@@ -1,0 +1,37 @@
+name: Doxygen
+
+on:
+  release:
+    types:
+      - published
+
+jobs:
+  build:
+    runs-on: ubuntu-20.04
+
+    steps:
+      - uses: actions/checkout@v2
+
+      - name: Cache dependencies
+        id: cache-dependencies
+        uses: actions/cache@v2
+        with:
+          path: dependencies
+          key: doxygen-dependencies-20210524
+
+      - name: Install dependencies
+        run: sudo bash script/build.sh
+
+      - name: Configure
+        run: cmake -S . -B build -DKLIB_BUILD_DOC=ON
+
+      - name: Build
+        run: cmake --build build --config Release --target doc
+
+      # https://github.com/peaceiris/actions-gh-pages
+      - name: Deploy
+        uses: peaceiris/actions-gh-pages@v3
+        with:
+          github_token: ${{ secrets.GITHUB_TOKEN }}
+          publish_dir: build/html
+          keep_files: false

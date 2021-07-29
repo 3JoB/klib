@@ -1,0 +1,60 @@
+name: Build
+
+on:
+  push:
+  pull_request:
+  schedule:
+    - cron: "0 0 1 * *"
+
+jobs:
+  build:
+    runs-on: ubuntu-20.04
+    strategy:
+      matrix:
+        build_type: ["Debug", "Release", "MinSizeRel", "RelWithDebInfo"]
+        compiler:
+          - { cc: "gcc", cxx: "g++" }
+          - { cc: "clang", cxx: "clang++" }
+
+    steps:
+      # https://github.com/actions/checkout
+      - uses: actions/checkout@v2
+
+      #  https://github.com/actions/cache
+      - name: Cache dependencies
+        id: cache-dependencies
+        uses: actions/cache@v2
+        with:
+          path: dependencies
+          key: build-dependencies-20210524
+
+      - name: Install dependencies
+        run: sudo bash script/build.sh
+
+      - name: Configure
+        run: |
+          cmake -S . -B build -DCMAKE_BUILD_TYPE=${{ matrix.build_type }} \
+          -DKLIB_BUILD_TEST=ON -DKLIB_BUILD_EXTRA_TEST=${{ matrix.build_type == 'Release' }}
+        env:
+          CC: ${{ matrix.compiler.cc }}
+          CXX: ${{ matrix.compiler.cxx }}
+
+      - name: Build
+        run: cmake --build build --config ${{ matrix.build_type }} -j"$(nproc)"
+
+      - name: Install
+        if: ${{ matrix.build_type == 'Release' }}
+        run: |
+          sudo cmake --build build --config ${{ matrix.build_type }} --target install
+          sudo ldconfig
+
+      - name: Run executable
+        if: ${{ matrix.build_type == 'Release' }}
+        run: tool
+
+      - name: Test
+        run: cd build ; ctest -C ${{ matrix.build_type }} -j"$(nproc)" --output-on-failure
+
+      - name: Uninstall
+        if: ${{ matrix.build_type == 'Release' }}
+        run: sudo cmake --build build --config ${{ matrix.build_type }} --target uninstall

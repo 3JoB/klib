@@ -1,0 +1,76 @@
+name: Release
+
+on:
+  release:
+    types:
+      - published
+
+jobs:
+  build:
+    runs-on: ubuntu-20.04
+    strategy:
+      matrix:
+        compiler:
+          - { cc: "gcc", cxx: "g++" }
+          - { cc: "clang", cxx: "clang++" }
+
+    steps:
+      - uses: actions/checkout@v2
+
+      - name: Cache dependencies
+        id: cache-dependencies
+        uses: actions/cache@v2
+        with:
+          path: dependencies
+          key: release-dependencies-20210524
+
+      - name: Install dependencies
+        run: sudo bash script/build.sh
+
+      - name: Set environment variable
+        run: echo "RELEASE_VERSION=${TAG_NAME:1}" >> $GITHUB_ENV
+        env:
+          TAG_NAME: ${{ github.event.release.tag_name }}
+
+      - name: Configure
+        run: cmake -S . -B build
+
+      - name: Build
+        run: cmake --build build --config Release -j"$(nproc)"
+
+      - name: CPack
+        run: |
+          cd build
+          cpack
+          mv klib-${{ env.RELEASE_VERSION }}-Linux.deb \
+          klib-${{ env.RELEASE_VERSION }}-ubuntu-20.04.deb
+          mv klib-${{ env.RELEASE_VERSION }}-Linux.tar.gz \
+          klib-${{ env.RELEASE_VERSION }}-ubuntu-20.04.tar.gz
+
+      - name: Install
+        run: |
+          sudo dpkg -i build/klib-${{ env.RELEASE_VERSION }}-ubuntu-20.04.deb
+          sudo ldconfig
+
+      - name: Run executable
+        run: tool
+
+      - name: Build example
+        run: |
+          cd example
+          cmake -S . -B build -DCMAKE_BUILD_TYPE=Release
+          cmake --build build --config Release -j"$(nproc)"
+        env:
+          CC: ${{ matrix.compiler.cc }}
+          CXX: ${{ matrix.compiler.cxx }}
+
+      # https://github.com/softprops/action-gh-release
+      - name: Release
+        uses: softprops/action-gh-release@v1
+        if: ${{ matrix.compiler.cxx == 'g++' }}
+        with:
+          files: |
+            build/klib-${{ env.RELEASE_VERSION }}-ubuntu-20.04.deb
+            build/klib-${{ env.RELEASE_VERSION }}-ubuntu-20.04.tar.gz
+        env:
+          GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}
