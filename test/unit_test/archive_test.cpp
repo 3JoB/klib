@@ -67,3 +67,11 @@ TEST_CASE("decompress") {
   REQUIRE(std::filesystem::exists("madler-zlib-7085a61"));
   REQUIRE(folder_size("madler-zlib-7085a61") == 2984209);
 }
+
+TEST_CASE("decompress error") {
+  REQUIRE(std::filesystem::exists("error.tar.gz"));
+
+  REQUIRE_THROWS_MATCHES(klib::archive::decompress("error.tar.gz"),
+                         std::runtime_error,
+                         Catch::Message("Damaged tar archive"));
+}

@@ -9,6 +9,7 @@
 #include <cstdio>
 #include <filesystem>
 #include <memory>
+#include <stdexcept>
 #include <vector>
 
 #include <archive.h>
@@ -65,12 +66,12 @@ void copy_data(struct archive *ar, struct archive *aw) {
       return;
     }
     if (status != ARCHIVE_OK) {
-      klib::detail::error(archive_error_string(ar));
+      throw std::runtime_error(archive_error_string(ar));
     }
 
     status = archive_write_data_block(aw, buff, size, offset);
     if (status != ARCHIVE_OK) {
-      klib::detail::error(archive_error_string(aw));
+      throw std::runtime_error(archive_error_string(aw));
     }
   }
 }
@@ -95,7 +96,7 @@ void compress(const std::string &path, Algorithm algorithm, bool flag) {
   }
 
   if (archive_write_open_filename(archive, out.c_str()) != ARCHIVE_OK) {
-    detail::error(archive_error_string(archive));
+    throw std::runtime_error(archive_error_string(archive));
   }
 
   std::vector<std::string> paths;
@@ -116,7 +117,7 @@ void compress(const std::string &path, Algorithm algorithm, bool flag) {
     auto disk = archive_read_disk_new();
     archive_read_disk_set_standard_lookup(disk);
     if (archive_read_disk_open(disk, item.c_str()) != ARCHIVE_OK) {
-      detail::error(archive_error_string(disk));
+      throw std::runtime_error(archive_error_string(disk));
     }
 
     while (true) {
@@ -127,21 +128,20 @@ void compress(const std::string &path, Algorithm algorithm, bool flag) {
         break;
       }
       if (status != ARCHIVE_OK) {
-        detail::error(archive_error_string(disk));
+        throw std::runtime_error(archive_error_string(disk));
       }
 
       archive_read_disk_descend(disk);
 
       status = archive_write_header(archive, entry);
       if (status != ARCHIVE_OK) {
-        detail::error(archive_error_string(archive));
+        throw std::runtime_error(archive_error_string(archive));
       }
 
       char buff[16384];
       auto file = std::fopen(archive_entry_sourcepath(entry), "rb");
       if (!file) {
-        detail::error(std::strerror(errno));
-        ;
+        throw std::runtime_error(std::strerror(errno));
       }
 
       auto len = std::fread(buff, 1, sizeof(buff), file);
@@ -175,9 +175,19 @@ void decompress(const std::string &file_name, const std::string &path) {
   archive_write_disk_set_options(extract, flags);
   archive_write_disk_set_standard_lookup(extract);
 
+#define FREE                      \
+  do {                            \
+    archive_read_close(archive);  \
+    archive_read_free(archive);   \
+    archive_write_close(extract); \
+    archive_write_free(extract);  \
+  } while (false)
+
   if (archive_read_open_filename(archive, file_name.c_str(), 10240) !=
       ARCHIVE_OK) {
-    detail::error(archive_error_string(archive));
+    std::string msg = archive_error_string(archive);
+    FREE;
+    throw std::runtime_error(msg);
   }
 
   ChangeWorkDir change_work_dir(path);
@@ -189,29 +199,37 @@ void decompress(const std::string &file_name, const std::string &path) {
       break;
     }
     if (status != ARCHIVE_OK) {
-      detail::error(archive_error_string(archive));
+      std::string msg = archive_error_string(archive);
+      FREE;
+      throw std::runtime_error(msg);
     }
 
     status = archive_write_header(extract, entry);
     if (status != ARCHIVE_OK) {
-      detail::error(archive_error_string(extract));
+      std::string msg = archive_error_string(archive);
+      FREE;
+      throw std::runtime_error(msg);
     }
 
     if (archive_entry_size(entry) > 0) {
-      copy_data(archive, extract);
+      try {
+        copy_data(archive, extract);
+      } catch (const std::runtime_error &error) {
+        FREE;
+        throw error;
+      }
     }
 
     status = archive_write_finish_entry(extract);
     if (status != ARCHIVE_OK) {
-      detail::error(archive_error_string(extract));
+      std::string msg = archive_error_string(archive);
+      FREE;
+      throw std::runtime_error(msg);
     }
   }
 
-  archive_read_close(archive);
-  archive_read_free(archive);
-
-  archive_write_close(extract);
-  archive_write_free(extract);
+  FREE;
+#undef FREE
 }
 
 }  // namespace klib::archive

@@ -9,10 +9,13 @@
 
 namespace klib::archive {
 
+/**
+ * @brief Algorithm used for compression
+ */
 enum class Algorithm { Zip, Gzip };
 
 /**
- * @brief Use the zip algorithm to compress files or folders
+ * @brief Compress files or folders
  * @param path: File or folder path
  * (String cannot be empty)
  * @param flag: Whether to include the outermost folder
