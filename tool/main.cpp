@@ -3,4 +3,6 @@
 
 #include "klib/archive.h"
 
-int main() { klib::archive::decompress("error.tar.gz"); }
+int main() {
+  klib::archive::compress("error.tar.gz", klib::archive::Algorithm::Gzip, true);
+}

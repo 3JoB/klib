@@ -15,19 +15,21 @@ namespace klib::archive {
 enum class Algorithm { Zip, Gzip };
 
 /**
- * @brief Compress files or folders
+ * @brief Compress file or folder
  * @param path: File or folder path
- * (String cannot be empty)
- * @param flag: Whether to include the outermost folder
+ * @param algorithm: Compression algorithm used
+ * @param flag: Whether to include the outermost folder(If the outermost folder
+ * does not exist, ignore it)
  */
 void compress(const std::string &path, Algorithm algorithm, bool flag);
 
 /**
- * @brief Use the zip algorithm to decompress the file
- * @param file_name: File path
- * (String cannot be empty)
- * @param path: Specify the location of the decompressed content
+ * @brief Decompress file or folder
+ * @param path: Compressed file path
+ * @param decompressed_path: Specify the location of the decompressed content
+ * @return Outermost folder name(If it does not exist, return an empty string)
  */
-void decompress(const std::string &file_name, const std::string &path = "");
+std::string decompress(const std::string &path,
+                       const std::string &decompressed_path = "");
 
 }  // namespace klib::archive
