@@ -38,7 +38,7 @@ void compress(const std::vector<std::string> &paths, Algorithm algorithm,
               const std::string &file_name);
 
 /**
- * @brief Decompress file or folder
+ * @brief Decompress file
  * @param path: Compressed file path
  * @param decompressed_path: Specify the location of the decompressed content
  * @return Outermost folder name
