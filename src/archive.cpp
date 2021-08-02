@@ -144,6 +144,21 @@ auto create_unique_ptr(
   return entry;
 }
 
+std::string compressed_file_name(const std::string &path,
+                                 klib::archive::Algorithm algorithm) {
+  auto name = std::filesystem::path(path).filename();
+
+  if (algorithm == klib::archive::Algorithm::Zip) {
+    name += ".zip";
+  } else if (algorithm == klib::archive::Algorithm::Gzip) {
+    name += ".tar.gz";
+  } else {
+    assert(false);
+  }
+
+  return name;
+}
+
 }  // namespace
 
 namespace klib::archive {
@@ -152,21 +167,10 @@ void compress(const std::string &path, Algorithm algorithm,
               const std::string &file_name, bool flag) {
   check_file_or_folder(path);
 
-  auto archive = create_unique_ptr(archive_write_new,
-                                   {archive_write_close, archive_write_free});
-
-  if (algorithm == Algorithm::Zip) {
-    checked_archive_func(archive_write_set_format_zip, archive.get());
-  } else if (algorithm == Algorithm::Gzip) {
-    checked_archive_func(archive_write_set_format_gnutar, archive.get());
-    checked_archive_func(archive_write_add_filter_gzip, archive.get());
-  } else {
-    assert(false);
-  }
-
-  check_archive_correctness(
-      archive_write_open_filename(archive.get(), file_name.c_str()),
-      archive.get());
+  std::string out =
+      (std::empty(file_name) ? compressed_file_name(path, algorithm)
+                             : file_name);
+  out = std::filesystem::current_path() / out;
 
   std::vector<std::string> paths;
   std::unique_ptr<ChangeWorkDir> p;
@@ -182,6 +186,27 @@ void compress(const std::string &path, Algorithm algorithm,
       paths.push_back(item.path().filename().string());
     }
   }
+
+  compress(paths, algorithm, out);
+}
+
+void compress(const std::vector<std::string> &paths, Algorithm algorithm,
+              const std::string &file_name) {
+  auto archive = create_unique_ptr(archive_write_new,
+                                   {archive_write_close, archive_write_free});
+
+  if (algorithm == Algorithm::Zip) {
+    checked_archive_func(archive_write_set_format_zip, archive.get());
+  } else if (algorithm == Algorithm::Gzip) {
+    checked_archive_func(archive_write_set_format_gnutar, archive.get());
+    checked_archive_func(archive_write_add_filter_gzip, archive.get());
+  } else {
+    assert(false);
+  }
+
+  check_archive_correctness(
+      archive_write_open_filename(archive.get(), file_name.c_str()),
+      archive.get());
 
   for (const auto &item : paths) {
     auto disk = create_unique_ptr(archive_read_disk_new,
@@ -214,7 +239,8 @@ void compress(const std::string &path, Algorithm algorithm,
   }
 }
 
-std::string decompress(const std::string &file_name, const std::string &path) {
+std::optional<std::string> decompress(const std::string &file_name,
+                                      const std::string &path) {
   std::int32_t flags = (ARCHIVE_EXTRACT_TIME | ARCHIVE_EXTRACT_PERM |
                         ARCHIVE_EXTRACT_ACL | ARCHIVE_EXTRACT_FFLAGS);
 
@@ -244,8 +270,8 @@ std::string decompress(const std::string &file_name, const std::string &path) {
 
   ChangeWorkDir change_work_dir(path);
 
-  std::string dir;
-  bool check = false;
+  std::optional<std::string> dir;
+  bool first = true;
   while (true) {
     struct archive_entry *entry;
     auto status = archive_read_next_header(archive, &entry);
@@ -264,12 +290,12 @@ std::string decompress(const std::string &file_name, const std::string &path) {
       FREE;
       throw std::runtime_error(msg);
     }
-    if (!check) {
+    if (first) {
       dir = archive_entry_pathname(entry);
-      check = true;
-    } else if (!std::empty(dir)) {
-      if (!std::string(archive_entry_pathname(entry)).starts_with(dir)) {
-        dir.clear();
+      first = false;
+    } else if (dir) {
+      if (!std::string(archive_entry_pathname(entry)).starts_with(*dir)) {
+        dir.reset();
       }
     }
 
@@ -293,8 +319,8 @@ std::string decompress(const std::string &file_name, const std::string &path) {
   FREE;
 #undef FREE
 
-  if (dir.ends_with("/")) {
-    return dir.substr(0, std::size(dir) - 1);
+  if (dir && dir->ends_with("/")) {
+    return dir->substr(0, std::size(*dir) - 1);
   }
 
   return dir;
