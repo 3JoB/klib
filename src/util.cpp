@@ -36,7 +36,7 @@ std::map<std::string, std::string> read_folder(const std::string &path) {
     auto relative_path = item.path().string().substr(std::size(path) + 1);
 
     if (std::filesystem::is_regular_file(item.path())) {
-      auto file = klib::util::read_file(item.path(), false);
+      auto file = klib::util::read_file(item.path(), true);
       folder.emplace(relative_path, file);
     } else {
       folder.emplace(relative_path, "");
