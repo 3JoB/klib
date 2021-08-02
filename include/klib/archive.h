@@ -18,10 +18,12 @@ enum class Algorithm { Zip, Gzip };
  * @brief Compress file or folder
  * @param path: File or folder path
  * @param algorithm: Compression algorithm used
+ * @param file_name: Compressed file name
  * @param flag: Whether to include the outermost folder(If the outermost folder
  * does not exist, ignore it)
  */
-void compress(const std::string &path, Algorithm algorithm, bool flag);
+void compress(const std::string &path, Algorithm algorithm,
+              const std::string &file_name, bool flag = true);
 
 /**
  * @brief Decompress file or folder

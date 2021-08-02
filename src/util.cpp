@@ -7,6 +7,7 @@
 #include <cuchar>
 #include <filesystem>
 #include <fstream>
+#include <map>
 #include <vector>
 
 #include <fmt/compile.h>
@@ -15,6 +16,7 @@
 #include <openssl/sha.h>
 
 #include "klib/detail/error.h"
+#include "klib/exception.h"
 
 namespace {
 
@@ -27,18 +29,35 @@ std::string bytes_to_hex_string(const std::vector<std::uint8_t> &bytes) {
   return str;
 }
 
+std::map<std::string, std::string> read_folder(const std::string &path) {
+  std::map<std::string, std::string> folder;
+
+  for (const auto &item : std::filesystem::recursive_directory_iterator(path)) {
+    auto relative_path = item.path().string().substr(std::size(path) + 1);
+
+    if (std::filesystem::is_regular_file(item.path())) {
+      auto file = klib::util::read_file(item.path(), false);
+      folder.emplace(relative_path, file);
+    } else {
+      folder.emplace(relative_path, "");
+    }
+  }
+
+  return folder;
+}
+
 }  // namespace
 
-namespace klib {
+namespace klib::util {
 
 std::string read_file(const std::string &path, bool binary_mode) {
   assert(!std::empty(path) && "'path' cannot be empty");
 
   if (!std::filesystem::exists(path)) {
-    detail::error("'{}' does not exist", path);
+    throw RuntimeError(fmt::format("'{}' does not exist", path));
   }
   if (!std::filesystem::is_regular_file(path)) {
-    detail::error("'{}' is not a file", path);
+    throw RuntimeError(fmt::format("'{}' is not a file", path));
   }
 
   std::ifstream ifs;
@@ -143,4 +162,19 @@ std::string sha3_512(const std::string &path) {
   return output;
 }
 
-}  // namespace klib
+std::size_t folder_size(const std::string &path) {
+  std::size_t size = 0;
+  for (const auto &item : std::filesystem::recursive_directory_iterator(path)) {
+    if (std::filesystem::is_regular_file(item)) {
+      size += std::filesystem::file_size(item);
+    }
+  }
+
+  return size;
+}
+
+bool same_folder(const std::string &path1, const std::string &path2) {
+  return read_folder(path1) == read_folder(path2);
+}
+
+}  // namespace klib::util

@@ -5,11 +5,12 @@
 
 #pragma once
 
+#include <cstddef>
 #include <string>
 
 #include "klib/detail/unicode.h"
 
-namespace klib {
+namespace klib::util {
 
 /**
  * @brief Read a file at a time and store it in a string
@@ -68,4 +69,8 @@ bool is_chinese(const std::string &c);
  */
 std::string sha3_512(const std::string &path);
 
-}  // namespace klib
+std::size_t folder_size(const std::string &path);
+
+bool same_folder(const std::string &path1, const std::string &path2);
+
+}  // namespace klib::util

@@ -70,12 +70,12 @@ void copy_data(struct archive *ar, struct archive *aw) {
       return;
     }
     if (status != ARCHIVE_OK) {
-      throw std::runtime_error(archive_error_string(ar));
+      throw klib::RuntimeError(archive_error_string(ar));
     }
 
     status = archive_write_data_block(aw, buff, size, offset);
     if (status != ARCHIVE_OK) {
-      throw std::runtime_error(archive_error_string(aw));
+      throw klib::RuntimeError(archive_error_string(aw));
     }
   }
 }
@@ -148,26 +148,24 @@ auto create_unique_ptr(
 
 namespace klib::archive {
 
-void compress(const std::string &path, Algorithm algorithm, bool flag) {
+void compress(const std::string &path, Algorithm algorithm,
+              const std::string &file_name, bool flag) {
   check_file_or_folder(path);
 
   auto archive = create_unique_ptr(archive_write_new,
                                    {archive_write_close, archive_write_free});
 
-  std::string compressed_file_name = std::filesystem::path(path).filename();
   if (algorithm == Algorithm::Zip) {
     checked_archive_func(archive_write_set_format_zip, archive.get());
-    compressed_file_name += ".zip";
   } else if (algorithm == Algorithm::Gzip) {
     checked_archive_func(archive_write_set_format_gnutar, archive.get());
     checked_archive_func(archive_write_add_filter_gzip, archive.get());
-    compressed_file_name += ".tar.gz";
   } else {
     assert(false);
   }
 
   check_archive_correctness(
-      archive_write_open_filename(archive.get(), compressed_file_name.c_str()),
+      archive_write_open_filename(archive.get(), file_name.c_str()),
       archive.get());
 
   std::vector<std::string> paths;
@@ -209,7 +207,7 @@ void compress(const std::string &path, Algorithm algorithm, bool flag) {
       std::string data;
       auto source_path = archive_entry_sourcepath(entry.get());
       if (std::filesystem::is_regular_file(source_path)) {
-        data = read_file(source_path, true);
+        data = util::read_file(source_path, true);
       }
       archive_write_data(archive.get(), data.data(), std::size(data));
     }
@@ -246,6 +244,8 @@ std::string decompress(const std::string &file_name, const std::string &path) {
 
   ChangeWorkDir change_work_dir(path);
 
+  std::string dir;
+  bool check = false;
   while (true) {
     struct archive_entry *entry;
     auto status = archive_read_next_header(archive, &entry);
@@ -263,6 +263,14 @@ std::string decompress(const std::string &file_name, const std::string &path) {
       std::string msg = archive_error_string(archive);
       FREE;
       throw std::runtime_error(msg);
+    }
+    if (!check) {
+      dir = archive_entry_pathname(entry);
+      check = true;
+    } else if (!std::empty(dir)) {
+      if (!std::string(archive_entry_pathname(entry)).starts_with(dir)) {
+        dir.clear();
+      }
     }
 
     if (archive_entry_size(entry) > 0) {
@@ -285,7 +293,11 @@ std::string decompress(const std::string &file_name, const std::string &path) {
   FREE;
 #undef FREE
 
-  return {};
+  if (dir.ends_with("/")) {
+    return dir.substr(0, std::size(dir) - 1);
+  }
+
+  return dir;
 }
 
 }  // namespace klib::archive
