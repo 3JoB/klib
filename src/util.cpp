@@ -54,10 +54,12 @@ std::string read_file(const std::string &path, bool binary_mode) {
   assert(!std::empty(path) && "'path' cannot be empty");
 
   if (!std::filesystem::exists(path)) {
-    throw RuntimeError(fmt::format("'{}' does not exist", path));
+    throw klib::exception::RuntimeError(
+        fmt::format("'{}' does not exist", path));
   }
   if (!std::filesystem::is_regular_file(path)) {
-    throw RuntimeError(fmt::format("'{}' is not a file", path));
+    throw klib::exception::RuntimeError(
+        fmt::format("'{}' is not a file", path));
   }
 
   std::ifstream ifs;

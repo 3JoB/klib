@@ -55,6 +55,11 @@ class Request {
   void set_proxy(const std::string &proxy);
 
   /**
+   * @brief No proxy
+   */
+  void set_no_proxy();
+
+  /**
    * @brief Set up user agent
    * @param user_agent: String representing user agent
    */
@@ -106,7 +111,7 @@ class Response {
    * @brief Save response content to file
    * @param path: File path
    */
-  void save(const std::string &path) const;
+  void save_to_file(const std::string &path) const;
 
  private:
   std::int64_t status_code_ = StatusCode::None;

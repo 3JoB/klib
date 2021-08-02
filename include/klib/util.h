@@ -69,8 +69,19 @@ bool is_chinese(const std::string &c);
  */
 std::string sha3_512(const std::string &path);
 
+/**
+ * @brief Count the sum of the size of all files in the folder
+ * @param path: The path of the folder to be counted
+ * @return Folder size
+ */
 std::size_t folder_size(const std::string &path);
 
+/**
+ * @brief Determine whether the two folders are the same
+ * @param path1: Folder path
+ * @param path2: Folder path
+ * @return If the two folders are the same, return true, otherwise return false
+ */
 bool same_folder(const std::string &path1, const std::string &path2);
 
 }  // namespace klib::util

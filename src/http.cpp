@@ -25,6 +25,7 @@ class Request::RequestImpl {
   void verbose(bool flag);
   void allow_redirects(bool flag);
   void set_proxy(const std::string &proxy);
+  void set_no_proxy();
   void set_user_agent(const std::string &user_agent);
 
   Response get(const std::string &url);
@@ -76,6 +77,10 @@ void Request::RequestImpl::allow_redirects(bool flag) {
 
 void Request::RequestImpl::set_proxy(const std::string &proxy) {
   curl_easy_setopt(http_handle_, CURLOPT_PROXY, proxy.c_str());
+}
+
+void Request::RequestImpl::set_no_proxy() {
+  curl_easy_setopt(http_handle_, CURLOPT_NOPROXY, "*");
 }
 
 void Request::RequestImpl::set_user_agent(const std::string &user_agent) {
@@ -137,6 +142,8 @@ void Request::allow_redirects(bool flag) { impl_->allow_redirects(flag); }
 
 void Request::set_proxy(const std::string &proxy) { impl_->set_proxy(proxy); }
 
+void Request::set_no_proxy() { impl_->set_no_proxy(); }
+
 void Request::set_user_agent(const std::string &user_agent) {
   impl_->set_user_agent(user_agent);
 }
@@ -149,7 +156,7 @@ std::string Response::header() const { return header_; }
 
 std::string Response::text() const { return text_; }
 
-void Response::save(const std::string &path) const {
+void Response::save_to_file(const std::string &path) const {
   std::ofstream ofs(path);
   ofs << text_ << std::flush;
 }

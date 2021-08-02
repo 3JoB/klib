@@ -50,3 +50,15 @@ TEST_CASE("sha3_512") {
           "38af19362e48ec80f6565cf18245f520c8ee5348374cb0c11286f3b23cc93fd05a6a"
           "2a2b8784f20bb2307211a2a776241797857b133056f4b33de1d363db7bb2");
 }
+
+TEST_CASE("folder_size") {
+  REQUIRE(std::filesystem::exists("folder1"));
+  REQUIRE(klib::util::folder_size("folder1") == 38);
+}
+
+TEST_CASE("same_folder") {
+  REQUIRE(std::filesystem::exists("folder1"));
+  REQUIRE(std::filesystem::exists("folder2"));
+
+  REQUIRE(klib::util::same_folder("folder1", "folder2"));
+}

@@ -70,12 +70,12 @@ void copy_data(struct archive *ar, struct archive *aw) {
       return;
     }
     if (status != ARCHIVE_OK) {
-      throw klib::RuntimeError(archive_error_string(ar));
+      throw klib::exception::RuntimeError(archive_error_string(ar));
     }
 
     status = archive_write_data_block(aw, buff, size, offset);
     if (status != ARCHIVE_OK) {
-      throw klib::RuntimeError(archive_error_string(aw));
+      throw klib::exception::RuntimeError(archive_error_string(aw));
     }
   }
 }
@@ -95,7 +95,7 @@ void check_file_or_folder(const std::string &path) {
 
 void check_archive_correctness(std::int32_t code, struct archive *archive) {
   if (code != ARCHIVE_OK) {
-    throw klib::RuntimeError(archive_error_string(archive));
+    throw klib::exception::RuntimeError(archive_error_string(archive));
   }
 }
 
@@ -119,7 +119,7 @@ auto create_unique_ptr(
       init(), free_archive);
 
   if (!archive) {
-    throw klib::RuntimeError("create archive error");
+    throw klib::exception::RuntimeError("create archive error");
   }
 
   return archive;
@@ -138,7 +138,7 @@ auto create_unique_ptr(
       init(), free_archive);
 
   if (!entry) {
-    throw klib::RuntimeError("create archive_entry error");
+    throw klib::exception::RuntimeError("create archive_entry error");
   }
 
   return entry;
