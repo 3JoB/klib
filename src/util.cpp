@@ -185,7 +185,7 @@ void execute_command(const std::string &command) {
 }
 
 void execute_command(const char *command) {
-  assert(!command);
+  assert(command);
 
   auto status = std::system(command);
   if (status == -1 || !WIFEXITED(status) || WEXITSTATUS(status)) {
