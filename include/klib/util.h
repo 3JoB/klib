@@ -47,7 +47,7 @@ constexpr bool is_ascii(char c) { return static_cast<std::uint8_t>(c) <= 0x7F; }
  * @return If it is a Chinese character, return true, otherwise return false
  */
 constexpr bool is_chinese(char32_t c) {
-  using namespace detail;
+  using namespace klib::detail;
 
   return UnifiedIdeographs{}(c) || UnifiedIdeographsA{}(c) ||
          UnifiedIdeographsB{}(c) || UnifiedIdeographsC{}(c) ||
@@ -83,5 +83,17 @@ std::size_t folder_size(const std::string &path);
  * @return If the two folders are the same, return true, otherwise return false
  */
 bool same_folder(const std::string &path1, const std::string &path2);
+
+/**
+ * @brief Execute the given line as a shell command
+ * @param command: Command to be execute
+ */
+void execute_command(const std::string &command);
+
+/**
+ * @brief Execute the given line as a shell command
+ * @param command: Command to be execute
+ */
+void execute_command(const char *command);
 
 }  // namespace klib::util

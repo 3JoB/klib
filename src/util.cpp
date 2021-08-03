@@ -179,4 +179,19 @@ bool same_folder(const std::string &path1, const std::string &path2) {
   return read_folder(path1) == read_folder(path2);
 }
 
+void execute_command(const std::string &command) {
+  assert(!std::empty(command));
+  execute_command(command.c_str());
+}
+
+void execute_command(const char *command) {
+  assert(!command);
+
+  auto status = std::system(command);
+  if (status == -1 || !WIFEXITED(status) || WEXITSTATUS(status)) {
+    throw klib::exception::RuntimeError(
+        fmt::format("execute command: {}", command));
+  }
+}
+
 }  // namespace klib::util

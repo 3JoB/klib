@@ -32,7 +32,7 @@ class Request {
   Request &operator=(Request &&) = delete;
 
   /**
-   * @brief Default destructor
+   * @brief Destructor
    */
   ~Request();
 
@@ -86,6 +86,7 @@ class Response {
  public:
   /**
    * @brief HTTP Status Code
+   * @see https://developer.mozilla.org/zh-CN/docs/Web/HTTP/Status
    */
   enum StatusCode : std::int64_t { None, Ok = 200 };
 
@@ -96,7 +97,7 @@ class Response {
   [[nodiscard]] std::int64_t status_code() const;
 
   /**
-   * @brief Server response
+   * @brief Get server response
    * @return Server response
    */
   [[nodiscard]] std::string header() const;
