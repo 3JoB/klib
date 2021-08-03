@@ -82,14 +82,15 @@ void copy_data(struct archive *ar, struct archive *aw) {
 
 void check_file_or_folder(const std::string &path) {
   if (!std::filesystem::exists(path)) {
-    throw std::runtime_error(
-        fmt::format("The file or folder does not exist: '{}'", path));
+    throw std::runtime_error(fmt::format(
+        FMT_COMPILE("The file or folder does not exist: '{}'"), path));
   }
 
   if (!std::filesystem::is_regular_file(path) &&
       !std::filesystem::is_directory(path)) {
     throw std::runtime_error(fmt::format(
-        "The path does not correspond to a file or folder: '{}'", path));
+        FMT_COMPILE("The path does not correspond to a file or folder: '{}'"),
+        path));
   }
 }
 

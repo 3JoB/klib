@@ -1,9 +1,9 @@
 #include "klib/util.h"
 
 #include <cassert>
+#include <cerrno>
 #include <clocale>
-#include <cstddef>
-#include <cstdint>
+#include <cstdlib>
 #include <cuchar>
 #include <filesystem>
 #include <fstream>
@@ -15,29 +15,40 @@
 #include <openssl/evp.h>
 #include <openssl/sha.h>
 
-#include "klib/detail/error.h"
 #include "klib/exception.h"
+
+namespace klib::util {
 
 namespace {
 
 std::string bytes_to_hex_string(const std::vector<std::uint8_t> &bytes) {
+  assert(!std::empty(bytes));
+
   std::string str;
+
+  // https://zh.wikipedia.org/wiki/SHA-3#SHA_%E5%AE%B6%E6%97%8F%E5%87%BD%E6%95%B0%E7%9A%84%E6%AF%94%E8%BE%83
+  str.reserve(128);
+
   for (auto byte : bytes) {
-    str += fmt::format(FMT_COMPILE("{:02x}"), static_cast<int>(byte));
+    str += fmt::format(FMT_COMPILE("{:02x}"), byte);
   }
 
   return str;
 }
 
 std::map<std::string, std::string> read_folder(const std::string &path) {
+  if (!std::filesystem::is_directory(path)) {
+    throw klib::exception::RuntimeError(
+        fmt::format(FMT_COMPILE("'{}' is not a directory"), path));
+  }
+
   std::map<std::string, std::string> folder;
 
   for (const auto &item : std::filesystem::recursive_directory_iterator(path)) {
     auto relative_path = item.path().string().substr(std::size(path) + 1);
 
     if (std::filesystem::is_regular_file(item.path())) {
-      auto file = klib::util::read_file(item.path(), true);
-      folder.emplace(relative_path, file);
+      folder.emplace(relative_path, read_file(item.path(), true));
     } else {
       folder.emplace(relative_path, "");
     }
@@ -48,18 +59,10 @@ std::map<std::string, std::string> read_folder(const std::string &path) {
 
 }  // namespace
 
-namespace klib::util {
-
 std::string read_file(const std::string &path, bool binary_mode) {
-  assert(!std::empty(path) && "'path' cannot be empty");
-
-  if (!std::filesystem::exists(path)) {
-    throw klib::exception::RuntimeError(
-        fmt::format("'{}' does not exist", path));
-  }
   if (!std::filesystem::is_regular_file(path)) {
     throw klib::exception::RuntimeError(
-        fmt::format("'{}' is not a file", path));
+        fmt::format(FMT_COMPILE("'{}' is not a file"), path));
   }
 
   std::ifstream ifs;
@@ -70,7 +73,8 @@ std::string read_file(const std::string &path, bool binary_mode) {
   }
 
   if (!ifs) {
-    detail::error("can not open file: '{}'", path);
+    throw klib::exception::RuntimeError(
+        fmt::format(FMT_COMPILE("can not open file: '{}'"), path));
   }
 
   std::string data;
@@ -85,6 +89,8 @@ std::string read_file(const std::string &path, bool binary_mode) {
 
 // https://zh.cppreference.com/w/c/string/multibyte/mbrtoc16
 std::u16string utf8_to_utf16(const std::string &str) {
+  assert(!std::empty(str));
+
   std::setlocale(LC_ALL, "en_US.utf8");
 
   std::u16string result;
@@ -94,10 +100,14 @@ std::u16string utf8_to_utf16(const std::string &str) {
   auto size = std::size(str);
   mbstate_t state = {};
 
-  while (auto rc = mbrtoc16(&out, begin, size, &state)) {
+  while (auto rc = std::mbrtoc16(&out, begin, size, &state)) {
+    if (rc == static_cast<std::size_t>(-1)) {
+      throw klib::exception::RuntimeError(std::strerror(errno));
+    }
+
     if (rc == static_cast<std::size_t>(-3)) {
       result.push_back(out);
-    } else if (rc <= SIZE_MAX / 2) {
+    } else if (rc <= std::numeric_limits<std::size_t>::max() / 2) {
       begin += rc;
       result.push_back(out);
     } else {
@@ -110,6 +120,8 @@ std::u16string utf8_to_utf16(const std::string &str) {
 
 // https://zh.cppreference.com/w/c/string/multibyte/mbrtoc32
 std::u32string utf8_to_utf32(const std::string &str) {
+  assert(!std::empty(str));
+
   std::setlocale(LC_ALL, "en_US.utf8");
 
   std::u32string result;
@@ -119,8 +131,12 @@ std::u32string utf8_to_utf32(const std::string &str) {
   auto size = std::size(str);
   mbstate_t state = {};
 
-  while (auto rc = mbrtoc32(&out, begin, size, &state)) {
+  while (auto rc = std::mbrtoc32(&out, begin, size, &state)) {
     assert(rc != static_cast<std::size_t>(-3));
+
+    if (rc == static_cast<std::size_t>(-1)) {
+      throw klib::exception::RuntimeError(std::strerror(errno));
+    }
 
     if (rc > static_cast<std::size_t>(-1) / 2) {
       break;
@@ -134,10 +150,13 @@ std::u32string utf8_to_utf32(const std::string &str) {
 }
 
 bool is_chinese(const std::string &c) {
+  assert(!std::empty(c));
+
   auto utf32 = utf8_to_utf32(c);
 
   if (std::size(utf32) != 1) {
-    detail::error("not a char");
+    throw klib::exception::RuntimeError(
+        fmt::format(FMT_COMPILE("not a UTF-32 encoded character: '{}'"), c));
   }
 
   return is_chinese(utf32.front());
@@ -147,12 +166,12 @@ std::string sha3_512(const std::string &path) {
   auto data = read_file(path, true);
 
   std::uint32_t digest_length = SHA512_DIGEST_LENGTH;
-  auto digest = static_cast<uint8_t *>(OPENSSL_malloc(digest_length));
+  auto digest = static_cast<std::uint8_t *>(OPENSSL_malloc(digest_length));
 
   EVP_MD_CTX *context = EVP_MD_CTX_new();
   auto algorithm = EVP_sha3_512();
   EVP_DigestInit_ex(context, algorithm, nullptr);
-  EVP_DigestUpdate(context, data.c_str(), data.size());
+  EVP_DigestUpdate(context, data.c_str(), std::size(data));
   EVP_DigestFinal_ex(context, digest, &digest_length);
   EVP_MD_CTX_destroy(context);
 
@@ -165,7 +184,13 @@ std::string sha3_512(const std::string &path) {
 }
 
 std::size_t folder_size(const std::string &path) {
+  if (!std::filesystem::is_directory(path)) {
+    throw klib::exception::RuntimeError(
+        fmt::format(FMT_COMPILE("'{}' is not a directory"), path));
+  }
+
   std::size_t size = 0;
+
   for (const auto &item : std::filesystem::recursive_directory_iterator(path)) {
     if (std::filesystem::is_regular_file(item)) {
       size += std::filesystem::file_size(item);
@@ -190,7 +215,7 @@ void execute_command(const char *command) {
   auto status = std::system(command);
   if (status == -1 || !WIFEXITED(status) || WEXITSTATUS(status)) {
     throw klib::exception::RuntimeError(
-        fmt::format("execute command: {}", command));
+        fmt::format(FMT_COMPILE("execute command error: {}"), command));
   }
 }
 

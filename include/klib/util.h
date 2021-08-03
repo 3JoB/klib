@@ -6,6 +6,7 @@
 #pragma once
 
 #include <cstddef>
+#include <cstdint>
 #include <string>
 
 #include "klib/detail/unicode.h"
@@ -14,7 +15,7 @@ namespace klib::util {
 
 /**
  * @brief Read a file at a time and store it in a string
- * @param path: File path(String cannot be empty)
+ * @param path: File path
  * @param binary_mode: Whether to open in binary mode
  * @return A string that holds the contents of the file
  */

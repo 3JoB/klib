@@ -8,7 +8,7 @@
 #include <string>
 
 /**
- * @brief klib major verion
+ * @brief klib major version
  */
 #define KLIB_VER_MAJOR 0
 
