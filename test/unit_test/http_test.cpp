@@ -24,14 +24,16 @@ TEST_CASE("download file") {
   request.allow_redirects(true);
 
 #ifdef KLIB_TEST_USE_PROXY
-  request.set_proxy("socks5://127.0.0.1:1080");
+  request.set_proxy();
 #endif
 
   auto response =
       request.get("https://github.com/fmtlib/fmt/archive/refs/tags/8.0.1.zip");
+
   REQUIRE(response.status_code() == klib::http::Response::StatusCode::Ok);
 
   response.save_to_file("8.0.1.zip");
+
   REQUIRE(std::filesystem::exists("8.0.1.zip"));
   REQUIRE(std::filesystem::file_size("8.0.1.zip") == 871270);
   REQUIRE(klib::util::sha3_512("8.0.1.zip") ==

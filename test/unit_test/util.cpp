@@ -1,4 +1,5 @@
 #include <filesystem>
+#include <string>
 
 #include <catch2/catch.hpp>
 
@@ -61,4 +62,9 @@ TEST_CASE("same_folder") {
   REQUIRE(std::filesystem::exists("folder2"));
 
   REQUIRE(klib::util::same_folder("folder1", "folder2"));
+}
+
+TEST_CASE("execute_command") {
+  std::string command = "gcc -v";
+  REQUIRE_NOTHROW(klib::util::execute_command(command));
 }
