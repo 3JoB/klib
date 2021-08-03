@@ -22,6 +22,15 @@ namespace klib::util {
 std::string read_file(const std::string &path, bool binary_mode);
 
 /**
+ * @brief Write string to file
+ * @param path: File path
+ * @param binary_mode: Whether to open in binary mode
+ * @param content: String to be written
+ */
+void write_file(const std::string &path, bool binary_mode,
+                const std::string &content);
+
+/**
  * @brief Convert UTF-8 encoded string to UTF-16 encoded string
  * @param str: UTF-8 encoded string
  * @return The converted UTF-16 encoded string

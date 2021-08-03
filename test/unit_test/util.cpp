@@ -5,11 +5,18 @@
 
 #include "klib/util.h"
 
-TEST_CASE("read_file") {
+TEST_CASE("read_file & write_file") {
   REQUIRE(std::filesystem::exists("zlib-v1.2.11.tar.gz"));
 
   auto data = klib::util::read_file("zlib-v1.2.11.tar.gz", true);
   REQUIRE(std::size(data) == 644596);
+
+  REQUIRE_NOTHROW(klib::util::write_file("write-file.zip", true, data));
+
+  REQUIRE(std::filesystem::exists("write-file.zip"));
+  REQUIRE(std::filesystem::file_size("write-file.zip") == 644596);
+
+  std::filesystem::remove("write-file.zip");
 }
 
 TEST_CASE("utf8_to_utf16") {

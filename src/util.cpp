@@ -87,6 +87,23 @@ std::string read_file(const std::string &path, bool binary_mode) {
   return data;
 }
 
+void write_file(const std::string &path, bool binary_mode,
+                const std::string &content) {
+  std::ofstream ofs;
+  if (binary_mode) {
+    ofs.open(path, std::ofstream::binary);
+  } else {
+    ofs.open(path);
+  }
+
+  if (!ofs) {
+    throw klib::exception::RuntimeError(
+        fmt::format(FMT_COMPILE("can not open file: '{}'"), path));
+  }
+
+  ofs.write(content.data(), std::size(content));
+}
+
 // https://zh.cppreference.com/w/c/string/multibyte/mbrtoc16
 std::u16string utf8_to_utf16(const std::string &str) {
   assert(!std::empty(str));
