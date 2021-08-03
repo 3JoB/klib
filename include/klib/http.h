@@ -110,9 +110,10 @@ class Response {
 
   /**
    * @brief Save response content to file
+   * @param binary_mode: Whether to open in binary mode
    * @param path: File path
    */
-  void save_to_file(const std::string &path) const;
+  void save_to_file(const std::string &path, bool binary_mode) const;
 
  private:
   std::int64_t status_code_ = StatusCode::None;

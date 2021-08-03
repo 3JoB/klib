@@ -32,7 +32,7 @@ TEST_CASE("download file") {
 
   REQUIRE(response.status_code() == klib::http::Response::StatusCode::Ok);
 
-  response.save_to_file("8.0.1.zip");
+  response.save_to_file("8.0.1.zip", true);
 
   REQUIRE(std::filesystem::exists("8.0.1.zip"));
   REQUIRE(std::filesystem::file_size("8.0.1.zip") == 871270);
