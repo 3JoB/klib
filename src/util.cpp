@@ -9,6 +9,7 @@
 #include <cuchar>
 #include <filesystem>
 #include <fstream>
+#include <limits>
 #include <map>
 #include <vector>
 
