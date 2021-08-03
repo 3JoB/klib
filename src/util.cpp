@@ -1,5 +1,7 @@
 #include "klib/util.h"
 
+#include <unistd.h>
+
 #include <cassert>
 #include <cerrno>
 #include <clocale>
@@ -15,6 +17,7 @@
 #include <openssl/evp.h>
 #include <openssl/sha.h>
 
+#include "klib/detail/error.h"
 #include "klib/exception.h"
 
 namespace klib::util {
@@ -58,6 +61,30 @@ std::map<std::string, std::string> read_folder(const std::string &path) {
 }
 
 }  // namespace
+
+ChangeWorkingDir::ChangeWorkingDir(const std::string &path) {
+  if (!std::empty(path)) {
+    backup_ = std::filesystem::current_path();
+
+    if (!(std::filesystem::exists(path) &&
+          std::filesystem::is_directory(path))) {
+      if (!std::filesystem::create_directory(path)) {
+        throw klib::exception::RuntimeError(
+            fmt::format(FMT_COMPILE("can not create directory: '{}'"), path));
+      }
+    }
+
+    if (chdir(path.c_str())) {
+      throw klib::exception::RuntimeError("chdir error");
+    }
+  }
+}
+
+ChangeWorkingDir::~ChangeWorkingDir() {
+  if (!std::empty(backup_) && chdir(backup_.c_str())) {
+    klib::detail::error("chdir error");
+  }
+}
 
 std::string read_file(const std::string &path, bool binary_mode) {
   if (!std::filesystem::is_regular_file(path)) {

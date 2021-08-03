@@ -17,47 +17,14 @@
 #include <fmt/compile.h>
 #include <fmt/format.h>
 
-#include "klib/detail/error.h"
 #include "klib/exception.h"
 #include "klib/util.h"
 
 // https://github.com/libarchive/libarchive/wiki/Examples
 // https://github.com/libarchive/libarchive/blob/master/examples/minitar/minitar.c
+namespace klib::archive {
+
 namespace {
-
-class ChangeWorkDir {
- public:
-  explicit ChangeWorkDir(const std::string &path = "") {
-    if (!std::empty(path)) {
-      backup_ = std::filesystem::current_path();
-
-      if (!(std::filesystem::exists(path) &&
-            std::filesystem::is_directory(path))) {
-        if (!std::filesystem::create_directory(path)) {
-          klib::detail::error("can not create directory: {}", path);
-        }
-      }
-
-      if (chdir(path.c_str())) {
-        klib::detail::error("chdir error");
-      }
-    }
-  }
-
-  ChangeWorkDir(const ChangeWorkDir &) = delete;
-  ChangeWorkDir(ChangeWorkDir &&) = delete;
-  ChangeWorkDir &operator=(const ChangeWorkDir &) = delete;
-  ChangeWorkDir &operator=(ChangeWorkDir &&) = delete;
-
-  ~ChangeWorkDir() {
-    if (!std::empty(backup_) && chdir(backup_.c_str())) {
-      klib::detail::error("chdir error");
-    }
-  }
-
- private:
-  std::string backup_;
-};
 
 void copy_data(struct archive *ar, struct archive *aw) {
   while (true) {
@@ -82,13 +49,13 @@ void copy_data(struct archive *ar, struct archive *aw) {
 
 void check_file_or_folder(const std::string &path) {
   if (!std::filesystem::exists(path)) {
-    throw std::runtime_error(fmt::format(
+    throw klib::exception::RuntimeError(fmt::format(
         FMT_COMPILE("The file or folder does not exist: '{}'"), path));
   }
 
   if (!std::filesystem::is_regular_file(path) &&
       !std::filesystem::is_directory(path)) {
-    throw std::runtime_error(fmt::format(
+    throw klib::exception::RuntimeError(fmt::format(
         FMT_COMPILE("The path does not correspond to a file or folder: '{}'"),
         path));
   }
@@ -162,8 +129,6 @@ std::string compressed_file_name(const std::string &path,
 
 }  // namespace
 
-namespace klib::archive {
-
 void compress(const std::string &path, Algorithm algorithm,
               const std::string &file_name, bool flag) {
   check_file_or_folder(path);
@@ -174,12 +139,12 @@ void compress(const std::string &path, Algorithm algorithm,
   out = std::filesystem::current_path() / out;
 
   std::vector<std::string> paths;
-  std::unique_ptr<ChangeWorkDir> p;
+  std::unique_ptr<klib::util::ChangeWorkingDir> p;
 
   if (flag || std::filesystem::is_regular_file(path)) {
     paths.push_back(path);
   } else {
-    p = std::make_unique<ChangeWorkDir>(path);
+    p = std::make_unique<klib::util::ChangeWorkingDir>(path);
     (void)p;
 
     for (const auto &item :
@@ -266,10 +231,10 @@ std::optional<std::string> decompress(const std::string &file_name,
       ARCHIVE_OK) {
     std::string msg = archive_error_string(archive);
     FREE;
-    throw std::runtime_error(msg);
+    throw klib::exception::RuntimeError(msg);
   }
 
-  ChangeWorkDir change_work_dir(path);
+  klib::util::ChangeWorkingDir change_work_dir(path);
 
   std::optional<std::string> dir;
   bool first = true;
@@ -282,14 +247,14 @@ std::optional<std::string> decompress(const std::string &file_name,
     if (status != ARCHIVE_OK) {
       std::string msg = archive_error_string(archive);
       FREE;
-      throw std::runtime_error(msg);
+      throw klib::exception::RuntimeError(msg);
     }
 
     status = archive_write_header(extract, entry);
     if (status != ARCHIVE_OK) {
       std::string msg = archive_error_string(archive);
       FREE;
-      throw std::runtime_error(msg);
+      throw klib::exception::RuntimeError(msg);
     }
     if (first) {
       dir = archive_entry_pathname(entry);
@@ -303,7 +268,7 @@ std::optional<std::string> decompress(const std::string &file_name,
     if (archive_entry_size(entry) > 0) {
       try {
         copy_data(archive, extract);
-      } catch (const std::runtime_error &error) {
+      } catch (const klib::exception::RuntimeError &error) {
         FREE;
         throw error;
       }
@@ -313,7 +278,7 @@ std::optional<std::string> decompress(const std::string &file_name,
     if (status != ARCHIVE_OK) {
       std::string msg = archive_error_string(archive);
       FREE;
-      throw std::runtime_error(msg);
+      throw klib::exception::RuntimeError(msg);
     }
   }
 

@@ -5,6 +5,17 @@
 
 #include "klib/util.h"
 
+TEST_CASE("ChangeWorkingDir") {
+  REQUIRE(!std::filesystem::exists("work-dir"));
+
+  {
+    klib::util::ChangeWorkingDir dir("work-dir");
+    REQUIRE(std::filesystem::exists("../work-dir"));
+  }
+
+  REQUIRE(std::filesystem::remove("work-dir"));
+}
+
 TEST_CASE("read_file & write_file") {
   REQUIRE(std::filesystem::exists("zlib-v1.2.11.tar.gz"));
 

@@ -14,6 +14,32 @@
 namespace klib::util {
 
 /**
+ * @brief Change working directory
+ */
+class ChangeWorkingDir {
+ public:
+  /**
+   * @brief Default constructor
+   * @param path: Target working directory, do nothing if it is empty, create if
+   * the directory does not exist
+   */
+  explicit ChangeWorkingDir(const std::string &path = "");
+
+  ChangeWorkingDir(const ChangeWorkingDir &) = delete;
+  ChangeWorkingDir(ChangeWorkingDir &&) = delete;
+  ChangeWorkingDir &operator=(const ChangeWorkingDir &) = delete;
+  ChangeWorkingDir &operator=(ChangeWorkingDir &&) = delete;
+
+  /**
+   * @brief Destructor
+   */
+  ~ChangeWorkingDir();
+
+ private:
+  std::string backup_;
+};
+
+/**
  * @brief Read a file at a time and store it in a string
  * @param path: File path
  * @param binary_mode: Whether to open in binary mode
