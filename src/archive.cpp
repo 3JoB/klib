@@ -1,16 +1,11 @@
 #include "klib/archive.h"
 
-#include <unistd.h>
-
 #include <cassert>
-#include <cerrno>
 #include <cstddef>
 #include <cstdint>
-#include <cstdio>
 #include <filesystem>
 #include <functional>
 #include <memory>
-#include <vector>
 
 #include <archive.h>
 #include <archive_entry.h>
