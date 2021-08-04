@@ -13,9 +13,10 @@ TEST_CASE("Compress and decompress using the zip algorithm") {
 
   REQUIRE_NOTHROW(klib::archive::compress(
       "madler-zlib-7085a61", klib::archive::Algorithm::Zip, "zlib.zip"));
+  REQUIRE(std::filesystem::is_regular_file("zlib.zip"));
+
   REQUIRE(klib::archive::decompress("zlib.zip", "zip") ==
           "madler-zlib-7085a61");
-
   REQUIRE(std::filesystem::is_directory("zip/madler-zlib-7085a61"));
   REQUIRE(klib::util::folder_size("zip/madler-zlib-7085a61") == 2984209);
   REQUIRE(klib::util::same_folder("madler-zlib-7085a61",
@@ -31,9 +32,10 @@ TEST_CASE("Compress and decompress using the gzip algorithm") {
 
   REQUIRE_NOTHROW(klib::archive::compress(
       "madler-zlib-7085a61", klib::archive::Algorithm::Gzip, "zlib.tar.gz"));
+  REQUIRE(std::filesystem::is_regular_file("zlib.tar.gz"));
+
   REQUIRE(klib::archive::decompress("zlib.tar.gz", "gzip") ==
           "madler-zlib-7085a61");
-
   REQUIRE(std::filesystem::is_directory("gzip/madler-zlib-7085a61"));
   REQUIRE(klib::util::folder_size("gzip/madler-zlib-7085a61") == 2984209);
   REQUIRE(klib::util::same_folder("madler-zlib-7085a61",
@@ -71,10 +73,9 @@ TEST_CASE(
 
   REQUIRE_NOTHROW(klib::archive::compress(
       "madler-zlib-7085a61", klib::archive::Algorithm::Zip, "", false));
-
   REQUIRE(std::filesystem::exists("madler-zlib-7085a61.zip"));
-  REQUIRE(!klib::archive::decompress("madler-zlib-7085a61.zip", "flag"));
 
+  REQUIRE(!klib::archive::decompress("madler-zlib-7085a61.zip", "flag"));
   REQUIRE(std::filesystem::is_directory("flag"));
   REQUIRE(klib::util::folder_size("flag") == 2984209);
   REQUIRE(klib::util::same_folder("madler-zlib-7085a61", "flag"));

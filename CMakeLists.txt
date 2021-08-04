@@ -65,6 +65,10 @@ find_package(LibArchive REQUIRED)
 find_package(CURL CONFIG REQUIRED)
 find_package(OpenSSL REQUIRED)
 
+if(KLIB_TEST_USE_PROXY)
+  add_definitions(-DKLIB_TEST_USE_PROXY)
+endif()
+
 # ---------------------------------------------------------------------------------------
 # Build static library
 # ---------------------------------------------------------------------------------------

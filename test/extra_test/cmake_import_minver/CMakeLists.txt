@@ -2,7 +2,11 @@ cmake_minimum_required(VERSION 3.20)
 
 project(dummy_import LANGUAGES CXX)
 
-find_package(klib 3.1.0 REQUIRED)
+find_package(klib 0.1.0 REQUIRED)
+
+if(KLIB_TEST_USE_PROXY)
+  add_definitions(-DKLIB_TEST_USE_PROXY)
+endif()
 
 add_executable(with_namespace_target main.cpp)
 target_link_libraries(with_namespace_target PRIVATE klib::klib)

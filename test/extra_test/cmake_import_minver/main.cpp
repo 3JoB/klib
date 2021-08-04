@@ -5,6 +5,7 @@
 
 int main() {
   klib::http::Request request;
+  request.verbose(true);
 
 #ifdef KLIB_TEST_USE_PROXY
   request.set_proxy();

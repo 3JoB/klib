@@ -6,6 +6,7 @@
 #include <cerrno>
 #include <clocale>
 #include <cstdlib>
+#include <cstring>
 #include <cuchar>
 #include <filesystem>
 #include <fstream>
@@ -106,7 +107,6 @@ std::string read_file(const std::string &path, bool binary_mode) {
   }
 
   std::string data;
-  data.reserve(16384);
 
   auto size = ifs.seekg(0, std::ifstream::end).tellg();
   data.resize(size);
