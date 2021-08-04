@@ -1,5 +1,5 @@
 # https://github.com/gabime/spdlog/blob/v1.x/CMakeLists.txt
-cmake_minimum_required(VERSION 3.19)
+cmake_minimum_required(VERSION 3.20)
 message(STATUS "CMake version: ${CMAKE_VERSION}")
 
 # ---------------------------------------------------------------------------------------
