@@ -74,6 +74,8 @@ if(KLIB_BUILD_STATIC)
   message(STATUS "Build static library")
 
   add_library(${LIBRARY}-part STATIC ${LIBRARY_SRC})
+  target_include_directories(
+    ${LIBRARY}-part PUBLIC "$<BUILD_INTERFACE:${KLIB_SOURCE_DIR}/include>")
   set_target_properties(
     ${LIBRARY}-part
     PROPERTIES DEBUG_POSTFIX d
