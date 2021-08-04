@@ -85,8 +85,9 @@ if(KLIB_BUILD_STATIC)
     ${LIBRARY} PUBLIC "$<BUILD_INTERFACE:${KLIB_SOURCE_DIR}/include>"
                       "$<INSTALL_INTERFACE:${CMAKE_INSTALL_INCLUDEDIR}>")
   target_compile_features(${LIBRARY} INTERFACE cxx_std_20)
-  target_link_libraries(${LIBRARY} CURL::libcurl fmt::fmt OpenSSL::Crypto
-                        ${LibArchive_LIBRARIES} ${ZLIB_LIBRARIES})
+  target_link_libraries(
+    ${LIBRARY} PRIVATE CURL::libcurl fmt::fmt OpenSSL::Crypto
+                       ${LibArchive_LIBRARIES} ${ZLIB_LIBRARIES})
 
   set_target_properties(
     ${LIBRARY}
@@ -111,8 +112,8 @@ if(KLIB_BUILD_SHARED)
                              "$<INSTALL_INTERFACE:${CMAKE_INSTALL_INCLUDEDIR}>")
   target_compile_features(${LIBRARY}-shared INTERFACE cxx_std_20)
   target_link_libraries(
-    ${LIBRARY}-shared CURL::libcurl fmt::fmt OpenSSL::Crypto
-    ${LibArchive_LIBRARIES} ${ZLIB_LIBRARIES})
+    ${LIBRARY}-shared PRIVATE CURL::libcurl fmt::fmt OpenSSL::Crypto
+                              ${LibArchive_LIBRARIES} ${ZLIB_LIBRARIES})
 
   set_target_properties(
     ${LIBRARY}-shared
