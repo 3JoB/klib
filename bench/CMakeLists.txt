@@ -4,15 +4,12 @@ file(COPY ${KLIB_SOURCE_DIR}/data/zlib-v1.2.11.tar.gz
 file(GLOB_RECURSE BENCHMARK_SRC CONFIGURE_DEPENDS
      "${CMAKE_CURRENT_SOURCE_DIR}/*.cpp")
 
-set(THREADS_PREFER_PTHREAD_FLAG TRUE)
-find_package(Threads REQUIRED)
 find_package(Catch2 REQUIRED)
 add_definitions(-DCATCH_CONFIG_ENABLE_BENCHMARKING)
 
 add_executable(${BENCHMARK_EXECUTABLE} ${BENCHMARK_SRC})
-target_link_libraries(
-  ${BENCHMARK_EXECUTABLE} PRIVATE ${LIBRARY} Catch2::Catch2WithMain
-                                  ${CMAKE_DL_LIBS} ${CMAKE_THREAD_LIBS_INIT})
+target_link_libraries(${BENCHMARK_EXECUTABLE} PRIVATE ${LIBRARY}
+                                                      Catch2::Catch2WithMain)
 
 add_custom_target(
   bench_decompress

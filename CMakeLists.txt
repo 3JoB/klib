@@ -63,6 +63,9 @@ find_package(LibArchive REQUIRED)
 find_package(CURL CONFIG REQUIRED)
 find_package(OpenSSL REQUIRED)
 
+set(THREADS_PREFER_PTHREAD_FLAG TRUE)
+find_package(Threads REQUIRED)
+
 if(KLIB_TEST_USE_PROXY)
   add_definitions(-DKLIB_TEST_USE_PROXY)
 endif()
@@ -82,6 +85,8 @@ if(KLIB_BUILD_STATIC)
     ${LIBRARY} PUBLIC "$<BUILD_INTERFACE:${KLIB_SOURCE_DIR}/include>"
                       "$<INSTALL_INTERFACE:${CMAKE_INSTALL_INCLUDEDIR}>")
   target_compile_features(${LIBRARY} INTERFACE cxx_std_20)
+  target_link_libraries(${LIBRARY} PUBLIC ${CMAKE_DL_LIBS}
+                                          ${CMAKE_THREAD_LIBS_INIT})
 
   set_target_properties(
     ${LIBRARY}
