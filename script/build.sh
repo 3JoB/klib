@@ -5,8 +5,11 @@ set -e
 if [[ "$OSTYPE" == "linux-gnu"* ]]; then
   curl -L https://github.com/KaiserLancelot/kpkg/releases/download/v0.2.1/kpkg-0.2.1-ubuntu-20.04.deb \
     -o kpkg.deb
-
   sudo dpkg -i kpkg.deb
+
+  sudo add-apt-repository -y ppa:ubuntu-toolchain-r/test
+  sudo apt update
+  sudo apt install -y gcc-11 g++-11
 
   sudo bash -c "$(wget -O - https://apt.llvm.org/llvm.sh)"
   sudo apt install -y clang-tidy-12 valgrind
@@ -20,11 +23,9 @@ if [[ "$OSTYPE" == "linux-gnu"* ]]; then
     echo "mkdir dependencies"
     mkdir dependencies
   fi
-
   cd dependencies
 
-  kpkg install lcov doxygen catch2 -i
-
+  kpkg install lcov doxygen catch2 fmt libarchive curl openssl -i
   sudo ldconfig
 else
   echo "The system does not support: $OSTYPE"
