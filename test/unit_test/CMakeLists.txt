@@ -16,10 +16,6 @@ add_custom_target(
 
 file(GLOB TEST_SRC CONFIGURE_DEPENDS ${CMAKE_CURRENT_SOURCE_DIR}/*.cpp)
 
-if(KLIB_TEST_USE_PROXY)
-  add_definitions(-DKLIB_TEST_USE_PROXY)
-endif()
-
 find_package(Catch2 REQUIRED)
 
 add_executable(${TEST_EXECUTABLE} ${TEST_SRC})

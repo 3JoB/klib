@@ -33,6 +33,7 @@ message(STATUS "Build type: " ${CMAKE_BUILD_TYPE})
 set(LIBRARY ${PROJECT_NAME})
 set(EXECUTABLE tool)
 set(TEST_EXECUTABLE catch2)
+set(BENCHMARK_EXECUTABLE bench)
 
 set(KLIB_SOURCE_DIR ${CMAKE_CURRENT_SOURCE_DIR})
 set(KLIB_BINARY_DIR ${CMAKE_CURRENT_BINARY_DIR})
@@ -123,6 +124,14 @@ endif()
 if(BUILD_TESTING AND KLIB_BUILD_TEST)
   message(STATUS "Build test")
   add_subdirectory(test)
+endif()
+
+# ---------------------------------------------------------------------------------------
+# Build benchmark
+# ---------------------------------------------------------------------------------------
+if(KLIB_BUILD_BENCHMARK)
+  message(STATUS "Build benchmark")
+  add_subdirectory(bench)
 endif()
 
 # ---------------------------------------------------------------------------------------
