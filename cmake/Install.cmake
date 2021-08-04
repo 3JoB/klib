@@ -7,15 +7,11 @@ include(GNUInstallDirs)
 install(DIRECTORY "include/" DESTINATION ${CMAKE_INSTALL_INCLUDEDIR})
 
 install(
-  TARGETS ${LIBRARY}-shared
+  TARGETS ${LIBRARY} ${LIBRARY}-shared
   EXPORT KLIB_EXPORTS
   LIBRARY DESTINATION ${CMAKE_INSTALL_LIBDIR}
   ARCHIVE DESTINATION ${CMAKE_INSTALL_LIBDIR}
   RUNTIME DESTINATION ${CMAKE_INSTALL_BINDIR})
-
-# https://stackoverflow.com/questions/41175354/can-i-install-shared-imported-library
-install(FILES "${KLIB_BINARY_DIR}/libklib.a"
-        DESTINATION ${CMAKE_INSTALL_LIBDIR})
 
 # ---------------------------------------------------------------------------------------
 # Install CMake config files

@@ -73,20 +73,27 @@ endif()
 if(KLIB_BUILD_STATIC)
   message(STATUS "Build static library")
 
-  add_library(${LIBRARY}-part STATIC ${LIBRARY_SRC})
+  add_library(${LIBRARY} STATIC ${LIBRARY_SRC})
+  add_library(${LIBRARY}::${LIBRARY} ALIAS ${LIBRARY})
+
+  # https://cmake.org/cmake/help/latest/command/target_include_directories.html
+  # https://stackoverflow.com/questions/26037954/cmake-target-link-libraries-interface-dependencies
   target_include_directories(
-    ${LIBRARY}-part PUBLIC "$<BUILD_INTERFACE:${KLIB_SOURCE_DIR}/include>")
+    ${LIBRARY} PUBLIC "$<BUILD_INTERFACE:${KLIB_SOURCE_DIR}/include>"
+                      "$<INSTALL_INTERFACE:${CMAKE_INSTALL_INCLUDEDIR}>")
+  target_compile_features(${LIBRARY} INTERFACE cxx_std_20)
+
   set_target_properties(
-    ${LIBRARY}-part
-    PROPERTIES DEBUG_POSTFIX d
-               OUTPUT_NAME ${LIBRARY}-part
+    ${LIBRARY}
+    PROPERTIES OUTPUT_NAME ${LIBRARY}
                POSITION_INDEPENDENT_CODE ON
                INTERPROCEDURAL_OPTIMIZATION FALSE)
 
   file(MAKE_DIRECTORY ${CMAKE_BINARY_DIR}/third-party)
-  add_custom_target(
-    combined
-    COMMAND ar -x $<TARGET_FILE:${LIBRARY}-part>
+  add_custom_command(
+    TARGET ${LIBRARY}
+    POST_BUILD
+    COMMAND ar -x $<TARGET_FILE:${LIBRARY}>
     COMMAND ar -x /usr/local/lib/libcurl.a
     COMMAND ar -x /usr/local/lib/libfmt.a
     COMMAND ar -x /usr/local/lib/libcrypto.a
@@ -95,20 +102,7 @@ if(KLIB_BUILD_STATIC)
     COMMAND ar -x /usr/local/lib/libz.a
     COMMAND ar -qcs ../libklib.a *.o
     WORKING_DIRECTORY ${CMAKE_BINARY_DIR}/third-party
-    DEPENDS ${LIBRARY}-part)
-
-  add_library(${LIBRARY} STATIC IMPORTED GLOBAL)
-  add_library(${LIBRARY}::${LIBRARY} ALIAS ${LIBRARY})
-  add_dependencies(${LIBRARY} combined)
-
-  # https://cmake.org/cmake/help/latest/command/target_include_directories.html
-  # https://stackoverflow.com/questions/26037954/cmake-target-link-libraries-interface-dependencies
-  target_include_directories(
-    ${LIBRARY} INTERFACE "$<BUILD_INTERFACE:${KLIB_SOURCE_DIR}/include>"
-                         "$<INSTALL_INTERFACE:${CMAKE_INSTALL_INCLUDEDIR}>")
-  target_compile_features(${LIBRARY} INTERFACE cxx_std_20)
-  set_target_properties(${LIBRARY} PROPERTIES IMPORTED_LOCATION
-                                              "${KLIB_BINARY_DIR}/libklib.a")
+    COMMENT "combined static library")
 endif()
 
 # ---------------------------------------------------------------------------------------
@@ -130,8 +124,7 @@ if(KLIB_BUILD_SHARED)
 
   set_target_properties(
     ${LIBRARY}-shared
-    PROPERTIES DEBUG_POSTFIX d
-               OUTPUT_NAME ${LIBRARY}
+    PROPERTIES OUTPUT_NAME ${LIBRARY}
                VERSION ${KLIB_VERSION}
                SOVERSION ${KLIB_VERSION_MAJOR})
 endif()
