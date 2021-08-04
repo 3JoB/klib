@@ -94,7 +94,7 @@ if(KLIB_BUILD_STATIC)
                POSITION_INDEPENDENT_CODE ON
                INTERPROCEDURAL_OPTIMIZATION FALSE)
 
-  file(MAKE_DIRECTORY ${CMAKE_BINARY_DIR}/third-party)
+  file(MAKE_DIRECTORY ${KLIB_BINARY_DIR}/third-party)
   add_custom_command(
     TARGET ${LIBRARY}
     POST_BUILD
@@ -105,8 +105,8 @@ if(KLIB_BUILD_STATIC)
     COMMAND ar -x /usr/local/lib/libssl.a
     COMMAND ar -x /usr/local/lib/libarchive.a
     COMMAND ar -x /usr/local/lib/libz.a
-    COMMAND ar -qcs ../libklib.a *.o
-    WORKING_DIRECTORY ${CMAKE_BINARY_DIR}/third-party
+    COMMAND ar -qcs ${KLIB_BINARY_DIR}/libklib.a *.o
+    WORKING_DIRECTORY ${KLIB_BINARY_DIR}/third-party
     COMMENT "combined static library")
 endif()
 
