@@ -9,11 +9,14 @@ file(COPY ${KLIB_SOURCE_DIR}/data/folder2
 
 file(GLOB TEST_SRC CONFIGURE_DEPENDS ${CMAKE_CURRENT_SOURCE_DIR}/*.cpp)
 
+set(THREADS_PREFER_PTHREAD_FLAG TRUE)
+find_package(Threads REQUIRED)
 find_package(Catch2 REQUIRED)
 
 add_executable(${TEST_EXECUTABLE} ${TEST_SRC})
-target_link_libraries(${TEST_EXECUTABLE} PRIVATE ${LIBRARY}
-                                                 Catch2::Catch2WithMain)
+target_link_libraries(
+  ${TEST_EXECUTABLE} PRIVATE ${LIBRARY} Catch2::Catch2WithMain ${CMAKE_DL_LIBS}
+                             ${CMAKE_THREAD_LIBS_INIT})
 
 add_custom_target(
   test_decompress

@@ -5,12 +5,17 @@ include(GNUInstallDirs)
 # ---------------------------------------------------------------------------------------
 # https://github.com/gabime/spdlog/blob/v1.x/CMakeLists.txt
 install(DIRECTORY "include/" DESTINATION ${CMAKE_INSTALL_INCLUDEDIR})
+
 install(
-  TARGETS ${LIBRARY_TARGETS}
+  TARGETS ${LIBRARY}-shared
   EXPORT KLIB_EXPORTS
   LIBRARY DESTINATION ${CMAKE_INSTALL_LIBDIR}
   ARCHIVE DESTINATION ${CMAKE_INSTALL_LIBDIR}
   RUNTIME DESTINATION ${CMAKE_INSTALL_BINDIR})
+
+# https://stackoverflow.com/questions/41175354/can-i-install-shared-imported-library
+install(FILES "${KLIB_BINARY_DIR}/libklib.a"
+        DESTINATION ${CMAKE_INSTALL_LIBDIR})
 
 # ---------------------------------------------------------------------------------------
 # Install CMake config files

@@ -33,17 +33,7 @@ endif()
 # ---------------------------------------------------------------------------------------
 # Generator
 # ---------------------------------------------------------------------------------------
-if(CMAKE_GENERATOR STREQUAL "Ninja")
-  execute_process(
-    COMMAND ninja --version
-    OUTPUT_VARIABLE NINJA_VERSION
-    OUTPUT_STRIP_TRAILING_WHITESPACE)
-
-  message(STATUS "CMake Generator: ${CMAKE_GENERATOR} ${NINJA_VERSION}")
-else()
-  message(STATUS "CMake Generator: ${CMAKE_GENERATOR}")
-  message(WARNING "CMake Generator should be Ninja")
-endif()
+message(STATUS "CMake Generator: ${CMAKE_GENERATOR}")
 
 # ---------------------------------------------------------------------------------------
 # Compiler

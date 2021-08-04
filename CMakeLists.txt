@@ -38,8 +38,6 @@ set(BENCHMARK_EXECUTABLE bench)
 set(KLIB_SOURCE_DIR ${CMAKE_CURRENT_SOURCE_DIR})
 set(KLIB_BINARY_DIR ${CMAKE_CURRENT_BINARY_DIR})
 
-set(LIBRARY_TARGETS "")
-
 # https://cmake.org/cmake/help/latest/command/file.html#glob-recurse
 file(GLOB_RECURSE LIBRARY_SRC CONFIGURE_DEPENDS "${KLIB_SOURCE_DIR}/src/*.cpp")
 
@@ -74,27 +72,41 @@ endif()
 # ---------------------------------------------------------------------------------------
 if(KLIB_BUILD_STATIC)
   message(STATUS "Build static library")
-  list(APPEND LIBRARY_TARGETS ${LIBRARY})
 
-  add_library(${LIBRARY} STATIC ${LIBRARY_SRC})
+  add_library(${LIBRARY}-part STATIC ${LIBRARY_SRC})
+  set_target_properties(
+    ${LIBRARY}-part
+    PROPERTIES DEBUG_POSTFIX d
+               OUTPUT_NAME ${LIBRARY}-part
+               POSITION_INDEPENDENT_CODE ON
+               INTERPROCEDURAL_OPTIMIZATION FALSE)
+
+  file(MAKE_DIRECTORY ${CMAKE_BINARY_DIR}/third-party)
+  add_custom_target(
+    combined
+    COMMAND ar -x $<TARGET_FILE:${LIBRARY}-part>
+    COMMAND ar -x /usr/local/lib/libcurl.a
+    COMMAND ar -x /usr/local/lib/libfmt.a
+    COMMAND ar -x /usr/local/lib/libcrypto.a
+    COMMAND ar -x /usr/local/lib/libssl.a
+    COMMAND ar -x /usr/local/lib/libarchive.a
+    COMMAND ar -x /usr/local/lib/libz.a
+    COMMAND ar -qcs ../libklib.a *.o
+    WORKING_DIRECTORY ${CMAKE_BINARY_DIR}/third-party
+    DEPENDS ${LIBRARY}-part)
+
+  add_library(${LIBRARY} STATIC IMPORTED GLOBAL)
   add_library(${LIBRARY}::${LIBRARY} ALIAS ${LIBRARY})
+  add_dependencies(${LIBRARY} combined)
 
   # https://cmake.org/cmake/help/latest/command/target_include_directories.html
   # https://stackoverflow.com/questions/26037954/cmake-target-link-libraries-interface-dependencies
   target_include_directories(
-    ${LIBRARY} PUBLIC "$<BUILD_INTERFACE:${KLIB_SOURCE_DIR}/include>"
-                      "$<INSTALL_INTERFACE:${CMAKE_INSTALL_INCLUDEDIR}>")
+    ${LIBRARY} INTERFACE "$<BUILD_INTERFACE:${KLIB_SOURCE_DIR}/include>"
+                         "$<INSTALL_INTERFACE:${CMAKE_INSTALL_INCLUDEDIR}>")
   target_compile_features(${LIBRARY} INTERFACE cxx_std_20)
-  target_link_libraries(
-    ${LIBRARY} PRIVATE CURL::libcurl fmt::fmt OpenSSL::Crypto
-                       ${LibArchive_LIBRARIES} ${ZLIB_LIBRARIES})
-
-  set_target_properties(
-    ${LIBRARY}
-    PROPERTIES DEBUG_POSTFIX d
-               OUTPUT_NAME ${LIBRARY}
-               POSITION_INDEPENDENT_CODE ON
-               INTERPROCEDURAL_OPTIMIZATION FALSE)
+  set_target_properties(${LIBRARY} PROPERTIES IMPORTED_LOCATION
+                                              "${KLIB_BINARY_DIR}/libklib.a")
 endif()
 
 # ---------------------------------------------------------------------------------------
@@ -102,7 +114,6 @@ endif()
 # ---------------------------------------------------------------------------------------
 if(KLIB_BUILD_SHARED)
   message(STATUS "Build shared library")
-  list(APPEND LIBRARY_TARGETS ${LIBRARY}-shared)
 
   add_library(${LIBRARY}-shared SHARED ${LIBRARY_SRC})
   add_library(${LIBRARY}::${LIBRARY}-shared ALIAS ${LIBRARY}-shared)
