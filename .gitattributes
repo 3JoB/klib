@@ -1,0 +1,2 @@
+*.S linguist-language=cpp
+*.c linguist-language=cpp

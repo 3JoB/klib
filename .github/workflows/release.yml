@@ -52,9 +52,6 @@ jobs:
           sudo dpkg -i build/klib-${{ env.RELEASE_VERSION }}-ubuntu-20.04.deb
           sudo ldconfig
 
-      - name: Run executable
-        run: tool
-
       - name: Build example
         run: |
           cd example

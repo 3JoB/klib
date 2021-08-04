@@ -48,10 +48,6 @@ jobs:
           sudo cmake --build build --config ${{ matrix.build_type }} --target install
           sudo ldconfig
 
-      - name: Run executable
-        if: ${{ matrix.build_type == 'Release' }}
-        run: tool
-
       - name: Test
         run: cd build ; ctest -C ${{ matrix.build_type }} -j"$(nproc)" --output-on-failure
 
