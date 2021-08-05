@@ -2,8 +2,8 @@ name: Release
 
 on:
   release:
-    types:
-      - published
+    # https://stackoverflow.com/questions/59319281/github-action-different-between-release-created-and-published
+    types: [published]
 
 jobs:
   build:

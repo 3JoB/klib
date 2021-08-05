@@ -9,6 +9,7 @@ jobs:
     runs-on: ubuntu-20.04
     strategy:
       matrix:
+        build_type: ["Debug", "Release", "RelWithDebInfo", "MinSizeRel"]
         compiler:
           - { cc: "gcc", cxx: "g++" }
           - { cc: "clang", cxx: "clang++" }
@@ -35,15 +36,15 @@ jobs:
 
       - name: Configure
         run: |
-          cmake -S . -B build -DCMAKE_BUILD_TYPE=RelWithDebInfo \
+          cmake -S . -B build -DCMAKE_BUILD_TYPE=${{ matrix.build_type }} \
           -DKLIB_BUILD_TEST=ON -DKLIB_VALGRIND=ON
         env:
           CC: ${{ matrix.compiler.cc }}
           CXX: ${{ matrix.compiler.cxx }}
 
       - name: Build
-        run: cmake --build build --config RelWithDebInfo -j"$(nproc)"
+        run: cmake --build build --config ${{ matrix.build_type }} -j"$(nproc)"
 
       - name: Test
-        run: ctest -C RelWithDebInfo -j"$(nproc)" --output-on-failure
+        run: ctest -C ${{ matrix.build_type }} -j"$(nproc)" --output-on-failure
         working-directory: build

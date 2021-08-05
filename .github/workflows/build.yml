@@ -9,7 +9,7 @@ jobs:
     runs-on: ubuntu-20.04
     strategy:
       matrix:
-        build_type: ["Debug", "Release", "MinSizeRel", "RelWithDebInfo"]
+        build_type: ["Debug", "Release", "RelWithDebInfo", "MinSizeRel"]
         compiler:
           - { cc: "gcc", cxx: "g++" }
           - { cc: "clang", cxx: "clang++" }
