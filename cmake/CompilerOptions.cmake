@@ -1,5 +1,6 @@
 include(AddCXXCompilerFlag)
 
+# https://cmake.org/cmake/help/latest/prop_tgt/CXX_STANDARD.html
 set(CMAKE_CXX_STANDARD 20)
 set(CMAKE_CXX_EXTENSIONS OFF)
 set(CMAKE_CXX_STANDARD_REQUIRED ON)
@@ -8,7 +9,7 @@ set(CMAKE_EXPORT_COMPILE_COMMANDS ON)
 # ---------------------------------------------------------------------------------------
 # lld
 # ---------------------------------------------------------------------------------------
-if(CMAKE_CXX_COMPILER_ID STREQUAL "Clang")
+if(${CMAKE_CXX_COMPILER_ID} STREQUAL "Clang")
   execute_process(
     COMMAND ld.lld --version
     OUTPUT_VARIABLE LLD_VERSION
@@ -28,12 +29,6 @@ else()
 endif()
 
 # ---------------------------------------------------------------------------------------
-# Static link
-# ---------------------------------------------------------------------------------------
-add_link_options("-static-libstdc++")
-add_link_options("-static-libgcc")
-
-# ---------------------------------------------------------------------------------------
 # Warning
 # ---------------------------------------------------------------------------------------
 add_cxx_compiler_flag("-Wall")
@@ -45,7 +40,7 @@ add_cxx_compiler_flag("-Werror")
 # Link time optimization
 # ---------------------------------------------------------------------------------------
 # https://github.com/ninja-build/ninja/blob/master/CMakeLists.txt
-if(CMAKE_BUILD_TYPE STREQUAL "Release")
+if(${CMAKE_BUILD_TYPE} STREQUAL "Release")
   include(CheckIPOSupported)
   check_ipo_supported(
     RESULT LTO_SUPPORTED
@@ -66,7 +61,7 @@ endif()
 # Sanitizer
 # ---------------------------------------------------------------------------------------
 if(KLIB_SANITIZER)
-  message(STATUS "Build with AddressSanitizer and UndefinedSanitizer")
+  message(STATUS "Build test with AddressSanitizer and UndefinedSanitizer")
   add_cxx_compiler_flag("-fno-omit-frame-pointer")
 
   add_cxx_compiler_flag("-fsanitize=address")

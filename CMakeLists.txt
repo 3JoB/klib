@@ -159,7 +159,7 @@ if(KLIB_INSTALL)
 
   # https://gitlab.kitware.com/cmake/community/-/wikis/FAQ#can-i-do-make-uninstall-with-cmake
   configure_file("${KLIB_SOURCE_DIR}/cmake/CMakeUninstall.cmake.in"
-                 "${KLIB_BINARY_DIR}/CMakeUninstall.cmake" @ONLY)
+                 "${KLIB_BINARY_DIR}/CMakeUninstall.cmake" IMMEDIATE @ONLY)
   add_custom_target(uninstall COMMAND ${CMAKE_COMMAND} -P
                                       ${KLIB_BINARY_DIR}/CMakeUninstall.cmake)
 endif()
