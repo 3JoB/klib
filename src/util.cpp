@@ -12,19 +12,30 @@
 #include <fstream>
 #include <limits>
 #include <map>
+#include <string_view>
 #include <vector>
 
+#include <fmt/color.h>
 #include <fmt/compile.h>
+#include <fmt/core.h>
 #include <fmt/format.h>
 #include <openssl/evp.h>
 #include <openssl/sha.h>
 
-#include "klib/detail/error.h"
 #include "klib/exception.h"
 
 namespace klib::util {
 
 namespace {
+
+template <typename... Args>
+[[noreturn]] void error(std::string_view fmt, Args &&...args) {
+  fmt::print(fmt::fg(fmt::color::red), "klib error: ");
+  fmt::print(fmt::fg(fmt::color::red), fmt, std::forward<Args>(args)...);
+  fmt::print("\n");
+
+  std::exit(EXIT_FAILURE);
+}
 
 std::string bytes_to_hex_string(const std::vector<std::uint8_t> &bytes) {
   assert(!std::empty(bytes));
@@ -84,7 +95,7 @@ ChangeWorkingDir::ChangeWorkingDir(const std::string &path) {
 
 ChangeWorkingDir::~ChangeWorkingDir() {
   if (!std::empty(backup_) && chdir(backup_.c_str())) {
-    klib::detail::error("chdir error");
+    error("chdir error");
   }
 }
 
