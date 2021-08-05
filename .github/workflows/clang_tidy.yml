@@ -29,7 +29,7 @@ jobs:
         run: sudo bash script/build.sh
 
       - name: Configure
-        run: cmake -S . -B build -DKLIB_CLANG_TIDY=ON
+        run: cmake -S . -B build -DCMAKE_BUILD_TYPE=Release -DKLIB_CLANG_TIDY=ON
 
       - name: Build
         run: cmake --build build --config Release -j"$(nproc)"

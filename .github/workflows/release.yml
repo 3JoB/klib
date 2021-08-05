@@ -12,6 +12,8 @@ jobs:
     runs-on: ubuntu-20.04
     strategy:
       matrix:
+        # https://cmake.org/cmake/help/latest/variable/CMAKE_BUILD_TYPE.html
+        build_type: ["Debug", "Release", "RelWithDebInfo", "MinSizeRel"]
         compiler:
           - { cc: "gcc", cxx: "g++" }
           - { cc: "clang", cxx: "clang++" }
@@ -37,7 +39,7 @@ jobs:
         run: sudo bash script/build.sh
 
       - name: Configure
-        run: cmake -S . -B build
+        run: cmake -S . -B build -DCMAKE_BUILD_TYPE=Release
 
       - name: Build
         run: cmake --build build --config Release -j"$(nproc)"
@@ -65,8 +67,8 @@ jobs:
 
       - name: Build example
         run: |
-          cmake -S . -B build -DCMAKE_BUILD_TYPE=Release
-          cmake --build build --config Release -j"$(nproc)"
+          cmake -S . -B build -DCMAKE_BUILD_TYPE=${{ matrix.build_type }}
+          cmake --build build --config ${{ matrix.build_type }} -j"$(nproc)"
         working-directory: example
         env:
           CC: ${{ matrix.compiler.cc }}
