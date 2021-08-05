@@ -44,24 +44,23 @@ jobs:
       - name: Build
         run: cmake --build build --config Release -j"$(nproc)"
 
-      # https://github.community/t/how-to-get-just-the-tag-name/16241/10
       - name: Get version
-        id: get-version
-        run: echo "::set-output name=version::${GITHUB_REF#refs/tags/}
-        shell: bash
+        run: echo "RELEASE_VERSION=${TAG_NAME:1}" >> $GITHUB_ENV
+        env:
+          TAG_NAME: ${{ github.event.release.tag_name }}
 
       - name: CPack
         run: |
           cpack
-          mv klib-${{ steps.get-version.outputs.version }}-Linux.deb \
-          klib-${{ steps.get-version.outputs.version }}-ubuntu-20.04.deb
-          mv klib-${{ steps.get-version.outputs.version }}-Linux.tar.gz \
-          klib-${{ steps.get-version.outputs.version }}-ubuntu-20.04.tar.gz
+          mv klib-${{ env.RELEASE_VERSION }}-Linux.deb \
+          klib-${{ env.RELEASE_VERSION }}-ubuntu-20.04.deb
+          mv klib-${{ env.RELEASE_VERSION }}-Linux.tar.gz \
+          klib-${{ env.RELEASE_VERSION }}-ubuntu-20.04.tar.gz
         working-directory: build
 
       - name: Install
         run: |
-          sudo dpkg -i klib-${{ steps.get-version.outputs.version }}-ubuntu-20.04.deb
+          sudo dpkg -i klib-${{ env.RELEASE_VERSION }}-ubuntu-20.04.deb
           sudo ldconfig
         working-directory: build
 
@@ -77,8 +76,8 @@ jobs:
       # https://github.com/softprops/action-gh-release
       - name: Release
         uses: softprops/action-gh-release@v1
-        if: ${{ matrix.compiler.cxx == 'g++' }}
+        if: ${{ matrix.compiler.cxx == 'g++' && matrix.build_type == 'Release'}}
         with:
           files: |
-            build/klib-${{ steps.get-version.outputs.version }}-ubuntu-20.04.deb
-            build/klib-${{ steps.get-version.outputs.version }}-ubuntu-20.04.tar.gz
+            build/klib-${{ env.RELEASE_VERSION }}-ubuntu-20.04.deb
+            build/klib-${{ env.RELEASE_VERSION }}-ubuntu-20.04.tar.gz
