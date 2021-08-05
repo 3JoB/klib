@@ -22,6 +22,5 @@ add_custom_target(
   COMMENT "Unpacking zlib-v1.2.11.tar.gz")
 add_dependencies(${TEST_EXECUTABLE} test_decompress)
 
-# https://github.com/catchorg/Catch2/blob/devel/docs/cmake-integration.md
 include(Catch)
 catch_discover_tests(${TEST_EXECUTABLE} REPORTER compact)
