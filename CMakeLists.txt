@@ -1,4 +1,6 @@
-# https://github.com/gabime/spdlog/blob/v1.x/CMakeLists.txt
+# ---------------------------------------------------------------------------------------
+# CMake version
+# ---------------------------------------------------------------------------------------
 cmake_minimum_required(VERSION 3.20)
 message(STATUS "CMake version: ${CMAKE_VERSION}")
 
@@ -23,7 +25,7 @@ message(STATUS "${PROJECT_NAME} version: ${KLIB_VERSION}")
 if(NOT CMAKE_BUILD_TYPE)
   set(CMAKE_BUILD_TYPE
       "Release"
-      CACHE STRING "Choose Debug, Release, MinSizeRel or RelWithDebInfo" FORCE)
+      CACHE STRING "Choose Debug, Release, RelWithDebInfo or MinSizeRel" FORCE)
 endif()
 message(STATUS "Build type: " ${CMAKE_BUILD_TYPE})
 
@@ -31,9 +33,8 @@ message(STATUS "Build type: " ${CMAKE_BUILD_TYPE})
 # Set variables
 # ---------------------------------------------------------------------------------------
 set(LIBRARY ${PROJECT_NAME})
-set(EXECUTABLE tool)
-set(TEST_EXECUTABLE catch2)
-set(BENCHMARK_EXECUTABLE bench)
+set(TEST_EXECUTABLE ${LIBRARY}-test)
+set(BENCH_EXECUTABLE ${LIBRARY}-bench)
 
 set(KLIB_SOURCE_DIR ${CMAKE_CURRENT_SOURCE_DIR})
 set(KLIB_BINARY_DIR ${CMAKE_CURRENT_BINARY_DIR})
@@ -94,7 +95,8 @@ if(KLIB_BUILD_STATIC)
                POSITION_INDEPENDENT_CODE ON
                INTERPROCEDURAL_OPTIMIZATION FALSE)
 
-  file(MAKE_DIRECTORY ${KLIB_BINARY_DIR}/third-party)
+  # https://stackoverflow.com/questions/37924383/combining-several-static-libraries-into-one-using-cmake
+  file(MAKE_DIRECTORY ${KLIB_BINARY_DIR}/third_party)
   add_custom_command(
     TARGET ${LIBRARY}
     POST_BUILD
@@ -105,9 +107,9 @@ if(KLIB_BUILD_STATIC)
     COMMAND ar -x /usr/local/lib/libssl.a
     COMMAND ar -x /usr/local/lib/libarchive.a
     COMMAND ar -x /usr/local/lib/libz.a
-    COMMAND ar -qcs ${KLIB_BINARY_DIR}/libklib.a *.o
-    WORKING_DIRECTORY ${KLIB_BINARY_DIR}/third-party
-    COMMENT "combined static library")
+    COMMAND ar -qcs ${KLIB_BINARY_DIR}/lib${LIBRARY}.a *.o
+    WORKING_DIRECTORY ${KLIB_BINARY_DIR}/third_party
+    COMMENT "Combined static library")
 endif()
 
 # ---------------------------------------------------------------------------------------
