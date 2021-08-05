@@ -15,6 +15,8 @@ if(KLIB_FORMAT)
     GLOB_RECURSE
     CLANG_FORMAT_SRC
     CONFIGURE_DEPENDS
+    "${CMAKE_CURRENT_SOURCE_DIR}/bench/*.cpp"
+    "${CMAKE_CURRENT_SOURCE_DIR}/example/*.cpp"
     "${CMAKE_CURRENT_SOURCE_DIR}/include/*.h"
     "${CMAKE_CURRENT_SOURCE_DIR}/src/*.cpp"
     "${CMAKE_CURRENT_SOURCE_DIR}/test/*.cpp")
@@ -23,7 +25,9 @@ if(KLIB_FORMAT)
     GLOB_RECURSE
     CMAKE_FORMAT_SRC
     CONFIGURE_DEPENDS
+    "${CMAKE_CURRENT_SOURCE_DIR}/bench/CMakeLists.txt"
     "${CMAKE_CURRENT_SOURCE_DIR}/cmake/*.cmake"
+    "${CMAKE_CURRENT_SOURCE_DIR}/example/CMakeLists.txt"
     "${CMAKE_CURRENT_SOURCE_DIR}/test/CMakeLists.txt"
     "${CMAKE_CURRENT_SOURCE_DIR}/CMakeLists.txt")
 

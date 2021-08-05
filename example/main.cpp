@@ -8,5 +8,5 @@ int main() {
 
   auto response = request.get("https://www.baidu.com");
 
-  std::cout << response.text()<< '\n';
+  std::cout << response.text() << '\n';
 }
