@@ -46,7 +46,7 @@ if(${CMAKE_GENERATOR} STREQUAL "Unix Makefiles")
 
   message(STATUS "CMake Generator: ${CMAKE_GENERATOR} ${GENERATOR_VERSION}")
 else()
-  message(FATAL_ERROR "The system does not support: ${CMAKE_GENERATOR}")
+  message(FATAL_ERROR "The generator not support: ${CMAKE_GENERATOR}")
 endif()
 
 # ---------------------------------------------------------------------------------------

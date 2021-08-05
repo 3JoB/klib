@@ -107,3 +107,9 @@ fabric.properties
 *.exe
 *.out
 *.app
+
+# Development files
+.cache
+build
+*.profraw
+compile_commands.json
