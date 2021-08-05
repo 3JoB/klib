@@ -1,9 +1,9 @@
 if(KLIB_BUILD_COVERAGE)
   if(CMAKE_COMPILER_IS_GNUCXX)
     message(
-      STATUS "Build with coverage information, use lcov to generate report")
+      STATUS "Build test with coverage information, use lcov to generate report"
+    )
 
-    # https://github.com/nlohmann/json/blob/develop/test/CMakeLists.txt
     get_filename_component(COMPILER_PATH ${CMAKE_CXX_COMPILER} PATH)
     string(REGEX MATCH "^[0-9]+" GCC_VERSION ${CMAKE_CXX_COMPILER_VERSION})
     find_program(
@@ -25,7 +25,6 @@ if(KLIB_BUILD_COVERAGE)
     endif()
 
     # https://github.com/linux-test-project/lcov
-    # https://github.com/nlohmann/json/blob/develop/test/CMakeLists.txt
     add_custom_target(
       coverage
       COMMAND ${LCOV_EXECUTABLE} -d ${KLIB_BINARY_DIR} -z
@@ -44,7 +43,8 @@ if(KLIB_BUILD_COVERAGE)
     )
   else()
     message(
-      STATUS "Build with coverage information, use llvm-cov to generate report")
+      STATUS
+        "Build test with coverage information, use llvm-cov to generate report")
 
     find_program(LLVM_PROFDATA_EXECUTABLE llvm-profdata)
     if(NOT LLVM_PROFDATA_EXECUTABLE)
@@ -65,14 +65,14 @@ if(KLIB_BUILD_COVERAGE)
               ${TEST_EXECUTABLE}.profdata default.profraw
       COMMAND
         ${LLVM_COV_EXECUTABLE} show ./${TEST_EXECUTABLE}
-        -instr-profile=${TEST_EXECUTABLE}.profdata -format=html
-        -show-branches=percent -show-line-counts-or-regions
-        -ignore-filename-regex=${KLIB_SOURCE_DIR}/test/* -output-dir=coverage
+        -instr-profile=${TEST_EXECUTABLE}.profdata -show-branches=percent
+        -show-line-counts-or-regions
+        -ignore-filename-regex=${KLIB_SOURCE_DIR}/test/* -format=html
+        -output-dir=coverage
       COMMAND
         ${LLVM_COV_EXECUTABLE} export ./${TEST_EXECUTABLE}
-        -instr-profile=${TEST_EXECUTABLE}.profdata
-        -ignore-filename-regex=${KLIB_SOURCE_DIR}/test/* -format=lcov >
-        lcov.info
+        -instr-profile=${TEST_EXECUTABLE}.profdata -format=lcov
+        -ignore-filename-regex=${KLIB_SOURCE_DIR}/test/* > lcov.info
       WORKING_DIRECTORY ${KLIB_BINARY_DIR}/test/unit_test
       DEPENDS ${TEST_EXECUTABLE}
       COMMENT
