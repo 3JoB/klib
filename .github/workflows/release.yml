@@ -45,7 +45,7 @@ jobs:
         run: cmake --build build --config Release -j"$(nproc)"
 
       - name: Get version
-        run: echo "RELEASE_VERSION=${TAG_NAME}" >> $GITHUB_ENV
+        run: echo "RELEASE_VERSION=${TAG_NAME:1}" >> $GITHUB_ENV
         env:
           TAG_NAME: ${{ github.event.release.tag_name }}
 
@@ -53,9 +53,9 @@ jobs:
         run: |
           cpack
           mv klib-${{ env.RELEASE_VERSION }}-Linux.deb \
-          klib-${{ env.RELEASE_VERSION }}-ubuntu-20.04.deb
+          klib-v${{ env.RELEASE_VERSION }}-ubuntu-20.04.deb
           mv klib-${{ env.RELEASE_VERSION }}-Linux.tar.gz \
-          klib-${{ env.RELEASE_VERSION }}-ubuntu-20.04.tar.gz
+          klib-v${{ env.RELEASE_VERSION }}-ubuntu-20.04.tar.gz
         working-directory: build
 
       - name: Install
