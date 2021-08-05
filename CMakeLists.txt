@@ -156,7 +156,7 @@ endif()
 # Install target
 # ---------------------------------------------------------------------------------------
 if(KLIB_INSTALL)
-  message(STATUS "Generate install")
+  message(STATUS "Generate install target")
   include(Install)
 
   # https://gitlab.kitware.com/cmake/community/-/wikis/FAQ#can-i-do-make-uninstall-with-cmake

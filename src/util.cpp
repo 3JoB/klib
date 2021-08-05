@@ -151,7 +151,7 @@ std::u16string utf8_to_utf16(const std::string &str) {
 
   std::u16string result;
 
-  char16_t out;
+  char16_t out = 0;
   auto begin = str.c_str();
   auto size = std::size(str);
   mbstate_t state = {};
@@ -182,7 +182,7 @@ std::u32string utf8_to_utf32(const std::string &str) {
 
   std::u32string result;
 
-  char32_t out;
+  char32_t out = 0;
   auto begin = str.c_str();
   auto size = std::size(str);
   mbstate_t state = {};
