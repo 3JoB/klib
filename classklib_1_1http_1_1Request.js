@@ -9,7 +9,7 @@ var classklib_1_1http_1_1Request =
     [ "operator=", "classklib_1_1http_1_1Request.html#ae1599462d179414015729bd84e7b3bd2", null ],
     [ "operator=", "classklib_1_1http_1_1Request.html#aa023d047f88a5e849ef7f2aaaa524a1f", null ],
     [ "set_no_proxy", "classklib_1_1http_1_1Request.html#acebaa7647313e8bcc0a3794d601f034a", null ],
-    [ "set_proxy", "classklib_1_1http_1_1Request.html#a05349e789cae710efb35611b24fa99ca", null ],
+    [ "set_proxy", "classklib_1_1http_1_1Request.html#a48bbd0039f028a63a0495aa7d86a1ced", null ],
     [ "set_user_agent", "classklib_1_1http_1_1Request.html#acb0963c874151423f3f4d47c5bb765fa", null ],
     [ "verbose", "classklib_1_1http_1_1Request.html#a82283c98906d0bdf009452cb538bc3a9", null ],
     [ "Response", "classklib_1_1http_1_1Request.html#a0bb0e5a2fcd99881ef189293e209db7f", null ]
