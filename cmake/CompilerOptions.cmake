@@ -62,10 +62,10 @@ endif()
 # ---------------------------------------------------------------------------------------
 if(KLIB_SANITIZER)
   message(STATUS "Build test with AddressSanitizer and UndefinedSanitizer")
-  add_cxx_compiler_flag("-fno-omit-frame-pointer")
 
   add_cxx_compiler_flag("-fsanitize=address")
   add_cxx_compiler_flag("-fsanitize-address-use-after-scope")
+  add_cxx_compiler_flag("-fno-omit-frame-pointer")
   add_cxx_compiler_flag("-fno-optimize-sibling-calls")
 
   add_cxx_compiler_flag("-fsanitize=undefined")
