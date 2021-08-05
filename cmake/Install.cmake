@@ -1,9 +1,8 @@
-include(GNUInstallDirs)
-
 # ---------------------------------------------------------------------------------------
 # Include files
 # ---------------------------------------------------------------------------------------
-# https://github.com/gabime/spdlog/blob/v1.x/CMakeLists.txt
+include(GNUInstallDirs)
+
 install(DIRECTORY "include/" DESTINATION ${CMAKE_INSTALL_INCLUDEDIR})
 
 install(
@@ -57,9 +56,5 @@ set(CPACK_PACKAGE_VERSION
 set(CPACK_GENERATOR "TGZ;DEB")
 
 set(CPACK_DEBIAN_PACKAGE_SHLIBDEPS ON)
-
-# https://cmake.org/cmake/help/latest/module/InstallRequiredSystemLibraries.html
-set(CMAKE_INSTALL_SYSTEM_RUNTIME_LIBS "")
-include(InstallRequiredSystemLibraries)
 
 include(CPack)
