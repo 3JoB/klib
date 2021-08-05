@@ -11,7 +11,7 @@ jobs:
 
     steps:
       # https://github.com/actions/checkout
-      - name: Checkout repository
+      - name: Checkout
         uses: actions/checkout@v2
 
       # https://github.com/actions/cache
@@ -42,4 +42,3 @@ jobs:
         with:
           github_token: ${{ secrets.GITHUB_TOKEN }}
           publish_dir: build/html
-          keep_files: false

@@ -8,7 +8,7 @@ jobs:
 
     steps:
       # https://github.com/actions/checkout
-      - name: Checkout repository
+      - name: Checkout
         uses: actions/checkout@v2
 
       # https://github.com/actions/cache
@@ -28,12 +28,12 @@ jobs:
         run: sudo bash script/build.sh
 
       # https://github.com/github/codeql-action
-      # https://docs.github.com/en/github/finding-security-vulnerabilities-and-errors-in-your-code/configuring-code-scanning
       - name: Initialize CodeQL
         uses: github/codeql-action/init@v1
         with:
           languages: cpp
-          queries: security-and-quality
+          # https://docs.github.com/cn/code-security/secure-coding/automatically-scanning-your-code-for-vulnerabilities-and-errors/configuring-code-scanning#running-additional-queries
+          queries: +security-and-quality
 
       - name: Configure
         run: cmake -S . -B build
