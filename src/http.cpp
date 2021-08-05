@@ -78,7 +78,7 @@ Request::RequestImpl::RequestImpl() {
   check_curl_correct(curl_easy_setopt(
       http_handle_, CURLOPT_USERAGENT,
       "Mozilla/5.0 (X11; Linux x86_64) AppleWebKit/537.36 (KHTML, like Gecko) "
-      "Chrome/92.0.4515.107 Safari/537.36 Edg/92.0.902.55"));
+      "Chrome/93.0.4577.18 Safari/537.36 Edg/93.0.961.11"));
 }
 
 Request::RequestImpl::~RequestImpl() {
