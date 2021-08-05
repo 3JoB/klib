@@ -145,7 +145,7 @@ endif()
 # ---------------------------------------------------------------------------------------
 # Build benchmark
 # ---------------------------------------------------------------------------------------
-if(KLIB_BUILD_BENCHMARK)
+if(KLIB_BUILD_BENCH)
   message(STATUS "Build benchmark")
   add_subdirectory(bench)
 endif()

@@ -50,7 +50,7 @@ jobs:
         uses: coverallsapp/github-action@master
         with:
           github-token: ${{ secrets.GITHUB_TOKEN }}
-          path-to-lcov: build/test/unit_test/lcov.info
+          path-to-lcov: build/lcov.info
 
       # https://github.com/actions/upload-artifact
       - name: Upload artifact
@@ -58,5 +58,5 @@ jobs:
         uses: actions/upload-artifact@v2
         with:
           name: coverage-lcov
-          path: build/test/unit_test/coverage
+          path: build/coverage
           if-no-files-found: error

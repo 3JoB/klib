@@ -36,11 +36,11 @@ if(KLIB_BUILD_COVERAGE)
         -o lcov.info --rc lcov_branch_coverage=1
       COMMAND ${GENHTML_EXECUTABLE} lcov.info -o coverage -s --title
               "${PROJECT_NAME}" --legend --demangle-cpp --branch-coverage
+      COMMAND mv lcov.info ${KLIB_BINARY_DIR}/lcov.info
+      COMMAND mv coverage ${KLIB_BINARY_DIR}/coverage
       WORKING_DIRECTORY ${KLIB_BINARY_DIR}/test/unit_test
       DEPENDS ${TEST_EXECUTABLE}
-      COMMENT
-        "Generate HTML report: ${KLIB_BINARY_DIR}/test/unit_test/coverage/index.html"
-    )
+      COMMENT "Generate HTML report: ${KLIB_BINARY_DIR}/coverage/index.html")
   else()
     message(
       STATUS
@@ -73,10 +73,10 @@ if(KLIB_BUILD_COVERAGE)
         ${LLVM_COV_EXECUTABLE} export ./${TEST_EXECUTABLE}
         -instr-profile=${TEST_EXECUTABLE}.profdata -format=lcov
         -ignore-filename-regex=${KLIB_SOURCE_DIR}/test/* > lcov.info
+      COMMAND mv lcov.info ${KLIB_BINARY_DIR}/lcov.info
+      COMMAND mv coverage ${KLIB_BINARY_DIR}/coverage
       WORKING_DIRECTORY ${KLIB_BINARY_DIR}/test/unit_test
       DEPENDS ${TEST_EXECUTABLE}
-      COMMENT
-        "Generate HTML report: ${KLIB_BINARY_DIR}/test/unit_test/coverage/index.html"
-    )
+      COMMENT "Generate HTML report: ${KLIB_BINARY_DIR}/coverage/index.html")
   endif()
 endif()
