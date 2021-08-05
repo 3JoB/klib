@@ -62,23 +62,35 @@ Request::RequestImpl::RequestImpl() {
     throw klib::exception::RuntimeError("curl_easy_init() error");
   }
 
-  check_curl_correct(
-      curl_easy_setopt(http_handle_, CURLOPT_SSL_VERIFYPEER, 1L));
-  check_curl_correct(
-      curl_easy_setopt(http_handle_, CURLOPT_SSL_VERIFYHOST, 2L));
-  check_curl_correct(
-      curl_easy_setopt(http_handle_, CURLOPT_CAPATH, "/etc/ssl/certs"));
-  check_curl_correct(curl_easy_setopt(http_handle_, CURLOPT_CAINFO,
-                                      "/etc/ssl/certs/ca-certificates.crt"));
+  try {
+    check_curl_correct(
+        curl_easy_setopt(http_handle_, CURLOPT_SSL_VERIFYPEER, 1L));
+    check_curl_correct(
+        curl_easy_setopt(http_handle_, CURLOPT_SSL_VERIFYHOST, 2L));
+    check_curl_correct(
+        curl_easy_setopt(http_handle_, CURLOPT_CAPATH, "/etc/ssl/certs"));
+    check_curl_correct(curl_easy_setopt(http_handle_, CURLOPT_CAINFO,
+                                        "/etc/ssl/certs/ca-certificates.crt"));
 
-  check_curl_correct(
-      curl_easy_setopt(http_handle_, CURLOPT_FOLLOWLOCATION, 1L));
+    // TODO Support HTTP/2
+    // check_curl_correct(curl_easy_setopt(http_handle_,
+    // CURLOPT_HTTP_VERSION, CURL_HTTP_VERSION_2_0));
 
-  // navigator.userAgent
-  check_curl_correct(curl_easy_setopt(
-      http_handle_, CURLOPT_USERAGENT,
-      "Mozilla/5.0 (X11; Linux x86_64) AppleWebKit/537.36 (KHTML, like Gecko) "
-      "Chrome/93.0.4577.18 Safari/537.36 Edg/93.0.961.11"));
+    check_curl_correct(
+        curl_easy_setopt(http_handle_, CURLOPT_FOLLOWLOCATION, 1L));
+
+    // navigator.userAgent
+    check_curl_correct(
+        curl_easy_setopt(http_handle_, CURLOPT_USERAGENT,
+                         "Mozilla/5.0 (X11; Linux x86_64) AppleWebKit/537.36 "
+                         "(KHTML, like Gecko) "
+                         "Chrome/93.0.4577.18 Safari/537.36 Edg/93.0.961.11"));
+  } catch (const klib::exception::RuntimeError &error) {
+    curl_easy_cleanup(http_handle_);
+    curl_global_cleanup();
+
+    throw error;
+  }
 }
 
 Request::RequestImpl::~RequestImpl() {
