@@ -14,12 +14,12 @@
 
 C++ Library
 
-## Environment:
+## Environment
 
 - Linux(Ubuntu 20.04)
 - gcc/clang(Request to support C++20)
 
-## Libraries:
+## Library
 
 - fmt
 - zlib
@@ -58,3 +58,7 @@ or
 find_package(klib)
 target_link_libraries(<your-target> PRIVATE klib::klib)
 ```
+
+---
+
+Thanks to [JetBrains](https://www.jetbrains.com/) for donating product licenses to help develop this project <a href="https://www.jetbrains.com/"><img src="logo/jetbrains.svg" width="94" align="center" /></a>

@@ -52,5 +52,5 @@ jobs:
         env:
           # https://clang.llvm.org/docs/AddressSanitizer.html
           ASAN_OPTIONS: detect_stack_use_after_return=1
-          # # https://clang.llvm.org/docs/UndefinedBehaviorSanitizer.html
+          # https://clang.llvm.org/docs/UndefinedBehaviorSanitizer.html
           UBSAN_OPTIONS: print_stacktrace=1

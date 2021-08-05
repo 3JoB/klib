@@ -48,7 +48,7 @@ set(CPACK_INSTALL_CMAKE_PROJECTS ${KLIB_BINARY_DIR} ${LIBRARY} ALL .)
 
 # https://cmake.org/cmake/help/latest/cpack_gen/deb.html
 set(CPACK_PACKAGE_CONTACT "kaiser <KaiserLancelot123@gmail.com>")
-set(CPACK_PACKAGE_DESCRIPTION_SUMMARY "A template for C++ projects using CMake")
+set(CPACK_PACKAGE_DESCRIPTION_SUMMARY "C++ Library")
 set(CPACK_PACKAGE_VERSION
     ${PROJECT_VERSION_MAJOR}.${PROJECT_VERSION_MINOR}.${PROJECT_VERSION_PATCH})
 

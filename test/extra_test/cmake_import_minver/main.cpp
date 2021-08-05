@@ -8,7 +8,7 @@ int main() {
   request.verbose(true);
 
 #ifdef KLIB_TEST_USE_PROXY
-  request.set_proxy();
+  request.set_proxy("socks5://127.0.0.1:1080");
 #endif
 
   auto response =
