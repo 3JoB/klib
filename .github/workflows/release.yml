@@ -60,7 +60,7 @@ jobs:
 
       - name: Install
         run: |
-          sudo dpkg -i klib-${{ env.RELEASE_VERSION }}-ubuntu-20.04.deb
+          sudo dpkg -i klib-v${{ env.RELEASE_VERSION }}-ubuntu-20.04.deb
           sudo ldconfig
         working-directory: build
 
@@ -79,5 +79,5 @@ jobs:
         if: ${{ matrix.compiler.cxx == 'g++' && matrix.build_type == 'Release'}}
         with:
           files: |
-            build/klib-${{ env.RELEASE_VERSION }}-ubuntu-20.04.deb
-            build/klib-${{ env.RELEASE_VERSION }}-ubuntu-20.04.tar.gz
+            build/klib-v${{ env.RELEASE_VERSION }}-ubuntu-20.04.deb
+            build/klib-v${{ env.RELEASE_VERSION }}-ubuntu-20.04.tar.gz
