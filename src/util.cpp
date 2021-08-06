@@ -30,7 +30,7 @@ namespace {
 
 template <typename... Args>
 [[noreturn]] void error(std::string_view fmt, Args &&...args) {
-  fmt::print(fmt::fg(fmt::color::red), "klib error: ");
+  fmt::print(fmt::fg(fmt::color::red), "klib error:\n");
   fmt::print(fmt::fg(fmt::color::red), fmt, std::forward<Args>(args)...);
   fmt::print("\n");
 

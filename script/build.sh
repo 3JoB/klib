@@ -25,7 +25,7 @@ if [[ "$OSTYPE" == "linux-gnu"* ]]; then
   fi
   cd dependencies
 
-  kpkg install lcov doxygen catch2 fmt libarchive curl openssl -i
+  kpkg install lcov doxygen catch2 fmt libarchive curl openssl tidy-html5 -i
   sudo ldconfig
 else
   echo "The system does not support: $OSTYPE"

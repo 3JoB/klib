@@ -26,6 +26,7 @@ C++ Library
 - libarchive
 - openssl
 - curl
+- tidy-html5
 
 ## Build
 

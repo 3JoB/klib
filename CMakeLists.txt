@@ -64,6 +64,9 @@ find_package(LibArchive REQUIRED)
 find_package(CURL CONFIG REQUIRED)
 find_package(OpenSSL REQUIRED)
 
+find_package(PkgConfig REQUIRED)
+pkg_check_modules(tidy REQUIRED IMPORTED_TARGET tidy)
+
 set(THREADS_PREFER_PTHREAD_FLAG TRUE)
 find_package(Threads REQUIRED)
 
@@ -76,6 +79,8 @@ endif()
 # ---------------------------------------------------------------------------------------
 if(KLIB_BUILD_STATIC)
   message(STATUS "Build static library")
+
+  add_definitions(-DCURL_STATICLIB -DFMT_LOCALE)
 
   add_library(${LIBRARY} STATIC ${LIBRARY_SRC})
   add_library(${LIBRARY}::${LIBRARY} ALIAS ${LIBRARY})
@@ -107,6 +112,7 @@ if(KLIB_BUILD_STATIC)
     COMMAND ar -x /usr/local/lib/libssl.a
     COMMAND ar -x /usr/local/lib/libarchive.a
     COMMAND ar -x /usr/local/lib/libz.a
+    COMMAND ar -x /usr/local/lib/libtidy.a
     COMMAND ar -qcs ${KLIB_BINARY_DIR}/lib${LIBRARY}.a *.o
     WORKING_DIRECTORY ${KLIB_BINARY_DIR}/third_party
     COMMENT "Combined static library")
@@ -126,8 +132,9 @@ if(KLIB_BUILD_SHARED)
                              "$<INSTALL_INTERFACE:${CMAKE_INSTALL_INCLUDEDIR}>")
   target_compile_features(${LIBRARY}-shared INTERFACE cxx_std_20)
   target_link_libraries(
-    ${LIBRARY}-shared PRIVATE CURL::libcurl fmt::fmt OpenSSL::Crypto
-                              ${LibArchive_LIBRARIES} ${ZLIB_LIBRARIES})
+    ${LIBRARY}-shared
+    PRIVATE CURL::libcurl fmt::fmt OpenSSL::Crypto ${LibArchive_LIBRARIES}
+            ${ZLIB_LIBRARIES} PkgConfig::tidy)
 
   set_target_properties(
     ${LIBRARY}-shared
