@@ -3,10 +3,6 @@
 set -e
 
 if [[ "$OSTYPE" == "linux-gnu"* ]]; then
-  curl -L https://github.com/KaiserLancelot/kpkg/releases/download/v0.3.0/kpkg-v0.3.0-ubuntu-20.04.deb \
-    -o kpkg.deb
-  sudo dpkg -i kpkg.deb
-
   sudo add-apt-repository -y ppa:ubuntu-toolchain-r/test
   sudo apt update
   sudo apt install -y gcc-11 g++-11
@@ -29,6 +25,10 @@ if [[ "$OSTYPE" == "linux-gnu"* ]]; then
   sudo update-alternatives --install /usr/bin/llvm-profdata llvm-profdata /usr/bin/llvm-profdata-12 400
   sudo update-alternatives --install /usr/bin/llvm-cov llvm-cov /usr/bin/llvm-cov-12 400
   sudo update-alternatives --install /usr/bin/llvm-symbolizer llvm-symbolizer /usr/bin/llvm-symbolizer-12 400
+
+  curl -L https://github.com/KaiserLancelot/kpkg/releases/download/v0.3.0/kpkg-v0.3.0-ubuntu-20.04.deb \
+      -o kpkg.deb
+  sudo dpkg -i kpkg.deb
 
   if [ ! -d "dependencies" ]; then
     echo "mkdir dependencies"
