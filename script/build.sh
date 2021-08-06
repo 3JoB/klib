@@ -3,7 +3,7 @@
 set -e
 
 if [[ "$OSTYPE" == "linux-gnu"* ]]; then
-  curl -L https://github.com/KaiserLancelot/kpkg/releases/download/v0.2.1/kpkg-0.2.1-ubuntu-20.04.deb \
+  curl -L https://github.com/KaiserLancelot/kpkg/releases/download/v0.3.0/kpkg-v0.3.0-ubuntu-20.04.deb \
     -o kpkg.deb
   sudo dpkg -i kpkg.deb
 

@@ -27,6 +27,7 @@ C++ Library
 - openssl
 - curl
 - tidy-html5
+- nghttp2
 
 ## Build
 

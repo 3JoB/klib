@@ -8,10 +8,21 @@
 TEST_CASE("download html") {
   klib::http::Request request;
   request.verbose(true);
+
+#ifdef KLIB_TEST_USE_PROXY
+  request.set_proxy("socks5://127.0.0.1:1080");
+#endif
+
+  auto response = request.get("https://api.github.com/repos/madler/zlib/tags");
+
+  REQUIRE(response.status_code() == klib::http::Response::StatusCode::Ok);
+  REQUIRE(!std::empty(response.header()));
+  REQUIRE(!std::empty(response.text()));
+
   request.set_user_agent("curl/7.78.0");
   request.set_no_proxy();
 
-  auto response = request.get("https://www.baidu.com");
+  response = request.get("https://www.baidu.com");
 
   REQUIRE(response.status_code() == klib::http::Response::StatusCode::Ok);
   REQUIRE(!std::empty(response.header()));

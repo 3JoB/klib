@@ -113,6 +113,7 @@ if(KLIB_BUILD_STATIC)
     COMMAND ar -x /usr/local/lib/libarchive.a
     COMMAND ar -x /usr/local/lib/libz.a
     COMMAND ar -x /usr/local/lib/libtidy.a
+    COMMAND ar -x /usr/local/lib/libnghttp2.a
     COMMAND ar -qcs ${KLIB_BINARY_DIR}/lib${LIBRARY}.a *.o
     WORKING_DIRECTORY ${KLIB_BINARY_DIR}/third_party
     COMMENT "Combined static library")

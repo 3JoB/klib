@@ -71,10 +71,8 @@ Request::RequestImpl::RequestImpl() {
         curl_easy_setopt(http_handle_, CURLOPT_CAPATH, "/etc/ssl/certs"));
     check_curl_correct(curl_easy_setopt(http_handle_, CURLOPT_CAINFO,
                                         "/etc/ssl/certs/ca-certificates.crt"));
-
-    // TODO Support HTTP/2
-    // check_curl_correct(curl_easy_setopt(http_handle_,
-    // CURLOPT_HTTP_VERSION, CURL_HTTP_VERSION_2_0));
+    check_curl_correct(curl_easy_setopt(http_handle_, CURLOPT_HTTP_VERSION,
+                                        CURL_HTTP_VERSION_2_0));
 
     check_curl_correct(
         curl_easy_setopt(http_handle_, CURLOPT_FOLLOWLOCATION, 1L));
