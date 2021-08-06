@@ -19,7 +19,7 @@ C++ Library
 - Linux(Ubuntu 20.04)
 - gcc/clang(Request to support C++20)
 
-## Library
+## Dependency
 
 - fmt
 - zlib
