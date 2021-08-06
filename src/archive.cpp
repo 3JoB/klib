@@ -21,7 +21,19 @@ namespace klib::archive {
 
 namespace {
 
-void check_file_or_folder(const std::string &path) {
+void check_file_exists(const std::string &path) {
+  if (!std::filesystem::exists(path)) {
+    throw klib::exception::RuntimeError(
+        fmt::format(FMT_COMPILE("The file does not exist: '{}'"), path));
+  }
+
+  if (!std::filesystem::is_regular_file(path)) {
+    throw klib::exception::RuntimeError(fmt::format(
+        FMT_COMPILE("The path does not correspond to a file: '{}'"), path));
+  }
+}
+
+void check_file_or_folder_exists(const std::string &path) {
   if (!std::filesystem::exists(path)) {
     throw klib::exception::RuntimeError(fmt::format(
         FMT_COMPILE("The file or folder does not exist: '{}'"), path));
@@ -124,7 +136,7 @@ void copy_data(struct archive *ar, struct archive *aw) {
 
 void compress(const std::string &path, Algorithm algorithm,
               const std::string &file_name, bool flag) {
-  check_file_or_folder(path);
+  check_file_or_folder_exists(path);
 
   std::string out =
       (std::empty(file_name) ? compressed_file_name(path, algorithm)
@@ -152,7 +164,7 @@ void compress(const std::string &path, Algorithm algorithm,
 void compress(const std::vector<std::string> &paths, Algorithm algorithm,
               const std::string &file_name) {
   for (const auto &path : paths) {
-    check_file_or_folder(path);
+    check_file_or_folder_exists(path);
   }
 
   auto archive = create_unique_ptr(archive_write_new,
@@ -204,6 +216,8 @@ void compress(const std::vector<std::string> &paths, Algorithm algorithm,
 
 std::optional<std::string> decompress(const std::string &file_name,
                                       const std::string &path) {
+  check_file_exists(file_name);
+
   std::int32_t flags = (ARCHIVE_EXTRACT_TIME | ARCHIVE_EXTRACT_PERM |
                         ARCHIVE_EXTRACT_ACL | ARCHIVE_EXTRACT_FFLAGS);
 

@@ -1,6 +1,6 @@
 /**
  * @file html.h
- * @brief Contains HTML parsing module
+ * @brief Contains HTML Tidy module
  */
 
 #pragma once

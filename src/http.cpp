@@ -121,6 +121,7 @@ void Request::RequestImpl::set_user_agent(const std::string &user_agent) {
       curl_easy_setopt(http_handle_, CURLOPT_USERAGENT, user_agent.c_str()));
 }
 
+// TODO check url
 Response Request::RequestImpl::get(const std::string &url) {
   Response response;
 
