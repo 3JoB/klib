@@ -59,7 +59,6 @@ include(CompilerOptions)
 # Find package
 # ---------------------------------------------------------------------------------------
 find_package(fmt REQUIRED)
-find_package(ZLIB REQUIRED)
 find_package(LibArchive REQUIRED)
 find_package(CURL CONFIG REQUIRED)
 find_package(OpenSSL REQUIRED)
@@ -133,9 +132,8 @@ if(KLIB_BUILD_SHARED)
                              "$<INSTALL_INTERFACE:${CMAKE_INSTALL_INCLUDEDIR}>")
   target_compile_features(${LIBRARY}-shared INTERFACE cxx_std_20)
   target_link_libraries(
-    ${LIBRARY}-shared
-    PRIVATE CURL::libcurl fmt::fmt OpenSSL::Crypto ${LibArchive_LIBRARIES}
-            ${ZLIB_LIBRARIES} PkgConfig::tidy)
+    ${LIBRARY}-shared PRIVATE CURL::libcurl fmt::fmt OpenSSL::Crypto
+                              ${LibArchive_LIBRARIES} PkgConfig::tidy)
 
   set_target_properties(
     ${LIBRARY}-shared
