@@ -7,49 +7,6 @@
   },
   "configurePresets": [
     {
-      "name": "clang-debug",
-      "displayName": "Clang Debug",
-      "description": "The compiler is Clang, and the build type is Debug",
-      "generator": "Unix Makefiles",
-      "binaryDir": "${sourceDir}/build/${presetName}",
-      "cacheVariables": {
-        "CMAKE_BUILD_TYPE": "Debug",
-        "KLIB_BUILD_TEST": "ON",
-        "KLIB_BUILD_EXTRA_TEST": "ON",
-        "KLIB_TEST_USE_PROXY": "ON",
-        "KLIB_BUILD_DOC": "ON",
-        "KLIB_FORMAT": "ON",
-        "KLIB_SANITIZER": "ON",
-        "KLIB_BUILD_COVERAGE": "ON"
-      },
-      "vendor": {
-        "jetbrains.com/clion": {
-          "toolchain": "clang"
-        }
-      }
-    },
-    {
-      "name": "clang-release",
-      "displayName": "Clang Release",
-      "description": "The compiler is clang, and the build type is Release",
-      "generator": "Unix Makefiles",
-      "binaryDir": "${sourceDir}/build/${presetName}",
-      "cacheVariables": {
-        "CMAKE_BUILD_TYPE": "Release",
-        "KLIB_BUILD_TEST": "ON",
-        "KLIB_BUILD_EXTRA_TEST": "ON",
-        "KLIB_TEST_USE_PROXY": "ON",
-        "KLIB_BUILD_BENCH": "ON",
-        "KLIB_BUILD_DOC": "ON",
-        "KLIB_FORMAT": "ON"
-      },
-      "vendor": {
-        "jetbrains.com/clion": {
-          "toolchain": "clang"
-        }
-      }
-    },
-    {
       "name": "gcc-debug",
       "displayName": "GCC Debug",
       "description": "The compiler is GCC, and the build type is Debug",
@@ -91,17 +48,52 @@
           "toolchain": "gcc"
         }
       }
+    },
+    {
+      "name": "clang-debug",
+      "displayName": "Clang Debug",
+      "description": "The compiler is Clang, and the build type is Debug",
+      "generator": "Unix Makefiles",
+      "binaryDir": "${sourceDir}/build/${presetName}",
+      "cacheVariables": {
+        "CMAKE_BUILD_TYPE": "Debug",
+        "KLIB_BUILD_TEST": "ON",
+        "KLIB_BUILD_EXTRA_TEST": "ON",
+        "KLIB_TEST_USE_PROXY": "ON",
+        "KLIB_BUILD_DOC": "ON",
+        "KLIB_FORMAT": "ON",
+        "KLIB_SANITIZER": "ON",
+        "KLIB_BUILD_COVERAGE": "ON"
+      },
+      "vendor": {
+        "jetbrains.com/clion": {
+          "toolchain": "clang"
+        }
+      }
+    },
+    {
+      "name": "clang-release",
+      "displayName": "Clang Release",
+      "description": "The compiler is clang, and the build type is Release",
+      "generator": "Unix Makefiles",
+      "binaryDir": "${sourceDir}/build/${presetName}",
+      "cacheVariables": {
+        "CMAKE_BUILD_TYPE": "Release",
+        "KLIB_BUILD_TEST": "ON",
+        "KLIB_BUILD_EXTRA_TEST": "ON",
+        "KLIB_TEST_USE_PROXY": "ON",
+        "KLIB_BUILD_BENCH": "ON",
+        "KLIB_BUILD_DOC": "ON",
+        "KLIB_FORMAT": "ON"
+      },
+      "vendor": {
+        "jetbrains.com/clion": {
+          "toolchain": "clang"
+        }
+      }
     }
   ],
   "buildPresets": [
-    {
-      "name": "Clang Debug",
-      "configurePreset": "clang-debug"
-    },
-    {
-      "name": "Clang Release",
-      "configurePreset": "clang-release"
-    },
     {
       "name": "GCC Debug",
       "configurePreset": "gcc-debug"
@@ -109,6 +101,14 @@
     {
       "name": "GCC Release",
       "configurePreset": "gcc-release"
+    },
+    {
+      "name": "Clang Debug",
+      "configurePreset": "clang-debug"
+    },
+    {
+      "name": "Clang Release",
+      "configurePreset": "clang-release"
     }
   ]
 }
