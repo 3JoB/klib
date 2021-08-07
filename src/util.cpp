@@ -17,27 +17,17 @@
 #include <utility>
 #include <vector>
 
-#include <fmt/color.h>
 #include <fmt/compile.h>
-#include <fmt/core.h>
 #include <fmt/format.h>
 #include <openssl/evp.h>
 #include <openssl/sha.h>
 
+#include "klib/error.h"
 #include "klib/exception.h"
 
 namespace klib::util {
 
 namespace {
-
-template <typename... Args>
-[[noreturn]] void error(std::string_view fmt, Args &&...args) {
-  fmt::print(fmt::fg(fmt::color::red), "klib error:\n");
-  fmt::print(fmt::fg(fmt::color::red), fmt, std::forward<Args>(args)...);
-  fmt::print("\n");
-
-  std::exit(EXIT_FAILURE);
-}
 
 std::string bytes_to_hex_string(const std::vector<std::uint8_t> &bytes) {
   assert(!std::empty(bytes));
@@ -56,7 +46,7 @@ std::string bytes_to_hex_string(const std::vector<std::uint8_t> &bytes) {
 
 std::map<std::string, std::string> read_folder(const std::string &path) {
   if (!std::filesystem::is_directory(path)) {
-    throw klib::exception::RuntimeError(
+    throw klib::RuntimeError(
         fmt::format(FMT_COMPILE("'{}' is not a directory"), path));
   }
 
@@ -84,13 +74,13 @@ ChangeWorkingDir::ChangeWorkingDir(const std::string &path) {
     if (!(std::filesystem::exists(path) &&
           std::filesystem::is_directory(path))) {
       if (!std::filesystem::create_directory(path)) {
-        throw klib::exception::RuntimeError(
+        throw klib::RuntimeError(
             fmt::format(FMT_COMPILE("can not create directory: '{}'"), path));
       }
     }
 
     if (chdir(path.c_str())) {
-      throw klib::exception::RuntimeError("chdir error");
+      throw klib::RuntimeError("chdir error");
     }
   }
 }
@@ -103,7 +93,7 @@ ChangeWorkingDir::~ChangeWorkingDir() {
 
 std::string read_file(const std::string &path, bool binary_mode) {
   if (!std::filesystem::is_regular_file(path)) {
-    throw klib::exception::RuntimeError(
+    throw klib::RuntimeError(
         fmt::format(FMT_COMPILE("'{}' is not a file"), path));
   }
 
@@ -115,7 +105,7 @@ std::string read_file(const std::string &path, bool binary_mode) {
   }
 
   if (!ifs) {
-    throw klib::exception::RuntimeError(
+    throw klib::RuntimeError(
         fmt::format(FMT_COMPILE("can not open file: '{}'"), path));
   }
 
@@ -138,7 +128,7 @@ void write_file(const std::string &path, bool binary_mode,
   }
 
   if (!ofs) {
-    throw klib::exception::RuntimeError(
+    throw klib::RuntimeError(
         fmt::format(FMT_COMPILE("can not open file: '{}'"), path));
   }
 
@@ -160,7 +150,7 @@ std::u16string utf8_to_utf16(const std::string &str) {
 
   while (auto rc = std::mbrtoc16(&out, begin, size, &state)) {
     if (rc == static_cast<std::size_t>(-1)) {
-      throw klib::exception::RuntimeError(std::strerror(errno));
+      throw klib::RuntimeError(std::strerror(errno));
     }
 
     if (rc == static_cast<std::size_t>(-3)) {
@@ -193,7 +183,7 @@ std::u32string utf8_to_utf32(const std::string &str) {
     assert(rc != static_cast<std::size_t>(-3));
 
     if (rc == static_cast<std::size_t>(-1)) {
-      throw klib::exception::RuntimeError(std::strerror(errno));
+      throw klib::RuntimeError(std::strerror(errno));
     }
 
     if (rc > static_cast<std::size_t>(-1) / 2) {
@@ -218,7 +208,7 @@ bool is_chinese(const std::string &c) {
   auto utf32 = utf8_to_utf32(c);
 
   if (std::size(utf32) != 1) {
-    throw klib::exception::RuntimeError(
+    throw klib::RuntimeError(
         fmt::format(FMT_COMPILE("not a UTF-32 encoded character: '{}'"), c));
   }
 
@@ -248,7 +238,7 @@ std::string sha3_512(const std::string &path) {
 
 std::size_t folder_size(const std::string &path) {
   if (!std::filesystem::is_directory(path)) {
-    throw klib::exception::RuntimeError(
+    throw klib::RuntimeError(
         fmt::format(FMT_COMPILE("'{}' is not a directory"), path));
   }
 
@@ -277,7 +267,7 @@ void execute_command(const char *command) {
 
   auto status = std::system(command);
   if (status == -1 || !WIFEXITED(status) || WEXITSTATUS(status)) {
-    throw klib::exception::RuntimeError(
+    throw klib::RuntimeError(
         fmt::format(FMT_COMPILE("execute command error: {}"), command));
   }
 }

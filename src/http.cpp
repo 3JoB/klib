@@ -16,13 +16,13 @@ namespace {
 
 void check_curl_correct(CURLcode code) {
   if (code != CURLcode::CURLE_OK) {
-    throw klib::exception::RuntimeError(curl_easy_strerror(code));
+    throw klib::RuntimeError(curl_easy_strerror(code));
   }
 }
 
 void check_curl_correct(CURLMcode code) {
   if (code != CURLMcode::CURLM_OK) {
-    throw klib::exception::RuntimeError(curl_multi_strerror(code));
+    throw klib::RuntimeError(curl_multi_strerror(code));
   }
 }
 
@@ -59,7 +59,7 @@ Request::RequestImpl::RequestImpl() {
 
   http_handle_ = curl_easy_init();
   if (!http_handle_) {
-    throw klib::exception::RuntimeError("curl_easy_init() error");
+    throw klib::RuntimeError("curl_easy_init() error");
   }
 
   try {
@@ -83,7 +83,7 @@ Request::RequestImpl::RequestImpl() {
                          "Mozilla/5.0 (X11; Linux x86_64) AppleWebKit/537.36 "
                          "(KHTML, like Gecko) "
                          "Chrome/93.0.4577.18 Safari/537.36 Edg/93.0.961.11"));
-  } catch (const klib::exception::RuntimeError &error) {
+  } catch (const klib::RuntimeError &error) {
     curl_easy_cleanup(http_handle_);
     curl_global_cleanup();
 
@@ -143,7 +143,7 @@ Response Request::RequestImpl::get(const std::string &url) {
       curl_multi_init(), free_multi_handle);
 
   if (!multi_handle) {
-    throw klib::exception::RuntimeError("create multi_handle error");
+    throw klib::RuntimeError("create multi_handle error");
   }
 
   check_curl_correct(curl_multi_add_handle(multi_handle.get(), http_handle_));

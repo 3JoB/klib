@@ -8,8 +8,11 @@
 #include <stdexcept>
 #include <string>
 #include <string_view>
+#include <utility>
 
-namespace klib::exception {
+#include <fmt/format.h>
+
+namespace klib {
 
 /**
  * @brief Exception class, which means runtime error
@@ -33,6 +36,11 @@ class RuntimeError : public std::runtime_error {
    * @param msg: Exception information
    */
   explicit RuntimeError(std::string_view msg) : RuntimeError(msg.data()) {}
+
+  template <typename... Args>
+  explicit RuntimeError(std::string_view fmt, Args &&...args)
+      : RuntimeError(
+            fmt::format(fmt::runtime(fmt), std::forward<Args>(args)...)) {}
 };
 
-}  // namespace klib::exception
+}  // namespace klib

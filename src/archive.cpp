@@ -23,25 +23,25 @@ namespace {
 
 void check_file_exists(const std::string &path) {
   if (!std::filesystem::exists(path)) {
-    throw klib::exception::RuntimeError(
+    throw klib::RuntimeError(
         fmt::format(FMT_COMPILE("The file does not exist: '{}'"), path));
   }
 
   if (!std::filesystem::is_regular_file(path)) {
-    throw klib::exception::RuntimeError(fmt::format(
+    throw klib::RuntimeError(fmt::format(
         FMT_COMPILE("The path does not correspond to a file: '{}'"), path));
   }
 }
 
 void check_file_or_folder_exists(const std::string &path) {
   if (!std::filesystem::exists(path)) {
-    throw klib::exception::RuntimeError(fmt::format(
+    throw klib::RuntimeError(fmt::format(
         FMT_COMPILE("The file or folder does not exist: '{}'"), path));
   }
 
   if (!std::filesystem::is_regular_file(path) &&
       !std::filesystem::is_directory(path)) {
-    throw klib::exception::RuntimeError(fmt::format(
+    throw klib::RuntimeError(fmt::format(
         FMT_COMPILE("The path does not correspond to a file or folder: '{}'"),
         path));
   }
@@ -49,7 +49,7 @@ void check_file_or_folder_exists(const std::string &path) {
 
 void check_archive_correctness(std::int32_t code, struct archive *archive) {
   if (code != ARCHIVE_OK) {
-    throw klib::exception::RuntimeError(archive_error_string(archive));
+    throw klib::RuntimeError(archive_error_string(archive));
   }
 }
 
@@ -73,7 +73,7 @@ auto create_unique_ptr(
       init(), free_archive);
 
   if (!archive) {
-    throw klib::exception::RuntimeError("create archive error");
+    throw klib::RuntimeError("create archive error");
   }
 
   return archive;
@@ -92,7 +92,7 @@ auto create_unique_ptr(
       init(), free_archive);
 
   if (!entry) {
-    throw klib::exception::RuntimeError("create archive_entry error");
+    throw klib::RuntimeError("create archive_entry error");
   }
 
   return entry;
@@ -124,7 +124,7 @@ void copy_data(struct archive *ar, struct archive *aw) {
       return;
     }
     if (status != ARCHIVE_OK) {
-      throw klib::exception::RuntimeError(archive_error_string(ar));
+      throw klib::RuntimeError(archive_error_string(ar));
     }
 
     check_archive_correctness(archive_write_data_block(aw, buff, size, offset),
@@ -249,7 +249,7 @@ std::optional<std::string> decompress(const std::string &file_name,
       break;
     }
     if (status != ARCHIVE_OK) {
-      throw klib::exception::RuntimeError(archive_error_string(archive.get()));
+      throw klib::RuntimeError(archive_error_string(archive.get()));
     }
 
     check_archive_correctness(archive_write_header(extract.get(), entry),

@@ -17,5 +17,5 @@ TEST_CASE("html_tidy") {
 )");
 
   REQUIRE_THROWS_AS(klib::html::html_tidy("<titleFoo</title><p>Foo!"),
-                    klib::exception::RuntimeError);
+                    klib::RuntimeError);
 }

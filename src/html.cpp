@@ -16,7 +16,7 @@ namespace {
 
 void check_opt_set(bool ok) {
   if (!ok) {
-    throw klib::exception::RuntimeError("option set fail");
+    throw klib::RuntimeError("option set fail");
   }
 }
 
@@ -65,12 +65,12 @@ std::string html_tidy(const std::string &html) {
   std::string xhtml;
   if (rc >= 0) {
     if (rc > 1) {
-      throw klib::exception::RuntimeError(fmt::format(
+      throw klib::RuntimeError(fmt::format(
           FMT_COMPILE("{}"), reinterpret_cast<const char *>(error_buffer->bp)));
     }
     xhtml.assign(reinterpret_cast<const char *>(output->bp), output->size);
   } else {
-    throw klib::exception::RuntimeError(
+    throw klib::RuntimeError(
         fmt::format(FMT_COMPILE("html_tidy error: {}"), rc));
   }
 
