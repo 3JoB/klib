@@ -4,16 +4,6 @@ if(KLIB_BUILD_COVERAGE)
       STATUS "Build test with coverage information, use lcov to generate report"
     )
 
-    get_filename_component(COMPILER_PATH ${CMAKE_CXX_COMPILER} PATH)
-    string(REGEX MATCH "^[0-9]+" GCC_VERSION ${CMAKE_CXX_COMPILER_VERSION})
-    find_program(
-      GCOV_EXECUTABLE
-      NAMES gcov-${GCC_VERSION} gcov
-      HINTS ${COMPILER_PATH})
-    if(NOT GCOV_EXECUTABLE)
-      message(FATAL_ERROR "Can not find gcov")
-    endif()
-
     find_program(LCOV_EXECUTABLE lcov)
     if(NOT LCOV_EXECUTABLE)
       message(FATAL_ERROR "Can not find lcov")
@@ -32,8 +22,8 @@ if(KLIB_BUILD_COVERAGE)
       COMMAND
         ${LCOV_EXECUTABLE} -d ${KLIB_BINARY_DIR} --include
         '${KLIB_SOURCE_DIR}/src/*.cpp' --include
-        '${KLIB_SOURCE_DIR}/include/klib/*.h' --gcov-tool ${GCOV_EXECUTABLE} -c
-        -o lcov.info --rc lcov_branch_coverage=1
+        '${KLIB_SOURCE_DIR}/include/klib/*.h' -c -o lcov.info --rc
+        lcov_branch_coverage=1
       COMMAND ${GENHTML_EXECUTABLE} lcov.info -o coverage -s --title
               "${PROJECT_NAME}" --legend --demangle-cpp --branch-coverage
       COMMAND mv lcov.info ${KLIB_BINARY_DIR}/lcov.info

@@ -14,6 +14,7 @@ if [[ "$OSTYPE" == "linux-gnu"* ]]; then
 
   sudo update-alternatives --install /usr/bin/gcc gcc /usr/bin/gcc-11 400
   sudo update-alternatives --install /usr/bin/g++ g++ /usr/bin/g++-11 400
+  sudo update-alternatives --install /usr/bin/gcov gcov /usr/bin/gcov-11 400
   sudo update-alternatives --install /usr/bin/clang clang /usr/bin/clang-12 400
   sudo update-alternatives --install /usr/bin/clang++ clang++ /usr/bin/clang++-12 400
   sudo update-alternatives --install /usr/bin/lld lld /usr/bin/lld-12 400

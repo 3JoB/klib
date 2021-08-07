@@ -58,13 +58,14 @@ include(CompilerOptions)
 # ---------------------------------------------------------------------------------------
 # Find package
 # ---------------------------------------------------------------------------------------
-find_package(fmt REQUIRED)
 find_package(LibArchive REQUIRED)
-find_package(CURL CONFIG REQUIRED)
 find_package(OpenSSL REQUIRED)
+find_package(CURL CONFIG REQUIRED)
 
 find_package(PkgConfig REQUIRED)
 pkg_check_modules(tidy REQUIRED IMPORTED_TARGET tidy)
+
+find_package(fmt REQUIRED)
 
 set(THREADS_PREFER_PTHREAD_FLAG TRUE)
 find_package(Threads REQUIRED)
