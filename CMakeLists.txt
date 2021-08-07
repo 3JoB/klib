@@ -66,6 +66,8 @@ find_package(PkgConfig REQUIRED)
 pkg_check_modules(tidy REQUIRED IMPORTED_TARGET tidy)
 
 find_package(fmt REQUIRED)
+find_package(pugixml REQUIRED)
+find_package(ICU REQUIRED COMPONENTS uc i18n)
 
 set(THREADS_PREFER_PTHREAD_FLAG TRUE)
 find_package(Threads REQUIRED)
@@ -80,6 +82,7 @@ endif()
 if(KLIB_BUILD_STATIC)
   message(STATUS "Build static library")
 
+  # TODO for pugixml and icu
   add_definitions(-DCURL_STATICLIB -DFMT_LOCALE)
 
   add_library(${LIBRARY} STATIC ${LIBRARY_SRC})
@@ -91,7 +94,7 @@ if(KLIB_BUILD_STATIC)
     ${LIBRARY} PUBLIC "$<BUILD_INTERFACE:${KLIB_SOURCE_DIR}/include>"
                       "$<INSTALL_INTERFACE:${CMAKE_INSTALL_INCLUDEDIR}>")
   target_compile_features(${LIBRARY} INTERFACE cxx_std_20)
-  target_link_libraries(${LIBRARY} PUBLIC ${CMAKE_DL_LIBS}
+  target_link_libraries(${LIBRARY} PUBLIC ${ICU_LIBRARIES} ${CMAKE_DL_LIBS}
                                           ${CMAKE_THREAD_LIBS_INIT})
 
   set_target_properties(
@@ -114,6 +117,7 @@ if(KLIB_BUILD_STATIC)
     COMMAND ar -x /usr/local/lib/libcurl.a
     COMMAND ar -x /usr/local/lib/libtidy.a
     COMMAND ar -x /usr/local/lib/libfmt.a
+    COMMAND ar -x /usr/local/lib/libpugixml.a
     COMMAND ar -qcs ${KLIB_BINARY_DIR}/lib${LIBRARY}.a *.o
     WORKING_DIRECTORY ${KLIB_BINARY_DIR}/third_party
     COMMENT "Combined static library")
@@ -133,8 +137,14 @@ if(KLIB_BUILD_SHARED)
                              "$<INSTALL_INTERFACE:${CMAKE_INSTALL_INCLUDEDIR}>")
   target_compile_features(${LIBRARY}-shared INTERFACE cxx_std_20)
   target_link_libraries(
-    ${LIBRARY}-shared PRIVATE ${LibArchive_LIBRARIES} OpenSSL::Crypto
-                              CURL::libcurl PkgConfig::tidy fmt::fmt)
+    ${LIBRARY}-shared
+    PRIVATE ${LibArchive_LIBRARIES}
+            OpenSSL::Crypto
+            CURL::libcurl
+            PkgConfig::tidy
+            fmt::fmt
+            pugixml::pugixml
+            ${ICU_LIBRARIES})
 
   set_target_properties(
     ${LIBRARY}-shared
