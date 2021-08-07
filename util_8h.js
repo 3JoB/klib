@@ -14,6 +14,7 @@ var util_8h =
     [ "execute_command", "util_8h.html#ae613fcbef5b65597318bded0ffa03a23", null ],
     [ "folder_size", "util_8h.html#ae6bfd8da1e23b817cd9b8ca491cb930f", null ],
     [ "is_ascii", "util_8h.html#a1ffc7306fd8462a96d78a120f5197327", null ],
+    [ "is_ascii", "util_8h.html#a2e022bbd6a95d0ce759801b01bfc5219", null ],
     [ "is_chinese", "util_8h.html#a2979235ddb89e4a46123cc8fe83320fa", null ],
     [ "is_chinese", "util_8h.html#a19e46c859074882253d719f877f2303d", null ],
     [ "read_file", "util_8h.html#ac786df37765314df41c920854075270d", null ],

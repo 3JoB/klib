@@ -31,7 +31,7 @@
  <tr style="height: 56px;">
   <td id="projectalign" style="padding-left: 0.5em;">
    <div id="projectname">klib
-   &#160;<span id="projectnumber">0.1.7</span>
+   &#160;<span id="projectnumber">0.1.8</span>
    </div>
   </td>
    <td>        <div id="MSearchBox" class="MSearchBoxInactive">
@@ -155,34 +155,36 @@ $(document).ready(function(){initNavTree('util_8h_source.html',''); initResizabl
 <div class="line"><a name="l00094"></a><span class="lineno">   94</span>&#160; </div>
 <div class="line"><a name="l00100"></a><span class="lineno"><a class="line" href="util_8h.html#a1ffc7306fd8462a96d78a120f5197327">  100</a></span>&#160;constexpr <span class="keywordtype">bool</span> <a class="code" href="util_8h.html#a1ffc7306fd8462a96d78a120f5197327">is_ascii</a>(<span class="keywordtype">char</span> c) { <span class="keywordflow">return</span> <span class="keyword">static_cast&lt;</span>std::uint8_t<span class="keyword">&gt;</span>(c) &lt;= 0x7F; }</div>
 <div class="line"><a name="l00101"></a><span class="lineno">  101</span>&#160; </div>
-<div class="line"><a name="l00107"></a><span class="lineno"><a class="line" href="util_8h.html#a2979235ddb89e4a46123cc8fe83320fa">  107</a></span>&#160;constexpr <span class="keywordtype">bool</span> <a class="code" href="util_8h.html#a2979235ddb89e4a46123cc8fe83320fa">is_chinese</a>(char32_t c) {</div>
-<div class="line"><a name="l00108"></a><span class="lineno">  108</span>&#160;  <span class="keyword">using namespace </span>detail;</div>
+<div class="line"><a name="l00108"></a><span class="lineno"><a class="line" href="util_8h.html#a2e022bbd6a95d0ce759801b01bfc5219">  108</a></span>&#160;<span class="keywordtype">bool</span> <a class="code" href="util_8h.html#a1ffc7306fd8462a96d78a120f5197327">is_ascii</a>(<span class="keyword">const</span> std::string &amp;str);</div>
 <div class="line"><a name="l00109"></a><span class="lineno">  109</span>&#160; </div>
-<div class="line"><a name="l00110"></a><span class="lineno">  110</span>&#160;  <span class="keywordflow">return</span> UnifiedIdeographs{}(c) || UnifiedIdeographsA{}(c) ||</div>
-<div class="line"><a name="l00111"></a><span class="lineno">  111</span>&#160;         UnifiedIdeographsB{}(c) || UnifiedIdeographsC{}(c) ||</div>
-<div class="line"><a name="l00112"></a><span class="lineno">  112</span>&#160;         UnifiedIdeographsD{}(c) || UnifiedIdeographsE{}(c) ||</div>
-<div class="line"><a name="l00113"></a><span class="lineno">  113</span>&#160;         CompatibilityIdeographs{}(c) || CompatibilityIdeographsSupplement{}(c);</div>
-<div class="line"><a name="l00114"></a><span class="lineno">  114</span>&#160;}</div>
-<div class="line"><a name="l00115"></a><span class="lineno">  115</span>&#160; </div>
-<div class="line"><a name="l00121"></a><span class="lineno"><a class="line" href="util_8h.html#a19e46c859074882253d719f877f2303d">  121</a></span>&#160;<span class="keywordtype">bool</span> <a class="code" href="util_8h.html#a2979235ddb89e4a46123cc8fe83320fa">is_chinese</a>(<span class="keyword">const</span> std::string &amp;c);</div>
-<div class="line"><a name="l00122"></a><span class="lineno">  122</span>&#160; </div>
-<div class="line"><a name="l00128"></a><span class="lineno"><a class="line" href="util_8h.html#ab43591e03de3275ee8fc216165429e1a">  128</a></span>&#160;std::string <a class="code" href="util_8h.html#ab43591e03de3275ee8fc216165429e1a">sha3_512</a>(<span class="keyword">const</span> std::string &amp;path);</div>
-<div class="line"><a name="l00129"></a><span class="lineno">  129</span>&#160; </div>
-<div class="line"><a name="l00135"></a><span class="lineno"><a class="line" href="util_8h.html#ae6bfd8da1e23b817cd9b8ca491cb930f">  135</a></span>&#160;std::size_t <a class="code" href="util_8h.html#ae6bfd8da1e23b817cd9b8ca491cb930f">folder_size</a>(<span class="keyword">const</span> std::string &amp;path);</div>
-<div class="line"><a name="l00136"></a><span class="lineno">  136</span>&#160; </div>
-<div class="line"><a name="l00143"></a><span class="lineno"><a class="line" href="util_8h.html#a7d59cb4d5b2af5fbb0fd1933c333ba6c">  143</a></span>&#160;<span class="keywordtype">bool</span> <a class="code" href="util_8h.html#a7d59cb4d5b2af5fbb0fd1933c333ba6c">same_folder</a>(<span class="keyword">const</span> std::string &amp;path1, <span class="keyword">const</span> std::string &amp;path2);</div>
+<div class="line"><a name="l00115"></a><span class="lineno"><a class="line" href="util_8h.html#a2979235ddb89e4a46123cc8fe83320fa">  115</a></span>&#160;constexpr <span class="keywordtype">bool</span> <a class="code" href="util_8h.html#a2979235ddb89e4a46123cc8fe83320fa">is_chinese</a>(char32_t c) {</div>
+<div class="line"><a name="l00116"></a><span class="lineno">  116</span>&#160;  <span class="keyword">using namespace </span>detail;</div>
+<div class="line"><a name="l00117"></a><span class="lineno">  117</span>&#160; </div>
+<div class="line"><a name="l00118"></a><span class="lineno">  118</span>&#160;  <span class="keywordflow">return</span> UnifiedIdeographs{}(c) || UnifiedIdeographsA{}(c) ||</div>
+<div class="line"><a name="l00119"></a><span class="lineno">  119</span>&#160;         UnifiedIdeographsB{}(c) || UnifiedIdeographsC{}(c) ||</div>
+<div class="line"><a name="l00120"></a><span class="lineno">  120</span>&#160;         UnifiedIdeographsD{}(c) || UnifiedIdeographsE{}(c) ||</div>
+<div class="line"><a name="l00121"></a><span class="lineno">  121</span>&#160;         CompatibilityIdeographs{}(c) || CompatibilityIdeographsSupplement{}(c);</div>
+<div class="line"><a name="l00122"></a><span class="lineno">  122</span>&#160;}</div>
+<div class="line"><a name="l00123"></a><span class="lineno">  123</span>&#160; </div>
+<div class="line"><a name="l00129"></a><span class="lineno"><a class="line" href="util_8h.html#a19e46c859074882253d719f877f2303d">  129</a></span>&#160;<span class="keywordtype">bool</span> <a class="code" href="util_8h.html#a2979235ddb89e4a46123cc8fe83320fa">is_chinese</a>(<span class="keyword">const</span> std::string &amp;c);</div>
+<div class="line"><a name="l00130"></a><span class="lineno">  130</span>&#160; </div>
+<div class="line"><a name="l00136"></a><span class="lineno"><a class="line" href="util_8h.html#ab43591e03de3275ee8fc216165429e1a">  136</a></span>&#160;std::string <a class="code" href="util_8h.html#ab43591e03de3275ee8fc216165429e1a">sha3_512</a>(<span class="keyword">const</span> std::string &amp;path);</div>
+<div class="line"><a name="l00137"></a><span class="lineno">  137</span>&#160; </div>
+<div class="line"><a name="l00143"></a><span class="lineno"><a class="line" href="util_8h.html#ae6bfd8da1e23b817cd9b8ca491cb930f">  143</a></span>&#160;std::size_t <a class="code" href="util_8h.html#ae6bfd8da1e23b817cd9b8ca491cb930f">folder_size</a>(<span class="keyword">const</span> std::string &amp;path);</div>
 <div class="line"><a name="l00144"></a><span class="lineno">  144</span>&#160; </div>
-<div class="line"><a name="l00149"></a><span class="lineno"><a class="line" href="util_8h.html#ae613fcbef5b65597318bded0ffa03a23">  149</a></span>&#160;<span class="keywordtype">void</span> <a class="code" href="util_8h.html#ae613fcbef5b65597318bded0ffa03a23">execute_command</a>(<span class="keyword">const</span> std::string &amp;command);</div>
-<div class="line"><a name="l00150"></a><span class="lineno">  150</span>&#160; </div>
-<div class="line"><a name="l00155"></a><span class="lineno"><a class="line" href="util_8h.html#a9b2f5c259df254c6076c2099adc818b5">  155</a></span>&#160;<span class="keywordtype">void</span> <a class="code" href="util_8h.html#ae613fcbef5b65597318bded0ffa03a23">execute_command</a>(<span class="keyword">const</span> <span class="keywordtype">char</span> *command);</div>
-<div class="line"><a name="l00156"></a><span class="lineno">  156</span>&#160; </div>
-<div class="line"><a name="l00157"></a><span class="lineno">  157</span>&#160;}  <span class="comment">// namespace klib::util</span></div>
+<div class="line"><a name="l00151"></a><span class="lineno"><a class="line" href="util_8h.html#a7d59cb4d5b2af5fbb0fd1933c333ba6c">  151</a></span>&#160;<span class="keywordtype">bool</span> <a class="code" href="util_8h.html#a7d59cb4d5b2af5fbb0fd1933c333ba6c">same_folder</a>(<span class="keyword">const</span> std::string &amp;path1, <span class="keyword">const</span> std::string &amp;path2);</div>
+<div class="line"><a name="l00152"></a><span class="lineno">  152</span>&#160; </div>
+<div class="line"><a name="l00157"></a><span class="lineno"><a class="line" href="util_8h.html#ae613fcbef5b65597318bded0ffa03a23">  157</a></span>&#160;<span class="keywordtype">void</span> <a class="code" href="util_8h.html#ae613fcbef5b65597318bded0ffa03a23">execute_command</a>(<span class="keyword">const</span> std::string &amp;command);</div>
+<div class="line"><a name="l00158"></a><span class="lineno">  158</span>&#160; </div>
+<div class="line"><a name="l00163"></a><span class="lineno"><a class="line" href="util_8h.html#a9b2f5c259df254c6076c2099adc818b5">  163</a></span>&#160;<span class="keywordtype">void</span> <a class="code" href="util_8h.html#ae613fcbef5b65597318bded0ffa03a23">execute_command</a>(<span class="keyword">const</span> <span class="keywordtype">char</span> *command);</div>
+<div class="line"><a name="l00164"></a><span class="lineno">  164</span>&#160; </div>
+<div class="line"><a name="l00165"></a><span class="lineno">  165</span>&#160;}  <span class="comment">// namespace klib::util</span></div>
 <div class="ttc" id="aclassklib_1_1util_1_1ChangeWorkingDir_html"><div class="ttname"><a href="classklib_1_1util_1_1ChangeWorkingDir.html">klib::util::ChangeWorkingDir</a></div><div class="ttdoc">Change working directory.</div><div class="ttdef"><b>Definition:</b> util.h:41</div></div>
 <div class="ttc" id="aclassklib_1_1util_1_1ChangeWorkingDir_html_a29ac7eb32234f0f1bc9433e30fb4c7db"><div class="ttname"><a href="classklib_1_1util_1_1ChangeWorkingDir.html#a29ac7eb32234f0f1bc9433e30fb4c7db">klib::util::ChangeWorkingDir::ChangeWorkingDir</a></div><div class="ttdeci">ChangeWorkingDir(const std::string &amp;path=&quot;&quot;)</div><div class="ttdoc">Default constructor.</div></div>
 <div class="ttc" id="aclassklib_1_1util_1_1ChangeWorkingDir_html_a635f71dc997055762b8ea676823ad583"><div class="ttname"><a href="classklib_1_1util_1_1ChangeWorkingDir.html#a635f71dc997055762b8ea676823ad583">klib::util::ChangeWorkingDir::~ChangeWorkingDir</a></div><div class="ttdeci">~ChangeWorkingDir()</div><div class="ttdoc">Destructor.</div></div>
 <div class="ttc" id="aclassklib_1_1util_1_1detail_1_1UnicodeRange_html"><div class="ttname"><a href="classklib_1_1util_1_1detail_1_1UnicodeRange.html">klib::util::detail::UnicodeRange</a></div><div class="ttdef"><b>Definition:</b> util.h:18</div></div>
 <div class="ttc" id="autil_8h_html_a1ffc7306fd8462a96d78a120f5197327"><div class="ttname"><a href="util_8h.html#a1ffc7306fd8462a96d78a120f5197327">klib::util::is_ascii</a></div><div class="ttdeci">constexpr bool is_ascii(char c)</div><div class="ttdoc">Determine whether it is an ASCII character.</div><div class="ttdef"><b>Definition:</b> util.h:100</div></div>
-<div class="ttc" id="autil_8h_html_a2979235ddb89e4a46123cc8fe83320fa"><div class="ttname"><a href="util_8h.html#a2979235ddb89e4a46123cc8fe83320fa">klib::util::is_chinese</a></div><div class="ttdeci">constexpr bool is_chinese(char32_t c)</div><div class="ttdoc">Determine whether it is a Chinese character.</div><div class="ttdef"><b>Definition:</b> util.h:107</div></div>
+<div class="ttc" id="autil_8h_html_a2979235ddb89e4a46123cc8fe83320fa"><div class="ttname"><a href="util_8h.html#a2979235ddb89e4a46123cc8fe83320fa">klib::util::is_chinese</a></div><div class="ttdeci">constexpr bool is_chinese(char32_t c)</div><div class="ttdoc">Determine whether it is a Chinese character.</div><div class="ttdef"><b>Definition:</b> util.h:115</div></div>
 <div class="ttc" id="autil_8h_html_a474c578a7cbb7f5a38fcf46701d80cb3"><div class="ttname"><a href="util_8h.html#a474c578a7cbb7f5a38fcf46701d80cb3">klib::util::write_file</a></div><div class="ttdeci">void write_file(const std::string &amp;path, bool binary_mode, const std::string &amp;content)</div><div class="ttdoc">Write string to file.</div></div>
 <div class="ttc" id="autil_8h_html_a4eefc72f0ae965fddc702d27acd6cf43"><div class="ttname"><a href="util_8h.html#a4eefc72f0ae965fddc702d27acd6cf43">klib::util::utf8_to_utf32</a></div><div class="ttdeci">std::u32string utf8_to_utf32(const std::string &amp;str)</div><div class="ttdoc">Convert UTF-8 encoded string to UTF-32 encoded string.</div></div>
 <div class="ttc" id="autil_8h_html_a7d59cb4d5b2af5fbb0fd1933c333ba6c"><div class="ttname"><a href="util_8h.html#a7d59cb4d5b2af5fbb0fd1933c333ba6c">klib::util::same_folder</a></div><div class="ttdeci">bool same_folder(const std::string &amp;path1, const std::string &amp;path2)</div><div class="ttdoc">Determine whether the two folders are the same.</div></div>

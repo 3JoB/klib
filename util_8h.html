@@ -31,7 +31,7 @@
  <tr style="height: 56px;">
   <td id="projectalign" style="padding-left: 0.5em;">
    <div id="projectname">klib
-   &#160;<span id="projectnumber">0.1.7</span>
+   &#160;<span id="projectnumber">0.1.8</span>
    </div>
   </td>
    <td>        <div id="MSearchBox" class="MSearchBoxInactive">
@@ -161,6 +161,9 @@ Functions</h2></td></tr>
 <tr class="memitem:a1ffc7306fd8462a96d78a120f5197327"><td class="memItemLeft" align="right" valign="top">constexpr bool&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="util_8h.html#a1ffc7306fd8462a96d78a120f5197327">klib::util::is_ascii</a> (char c)</td></tr>
 <tr class="memdesc:a1ffc7306fd8462a96d78a120f5197327"><td class="mdescLeft">&#160;</td><td class="mdescRight">Determine whether it is an ASCII character.  <a href="util_8h.html#a1ffc7306fd8462a96d78a120f5197327">More...</a><br /></td></tr>
 <tr class="separator:a1ffc7306fd8462a96d78a120f5197327"><td class="memSeparator" colspan="2">&#160;</td></tr>
+<tr class="memitem:a2e022bbd6a95d0ce759801b01bfc5219"><td class="memItemLeft" align="right" valign="top">bool&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="util_8h.html#a2e022bbd6a95d0ce759801b01bfc5219">klib::util::is_ascii</a> (const std::string &amp;str)</td></tr>
+<tr class="memdesc:a2e022bbd6a95d0ce759801b01bfc5219"><td class="mdescLeft">&#160;</td><td class="mdescRight">Determine whether a string consisting of ASCII characters.  <a href="util_8h.html#a2e022bbd6a95d0ce759801b01bfc5219">More...</a><br /></td></tr>
+<tr class="separator:a2e022bbd6a95d0ce759801b01bfc5219"><td class="memSeparator" colspan="2">&#160;</td></tr>
 <tr class="memitem:a2979235ddb89e4a46123cc8fe83320fa"><td class="memItemLeft" align="right" valign="top">constexpr bool&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="util_8h.html#a2979235ddb89e4a46123cc8fe83320fa">klib::util::is_chinese</a> (char32_t c)</td></tr>
 <tr class="memdesc:a2979235ddb89e4a46123cc8fe83320fa"><td class="mdescLeft">&#160;</td><td class="mdescRight">Determine whether it is a Chinese character.  <a href="util_8h.html#a2979235ddb89e4a46123cc8fe83320fa">More...</a><br /></td></tr>
 <tr class="separator:a2979235ddb89e4a46123cc8fe83320fa"><td class="memSeparator" colspan="2">&#160;</td></tr>
@@ -266,7 +269,7 @@ Functions</h2></td></tr>
 </div>
 </div>
 <a id="a1ffc7306fd8462a96d78a120f5197327"></a>
-<h2 class="memtitle"><span class="permalink"><a href="#a1ffc7306fd8462a96d78a120f5197327">&#9670;&nbsp;</a></span>is_ascii()</h2>
+<h2 class="memtitle"><span class="permalink"><a href="#a1ffc7306fd8462a96d78a120f5197327">&#9670;&nbsp;</a></span>is_ascii() <span class="overload">[1/2]</span></h2>
 
 <div class="memitem">
 <div class="memproto">
@@ -297,6 +300,33 @@ Functions</h2></td></tr>
   </dd>
 </dl>
 <dl class="section return"><dt>Returns</dt><dd>If it is an ASCII character, return true, otherwise return false </dd></dl>
+
+</div>
+</div>
+<a id="a2e022bbd6a95d0ce759801b01bfc5219"></a>
+<h2 class="memtitle"><span class="permalink"><a href="#a2e022bbd6a95d0ce759801b01bfc5219">&#9670;&nbsp;</a></span>is_ascii() <span class="overload">[2/2]</span></h2>
+
+<div class="memitem">
+<div class="memproto">
+      <table class="memname">
+        <tr>
+          <td class="memname">bool klib::util::is_ascii </td>
+          <td>(</td>
+          <td class="paramtype">const std::string &amp;&#160;</td>
+          <td class="paramname"><em>str</em></td><td>)</td>
+          <td></td>
+        </tr>
+      </table>
+</div><div class="memdoc">
+
+<p>Determine whether a string consisting of ASCII characters. </p>
+<dl class="params"><dt>Parameters</dt><dd>
+  <table class="params">
+    <tr><td class="paramname">str</td><td>A string </td></tr>
+  </table>
+  </dd>
+</dl>
+<dl class="section return"><dt>Returns</dt><dd>If it is a string consisting of ASCII characters , return true, otherwise return false </dd></dl>
 
 </div>
 </div>
