@@ -40,7 +40,8 @@ add_cxx_compiler_flag("-Werror")
 # Link time optimization
 # ---------------------------------------------------------------------------------------
 # https://github.com/ninja-build/ninja/blob/master/CMakeLists.txt
-if(${CMAKE_BUILD_TYPE} STREQUAL "Release")
+if((${CMAKE_BUILD_TYPE} STREQUAL "Release") OR (${CMAKE_BUILD_TYPE} STREQUAL
+                                                "MinSizeRel"))
   include(CheckIPOSupported)
   check_ipo_supported(
     RESULT LTO_SUPPORTED
@@ -61,7 +62,7 @@ endif()
 # Sanitizer
 # ---------------------------------------------------------------------------------------
 if(KLIB_SANITIZER)
-  message(STATUS "Build test with AddressSanitizer and UndefinedSanitizer")
+  message(STATUS "Build with AddressSanitizer and UndefinedSanitizer")
 
   add_cxx_compiler_flag("-fsanitize=address")
   add_cxx_compiler_flag("-fsanitize-address-use-after-scope")

@@ -16,18 +16,18 @@ C++ Library
 
 ## Environment
 
-- Linux(Ubuntu 20.04)
-- gcc/clang(Request to support C++20)
+- Ubuntu 20.04
+- GCC 11 or Clang 12
 
 ## Dependency
 
-- fmt
-- zlib
-- libarchive
-- openssl
-- curl
-- tidy-html5
-- nghttp2
+- [zlib](https://github.com/madler/zlib)
+- [libarchive](https://github.com/libarchive/libarchive)
+- [openssl](https://github.com/openssl/openssl)
+- [nghttp2](https://github.com/nghttp2/nghttp2)
+- [curl](https://github.com/curl/curl)
+- [tidy-html5](https://github.com/htacg/tidy-html5)
+- [fmt](https://github.com/fmtlib/fmt)
 
 ## Build
 
