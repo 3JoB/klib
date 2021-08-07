@@ -2,6 +2,7 @@
 
 #include <unistd.h>
 
+#include <algorithm>
 #include <cassert>
 #include <cerrno>
 #include <clocale>
@@ -204,6 +205,11 @@ std::u32string utf8_to_utf32(const std::string &str) {
   }
 
   return result;
+}
+
+bool is_ascii(const std::string &str) {
+  return std::all_of(std::begin(str), std::end(str),
+                     [](char c) { return is_ascii(c); });
 }
 
 bool is_chinese(const std::string &c) {

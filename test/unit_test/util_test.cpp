@@ -54,6 +54,9 @@ TEST_CASE("utf8_to_utf32") {
 TEST_CASE("is_ascii") {
   REQUIRE(klib::util::is_ascii('A'));
   REQUIRE_FALSE(klib::util::is_ascii(static_cast<char>(190)));
+
+  REQUIRE(klib::util::is_ascii("AAA"));
+  REQUIRE_FALSE(klib::util::is_ascii("你"));
 }
 
 TEST_CASE("is_chinese") {

@@ -100,6 +100,14 @@ std::u32string utf8_to_utf32(const std::string &str);
 constexpr bool is_ascii(char c) { return static_cast<std::uint8_t>(c) <= 0x7F; }
 
 /**
+ * @brief Determine whether a string consisting of ASCII characters
+ * @param str: A string
+ * @return If it is a string consisting of ASCII characters , return true,
+ * otherwise return false
+ */
+bool is_ascii(const std::string &str);
+
+/**
  * @brief Determine whether it is a Chinese character
  * @param c: A UTF-32 encoded character
  * @return If it is a Chinese character, return true, otherwise return false
