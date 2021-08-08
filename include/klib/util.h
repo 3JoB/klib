@@ -10,7 +10,7 @@
 #include <string>
 #include <string_view>
 
-namespace klib::util {
+namespace klib {
 
 namespace detail {
 
@@ -173,4 +173,4 @@ void execute_command(const std::string &command);
  */
 void execute_command(const char *command);
 
-}  // namespace klib::util
+}  // namespace klib

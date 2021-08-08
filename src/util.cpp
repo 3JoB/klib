@@ -25,7 +25,7 @@
 #include "klib/error.h"
 #include "klib/exception.h"
 
-namespace klib::util {
+namespace klib {
 
 namespace {
 
@@ -282,4 +282,4 @@ void execute_command(const char *command) {
   }
 }
 
-}  // namespace klib::util
+}  // namespace klib

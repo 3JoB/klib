@@ -10,7 +10,7 @@
 #include <memory>
 #include <string>
 
-namespace klib::http {
+namespace klib {
 
 class Response;
 
@@ -121,4 +121,4 @@ class Response {
   std::string text_;
 };
 
-}  // namespace klib::http
+}  // namespace klib

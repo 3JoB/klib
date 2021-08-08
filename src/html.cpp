@@ -8,7 +8,7 @@
 
 #include "klib/exception.h"
 
-namespace klib::html {
+namespace klib {
 
 namespace {
 
@@ -74,4 +74,4 @@ std::string html_tidy(const std::string &html) {
   return xhtml;
 }
 
-}  // namespace klib::html
+}  // namespace klib

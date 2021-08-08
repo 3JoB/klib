@@ -9,7 +9,7 @@
 #include <string>
 #include <vector>
 
-namespace klib::archive {
+namespace klib {
 
 /**
  * @brief Algorithm used for compression
@@ -46,4 +46,4 @@ void compress(const std::vector<std::string> &paths, Algorithm algorithm,
 std::optional<std::string> decompress(
     const std::string &path, const std::string &decompressed_path = "");
 
-}  // namespace klib::archive
+}  // namespace klib

@@ -10,7 +10,7 @@
 
 // https://curl.se/libcurl/c/multi-single.html
 // https://curl.se/libcurl/c/http2-download.html
-namespace klib::http {
+namespace klib {
 
 namespace {
 
@@ -194,7 +194,7 @@ std::string Response::header() const { return header_; }
 std::string Response::text() const { return text_; }
 
 void Response::save_to_file(const std::string &path, bool binary_mode) const {
-  klib::util::write_file(path, binary_mode, text_);
+  klib::write_file(path, binary_mode, text_);
 }
 
-}  // namespace klib::http
+}  // namespace klib

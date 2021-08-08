@@ -8,14 +8,11 @@
 #include "klib/util.h"
 
 TEST_CASE("base generate", "[epub]") {
-  klib::epub::Epub epub;
+  klib::Epub epub;
   epub.set_creator("kaiser");
   epub.set_book_name("test book");
   epub.set_author("test author");
   epub.set_introduction({"test", "introduction"});
-
-  auto font = klib::util::read_file("SourceHanSansHWSC-Bold.otf", true);
-  epub.set_font(font);
 
   epub.set_uuid("5208e6bb-5d25-45b0-a7fd-b97d79a85fd4");
   epub.set_date("2021-08-01");
@@ -23,10 +20,10 @@ TEST_CASE("base generate", "[epub]") {
   REQUIRE_NOTHROW(epub.generate());
   REQUIRE(std::filesystem::is_directory("test book"));
 
-  auto ptr = std::make_unique<klib::util::ChangeWorkingDir>("test book");
+  auto ptr = std::make_unique<klib::ChangeWorkingDir>("test book");
 
-  REQUIRE(std::filesystem::exists(klib::epub::Epub::container_path));
-  REQUIRE(klib::util::read_file(klib::epub::Epub::container_path, false) ==
+  REQUIRE(std::filesystem::exists(klib::Epub::container_path));
+  REQUIRE(klib::read_file(klib::Epub::container_path, false) ==
           R"(<?xml version="1.0" encoding="UTF-8"?>
 <container version="1.0" xmlns="urn:oasis:names:tc:opendocument:xmlns:container">
     <rootfiles>
@@ -35,14 +32,14 @@ TEST_CASE("base generate", "[epub]") {
 </container>
 )");
 
-  REQUIRE(std::filesystem::exists(klib::epub::Epub::font_path));
-  REQUIRE(std::filesystem::file_size(klib::epub::Epub::font_path) == 16958696);
+  REQUIRE(std::filesystem::exists(klib::Epub::font_path));
+  REQUIRE(std::filesystem::file_size(klib::Epub::font_path) == 16958696);
 
-  REQUIRE(std::filesystem::exists(klib::epub::Epub::style_path));
-  REQUIRE(std::filesystem::file_size(klib::epub::Epub::style_path) == 5333);
+  REQUIRE(std::filesystem::exists(klib::Epub::style_path));
+  REQUIRE(std::filesystem::file_size(klib::Epub::style_path) == 5333);
 
-  REQUIRE(std::filesystem::exists(klib::epub::Epub::introduction_path));
-  REQUIRE(klib::util::read_file(klib::epub::Epub::introduction_path, false) ==
+  REQUIRE(std::filesystem::exists(klib::Epub::introduction_path));
+  REQUIRE(klib::read_file(klib::Epub::introduction_path, false) ==
           R"(<?xml version="1.0" encoding="UTF-8"?>
 <!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.1//EN" "http://www.w3.org/TR/xhtml11/DTD/xhtml11.dtd">
 <html xmlns="http://www.w3.org/1999/xhtml" xml:lang="zh-CN" xmlns:epub="http://www.idpf.org/2007/ops">
@@ -60,8 +57,8 @@ TEST_CASE("base generate", "[epub]") {
 </html>
 )");
 
-  REQUIRE(std::filesystem::exists(klib::epub::Epub::message_path));
-  REQUIRE(klib::util::read_file(klib::epub::Epub::message_path, false) ==
+  REQUIRE(std::filesystem::exists(klib::Epub::message_path));
+  REQUIRE(klib::read_file(klib::Epub::message_path, false) ==
           R"(<?xml version="1.0" encoding="UTF-8"?>
 <!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.1//EN" "http://www.w3.org/TR/xhtml11/DTD/xhtml11.dtd">
 <html xmlns="http://www.w3.org/1999/xhtml" xml:lang="zh-CN" xmlns:epub="http://www.idpf.org/2007/ops">
@@ -80,8 +77,8 @@ TEST_CASE("base generate", "[epub]") {
 </html>
 )");
 
-  REQUIRE(std::filesystem::exists(klib::epub::Epub::content_path));
-  REQUIRE(klib::util::read_file(klib::epub::Epub::content_path, false) ==
+  REQUIRE(std::filesystem::exists(klib::Epub::content_path));
+  REQUIRE(klib::read_file(klib::Epub::content_path, false) ==
           R"(<?xml version="1.0" encoding="UTF-8"?>
 <package version="2.0" unique-identifier="BookId" xmlns="http://www.idpf.org/2007/opf">
     <metadata xmlns:dc="http://purl.org/dc/elements/1.1/" xmlns:opf="http://www.idpf.org/2007/opf">
@@ -108,8 +105,8 @@ TEST_CASE("base generate", "[epub]") {
 </package>
 )");
 
-  REQUIRE(std::filesystem::exists(klib::epub::Epub::toc_path));
-  REQUIRE(klib::util::read_file(klib::epub::Epub::toc_path, false) ==
+  REQUIRE(std::filesystem::exists(klib::Epub::toc_path));
+  REQUIRE(klib::read_file(klib::Epub::toc_path, false) ==
           R"(<?xml version="1.0" encoding="UTF-8"?>
 <!DOCTYPE ncx PUBLIC "-//NISO//DTD ncx 2005-1//EN" "http://www.daisy.org/z3986/2005/ncx-2005-1.dtd">
 <ncx version="2005-1" xmlns="http://www.daisy.org/z3986/2005/ncx/">
@@ -142,8 +139,8 @@ TEST_CASE("base generate", "[epub]") {
 </ncx>
 )");
 
-  REQUIRE(std::filesystem::exists(klib::epub::Epub::mimetype_path));
-  REQUIRE(klib::util::read_file(klib::epub::Epub::mimetype_path, false) ==
+  REQUIRE(std::filesystem::exists(klib::Epub::mimetype_path));
+  REQUIRE(klib::read_file(klib::Epub::mimetype_path, false) ==
           R"(application/epub+zip
 )");
 
@@ -156,15 +153,12 @@ TEST_CASE("base generate", "[epub]") {
 }
 
 TEST_CASE("generate postscript", "[epub]") {
-  klib::epub::Epub epub;
+  klib::Epub epub;
   epub.set_creator("kaiser");
   epub.set_book_name("test book");
   epub.set_author("test author");
   epub.set_introduction({"test", "introduction"});
   epub.set_generate_postscript(true);
-
-  auto font = klib::util::read_file("SourceHanSansHWSC-Bold.otf", true);
-  epub.set_font(font);
 
   epub.set_uuid("5208e6bb-5d25-45b0-a7fd-b97d79a85fd4");
   epub.set_date("2021-08-01");
@@ -172,10 +166,10 @@ TEST_CASE("generate postscript", "[epub]") {
   REQUIRE_NOTHROW(epub.generate());
   REQUIRE(std::filesystem::is_directory("test book"));
 
-  auto ptr = std::make_unique<klib::util::ChangeWorkingDir>("test book");
+  auto ptr = std::make_unique<klib::ChangeWorkingDir>("test book");
 
-  REQUIRE(std::filesystem::exists(klib::epub::Epub::postscript_path));
-  REQUIRE(klib::util::read_file(klib::epub::Epub::postscript_path, false) ==
+  REQUIRE(std::filesystem::exists(klib::Epub::postscript_path));
+  REQUIRE(klib::read_file(klib::Epub::postscript_path, false) ==
           R"(<?xml version="1.0" encoding="UTF-8"?>
 <!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.1//EN" "http://www.w3.org/TR/xhtml11/DTD/xhtml11.dtd">
 <html xmlns="http://www.w3.org/1999/xhtml" xml:lang="zh-CN" xmlns:epub="http://www.idpf.org/2007/ops">
@@ -191,8 +185,8 @@ TEST_CASE("generate postscript", "[epub]") {
 </html>
 )");
 
-  REQUIRE(std::filesystem::exists(klib::epub::Epub::content_path));
-  REQUIRE(klib::util::read_file(klib::epub::Epub::content_path, false) ==
+  REQUIRE(std::filesystem::exists(klib::Epub::content_path));
+  REQUIRE(klib::read_file(klib::Epub::content_path, false) ==
           R"(<?xml version="1.0" encoding="UTF-8"?>
 <package version="2.0" unique-identifier="BookId" xmlns="http://www.idpf.org/2007/opf">
     <metadata xmlns:dc="http://purl.org/dc/elements/1.1/" xmlns:opf="http://www.idpf.org/2007/opf">
@@ -221,8 +215,8 @@ TEST_CASE("generate postscript", "[epub]") {
 </package>
 )");
 
-  REQUIRE(std::filesystem::exists(klib::epub::Epub::toc_path));
-  REQUIRE(klib::util::read_file(klib::epub::Epub::toc_path, false) ==
+  REQUIRE(std::filesystem::exists(klib::Epub::toc_path));
+  REQUIRE(klib::read_file(klib::Epub::toc_path, false) ==
           R"(<?xml version="1.0" encoding="UTF-8"?>
 <!DOCTYPE ncx PUBLIC "-//NISO//DTD ncx 2005-1//EN" "http://www.daisy.org/z3986/2005/ncx-2005-1.dtd">
 <ncx version="2005-1" xmlns="http://www.daisy.org/z3986/2005/ncx/">
@@ -270,7 +264,7 @@ TEST_CASE("generate postscript", "[epub]") {
 }
 
 TEST_CASE("generate postscript and cover", "[epub]") {
-  klib::epub::Epub epub;
+  klib::Epub epub;
   epub.set_creator("kaiser");
   epub.set_book_name("test book");
   epub.set_author("test author");
@@ -278,19 +272,16 @@ TEST_CASE("generate postscript and cover", "[epub]") {
   epub.set_generate_postscript(true);
   epub.set_generate_cover(true);
 
-  auto font = klib::util::read_file("SourceHanSansHWSC-Bold.otf", true);
-  epub.set_font(font);
-
   epub.set_uuid("5208e6bb-5d25-45b0-a7fd-b97d79a85fd4");
   epub.set_date("2021-08-01");
 
   REQUIRE_NOTHROW(epub.generate());
   REQUIRE(std::filesystem::is_directory("test book"));
 
-  auto ptr = std::make_unique<klib::util::ChangeWorkingDir>("test book");
+  auto ptr = std::make_unique<klib::ChangeWorkingDir>("test book");
 
-  REQUIRE(std::filesystem::exists(klib::epub::Epub::cover_path));
-  REQUIRE(klib::util::read_file(klib::epub::Epub::cover_path, false) ==
+  REQUIRE(std::filesystem::exists(klib::Epub::cover_path));
+  REQUIRE(klib::read_file(klib::Epub::cover_path, false) ==
           R"(<?xml version="1.0" encoding="UTF-8"?>
 <!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.1//EN" "http://www.w3.org/TR/xhtml11/DTD/xhtml11.dtd">
 <html xmlns="http://www.w3.org/1999/xhtml" xml:lang="zh-CN" xmlns:epub="http://www.idpf.org/2007/ops">
@@ -306,8 +297,8 @@ TEST_CASE("generate postscript and cover", "[epub]") {
 </html>
 )");
 
-  REQUIRE(std::filesystem::exists(klib::epub::Epub::content_path));
-  REQUIRE(klib::util::read_file(klib::epub::Epub::content_path, false) ==
+  REQUIRE(std::filesystem::exists(klib::Epub::content_path));
+  REQUIRE(klib::read_file(klib::Epub::content_path, false) ==
           R"(<?xml version="1.0" encoding="UTF-8"?>
 <package version="2.0" unique-identifier="BookId" xmlns="http://www.idpf.org/2007/opf">
     <metadata xmlns:dc="http://purl.org/dc/elements/1.1/" xmlns:opf="http://www.idpf.org/2007/opf">
@@ -342,8 +333,8 @@ TEST_CASE("generate postscript and cover", "[epub]") {
 </package>
 )");
 
-  REQUIRE(std::filesystem::exists(klib::epub::Epub::toc_path));
-  REQUIRE(klib::util::read_file(klib::epub::Epub::toc_path, false) ==
+  REQUIRE(std::filesystem::exists(klib::Epub::toc_path));
+  REQUIRE(klib::read_file(klib::Epub::toc_path, false) ==
           R"(<?xml version="1.0" encoding="UTF-8"?>
 <!DOCTYPE ncx PUBLIC "-//NISO//DTD ncx 2005-1//EN" "http://www.daisy.org/z3986/2005/ncx-2005-1.dtd">
 <ncx version="2005-1" xmlns="http://www.daisy.org/z3986/2005/ncx/">
@@ -397,7 +388,7 @@ TEST_CASE("generate postscript and cover", "[epub]") {
 }
 
 TEST_CASE("generate postscript, cover, illustration and image", "[epub]") {
-  klib::epub::Epub epub;
+  klib::Epub epub;
   epub.set_creator("kaiser");
   epub.set_book_name("test book");
   epub.set_author("test author");
@@ -407,23 +398,20 @@ TEST_CASE("generate postscript, cover, illustration and image", "[epub]") {
   epub.set_illustration_num(3);
   epub.set_image_num(6);
 
-  auto font = klib::util::read_file("SourceHanSansHWSC-Bold.otf", true);
-  epub.set_font(font);
-
   epub.set_uuid("5208e6bb-5d25-45b0-a7fd-b97d79a85fd4");
   epub.set_date("2021-08-01");
 
   REQUIRE_NOTHROW(epub.generate());
   REQUIRE(std::filesystem::is_directory("test book"));
 
-  auto ptr = std::make_unique<klib::util::ChangeWorkingDir>("test book");
+  auto ptr = std::make_unique<klib::ChangeWorkingDir>("test book");
 
   for (std::int32_t i = 1; i <= 3; ++i) {
     auto file_name = "illustration00" + std::to_string(i) + ".xhtml";
-    auto path = std::filesystem::path(klib::epub::Epub::text_dir) / file_name;
+    auto path = std::filesystem::path(klib::Epub::text_dir) / file_name;
 
     REQUIRE(std::filesystem::exists(path));
-    REQUIRE(klib::util::read_file(path, false) ==
+    REQUIRE(klib::read_file(path, false) ==
             fmt::format(R"(<?xml version="1.0" encoding="UTF-8"?>
 <!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.1//EN" "http://www.w3.org/TR/xhtml11/DTD/xhtml11.dtd">
 <html xmlns="http://www.w3.org/1999/xhtml" xml:lang="zh-CN" xmlns:epub="http://www.idpf.org/2007/ops">
@@ -444,8 +432,8 @@ TEST_CASE("generate postscript, cover, illustration and image", "[epub]") {
                         std::to_string(i)));
   }
 
-  REQUIRE(std::filesystem::exists(klib::epub::Epub::content_path));
-  REQUIRE(klib::util::read_file(klib::epub::Epub::content_path, false) ==
+  REQUIRE(std::filesystem::exists(klib::Epub::content_path));
+  REQUIRE(klib::read_file(klib::Epub::content_path, false) ==
           R"(<?xml version="1.0" encoding="UTF-8"?>
 <package version="2.0" unique-identifier="BookId" xmlns="http://www.idpf.org/2007/opf">
     <metadata xmlns:dc="http://purl.org/dc/elements/1.1/" xmlns:opf="http://www.idpf.org/2007/opf">
@@ -492,8 +480,8 @@ TEST_CASE("generate postscript, cover, illustration and image", "[epub]") {
 </package>
 )");
 
-  REQUIRE(std::filesystem::exists(klib::epub::Epub::toc_path));
-  REQUIRE(klib::util::read_file(klib::epub::Epub::toc_path, false) ==
+  REQUIRE(std::filesystem::exists(klib::Epub::toc_path));
+  REQUIRE(klib::read_file(klib::Epub::toc_path, false) ==
           R"(<?xml version="1.0" encoding="UTF-8"?>
 <!DOCTYPE ncx PUBLIC "-//NISO//DTD ncx 2005-1//EN" "http://www.daisy.org/z3986/2005/ncx-2005-1.dtd">
 <ncx version="2005-1" xmlns="http://www.daisy.org/z3986/2005/ncx/">
@@ -553,7 +541,7 @@ TEST_CASE("generate postscript, cover, illustration and image", "[epub]") {
 }
 
 TEST_CASE("full generate", "[epub]") {
-  klib::epub::Epub epub;
+  klib::Epub epub;
   epub.set_creator("kaiser");
   epub.set_book_name("test book");
   epub.set_author("test author");
@@ -562,9 +550,6 @@ TEST_CASE("full generate", "[epub]") {
   epub.set_generate_cover(true);
   epub.set_illustration_num(3);
   epub.set_image_num(6);
-
-  auto font = klib::util::read_file("SourceHanSansHWSC-Bold.otf", true);
-  epub.set_font(font);
 
   epub.add_content("title 1", {"abc 1"});
   epub.add_content("title 2", {"abc 2"});
@@ -576,14 +561,14 @@ TEST_CASE("full generate", "[epub]") {
   REQUIRE_NOTHROW(epub.generate());
   REQUIRE(std::filesystem::is_directory("test book"));
 
-  auto ptr = std::make_unique<klib::util::ChangeWorkingDir>("test book");
+  auto ptr = std::make_unique<klib::ChangeWorkingDir>("test book");
 
   for (std::int32_t i = 1; i <= 3; ++i) {
     auto file_name = "chapter00" + std::to_string(i) + ".xhtml";
-    auto path = std::filesystem::path(klib::epub::Epub::text_dir) / file_name;
+    auto path = std::filesystem::path(klib::Epub::text_dir) / file_name;
 
     REQUIRE(std::filesystem::exists(path));
-    REQUIRE(klib::util::read_file(path, false) ==
+    REQUIRE(klib::read_file(path, false) ==
             fmt::format(R"(<?xml version="1.0" encoding="UTF-8"?>
 <!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.1//EN" "http://www.w3.org/TR/xhtml11/DTD/xhtml11.dtd">
 <html xmlns="http://www.w3.org/1999/xhtml" xml:lang="zh-CN" xmlns:epub="http://www.idpf.org/2007/ops">
@@ -603,8 +588,8 @@ TEST_CASE("full generate", "[epub]") {
                         std::to_string(i)));
   }
 
-  REQUIRE(std::filesystem::exists(klib::epub::Epub::content_path));
-  REQUIRE(klib::util::read_file(klib::epub::Epub::content_path, false) ==
+  REQUIRE(std::filesystem::exists(klib::Epub::content_path));
+  REQUIRE(klib::read_file(klib::Epub::content_path, false) ==
           R"(<?xml version="1.0" encoding="UTF-8"?>
 <package version="2.0" unique-identifier="BookId" xmlns="http://www.idpf.org/2007/opf">
     <metadata xmlns:dc="http://purl.org/dc/elements/1.1/" xmlns:opf="http://www.idpf.org/2007/opf">
@@ -657,8 +642,8 @@ TEST_CASE("full generate", "[epub]") {
 </package>
 )");
 
-  REQUIRE(std::filesystem::exists(klib::epub::Epub::toc_path));
-  REQUIRE(klib::util::read_file(klib::epub::Epub::toc_path, false) ==
+  REQUIRE(std::filesystem::exists(klib::Epub::toc_path));
+  REQUIRE(klib::read_file(klib::Epub::toc_path, false) ==
           R"(<?xml version="1.0" encoding="UTF-8"?>
 <!DOCTYPE ncx PUBLIC "-//NISO//DTD ncx 2005-1//EN" "http://www.daisy.org/z3986/2005/ncx-2005-1.dtd">
 <ncx version="2005-1" xmlns="http://www.daisy.org/z3986/2005/ncx/">
@@ -736,7 +721,7 @@ TEST_CASE("full generate", "[epub]") {
 }
 
 TEST_CASE("sub-volume", "[epub]") {
-  klib::epub::Epub epub;
+  klib::Epub epub;
   epub.set_creator("kaiser");
   epub.set_book_name("test book");
   epub.set_author("test author");
@@ -745,9 +730,6 @@ TEST_CASE("sub-volume", "[epub]") {
   epub.set_generate_cover(true);
   epub.set_illustration_num(3);
   epub.set_image_num(6);
-
-  auto font = klib::util::read_file("SourceHanSansHWSC-Bold.otf", true);
-  epub.set_font(font);
 
   epub.add_content("volume 1", "title 1", {"abc 1"});
   epub.add_content("volume 1", "title 2", {"abc 2"});
@@ -759,14 +741,14 @@ TEST_CASE("sub-volume", "[epub]") {
   REQUIRE_NOTHROW(epub.generate());
   REQUIRE(std::filesystem::is_directory("test book"));
 
-  auto ptr = std::make_unique<klib::util::ChangeWorkingDir>("test book");
+  auto ptr = std::make_unique<klib::ChangeWorkingDir>("test book");
 
   for (std::int32_t i = 1; i <= 3; ++i) {
     auto file_name = "chapter00" + std::to_string(i) + ".xhtml";
-    auto path = std::filesystem::path(klib::epub::Epub::text_dir) / file_name;
+    auto path = std::filesystem::path(klib::Epub::text_dir) / file_name;
 
     REQUIRE(std::filesystem::exists(path));
-    REQUIRE(klib::util::read_file(path, false) ==
+    REQUIRE(klib::read_file(path, false) ==
             fmt::format(R"(<?xml version="1.0" encoding="UTF-8"?>
 <!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.1//EN" "http://www.w3.org/TR/xhtml11/DTD/xhtml11.dtd">
 <html xmlns="http://www.w3.org/1999/xhtml" xml:lang="zh-CN" xmlns:epub="http://www.idpf.org/2007/ops">
@@ -786,8 +768,8 @@ TEST_CASE("sub-volume", "[epub]") {
                         std::to_string(i)));
   }
 
-  REQUIRE(std::filesystem::exists(klib::epub::Epub::content_path));
-  REQUIRE(klib::util::read_file(klib::epub::Epub::content_path, false) ==
+  REQUIRE(std::filesystem::exists(klib::Epub::content_path));
+  REQUIRE(klib::read_file(klib::Epub::content_path, false) ==
           R"(<?xml version="1.0" encoding="UTF-8"?>
 <package version="2.0" unique-identifier="BookId" xmlns="http://www.idpf.org/2007/opf">
     <metadata xmlns:dc="http://purl.org/dc/elements/1.1/" xmlns:opf="http://www.idpf.org/2007/opf">
@@ -844,8 +826,8 @@ TEST_CASE("sub-volume", "[epub]") {
 </package>
 )");
 
-  REQUIRE(std::filesystem::exists(klib::epub::Epub::toc_path));
-  REQUIRE(klib::util::read_file(klib::epub::Epub::toc_path, false) ==
+  REQUIRE(std::filesystem::exists(klib::Epub::toc_path));
+  REQUIRE(klib::read_file(klib::Epub::toc_path, false) ==
           R"(<?xml version="1.0" encoding="UTF-8"?>
 <!DOCTYPE ncx PUBLIC "-//NISO//DTD ncx 2005-1//EN" "http://www.daisy.org/z3986/2005/ncx-2005-1.dtd">
 <ncx version="2005-1" xmlns="http://www.daisy.org/z3986/2005/ncx/">

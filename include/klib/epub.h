@@ -11,7 +11,7 @@
 #include <tuple>
 #include <vector>
 
-namespace klib::epub {
+namespace klib {
 
 class Epub {
  public:
@@ -67,13 +67,6 @@ class Epub {
    * @param image_num: The number of images
    */
   void set_image_num(std::int32_t image_num);
-
-  /**
-   * @brief Set font(Must be 'Source Han Sans HW SC')
-   * @param font: The string obtained by reading the font file
-   */
-  void set_font(const std::string &font);
-  void set_font(std::string_view font);
 
   /**
    * @brief Set uuid
@@ -172,4 +165,4 @@ class Epub {
       content_;
 };
 
-}  // namespace klib::epub
+}  // namespace klib

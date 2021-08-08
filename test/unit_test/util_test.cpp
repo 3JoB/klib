@@ -9,7 +9,7 @@ TEST_CASE("ChangeWorkingDir") {
   REQUIRE(!std::filesystem::exists("work-dir"));
 
   {
-    klib::util::ChangeWorkingDir dir("work-dir");
+    klib::ChangeWorkingDir dir("work-dir");
     REQUIRE(std::filesystem::exists("../work-dir"));
   }
 
@@ -19,10 +19,10 @@ TEST_CASE("ChangeWorkingDir") {
 TEST_CASE("read_file & write_file") {
   REQUIRE(std::filesystem::exists("zlib-v1.2.11.tar.gz"));
 
-  auto data = klib::util::read_file("zlib-v1.2.11.tar.gz", true);
+  auto data = klib::read_file("zlib-v1.2.11.tar.gz", true);
   REQUIRE(std::size(data) == 644596);
 
-  REQUIRE_NOTHROW(klib::util::write_file("write-file.zip", true, data));
+  REQUIRE_NOTHROW(klib::write_file("write-file.zip", true, data));
 
   REQUIRE(std::filesystem::exists("write-file.zip"));
   REQUIRE(std::filesystem::file_size("write-file.zip") == 644596);
@@ -31,7 +31,7 @@ TEST_CASE("read_file & write_file") {
 }
 
 TEST_CASE("utf8_to_utf16") {
-  auto utf16 = klib::util::utf8_to_utf16("zß水🍌");
+  auto utf16 = klib::utf8_to_utf16("zß水🍌");
 
   REQUIRE(std::size(utf16) == 5);
   REQUIRE(utf16[0] == 0x007A);
@@ -42,7 +42,7 @@ TEST_CASE("utf8_to_utf16") {
 }
 
 TEST_CASE("utf8_to_utf32") {
-  auto utf32 = klib::util::utf8_to_utf32("zß水🍌");
+  auto utf32 = klib::utf8_to_utf32("zß水🍌");
 
   REQUIRE(std::size(utf32) == 4);
   REQUIRE(utf32[0] == 0x0000007A);
@@ -52,40 +52,40 @@ TEST_CASE("utf8_to_utf32") {
 }
 
 TEST_CASE("is_ascii") {
-  REQUIRE(klib::util::is_ascii('A'));
-  REQUIRE_FALSE(klib::util::is_ascii(static_cast<char>(190)));
+  REQUIRE(klib::is_ascii('A'));
+  REQUIRE_FALSE(klib::is_ascii(static_cast<char>(190)));
 
-  REQUIRE(klib::util::is_ascii("AAA"));
-  REQUIRE_FALSE(klib::util::is_ascii("你"));
+  REQUIRE(klib::is_ascii("AAA"));
+  REQUIRE_FALSE(klib::is_ascii("你"));
 }
 
 TEST_CASE("is_chinese") {
-  REQUIRE(klib::util::is_chinese("你"));
-  REQUIRE_FALSE(klib::util::is_chinese("a"));
-  REQUIRE_FALSE(klib::util::is_chinese("🍌"));
+  REQUIRE(klib::is_chinese("你"));
+  REQUIRE_FALSE(klib::is_chinese("a"));
+  REQUIRE_FALSE(klib::is_chinese("🍌"));
 }
 
 TEST_CASE("sha3_512") {
   REQUIRE(std::filesystem::exists("zlib-v1.2.11.tar.gz"));
 
-  REQUIRE(klib::util::sha3_512("zlib-v1.2.11.tar.gz") ==
+  REQUIRE(klib::sha3_512("zlib-v1.2.11.tar.gz") ==
           "38af19362e48ec80f6565cf18245f520c8ee5348374cb0c11286f3b23cc93fd05a6a"
           "2a2b8784f20bb2307211a2a776241797857b133056f4b33de1d363db7bb2");
 }
 
 TEST_CASE("folder_size") {
   REQUIRE(std::filesystem::exists("folder1"));
-  REQUIRE(klib::util::folder_size("folder1") == 38);
+  REQUIRE(klib::folder_size("folder1") == 38);
 }
 
 TEST_CASE("same_folder") {
   REQUIRE(std::filesystem::exists("folder1"));
   REQUIRE(std::filesystem::exists("folder2"));
 
-  REQUIRE(klib::util::same_folder("folder1", "folder2"));
+  REQUIRE(klib::same_folder("folder1", "folder2"));
 }
 
 TEST_CASE("execute_command") {
   std::string command = "gcc -v";
-  REQUIRE_NOTHROW(klib::util::execute_command(command));
+  REQUIRE_NOTHROW(klib::execute_command(command));
 }

@@ -4,11 +4,11 @@
 #include <klib/http.h>
 
 int main() {
-  klib::http::Request request;
+  klib::Request request;
   request.set_no_proxy();
 
   auto response = request.get("https://www.baidu.com");
-  assert(response.status_code() == klib::http::Response::StatusCode::Ok);
+  assert(response.status_code() == klib::Response::StatusCode::Ok);
 
   std::cout << response.text() << '\n';
 }

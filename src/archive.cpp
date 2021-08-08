@@ -15,7 +15,7 @@
 
 // https://github.com/libarchive/libarchive/wiki/Examples
 // https://github.com/libarchive/libarchive/blob/master/examples/minitar/minitar.c
-namespace klib::archive {
+namespace klib {
 
 namespace {
 
@@ -94,12 +94,12 @@ auto create_unique_ptr(
 }
 
 std::string compressed_file_name(const std::string &path,
-                                 klib::archive::Algorithm algorithm) {
+                                 klib::Algorithm algorithm) {
   auto name = std::filesystem::path(path).filename();
 
-  if (algorithm == klib::archive::Algorithm::Zip) {
+  if (algorithm == klib::Algorithm::Zip) {
     name += ".zip";
-  } else if (algorithm == klib::archive::Algorithm::Gzip) {
+  } else if (algorithm == klib::Algorithm::Gzip) {
     name += ".tar.gz";
   } else {
     assert(false);
@@ -139,12 +139,12 @@ void compress(const std::string &path, Algorithm algorithm,
   out = std::filesystem::current_path() / out;
 
   std::vector<std::string> paths;
-  std::unique_ptr<klib::util::ChangeWorkingDir> ptr;
+  std::unique_ptr<klib::ChangeWorkingDir> ptr;
 
   if (flag || std::filesystem::is_regular_file(path)) {
     paths.push_back(path);
   } else {
-    ptr = std::make_unique<klib::util::ChangeWorkingDir>(path);
+    ptr = std::make_unique<klib::ChangeWorkingDir>(path);
     (void)ptr;
 
     for (const auto &item :
@@ -202,7 +202,7 @@ void compress(const std::vector<std::string> &paths, Algorithm algorithm,
       std::string data;
       const auto source_path = archive_entry_sourcepath(entry.get());
       if (std::filesystem::is_regular_file(source_path)) {
-        data = util::read_file(source_path, true);
+        data = read_file(source_path, true);
       }
       archive_write_data(archive.get(), data.data(), std::size(data));
     }
@@ -232,7 +232,7 @@ std::optional<std::string> decompress(const std::string &file_name,
       archive_read_open_filename(archive.get(), file_name.c_str(), 10240),
       archive.get());
 
-  klib::util::ChangeWorkingDir change_work_dir(path);
+  klib::ChangeWorkingDir change_work_dir(path);
   (void)change_work_dir;
 
   std::optional<std::string> dir;
@@ -273,4 +273,4 @@ std::optional<std::string> decompress(const std::string &file_name,
   return dir;
 }
 
-}  // namespace klib::archive
+}  // namespace klib

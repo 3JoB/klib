@@ -4,7 +4,7 @@
 #include "klib/html.h"
 
 TEST_CASE("html_tidy", "[html]") {
-  REQUIRE(klib::html::html_tidy("<title>Foo</title><p>Foo!") ==
+  REQUIRE(klib::html_tidy("<title>Foo</title><p>Foo!") ==
           R"(<!DOCTYPE html>
 <html xmlns="http://www.w3.org/1999/xhtml">
 <head>
@@ -16,6 +16,6 @@ TEST_CASE("html_tidy", "[html]") {
 </html>
 )");
 
-  REQUIRE_THROWS_AS(klib::html::html_tidy("<titleFoo</title><p>Foo!"),
+  REQUIRE_THROWS_AS(klib::html_tidy("<titleFoo</title><p>Foo!"),
                     klib::RuntimeError);
 }

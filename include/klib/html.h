@@ -7,7 +7,7 @@
 
 #include <string>
 
-namespace klib::html {
+namespace klib {
 
 /**
  * @brief Execute HTML Tidy
@@ -16,4 +16,4 @@ namespace klib::html {
  */
 std::string html_tidy(const std::string &html);
 
-}  // namespace klib::html
+}  // namespace klib
