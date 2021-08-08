@@ -817,6 +817,8 @@ TEST_CASE("sub-volume", "[epub]") {
         <item id="illustration001.xhtml" href="Text/illustration001.xhtml" media-type="application/xhtml+xml" />
         <item id="illustration002.xhtml" href="Text/illustration002.xhtml" media-type="application/xhtml+xml" />
         <item id="illustration003.xhtml" href="Text/illustration003.xhtml" media-type="application/xhtml+xml" />
+        <item id="volume001.xhtml" href="Text/volume001.xhtml" media-type="application/xhtml+xml" />
+        <item id="volume002.xhtml" href="Text/volume002.xhtml" media-type="application/xhtml+xml" />
         <item id="chapter001.xhtml" href="Text/chapter001.xhtml" media-type="application/xhtml+xml" />
         <item id="chapter002.xhtml" href="Text/chapter002.xhtml" media-type="application/xhtml+xml" />
         <item id="chapter003.xhtml" href="Text/chapter003.xhtml" media-type="application/xhtml+xml" />
@@ -829,6 +831,8 @@ TEST_CASE("sub-volume", "[epub]") {
         <itemref idref="illustration001.xhtml" />
         <itemref idref="illustration002.xhtml" />
         <itemref idref="illustration003.xhtml" />
+        <itemref idref="volume001.xhtml" />
+        <itemref idref="volume002.xhtml" />
         <itemref idref="chapter001.xhtml" />
         <itemref idref="chapter002.xhtml" />
         <itemref idref="chapter003.xhtml" />
