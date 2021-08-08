@@ -39,13 +39,13 @@ TEST_CASE("base generate", "[epub]") {
   REQUIRE(std::filesystem::file_size(klib::epub::Epub::font_path) == 16958696);
 
   REQUIRE(std::filesystem::exists(klib::epub::Epub::style_path));
-  REQUIRE(std::filesystem::file_size(klib::epub::Epub::style_path) == 9307);
+  REQUIRE(std::filesystem::file_size(klib::epub::Epub::style_path) == 5333);
 
   REQUIRE(std::filesystem::exists(klib::epub::Epub::introduction_path));
   REQUIRE(klib::util::read_file(klib::epub::Epub::introduction_path, false) ==
           R"(<?xml version="1.0" encoding="UTF-8"?>
 <!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.1//EN" "http://www.w3.org/TR/xhtml11/DTD/xhtml11.dtd">
-<html xmlns="http://www.w3.org/1999/xhtml" xml:lang="zh" xmlns:epub="http://www.idpf.org/2007/ops">
+<html xmlns="http://www.w3.org/1999/xhtml" xml:lang="zh-CN" xmlns:epub="http://www.idpf.org/2007/ops">
     <head>
         <link href="../Styles/style.css" rel="stylesheet" type="text/css" />
         <title>简介</title>
@@ -64,7 +64,7 @@ TEST_CASE("base generate", "[epub]") {
   REQUIRE(klib::util::read_file(klib::epub::Epub::message_path, false) ==
           R"(<?xml version="1.0" encoding="UTF-8"?>
 <!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.1//EN" "http://www.w3.org/TR/xhtml11/DTD/xhtml11.dtd">
-<html xmlns="http://www.w3.org/1999/xhtml" xml:lang="zh" xmlns:epub="http://www.idpf.org/2007/ops">
+<html xmlns="http://www.w3.org/1999/xhtml" xml:lang="zh-CN" xmlns:epub="http://www.idpf.org/2007/ops">
     <head>
         <link href="../Styles/style.css" rel="stylesheet" type="text/css" />
         <title>制作信息</title>
@@ -148,7 +148,11 @@ TEST_CASE("base generate", "[epub]") {
 )");
 
   ptr.reset();
+
+  REQUIRE(std::filesystem::is_regular_file("test book.epub"));
+
   std::filesystem::remove_all("test book");
+  std::filesystem::remove("test book.epub");
 }
 
 TEST_CASE("generate postscript", "[epub]") {
@@ -174,7 +178,7 @@ TEST_CASE("generate postscript", "[epub]") {
   REQUIRE(klib::util::read_file(klib::epub::Epub::postscript_path, false) ==
           R"(<?xml version="1.0" encoding="UTF-8"?>
 <!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.1//EN" "http://www.w3.org/TR/xhtml11/DTD/xhtml11.dtd">
-<html xmlns="http://www.w3.org/1999/xhtml" xml:lang="zh" xmlns:epub="http://www.idpf.org/2007/ops">
+<html xmlns="http://www.w3.org/1999/xhtml" xml:lang="zh-CN" xmlns:epub="http://www.idpf.org/2007/ops">
     <head>
         <link href="../Styles/style.css" rel="stylesheet" type="text/css" />
         <title>后记</title>
@@ -258,7 +262,11 @@ TEST_CASE("generate postscript", "[epub]") {
 )");
 
   ptr.reset();
+
+  REQUIRE(std::filesystem::is_regular_file("test book.epub"));
+
   std::filesystem::remove_all("test book");
+  std::filesystem::remove("test book.epub");
 }
 
 TEST_CASE("generate postscript and cover", "[epub]") {
@@ -285,7 +293,7 @@ TEST_CASE("generate postscript and cover", "[epub]") {
   REQUIRE(klib::util::read_file(klib::epub::Epub::cover_path, false) ==
           R"(<?xml version="1.0" encoding="UTF-8"?>
 <!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.1//EN" "http://www.w3.org/TR/xhtml11/DTD/xhtml11.dtd">
-<html xmlns="http://www.w3.org/1999/xhtml" xml:lang="zh" xmlns:epub="http://www.idpf.org/2007/ops">
+<html xmlns="http://www.w3.org/1999/xhtml" xml:lang="zh-CN" xmlns:epub="http://www.idpf.org/2007/ops">
     <head>
         <link href="../Styles/style.css" rel="stylesheet" type="text/css" />
         <title>封面</title>
@@ -381,7 +389,11 @@ TEST_CASE("generate postscript and cover", "[epub]") {
 )");
 
   ptr.reset();
+
+  REQUIRE(std::filesystem::is_regular_file("test book.epub"));
+
   std::filesystem::remove_all("test book");
+  std::filesystem::remove("test book.epub");
 }
 
 TEST_CASE("generate postscript, cover, illustration and image", "[epub]") {
@@ -414,7 +426,7 @@ TEST_CASE("generate postscript, cover, illustration and image", "[epub]") {
     REQUIRE(klib::util::read_file(path, false) ==
             fmt::format(R"(<?xml version="1.0" encoding="UTF-8"?>
 <!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.1//EN" "http://www.w3.org/TR/xhtml11/DTD/xhtml11.dtd">
-<html xmlns="http://www.w3.org/1999/xhtml" xml:lang="zh" xmlns:epub="http://www.idpf.org/2007/ops">
+<html xmlns="http://www.w3.org/1999/xhtml" xml:lang="zh-CN" xmlns:epub="http://www.idpf.org/2007/ops">
     <head>
         <link href="../Styles/style.css" rel="stylesheet" type="text/css" />
         <title>彩页00{}</title>
@@ -533,7 +545,11 @@ TEST_CASE("generate postscript, cover, illustration and image", "[epub]") {
 )");
 
   ptr.reset();
+
+  REQUIRE(std::filesystem::is_regular_file("test book.epub"));
+
   std::filesystem::remove_all("test book");
+  std::filesystem::remove("test book.epub");
 }
 
 TEST_CASE("full generate", "[epub]") {
@@ -570,7 +586,7 @@ TEST_CASE("full generate", "[epub]") {
     REQUIRE(klib::util::read_file(path, false) ==
             fmt::format(R"(<?xml version="1.0" encoding="UTF-8"?>
 <!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.1//EN" "http://www.w3.org/TR/xhtml11/DTD/xhtml11.dtd">
-<html xmlns="http://www.w3.org/1999/xhtml" xml:lang="zh" xmlns:epub="http://www.idpf.org/2007/ops">
+<html xmlns="http://www.w3.org/1999/xhtml" xml:lang="zh-CN" xmlns:epub="http://www.idpf.org/2007/ops">
     <head>
         <link href="../Styles/style.css" rel="stylesheet" type="text/css" />
         <title>title {}</title>

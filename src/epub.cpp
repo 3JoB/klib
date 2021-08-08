@@ -126,7 +126,7 @@ pugi::xml_document generate_xhtml(const std::string &title,
 
   auto html = doc.append_child("html");
   html.append_attribute("xmlns") = "http://www.w3.org/1999/xhtml";
-  html.append_attribute("xml:lang") = "zh";
+  html.append_attribute("xml:lang") = "zh-CN";
   html.append_attribute("xmlns:epub") = "http://www.idpf.org/2007/ops";
 
   auto head = html.append_child("head");
