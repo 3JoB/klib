@@ -37,6 +37,10 @@ std::string num_to_str(std::int32_t i) {
   }
 }
 
+std::string num_to_volume_name(std::int32_t i) {
+  return "volume" + num_to_str(i) + ".xhtml";
+}
+
 std::string num_to_chapter_name(std::int32_t i) {
   return "chapter" + num_to_str(i) + ".xhtml";
 }
@@ -93,7 +97,22 @@ void append_manifest_and_spine(pugi::xml_node &manifest, const std::string &id,
 
 void append_nav_map(pugi::xml_node &nav_map, const std::string &text,
                     const std::string &src) {
-  auto first = nav_map.last_child().attribute("playOrder").as_int() + 1;
+  std::int32_t first = 1;
+
+  auto last_child = nav_map.last_child();
+  if (!last_child.empty()) {
+    if (last_child.name() == std::string("navPoint")) {
+      if (last_child.last_child().name() == std::string("navPoint")) {
+        first = last_child.last_child().attribute("playOrder").as_int() + 1;
+      } else {
+        first = last_child.attribute("playOrder").as_int() + 1;
+      }
+    } else if (last_child.name() == std::string("content")) {
+      first = nav_map.attribute("playOrder").as_int() + 1;
+    } else {
+      assert(false);
+    }
+  }
 
   auto nav_point = nav_map.append_child("navPoint");
   nav_point.append_attribute("id") =
@@ -165,6 +184,13 @@ void append_texts(pugi::xml_document &doc,
     auto p = div.append_child("p");
     p.text() = text.c_str();
   }
+}
+
+void generate_volume(const std::string &volume_name, std::int32_t id) {
+  auto volume_file_name = num_to_volume_name(id);
+  auto volume = generate_xhtml(volume_name, "", true);
+  auto volume_path = std::filesystem::path(Epub::text_dir) / volume_file_name;
+  save_file(volume, volume_path.c_str());
 }
 
 }  // namespace
@@ -493,10 +519,43 @@ void Epub::generate_toc() const {
   }
 
   auto size = std::size(content_);
+  std::string last_volume_name;
+  std::int32_t volume_count = 0;
   for (std::size_t i = 0; i < size; ++i) {
-    // TODO
     auto [volume_name, title, text] = content_[i];
-    append_nav_map(nav_map, title, "Text/" + num_to_chapter_name(i + 1));
+    if (std::empty(volume_name)) {
+      if (!std::empty(last_volume_name)) {
+        throw klib::RuntimeError("Each must have a volume name");
+      }
+
+      append_nav_map(nav_map, title, "Text/" + num_to_chapter_name(i + 1));
+    } else {
+      if (std::empty(last_volume_name)) {
+        generate_volume(volume_name, ++volume_count);
+
+        append_nav_map(nav_map, volume_name,
+                       "Text/" + num_to_volume_name(volume_count));
+        nav_map = nav_map.last_child();
+        append_nav_map(nav_map, title, "Text/" + num_to_chapter_name(i + 1));
+      } else {
+        if (volume_name != last_volume_name) {
+          generate_volume(volume_name, ++volume_count);
+
+          nav_map = nav_map.parent();
+          append_nav_map(nav_map, volume_name,
+                         "Text/" + num_to_volume_name(volume_count));
+          nav_map = nav_map.last_child();
+        }
+
+        append_nav_map(nav_map, title, "Text/" + num_to_chapter_name(i + 1));
+      }
+    }
+
+    last_volume_name = volume_name;
+  }
+
+  if (!std::empty(last_volume_name)) {
+    nav_map = nav_map.parent();
   }
 
   if (generate_postscript_) {

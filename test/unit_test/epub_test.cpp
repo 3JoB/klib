@@ -884,23 +884,35 @@ TEST_CASE("sub-volume", "[epub]") {
         </navPoint>
         <navPoint id="navPoint-5" playOrder="5">
             <navLabel>
-                <text>title 1</text>
+                <text>volume 1</text>
             </navLabel>
-            <content src="Text/chapter001.xhtml" />
-        </navPoint>
-        <navPoint id="navPoint-6" playOrder="6">
-            <navLabel>
-                <text>title 2</text>
-            </navLabel>
-            <content src="Text/chapter002.xhtml" />
-        </navPoint>
-        <navPoint id="navPoint-7" playOrder="7">
-            <navLabel>
-                <text>title 3</text>
-            </navLabel>
-            <content src="Text/chapter003.xhtml" />
+            <content src="Text/volume001.xhtml" />
+            <navPoint id="navPoint-6" playOrder="6">
+                <navLabel>
+                    <text>title 1</text>
+                </navLabel>
+                <content src="Text/chapter001.xhtml" />
+            </navPoint>
+            <navPoint id="navPoint-7" playOrder="7">
+                <navLabel>
+                    <text>title 2</text>
+                </navLabel>
+                <content src="Text/chapter002.xhtml" />
+            </navPoint>
         </navPoint>
         <navPoint id="navPoint-8" playOrder="8">
+            <navLabel>
+                <text>volume 2</text>
+            </navLabel>
+            <content src="Text/volume002.xhtml" />
+            <navPoint id="navPoint-9" playOrder="9">
+                <navLabel>
+                    <text>title 3</text>
+                </navLabel>
+                <content src="Text/chapter003.xhtml" />
+            </navPoint>
+        </navPoint>
+        <navPoint id="navPoint-10" playOrder="10">
             <navLabel>
                 <text>后记</text>
             </navLabel>
