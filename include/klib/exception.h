@@ -37,6 +37,10 @@ class RuntimeError : public std::runtime_error {
    */
   explicit RuntimeError(std::string_view msg) : RuntimeError(msg.data()) {}
 
+  /**
+   * @brief Constructor
+   * @param msg: Exception information
+   */
   template <typename... Args>
   explicit RuntimeError(std::string_view fmt, Args &&...args)
       : RuntimeError(

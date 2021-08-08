@@ -1,3 +1,8 @@
+/**
+ * @file epub.h
+ * @brief Contains generate epub file modules
+ */
+
 #pragma once
 
 #include <cstdint>
@@ -8,36 +13,109 @@
 
 namespace klib::epub {
 
-// TODO deal with old style
 class Epub {
  public:
+  /**
+   * @brief Default constructor
+   */
   Epub();
 
+  /**
+   * @brief Set the name of the creator
+   * @param creator: Represents the name of the creator
+   */
   void set_creator(const std::string &creator);
+
+  /**
+   * @brief Set book name
+   * @param book_name: Represents the book name
+   */
   void set_book_name(const std::string &book_name);
+
+  /**
+   * @brief Set the name of the book author
+   * @param author: Represents the name of the book author
+   */
   void set_author(const std::string &author);
+
+  /**
+   * @brief Set the book introduction
+   * @param introduction: Represents the book introduction
+   */
   void set_introduction(const std::vector<std::string> &introduction);
 
+  /**
+   * @brief Set whether to generate cover
+   * @param generate_cover: True to generate cover
+   */
   void set_generate_cover(bool generate_cover);
+
+  /**
+   * @brief Set whether to generate postscript
+   * @param generate_postscript: True to generate postscript
+   */
   void set_generate_postscript(bool generate_postscript);
+
+  /**
+   * @brief Set the number of illustration
+   * @param illustration_num: The number of illustration
+   */
   void set_illustration_num(std::int32_t illustration_num);
+
+  /**
+   * @brief Set the number of images
+   * @param image_num: The number of images
+   */
   void set_image_num(std::int32_t image_num);
 
+  /**
+   * @brief Set font
+   * @param font: The string obtained by reading the font file
+   */
   void set_font(const std::string &font);
   void set_font(std::string_view font);
 
-  // for test
+  /**
+   * @brief Set uuid
+   * @param uuid: Represents the uuid
+   * @note For testing
+   */
   void set_uuid(const std::string &uuid);
+
+  /**
+   * @brief Set date
+   * @param uuid: Represents the date
+   * @note For testing
+   */
   void set_date(const std::string &date);
 
+  /**
+   * @brief Add book title and text
+   * @param title: Represents title
+   * @param text: Represents text
+   */
   void add_content(const std::string &title,
+                   const std::vector<std::string> &text);
+
+  /**
+   * @brief Add book title and text(book sub-volume)
+   * @param volume_name: Represents Volume name
+   * @param title: Represents title
+   * @param text: Represents text
+   */
+  void add_content(const std::string &volume_name, const std::string &title,
                    const std::vector<std::string> &content);
-  // TODO
-  //  void add_content(const std::string &volume_name, const std::string &title,
-  //                   const std::vector<std::string> &content);
 
-  void generate();
+  /**
+   * @brief Generate epub file
+   * @param archive: Whether to compress
+   */
+  void generate(bool archive = true);
 
+  /**
+   * @brief Epub file internal path
+   * @note For testing
+   */
   constexpr static std::string_view meta_inf_dir = "META-INF";
   constexpr static std::string_view oebps_dir = "OEBPS";
   constexpr static std::string_view fonts_dir = "OEBPS/Fonts";

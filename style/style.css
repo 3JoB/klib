@@ -427,10 +427,10 @@ rt {
 
 /*字体样式*/
 @font-face {
-  font-family: "SourceHanSansHWSC-Bold";
+  font-family: "Source Han Sans HW SC";
   src: url("../Fonts/SourceHanSansHWSC-Bold.otf");
 }
 .bold {
-  font-family: SourceHanSansHWSC-Bold, serif;
+  font-family: "Source Han Sans HW SC", serif;
   font-weight: normal;
 }

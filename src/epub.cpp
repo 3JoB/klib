@@ -197,9 +197,7 @@ void Epub::set_illustration_num(std::int32_t illustration_num) {
 
 void Epub::set_image_num(std::int32_t image_num) { image_num_ = image_num; }
 
-void Epub::set_font(const std::string &font) {
-  font_ = std::string_view(font.data(), std::size(font));
-}
+void Epub::set_font(const std::string &font) { font_ = font; }
 
 void Epub::set_font(std::string_view font) { font_ = font; }
 
@@ -208,11 +206,11 @@ void Epub::set_uuid(const std::string &uuid) { uuid_ = "urn:uuid:" + uuid; }
 void Epub::set_date(const std::string &date) { date_ = date; }
 
 void Epub::add_content(const std::string &title,
-                       const std::vector<std::string> &content) {
-  content_.emplace_back(title, content);
+                       const std::vector<std::string> &text) {
+  content_.emplace_back(title, text);
 }
 
-void Epub::generate() {
+void Epub::generate(bool archive) {
   if (std::empty(uuid_)) {
     auto uuid = boost::uuids::random_generator()();
     uuid_ = "urn:uuid:" + boost::uuids::to_string(uuid);
@@ -249,8 +247,10 @@ void Epub::generate() {
 
   ptr.reset();
 
-  klib::archive::compress(book_name_, klib::archive::Algorithm::Zip,
-                          book_name_ + ".epub", false);
+  if (archive) {
+    klib::archive::compress(book_name_, klib::archive::Algorithm::Zip,
+                            book_name_ + ".epub", false);
+  }
 }
 
 void Epub::generate_container() const {

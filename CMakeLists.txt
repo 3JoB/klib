@@ -77,10 +77,9 @@ if(KLIB_TEST_USE_PROXY)
 endif()
 
 # ---------------------------------------------------------------------------------------
-# Build epub file
+# Build style
 # ---------------------------------------------------------------------------------------
-file(GLOB_RECURSE STYLE_FILE CONFIGURE_DEPENDS "${KLIB_SOURCE_DIR}/style/*")
-file(COPY ${STYLE_FILE} DESTINATION ${KLIB_BINARY_DIR})
+file(COPY "${KLIB_SOURCE_DIR}/style/style.css" DESTINATION ${KLIB_BINARY_DIR})
 
 add_library(style STATIC ${KLIB_SOURCE_DIR}/src/epub.s)
 target_compile_options(style PRIVATE "-Wno-unused-command-line-argument")
@@ -91,7 +90,6 @@ target_compile_options(style PRIVATE "-Wno-unused-command-line-argument")
 if(KLIB_BUILD_STATIC)
   message(STATUS "Build static library")
 
-  # TODO for pugixml
   add_definitions(-DCURL_STATICLIB -DFMT_LOCALE)
 
   add_library(${LIBRARY} STATIC ${LIBRARY_SRC})
