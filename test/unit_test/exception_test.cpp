@@ -13,7 +13,7 @@ void func() {
 
 }  // namespace
 
-TEST_CASE("RuntimeError") {
+TEST_CASE("RuntimeError", "[exception]") {
   REQUIRE_THROWS_MATCHES(func(), klib::RuntimeError,
                          Catch::Message("a runtime error"));
 }

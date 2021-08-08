@@ -77,7 +77,7 @@ if(KLIB_TEST_USE_PROXY)
 endif()
 
 # ---------------------------------------------------------------------------------------
-# Build style
+# Build epub file
 # ---------------------------------------------------------------------------------------
 file(GLOB_RECURSE EPUB_FILE CONFIGURE_DEPENDS "${KLIB_SOURCE_DIR}/epub/*")
 file(COPY ${EPUB_FILE} DESTINATION ${KLIB_BINARY_DIR})
