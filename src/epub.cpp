@@ -4,6 +4,7 @@
 #include <cstddef>
 #include <ctime>
 #include <filesystem>
+#include <memory>
 
 #include <fmt/chrono.h>
 #include <fmt/format.h>
@@ -196,11 +197,11 @@ void Epub::set_illustration_num(std::int32_t illustration_num) {
 
 void Epub::set_image_num(std::int32_t image_num) { image_num_ = image_num; }
 
-void Epub::set_front(const std::string &font) {
+void Epub::set_font(const std::string &font) {
   font_ = std::string_view(font.data(), std::size(font));
 }
 
-void Epub::set_front(std::string_view font) { font_ = font; }
+void Epub::set_font(std::string_view font) { font_ = font; }
 
 void Epub::set_uuid(const std::string &uuid) { uuid_ = "urn:uuid:" + uuid; }
 
@@ -222,7 +223,7 @@ void Epub::generate() {
   }
 
   std::filesystem::create_directory(book_name_);
-  klib::util::ChangeWorkingDir change_working_dir(book_name_);
+  auto ptr = std::make_unique<klib::util::ChangeWorkingDir>(book_name_);
 
   std::filesystem::create_directory(Epub::meta_inf_dir);
   std::filesystem::create_directory(Epub::oebps_dir);
@@ -245,6 +246,8 @@ void Epub::generate() {
   generate_content();
   generate_toc();
   generate_mimetype();
+
+  ptr.reset();
 
   klib::archive::compress(book_name_, klib::archive::Algorithm::Zip,
                           book_name_ + ".epub", false);

@@ -23,8 +23,8 @@ class Epub {
   void set_illustration_num(std::int32_t illustration_num);
   void set_image_num(std::int32_t image_num);
 
-  void set_front(const std::string &font);
-  void set_front(std::string_view font);
+  void set_font(const std::string &font);
+  void set_font(std::string_view font);
 
   // for test
   void set_uuid(const std::string &uuid);

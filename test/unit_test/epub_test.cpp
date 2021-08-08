@@ -15,7 +15,7 @@ TEST_CASE("base generate", "[epub]") {
   epub.set_introduction({"test", "introduction"});
 
   auto font = klib::util::read_file("SourceHanSansHWSC-Bold.otf", true);
-  epub.set_front(font);
+  epub.set_font(font);
 
   epub.set_uuid("5208e6bb-5d25-45b0-a7fd-b97d79a85fd4");
   epub.set_date("2021-08-01");
@@ -160,7 +160,7 @@ TEST_CASE("generate postscript", "[epub]") {
   epub.set_generate_postscript(true);
 
   auto font = klib::util::read_file("SourceHanSansHWSC-Bold.otf", true);
-  epub.set_front(font);
+  epub.set_font(font);
 
   epub.set_uuid("5208e6bb-5d25-45b0-a7fd-b97d79a85fd4");
   epub.set_date("2021-08-01");
@@ -271,7 +271,7 @@ TEST_CASE("generate postscript and cover", "[epub]") {
   epub.set_generate_cover(true);
 
   auto font = klib::util::read_file("SourceHanSansHWSC-Bold.otf", true);
-  epub.set_front(font);
+  epub.set_font(font);
 
   epub.set_uuid("5208e6bb-5d25-45b0-a7fd-b97d79a85fd4");
   epub.set_date("2021-08-01");
@@ -396,7 +396,7 @@ TEST_CASE("generate postscript, cover, illustration and image", "[epub]") {
   epub.set_image_num(6);
 
   auto font = klib::util::read_file("SourceHanSansHWSC-Bold.otf", true);
-  epub.set_front(font);
+  epub.set_font(font);
 
   epub.set_uuid("5208e6bb-5d25-45b0-a7fd-b97d79a85fd4");
   epub.set_date("2021-08-01");
@@ -548,7 +548,7 @@ TEST_CASE("full generate", "[epub]") {
   epub.set_image_num(6);
 
   auto font = klib::util::read_file("SourceHanSansHWSC-Bold.otf", true);
-  epub.set_front(font);
+  epub.set_font(font);
 
   epub.add_content("title 1", {"abc 1"});
   epub.add_content("title 2", {"abc 2"});
