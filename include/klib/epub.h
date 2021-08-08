@@ -8,7 +8,7 @@
 #include <cstdint>
 #include <string>
 #include <string_view>
-#include <utility>
+#include <tuple>
 #include <vector>
 
 namespace klib::epub {
@@ -166,7 +166,8 @@ class Epub {
 
   std::string_view style_;
   std::string_view font_;
-  std::vector<std::pair<std::string, std::vector<std::string>>> content_;
+  std::vector<std::tuple<std::string, std::string, std::vector<std::string>>>
+      content_;
 };
 
 }  // namespace klib::epub

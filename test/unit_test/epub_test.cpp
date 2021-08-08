@@ -749,10 +749,9 @@ TEST_CASE("sub-volume", "[epub]") {
   auto font = klib::util::read_file("SourceHanSansHWSC-Bold.otf", true);
   epub.set_font(font);
 
-  // TODO
-  epub.add_content("title 1", {"abc 1"});
-  epub.add_content("title 2", {"abc 2"});
-  epub.add_content("title 3", {"abc 3"});
+  epub.add_content("volume 1", "title 1", {"abc 1"});
+  epub.add_content("volume 1", "title 2", {"abc 2"});
+  epub.add_content("volume 2", "title 3", {"abc 3"});
 
   epub.set_uuid("5208e6bb-5d25-45b0-a7fd-b97d79a85fd4");
   epub.set_date("2021-08-01");

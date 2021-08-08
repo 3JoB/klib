@@ -207,7 +207,12 @@ void Epub::set_date(const std::string &date) { date_ = date; }
 
 void Epub::add_content(const std::string &title,
                        const std::vector<std::string> &text) {
-  content_.emplace_back(title, text);
+  add_content("", title, text);
+}
+
+void Epub::add_content(const std::string &volume_name, const std::string &title,
+                       const std::vector<std::string> &content) {
+  content_.emplace_back(volume_name, title, content);
 }
 
 void Epub::generate(bool archive) {
@@ -287,7 +292,7 @@ void Epub::generate_style() const {
 void Epub::generate_chapter() const {
   auto size = std::size(content_);
   for (std::size_t i = 0; i < size; ++i) {
-    auto [title, texts] = content_[i];
+    auto [volume_name, title, texts] = content_[i];
     auto doc = generate_xhtml(title, "", true);
     append_texts(doc, texts);
 
@@ -489,8 +494,9 @@ void Epub::generate_toc() const {
 
   auto size = std::size(content_);
   for (std::size_t i = 0; i < size; ++i) {
-    append_nav_map(nav_map, content_[i].first,
-                   "Text/" + num_to_chapter_name(i + 1));
+    // TODO
+    auto [volume_name, title, text] = content_[i];
+    append_nav_map(nav_map, title, "Text/" + num_to_chapter_name(i + 1));
   }
 
   if (generate_postscript_) {
