@@ -7,7 +7,7 @@
 #include "klib/archive.h"
 #include "klib/util.h"
 
-TEST_CASE("Compress and decompress using the zip algorithm") {
+TEST_CASE("Compress and decompress using the zip algorithm", "[archive]") {
   REQUIRE(std::filesystem::is_directory("madler-zlib-7085a61"));
   REQUIRE(klib::util::folder_size("madler-zlib-7085a61") == 2984209);
 
@@ -26,7 +26,7 @@ TEST_CASE("Compress and decompress using the zip algorithm") {
   std::filesystem::remove_all("zip");
 }
 
-TEST_CASE("Compress and decompress using the gzip algorithm") {
+TEST_CASE("Compress and decompress using the gzip algorithm", "[archive]") {
   REQUIRE(std::filesystem::is_directory("madler-zlib-7085a61"));
   REQUIRE(klib::util::folder_size("madler-zlib-7085a61") == 2984209);
 
@@ -45,7 +45,8 @@ TEST_CASE("Compress and decompress using the gzip algorithm") {
   std::filesystem::remove_all("gzip");
 }
 
-TEST_CASE("Decompress using the gzip algorithm, compressed file from github") {
+TEST_CASE("Decompress using the gzip algorithm, compressed file from github",
+          "[archive]") {
   REQUIRE(std::filesystem::exists("zlib-v1.2.11.tar.gz"));
   REQUIRE(klib::util::sha3_512("zlib-v1.2.11.tar.gz") ==
           "38af19362e48ec80f6565cf18245f520c8ee5348374cb0c11286f3b23cc93fd05a6a"
@@ -67,7 +68,8 @@ TEST_CASE("Decompress using the gzip algorithm, compressed file from github") {
 
 TEST_CASE(
     "Compress and decompress using the zip algorithm, excluding the outermost "
-    "folder") {
+    "folder",
+    "[archive]") {
   REQUIRE(std::filesystem::is_directory("madler-zlib-7085a61"));
   REQUIRE(klib::util::folder_size("madler-zlib-7085a61") == 2984209);
 

@@ -11,6 +11,7 @@
 #include <boost/uuid/uuid_io.hpp>
 #include <pugixml.hpp>
 
+#include "klib/archive.h"
 #include "klib/exception.h"
 #include "klib/util.h"
 #include "klib/version.h"
@@ -244,6 +245,9 @@ void Epub::generate() {
   generate_content();
   generate_toc();
   generate_mimetype();
+
+  klib::archive::compress(book_name_, klib::archive::Algorithm::Zip,
+                          book_name_ + ".epub", false);
 }
 
 void Epub::generate_container() const {

@@ -712,5 +712,9 @@ TEST_CASE("full generate", "[epub]") {
 )");
 
   ptr.reset();
+
+  REQUIRE(std::filesystem::is_regular_file("test book.epub"));
+
   std::filesystem::remove_all("test book");
+  std::filesystem::remove("test book.epub");
 }

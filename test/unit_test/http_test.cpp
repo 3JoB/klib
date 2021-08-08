@@ -5,7 +5,7 @@
 #include "klib/http.h"
 #include "klib/util.h"
 
-TEST_CASE("download html") {
+TEST_CASE("download html", "[http]") {
   klib::http::Request request;
   request.verbose(true);
 
@@ -29,7 +29,7 @@ TEST_CASE("download html") {
   REQUIRE(!std::empty(response.text()));
 }
 
-TEST_CASE("download file") {
+TEST_CASE("download file", "[http]") {
   klib::http::Request request;
   request.verbose(true);
   request.allow_redirects(true);

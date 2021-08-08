@@ -3,7 +3,7 @@
 #include "klib/exception.h"
 #include "klib/html.h"
 
-TEST_CASE("html_tidy") {
+TEST_CASE("html_tidy", "[html]") {
   REQUIRE(klib::html::html_tidy("<title>Foo</title><p>Foo!") ==
           R"(<!DOCTYPE html>
 <html xmlns="http://www.w3.org/1999/xhtml">
