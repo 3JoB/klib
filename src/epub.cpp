@@ -15,14 +15,8 @@
 #include "klib/util.h"
 #include "klib/version.h"
 
-extern char font[];
-extern int font_size;
-
 extern char style[];
 extern int style_size;
-
-inline std::string_view font_str(font, font_size);
-inline std::string_view style_str(style, style_size);
 
 namespace klib::epub {
 
@@ -173,6 +167,8 @@ void append_texts(pugi::xml_document &doc,
 
 }  // namespace
 
+Epub::Epub() { style_ = std::string_view(style, style_size); }
+
 void Epub::set_creator(const std::string &creator) { creator_ = creator; }
 
 void Epub::set_book_name(const std::string &book_name) {
@@ -198,6 +194,12 @@ void Epub::set_illustration_num(std::int32_t illustration_num) {
 }
 
 void Epub::set_image_num(std::int32_t image_num) { image_num_ = image_num; }
+
+void Epub::set_front(const std::string &font) {
+  font_ = std::string_view(font.data(), std::size(font));
+}
+
+void Epub::set_front(std::string_view font) { font_ = font; }
 
 void Epub::set_uuid(const std::string &uuid) { uuid_ = "urn:uuid:" + uuid; }
 
@@ -260,11 +262,19 @@ void Epub::generate_container() const {
 }
 
 void Epub::generate_font() const {
-  klib::util::write_file(Epub::font_path, true, font_str);
+  if (std::empty(font_)) {
+    throw klib::RuntimeError("The font is empty");
+  }
+
+  klib::util::write_file(Epub::font_path, true, font_);
 }
 
 void Epub::generate_style() const {
-  klib::util::write_file(Epub::style_path, false, style_str);
+  if (std::empty(style_)) {
+    throw klib::RuntimeError("The style is empty");
+  }
+
+  klib::util::write_file(Epub::style_path, false, style_);
 }
 
 void Epub::generate_chapter() const {

@@ -11,6 +11,8 @@ namespace klib::epub {
 // TODO deal with old style
 class Epub {
  public:
+  Epub();
+
   void set_creator(const std::string &creator);
   void set_book_name(const std::string &book_name);
   void set_author(const std::string &author);
@@ -20,6 +22,9 @@ class Epub {
   void set_generate_postscript(bool generate_postscript);
   void set_illustration_num(std::int32_t illustration_num);
   void set_image_num(std::int32_t image_num);
+
+  void set_front(const std::string &font);
+  void set_front(std::string_view font);
 
   // for test
   void set_uuid(const std::string &uuid);
@@ -81,10 +86,9 @@ class Epub {
   std::string uuid_;
   std::string date_;
 
+  std::string_view style_;
+  std::string_view font_;
   std::vector<std::pair<std::string, std::vector<std::string>>> content_;
-
-  // TODO ???
-  bool connect_chinese_ = false;
 };
 
 }  // namespace klib::epub

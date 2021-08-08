@@ -79,11 +79,11 @@ endif()
 # ---------------------------------------------------------------------------------------
 # Build epub file
 # ---------------------------------------------------------------------------------------
-file(GLOB_RECURSE EPUB_FILE CONFIGURE_DEPENDS "${KLIB_SOURCE_DIR}/epub/*")
-file(COPY ${EPUB_FILE} DESTINATION ${KLIB_BINARY_DIR})
+file(GLOB_RECURSE STYLE_FILE CONFIGURE_DEPENDS "${KLIB_SOURCE_DIR}/style/*")
+file(COPY ${STYLE_FILE} DESTINATION ${KLIB_BINARY_DIR})
 
-add_library(epub STATIC ${KLIB_SOURCE_DIR}/src/epub.s)
-target_compile_options(epub PRIVATE "-Wno-unused-command-line-argument")
+add_library(style STATIC ${KLIB_SOURCE_DIR}/src/epub.s)
+target_compile_options(style PRIVATE "-Wno-unused-command-line-argument")
 
 # ---------------------------------------------------------------------------------------
 # Build static library
@@ -96,7 +96,7 @@ if(KLIB_BUILD_STATIC)
 
   add_library(${LIBRARY} STATIC ${LIBRARY_SRC})
   add_library(${LIBRARY}::${LIBRARY} ALIAS ${LIBRARY})
-  add_dependencies(${LIBRARY} epub)
+  add_dependencies(${LIBRARY} style)
 
   # https://cmake.org/cmake/help/latest/command/target_include_directories.html
   # https://stackoverflow.com/questions/26037954/cmake-target-link-libraries-interface-dependencies
@@ -119,7 +119,7 @@ if(KLIB_BUILD_STATIC)
     TARGET ${LIBRARY}
     POST_BUILD
     COMMAND ar -x $<TARGET_FILE:${LIBRARY}>
-    COMMAND ar -x $<TARGET_FILE:epub>
+    COMMAND ar -x $<TARGET_FILE:style>
     COMMAND ar -x /usr/local/lib/libz.a
     COMMAND ar -x /usr/local/lib/libarchive.a
     COMMAND ar -x /usr/local/lib/libcrypto.a
@@ -149,7 +149,7 @@ if(KLIB_BUILD_SHARED)
   target_compile_features(${LIBRARY}-shared INTERFACE cxx_std_20)
   target_link_libraries(
     ${LIBRARY}-shared
-    PRIVATE epub
+    PRIVATE style
             ${LibArchive_LIBRARIES}
             OpenSSL::Crypto
             CURL::libcurl
