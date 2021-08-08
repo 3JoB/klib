@@ -1,17 +1,29 @@
 #include <filesystem>
+#include <memory>
 
+#include <fmt/format.h>
 #include <catch2/catch.hpp>
 
 #include "klib/epub.h"
 #include "klib/util.h"
 
-TEST_CASE("generate") {
+TEST_CASE("base generate") {
   klib::epub::Epub epub;
-  epub.set_book_name("test");
-  epub.generate();
+  epub.set_creator("kaiser");
+  epub.set_book_name("test book");
+  epub.set_author("test author");
+  epub.set_introduction({"test", "introduction"});
 
-  REQUIRE(std::filesystem::exists("test/META-INF/container.xml"));
-  REQUIRE(klib::util::read_file("test/META-INF/container.xml", false) ==
+  epub.set_uuid("5208e6bb-5d25-45b0-a7fd-b97d79a85fd4");
+  epub.set_date("2021-08-01");
+
+  REQUIRE_NOTHROW(epub.generate());
+  REQUIRE(std::filesystem::is_directory("test book"));
+
+  auto ptr = std::make_unique<klib::util::ChangeWorkingDir>("test book");
+
+  REQUIRE(std::filesystem::exists(klib::epub::Epub::container_path));
+  REQUIRE(klib::util::read_file(klib::epub::Epub::container_path, false) ==
           R"(<?xml version="1.0" encoding="UTF-8"?>
 <container version="1.0" xmlns="urn:oasis:names:tc:opendocument:xmlns:container">
     <rootfiles>
@@ -20,13 +32,671 @@ TEST_CASE("generate") {
 </container>
 )");
 
-  REQUIRE(std::filesystem::exists("test/mimetype"));
-  REQUIRE(klib::util::read_file("test/mimetype", false) ==
-          "application/epub+zip");
+  REQUIRE(std::filesystem::exists(klib::epub::Epub::font_path));
+  REQUIRE(std::filesystem::file_size(klib::epub::Epub::font_path) == 16958696);
 
-  REQUIRE(std::filesystem::exists("test/OEBPS/content.opf"));
-  REQUIRE(klib::util::read_file("test/OEBPS/content.opf", false) ==
-          "application/epub+zip");
+  REQUIRE(std::filesystem::exists(klib::epub::Epub::style_path));
+  REQUIRE(std::filesystem::file_size(klib::epub::Epub::style_path) == 9307);
 
-  std::filesystem::remove_all("test");
+  REQUIRE(std::filesystem::exists(klib::epub::Epub::introduction_path));
+  REQUIRE(klib::util::read_file(klib::epub::Epub::introduction_path, false) ==
+          R"(<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.1//EN" "http://www.w3.org/TR/xhtml11/DTD/xhtml11.dtd">
+<html xmlns="http://www.w3.org/1999/xhtml" xml:lang="zh" xmlns:epub="http://www.idpf.org/2007/ops">
+    <head>
+        <link href="../Styles/style.css" rel="stylesheet" type="text/css" />
+        <title>简介</title>
+    </head>
+    <body>
+        <div>
+            <h1 class="bold">简介</h1>
+            <p>test</p>
+            <p>introduction</p>
+        </div>
+    </body>
+</html>
+)");
+
+  REQUIRE(std::filesystem::exists(klib::epub::Epub::message_path));
+  REQUIRE(klib::util::read_file(klib::epub::Epub::message_path, false) ==
+          R"(<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.1//EN" "http://www.w3.org/TR/xhtml11/DTD/xhtml11.dtd">
+<html xmlns="http://www.w3.org/1999/xhtml" xml:lang="zh" xmlns:epub="http://www.idpf.org/2007/ops">
+    <head>
+        <link href="../Styles/style.css" rel="stylesheet" type="text/css" />
+        <title>制作信息</title>
+    </head>
+    <body>
+        <div>
+            <h1 class="bold">制作信息</h1>
+            <div class="cutline">
+                <p class="makerifm">制作者：kaiser</p>
+            </div>
+        </div>
+    </body>
+</html>
+)");
+
+  REQUIRE(std::filesystem::exists(klib::epub::Epub::content_path));
+  REQUIRE(klib::util::read_file(klib::epub::Epub::content_path, false) ==
+          R"(<?xml version="1.0" encoding="UTF-8"?>
+<package version="2.0" unique-identifier="BookId" xmlns="http://www.idpf.org/2007/opf">
+    <metadata xmlns:dc="http://purl.org/dc/elements/1.1/" xmlns:opf="http://www.idpf.org/2007/opf">
+        <dc:title>test book</dc:title>
+        <dc:creator opf:file-as="kaiser" opf:role="aut">test author</dc:creator>
+        <dc:language>zh-CN</dc:language>
+        <dc:rights>kaiser</dc:rights>
+        <meta name="klib version" content="v0.2.0" />
+        <dc:date opf:event="modification" xmlns:opf="http://www.idpf.org/2007/opf">2021-08-01</dc:date>
+        <dc:identifier id="BookId" opf:scheme="UUID">urn:uuid:5208e6bb-5d25-45b0-a7fd-b97d79a85fd4</dc:identifier>
+    </metadata>
+    <manifest>
+        <item id="ncx" href="toc.ncx" media-type="application/x-dtbncx+xml" />
+        <item id="style.css" href="Styles/style.css" media-type="text/css" />
+        <item id="SourceHanSansHWSC-Bold.otf" href="Fonts/SourceHanSansHWSC-Bold.otf" media-type="application/vnd.ms-opentype" />
+        <item id="message.xhtml" href="Text/message.xhtml" media-type="application/xhtml+xml" />
+        <item id="introduction.xhtml" href="Text/introduction.xhtml" media-type="application/xhtml+xml" />
+    </manifest>
+    <spine toc="ncx">
+        <itemref idref="message.xhtml" />
+        <itemref idref="introduction.xhtml" />
+    </spine>
+    <guide />
+</package>
+)");
+
+  REQUIRE(std::filesystem::exists(klib::epub::Epub::toc_path));
+  REQUIRE(klib::util::read_file(klib::epub::Epub::toc_path, false) ==
+          R"(<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE ncx PUBLIC "-//NISO//DTD ncx 2005-1//EN" "http://www.daisy.org/z3986/2005/ncx-2005-1.dtd">
+<ncx version="2005-1" xmlns="http://www.daisy.org/z3986/2005/ncx/">
+    <head>
+        <meta name="dtb:uid" content="urn:uuid:5208e6bb-5d25-45b0-a7fd-b97d79a85fd4" />
+        <meta name="dtb:depth" content="1" />
+        <meta name="dtb:totalPageCount" content="0" />
+        <meta name="dtb:maxPageNumber" content="0" />
+    </head>
+    <docTitle>
+        <text>test book</text>
+    </docTitle>
+    <docAuthor>
+        <text>test author</text>
+    </docAuthor>
+    <navMap>
+        <navPoint id="navPoint-1" playOrder="1">
+            <navLabel>
+                <text>制作信息</text>
+            </navLabel>
+            <content src="Text/message.xhtml" />
+        </navPoint>
+        <navPoint id="navPoint-2" playOrder="2">
+            <navLabel>
+                <text>简介</text>
+            </navLabel>
+            <content src="Text/introduction.xhtml" />
+        </navPoint>
+    </navMap>
+</ncx>
+)");
+
+  REQUIRE(std::filesystem::exists(klib::epub::Epub::mimetype_path));
+  REQUIRE(klib::util::read_file(klib::epub::Epub::mimetype_path, false) ==
+          R"(application/epub+zip
+)");
+
+  ptr.reset();
+  std::filesystem::remove_all("test book");
+}
+
+TEST_CASE("generate postscript") {
+  klib::epub::Epub epub;
+  epub.set_creator("kaiser");
+  epub.set_book_name("test book");
+  epub.set_author("test author");
+  epub.set_introduction({"test", "introduction"});
+  epub.set_generate_postscript(true);
+
+  epub.set_uuid("5208e6bb-5d25-45b0-a7fd-b97d79a85fd4");
+  epub.set_date("2021-08-01");
+
+  REQUIRE_NOTHROW(epub.generate());
+  REQUIRE(std::filesystem::is_directory("test book"));
+
+  auto ptr = std::make_unique<klib::util::ChangeWorkingDir>("test book");
+
+  REQUIRE(std::filesystem::exists(klib::epub::Epub::postscript_path));
+  REQUIRE(klib::util::read_file(klib::epub::Epub::postscript_path, false) ==
+          R"(<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.1//EN" "http://www.w3.org/TR/xhtml11/DTD/xhtml11.dtd">
+<html xmlns="http://www.w3.org/1999/xhtml" xml:lang="zh" xmlns:epub="http://www.idpf.org/2007/ops">
+    <head>
+        <link href="../Styles/style.css" rel="stylesheet" type="text/css" />
+        <title>后记</title>
+    </head>
+    <body>
+        <div>
+            <h1 class="bold">后记</h1>
+        </div>
+    </body>
+</html>
+)");
+
+  REQUIRE(std::filesystem::exists(klib::epub::Epub::content_path));
+  REQUIRE(klib::util::read_file(klib::epub::Epub::content_path, false) ==
+          R"(<?xml version="1.0" encoding="UTF-8"?>
+<package version="2.0" unique-identifier="BookId" xmlns="http://www.idpf.org/2007/opf">
+    <metadata xmlns:dc="http://purl.org/dc/elements/1.1/" xmlns:opf="http://www.idpf.org/2007/opf">
+        <dc:title>test book</dc:title>
+        <dc:creator opf:file-as="kaiser" opf:role="aut">test author</dc:creator>
+        <dc:language>zh-CN</dc:language>
+        <dc:rights>kaiser</dc:rights>
+        <meta name="klib version" content="v0.2.0" />
+        <dc:date opf:event="modification" xmlns:opf="http://www.idpf.org/2007/opf">2021-08-01</dc:date>
+        <dc:identifier id="BookId" opf:scheme="UUID">urn:uuid:5208e6bb-5d25-45b0-a7fd-b97d79a85fd4</dc:identifier>
+    </metadata>
+    <manifest>
+        <item id="ncx" href="toc.ncx" media-type="application/x-dtbncx+xml" />
+        <item id="style.css" href="Styles/style.css" media-type="text/css" />
+        <item id="SourceHanSansHWSC-Bold.otf" href="Fonts/SourceHanSansHWSC-Bold.otf" media-type="application/vnd.ms-opentype" />
+        <item id="message.xhtml" href="Text/message.xhtml" media-type="application/xhtml+xml" />
+        <item id="introduction.xhtml" href="Text/introduction.xhtml" media-type="application/xhtml+xml" />
+        <item id="postscript.xhtml" href="Text/postscript.xhtml" media-type="application/xhtml+xml" />
+    </manifest>
+    <spine toc="ncx">
+        <itemref idref="message.xhtml" />
+        <itemref idref="introduction.xhtml" />
+        <itemref idref="postscript.xhtml" />
+    </spine>
+    <guide />
+</package>
+)");
+
+  REQUIRE(std::filesystem::exists(klib::epub::Epub::toc_path));
+  REQUIRE(klib::util::read_file(klib::epub::Epub::toc_path, false) ==
+          R"(<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE ncx PUBLIC "-//NISO//DTD ncx 2005-1//EN" "http://www.daisy.org/z3986/2005/ncx-2005-1.dtd">
+<ncx version="2005-1" xmlns="http://www.daisy.org/z3986/2005/ncx/">
+    <head>
+        <meta name="dtb:uid" content="urn:uuid:5208e6bb-5d25-45b0-a7fd-b97d79a85fd4" />
+        <meta name="dtb:depth" content="1" />
+        <meta name="dtb:totalPageCount" content="0" />
+        <meta name="dtb:maxPageNumber" content="0" />
+    </head>
+    <docTitle>
+        <text>test book</text>
+    </docTitle>
+    <docAuthor>
+        <text>test author</text>
+    </docAuthor>
+    <navMap>
+        <navPoint id="navPoint-1" playOrder="1">
+            <navLabel>
+                <text>制作信息</text>
+            </navLabel>
+            <content src="Text/message.xhtml" />
+        </navPoint>
+        <navPoint id="navPoint-2" playOrder="2">
+            <navLabel>
+                <text>简介</text>
+            </navLabel>
+            <content src="Text/introduction.xhtml" />
+        </navPoint>
+        <navPoint id="navPoint-3" playOrder="3">
+            <navLabel>
+                <text>后记</text>
+            </navLabel>
+            <content src="Text/postscript.xhtml" />
+        </navPoint>
+    </navMap>
+</ncx>
+)");
+
+  ptr.reset();
+  std::filesystem::remove_all("test book");
+}
+
+TEST_CASE("generate postscript and cover") {
+  klib::epub::Epub epub;
+  epub.set_creator("kaiser");
+  epub.set_book_name("test book");
+  epub.set_author("test author");
+  epub.set_introduction({"test", "introduction"});
+  epub.set_generate_postscript(true);
+  epub.set_generate_cover(true);
+
+  epub.set_uuid("5208e6bb-5d25-45b0-a7fd-b97d79a85fd4");
+  epub.set_date("2021-08-01");
+
+  REQUIRE_NOTHROW(epub.generate());
+  REQUIRE(std::filesystem::is_directory("test book"));
+
+  auto ptr = std::make_unique<klib::util::ChangeWorkingDir>("test book");
+
+  REQUIRE(std::filesystem::exists(klib::epub::Epub::cover_path));
+  REQUIRE(klib::util::read_file(klib::epub::Epub::cover_path, false) ==
+          R"(<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.1//EN" "http://www.w3.org/TR/xhtml11/DTD/xhtml11.dtd">
+<html xmlns="http://www.w3.org/1999/xhtml" xml:lang="zh" xmlns:epub="http://www.idpf.org/2007/ops">
+    <head>
+        <link href="../Styles/style.css" rel="stylesheet" type="text/css" />
+        <title>封面</title>
+    </head>
+    <body>
+        <div class="cover">
+            <img alt="" src="../Images/cover.jpg" />
+        </div>
+    </body>
+</html>
+)");
+
+  REQUIRE(std::filesystem::exists(klib::epub::Epub::content_path));
+  REQUIRE(klib::util::read_file(klib::epub::Epub::content_path, false) ==
+          R"(<?xml version="1.0" encoding="UTF-8"?>
+<package version="2.0" unique-identifier="BookId" xmlns="http://www.idpf.org/2007/opf">
+    <metadata xmlns:dc="http://purl.org/dc/elements/1.1/" xmlns:opf="http://www.idpf.org/2007/opf">
+        <dc:title>test book</dc:title>
+        <dc:creator opf:file-as="kaiser" opf:role="aut">test author</dc:creator>
+        <dc:language>zh-CN</dc:language>
+        <dc:rights>kaiser</dc:rights>
+        <meta name="klib version" content="v0.2.0" />
+        <dc:date opf:event="modification" xmlns:opf="http://www.idpf.org/2007/opf">2021-08-01</dc:date>
+        <dc:identifier id="BookId" opf:scheme="UUID">urn:uuid:5208e6bb-5d25-45b0-a7fd-b97d79a85fd4</dc:identifier>
+        <meta name="cover" content="cover.jpg" />
+    </metadata>
+    <manifest>
+        <item id="ncx" href="toc.ncx" media-type="application/x-dtbncx+xml" />
+        <item id="style.css" href="Styles/style.css" media-type="text/css" />
+        <item id="SourceHanSansHWSC-Bold.otf" href="Fonts/SourceHanSansHWSC-Bold.otf" media-type="application/vnd.ms-opentype" />
+        <item id="cover.jpg" href="Images/cover.jpg" media-type="image/jpeg" />
+        <item id="cover.xhtml" href="Text/cover.xhtml" media-type="application/xhtml+xml" />
+        <item id="message.xhtml" href="Text/message.xhtml" media-type="application/xhtml+xml" />
+        <item id="introduction.xhtml" href="Text/introduction.xhtml" media-type="application/xhtml+xml" />
+        <item id="postscript.xhtml" href="Text/postscript.xhtml" media-type="application/xhtml+xml" />
+    </manifest>
+    <spine toc="ncx">
+        <itemref idref="cover.xhtml" />
+        <itemref idref="message.xhtml" />
+        <itemref idref="introduction.xhtml" />
+        <itemref idref="postscript.xhtml" />
+    </spine>
+    <guide>
+        <reference type="cover" title="Cover" href="Text/cover.xhtml" />
+    </guide>
+</package>
+)");
+
+  REQUIRE(std::filesystem::exists(klib::epub::Epub::toc_path));
+  REQUIRE(klib::util::read_file(klib::epub::Epub::toc_path, false) ==
+          R"(<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE ncx PUBLIC "-//NISO//DTD ncx 2005-1//EN" "http://www.daisy.org/z3986/2005/ncx-2005-1.dtd">
+<ncx version="2005-1" xmlns="http://www.daisy.org/z3986/2005/ncx/">
+    <head>
+        <meta name="dtb:uid" content="urn:uuid:5208e6bb-5d25-45b0-a7fd-b97d79a85fd4" />
+        <meta name="dtb:depth" content="1" />
+        <meta name="dtb:totalPageCount" content="0" />
+        <meta name="dtb:maxPageNumber" content="0" />
+    </head>
+    <docTitle>
+        <text>test book</text>
+    </docTitle>
+    <docAuthor>
+        <text>test author</text>
+    </docAuthor>
+    <navMap>
+        <navPoint id="navPoint-1" playOrder="1">
+            <navLabel>
+                <text>封面</text>
+            </navLabel>
+            <content src="Text/cover.xhtml" />
+        </navPoint>
+        <navPoint id="navPoint-2" playOrder="2">
+            <navLabel>
+                <text>制作信息</text>
+            </navLabel>
+            <content src="Text/message.xhtml" />
+        </navPoint>
+        <navPoint id="navPoint-3" playOrder="3">
+            <navLabel>
+                <text>简介</text>
+            </navLabel>
+            <content src="Text/introduction.xhtml" />
+        </navPoint>
+        <navPoint id="navPoint-4" playOrder="4">
+            <navLabel>
+                <text>后记</text>
+            </navLabel>
+            <content src="Text/postscript.xhtml" />
+        </navPoint>
+    </navMap>
+</ncx>
+)");
+
+  ptr.reset();
+  std::filesystem::remove_all("test book");
+}
+
+TEST_CASE(
+    "generate postscript and cover, illustration num = 3, image num = 6") {
+  klib::epub::Epub epub;
+  epub.set_creator("kaiser");
+  epub.set_book_name("test book");
+  epub.set_author("test author");
+  epub.set_introduction({"test", "introduction"});
+  epub.set_generate_postscript(true);
+  epub.set_generate_cover(true);
+  epub.set_illustration_num(3);
+  epub.set_image_num(6);
+
+  epub.set_uuid("5208e6bb-5d25-45b0-a7fd-b97d79a85fd4");
+  epub.set_date("2021-08-01");
+
+  REQUIRE_NOTHROW(epub.generate());
+  REQUIRE(std::filesystem::is_directory("test book"));
+
+  auto ptr = std::make_unique<klib::util::ChangeWorkingDir>("test book");
+
+  for (std::int32_t i = 1; i <= 3; ++i) {
+    auto file_name = "illustration00" + std::to_string(i) + ".xhtml";
+    auto path = std::filesystem::path(klib::epub::Epub::text_dir) / file_name;
+
+    REQUIRE(std::filesystem::exists(path));
+    REQUIRE(klib::util::read_file(path, false) ==
+            fmt::format(R"(<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.1//EN" "http://www.w3.org/TR/xhtml11/DTD/xhtml11.dtd">
+<html xmlns="http://www.w3.org/1999/xhtml" xml:lang="zh" xmlns:epub="http://www.idpf.org/2007/ops">
+    <head>
+        <link href="../Styles/style.css" rel="stylesheet" type="text/css" />
+        <title>彩页00{}</title>
+    </head>
+    <body>
+        <div>
+            <div class="center">
+                <img alt="00{}" src="../Images/00{}.jpg" />
+            </div>
+        </div>
+    </body>
+</html>
+)",
+                        std::to_string(i), std::to_string(i),
+                        std::to_string(i)));
+  }
+
+  REQUIRE(std::filesystem::exists(klib::epub::Epub::content_path));
+  REQUIRE(klib::util::read_file(klib::epub::Epub::content_path, false) ==
+          R"(<?xml version="1.0" encoding="UTF-8"?>
+<package version="2.0" unique-identifier="BookId" xmlns="http://www.idpf.org/2007/opf">
+    <metadata xmlns:dc="http://purl.org/dc/elements/1.1/" xmlns:opf="http://www.idpf.org/2007/opf">
+        <dc:title>test book</dc:title>
+        <dc:creator opf:file-as="kaiser" opf:role="aut">test author</dc:creator>
+        <dc:language>zh-CN</dc:language>
+        <dc:rights>kaiser</dc:rights>
+        <meta name="klib version" content="v0.2.0" />
+        <dc:date opf:event="modification" xmlns:opf="http://www.idpf.org/2007/opf">2021-08-01</dc:date>
+        <dc:identifier id="BookId" opf:scheme="UUID">urn:uuid:5208e6bb-5d25-45b0-a7fd-b97d79a85fd4</dc:identifier>
+        <meta name="cover" content="cover.jpg" />
+    </metadata>
+    <manifest>
+        <item id="ncx" href="toc.ncx" media-type="application/x-dtbncx+xml" />
+        <item id="style.css" href="Styles/style.css" media-type="text/css" />
+        <item id="SourceHanSansHWSC-Bold.otf" href="Fonts/SourceHanSansHWSC-Bold.otf" media-type="application/vnd.ms-opentype" />
+        <item id="x001.jpg" href="Images/001.jpg" media-type="image/jpeg" />
+        <item id="x002.jpg" href="Images/002.jpg" media-type="image/jpeg" />
+        <item id="x003.jpg" href="Images/003.jpg" media-type="image/jpeg" />
+        <item id="x004.jpg" href="Images/004.jpg" media-type="image/jpeg" />
+        <item id="x005.jpg" href="Images/005.jpg" media-type="image/jpeg" />
+        <item id="x006.jpg" href="Images/006.jpg" media-type="image/jpeg" />
+        <item id="cover.jpg" href="Images/cover.jpg" media-type="image/jpeg" />
+        <item id="cover.xhtml" href="Text/cover.xhtml" media-type="application/xhtml+xml" />
+        <item id="message.xhtml" href="Text/message.xhtml" media-type="application/xhtml+xml" />
+        <item id="introduction.xhtml" href="Text/introduction.xhtml" media-type="application/xhtml+xml" />
+        <item id="illustration001.xhtml" href="Text/illustration001.xhtml" media-type="application/xhtml+xml" />
+        <item id="illustration002.xhtml" href="Text/illustration002.xhtml" media-type="application/xhtml+xml" />
+        <item id="illustration003.xhtml" href="Text/illustration003.xhtml" media-type="application/xhtml+xml" />
+        <item id="postscript.xhtml" href="Text/postscript.xhtml" media-type="application/xhtml+xml" />
+    </manifest>
+    <spine toc="ncx">
+        <itemref idref="cover.xhtml" />
+        <itemref idref="message.xhtml" />
+        <itemref idref="introduction.xhtml" />
+        <itemref idref="illustration001.xhtml" />
+        <itemref idref="illustration002.xhtml" />
+        <itemref idref="illustration003.xhtml" />
+        <itemref idref="postscript.xhtml" />
+    </spine>
+    <guide>
+        <reference type="cover" title="Cover" href="Text/cover.xhtml" />
+    </guide>
+</package>
+)");
+
+  REQUIRE(std::filesystem::exists(klib::epub::Epub::toc_path));
+  REQUIRE(klib::util::read_file(klib::epub::Epub::toc_path, false) ==
+          R"(<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE ncx PUBLIC "-//NISO//DTD ncx 2005-1//EN" "http://www.daisy.org/z3986/2005/ncx-2005-1.dtd">
+<ncx version="2005-1" xmlns="http://www.daisy.org/z3986/2005/ncx/">
+    <head>
+        <meta name="dtb:uid" content="urn:uuid:5208e6bb-5d25-45b0-a7fd-b97d79a85fd4" />
+        <meta name="dtb:depth" content="1" />
+        <meta name="dtb:totalPageCount" content="0" />
+        <meta name="dtb:maxPageNumber" content="0" />
+    </head>
+    <docTitle>
+        <text>test book</text>
+    </docTitle>
+    <docAuthor>
+        <text>test author</text>
+    </docAuthor>
+    <navMap>
+        <navPoint id="navPoint-1" playOrder="1">
+            <navLabel>
+                <text>封面</text>
+            </navLabel>
+            <content src="Text/cover.xhtml" />
+        </navPoint>
+        <navPoint id="navPoint-2" playOrder="2">
+            <navLabel>
+                <text>制作信息</text>
+            </navLabel>
+            <content src="Text/message.xhtml" />
+        </navPoint>
+        <navPoint id="navPoint-3" playOrder="3">
+            <navLabel>
+                <text>简介</text>
+            </navLabel>
+            <content src="Text/introduction.xhtml" />
+        </navPoint>
+        <navPoint id="navPoint-4" playOrder="4">
+            <navLabel>
+                <text>彩页</text>
+            </navLabel>
+            <content src="Text/illustration001.xhtml" />
+        </navPoint>
+        <navPoint id="navPoint-5" playOrder="5">
+            <navLabel>
+                <text>后记</text>
+            </navLabel>
+            <content src="Text/postscript.xhtml" />
+        </navPoint>
+    </navMap>
+</ncx>
+)");
+
+  ptr.reset();
+  std::filesystem::remove_all("test book");
+}
+
+TEST_CASE("full generate") {
+  klib::epub::Epub epub;
+  epub.set_creator("kaiser");
+  epub.set_book_name("test book");
+  epub.set_author("test author");
+  epub.set_introduction({"test", "introduction"});
+  epub.set_generate_postscript(true);
+  epub.set_generate_cover(true);
+  epub.set_illustration_num(3);
+  epub.set_image_num(6);
+
+  epub.add_content("title 1", {"abc 1"});
+  epub.add_content("title 2", {"abc 2"});
+  epub.add_content("title 3", {"abc 3"});
+
+  epub.set_uuid("5208e6bb-5d25-45b0-a7fd-b97d79a85fd4");
+  epub.set_date("2021-08-01");
+
+  REQUIRE_NOTHROW(epub.generate());
+  REQUIRE(std::filesystem::is_directory("test book"));
+
+  auto ptr = std::make_unique<klib::util::ChangeWorkingDir>("test book");
+
+  for (std::int32_t i = 1; i <= 3; ++i) {
+    auto file_name = "chapter00" + std::to_string(i) + ".xhtml";
+    auto path = std::filesystem::path(klib::epub::Epub::text_dir) / file_name;
+
+    REQUIRE(std::filesystem::exists(path));
+    REQUIRE(klib::util::read_file(path, false) ==
+            fmt::format(R"(<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.1//EN" "http://www.w3.org/TR/xhtml11/DTD/xhtml11.dtd">
+<html xmlns="http://www.w3.org/1999/xhtml" xml:lang="zh" xmlns:epub="http://www.idpf.org/2007/ops">
+    <head>
+        <link href="../Styles/style.css" rel="stylesheet" type="text/css" />
+        <title>title {}</title>
+    </head>
+    <body>
+        <div>
+            <h1 class="bold">title {}</h1>
+            <p>abc {}</p>
+        </div>
+    </body>
+</html>
+)",
+                        std::to_string(i), std::to_string(i),
+                        std::to_string(i)));
+  }
+
+  REQUIRE(std::filesystem::exists(klib::epub::Epub::content_path));
+  REQUIRE(klib::util::read_file(klib::epub::Epub::content_path, false) ==
+          R"(<?xml version="1.0" encoding="UTF-8"?>
+<package version="2.0" unique-identifier="BookId" xmlns="http://www.idpf.org/2007/opf">
+    <metadata xmlns:dc="http://purl.org/dc/elements/1.1/" xmlns:opf="http://www.idpf.org/2007/opf">
+        <dc:title>test book</dc:title>
+        <dc:creator opf:file-as="kaiser" opf:role="aut">test author</dc:creator>
+        <dc:language>zh-CN</dc:language>
+        <dc:rights>kaiser</dc:rights>
+        <meta name="klib version" content="v0.2.0" />
+        <dc:date opf:event="modification" xmlns:opf="http://www.idpf.org/2007/opf">2021-08-01</dc:date>
+        <dc:identifier id="BookId" opf:scheme="UUID">urn:uuid:5208e6bb-5d25-45b0-a7fd-b97d79a85fd4</dc:identifier>
+        <meta name="cover" content="cover.jpg" />
+    </metadata>
+    <manifest>
+        <item id="ncx" href="toc.ncx" media-type="application/x-dtbncx+xml" />
+        <item id="style.css" href="Styles/style.css" media-type="text/css" />
+        <item id="SourceHanSansHWSC-Bold.otf" href="Fonts/SourceHanSansHWSC-Bold.otf" media-type="application/vnd.ms-opentype" />
+        <item id="x001.jpg" href="Images/001.jpg" media-type="image/jpeg" />
+        <item id="x002.jpg" href="Images/002.jpg" media-type="image/jpeg" />
+        <item id="x003.jpg" href="Images/003.jpg" media-type="image/jpeg" />
+        <item id="x004.jpg" href="Images/004.jpg" media-type="image/jpeg" />
+        <item id="x005.jpg" href="Images/005.jpg" media-type="image/jpeg" />
+        <item id="x006.jpg" href="Images/006.jpg" media-type="image/jpeg" />
+        <item id="cover.jpg" href="Images/cover.jpg" media-type="image/jpeg" />
+        <item id="cover.xhtml" href="Text/cover.xhtml" media-type="application/xhtml+xml" />
+        <item id="message.xhtml" href="Text/message.xhtml" media-type="application/xhtml+xml" />
+        <item id="introduction.xhtml" href="Text/introduction.xhtml" media-type="application/xhtml+xml" />
+        <item id="illustration001.xhtml" href="Text/illustration001.xhtml" media-type="application/xhtml+xml" />
+        <item id="illustration002.xhtml" href="Text/illustration002.xhtml" media-type="application/xhtml+xml" />
+        <item id="illustration003.xhtml" href="Text/illustration003.xhtml" media-type="application/xhtml+xml" />
+        <item id="chapter001.xhtml" href="Text/chapter001.xhtml" media-type="application/xhtml+xml" />
+        <item id="chapter002.xhtml" href="Text/chapter002.xhtml" media-type="application/xhtml+xml" />
+        <item id="chapter003.xhtml" href="Text/chapter003.xhtml" media-type="application/xhtml+xml" />
+        <item id="postscript.xhtml" href="Text/postscript.xhtml" media-type="application/xhtml+xml" />
+    </manifest>
+    <spine toc="ncx">
+        <itemref idref="cover.xhtml" />
+        <itemref idref="message.xhtml" />
+        <itemref idref="introduction.xhtml" />
+        <itemref idref="illustration001.xhtml" />
+        <itemref idref="illustration002.xhtml" />
+        <itemref idref="illustration003.xhtml" />
+        <itemref idref="chapter001.xhtml" />
+        <itemref idref="chapter002.xhtml" />
+        <itemref idref="chapter003.xhtml" />
+        <itemref idref="postscript.xhtml" />
+    </spine>
+    <guide>
+        <reference type="cover" title="Cover" href="Text/cover.xhtml" />
+    </guide>
+</package>
+)");
+
+  REQUIRE(std::filesystem::exists(klib::epub::Epub::toc_path));
+  REQUIRE(klib::util::read_file(klib::epub::Epub::toc_path, false) ==
+          R"(<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE ncx PUBLIC "-//NISO//DTD ncx 2005-1//EN" "http://www.daisy.org/z3986/2005/ncx-2005-1.dtd">
+<ncx version="2005-1" xmlns="http://www.daisy.org/z3986/2005/ncx/">
+    <head>
+        <meta name="dtb:uid" content="urn:uuid:5208e6bb-5d25-45b0-a7fd-b97d79a85fd4" />
+        <meta name="dtb:depth" content="1" />
+        <meta name="dtb:totalPageCount" content="0" />
+        <meta name="dtb:maxPageNumber" content="0" />
+    </head>
+    <docTitle>
+        <text>test book</text>
+    </docTitle>
+    <docAuthor>
+        <text>test author</text>
+    </docAuthor>
+    <navMap>
+        <navPoint id="navPoint-1" playOrder="1">
+            <navLabel>
+                <text>封面</text>
+            </navLabel>
+            <content src="Text/cover.xhtml" />
+        </navPoint>
+        <navPoint id="navPoint-2" playOrder="2">
+            <navLabel>
+                <text>制作信息</text>
+            </navLabel>
+            <content src="Text/message.xhtml" />
+        </navPoint>
+        <navPoint id="navPoint-3" playOrder="3">
+            <navLabel>
+                <text>简介</text>
+            </navLabel>
+            <content src="Text/introduction.xhtml" />
+        </navPoint>
+        <navPoint id="navPoint-4" playOrder="4">
+            <navLabel>
+                <text>彩页</text>
+            </navLabel>
+            <content src="Text/illustration001.xhtml" />
+        </navPoint>
+        <navPoint id="navPoint-5" playOrder="5">
+            <navLabel>
+                <text>title 1</text>
+            </navLabel>
+            <content src="Text/chapter001.xhtml" />
+        </navPoint>
+        <navPoint id="navPoint-6" playOrder="6">
+            <navLabel>
+                <text>title 2</text>
+            </navLabel>
+            <content src="Text/chapter002.xhtml" />
+        </navPoint>
+        <navPoint id="navPoint-7" playOrder="7">
+            <navLabel>
+                <text>title 3</text>
+            </navLabel>
+            <content src="Text/chapter003.xhtml" />
+        </navPoint>
+        <navPoint id="navPoint-8" playOrder="8">
+            <navLabel>
+                <text>后记</text>
+            </navLabel>
+            <content src="Text/postscript.xhtml" />
+        </navPoint>
+    </navMap>
+</ncx>
+)");
+
+  ptr.reset();
+  std::filesystem::remove_all("test book");
 }

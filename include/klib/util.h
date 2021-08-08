@@ -8,6 +8,7 @@
 #include <cstddef>
 #include <cstdint>
 #include <string>
+#include <string_view>
 
 namespace klib::util {
 
@@ -70,6 +71,22 @@ class ChangeWorkingDir {
 std::string read_file(const std::string &path, bool binary_mode);
 
 /**
+ * @brief Read a file at a time and store it in a string
+ * @param path: File path
+ * @param binary_mode: Whether to open in binary mode
+ * @return A string that holds the contents of the file
+ */
+std::string read_file(std::string_view path, bool binary_mode);
+
+/**
+ * @brief Read a file at a time and store it in a string
+ * @param path: File path
+ * @param binary_mode: Whether to open in binary mode
+ * @return A string that holds the contents of the file
+ */
+std::string read_file(const char *path, bool binary_mode);
+
+/**
  * @brief Write string to file
  * @param path: File path
  * @param binary_mode: Whether to open in binary mode
@@ -77,6 +94,20 @@ std::string read_file(const std::string &path, bool binary_mode);
  */
 void write_file(const std::string &path, bool binary_mode,
                 const std::string &content);
+
+void write_file(const std::string &path, bool binary_mode,
+                std::string_view content);
+
+void write_file(std::string_view path, bool binary_mode,
+                const std::string &content);
+
+void write_file(std::string_view path, bool binary_mode,
+                std::string_view content);
+
+void write_file(const char *path, bool binary_mode, const std::string &content);
+
+void write_file(const char *path, bool binary_mode, const char *content,
+                std::size_t length);
 
 /**
  * @brief Convert UTF-8 encoded string to UTF-16 encoded string

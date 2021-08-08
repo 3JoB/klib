@@ -252,9 +252,9 @@ std::string get_date(std::string_view time_zone) {
       icu::TimeZone::createTimeZone(time_zone.data()), status);
   check_icu(status);
 
-  auto result = fmt::format("{}-{:02d}-{}", calendar->get(UCAL_YEAR, status),
-                            calendar->get(UCAL_MONTH, status) + 1,
-                            calendar->get(UCAL_DATE, status));
+  auto result = fmt::format(
+      "{}-{:02d}-{:02d}", calendar->get(UCAL_YEAR, status),
+      calendar->get(UCAL_MONTH, status) + 1, calendar->get(UCAL_DATE, status));
   check_icu(status);
 
   delete calendar;

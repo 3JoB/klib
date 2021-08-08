@@ -1,7 +1,6 @@
 #pragma once
 
 #include <cstdint>
-#include <filesystem>
 #include <string>
 #include <vector>
 
@@ -23,6 +22,10 @@ class Epub {
   void set_convert_tc_to_sc(bool convert_tc_to_sc);
   void set_old_style(bool old_style);
 
+  // for test
+  void set_uuid(const std::string &uuid);
+  void set_date(const std::string &date);
+
   void add_content(const std::string &title,
                    const std::vector<std::string> &content);
   void add_content(const std::string &volume_name, const std::string &title,
@@ -35,19 +38,23 @@ class Epub {
   void generate_mimetype() const;
   void generate_content() const;
   void generate_toc() const;
-
-  void generate_image() const;
-  void generate_cover() const;
-  void generate_message() const;
   void generate_introduction() const;
   void generate_illustration() const;
   void generate_chapter() const;
   void generate_postscript() const;
+  void generate_message() const;
+  void generate_cover() const;
+
+  void generate_font() const;
+  void generate_style() const;
+
+  void generate_uuid();
+  void generate_date();
 
   std::string creator_ = "TODO";
   std::string book_name_ = "TODO";
   std::string author_ = "TODO";
-  std::string introduction_ = {"TODO"};
+  std::vector<std::string> introduction_ = {"TODO"};
 
   std::vector<std::pair<std::string, std::vector<std::string>>> content_;
 
@@ -61,15 +68,30 @@ class Epub {
   bool connect_chinese_ = false;
   bool old_style_ = false;
 
-  std::filesystem::path root_;
+  std::string uuid_;
+  std::string date_;
 
-  const char *container_path_ = "META-INF/container.xml";
-  const char *content_path_ = "OEBPS/content.opf";
-  const char *toc_path_ = "OEBPS/toc.ncx";
-  const char *mimetype_path_ = "mimetype";
+ public:
+  constexpr static std::string_view meta_inf_dir = "META-INF";
+  constexpr static std::string_view oebps_dir = "OEBPS";
+  constexpr static std::string_view fonts_dir = "OEBPS/Fonts";
+  constexpr static std::string_view images_dir = "OEBPS/Images";
+  constexpr static std::string_view styles_dir = "OEBPS/Styles";
+  constexpr static std::string_view text_dir = "OEBPS/Text";
 
-  const char *ident_ = "    ";
-  std::string uuid_ = "urn:uuid:";
+  constexpr static std::string_view container_path = "META-INF/container.xml";
+  constexpr static std::string_view font_path =
+      "OEBPS/Fonts/SourceHanSansHWSC-Bold.otf";
+  constexpr static std::string_view style_path = "OEBPS/Styles/style.css";
+  constexpr static std::string_view cover_path = "OEBPS/Text/cover.xhtml";
+  constexpr static std::string_view introduction_path =
+      "OEBPS/Text/introduction.xhtml";
+  constexpr static std::string_view message_path = "OEBPS/Text/message.xhtml";
+  constexpr static std::string_view postscript_path =
+      "OEBPS/Text/postscript.xhtml";
+  constexpr static std::string_view content_path = "OEBPS/content.opf";
+  constexpr static std::string_view toc_path = "OEBPS/toc.ncx";
+  constexpr static std::string_view mimetype_path = "mimetype";
 };
 
 }  // namespace klib::epub

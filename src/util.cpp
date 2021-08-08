@@ -92,6 +92,14 @@ ChangeWorkingDir::~ChangeWorkingDir() {
 }
 
 std::string read_file(const std::string &path, bool binary_mode) {
+  return read_file(path.c_str(), binary_mode);
+}
+
+std::string read_file(std::string_view path, bool binary_mode) {
+  return read_file(path.data(), binary_mode);
+}
+
+std::string read_file(const char *path, bool binary_mode) {
   if (!std::filesystem::is_regular_file(path)) {
     throw klib::RuntimeError(
         fmt::format(FMT_COMPILE("'{}' is not a file"), path));
@@ -120,6 +128,31 @@ std::string read_file(const std::string &path, bool binary_mode) {
 
 void write_file(const std::string &path, bool binary_mode,
                 const std::string &content) {
+  write_file(path.c_str(), binary_mode, content.c_str(), std::size(content));
+}
+
+void write_file(const std::string &path, bool binary_mode,
+                std::string_view content) {
+  write_file(path.c_str(), binary_mode, content.data(), std::size(content));
+}
+
+void write_file(std::string_view path, bool binary_mode,
+                const std::string &content) {
+  write_file(path.data(), binary_mode, content.c_str(), std::size(content));
+}
+
+void write_file(std::string_view path, bool binary_mode,
+                std::string_view content) {
+  write_file(path.data(), binary_mode, content.data(), std::size(content));
+}
+
+void write_file(const char *path, bool binary_mode,
+                const std::string &content) {
+  write_file(path, binary_mode, content.data(), std::size(content));
+}
+
+void write_file(const char *path, bool binary_mode, const char *content,
+                std::size_t length) {
   std::ofstream ofs;
   if (binary_mode) {
     ofs.open(path, std::ofstream::binary);
@@ -132,7 +165,7 @@ void write_file(const std::string &path, bool binary_mode,
         fmt::format(FMT_COMPILE("can not open file: '{}'"), path));
   }
 
-  ofs.write(content.data(), std::size(content));
+  ofs.write(content, length);
 }
 
 // https://zh.cppreference.com/w/c/string/multibyte/mbrtoc16
