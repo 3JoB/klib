@@ -165,6 +165,77 @@ void append_texts(pugi::xml_document &doc,
 
 }  // namespace
 
+void Epub::set_creator(const std::string &creator) { creator_ = creator; }
+
+void Epub::set_book_name(const std::string &book_name) {
+  book_name_ = book_name;
+}
+
+void Epub::set_author(const std::string &author) { author_ = author; }
+
+void Epub::set_introduction(const std::vector<std::string> &introduction) {
+  introduction_ = introduction;
+}
+
+void Epub::set_generate_cover(bool generate_cover) {
+  generate_cover_ = generate_cover;
+}
+
+void Epub::set_generate_postscript(bool generate_postscript) {
+  generate_postscript_ = generate_postscript;
+}
+
+void Epub::set_illustration_num(std::int32_t illustration_num) {
+  illustration_num_ = illustration_num;
+}
+
+void Epub::set_image_num(std::int32_t image_num) { image_num_ = image_num; }
+
+void Epub::set_uuid(const std::string &uuid) { uuid_ = "urn:uuid:" + uuid; }
+
+void Epub::set_date(const std::string &date) { date_ = date; }
+
+void Epub::add_content(const std::string &title,
+                       const std::vector<std::string> &content) {
+  content_.emplace_back(title, content);
+}
+
+void Epub::generate() {
+  if (std::empty(uuid_)) {
+    auto uuid = boost::uuids::random_generator()();
+    uuid_ = "urn:uuid:" + boost::uuids::to_string(uuid);
+  }
+
+  if (std::empty(date_)) {
+    date_ = get_date();
+  }
+
+  std::filesystem::create_directory(book_name_);
+  klib::util::ChangeWorkingDir change_working_dir(book_name_);
+
+  std::filesystem::create_directory(Epub::meta_inf_dir);
+  std::filesystem::create_directory(Epub::oebps_dir);
+  std::filesystem::create_directory(Epub::fonts_dir);
+  if (image_num_ > 0) {
+    std::filesystem::create_directory(Epub::images_dir);
+  }
+  std::filesystem::create_directory(Epub::styles_dir);
+  std::filesystem::create_directory(Epub::text_dir);
+
+  generate_container();
+  generate_font();
+  generate_style();
+  generate_chapter();
+  generate_cover();
+  generate_illustration();
+  generate_introduction();
+  generate_message();
+  generate_postscript();
+  generate_content();
+  generate_toc();
+  generate_mimetype();
+}
+
 void Epub::generate_container() const {
   auto doc = generate_declaration();
 
@@ -173,49 +244,11 @@ void Epub::generate_container() const {
   container.append_attribute("xmlns") =
       "urn:oasis:names:tc:opendocument:xmlns:container";
 
-  auto rootfiles = container.append_child("rootfiles");
-  auto rootfile = rootfiles.append_child("rootfile");
-  rootfile.append_attribute("full-path") = "OEBPS/content.opf";
+  auto rootfile = container.append_child("rootfiles").append_child("rootfile");
+  rootfile.append_attribute("full-path") = content_path.data();
   rootfile.append_attribute("media-type") = "application/oebps-package+xml";
 
-  save_file(doc, "META-INF/container.xml");
-}
-
-void Epub::set_book_name(const std::string &book_name) {
-  book_name_ = book_name;
-}
-
-void Epub::generate() {
-  std::filesystem::create_directory(book_name_);
-  klib::util::ChangeWorkingDir change_working_dir(book_name_);
-
-  std::filesystem::create_directory(meta_inf_dir);
-  std::filesystem::create_directory(oebps_dir);
-  std::filesystem::create_directory(fonts_dir);
-
-  if (image_num_ > 0) {
-    std::filesystem::create_directory("OEBPS/Images");
-  }
-
-  std::filesystem::create_directory(styles_dir);
-  std::filesystem::create_directory(text_dir);
-
-  generate_uuid();
-  generate_date();
-
-  generate_container();
-  generate_mimetype();
-  generate_content();
-  generate_toc();
-  generate_introduction();
-  generate_illustration();
-  generate_chapter();
-  generate_postscript();
-  generate_message();
-  generate_cover();
-
-  generate_font();
-  generate_style();
+  save_file(doc, container_path);
 }
 
 void Epub::generate_mimetype() const {
@@ -408,34 +441,6 @@ void Epub::generate_postscript() const {
   save_file(doc, "OEBPS/Text/postscript.xhtml");
 }
 
-void Epub::set_creator(const std::string &creator) { creator_ = creator; }
-
-void Epub::set_author(const std::string &author) { author_ = author; }
-
-void Epub::set_introduction(const std::vector<std::string> &introduction) {
-  introduction_ = introduction;
-}
-
-void Epub::set_generate_cover(bool generate_cover) {
-  generate_cover_ = generate_cover;
-}
-
-void Epub::set_generate_postscript(bool generate_postscript) {
-  generate_postscript_ = generate_postscript;
-}
-
-void Epub::set_illustration_num(std::int32_t illustration_num) {
-  illustration_num_ = illustration_num;
-}
-
-void Epub::set_image_num(std::int32_t image_num) { image_num_ = image_num; }
-
-void Epub::set_convert_tc_to_sc(bool convert_tc_to_sc) {
-  convert_tc_to_sc_ = convert_tc_to_sc;
-}
-
-void Epub::set_old_style(bool old_style) { old_style_ = old_style; }
-
 void Epub::generate_message() const {
   auto doc = generate_xhtml("制作信息", "", true);
 
@@ -458,23 +463,6 @@ void Epub::generate_style() const {
   klib::util::write_file(Epub::style_path, true, style_str);
 }
 
-void Epub::generate_uuid() {
-  if (std::empty(uuid_)) {
-    auto uuid = boost::uuids::random_generator()();
-    uuid_ = "urn:uuid:" + boost::uuids::to_string(uuid);
-  }
-}
-
-void Epub::set_uuid(const std::string &uuid) { uuid_ = "urn:uuid:" + uuid; }
-
-void Epub::set_date(const std::string &date) { date_ = date; }
-
-void Epub::generate_date() {
-  if (std::empty(date_)) {
-    date_ = get_date();
-  }
-}
-
 void Epub::generate_cover() const {
   auto doc = generate_xhtml("封面", "cover", false);
 
@@ -484,11 +472,6 @@ void Epub::generate_cover() const {
   img.append_attribute("src") = "../Images/cover.jpg";
 
   save_file(doc, Epub::cover_path);
-}
-
-void Epub::add_content(const std::string &title,
-                       const std::vector<std::string> &content) {
-  content_.emplace_back(title, content);
 }
 
 }  // namespace klib::epub

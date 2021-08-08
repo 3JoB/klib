@@ -7,7 +7,7 @@
 #include "klib/epub.h"
 #include "klib/util.h"
 
-TEST_CASE("base generate") {
+TEST_CASE("base generate", "[epub]") {
   klib::epub::Epub epub;
   epub.set_creator("kaiser");
   epub.set_book_name("test book");
@@ -148,7 +148,7 @@ TEST_CASE("base generate") {
   std::filesystem::remove_all("test book");
 }
 
-TEST_CASE("generate postscript") {
+TEST_CASE("generate postscript", "[epub]") {
   klib::epub::Epub epub;
   epub.set_creator("kaiser");
   epub.set_book_name("test book");
@@ -255,7 +255,7 @@ TEST_CASE("generate postscript") {
   std::filesystem::remove_all("test book");
 }
 
-TEST_CASE("generate postscript and cover") {
+TEST_CASE("generate postscript and cover", "[epub]") {
   klib::epub::Epub epub;
   epub.set_creator("kaiser");
   epub.set_book_name("test book");
@@ -375,8 +375,7 @@ TEST_CASE("generate postscript and cover") {
   std::filesystem::remove_all("test book");
 }
 
-TEST_CASE(
-    "generate postscript and cover, illustration num = 3, image num = 6") {
+TEST_CASE("generate postscript, cover, illustration and image", "[epub]") {
   klib::epub::Epub epub;
   epub.set_creator("kaiser");
   epub.set_book_name("test book");
@@ -525,7 +524,7 @@ TEST_CASE(
   std::filesystem::remove_all("test book");
 }
 
-TEST_CASE("full generate") {
+TEST_CASE("full generate", "[epub]") {
   klib::epub::Epub epub;
   epub.set_creator("kaiser");
   epub.set_book_name("test book");

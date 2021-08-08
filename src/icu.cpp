@@ -24,8 +24,7 @@ class Trans {
   Trans &operator=(Trans &&) = delete;
 
   static const Trans &get();
-  [[nodiscard]] std::string trans_str(const std::string &str,
-                                      bool trans_hant) const;
+  [[nodiscard]] std::string trans_str(const std::string &str) const;
 
  private:
   Trans();
@@ -212,12 +211,10 @@ const Trans &Trans::get() {
   return trans;
 }
 
-std::string Trans::trans_str(const std::string &str, bool trans_hant) const {
+std::string Trans::trans_str(const std::string &str) const {
   icu::UnicodeString icu_str(str.c_str());
 
-  if (trans_hant) {
-    hant_hans_->transliterate(icu_str);
-  }
+  hant_hans_->transliterate(icu_str);
   fullwidth_halfwidth_->transliterate(icu_str);
   custom_trans(icu_str);
 
@@ -241,8 +238,8 @@ Trans::Trans() {
 
 }  // namespace
 
-std::string trans_str(const std::string &str, bool convert_tc_to_sc) {
-  return Trans::get().trans_str(str, convert_tc_to_sc);
+std::string trans_str(const std::string &str) {
+  return Trans::get().trans_str(str);
 }
 
 std::string get_date(std::string_view time_zone) {

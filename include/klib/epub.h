@@ -2,14 +2,16 @@
 
 #include <cstdint>
 #include <string>
+#include <string_view>
+#include <utility>
 #include <vector>
 
 namespace klib::epub {
 
+// TODO deal with old style
 class Epub {
  public:
   void set_creator(const std::string &creator);
-
   void set_book_name(const std::string &book_name);
   void set_author(const std::string &author);
   void set_introduction(const std::vector<std::string> &introduction);
@@ -19,59 +21,18 @@ class Epub {
   void set_illustration_num(std::int32_t illustration_num);
   void set_image_num(std::int32_t image_num);
 
-  void set_convert_tc_to_sc(bool convert_tc_to_sc);
-  void set_old_style(bool old_style);
-
   // for test
   void set_uuid(const std::string &uuid);
   void set_date(const std::string &date);
 
   void add_content(const std::string &title,
                    const std::vector<std::string> &content);
-  void add_content(const std::string &volume_name, const std::string &title,
-                   const std::vector<std::string> &content);
+  // TODO
+  //  void add_content(const std::string &volume_name, const std::string &title,
+  //                   const std::vector<std::string> &content);
 
   void generate();
 
- private:
-  void generate_container() const;
-  void generate_mimetype() const;
-  void generate_content() const;
-  void generate_toc() const;
-  void generate_introduction() const;
-  void generate_illustration() const;
-  void generate_chapter() const;
-  void generate_postscript() const;
-  void generate_message() const;
-  void generate_cover() const;
-
-  void generate_font() const;
-  void generate_style() const;
-
-  void generate_uuid();
-  void generate_date();
-
-  std::string creator_ = "TODO";
-  std::string book_name_ = "TODO";
-  std::string author_ = "TODO";
-  std::vector<std::string> introduction_ = {"TODO"};
-
-  std::vector<std::pair<std::string, std::vector<std::string>>> content_;
-
-  bool generate_cover_ = false;
-  bool generate_postscript_ = false;
-  std::int32_t illustration_num_ = 0;
-  std::int32_t image_num_ = 0;
-
-  bool convert_tc_to_sc_ = false;
-  // TODO ???
-  bool connect_chinese_ = false;
-  bool old_style_ = false;
-
-  std::string uuid_;
-  std::string date_;
-
- public:
   constexpr static std::string_view meta_inf_dir = "META-INF";
   constexpr static std::string_view oebps_dir = "OEBPS";
   constexpr static std::string_view fonts_dir = "OEBPS/Fonts";
@@ -92,6 +53,38 @@ class Epub {
   constexpr static std::string_view content_path = "OEBPS/content.opf";
   constexpr static std::string_view toc_path = "OEBPS/toc.ncx";
   constexpr static std::string_view mimetype_path = "mimetype";
+
+ private:
+  void generate_container() const;
+  void generate_font() const;
+  void generate_style() const;
+  void generate_chapter() const;
+  void generate_cover() const;
+  void generate_illustration() const;
+  void generate_introduction() const;
+  void generate_message() const;
+  void generate_postscript() const;
+  void generate_content() const;
+  void generate_toc() const;
+  void generate_mimetype() const;
+
+  std::string creator_ = "TODO";
+  std::string book_name_ = "TODO";
+  std::string author_ = "TODO";
+  std::vector<std::string> introduction_ = {"TODO"};
+
+  bool generate_cover_ = false;
+  bool generate_postscript_ = false;
+  std::int32_t illustration_num_ = 0;
+  std::int32_t image_num_ = 0;
+
+  std::string uuid_;
+  std::string date_;
+
+  std::vector<std::pair<std::string, std::vector<std::string>>> content_;
+
+  // TODO ???
+  bool connect_chinese_ = false;
 };
 
 }  // namespace klib::epub
