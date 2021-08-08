@@ -10,7 +10,7 @@
 TEST_CASE("base generate", "[epub]") {
   klib::Epub epub;
   epub.set_creator("kaiser");
-  epub.set_book_name("test book");
+  epub.set_book_name("test book1");
   epub.set_author("test author");
   epub.set_introduction({"test", "introduction"});
 
@@ -18,9 +18,9 @@ TEST_CASE("base generate", "[epub]") {
   epub.set_date("2021-08-01");
 
   REQUIRE_NOTHROW(epub.generate());
-  REQUIRE(std::filesystem::is_directory("test book"));
+  REQUIRE(std::filesystem::is_directory("test book1"));
 
-  auto ptr = std::make_unique<klib::ChangeWorkingDir>("test book");
+  auto ptr = std::make_unique<klib::ChangeWorkingDir>("test book1");
 
   REQUIRE(std::filesystem::exists(klib::Epub::container_path));
   REQUIRE(klib::read_file(klib::Epub::container_path, false) ==
@@ -82,7 +82,7 @@ TEST_CASE("base generate", "[epub]") {
           R"(<?xml version="1.0" encoding="UTF-8"?>
 <package version="2.0" unique-identifier="BookId" xmlns="http://www.idpf.org/2007/opf">
     <metadata xmlns:dc="http://purl.org/dc/elements/1.1/" xmlns:opf="http://www.idpf.org/2007/opf">
-        <dc:title>test book</dc:title>
+        <dc:title>test book1</dc:title>
         <dc:creator opf:file-as="kaiser" opf:role="aut">test author</dc:creator>
         <dc:language>zh-CN</dc:language>
         <dc:rights>kaiser</dc:rights>
@@ -117,7 +117,7 @@ TEST_CASE("base generate", "[epub]") {
         <meta name="dtb:maxPageNumber" content="0" />
     </head>
     <docTitle>
-        <text>test book</text>
+        <text>test book1</text>
     </docTitle>
     <docAuthor>
         <text>test author</text>
@@ -146,16 +146,16 @@ TEST_CASE("base generate", "[epub]") {
 
   ptr.reset();
 
-  REQUIRE(std::filesystem::is_regular_file("test book.epub"));
+  REQUIRE(std::filesystem::is_regular_file("test book1.epub"));
 
-  std::filesystem::remove_all("test book");
-  std::filesystem::remove("test book.epub");
+  std::filesystem::remove_all("test book1");
+  std::filesystem::remove("test book1.epub");
 }
 
 TEST_CASE("generate postscript", "[epub]") {
   klib::Epub epub;
   epub.set_creator("kaiser");
-  epub.set_book_name("test book");
+  epub.set_book_name("test book2");
   epub.set_author("test author");
   epub.set_introduction({"test", "introduction"});
   epub.set_generate_postscript(true);
@@ -164,9 +164,9 @@ TEST_CASE("generate postscript", "[epub]") {
   epub.set_date("2021-08-01");
 
   REQUIRE_NOTHROW(epub.generate());
-  REQUIRE(std::filesystem::is_directory("test book"));
+  REQUIRE(std::filesystem::is_directory("test book2"));
 
-  auto ptr = std::make_unique<klib::ChangeWorkingDir>("test book");
+  auto ptr = std::make_unique<klib::ChangeWorkingDir>("test book2");
 
   REQUIRE(std::filesystem::exists(klib::Epub::postscript_path));
   REQUIRE(klib::read_file(klib::Epub::postscript_path, false) ==
@@ -190,7 +190,7 @@ TEST_CASE("generate postscript", "[epub]") {
           R"(<?xml version="1.0" encoding="UTF-8"?>
 <package version="2.0" unique-identifier="BookId" xmlns="http://www.idpf.org/2007/opf">
     <metadata xmlns:dc="http://purl.org/dc/elements/1.1/" xmlns:opf="http://www.idpf.org/2007/opf">
-        <dc:title>test book</dc:title>
+        <dc:title>test book2</dc:title>
         <dc:creator opf:file-as="kaiser" opf:role="aut">test author</dc:creator>
         <dc:language>zh-CN</dc:language>
         <dc:rights>kaiser</dc:rights>
@@ -227,7 +227,7 @@ TEST_CASE("generate postscript", "[epub]") {
         <meta name="dtb:maxPageNumber" content="0" />
     </head>
     <docTitle>
-        <text>test book</text>
+        <text>test book2</text>
     </docTitle>
     <docAuthor>
         <text>test author</text>
@@ -257,16 +257,16 @@ TEST_CASE("generate postscript", "[epub]") {
 
   ptr.reset();
 
-  REQUIRE(std::filesystem::is_regular_file("test book.epub"));
+  REQUIRE(std::filesystem::is_regular_file("test book2.epub"));
 
-  std::filesystem::remove_all("test book");
-  std::filesystem::remove("test book.epub");
+  std::filesystem::remove_all("test book2");
+  std::filesystem::remove("test book2.epub");
 }
 
 TEST_CASE("generate postscript and cover", "[epub]") {
   klib::Epub epub;
   epub.set_creator("kaiser");
-  epub.set_book_name("test book");
+  epub.set_book_name("test book3");
   epub.set_author("test author");
   epub.set_introduction({"test", "introduction"});
   epub.set_generate_postscript(true);
@@ -276,9 +276,9 @@ TEST_CASE("generate postscript and cover", "[epub]") {
   epub.set_date("2021-08-01");
 
   REQUIRE_NOTHROW(epub.generate());
-  REQUIRE(std::filesystem::is_directory("test book"));
+  REQUIRE(std::filesystem::is_directory("test book3"));
 
-  auto ptr = std::make_unique<klib::ChangeWorkingDir>("test book");
+  auto ptr = std::make_unique<klib::ChangeWorkingDir>("test book3");
 
   REQUIRE(std::filesystem::exists(klib::Epub::cover_path));
   REQUIRE(klib::read_file(klib::Epub::cover_path, false) ==
@@ -302,7 +302,7 @@ TEST_CASE("generate postscript and cover", "[epub]") {
           R"(<?xml version="1.0" encoding="UTF-8"?>
 <package version="2.0" unique-identifier="BookId" xmlns="http://www.idpf.org/2007/opf">
     <metadata xmlns:dc="http://purl.org/dc/elements/1.1/" xmlns:opf="http://www.idpf.org/2007/opf">
-        <dc:title>test book</dc:title>
+        <dc:title>test book3</dc:title>
         <dc:creator opf:file-as="kaiser" opf:role="aut">test author</dc:creator>
         <dc:language>zh-CN</dc:language>
         <dc:rights>kaiser</dc:rights>
@@ -345,7 +345,7 @@ TEST_CASE("generate postscript and cover", "[epub]") {
         <meta name="dtb:maxPageNumber" content="0" />
     </head>
     <docTitle>
-        <text>test book</text>
+        <text>test book3</text>
     </docTitle>
     <docAuthor>
         <text>test author</text>
@@ -381,16 +381,16 @@ TEST_CASE("generate postscript and cover", "[epub]") {
 
   ptr.reset();
 
-  REQUIRE(std::filesystem::is_regular_file("test book.epub"));
+  REQUIRE(std::filesystem::is_regular_file("test book3.epub"));
 
-  std::filesystem::remove_all("test book");
-  std::filesystem::remove("test book.epub");
+  std::filesystem::remove_all("test book3");
+  std::filesystem::remove("test book3.epub");
 }
 
 TEST_CASE("generate postscript, cover, illustration and image", "[epub]") {
   klib::Epub epub;
   epub.set_creator("kaiser");
-  epub.set_book_name("test book");
+  epub.set_book_name("test book4");
   epub.set_author("test author");
   epub.set_introduction({"test", "introduction"});
   epub.set_generate_postscript(true);
@@ -402,9 +402,9 @@ TEST_CASE("generate postscript, cover, illustration and image", "[epub]") {
   epub.set_date("2021-08-01");
 
   REQUIRE_NOTHROW(epub.generate());
-  REQUIRE(std::filesystem::is_directory("test book"));
+  REQUIRE(std::filesystem::is_directory("test book4"));
 
-  auto ptr = std::make_unique<klib::ChangeWorkingDir>("test book");
+  auto ptr = std::make_unique<klib::ChangeWorkingDir>("test book4");
 
   for (std::int32_t i = 1; i <= 3; ++i) {
     auto file_name = "illustration00" + std::to_string(i) + ".xhtml";
@@ -437,7 +437,7 @@ TEST_CASE("generate postscript, cover, illustration and image", "[epub]") {
           R"(<?xml version="1.0" encoding="UTF-8"?>
 <package version="2.0" unique-identifier="BookId" xmlns="http://www.idpf.org/2007/opf">
     <metadata xmlns:dc="http://purl.org/dc/elements/1.1/" xmlns:opf="http://www.idpf.org/2007/opf">
-        <dc:title>test book</dc:title>
+        <dc:title>test book4</dc:title>
         <dc:creator opf:file-as="kaiser" opf:role="aut">test author</dc:creator>
         <dc:language>zh-CN</dc:language>
         <dc:rights>kaiser</dc:rights>
@@ -492,7 +492,7 @@ TEST_CASE("generate postscript, cover, illustration and image", "[epub]") {
         <meta name="dtb:maxPageNumber" content="0" />
     </head>
     <docTitle>
-        <text>test book</text>
+        <text>test book4</text>
     </docTitle>
     <docAuthor>
         <text>test author</text>
@@ -534,16 +534,16 @@ TEST_CASE("generate postscript, cover, illustration and image", "[epub]") {
 
   ptr.reset();
 
-  REQUIRE(std::filesystem::is_regular_file("test book.epub"));
+  REQUIRE(std::filesystem::is_regular_file("test book4.epub"));
 
-  std::filesystem::remove_all("test book");
-  std::filesystem::remove("test book.epub");
+  std::filesystem::remove_all("test book4");
+  std::filesystem::remove("test book4.epub");
 }
 
 TEST_CASE("full generate", "[epub]") {
   klib::Epub epub;
   epub.set_creator("kaiser");
-  epub.set_book_name("test book");
+  epub.set_book_name("test book5");
   epub.set_author("test author");
   epub.set_introduction({"test", "introduction"});
   epub.set_generate_postscript(true);
@@ -559,9 +559,9 @@ TEST_CASE("full generate", "[epub]") {
   epub.set_date("2021-08-01");
 
   REQUIRE_NOTHROW(epub.generate());
-  REQUIRE(std::filesystem::is_directory("test book"));
+  REQUIRE(std::filesystem::is_directory("test book5"));
 
-  auto ptr = std::make_unique<klib::ChangeWorkingDir>("test book");
+  auto ptr = std::make_unique<klib::ChangeWorkingDir>("test book5");
 
   for (std::int32_t i = 1; i <= 3; ++i) {
     auto file_name = "chapter00" + std::to_string(i) + ".xhtml";
@@ -593,7 +593,7 @@ TEST_CASE("full generate", "[epub]") {
           R"(<?xml version="1.0" encoding="UTF-8"?>
 <package version="2.0" unique-identifier="BookId" xmlns="http://www.idpf.org/2007/opf">
     <metadata xmlns:dc="http://purl.org/dc/elements/1.1/" xmlns:opf="http://www.idpf.org/2007/opf">
-        <dc:title>test book</dc:title>
+        <dc:title>test book5</dc:title>
         <dc:creator opf:file-as="kaiser" opf:role="aut">test author</dc:creator>
         <dc:language>zh-CN</dc:language>
         <dc:rights>kaiser</dc:rights>
@@ -654,7 +654,7 @@ TEST_CASE("full generate", "[epub]") {
         <meta name="dtb:maxPageNumber" content="0" />
     </head>
     <docTitle>
-        <text>test book</text>
+        <text>test book5</text>
     </docTitle>
     <docAuthor>
         <text>test author</text>
@@ -714,16 +714,16 @@ TEST_CASE("full generate", "[epub]") {
 
   ptr.reset();
 
-  REQUIRE(std::filesystem::is_regular_file("test book.epub"));
+  REQUIRE(std::filesystem::is_regular_file("test book5.epub"));
 
-  std::filesystem::remove_all("test book");
-  std::filesystem::remove("test book.epub");
+  std::filesystem::remove_all("test book5");
+  std::filesystem::remove("test book5.epub");
 }
 
 TEST_CASE("sub-volume", "[epub]") {
   klib::Epub epub;
   epub.set_creator("kaiser");
-  epub.set_book_name("test book");
+  epub.set_book_name("test book6");
   epub.set_author("test author");
   epub.set_introduction({"test", "introduction"});
   epub.set_generate_postscript(true);
@@ -739,9 +739,9 @@ TEST_CASE("sub-volume", "[epub]") {
   epub.set_date("2021-08-01");
 
   REQUIRE_NOTHROW(epub.generate());
-  REQUIRE(std::filesystem::is_directory("test book"));
+  REQUIRE(std::filesystem::is_directory("test book6"));
 
-  auto ptr = std::make_unique<klib::ChangeWorkingDir>("test book");
+  auto ptr = std::make_unique<klib::ChangeWorkingDir>("test book6");
 
   for (std::int32_t i = 1; i <= 3; ++i) {
     auto file_name = "chapter00" + std::to_string(i) + ".xhtml";
@@ -773,7 +773,7 @@ TEST_CASE("sub-volume", "[epub]") {
           R"(<?xml version="1.0" encoding="UTF-8"?>
 <package version="2.0" unique-identifier="BookId" xmlns="http://www.idpf.org/2007/opf">
     <metadata xmlns:dc="http://purl.org/dc/elements/1.1/" xmlns:opf="http://www.idpf.org/2007/opf">
-        <dc:title>test book</dc:title>
+        <dc:title>test book6</dc:title>
         <dc:creator opf:file-as="kaiser" opf:role="aut">test author</dc:creator>
         <dc:language>zh-CN</dc:language>
         <dc:rights>kaiser</dc:rights>
@@ -838,7 +838,7 @@ TEST_CASE("sub-volume", "[epub]") {
         <meta name="dtb:maxPageNumber" content="0" />
     </head>
     <docTitle>
-        <text>test book</text>
+        <text>test book6</text>
     </docTitle>
     <docAuthor>
         <text>test author</text>
@@ -910,8 +910,8 @@ TEST_CASE("sub-volume", "[epub]") {
 
   ptr.reset();
 
-  REQUIRE(std::filesystem::is_regular_file("test book.epub"));
+  REQUIRE(std::filesystem::is_regular_file("test book6.epub"));
 
-  std::filesystem::remove_all("test book");
-  std::filesystem::remove("test book.epub");
+  std::filesystem::remove_all("test book6");
+  std::filesystem::remove("test book6.epub");
 }
