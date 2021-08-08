@@ -1,4 +1,21 @@
 var searchData=
 [
-  ['text_33',['text',['../classklib_1_1http_1_1Response.html#a0761dc0319b27c3ba779f7cc1ef28147',1,'klib::http::Response']]]
+  ['same_5ffolder_30',['same_folder',['../util_8h.html#a634a5cccf588c12cb1d7e1f4253775c6',1,'klib']]],
+  ['save_5fto_5ffile_31',['save_to_file',['../classklib_1_1Response.html#a06c3d6a2557cca10a102646067e00a09',1,'klib::Response']]],
+  ['set_5fauthor_32',['set_author',['../classklib_1_1Epub.html#a538a6c9cea348757369149454f2e946b',1,'klib::Epub']]],
+  ['set_5fbook_5fname_33',['set_book_name',['../classklib_1_1Epub.html#a03a7eaa3c5a8344f606172aa9457217e',1,'klib::Epub']]],
+  ['set_5fcreator_34',['set_creator',['../classklib_1_1Epub.html#a34d7c9f0316f7a276e891bd682180371',1,'klib::Epub']]],
+  ['set_5fdate_35',['set_date',['../classklib_1_1Epub.html#a84431d9ce2bb1502462f297556af4276',1,'klib::Epub']]],
+  ['set_5fgenerate_5fcover_36',['set_generate_cover',['../classklib_1_1Epub.html#a97b44819940b481c9705799312c8bbeb',1,'klib::Epub']]],
+  ['set_5fgenerate_5fpostscript_37',['set_generate_postscript',['../classklib_1_1Epub.html#ab675c54fee1049fbd34779718aa0afbd',1,'klib::Epub']]],
+  ['set_5fillustration_5fnum_38',['set_illustration_num',['../classklib_1_1Epub.html#a1118cab3aa81d9122e90b376c0e4cf04',1,'klib::Epub']]],
+  ['set_5fimage_5fnum_39',['set_image_num',['../classklib_1_1Epub.html#a1a505673d80de41d21143556f2e8804c',1,'klib::Epub']]],
+  ['set_5fintroduction_40',['set_introduction',['../classklib_1_1Epub.html#a039d5d3f0473b06bd6e9a960b54e820c',1,'klib::Epub']]],
+  ['set_5fno_5fproxy_41',['set_no_proxy',['../classklib_1_1Request.html#aa6db2a71c4c12c8f054715e3f8fc71ae',1,'klib::Request']]],
+  ['set_5fproxy_42',['set_proxy',['../classklib_1_1Request.html#ac2cf384a73a9a958c5a49979db7a4633',1,'klib::Request']]],
+  ['set_5fuser_5fagent_43',['set_user_agent',['../classklib_1_1Request.html#abc72456d5b46d7081dbea3980fefc68b',1,'klib::Request']]],
+  ['set_5fuuid_44',['set_uuid',['../classklib_1_1Epub.html#a92ee9fc4e13f87e8d294a77c49dc12e9',1,'klib::Epub']]],
+  ['sha3_5f512_45',['sha3_512',['../util_8h.html#aa28ba8404c080685ab449acaee513e7f',1,'klib']]],
+  ['status_5fcode_46',['status_code',['../classklib_1_1Response.html#aa839e6f6599e336147cbdacb0e99bddf',1,'klib::Response']]],
+  ['statuscode_47',['StatusCode',['../classklib_1_1Response.html#abbd230b0781eceb59a4851976ad5df32',1,'klib::Response']]]
 ];

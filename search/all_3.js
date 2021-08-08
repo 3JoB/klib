@@ -1,5 +1,7 @@
 var searchData=
 [
-  ['exception_2eh_6',['exception.h',['../exception_8h.html',1,'']]],
-  ['execute_5fcommand_7',['execute_command',['../util_8h.html#ae613fcbef5b65597318bded0ffa03a23',1,'klib::util::execute_command(const std::string &amp;command)'],['../util_8h.html#a9b2f5c259df254c6076c2099adc818b5',1,'klib::util::execute_command(const char *command)']]]
+  ['epub_7',['Epub',['../classklib_1_1Epub.html#a54057ba7eafb52fa2e76581f8b27ab6d',1,'klib::Epub::Epub()'],['../classklib_1_1Epub.html',1,'klib::Epub']]],
+  ['epub_2eh_8',['epub.h',['../epub_8h.html',1,'']]],
+  ['exception_2eh_9',['exception.h',['../exception_8h.html',1,'']]],
+  ['execute_5fcommand_10',['execute_command',['../util_8h.html#a35fd01e366f38537ad663c0ca3d5cbb2',1,'klib::execute_command(const std::string &amp;command)'],['../util_8h.html#a8328b07e32da01c28f3f245f43eecf18',1,'klib::execute_command(const char *command)']]]
 ];

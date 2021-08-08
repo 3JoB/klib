@@ -1,6 +1,6 @@
 var searchData=
 [
-  ['read_5ffile_66',['read_file',['../util_8h.html#ac786df37765314df41c920854075270d',1,'klib::util']]],
-  ['request_67',['Request',['../classklib_1_1http_1_1Request.html#ade4f5d3e3ee8e14b43cbf597499b2b92',1,'klib::http::Request']]],
-  ['runtimeerror_68',['RuntimeError',['../classklib_1_1exception_1_1RuntimeError.html#a3d7bc61f42cc66166b00783f5dcffa52',1,'klib::exception::RuntimeError::RuntimeError(const char *msg)'],['../classklib_1_1exception_1_1RuntimeError.html#aef8c3e8015956be83ae5ada670cbc39d',1,'klib::exception::RuntimeError::RuntimeError(const std::string &amp;msg)'],['../classklib_1_1exception_1_1RuntimeError.html#aed20e10d8e93d67011bc0698547e8859',1,'klib::exception::RuntimeError::RuntimeError(std::string_view msg)']]]
+  ['read_5ffile_86',['read_file',['../util_8h.html#aff1e161e1457b1a895244581b50b9abd',1,'klib']]],
+  ['request_87',['Request',['../classklib_1_1Request.html#a0fe5c62e7c2d1adcb68f56fc644a7c61',1,'klib::Request']]],
+  ['runtimeerror_88',['RuntimeError',['../classklib_1_1RuntimeError.html#aff3943e22b8fdc7a1895da4f68235a7c',1,'klib::RuntimeError::RuntimeError(const char *msg)'],['../classklib_1_1RuntimeError.html#ad2fd5d0096ab416c1fd8dd0a05d7a11e',1,'klib::RuntimeError::RuntimeError(const std::string &amp;msg)'],['../classklib_1_1RuntimeError.html#aa000c04b65c1a10a7b792e3688ed8587',1,'klib::RuntimeError::RuntimeError(std::string_view msg)'],['../classklib_1_1RuntimeError.html#a58f0f5ebc345d39344520a1dbc654632',1,'klib::RuntimeError::RuntimeError(std::string_view fmt, Args &amp;&amp;...args)']]]
 ];

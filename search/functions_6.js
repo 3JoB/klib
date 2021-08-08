@@ -1,5 +1,5 @@
 var searchData=
 [
-  ['header_61',['header',['../classklib_1_1http_1_1Response.html#ae1dffd543b9cc0aa2965812b37b1b88b',1,'klib::http::Response']]],
-  ['html_5ftidy_62',['html_tidy',['../html_8h.html#a35d1ae6a48465db8dda0197189ada480',1,'klib::html']]]
+  ['header_81',['header',['../classklib_1_1Response.html#a7413ea495b8f8f89eccda9ef43c99cf8',1,'klib::Response']]],
+  ['html_5ftidy_82',['html_tidy',['../html_8h.html#aa66388003e03ea8397cdb0677f454a4c',1,'klib']]]
 ];

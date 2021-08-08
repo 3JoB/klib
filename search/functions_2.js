@@ -1,4 +1,4 @@
 var searchData=
 [
-  ['decompress_57',['decompress',['../archive_8h.html#a72918a8be91a327d4c6334061780177b',1,'klib::archive']]]
+  ['decompress_75',['decompress',['../archive_8h.html#a592124b0a2f1df676326dda164a75c86',1,'klib']]]
 ];

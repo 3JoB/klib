@@ -31,7 +31,7 @@
  <tr style="height: 56px;">
   <td id="projectalign" style="padding-left: 0.5em;">
    <div id="projectname">klib
-   &#160;<span id="projectnumber">0.1.8</span>
+   &#160;<span id="projectnumber">0.2.0</span>
    </div>
   </td>
    <td>        <div id="MSearchBox" class="MSearchBoxInactive">
@@ -102,23 +102,32 @@ $(document).ready(function(){initNavTree('exception_8h_source.html',''); initRes
 <div class="line"><a name="l00008"></a><span class="lineno">    8</span>&#160;<span class="preprocessor">#include &lt;stdexcept&gt;</span></div>
 <div class="line"><a name="l00009"></a><span class="lineno">    9</span>&#160;<span class="preprocessor">#include &lt;string&gt;</span></div>
 <div class="line"><a name="l00010"></a><span class="lineno">   10</span>&#160;<span class="preprocessor">#include &lt;string_view&gt;</span></div>
-<div class="line"><a name="l00011"></a><span class="lineno">   11</span>&#160; </div>
-<div class="line"><a name="l00012"></a><span class="lineno">   12</span>&#160;<span class="keyword">namespace </span>klib::exception {</div>
-<div class="line"><a name="l00013"></a><span class="lineno">   13</span>&#160; </div>
-<div class="line"><a name="l00017"></a><span class="lineno"><a class="line" href="classklib_1_1exception_1_1RuntimeError.html">   17</a></span>&#160;<span class="keyword">class </span><a class="code" href="classklib_1_1exception_1_1RuntimeError.html">RuntimeError</a> : <span class="keyword">public</span> std::runtime_error {</div>
-<div class="line"><a name="l00018"></a><span class="lineno">   18</span>&#160; <span class="keyword">public</span>:</div>
-<div class="line"><a name="l00023"></a><span class="lineno"><a class="line" href="classklib_1_1exception_1_1RuntimeError.html#a3d7bc61f42cc66166b00783f5dcffa52">   23</a></span>&#160;  <span class="keyword">explicit</span> <a class="code" href="classklib_1_1exception_1_1RuntimeError.html#a3d7bc61f42cc66166b00783f5dcffa52">RuntimeError</a>(<span class="keyword">const</span> <span class="keywordtype">char</span> *msg) : std::runtime_error(msg) {}</div>
-<div class="line"><a name="l00024"></a><span class="lineno">   24</span>&#160; </div>
-<div class="line"><a name="l00029"></a><span class="lineno"><a class="line" href="classklib_1_1exception_1_1RuntimeError.html#aef8c3e8015956be83ae5ada670cbc39d">   29</a></span>&#160;  <span class="keyword">explicit</span> <a class="code" href="classklib_1_1exception_1_1RuntimeError.html#aef8c3e8015956be83ae5ada670cbc39d">RuntimeError</a>(<span class="keyword">const</span> std::string &amp;msg) : std::runtime_error(msg) {}</div>
-<div class="line"><a name="l00030"></a><span class="lineno">   30</span>&#160; </div>
-<div class="line"><a name="l00035"></a><span class="lineno"><a class="line" href="classklib_1_1exception_1_1RuntimeError.html#aed20e10d8e93d67011bc0698547e8859">   35</a></span>&#160;  <span class="keyword">explicit</span> <a class="code" href="classklib_1_1exception_1_1RuntimeError.html#aed20e10d8e93d67011bc0698547e8859">RuntimeError</a>(std::string_view msg) : <a class="code" href="classklib_1_1exception_1_1RuntimeError.html">RuntimeError</a>(msg.data()) {}</div>
-<div class="line"><a name="l00036"></a><span class="lineno">   36</span>&#160;};</div>
-<div class="line"><a name="l00037"></a><span class="lineno">   37</span>&#160; </div>
-<div class="line"><a name="l00038"></a><span class="lineno">   38</span>&#160;}  <span class="comment">// namespace klib::exception</span></div>
-<div class="ttc" id="aclassklib_1_1exception_1_1RuntimeError_html"><div class="ttname"><a href="classklib_1_1exception_1_1RuntimeError.html">klib::exception::RuntimeError</a></div><div class="ttdoc">Exception class, which means runtime error.</div><div class="ttdef"><b>Definition:</b> exception.h:17</div></div>
-<div class="ttc" id="aclassklib_1_1exception_1_1RuntimeError_html_a3d7bc61f42cc66166b00783f5dcffa52"><div class="ttname"><a href="classklib_1_1exception_1_1RuntimeError.html#a3d7bc61f42cc66166b00783f5dcffa52">klib::exception::RuntimeError::RuntimeError</a></div><div class="ttdeci">RuntimeError(const char *msg)</div><div class="ttdoc">Constructor.</div><div class="ttdef"><b>Definition:</b> exception.h:23</div></div>
-<div class="ttc" id="aclassklib_1_1exception_1_1RuntimeError_html_aed20e10d8e93d67011bc0698547e8859"><div class="ttname"><a href="classklib_1_1exception_1_1RuntimeError.html#aed20e10d8e93d67011bc0698547e8859">klib::exception::RuntimeError::RuntimeError</a></div><div class="ttdeci">RuntimeError(std::string_view msg)</div><div class="ttdoc">Constructor.</div><div class="ttdef"><b>Definition:</b> exception.h:35</div></div>
-<div class="ttc" id="aclassklib_1_1exception_1_1RuntimeError_html_aef8c3e8015956be83ae5ada670cbc39d"><div class="ttname"><a href="classklib_1_1exception_1_1RuntimeError.html#aef8c3e8015956be83ae5ada670cbc39d">klib::exception::RuntimeError::RuntimeError</a></div><div class="ttdeci">RuntimeError(const std::string &amp;msg)</div><div class="ttdoc">Constructor.</div><div class="ttdef"><b>Definition:</b> exception.h:29</div></div>
+<div class="line"><a name="l00011"></a><span class="lineno">   11</span>&#160;<span class="preprocessor">#include &lt;utility&gt;</span></div>
+<div class="line"><a name="l00012"></a><span class="lineno">   12</span>&#160; </div>
+<div class="line"><a name="l00013"></a><span class="lineno">   13</span>&#160;<span class="preprocessor">#include &lt;fmt/format.h&gt;</span></div>
+<div class="line"><a name="l00014"></a><span class="lineno">   14</span>&#160; </div>
+<div class="line"><a name="l00015"></a><span class="lineno">   15</span>&#160;<span class="keyword">namespace </span>klib {</div>
+<div class="line"><a name="l00016"></a><span class="lineno">   16</span>&#160; </div>
+<div class="line"><a name="l00020"></a><span class="lineno"><a class="line" href="classklib_1_1RuntimeError.html">   20</a></span>&#160;<span class="keyword">class </span><a class="code" href="classklib_1_1RuntimeError.html">RuntimeError</a> : <span class="keyword">public</span> std::runtime_error {</div>
+<div class="line"><a name="l00021"></a><span class="lineno">   21</span>&#160; <span class="keyword">public</span>:</div>
+<div class="line"><a name="l00026"></a><span class="lineno"><a class="line" href="classklib_1_1RuntimeError.html#aff3943e22b8fdc7a1895da4f68235a7c">   26</a></span>&#160;  <span class="keyword">explicit</span> <a class="code" href="classklib_1_1RuntimeError.html#aff3943e22b8fdc7a1895da4f68235a7c">RuntimeError</a>(<span class="keyword">const</span> <span class="keywordtype">char</span> *msg) : std::runtime_error(msg) {}</div>
+<div class="line"><a name="l00027"></a><span class="lineno">   27</span>&#160; </div>
+<div class="line"><a name="l00032"></a><span class="lineno"><a class="line" href="classklib_1_1RuntimeError.html#ad2fd5d0096ab416c1fd8dd0a05d7a11e">   32</a></span>&#160;  <span class="keyword">explicit</span> <a class="code" href="classklib_1_1RuntimeError.html#ad2fd5d0096ab416c1fd8dd0a05d7a11e">RuntimeError</a>(<span class="keyword">const</span> std::string &amp;msg) : std::runtime_error(msg) {}</div>
+<div class="line"><a name="l00033"></a><span class="lineno">   33</span>&#160; </div>
+<div class="line"><a name="l00038"></a><span class="lineno"><a class="line" href="classklib_1_1RuntimeError.html#aa000c04b65c1a10a7b792e3688ed8587">   38</a></span>&#160;  <span class="keyword">explicit</span> <a class="code" href="classklib_1_1RuntimeError.html#aa000c04b65c1a10a7b792e3688ed8587">RuntimeError</a>(std::string_view msg) : <a class="code" href="classklib_1_1RuntimeError.html">RuntimeError</a>(msg.data()) {}</div>
+<div class="line"><a name="l00039"></a><span class="lineno">   39</span>&#160; </div>
+<div class="line"><a name="l00045"></a><span class="lineno">   45</span>&#160;  <span class="keyword">template</span> &lt;<span class="keyword">typename</span>... Args&gt;</div>
+<div class="line"><a name="l00046"></a><span class="lineno"><a class="line" href="classklib_1_1RuntimeError.html#a58f0f5ebc345d39344520a1dbc654632">   46</a></span>&#160;  <span class="keyword">explicit</span> <a class="code" href="classklib_1_1RuntimeError.html#a58f0f5ebc345d39344520a1dbc654632">RuntimeError</a>(std::string_view fmt, Args &amp;&amp;...args)</div>
+<div class="line"><a name="l00047"></a><span class="lineno">   47</span>&#160;      : <a class="code" href="classklib_1_1RuntimeError.html">RuntimeError</a>(</div>
+<div class="line"><a name="l00048"></a><span class="lineno">   48</span>&#160;            fmt::format(fmt::runtime(fmt), std::forward&lt;Args&gt;(args)...)) {}</div>
+<div class="line"><a name="l00049"></a><span class="lineno">   49</span>&#160;};</div>
+<div class="line"><a name="l00050"></a><span class="lineno">   50</span>&#160; </div>
+<div class="line"><a name="l00051"></a><span class="lineno">   51</span>&#160;}  <span class="comment">// namespace klib</span></div>
+<div class="ttc" id="aclassklib_1_1RuntimeError_html"><div class="ttname"><a href="classklib_1_1RuntimeError.html">klib::RuntimeError</a></div><div class="ttdoc">Exception class, which means runtime error.</div><div class="ttdef"><b>Definition:</b> exception.h:20</div></div>
+<div class="ttc" id="aclassklib_1_1RuntimeError_html_a58f0f5ebc345d39344520a1dbc654632"><div class="ttname"><a href="classklib_1_1RuntimeError.html#a58f0f5ebc345d39344520a1dbc654632">klib::RuntimeError::RuntimeError</a></div><div class="ttdeci">RuntimeError(std::string_view fmt, Args &amp;&amp;...args)</div><div class="ttdoc">Constructor.</div><div class="ttdef"><b>Definition:</b> exception.h:46</div></div>
+<div class="ttc" id="aclassklib_1_1RuntimeError_html_aa000c04b65c1a10a7b792e3688ed8587"><div class="ttname"><a href="classklib_1_1RuntimeError.html#aa000c04b65c1a10a7b792e3688ed8587">klib::RuntimeError::RuntimeError</a></div><div class="ttdeci">RuntimeError(std::string_view msg)</div><div class="ttdoc">Constructor.</div><div class="ttdef"><b>Definition:</b> exception.h:38</div></div>
+<div class="ttc" id="aclassklib_1_1RuntimeError_html_ad2fd5d0096ab416c1fd8dd0a05d7a11e"><div class="ttname"><a href="classklib_1_1RuntimeError.html#ad2fd5d0096ab416c1fd8dd0a05d7a11e">klib::RuntimeError::RuntimeError</a></div><div class="ttdeci">RuntimeError(const std::string &amp;msg)</div><div class="ttdoc">Constructor.</div><div class="ttdef"><b>Definition:</b> exception.h:32</div></div>
+<div class="ttc" id="aclassklib_1_1RuntimeError_html_aff3943e22b8fdc7a1895da4f68235a7c"><div class="ttname"><a href="classklib_1_1RuntimeError.html#aff3943e22b8fdc7a1895da4f68235a7c">klib::RuntimeError::RuntimeError</a></div><div class="ttdeci">RuntimeError(const char *msg)</div><div class="ttdoc">Constructor.</div><div class="ttdef"><b>Definition:</b> exception.h:26</div></div>
 </div><!-- fragment --></div><!-- contents -->
 </div><!-- doc-content -->
 <!-- start footer part -->

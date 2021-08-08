@@ -1,4 +1,4 @@
 var searchData=
 [
-  ['algorithm_83',['Algorithm',['../archive_8h.html#a0524b81523287f1a613a6e6bac653551',1,'klib::archive']]]
+  ['algorithm_114',['Algorithm',['../archive_8h.html#a00dd09aa9984a80a30a64727d6a7ac99',1,'klib']]]
 ];

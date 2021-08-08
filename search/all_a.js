@@ -1,11 +1,7 @@
 var searchData=
 [
-  ['same_5ffolder_25',['same_folder',['../util_8h.html#a7d59cb4d5b2af5fbb0fd1933c333ba6c',1,'klib::util']]],
-  ['save_5fto_5ffile_26',['save_to_file',['../classklib_1_1http_1_1Response.html#a7414785f940ce84cbb5d90df81e1547d',1,'klib::http::Response']]],
-  ['set_5fno_5fproxy_27',['set_no_proxy',['../classklib_1_1http_1_1Request.html#acebaa7647313e8bcc0a3794d601f034a',1,'klib::http::Request']]],
-  ['set_5fproxy_28',['set_proxy',['../classklib_1_1http_1_1Request.html#a48bbd0039f028a63a0495aa7d86a1ced',1,'klib::http::Request']]],
-  ['set_5fuser_5fagent_29',['set_user_agent',['../classklib_1_1http_1_1Request.html#acb0963c874151423f3f4d47c5bb765fa',1,'klib::http::Request']]],
-  ['sha3_5f512_30',['sha3_512',['../util_8h.html#ab43591e03de3275ee8fc216165429e1a',1,'klib::util']]],
-  ['status_5fcode_31',['status_code',['../classklib_1_1http_1_1Response.html#a69508a8b3a24b7815d7c6a6981dd9f57',1,'klib::http::Response']]],
-  ['statuscode_32',['StatusCode',['../classklib_1_1http_1_1Response.html#a2a6ad3c94472d6cdbb8f5deb8ae25d74',1,'klib::http::Response']]]
+  ['read_5ffile_26',['read_file',['../util_8h.html#aff1e161e1457b1a895244581b50b9abd',1,'klib']]],
+  ['request_27',['Request',['../classklib_1_1Request.html',1,'klib::Request'],['../classklib_1_1Request.html#a0fe5c62e7c2d1adcb68f56fc644a7c61',1,'klib::Request::Request()']]],
+  ['response_28',['Response',['../classklib_1_1Response.html',1,'klib']]],
+  ['runtimeerror_29',['RuntimeError',['../classklib_1_1RuntimeError.html',1,'klib::RuntimeError'],['../classklib_1_1RuntimeError.html#aff3943e22b8fdc7a1895da4f68235a7c',1,'klib::RuntimeError::RuntimeError(const char *msg)'],['../classklib_1_1RuntimeError.html#ad2fd5d0096ab416c1fd8dd0a05d7a11e',1,'klib::RuntimeError::RuntimeError(const std::string &amp;msg)'],['../classklib_1_1RuntimeError.html#aa000c04b65c1a10a7b792e3688ed8587',1,'klib::RuntimeError::RuntimeError(std::string_view msg)'],['../classklib_1_1RuntimeError.html#a58f0f5ebc345d39344520a1dbc654632',1,'klib::RuntimeError::RuntimeError(std::string_view fmt, Args &amp;&amp;...args)']]]
 ];
