@@ -31,6 +31,10 @@ C++ Library
 - [pugixml](https://github.com/zeux/pugixml)
 - [boost](https://www.boost.org/)
 
+## Font
+
+- [source-han-sans](https://github.com/adobe-fonts/source-han-sans)
+
 ## Build
 
 ```bash

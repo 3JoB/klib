@@ -7,7 +7,9 @@ if [[ "$OSTYPE" == "linux-gnu"* ]]; then
   sudo apt update
   sudo apt install -y gcc-11 g++-11
 
-  sudo bash -c "$(wget -O - https://apt.llvm.org/llvm.sh)"
+  wget https://apt.llvm.org/llvm.sh
+  chmod +x llvm.sh
+  sudo ./llvm.sh 12
   sudo apt install -y clang-tidy-12 valgrind
 
   sudo apt install -y make cmake re2c autoconf automake libtool m4 tcl

@@ -69,7 +69,7 @@ class Epub {
   void set_image_num(std::int32_t image_num);
 
   /**
-   * @brief Set font
+   * @brief Set font(Must be 'Source Han Sans HW SC')
    * @param font: The string obtained by reading the font file
    */
   void set_font(const std::string &font);
