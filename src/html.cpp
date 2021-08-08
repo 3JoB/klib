@@ -3,8 +3,6 @@
 #include <cassert>
 #include <memory>
 
-#include <fmt/compile.h>
-#include <fmt/format.h>
 #include <tidy.h>
 #include <tidybuffio.h>
 
@@ -65,13 +63,12 @@ std::string html_tidy(const std::string &html) {
   std::string xhtml;
   if (rc >= 0) {
     if (rc > 1) {
-      throw klib::RuntimeError(fmt::format(
-          FMT_COMPILE("{}"), reinterpret_cast<const char *>(error_buffer->bp)));
+      throw klib::RuntimeError(
+          "{}", reinterpret_cast<const char *>(error_buffer->bp));
     }
     xhtml.assign(reinterpret_cast<const char *>(output->bp), output->size);
   } else {
-    throw klib::RuntimeError(
-        fmt::format(FMT_COMPILE("html_tidy error: {}"), rc));
+    throw klib::RuntimeError("html_tidy error: {}", rc);
   }
 
   return xhtml;

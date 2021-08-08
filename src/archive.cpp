@@ -9,8 +9,6 @@
 
 #include <archive.h>
 #include <archive_entry.h>
-#include <fmt/compile.h>
-#include <fmt/format.h>
 
 #include "klib/exception.h"
 #include "klib/util.h"
@@ -23,27 +21,24 @@ namespace {
 
 void check_file_exists(const std::string &path) {
   if (!std::filesystem::exists(path)) {
-    throw klib::RuntimeError(
-        fmt::format(FMT_COMPILE("The file does not exist: '{}'"), path));
+    throw klib::RuntimeError("The file does not exist: '{}'", path);
   }
 
   if (!std::filesystem::is_regular_file(path)) {
-    throw klib::RuntimeError(fmt::format(
-        FMT_COMPILE("The path does not correspond to a file: '{}'"), path));
+    throw klib::RuntimeError("The path does not correspond to a file: '{}'",
+                             path);
   }
 }
 
 void check_file_or_folder_exists(const std::string &path) {
   if (!std::filesystem::exists(path)) {
-    throw klib::RuntimeError(fmt::format(
-        FMT_COMPILE("The file or folder does not exist: '{}'"), path));
+    throw klib::RuntimeError("The file or folder does not exist: '{}'", path);
   }
 
   if (!std::filesystem::is_regular_file(path) &&
       !std::filesystem::is_directory(path)) {
-    throw klib::RuntimeError(fmt::format(
-        FMT_COMPILE("The path does not correspond to a file or folder: '{}'"),
-        path));
+    throw klib::RuntimeError(
+        "The path does not correspond to a file or folder: '{}'", path);
   }
 }
 

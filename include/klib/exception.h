@@ -39,7 +39,8 @@ class RuntimeError : public std::runtime_error {
 
   /**
    * @brief Constructor
-   * @param msg: Exception information
+   * @param fmt: Format string
+   * @param args: Parameter
    */
   template <typename... Args>
   explicit RuntimeError(std::string_view fmt, Args &&...args)
