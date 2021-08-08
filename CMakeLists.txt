@@ -67,7 +67,7 @@ pkg_check_modules(tidy REQUIRED IMPORTED_TARGET tidy)
 
 find_package(fmt REQUIRED)
 find_package(pugixml REQUIRED)
-find_package(ICU REQUIRED COMPONENTS uc i18n)
+find_package(Boost CONFIG REQUIRED)
 
 set(THREADS_PREFER_PTHREAD_FLAG TRUE)
 find_package(Threads REQUIRED)
@@ -91,7 +91,7 @@ target_compile_options(epub PRIVATE "-Wno-unused-command-line-argument")
 if(KLIB_BUILD_STATIC)
   message(STATUS "Build static library")
 
-  # TODO for pugixml and icu
+  # TODO for pugixml
   add_definitions(-DCURL_STATICLIB -DFMT_LOCALE)
 
   add_library(${LIBRARY} STATIC ${LIBRARY_SRC})
@@ -104,7 +104,7 @@ if(KLIB_BUILD_STATIC)
     ${LIBRARY} PUBLIC "$<BUILD_INTERFACE:${KLIB_SOURCE_DIR}/include>"
                       "$<INSTALL_INTERFACE:${CMAKE_INSTALL_INCLUDEDIR}>")
   target_compile_features(${LIBRARY} INTERFACE cxx_std_20)
-  target_link_libraries(${LIBRARY} PUBLIC ${ICU_LIBRARIES} ${CMAKE_DL_LIBS}
+  target_link_libraries(${LIBRARY} PUBLIC ${CMAKE_DL_LIBS}
                                           ${CMAKE_THREAD_LIBS_INIT})
 
   set_target_properties(
@@ -155,8 +155,7 @@ if(KLIB_BUILD_SHARED)
             CURL::libcurl
             PkgConfig::tidy
             fmt::fmt
-            pugixml::pugixml
-            ${ICU_LIBRARIES})
+            pugixml::pugixml)
 
   set_target_properties(
     ${LIBRARY}-shared

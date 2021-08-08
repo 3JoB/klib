@@ -29,7 +29,7 @@ C++ Library
 - [tidy-html5](https://github.com/htacg/tidy-html5)
 - [fmt](https://github.com/fmtlib/fmt)
 - [pugixml](https://github.com/zeux/pugixml)
-- [icu](https://github.com/unicode-org/icu)
+- [boost](https://www.boost.org/)
 
 ## Build
 

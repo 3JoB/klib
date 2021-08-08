@@ -1,13 +1,17 @@
 #include "klib/epub.h"
 
+#include <cassert>
+#include <cstddef>
+#include <ctime>
 #include <filesystem>
 
+#include <fmt/chrono.h>
+#include <fmt/format.h>
 #include <boost/uuid/uuid_generators.hpp>
 #include <boost/uuid/uuid_io.hpp>
 #include <pugixml.hpp>
 
 #include "klib/exception.h"
-#include "klib/icu.h"
 #include "klib/util.h"
 #include "klib/version.h"
 
@@ -23,6 +27,37 @@ inline std::string_view style_str(style, style_size);
 namespace klib::epub {
 
 namespace {
+
+std::string num_to_str(std::int32_t i) {
+  assert(i > 0);
+
+  auto str = std::to_string(i);
+  if (i < 10) {
+    return "00" + str;
+  } else if (i < 100) {
+    return "0" + str;
+  } else {
+    return str;
+  }
+}
+
+std::string num_to_chapter_name(std::int32_t i) {
+  return "chapter" + num_to_str(i) + ".xhtml";
+}
+
+std::string num_to_illustration_name(std::int32_t i) {
+  return "illustration" + num_to_str(i) + ".xhtml";
+}
+
+std::string get_date() {
+  return fmt::format("{:%Y-%m-%d}.", fmt::localtime(std::time(nullptr)));
+}
+
+void save_file(const pugi::xml_document &doc, std::string_view path) {
+  if (!doc.save_file(path.data(), "    ")) {
+    throw klib::RuntimeError("can not save: {}", path);
+  }
+}
 
 void append_manifest_and_spine(pugi::xml_node &manifest, const std::string &id,
                                const std::string &href) {
@@ -121,33 +156,6 @@ pugi::xml_document generate_xhtml(const std::string &title,
   }
 
   return doc;
-}
-
-std::string num_to_str(std::int32_t i) {
-  assert(i > 0);
-
-  auto str = std::to_string(i);
-  if (i < 10) {
-    return "00" + str;
-  } else if (i < 100) {
-    return "0" + str;
-  } else {
-    return str;
-  }
-}
-
-std::string num_to_chapter_name(std::int32_t i) {
-  return "chapter" + num_to_str(i) + ".xhtml";
-}
-
-std::string num_to_illustration_name(std::int32_t i) {
-  return "illustration" + num_to_str(i) + ".xhtml";
-}
-
-void save_file(const pugi::xml_document &doc, std::string_view path) {
-  if (!doc.save_file(path.data(), "    ")) {
-    throw klib::RuntimeError("can not save: {}", path);
-  }
 }
 
 void append_texts(pugi::xml_document &doc,
@@ -251,9 +259,80 @@ void Epub::generate_container() const {
   save_file(doc, container_path);
 }
 
-void Epub::generate_mimetype() const {
-  std::string text = "application/epub+zip\n";
-  klib::util::write_file(Epub::mimetype_path, false, text);
+void Epub::generate_font() const {
+  klib::util::write_file(Epub::font_path, true, font_str);
+}
+
+void Epub::generate_style() const {
+  klib::util::write_file(Epub::style_path, false, style_str);
+}
+
+void Epub::generate_chapter() const {
+  auto size = std::size(content_);
+  for (std::size_t i = 0; i < size; ++i) {
+    auto [title, texts] = content_[i];
+    auto doc = generate_xhtml(title, "", true);
+    append_texts(doc, texts);
+
+    auto path =
+        std::filesystem::path(Epub::text_dir) / num_to_chapter_name(i + 1);
+    save_file(doc, path.c_str());
+  }
+}
+
+void Epub::generate_cover() const {
+  auto doc = generate_xhtml("封面", "cover", false);
+
+  auto div = doc.select_node("/html/body/div").node();
+  auto img = div.append_child("img");
+  img.append_attribute("alt") = "";
+  img.append_attribute("src") = "../Images/cover.jpg";
+
+  save_file(doc, Epub::cover_path);
+}
+
+void Epub::generate_illustration() const {
+  for (std::int32_t i = 1; i <= illustration_num_; ++i) {
+    auto num_str = num_to_str(i);
+    auto doc = generate_xhtml("彩页" + num_str, "", false);
+    auto file_name = num_to_illustration_name(i);
+
+    auto div = doc.select_node("/html/body/div").node();
+    div = div.append_child("div");
+    div.append_attribute("class") = "center";
+
+    auto img = div.append_child("img");
+    img.append_attribute("alt") = num_str.c_str();
+    img.append_attribute("src") = ("../Images/" + num_str + ".jpg").c_str();
+
+    auto path = std::filesystem::path(Epub::text_dir) / file_name;
+    save_file(doc, path.c_str());
+  }
+}
+
+void Epub::generate_introduction() const {
+  auto doc = generate_xhtml("简介", "", true);
+  append_texts(doc, introduction_);
+  save_file(doc, Epub::introduction_path);
+}
+
+void Epub::generate_message() const {
+  auto doc = generate_xhtml("制作信息", "", true);
+
+  auto div = doc.select_node("/html/body/div").node();
+  div = div.append_child("div");
+  div.append_attribute("class") = "cutline";
+
+  auto p = div.append_child("p");
+  p.append_attribute("class") = "makerifm";
+  p.text() = ("制作者：" + creator_).c_str();
+
+  save_file(doc, Epub::message_path);
+}
+
+void Epub::generate_postscript() const {
+  auto doc = generate_xhtml("后记", "", true);
+  save_file(doc, Epub::postscript_path);
 }
 
 void Epub::generate_content() const {
@@ -303,14 +382,17 @@ void Epub::generate_content() const {
   append_manifest_and_spine(manifest, "style.css", "Styles/style.css");
   append_manifest_and_spine(manifest, "SourceHanSansHWSC-Bold.otf",
                             "Fonts/SourceHanSansHWSC-Bold.otf");
+
   for (std::int32_t i = 1; i <= image_num_; ++i) {
     append_manifest_and_spine(manifest, "x" + num_to_str(i) + ".jpg",
                               "Images/" + num_to_str(i) + ".jpg");
   }
+
   if (generate_cover_) {
     append_manifest_and_spine(manifest, "cover.jpg", "Images/cover.jpg");
     append_manifest_and_spine(manifest, "cover.xhtml", "Text/cover.xhtml");
   }
+
   append_manifest_and_spine(manifest, "message.xhtml", "Text/message.xhtml");
   append_manifest_and_spine(manifest, "introduction.xhtml",
                             "Text/introduction.xhtml");
@@ -339,7 +421,7 @@ void Epub::generate_content() const {
     reference.append_attribute("href") = "Text/cover.xhtml";
   }
 
-  save_file(doc, "OEBPS/content.opf");
+  save_file(doc, Epub::content_path);
 }
 
 void Epub::generate_toc() const {
@@ -398,80 +480,12 @@ void Epub::generate_toc() const {
     append_nav_map(nav_map, "后记", "Text/postscript.xhtml");
   }
 
-  save_file(doc, "OEBPS/toc.ncx");
+  save_file(doc, Epub::toc_path);
 }
 
-void Epub::generate_introduction() const {
-  auto doc = generate_xhtml("简介", "", true);
-  append_texts(doc, introduction_);
-  save_file(doc, "OEBPS/Text/introduction.xhtml");
-}
-
-void Epub::generate_illustration() const {
-  for (std::int32_t i = 1; i <= illustration_num_; ++i) {
-    auto doc = generate_xhtml("彩页" + num_to_str(i), "", false);
-    auto file_name = num_to_illustration_name(i);
-
-    auto div = doc.select_node("/html/body/div").node();
-    div = div.append_child("div");
-    div.append_attribute("class") = "center";
-
-    auto img = div.append_child("img");
-    img.append_attribute("alt") = num_to_str(i).c_str();
-    img.append_attribute("src") =
-        ("../Images/" + num_to_str(i) + ".jpg").c_str();
-
-    save_file(doc, "OEBPS/Text/" + file_name);
-  }
-}
-
-void Epub::generate_chapter() const {
-  auto size = std::size(content_);
-  for (std::size_t i = 0; i < size; ++i) {
-    auto [title, texts] = content_[i];
-    auto doc = generate_xhtml(title, "", true);
-    append_texts(doc, texts);
-
-    save_file(doc, "OEBPS/Text/" + num_to_chapter_name(i + 1));
-  }
-}
-
-void Epub::generate_postscript() const {
-  auto doc = generate_xhtml("后记", "", true);
-  save_file(doc, "OEBPS/Text/postscript.xhtml");
-}
-
-void Epub::generate_message() const {
-  auto doc = generate_xhtml("制作信息", "", true);
-
-  auto div = doc.select_node("/html/body/div").node();
-  div = div.append_child("div");
-  div.append_attribute("class") = "cutline";
-
-  auto p = div.append_child("p");
-  p.append_attribute("class") = "makerifm";
-  p.text() = ("制作者：" + creator_).c_str();
-
-  save_file(doc, Epub::message_path);
-}
-
-void Epub::generate_font() const {
-  klib::util::write_file(Epub::font_path, true, font_str);
-}
-
-void Epub::generate_style() const {
-  klib::util::write_file(Epub::style_path, true, style_str);
-}
-
-void Epub::generate_cover() const {
-  auto doc = generate_xhtml("封面", "cover", false);
-
-  auto div = doc.select_node("/html/body/div").node();
-  auto img = div.append_child("img");
-  img.append_attribute("alt") = "";
-  img.append_attribute("src") = "../Images/cover.jpg";
-
-  save_file(doc, Epub::cover_path);
+void Epub::generate_mimetype() const {
+  std::string text = "application/epub+zip\n";
+  klib::util::write_file(Epub::mimetype_path, false, text);
 }
 
 }  // namespace klib::epub
