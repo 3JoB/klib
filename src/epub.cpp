@@ -214,8 +214,8 @@ std::int32_t last_chapter_num(const pugi::xml_node &node) {
 }
 
 std::int32_t deal_with_content(
-    const std::vector<std::tuple<std::string, std::string,
-                                 std::vector<std::string>>> &content) {
+    const std::vector<std::pair<std::string, std::vector<std::string>>>
+        &content) {
   pugi::xml_document doc;
   doc.load_file(Epub::content_path.data(), pugi::parse_default |
                                                pugi::parse_declaration |
@@ -239,8 +239,8 @@ std::int32_t deal_with_content(
 }
 
 void deal_with_toc(
-    const std::vector<std::tuple<std::string, std::string,
-                                 std::vector<std::string>>> &content,
+    const std::vector<std::pair<std::string, std::vector<std::string>>>
+        &content,
     std::int32_t first_num) {
   pugi::xml_document doc;
   doc.load_file(Epub::toc_path.data(), pugi::parse_default |
@@ -252,19 +252,19 @@ void deal_with_toc(
   auto size = std::size(content);
   for (std::size_t i = 0; i < size; ++i) {
     auto file_path = "Text/" + num_to_chapter_name(first_num++);
-    append_nav_map(nav_map, std::get<1>(content[i]), file_path);
+    append_nav_map(nav_map, content[i].first, file_path);
   }
 
   save_file(doc, Epub::toc_path);
 }
 
 void deal_with_chapter(
-    const std::vector<std::tuple<std::string, std::string,
-                                 std::vector<std::string>>> &content,
+    const std::vector<std::pair<std::string, std::vector<std::string>>>
+        &content,
     std::int32_t first_num) {
   auto size = std::size(content);
   for (std::size_t i = 0; i < size; ++i) {
-    auto [volume_name, title, texts] = content[i];
+    auto [title, texts] = content[i];
     auto doc = generate_xhtml(title, "", true);
     append_texts(doc, texts);
 
@@ -366,8 +366,8 @@ void Epub::generate(bool archive) {
 
 void Epub::append_chapter(
     const std::string &book_name,
-    const std::vector<std::tuple<std::string, std::string,
-                                 std::vector<std::string>>> &content) {
+    const std::vector<std::pair<std::string, std::vector<std::string>>>
+        &content) {
   if (!std::filesystem::is_directory(book_name)) {
     throw RuntimeError("The dir not exists: {}", book_name);
   }
@@ -410,7 +410,18 @@ void Epub::generate_style() const {
   klib::write_file(Epub::style_path, false, style_);
 }
 
-void Epub::generate_chapter() const { deal_with_chapter(content_, 1); }
+void Epub::generate_chapter() const {
+  auto size = std::size(content_);
+  for (std::size_t i = 0; i < size; ++i) {
+    auto [volume_name, title, texts] = content_[i];
+    auto doc = generate_xhtml(title, "", true);
+    append_texts(doc, texts);
+
+    auto path =
+        std::filesystem::path(Epub::text_dir) / num_to_chapter_name(i + 1);
+    save_file(doc, path.c_str());
+  }
+}
 
 void Epub::generate_cover() const {
   if (generate_cover_) {
