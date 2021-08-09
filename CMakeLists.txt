@@ -15,7 +15,7 @@ klib_extract_version()
 project(
   klib
   VERSION ${KLIB_VERSION}
-  LANGUAGES CXX ASM)
+  LANGUAGES ASM CXX)
 
 message(STATUS "${PROJECT_NAME} version: ${KLIB_VERSION}")
 

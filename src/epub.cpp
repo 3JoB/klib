@@ -259,7 +259,7 @@ void Epub::generate(bool archive) {
   std::filesystem::create_directory(Epub::meta_inf_dir);
   std::filesystem::create_directory(Epub::oebps_dir);
   std::filesystem::create_directory(Epub::fonts_dir);
-  if (image_num_ > 0) {
+  if (image_num_ > 0 || generate_cover_) {
     std::filesystem::create_directory(Epub::images_dir);
   }
   std::filesystem::create_directory(Epub::styles_dir);
