@@ -331,14 +331,16 @@ void Epub::generate_chapter() const {
 }
 
 void Epub::generate_cover() const {
-  auto doc = generate_xhtml("封面", "cover", false);
+  if (generate_cover_) {
+    auto doc = generate_xhtml("封面", "cover", false);
 
-  auto div = doc.select_node("/html/body/div").node();
-  auto img = div.append_child("img");
-  img.append_attribute("alt") = "";
-  img.append_attribute("src") = "../Images/cover.jpg";
+    auto div = doc.select_node("/html/body/div").node();
+    auto img = div.append_child("img");
+    img.append_attribute("alt") = "";
+    img.append_attribute("src") = "../Images/cover.jpg";
 
-  save_file(doc, Epub::cover_path);
+    save_file(doc, Epub::cover_path);
+  }
 }
 
 void Epub::generate_illustration() const {
@@ -381,8 +383,10 @@ void Epub::generate_message() const {
 }
 
 void Epub::generate_postscript() const {
-  auto doc = generate_xhtml("后记", "", true);
-  save_file(doc, Epub::postscript_path);
+  if (generate_postscript_) {
+    auto doc = generate_xhtml("后记", "", true);
+    save_file(doc, Epub::postscript_path);
+  }
 }
 
 void Epub::generate_toc() {
