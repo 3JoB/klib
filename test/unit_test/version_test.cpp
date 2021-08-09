@@ -3,5 +3,5 @@
 #include "klib/version.h"
 
 TEST_CASE("klib_version", "[version]") {
-  REQUIRE(klib::klib_version() == "v0.2.5");
+  REQUIRE(klib::klib_version() == "v0.2.6");
 }

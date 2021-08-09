@@ -53,7 +53,7 @@ std::string num_to_illustration_name(std::int32_t i) {
 }
 
 std::string get_date() {
-  return fmt::format("{:%Y-%m-%d}.", fmt::localtime(std::time(nullptr)));
+  return fmt::format("{:%Y-%m-%d}", fmt::localtime(std::time(nullptr)));
 }
 
 void save_file(const pugi::xml_document &doc, std::string_view path) {
