@@ -15,7 +15,6 @@
 #include "klib/archive.h"
 #include "klib/exception.h"
 #include "klib/util.h"
-#include "klib/version.h"
 
 extern char font[];
 extern int font_size;
@@ -596,10 +595,6 @@ void Epub::generate_content() const {
   metadata.append_child("dc:language").text() = "zh-CN";
   metadata.append_child("dc:rights").text() = creator_.c_str();
 
-  auto meta = metadata.append_child("meta");
-  meta.append_attribute("name") = "klib version";
-  meta.append_attribute("content") = klib_version().c_str();
-
   auto dc_date = metadata.append_child("dc:date");
   dc_date.append_attribute("opf:event") = "modification";
   dc_date.append_attribute("xmlns:opf") = "http://www.idpf.org/2007/opf";
@@ -611,7 +606,7 @@ void Epub::generate_content() const {
   dc_identifier.text() = uuid_.c_str();
 
   if (generate_cover_) {
-    meta = metadata.append_child("meta");
+    auto meta = metadata.append_child("meta");
     meta.append_attribute("name") = "cover";
     meta.append_attribute("content") = "cover.jpg";
   }
@@ -641,15 +636,24 @@ void Epub::generate_content() const {
     append_manifest_and_spine(manifest, name, "Text/" + name);
   }
 
-  for (std::int32_t i = 1; i <= volume_count_; ++i) {
-    auto name = num_to_volume_name(i);
-    append_manifest_and_spine(manifest, name, "Text/" + name);
-  }
-
   auto size = std::size(content_);
-  for (std::size_t i = 1; i <= size; ++i) {
-    auto name = num_to_chapter_name(i);
+  std::string last_volume_name;
+  std::int32_t volume_count = 0;
+  for (std::size_t i = 0; i < size; ++i) {
+    auto volume_name = std::get<0>(content_[i]);
+
+    if (volume_name != last_volume_name) {
+      auto name = num_to_volume_name(volume_count + 1);
+      append_manifest_and_spine(manifest, name, "Text/" + name);
+      ++volume_count;
+    }
+    auto name = num_to_chapter_name(i + 1);
     append_manifest_and_spine(manifest, name, "Text/" + name);
+
+    last_volume_name = volume_name;
+  }
+  if (volume_count != volume_count_) {
+    throw RuntimeError("Volume count error: {}", volume_count);
   }
 
   if (generate_postscript_) {

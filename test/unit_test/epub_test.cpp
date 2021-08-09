@@ -6,7 +6,6 @@
 
 #include "klib/epub.h"
 #include "klib/util.h"
-#include "klib/version.h"
 
 TEST_CASE("base generate", "[epub]") {
   klib::Epub epub;
@@ -80,14 +79,13 @@ TEST_CASE("base generate", "[epub]") {
 
   REQUIRE(std::filesystem::exists(klib::Epub::content_path));
   REQUIRE(klib::read_file(klib::Epub::content_path, false) ==
-          fmt::format(R"(<?xml version="1.0" encoding="UTF-8"?>
+          R"(<?xml version="1.0" encoding="UTF-8"?>
 <package version="2.0" unique-identifier="BookId" xmlns="http://www.idpf.org/2007/opf">
     <metadata xmlns:dc="http://purl.org/dc/elements/1.1/" xmlns:opf="http://www.idpf.org/2007/opf">
         <dc:title>test book1</dc:title>
         <dc:creator opf:file-as="kaiser" opf:role="aut">test author</dc:creator>
         <dc:language>zh-CN</dc:language>
         <dc:rights>kaiser</dc:rights>
-        <meta name="klib version" content="{}" />
         <dc:date opf:event="modification" xmlns:opf="http://www.idpf.org/2007/opf">2021-08-01</dc:date>
         <dc:identifier id="BookId" opf:scheme="UUID">urn:uuid:5208e6bb-5d25-45b0-a7fd-b97d79a85fd4</dc:identifier>
     </metadata>
@@ -104,8 +102,7 @@ TEST_CASE("base generate", "[epub]") {
     </spine>
     <guide />
 </package>
-)",
-                      klib::klib_version()));
+)");
 
   REQUIRE(std::filesystem::exists(klib::Epub::toc_path));
   REQUIRE(klib::read_file(klib::Epub::toc_path, false) ==
@@ -186,14 +183,13 @@ TEST_CASE("generate postscript", "[epub]") {
 
   REQUIRE(std::filesystem::exists(klib::Epub::content_path));
   REQUIRE(klib::read_file(klib::Epub::content_path, false) ==
-          fmt::format(R"(<?xml version="1.0" encoding="UTF-8"?>
+          R"(<?xml version="1.0" encoding="UTF-8"?>
 <package version="2.0" unique-identifier="BookId" xmlns="http://www.idpf.org/2007/opf">
     <metadata xmlns:dc="http://purl.org/dc/elements/1.1/" xmlns:opf="http://www.idpf.org/2007/opf">
         <dc:title>test book2</dc:title>
         <dc:creator opf:file-as="kaiser" opf:role="aut">test author</dc:creator>
         <dc:language>zh-CN</dc:language>
         <dc:rights>kaiser</dc:rights>
-        <meta name="klib version" content="{}" />
         <dc:date opf:event="modification" xmlns:opf="http://www.idpf.org/2007/opf">2021-08-01</dc:date>
         <dc:identifier id="BookId" opf:scheme="UUID">urn:uuid:5208e6bb-5d25-45b0-a7fd-b97d79a85fd4</dc:identifier>
     </metadata>
@@ -212,8 +208,7 @@ TEST_CASE("generate postscript", "[epub]") {
     </spine>
     <guide />
 </package>
-)",
-                      klib::klib_version()));
+)");
 
   REQUIRE(std::filesystem::exists(klib::Epub::toc_path));
   REQUIRE(klib::read_file(klib::Epub::toc_path, false) ==
@@ -296,14 +291,13 @@ TEST_CASE("generate postscript and cover", "[epub]") {
 
   REQUIRE(std::filesystem::exists(klib::Epub::content_path));
   REQUIRE(klib::read_file(klib::Epub::content_path, false) ==
-          fmt::format(R"(<?xml version="1.0" encoding="UTF-8"?>
+          R"(<?xml version="1.0" encoding="UTF-8"?>
 <package version="2.0" unique-identifier="BookId" xmlns="http://www.idpf.org/2007/opf">
     <metadata xmlns:dc="http://purl.org/dc/elements/1.1/" xmlns:opf="http://www.idpf.org/2007/opf">
         <dc:title>test book3</dc:title>
         <dc:creator opf:file-as="kaiser" opf:role="aut">test author</dc:creator>
         <dc:language>zh-CN</dc:language>
         <dc:rights>kaiser</dc:rights>
-        <meta name="klib version" content="{}" />
         <dc:date opf:event="modification" xmlns:opf="http://www.idpf.org/2007/opf">2021-08-01</dc:date>
         <dc:identifier id="BookId" opf:scheme="UUID">urn:uuid:5208e6bb-5d25-45b0-a7fd-b97d79a85fd4</dc:identifier>
         <meta name="cover" content="cover.jpg" />
@@ -328,8 +322,7 @@ TEST_CASE("generate postscript and cover", "[epub]") {
         <reference type="cover" title="Cover" href="Text/cover.xhtml" />
     </guide>
 </package>
-)",
-                      klib::klib_version()));
+)");
 
   REQUIRE(std::filesystem::exists(klib::Epub::toc_path));
   REQUIRE(klib::read_file(klib::Epub::toc_path, false) ==
@@ -429,14 +422,13 @@ TEST_CASE("generate postscript, cover, illustration and image", "[epub]") {
 
   REQUIRE(std::filesystem::exists(klib::Epub::content_path));
   REQUIRE(klib::read_file(klib::Epub::content_path, false) ==
-          fmt::format(R"(<?xml version="1.0" encoding="UTF-8"?>
+          R"(<?xml version="1.0" encoding="UTF-8"?>
 <package version="2.0" unique-identifier="BookId" xmlns="http://www.idpf.org/2007/opf">
     <metadata xmlns:dc="http://purl.org/dc/elements/1.1/" xmlns:opf="http://www.idpf.org/2007/opf">
         <dc:title>test book4</dc:title>
         <dc:creator opf:file-as="kaiser" opf:role="aut">test author</dc:creator>
         <dc:language>zh-CN</dc:language>
         <dc:rights>kaiser</dc:rights>
-        <meta name="klib version" content="{}" />
         <dc:date opf:event="modification" xmlns:opf="http://www.idpf.org/2007/opf">2021-08-01</dc:date>
         <dc:identifier id="BookId" opf:scheme="UUID">urn:uuid:5208e6bb-5d25-45b0-a7fd-b97d79a85fd4</dc:identifier>
         <meta name="cover" content="cover.jpg" />
@@ -473,8 +465,7 @@ TEST_CASE("generate postscript, cover, illustration and image", "[epub]") {
         <reference type="cover" title="Cover" href="Text/cover.xhtml" />
     </guide>
 </package>
-)",
-                      klib::klib_version()));
+)");
 
   REQUIRE(std::filesystem::exists(klib::Epub::toc_path));
   REQUIRE(klib::read_file(klib::Epub::toc_path, false) ==
@@ -583,14 +574,13 @@ TEST_CASE("full generate", "[epub]") {
 
   REQUIRE(std::filesystem::exists(klib::Epub::content_path));
   REQUIRE(klib::read_file(klib::Epub::content_path, false) ==
-          fmt::format(R"(<?xml version="1.0" encoding="UTF-8"?>
+          R"(<?xml version="1.0" encoding="UTF-8"?>
 <package version="2.0" unique-identifier="BookId" xmlns="http://www.idpf.org/2007/opf">
     <metadata xmlns:dc="http://purl.org/dc/elements/1.1/" xmlns:opf="http://www.idpf.org/2007/opf">
         <dc:title>test book5</dc:title>
         <dc:creator opf:file-as="kaiser" opf:role="aut">test author</dc:creator>
         <dc:language>zh-CN</dc:language>
         <dc:rights>kaiser</dc:rights>
-        <meta name="klib version" content="{}" />
         <dc:date opf:event="modification" xmlns:opf="http://www.idpf.org/2007/opf">2021-08-01</dc:date>
         <dc:identifier id="BookId" opf:scheme="UUID">urn:uuid:5208e6bb-5d25-45b0-a7fd-b97d79a85fd4</dc:identifier>
         <meta name="cover" content="cover.jpg" />
@@ -633,8 +623,7 @@ TEST_CASE("full generate", "[epub]") {
         <reference type="cover" title="Cover" href="Text/cover.xhtml" />
     </guide>
 </package>
-)",
-                      klib::klib_version()));
+)");
 
   REQUIRE(std::filesystem::exists(klib::Epub::toc_path));
   REQUIRE(klib::read_file(klib::Epub::toc_path, false) ==
@@ -761,14 +750,13 @@ TEST_CASE("sub-volume", "[epub]") {
 
   REQUIRE(std::filesystem::exists(klib::Epub::content_path));
   REQUIRE(klib::read_file(klib::Epub::content_path, false) ==
-          fmt::format(R"(<?xml version="1.0" encoding="UTF-8"?>
+          R"(<?xml version="1.0" encoding="UTF-8"?>
 <package version="2.0" unique-identifier="BookId" xmlns="http://www.idpf.org/2007/opf">
     <metadata xmlns:dc="http://purl.org/dc/elements/1.1/" xmlns:opf="http://www.idpf.org/2007/opf">
         <dc:title>test book6</dc:title>
         <dc:creator opf:file-as="kaiser" opf:role="aut">test author</dc:creator>
         <dc:language>zh-CN</dc:language>
         <dc:rights>kaiser</dc:rights>
-        <meta name="klib version" content="{}" />
         <dc:date opf:event="modification" xmlns:opf="http://www.idpf.org/2007/opf">2021-08-01</dc:date>
         <dc:identifier id="BookId" opf:scheme="UUID">urn:uuid:5208e6bb-5d25-45b0-a7fd-b97d79a85fd4</dc:identifier>
         <meta name="cover" content="cover.jpg" />
@@ -791,9 +779,9 @@ TEST_CASE("sub-volume", "[epub]") {
         <item id="illustration002.xhtml" href="Text/illustration002.xhtml" media-type="application/xhtml+xml" />
         <item id="illustration003.xhtml" href="Text/illustration003.xhtml" media-type="application/xhtml+xml" />
         <item id="volume001.xhtml" href="Text/volume001.xhtml" media-type="application/xhtml+xml" />
-        <item id="volume002.xhtml" href="Text/volume002.xhtml" media-type="application/xhtml+xml" />
         <item id="chapter001.xhtml" href="Text/chapter001.xhtml" media-type="application/xhtml+xml" />
         <item id="chapter002.xhtml" href="Text/chapter002.xhtml" media-type="application/xhtml+xml" />
+        <item id="volume002.xhtml" href="Text/volume002.xhtml" media-type="application/xhtml+xml" />
         <item id="chapter003.xhtml" href="Text/chapter003.xhtml" media-type="application/xhtml+xml" />
         <item id="postscript.xhtml" href="Text/postscript.xhtml" media-type="application/xhtml+xml" />
     </manifest>
@@ -805,9 +793,9 @@ TEST_CASE("sub-volume", "[epub]") {
         <itemref idref="illustration002.xhtml" />
         <itemref idref="illustration003.xhtml" />
         <itemref idref="volume001.xhtml" />
-        <itemref idref="volume002.xhtml" />
         <itemref idref="chapter001.xhtml" />
         <itemref idref="chapter002.xhtml" />
+        <itemref idref="volume002.xhtml" />
         <itemref idref="chapter003.xhtml" />
         <itemref idref="postscript.xhtml" />
     </spine>
@@ -815,8 +803,7 @@ TEST_CASE("sub-volume", "[epub]") {
         <reference type="cover" title="Cover" href="Text/cover.xhtml" />
     </guide>
 </package>
-)",
-                      klib::klib_version()));
+)");
 
   REQUIRE(std::filesystem::exists(klib::Epub::toc_path));
   REQUIRE(klib::read_file(klib::Epub::toc_path, false) ==
@@ -958,14 +945,13 @@ TEST_CASE("append", "[epub]") {
 
   REQUIRE(std::filesystem::exists(klib::Epub::content_path));
   REQUIRE(klib::read_file(klib::Epub::content_path, false) ==
-          fmt::format(R"(<?xml version="1.0" encoding="UTF-8"?>
+          R"(<?xml version="1.0" encoding="UTF-8"?>
 <package version="2.0" unique-identifier="BookId" xmlns="http://www.idpf.org/2007/opf">
     <metadata xmlns:dc="http://purl.org/dc/elements/1.1/" xmlns:opf="http://www.idpf.org/2007/opf">
         <dc:title>test book7</dc:title>
         <dc:creator opf:file-as="kaiser" opf:role="aut">test author</dc:creator>
         <dc:language>zh-CN</dc:language>
         <dc:rights>kaiser</dc:rights>
-        <meta name="klib version" content="{}" />
         <dc:date opf:event="modification" xmlns:opf="http://www.idpf.org/2007/opf">2021-08-01</dc:date>
         <dc:identifier id="BookId" opf:scheme="UUID">urn:uuid:5208e6bb-5d25-45b0-a7fd-b97d79a85fd4</dc:identifier>
         <meta name="cover" content="cover.jpg" />
@@ -1012,8 +998,7 @@ TEST_CASE("append", "[epub]") {
         <reference type="cover" title="Cover" href="Text/cover.xhtml" />
     </guide>
 </package>
-)",
-                      klib::klib_version()));
+)");
 
   REQUIRE(std::filesystem::exists(klib::Epub::toc_path));
   REQUIRE(klib::read_file(klib::Epub::toc_path, false) ==
