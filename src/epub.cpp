@@ -402,8 +402,8 @@ void Epub::generate(bool archive) {
   generate_introduction();
   generate_message();
   generate_postscript();
-  generate_toc();
   generate_content();
+  generate_toc();
   generate_mimetype();
 
   ptr.reset();
@@ -521,63 +521,6 @@ void Epub::generate_postscript() const {
   }
 }
 
-void Epub::generate_toc() {
-  auto doc = generate_declaration();
-
-  doc.append_child(pugi::node_doctype)
-      .set_value(
-          R"(ncx PUBLIC "-//NISO//DTD ncx 2005-1//EN" "http://www.daisy.org/z3986/2005/ncx-2005-1.dtd")");
-
-  auto ncx = doc.append_child("ncx");
-  ncx.append_attribute("version") = "2005-1";
-  ncx.append_attribute("xmlns") = "http://www.daisy.org/z3986/2005/ncx/";
-
-  auto head = ncx.append_child("head");
-
-  auto meta = head.append_child("meta");
-  meta.append_attribute("name") = "dtb:uid";
-  meta.append_attribute("content") = uuid_.c_str();
-
-  meta = head.append_child("meta");
-  meta.append_attribute("name") = "dtb:depth";
-  meta.append_attribute("content") = 1;
-
-  meta = head.append_child("meta");
-  meta.append_attribute("name") = "dtb:totalPageCount";
-  meta.append_attribute("content") = 0;
-
-  meta = head.append_child("meta");
-  meta.append_attribute("name") = "dtb:maxPageNumber";
-  meta.append_attribute("content") = 0;
-
-  auto doc_title = ncx.append_child("docTitle");
-  doc_title.append_child("text").text() = book_name_.c_str();
-
-  auto doc_author = ncx.append_child("docAuthor");
-  doc_author.append_child("text").text() = author_.c_str();
-
-  auto nav_map = ncx.append_child("navMap");
-  if (generate_cover_) {
-    append_nav_map(nav_map, "封面", "Text/cover.xhtml");
-  }
-  append_nav_map(nav_map, "制作信息", "Text/message.xhtml");
-  append_nav_map(nav_map, "简介", "Text/introduction.xhtml");
-
-  if (illustration_num_ > 0) {
-    append_nav_map(nav_map, "彩页", "Text/illustration001.xhtml");
-  }
-
-  //  if (!std::empty(last_volume_name)) {
-  //    nav_map = nav_map.parent();
-  //  }
-
-  if (generate_postscript_) {
-    append_nav_map(nav_map, "后记", "Text/postscript.xhtml");
-  }
-
-  save_file(doc, Epub::toc_path);
-}
-
 void Epub::generate_content() const {
   auto doc = generate_declaration();
 
@@ -657,6 +600,63 @@ void Epub::generate_content() const {
   }
 
   save_file(doc, Epub::content_path);
+}
+
+void Epub::generate_toc() {
+  auto doc = generate_declaration();
+
+  doc.append_child(pugi::node_doctype)
+      .set_value(
+          R"(ncx PUBLIC "-//NISO//DTD ncx 2005-1//EN" "http://www.daisy.org/z3986/2005/ncx-2005-1.dtd")");
+
+  auto ncx = doc.append_child("ncx");
+  ncx.append_attribute("version") = "2005-1";
+  ncx.append_attribute("xmlns") = "http://www.daisy.org/z3986/2005/ncx/";
+
+  auto head = ncx.append_child("head");
+
+  auto meta = head.append_child("meta");
+  meta.append_attribute("name") = "dtb:uid";
+  meta.append_attribute("content") = uuid_.c_str();
+
+  meta = head.append_child("meta");
+  meta.append_attribute("name") = "dtb:depth";
+  meta.append_attribute("content") = 1;
+
+  meta = head.append_child("meta");
+  meta.append_attribute("name") = "dtb:totalPageCount";
+  meta.append_attribute("content") = 0;
+
+  meta = head.append_child("meta");
+  meta.append_attribute("name") = "dtb:maxPageNumber";
+  meta.append_attribute("content") = 0;
+
+  auto doc_title = ncx.append_child("docTitle");
+  doc_title.append_child("text").text() = book_name_.c_str();
+
+  auto doc_author = ncx.append_child("docAuthor");
+  doc_author.append_child("text").text() = author_.c_str();
+
+  auto nav_map = ncx.append_child("navMap");
+  if (generate_cover_) {
+    append_nav_map(nav_map, "封面", "Text/cover.xhtml");
+  }
+  append_nav_map(nav_map, "制作信息", "Text/message.xhtml");
+  append_nav_map(nav_map, "简介", "Text/introduction.xhtml");
+
+  if (illustration_num_ > 0) {
+    append_nav_map(nav_map, "彩页", "Text/illustration001.xhtml");
+  }
+
+  //  if (!std::empty(last_volume_name)) {
+  //    nav_map = nav_map.parent();
+  //  }
+
+  if (generate_postscript_) {
+    append_nav_map(nav_map, "后记", "Text/postscript.xhtml");
+  }
+
+  save_file(doc, Epub::toc_path);
 }
 
 void Epub::generate_mimetype() const {

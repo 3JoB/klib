@@ -150,8 +150,8 @@ class Epub {
   void generate_introduction() const;
   void generate_message() const;
   void generate_postscript() const;
-  void generate_toc();
   void generate_content() const;
+  void generate_toc();
   void generate_mimetype() const;
 
   std::string creator_ = "TODO";
@@ -163,8 +163,6 @@ class Epub {
   bool generate_postscript_ = false;
   std::int32_t illustration_num_ = 0;
   std::int32_t image_num_ = 0;
-
-  std::int32_t volume_count_ = 0;
 
   std::string uuid_;
   std::string date_;
