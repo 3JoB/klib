@@ -195,80 +195,131 @@ void generate_volume(const std::string &volume_name, std::int32_t id) {
   save_file(volume, volume_path.c_str());
 }
 
-std::int32_t last_chapter_num(const pugi::xml_node &node) {
+std::int32_t last_num(const pugi::xml_node &node, const std::string &prefix,
+                      const std::string &suffix) {
   auto item = node.select_node("/package/manifest").node();
+  auto prefix_size = std::size(prefix);
+  auto suffix_size = std::size(suffix);
 
   std::vector<std::int32_t> ids;
+
   for (const auto &child : item.children("item")) {
     std::string id = child.attribute("id").as_string();
-    if (id.starts_with("chapter")) {
-      auto num_str = id.substr(7);
-      num_str = num_str.substr(0, std::size(num_str) - 6);
+    if (id.starts_with(prefix)) {
+      auto num_str = id.substr(prefix_size);
+      num_str = num_str.substr(0, std::size(num_str) - suffix_size);
       ids.push_back(std::stoi(num_str));
     }
   }
   std::sort(std::begin(ids), std::end(ids));
 
-  return ids.back();
+  return std::empty(ids) ? 0 : ids.back();
 }
 
-std::int32_t deal_with_content(
-    const std::vector<std::pair<std::string, std::vector<std::string>>>
-        &content) {
+void do_deal_with_content(
+    pugi::xml_node &manifest, std::int32_t first_chapter_id,
+    std::int32_t first_volume_id,
+    const std::vector<std::tuple<std::string, std::string,
+                                 std::vector<std::string>>> &content) {
+  std::string last_volume_name;
+
+  for (const auto &[volume_name, title, text] : content) {
+    if (volume_name != last_volume_name) {
+      auto name = num_to_volume_name(first_volume_id++);
+      append_manifest_and_spine(manifest, name, "Text/" + name);
+    }
+    auto name = num_to_chapter_name(first_chapter_id++);
+    append_manifest_and_spine(manifest, name, "Text/" + name);
+
+    last_volume_name = volume_name;
+  }
+}
+
+std::pair<std::int32_t, std::int32_t> deal_with_content(
+    const std::vector<std::tuple<std::string, std::string,
+                                 std::vector<std::string>>> &content) {
   pugi::xml_document doc;
   doc.load_file(Epub::content_path.data(), pugi::parse_default |
                                                pugi::parse_declaration |
                                                pugi::parse_doctype);
 
-  auto first_num = last_chapter_num(doc) + 1;
-
   auto manifest = doc.select_node("/package/manifest").node();
-
-  auto size = std::size(content);
-  auto id = first_num;
-  for (std::size_t i = 0; i < size; ++i) {
-    auto file_name = num_to_chapter_name(id++);
-    auto file_path = "Text/" + file_name;
-    append_manifest_and_spine(manifest, file_name, file_path);
-  }
+  auto first_chapter_id = last_num(doc, "chapter", ".xhtml") + 1;
+  auto first_volume_id = last_num(doc, "volume", ".xhtml") + 1;
+  do_deal_with_content(manifest, first_chapter_id, first_volume_id, content);
 
   save_file(doc, Epub::content_path);
 
-  return first_num;
+  return {first_chapter_id, first_volume_id};
+}
+
+void do_deal_with_toc(
+    pugi::xml_node &nav_map, std::int32_t first_chapter_id,
+    std::int32_t first_volume_id,
+    const std::vector<std::tuple<std::string, std::string,
+                                 std::vector<std::string>>> &content) {
+  std::string last_volume_name;
+  for (const auto &[volume_name, title, text] : content) {
+    if (std::empty(volume_name)) {
+      if (!std::empty(last_volume_name)) {
+        throw klib::RuntimeError("Each must have a volume name");
+      }
+
+      append_nav_map(nav_map, title,
+                     "Text/" + num_to_chapter_name(first_chapter_id++));
+    } else {
+      if (std::empty(last_volume_name)) {
+        generate_volume(volume_name, first_volume_id++);
+
+        append_nav_map(nav_map, volume_name,
+                       "Text/" + num_to_volume_name(first_volume_id++));
+        nav_map = nav_map.last_child();
+        append_nav_map(nav_map, title,
+                       "Text/" + num_to_chapter_name(first_chapter_id++));
+      } else {
+        if (volume_name != last_volume_name) {
+          generate_volume(volume_name, first_volume_id++);
+
+          nav_map = nav_map.parent();
+          append_nav_map(nav_map, volume_name,
+                         "Text/" + num_to_volume_name(first_volume_id++));
+          nav_map = nav_map.last_child();
+        }
+
+        append_nav_map(nav_map, title,
+                       "Text/" + num_to_chapter_name(first_chapter_id++));
+      }
+    }
+
+    last_volume_name = volume_name;
+  }
 }
 
 void deal_with_toc(
-    const std::vector<std::pair<std::string, std::vector<std::string>>>
-        &content,
-    std::int32_t first_num) {
+    const std::vector<std::tuple<std::string, std::string,
+                                 std::vector<std::string>>> &content,
+    std::int32_t first_chapter_id, std::int32_t first_volume_id) {
   pugi::xml_document doc;
   doc.load_file(Epub::toc_path.data(), pugi::parse_default |
                                            pugi::parse_declaration |
                                            pugi::parse_doctype);
 
   auto nav_map = doc.select_node("/ncx/navMap").node();
-
-  auto size = std::size(content);
-  for (std::size_t i = 0; i < size; ++i) {
-    auto file_path = "Text/" + num_to_chapter_name(first_num++);
-    append_nav_map(nav_map, content[i].first, file_path);
-  }
+  do_deal_with_toc(nav_map, first_chapter_id, first_volume_id, content);
 
   save_file(doc, Epub::toc_path);
 }
 
 void deal_with_chapter(
-    const std::vector<std::pair<std::string, std::vector<std::string>>>
-        &content,
-    std::int32_t first_num) {
-  auto size = std::size(content);
-  for (std::size_t i = 0; i < size; ++i) {
-    auto [title, texts] = content[i];
+    const std::vector<std::tuple<std::string, std::string,
+                                 std::vector<std::string>>> &content,
+    std::int32_t first_chapter_id) {
+  for (const auto &[volume, title, texts] : content) {
     auto doc = generate_xhtml(title, "", true);
     append_texts(doc, texts);
 
     auto path = std::filesystem::path(Epub::text_dir) /
-                num_to_chapter_name(first_num++);
+                num_to_chapter_name(first_chapter_id++);
     save_file(doc, path.c_str());
   }
 }
@@ -365,17 +416,17 @@ void Epub::generate(bool archive) {
 
 void Epub::append_chapter(
     const std::string &book_name,
-    const std::vector<std::pair<std::string, std::vector<std::string>>>
-        &content) {
+    const std::vector<std::tuple<std::string, std::string,
+                                 std::vector<std::string>>> &content) {
   if (!std::filesystem::is_directory(book_name)) {
     throw RuntimeError("The dir not exists: {}", book_name);
   }
 
   ChangeWorkingDir change_working_dir(book_name);
 
-  auto first_num = deal_with_content(content);
-  deal_with_toc(content, first_num);
-  deal_with_chapter(content, first_num);
+  auto [first_chapter_id, first_volume_id] = deal_with_content(content);
+  deal_with_toc(content, first_chapter_id, first_volume_id);
+  deal_with_chapter(content, first_chapter_id);
 }
 
 void Epub::generate_container() const {
@@ -409,18 +460,7 @@ void Epub::generate_style() const {
   klib::write_file(Epub::style_path, false, style_);
 }
 
-void Epub::generate_chapter() const {
-  auto size = std::size(content_);
-  for (std::size_t i = 0; i < size; ++i) {
-    auto [volume_name, title, texts] = content_[i];
-    auto doc = generate_xhtml(title, "", true);
-    append_texts(doc, texts);
-
-    auto path =
-        std::filesystem::path(Epub::text_dir) / num_to_chapter_name(i + 1);
-    save_file(doc, path.c_str());
-  }
-}
+void Epub::generate_chapter() const { deal_with_chapter(content_, 1); }
 
 void Epub::generate_cover() const {
   if (generate_cover_) {
@@ -527,44 +567,9 @@ void Epub::generate_toc() {
     append_nav_map(nav_map, "彩页", "Text/illustration001.xhtml");
   }
 
-  auto size = std::size(content_);
-  std::string last_volume_name;
-  for (std::size_t i = 0; i < size; ++i) {
-    auto [volume_name, title, text] = content_[i];
-    if (std::empty(volume_name)) {
-      if (!std::empty(last_volume_name)) {
-        throw klib::RuntimeError("Each must have a volume name");
-      }
-
-      append_nav_map(nav_map, title, "Text/" + num_to_chapter_name(i + 1));
-    } else {
-      if (std::empty(last_volume_name)) {
-        generate_volume(volume_name, ++volume_count_);
-
-        append_nav_map(nav_map, volume_name,
-                       "Text/" + num_to_volume_name(volume_count_));
-        nav_map = nav_map.last_child();
-        append_nav_map(nav_map, title, "Text/" + num_to_chapter_name(i + 1));
-      } else {
-        if (volume_name != last_volume_name) {
-          generate_volume(volume_name, ++volume_count_);
-
-          nav_map = nav_map.parent();
-          append_nav_map(nav_map, volume_name,
-                         "Text/" + num_to_volume_name(volume_count_));
-          nav_map = nav_map.last_child();
-        }
-
-        append_nav_map(nav_map, title, "Text/" + num_to_chapter_name(i + 1));
-      }
-    }
-
-    last_volume_name = volume_name;
-  }
-
-  if (!std::empty(last_volume_name)) {
-    nav_map = nav_map.parent();
-  }
+  //  if (!std::empty(last_volume_name)) {
+  //    nav_map = nav_map.parent();
+  //  }
 
   if (generate_postscript_) {
     append_nav_map(nav_map, "后记", "Text/postscript.xhtml");
@@ -636,25 +641,7 @@ void Epub::generate_content() const {
     append_manifest_and_spine(manifest, name, "Text/" + name);
   }
 
-  auto size = std::size(content_);
-  std::string last_volume_name;
-  std::int32_t volume_count = 0;
-  for (std::size_t i = 0; i < size; ++i) {
-    auto volume_name = std::get<0>(content_[i]);
-
-    if (volume_name != last_volume_name) {
-      auto name = num_to_volume_name(volume_count + 1);
-      append_manifest_and_spine(manifest, name, "Text/" + name);
-      ++volume_count;
-    }
-    auto name = num_to_chapter_name(i + 1);
-    append_manifest_and_spine(manifest, name, "Text/" + name);
-
-    last_volume_name = volume_name;
-  }
-  if (volume_count != volume_count_) {
-    throw RuntimeError("Volume count error: {}", volume_count);
-  }
+  do_deal_with_content(manifest, 1, 1, content_);
 
   if (generate_postscript_) {
     append_manifest_and_spine(manifest, "postscript.xhtml",
