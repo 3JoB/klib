@@ -196,6 +196,84 @@ void generate_volume(const std::string &volume_name, std::int32_t id) {
   save_file(volume, volume_path.c_str());
 }
 
+std::int32_t last_chapter_num(const pugi::xml_node &node) {
+  auto item = node.select_node("/package/manifest").node();
+
+  std::vector<std::int32_t> ids;
+  for (const auto &child : item.children("item")) {
+    std::string id = child.attribute("id").as_string();
+    if (id.starts_with("chapter")) {
+      auto num_str = id.substr(7);
+      num_str = num_str.substr(0, std::size(num_str) - 6);
+      ids.push_back(std::stoi(num_str));
+    }
+  }
+  std::sort(std::begin(ids), std::end(ids));
+
+  return ids.back();
+}
+
+std::int32_t deal_with_content(
+    const std::vector<std::tuple<std::string, std::string,
+                                 std::vector<std::string>>> &content) {
+  pugi::xml_document doc;
+  doc.load_file(Epub::content_path.data(), pugi::parse_default |
+                                               pugi::parse_declaration |
+                                               pugi::parse_doctype);
+
+  auto first_num = last_chapter_num(doc) + 1;
+
+  auto manifest = doc.select_node("/package/manifest").node();
+
+  auto size = std::size(content);
+  auto id = first_num;
+  for (std::size_t i = 0; i < size; ++i) {
+    auto file_name = num_to_chapter_name(id++);
+    auto file_path = "Text/" + file_name;
+    append_manifest_and_spine(manifest, file_name, file_path);
+  }
+
+  save_file(doc, Epub::content_path);
+
+  return first_num;
+}
+
+void deal_with_toc(
+    const std::vector<std::tuple<std::string, std::string,
+                                 std::vector<std::string>>> &content,
+    std::int32_t first_num) {
+  pugi::xml_document doc;
+  doc.load_file(Epub::toc_path.data(), pugi::parse_default |
+                                           pugi::parse_declaration |
+                                           pugi::parse_doctype);
+
+  auto nav_map = doc.select_node("/ncx/navMap").node();
+
+  auto size = std::size(content);
+  for (std::size_t i = 0; i < size; ++i) {
+    auto file_path = "Text/" + num_to_chapter_name(first_num++);
+    append_nav_map(nav_map, std::get<1>(content[i]), file_path);
+  }
+
+  save_file(doc, Epub::toc_path);
+}
+
+void deal_with_chapter(
+    const std::vector<std::tuple<std::string, std::string,
+                                 std::vector<std::string>>> &content,
+    std::int32_t first_num) {
+  auto size = std::size(content);
+  for (std::size_t i = 0; i < size; ++i) {
+    auto [volume_name, title, texts] = content[i];
+    auto doc = generate_xhtml(title, "", true);
+    append_texts(doc, texts);
+
+    auto path = std::filesystem::path(Epub::text_dir) /
+                num_to_chapter_name(first_num++);
+    save_file(doc, path.c_str());
+  }
+}
+
 }  // namespace
 
 Epub::Epub() {
@@ -286,6 +364,21 @@ void Epub::generate(bool archive) {
   }
 }
 
+void Epub::append_chapter(
+    const std::string &book_name,
+    const std::vector<std::tuple<std::string, std::string,
+                                 std::vector<std::string>>> &content) {
+  if (!std::filesystem::is_directory(book_name)) {
+    throw RuntimeError("The dir not exists: {}", book_name);
+  }
+
+  ChangeWorkingDir change_working_dir(book_name);
+
+  auto first_num = deal_with_content(content);
+  deal_with_toc(content, first_num);
+  deal_with_chapter(content, first_num);
+}
+
 void Epub::generate_container() const {
   auto doc = generate_declaration();
 
@@ -317,18 +410,7 @@ void Epub::generate_style() const {
   klib::write_file(Epub::style_path, false, style_);
 }
 
-void Epub::generate_chapter() const {
-  auto size = std::size(content_);
-  for (std::size_t i = 0; i < size; ++i) {
-    auto [volume_name, title, texts] = content_[i];
-    auto doc = generate_xhtml(title, "", true);
-    append_texts(doc, texts);
-
-    auto path =
-        std::filesystem::path(Epub::text_dir) / num_to_chapter_name(i + 1);
-    save_file(doc, path.c_str());
-  }
-}
+void Epub::generate_chapter() const { deal_with_chapter(content_, 1); }
 
 void Epub::generate_cover() const {
   if (generate_cover_) {

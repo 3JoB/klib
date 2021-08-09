@@ -9,6 +9,11 @@
 
 namespace klib {
 
+/**
+ * @brief Report error
+ * @param fmt: Format string
+ * @param args: Parameter
+ */
 template <typename... Args>
 void warn(std::string_view fmt, Args &&...args) {
   fmt::print(fmt::fg(fmt::color::yellow), "warning:\n");
@@ -16,6 +21,11 @@ void warn(std::string_view fmt, Args &&...args) {
   fmt::print("\n");
 }
 
+/**
+ * @brief Report warning
+ * @param fmt: Format string
+ * @param args: Parameter
+ */
 template <typename... Args>
 [[noreturn]] void error(std::string_view fmt, Args &&...args) {
   fmt::print(fmt::fg(fmt::color::red), "error:\n");

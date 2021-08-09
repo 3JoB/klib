@@ -70,8 +70,7 @@ ChangeWorkingDir::ChangeWorkingDir(const std::string &path) {
   if (!std::empty(path)) {
     backup_ = std::filesystem::current_path();
 
-    if (!(std::filesystem::exists(path) &&
-          std::filesystem::is_directory(path))) {
+    if (!std::filesystem::is_directory(path)) {
       if (!std::filesystem::create_directory(path)) {
         throw klib::RuntimeError("can not create directory: '{}'", path);
       }

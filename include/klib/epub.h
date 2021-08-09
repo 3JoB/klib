@@ -106,6 +106,16 @@ class Epub {
   void generate(bool archive = true);
 
   /**
+   * @brief Append chapter
+   * @param book_name: Book name
+   * @param content: Volume name, title and text
+   */
+  static void append_chapter(
+      const std::string &book_name,
+      const std::vector<std::tuple<std::string, std::string,
+                                   std::vector<std::string>>> &content);
+
+  /**
    * @brief Epub file internal path
    * @note For testing
    */
