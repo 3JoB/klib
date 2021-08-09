@@ -31,7 +31,7 @@
  <tr style="height: 56px;">
   <td id="projectalign" style="padding-left: 0.5em;">
    <div id="projectname">klib
-   &#160;<span id="projectnumber">0.2.4</span>
+   &#160;<span id="projectnumber">0.2.5</span>
    </div>
   </td>
    <td>        <div id="MSearchBox" class="MSearchBoxInactive">
@@ -94,6 +94,7 @@ $(document).ready(function(){initNavTree('classklib_1_1Epub.html',''); initResiz
 <div class="header">
   <div class="summary">
 <a href="#pub-methods">Public Member Functions</a> &#124;
+<a href="#pub-static-methods">Static Public Member Functions</a> &#124;
 <a href="#pub-static-attribs">Static Public Attributes</a> &#124;
 <a href="classklib_1_1Epub-members.html">List of all members</a>  </div>
   <div class="headertitle">
@@ -146,6 +147,12 @@ Public Member Functions</h2></td></tr>
 <tr class="memitem:a284ea5d0004f8387bf9ebaa62e0c87a6"><td class="memItemLeft" align="right" valign="top">void&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="classklib_1_1Epub.html#a284ea5d0004f8387bf9ebaa62e0c87a6">generate</a> (bool archive=true)</td></tr>
 <tr class="memdesc:a284ea5d0004f8387bf9ebaa62e0c87a6"><td class="mdescLeft">&#160;</td><td class="mdescRight">Generate epub file.  <a href="classklib_1_1Epub.html#a284ea5d0004f8387bf9ebaa62e0c87a6">More...</a><br /></td></tr>
 <tr class="separator:a284ea5d0004f8387bf9ebaa62e0c87a6"><td class="memSeparator" colspan="2">&#160;</td></tr>
+</table><table class="memberdecls">
+<tr class="heading"><td colspan="2"><h2 class="groupheader"><a name="pub-static-methods"></a>
+Static Public Member Functions</h2></td></tr>
+<tr class="memitem:a486dd9a86d18cf086ffdfce2a2b3237c"><td class="memItemLeft" align="right" valign="top">static void&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="classklib_1_1Epub.html#a486dd9a86d18cf086ffdfce2a2b3237c">append_chapter</a> (const std::string &amp;book_name, const std::vector&lt; std::pair&lt; std::string, std::vector&lt; std::string &gt;&gt;&gt; &amp;content)</td></tr>
+<tr class="memdesc:a486dd9a86d18cf086ffdfce2a2b3237c"><td class="mdescLeft">&#160;</td><td class="mdescRight">Append chapter.  <a href="classklib_1_1Epub.html#a486dd9a86d18cf086ffdfce2a2b3237c">More...</a><br /></td></tr>
+<tr class="separator:a486dd9a86d18cf086ffdfce2a2b3237c"><td class="memSeparator" colspan="2">&#160;</td></tr>
 </table><table class="memberdecls">
 <tr class="heading"><td colspan="2"><h2 class="groupheader"><a name="pub-static-attribs"></a>
 Static Public Attributes</h2></td></tr>
@@ -271,6 +278,51 @@ constexpr static std::string_view&#160;</td><td class="memItemRight" valign="bot
     <tr><td class="paramname">volume_name</td><td>Represents Volume name </td></tr>
     <tr><td class="paramname">title</td><td>Represents title </td></tr>
     <tr><td class="paramname">text</td><td>Represents text </td></tr>
+  </table>
+  </dd>
+</dl>
+
+</div>
+</div>
+<a id="a486dd9a86d18cf086ffdfce2a2b3237c"></a>
+<h2 class="memtitle"><span class="permalink"><a href="#a486dd9a86d18cf086ffdfce2a2b3237c">&#9670;&nbsp;</a></span>append_chapter()</h2>
+
+<div class="memitem">
+<div class="memproto">
+<table class="mlabels">
+  <tr>
+  <td class="mlabels-left">
+      <table class="memname">
+        <tr>
+          <td class="memname">static void klib::Epub::append_chapter </td>
+          <td>(</td>
+          <td class="paramtype">const std::string &amp;&#160;</td>
+          <td class="paramname"><em>book_name</em>, </td>
+        </tr>
+        <tr>
+          <td class="paramkey"></td>
+          <td></td>
+          <td class="paramtype">const std::vector&lt; std::pair&lt; std::string, std::vector&lt; std::string &gt;&gt;&gt; &amp;&#160;</td>
+          <td class="paramname"><em>content</em>&#160;</td>
+        </tr>
+        <tr>
+          <td></td>
+          <td>)</td>
+          <td></td><td></td>
+        </tr>
+      </table>
+  </td>
+  <td class="mlabels-right">
+<span class="mlabels"><span class="mlabel">static</span></span>  </td>
+  </tr>
+</table>
+</div><div class="memdoc">
+
+<p>Append chapter. </p>
+<dl class="params"><dt>Parameters</dt><dd>
+  <table class="params">
+    <tr><td class="paramname">book_name</td><td>Book name </td></tr>
+    <tr><td class="paramname">content</td><td>Title and text </td></tr>
   </table>
   </dd>
 </dl>
