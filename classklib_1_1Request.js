@@ -8,6 +8,8 @@ var classklib_1_1Request =
     [ "get", "classklib_1_1Request.html#aff734085e5025357e3151e2a56c8a681", null ],
     [ "operator=", "classklib_1_1Request.html#a1bdd9d722384dfe377bc3a902f9ce4ab", null ],
     [ "operator=", "classklib_1_1Request.html#acd404419be226f1a1f63d6cf0562c065", null ],
+    [ "set_browser_user_agent", "classklib_1_1Request.html#afa583b9071002118ad316a9690003256", null ],
+    [ "set_curl_user_agent", "classklib_1_1Request.html#a4aba7a126459a31beb9ba92d436949c8", null ],
     [ "set_no_proxy", "classklib_1_1Request.html#aa6db2a71c4c12c8f054715e3f8fc71ae", null ],
     [ "set_proxy", "classklib_1_1Request.html#ac2cf384a73a9a958c5a49979db7a4633", null ],
     [ "set_user_agent", "classklib_1_1Request.html#abc72456d5b46d7081dbea3980fefc68b", null ],
