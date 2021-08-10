@@ -16,13 +16,13 @@ namespace {
 
 void check_curl_correct(CURLcode code) {
   if (code != CURLcode::CURLE_OK) {
-    throw klib::RuntimeError(curl_easy_strerror(code));
+    throw RuntimeError(curl_easy_strerror(code));
   }
 }
 
 void check_curl_correct(CURLMcode code) {
   if (code != CURLMcode::CURLM_OK) {
-    throw klib::RuntimeError(curl_multi_strerror(code));
+    throw RuntimeError(curl_multi_strerror(code));
   }
 }
 
@@ -43,6 +43,8 @@ class Request::RequestImpl {
   void set_proxy(const std::string &proxy);
   void set_no_proxy();
   void set_user_agent(const std::string &user_agent);
+  void set_browser_user_agent();
+  void set_curl_user_agent();
 
   Response get(const std::string &url);
 
@@ -59,7 +61,7 @@ Request::RequestImpl::RequestImpl() {
 
   http_handle_ = curl_easy_init();
   if (!http_handle_) {
-    throw klib::RuntimeError("curl_easy_init() error");
+    throw RuntimeError("curl_easy_init() error");
   }
 
   try {
@@ -73,17 +75,9 @@ Request::RequestImpl::RequestImpl() {
                                         "/etc/ssl/certs/ca-certificates.crt"));
     check_curl_correct(curl_easy_setopt(http_handle_, CURLOPT_HTTP_VERSION,
                                         CURL_HTTP_VERSION_2_0));
-
     check_curl_correct(
         curl_easy_setopt(http_handle_, CURLOPT_FOLLOWLOCATION, 1L));
-
-    // navigator.userAgent
-    check_curl_correct(
-        curl_easy_setopt(http_handle_, CURLOPT_USERAGENT,
-                         "Mozilla/5.0 (X11; Linux x86_64) AppleWebKit/537.36 "
-                         "(KHTML, like Gecko) "
-                         "Chrome/93.0.4577.18 Safari/537.36 Edg/93.0.961.11"));
-  } catch (const klib::RuntimeError &error) {
+  } catch (const RuntimeError &error) {
     curl_easy_cleanup(http_handle_);
     curl_global_cleanup();
 
@@ -119,6 +113,17 @@ void Request::RequestImpl::set_user_agent(const std::string &user_agent) {
       curl_easy_setopt(http_handle_, CURLOPT_USERAGENT, user_agent.c_str()));
 }
 
+void Request::RequestImpl::set_browser_user_agent() {
+  // navigator.userAgent
+  set_user_agent(
+      "Mozilla/5.0 (X11; Linux x86_64) AppleWebKit/537.36 (KHTML, like Gecko) "
+      "Chrome/93.0.4577.18 Safari/537.36 Edg/93.0.961.11");
+}
+
+void Request::RequestImpl::set_curl_user_agent() {
+  set_user_agent("curl/7.78.0");
+}
+
 // TODO check url
 Response Request::RequestImpl::get(const std::string &url) {
   Response response;
@@ -143,7 +148,7 @@ Response Request::RequestImpl::get(const std::string &url) {
       curl_multi_init(), free_multi_handle);
 
   if (!multi_handle) {
-    throw klib::RuntimeError("create multi_handle error");
+    throw RuntimeError("create multi_handle error");
   }
 
   check_curl_correct(curl_multi_add_handle(multi_handle.get(), http_handle_));
@@ -185,6 +190,10 @@ void Request::set_user_agent(const std::string &user_agent) {
   impl_->set_user_agent(user_agent);
 }
 
+void Request::set_browser_user_agent() { impl_->set_browser_user_agent(); }
+
+void Request::set_curl_user_agent() { impl_->set_curl_user_agent(); }
+
 Response Request::get(const std::string &url) { return impl_->get(url); }
 
 std::int64_t Response::status_code() const { return status_code_; }
@@ -194,7 +203,7 @@ std::string Response::header() const { return header_; }
 std::string Response::text() const { return text_; }
 
 void Response::save_to_file(const std::string &path, bool binary_mode) const {
-  klib::write_file(path, binary_mode, text_);
+  write_file(path, binary_mode, text_);
 }
 
 }  // namespace klib

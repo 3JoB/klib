@@ -44,7 +44,7 @@ install(FILES ${KLIB_PROJECT_CONFIG_OUT} ${KLIB_VERSION_CONFIG_FILE}
 # ---------------------------------------------------------------------------------------
 # https://cmake.org/cmake/help/latest/module/CPack.html
 set(CPACK_INCLUDE_TOPLEVEL_DIRECTORY OFF)
-set(CPACK_INSTALL_CMAKE_PROJECTS ${KLIB_BINARY_DIR} ${LIBRARY} ALL .)
+set(CPACK_INSTALL_CMAKE_PROJECTS ${KLIB_BINARY_DIR} ${PROJECT_NAME} ALL .)
 
 # https://cmake.org/cmake/help/latest/cpack_gen/deb.html
 set(CPACK_PACKAGE_CONTACT "kaiser <KaiserLancelot123@gmail.com>")

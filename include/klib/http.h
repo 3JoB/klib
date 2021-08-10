@@ -66,6 +66,16 @@ class Request {
   void set_user_agent(const std::string &user_agent);
 
   /**
+   * @brief Set up browser user agent
+   */
+  void set_browser_user_agent();
+
+  /**
+   * @brief Set up curl user agent
+   */
+  void set_curl_user_agent();
+
+  /**
    * @brief Sends a GET request
    * @param url: Requested url
    * @return Response content

@@ -21,30 +21,29 @@ namespace {
 
 void check_file_exists(const std::string &path) {
   if (!std::filesystem::exists(path)) {
-    throw klib::RuntimeError("The file does not exist: '{}'", path);
+    throw RuntimeError("The file does not exist: '{}'", path);
   }
 
   if (!std::filesystem::is_regular_file(path)) {
-    throw klib::RuntimeError("The path does not correspond to a file: '{}'",
-                             path);
+    throw RuntimeError("The path does not correspond to a file: '{}'", path);
   }
 }
 
 void check_file_or_folder_exists(const std::string &path) {
   if (!std::filesystem::exists(path)) {
-    throw klib::RuntimeError("The file or folder does not exist: '{}'", path);
+    throw RuntimeError("The file or folder does not exist: '{}'", path);
   }
 
   if (!std::filesystem::is_regular_file(path) &&
       !std::filesystem::is_directory(path)) {
-    throw klib::RuntimeError(
-        "The path does not correspond to a file or folder: '{}'", path);
+    throw RuntimeError("The path does not correspond to a file or folder: '{}'",
+                       path);
   }
 }
 
 void check_archive_correctness(std::int32_t code, struct archive *archive) {
   if (code != ARCHIVE_OK) {
-    throw klib::RuntimeError(archive_error_string(archive));
+    throw RuntimeError(archive_error_string(archive));
   }
 }
 
@@ -68,7 +67,7 @@ auto create_unique_ptr(
       init(), free_archive);
 
   if (!archive) {
-    throw klib::RuntimeError("create archive error");
+    throw RuntimeError("create archive error");
   }
 
   return archive;
@@ -87,19 +86,18 @@ auto create_unique_ptr(
       init(), free_archive);
 
   if (!entry) {
-    throw klib::RuntimeError("create archive_entry error");
+    throw RuntimeError("create archive_entry error");
   }
 
   return entry;
 }
 
-std::string compressed_file_name(const std::string &path,
-                                 klib::Algorithm algorithm) {
+std::string compressed_file_name(const std::string &path, Algorithm algorithm) {
   auto name = std::filesystem::path(path).filename();
 
-  if (algorithm == klib::Algorithm::Zip) {
+  if (algorithm == Algorithm::Zip) {
     name += ".zip";
-  } else if (algorithm == klib::Algorithm::Gzip) {
+  } else if (algorithm == Algorithm::Gzip) {
     name += ".tar.gz";
   } else {
     assert(false);
@@ -119,7 +117,7 @@ void copy_data(struct archive *ar, struct archive *aw) {
       return;
     }
     if (status != ARCHIVE_OK) {
-      throw klib::RuntimeError(archive_error_string(ar));
+      throw RuntimeError(archive_error_string(ar));
     }
 
     check_archive_correctness(archive_write_data_block(aw, buff, size, offset),
@@ -139,12 +137,12 @@ void compress(const std::string &path, Algorithm algorithm,
   out = std::filesystem::current_path() / out;
 
   std::vector<std::string> paths;
-  std::unique_ptr<klib::ChangeWorkingDir> ptr;
+  std::unique_ptr<ChangeWorkingDir> ptr;
 
   if (flag || std::filesystem::is_regular_file(path)) {
     paths.push_back(path);
   } else {
-    ptr = std::make_unique<klib::ChangeWorkingDir>(path);
+    ptr = std::make_unique<ChangeWorkingDir>(path);
     (void)ptr;
 
     for (const auto &item :
@@ -232,7 +230,7 @@ std::optional<std::string> decompress(const std::string &file_name,
       archive_read_open_filename(archive.get(), file_name.c_str(), 10240),
       archive.get());
 
-  klib::ChangeWorkingDir change_work_dir(path);
+  ChangeWorkingDir change_work_dir(path);
   (void)change_work_dir;
 
   std::optional<std::string> dir;
@@ -244,7 +242,7 @@ std::optional<std::string> decompress(const std::string &file_name,
       break;
     }
     if (status != ARCHIVE_OK) {
-      throw klib::RuntimeError(archive_error_string(archive.get()));
+      throw RuntimeError(archive_error_string(archive.get()));
     }
 
     check_archive_correctness(archive_write_header(extract.get(), entry),

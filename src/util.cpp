@@ -46,7 +46,7 @@ std::string bytes_to_hex_string(const std::vector<std::uint8_t> &bytes) {
 
 std::map<std::string, std::string> read_folder(const std::string &path) {
   if (!std::filesystem::is_directory(path)) {
-    throw klib::RuntimeError("'{}' is not a directory", path);
+    throw RuntimeError("'{}' is not a directory", path);
   }
 
   std::map<std::string, std::string> folder;
@@ -72,12 +72,12 @@ ChangeWorkingDir::ChangeWorkingDir(const std::string &path) {
 
     if (!std::filesystem::is_directory(path)) {
       if (!std::filesystem::create_directory(path)) {
-        throw klib::RuntimeError("can not create directory: '{}'", path);
+        throw RuntimeError("can not create directory: '{}'", path);
       }
     }
 
     if (chdir(path.c_str())) {
-      throw klib::RuntimeError("chdir error");
+      throw RuntimeError("chdir error");
     }
   }
 }
@@ -98,7 +98,7 @@ std::string read_file(std::string_view path, bool binary_mode) {
 
 std::string read_file(const char *path, bool binary_mode) {
   if (!std::filesystem::is_regular_file(path)) {
-    throw klib::RuntimeError("'{}' is not a file", path);
+    throw RuntimeError("'{}' is not a file", path);
   }
 
   std::ifstream ifs;
@@ -109,7 +109,7 @@ std::string read_file(const char *path, bool binary_mode) {
   }
 
   if (!ifs) {
-    throw klib::RuntimeError("can not open file: '{}'", path);
+    throw RuntimeError("can not open file: '{}'", path);
   }
 
   std::string data;
@@ -141,7 +141,7 @@ void write_file(const char *path, bool binary_mode, const char *content,
   }
 
   if (!ofs) {
-    throw klib::RuntimeError("can not open file: '{}'", path);
+    throw RuntimeError("can not open file: '{}'", path);
   }
 
   ofs.write(content, length);
@@ -162,7 +162,7 @@ std::u16string utf8_to_utf16(const std::string &str) {
 
   while (auto rc = std::mbrtoc16(&out, begin, size, &state)) {
     if (rc == static_cast<std::size_t>(-1)) {
-      throw klib::RuntimeError(std::strerror(errno));
+      throw RuntimeError(std::strerror(errno));
     }
 
     if (rc == static_cast<std::size_t>(-3)) {
@@ -195,7 +195,7 @@ std::u32string utf8_to_utf32(const std::string &str) {
     assert(rc != static_cast<std::size_t>(-3));
 
     if (rc == static_cast<std::size_t>(-1)) {
-      throw klib::RuntimeError(std::strerror(errno));
+      throw RuntimeError(std::strerror(errno));
     }
 
     if (rc > static_cast<std::size_t>(-1) / 2) {
@@ -220,7 +220,7 @@ bool is_chinese(const std::string &c) {
   auto utf32 = utf8_to_utf32(c);
 
   if (std::size(utf32) != 1) {
-    throw klib::RuntimeError("not a UTF-32 encoded character: '{}'", c);
+    throw RuntimeError("not a UTF-32 encoded character: '{}'", c);
   }
 
   return is_chinese(utf32.front());
@@ -249,7 +249,7 @@ std::string sha3_512(const std::string &path) {
 
 std::size_t folder_size(const std::string &path) {
   if (!std::filesystem::is_directory(path)) {
-    throw klib::RuntimeError("'{}' is not a directory", path);
+    throw RuntimeError("'{}' is not a directory", path);
   }
 
   std::size_t size = 0;
@@ -277,7 +277,7 @@ void execute_command(const char *command) {
 
   auto status = std::system(command);
   if (status == -1 || !WIFEXITED(status) || WEXITSTATUS(status)) {
-    throw klib::RuntimeError("execute command error: '{}'", command);
+    throw RuntimeError("execute command error: '{}'", command);
   }
 }
 

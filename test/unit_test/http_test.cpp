@@ -8,6 +8,7 @@
 TEST_CASE("download html", "[http]") {
   klib::Request request;
   request.verbose(true);
+  request.set_browser_user_agent();
 
 #ifdef KLIB_TEST_USE_PROXY
   request.set_proxy("socks5://127.0.0.1:1080");
@@ -19,7 +20,7 @@ TEST_CASE("download html", "[http]") {
   REQUIRE(!std::empty(response.header()));
   REQUIRE(!std::empty(response.text()));
 
-  request.set_user_agent("curl/7.78.0");
+  request.set_curl_user_agent();
   request.set_no_proxy();
 
   response = request.get("https://www.baidu.com");
