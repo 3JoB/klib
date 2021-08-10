@@ -1,5 +1,4 @@
 var searchData=
 [
-  ['verbose_54',['verbose',['../classklib_1_1Request.html#a049dedc37a3f347c03784b1147455546',1,'klib::Request']]],
-  ['version_2eh_55',['version.h',['../version_8h.html',1,'']]]
+  ['write_5ffile_40',['write_file',['../util_8h.html#ad20740bb960a952fc137ca4247bbc179',1,'klib']]]
 ];

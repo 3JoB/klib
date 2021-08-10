@@ -1,6 +1,4 @@
 var searchData=
 [
-  ['request_61',['Request',['../classklib_1_1Request.html',1,'klib']]],
-  ['response_62',['Response',['../classklib_1_1Response.html',1,'klib']]],
-  ['runtimeerror_63',['RuntimeError',['../classklib_1_1RuntimeError.html',1,'klib']]]
+  ['unicoderange_47',['UnicodeRange',['../classklib_1_1detail_1_1UnicodeRange.html',1,'klib::detail']]]
 ];
