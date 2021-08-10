@@ -28,12 +28,6 @@ C++ Library
 - [curl](https://github.com/curl/curl)
 - [tidy-html5](https://github.com/htacg/tidy-html5)
 - [fmt](https://github.com/fmtlib/fmt)
-- [pugixml](https://github.com/zeux/pugixml)
-- [boost](https://www.boost.org/)
-
-## Font
-
-- [source-han-sans](https://github.com/adobe-fonts/source-han-sans)
 
 ## Build
 
