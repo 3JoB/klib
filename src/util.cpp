@@ -226,6 +226,53 @@ bool is_chinese(const std::string &c) {
   return is_chinese(utf32.front());
 }
 
+// https://stackoverflow.com/questions/5288076/base64-encoding-and-decoding-with-openssl
+std::string base64_encode(const std::string &str) {
+  const auto predicted_len = 4 * ((std::size(str) + 2) / 3);
+  const auto output_buffer =
+      std::make_unique<std::uint8_t[]>(predicted_len + 1);
+  const std::vector<std::uint8_t> vec_chars(str.begin(), str.end());
+
+  const std::size_t output_len =
+      EVP_EncodeBlock(reinterpret_cast<std::uint8_t *>(output_buffer.get()),
+                      std::data(vec_chars), std::size(vec_chars));
+
+  if (predicted_len != output_len) {
+    throw RuntimeError("Encode Base64 error");
+  }
+
+  std::string result;
+  result.reserve(output_len);
+  for (std::size_t i = 0; i < output_len; ++i) {
+    result.push_back(static_cast<char>(output_buffer[i]));
+  }
+
+  return result;
+}
+
+std::string base64_decode(const std::string &str) {
+  const auto predicted_len = 3 * std::size(str) / 4;
+  const auto output_buffer =
+      std::make_unique<std::uint8_t[]>(predicted_len + 1);
+  const std::vector<std::uint8_t> vec_chars(str.begin(), str.end());
+
+  const std::size_t output_len =
+      EVP_DecodeBlock(reinterpret_cast<std::uint8_t *>(output_buffer.get()),
+                      std::data(vec_chars), std::size(vec_chars));
+
+  if (predicted_len != output_len) {
+    throw RuntimeError("Decode Base64 error");
+  }
+
+  std::string result;
+  result.reserve(output_len);
+  for (std::size_t i = 0; i < output_len; ++i) {
+    result.push_back(static_cast<char>(output_buffer[i]));
+  }
+
+  return result;
+}
+
 std::string sha3_512(const std::string &path) {
   auto data = read_file(path, true);
 

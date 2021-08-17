@@ -65,6 +65,14 @@ TEST_CASE("is_chinese", "[util]") {
   REQUIRE_FALSE(klib::is_chinese("🍌"));
 }
 
+TEST_CASE("base64_encode", "[util]") {
+  REQUIRE(klib::base64_encode("hello") == "aGVsbG8=");
+}
+
+TEST_CASE("base64_decode", "[util]") {
+  REQUIRE(klib::base64_decode("aGVsbG8=") == "hello");
+}
+
 TEST_CASE("sha3_512", "[util]") {
   REQUIRE(std::filesystem::exists("zlib-v1.2.11.tar.gz"));
 

@@ -140,6 +140,20 @@ constexpr bool is_chinese(char32_t c) {
 bool is_chinese(const std::string &c);
 
 /**
+ * @brief Base64 encode
+ * @param str: Data to be encoded
+ * @return Base64 result
+ */
+std::string base64_encode(const std::string &str);
+
+/**
+ * @brief Base64 decode
+ * @param str: Data to be decoded
+ * @return Raw data
+ */
+std::string base64_decode(const std::string &str);
+
+/**
  * @brief Calculate SHA3-512
  * @param path: The path of the file to be calculated
  * @return SHA3-512 result
