@@ -12,7 +12,7 @@ if [[ "$OSTYPE" == "linux-gnu"* ]]; then
   sudo ./llvm.sh 12
   sudo apt install -y clang-tidy-12 valgrind
 
-  sudo apt install -y make cmake re2c autoconf automake libtool m4 tcl
+  sudo apt install -y make cmake autoconf automake libtool m4 tcl
 
   sudo update-alternatives --install /usr/bin/gcc gcc /usr/bin/gcc-11 400
   sudo update-alternatives --install /usr/bin/g++ g++ /usr/bin/g++-11 400
@@ -29,7 +29,7 @@ if [[ "$OSTYPE" == "linux-gnu"* ]]; then
   sudo update-alternatives --install /usr/bin/llvm-cov llvm-cov /usr/bin/llvm-cov-12 400
   sudo update-alternatives --install /usr/bin/llvm-symbolizer llvm-symbolizer /usr/bin/llvm-symbolizer-12 400
 
-  curl -L https://github.com/KaiserLancelot/kpkg/releases/download/v0.3.5/kpkg-v0.3.5-ubuntu-20.04.deb \
+  curl -L https://github.com/KaiserLancelot/kpkg/releases/download/v0.3.10/kpkg-v0.3.10-ubuntu-20.04.deb \
       -o kpkg.deb
   sudo dpkg -i kpkg.deb
 
