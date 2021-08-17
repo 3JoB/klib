@@ -7,6 +7,7 @@
 
 #include <cstdint>
 #include <experimental/propagate_const>
+#include <map>
 #include <memory>
 #include <string>
 
@@ -78,9 +79,11 @@ class Request {
   /**
    * @brief Sends a GET request
    * @param url: Requested url
+   * @param params: URL parameters
    * @return Response content
    */
-  Response get(const std::string &url);
+  Response get(const std::string &url,
+               const std::map<std::string, std::string> &params = {});
 
  private:
   class RequestImpl;

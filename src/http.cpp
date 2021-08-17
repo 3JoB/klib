@@ -26,6 +26,21 @@ void check_curl_correct(CURLMcode code) {
   }
 }
 
+std::string splicing_url(const std::string &url,
+                         const std::map<std::string, std::string> &params) {
+  if (std::empty(params)) {
+    return url;
+  }
+
+  auto result = url + "?";
+  for (const auto &[key, value] : params) {
+    result.append(key).append("=").append(value).append("&");
+  }
+  result.pop_back();
+
+  return result;
+}
+
 }  // namespace
 
 class Request::RequestImpl {
@@ -46,7 +61,8 @@ class Request::RequestImpl {
   void set_browser_user_agent();
   void set_curl_user_agent();
 
-  Response get(const std::string &url);
+  Response get(const std::string &url,
+               const std::map<std::string, std::string> &params);
 
  private:
   static std::size_t callback_func_std_string(void *contents, std::size_t size,
@@ -125,10 +141,13 @@ void Request::RequestImpl::set_curl_user_agent() {
 }
 
 // TODO check url
-Response Request::RequestImpl::get(const std::string &url) {
+Response Request::RequestImpl::get(
+    const std::string &url, const std::map<std::string, std::string> &params) {
+  auto complete_url = splicing_url(url, params);
   Response response;
 
-  check_curl_correct(curl_easy_setopt(http_handle_, CURLOPT_URL, url.c_str()));
+  check_curl_correct(
+      curl_easy_setopt(http_handle_, CURLOPT_URL, complete_url.c_str()));
 
   check_curl_correct(
       curl_easy_setopt(http_handle_, CURLOPT_WRITEDATA, &response.text_));
@@ -194,7 +213,10 @@ void Request::set_browser_user_agent() { impl_->set_browser_user_agent(); }
 
 void Request::set_curl_user_agent() { impl_->set_curl_user_agent(); }
 
-Response Request::get(const std::string &url) { return impl_->get(url); }
+Response Request::get(const std::string &url,
+                      const std::map<std::string, std::string> &params) {
+  return impl_->get(url, params);
+}
 
 std::int64_t Response::status_code() const { return status_code_; }
 
