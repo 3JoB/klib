@@ -30,7 +30,7 @@ TEST_CASE("download html", "[http]") {
   REQUIRE(!std::empty(response.text()));
 }
 
-TEST_CASE("google search", "[http]") {
+TEST_CASE("google", "[http]") {
   klib::Request request;
   request.verbose(true);
   request.set_browser_user_agent();
@@ -39,8 +39,7 @@ TEST_CASE("google search", "[http]") {
   request.set_proxy("socks5://127.0.0.1:1080");
 #endif
 
-  auto response = request.get("https://www.google.com/search",
-                              {{"q", "http"}, {"oq", "http"}, {"ie", "UTF-8"}});
+  auto response = request.get("https://www.google.com.hk/", {{"hl", "zh_CN"}});
 
   REQUIRE(response.status_code() == klib::Response::StatusCode::Ok);
   REQUIRE(!std::empty(response.header()));
