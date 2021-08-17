@@ -9,6 +9,7 @@
 #include <cstdint>
 #include <string>
 #include <string_view>
+#include <tuple>
 #include <vector>
 
 namespace klib {
@@ -244,5 +245,10 @@ void execute_command(const std::string &command);
  * @param command: Command to be execute
  */
 void execute_command(const char *command);
+
+/**
+ * @brief Wait for all child processes to exit
+ */
+void wait_for_child_process();
 
 }  // namespace klib

@@ -1,6 +1,7 @@
 #include "klib/util.h"
 
 #include <unistd.h>
+#include <wait.h>
 
 #include <algorithm>
 #include <cassert>
@@ -454,6 +455,16 @@ void execute_command(const char *command) {
   auto status = std::system(command);
   if (status == -1 || !WIFEXITED(status) || WEXITSTATUS(status)) {
     throw RuntimeError("execute command error: '{}'", command);
+  }
+}
+
+void wait_for_child_process() {
+  std::int32_t status = 0;
+
+  while (waitpid(-1, &status, 0) > 0) {
+    if (!WIFEXITED(status) || WEXITSTATUS(status)) {
+      throw RuntimeError("waitpid error: {}", status);
+    }
   }
 }
 

@@ -1,5 +1,9 @@
+#include <unistd.h>
+
 #include <cstdint>
+#include <cstdlib>
 #include <filesystem>
+#include <fstream>
 #include <string>
 #include <vector>
 
@@ -262,4 +266,27 @@ TEST_CASE("same_folder", "[util]") {
 TEST_CASE("execute_command", "[util]") {
   std::string command = "gcc -v";
   REQUIRE_NOTHROW(klib::execute_command(command));
+}
+
+TEST_CASE("wait_for_child_process", "[util]") {
+  for (std::int32_t i = 0; i < 3; ++i) {
+    auto pid = fork();
+    REQUIRE(pid >= 0);
+
+    if (pid == 0) {
+      std::ofstream ofs(std::to_string(i) + ".txt");
+      ofs << std::to_string(i) << std::flush;
+
+      std::exit(EXIT_SUCCESS);
+    }
+  }
+
+  klib::wait_for_child_process();
+  for (std::int32_t i = 0; i < 3; ++i) {
+    auto file_name = std::to_string(i) + ".txt";
+
+    REQUIRE(std::filesystem::exists(file_name));
+    REQUIRE(klib::read_file(file_name, false) == std::to_string(i));
+    std::filesystem::remove(file_name);
+  }
 }
