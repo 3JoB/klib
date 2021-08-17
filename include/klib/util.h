@@ -9,6 +9,7 @@
 #include <cstdint>
 #include <string>
 #include <string_view>
+#include <vector>
 
 namespace klib {
 
@@ -154,11 +155,68 @@ std::string base64_encode(const std::string &str);
 std::string base64_decode(const std::string &str);
 
 /**
+ * @brief Calculate SHA-256
+ * @param str: Data to be encrypted
+ * @return SHA-256 result
+ */
+std::string sha_256(const std::string &str);
+
+/**
+ * @brief Calculate SHA-256
+ * @param str: Data to be encrypted
+ * @return SHA-256 result
+ */
+std::vector<std::uint8_t> sha_256_raw(const std::string &str);
+
+/**
+ * @brief Calculate SHA-256
+ * @param path: The path of the file to be calculated
+ * @return SHA-256 result
+ */
+std::string sha_256_file(const std::string &path);
+
+/**
+ * @brief Calculate SHA3-512
+ * @param str: Data to be encrypted
+ * @return SHA3-512 result
+ */
+std::string sha3_512(const std::string &str);
+
+/**
+ * @brief Calculate SHA3-512
+ * @param str: Data to be encrypted
+ * @return SHA3-512 result
+ */
+std::vector<std::uint8_t> sha3_512_raw(const std::string &str);
+
+/**
  * @brief Calculate SHA3-512
  * @param path: The path of the file to be calculated
  * @return SHA3-512 result
  */
-std::string sha3_512(const std::string &path);
+std::string sha3_512_file(const std::string &path);
+
+/**
+ * @brief AES 256-cbc encryption
+ * @param str: Data to be encrypted
+ * @param key: Key
+ * @param iv: iv
+ * @return Encrypted data
+ */
+std::string aes_256_cbc_encrypt(const std::string &str,
+                                const std::vector<std::uint8_t> &key,
+                                const std::vector<std::uint8_t> &iv);
+
+/**
+ * @brief AES 256-cbc decryption
+ * @param str: Data to be decrypted
+ * @param key: Key
+ * @param iv: iv
+ * @return Raw data
+ */
+std::string aes_256_cbc_decrypt(const std::string &str,
+                                const std::vector<std::uint8_t> &key,
+                                const std::vector<std::uint8_t> &iv);
 
 /**
  * @brief Count the sum of the size of all files in the folder

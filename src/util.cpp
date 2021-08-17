@@ -13,12 +13,15 @@
 #include <fstream>
 #include <limits>
 #include <map>
+#include <memory>
 #include <string_view>
 #include <utility>
 #include <vector>
 
 #include <fmt/compile.h>
 #include <fmt/format.h>
+#include <openssl/aes.h>
+#include <openssl/err.h>
 #include <openssl/evp.h>
 #include <openssl/sha.h>
 
@@ -28,6 +31,12 @@
 namespace klib {
 
 namespace {
+
+void check_openssl(std::int32_t rc) {
+  if (rc != 1) {
+    throw RuntimeError(ERR_error_string(ERR_get_error(), nullptr));
+  }
+}
 
 std::string bytes_to_hex_string(const std::vector<std::uint8_t> &bytes) {
   assert(!std::empty(bytes));
@@ -231,11 +240,10 @@ std::string base64_encode(const std::string &str) {
   const auto predicted_len = 4 * ((std::size(str) + 2) / 3);
   const auto output_buffer =
       std::make_unique<std::uint8_t[]>(predicted_len + 1);
-  const std::vector<std::uint8_t> vec_chars(str.begin(), str.end());
 
-  const std::size_t output_len =
-      EVP_EncodeBlock(reinterpret_cast<std::uint8_t *>(output_buffer.get()),
-                      std::data(vec_chars), std::size(vec_chars));
+  const std::size_t output_len = EVP_EncodeBlock(
+      reinterpret_cast<std::uint8_t *>(output_buffer.get()),
+      reinterpret_cast<const std::uint8_t *>(std::data(str)), std::size(str));
 
   if (predicted_len != output_len) {
     throw RuntimeError("Encode Base64 error");
@@ -246,6 +254,9 @@ std::string base64_encode(const std::string &str) {
   for (std::size_t i = 0; i < output_len; ++i) {
     result.push_back(static_cast<char>(output_buffer[i]));
   }
+  if (result.back() == '\0') {
+    result.pop_back();
+  }
 
   return result;
 }
@@ -254,11 +265,10 @@ std::string base64_decode(const std::string &str) {
   const auto predicted_len = 3 * std::size(str) / 4;
   const auto output_buffer =
       std::make_unique<std::uint8_t[]>(predicted_len + 1);
-  const std::vector<std::uint8_t> vec_chars(str.begin(), str.end());
 
-  const std::size_t output_len =
-      EVP_DecodeBlock(reinterpret_cast<std::uint8_t *>(output_buffer.get()),
-                      std::data(vec_chars), std::size(vec_chars));
+  const std::size_t output_len = EVP_DecodeBlock(
+      reinterpret_cast<std::uint8_t *>(output_buffer.get()),
+      reinterpret_cast<const std::uint8_t *>(std::data(str)), std::size(str));
 
   if (predicted_len != output_len) {
     throw RuntimeError("Decode Base64 error");
@@ -269,29 +279,148 @@ std::string base64_decode(const std::string &str) {
   for (std::size_t i = 0; i < output_len; ++i) {
     result.push_back(static_cast<char>(output_buffer[i]));
   }
+  if (result.back() == '\0') {
+    result.pop_back();
+  }
 
   return result;
 }
 
-std::string sha3_512(const std::string &path) {
-  auto data = read_file(path, true);
+std::string sha_256(const std::string &str) {
+  return bytes_to_hex_string(sha_256_raw(str));
+}
 
+std::vector<std::uint8_t> sha_256_raw(const std::string &str) {
+  std::uint32_t digest_length = SHA256_DIGEST_LENGTH;
+  auto digest = static_cast<std::uint8_t *>(OPENSSL_malloc(digest_length));
+
+  EVP_MD_CTX *context = EVP_MD_CTX_new();
+  auto algorithm = EVP_sha256();
+  EVP_DigestInit_ex(context, algorithm, nullptr);
+  EVP_DigestUpdate(context, str.c_str(), std::size(str));
+  EVP_DigestFinal_ex(context, digest, &digest_length);
+  EVP_MD_CTX_destroy(context);
+
+  std::vector<std::uint8_t> output(digest, digest + digest_length);
+
+  OPENSSL_free(digest);
+
+  return output;
+}
+
+std::string sha_256_file(const std::string &path) {
+  return sha_256(read_file(path, true));
+}
+
+std::string sha3_512(const std::string &str) {
+  return bytes_to_hex_string(sha3_512_raw(str));
+}
+
+std::vector<std::uint8_t> sha3_512_raw(const std::string &str) {
   std::uint32_t digest_length = SHA512_DIGEST_LENGTH;
   auto digest = static_cast<std::uint8_t *>(OPENSSL_malloc(digest_length));
 
   EVP_MD_CTX *context = EVP_MD_CTX_new();
   auto algorithm = EVP_sha3_512();
   EVP_DigestInit_ex(context, algorithm, nullptr);
-  EVP_DigestUpdate(context, data.c_str(), std::size(data));
+  EVP_DigestUpdate(context, str.c_str(), std::size(str));
   EVP_DigestFinal_ex(context, digest, &digest_length);
   EVP_MD_CTX_destroy(context);
 
-  auto output = bytes_to_hex_string(
-      std::vector<std::uint8_t>(digest, digest + digest_length));
+  std::vector<std::uint8_t> output(digest, digest + digest_length);
 
   OPENSSL_free(digest);
 
   return output;
+}
+
+std::string sha3_512_file(const std::string &path) {
+  return sha3_512(read_file(path, true));
+}
+
+// https://wiki.openssl.org/index.php/EVP_Symmetric_Encryption_and_Decryption#C.2B.2B_Programs
+std::string aes_256_cbc_encrypt(const std::string &str,
+                                const std::vector<std::uint8_t> &key,
+                                const std::vector<std::uint8_t> &iv) {
+  if (std::size(key) != 32) {
+    throw RuntimeError("The key is not 256 bit");
+  }
+  if (std::size(iv) != AES_BLOCK_SIZE) {
+    throw RuntimeError("The iv is not 16 bit");
+  }
+
+  EVP_add_cipher(EVP_aes_256_cbc());
+  std::unique_ptr<EVP_CIPHER_CTX, decltype(&EVP_CIPHER_CTX_free)> ctx(
+      EVP_CIPHER_CTX_new(), EVP_CIPHER_CTX_free);
+  if (!ctx) {
+    throw RuntimeError(ERR_error_string(ERR_get_error(), nullptr));
+  }
+
+  check_openssl(EVP_EncryptInit_ex(
+      ctx.get(), EVP_aes_256_cbc(), nullptr,
+      reinterpret_cast<const unsigned char *>(std::data(key)),
+      reinterpret_cast<const unsigned char *>(std::data(iv))));
+
+  check_openssl(EVP_CIPHER_CTX_set_padding(ctx.get(), EVP_PADDING_PKCS7));
+
+  std::string result;
+  auto input_size = std::size(str);
+  result.resize(input_size + AES_BLOCK_SIZE);
+  std::int32_t len;
+
+  check_openssl(EVP_EncryptUpdate(
+      ctx.get(), reinterpret_cast<unsigned char *>(std::data(result)), &len,
+      reinterpret_cast<const unsigned char *>(std::data(str)), input_size));
+
+  std::int32_t len2;
+  check_openssl(EVP_EncryptFinal_ex(
+      ctx.get(), reinterpret_cast<unsigned char *>(std::data(result)) + len,
+      &len2));
+
+  result.resize(len + len2);
+  return result;
+}
+
+std::string aes_256_cbc_decrypt(const std::string &str,
+                                const std::vector<std::uint8_t> &key,
+                                const std::vector<std::uint8_t> &iv) {
+  if (std::size(key) != 32) {
+    throw RuntimeError("The key is not 256 bit");
+  }
+  if (std::size(iv) != AES_BLOCK_SIZE) {
+    throw RuntimeError("The iv is not 16 bit");
+  }
+
+  EVP_add_cipher(EVP_aes_256_cbc());
+  std::unique_ptr<EVP_CIPHER_CTX, decltype(&EVP_CIPHER_CTX_free)> ctx(
+      EVP_CIPHER_CTX_new(), EVP_CIPHER_CTX_free);
+  if (!ctx) {
+    throw RuntimeError(ERR_error_string(ERR_get_error(), nullptr));
+  }
+
+  check_openssl(EVP_DecryptInit_ex(
+      ctx.get(), EVP_aes_256_cbc(), nullptr,
+      reinterpret_cast<const unsigned char *>(std::data(key)),
+      reinterpret_cast<const unsigned char *>(std::data(iv))));
+
+  check_openssl(EVP_CIPHER_CTX_set_padding(ctx.get(), EVP_PADDING_PKCS7));
+
+  std::string result;
+  auto input_size = std::size(str);
+  result.resize(input_size + AES_BLOCK_SIZE);
+  std::int32_t len;
+
+  check_openssl(EVP_DecryptUpdate(
+      ctx.get(), reinterpret_cast<unsigned char *>(std::data(result)), &len,
+      reinterpret_cast<const unsigned char *>(std::data(str)), input_size));
+
+  std::int32_t len2;
+  check_openssl(EVP_DecryptFinal_ex(
+      ctx.get(), reinterpret_cast<unsigned char *>(std::data(result)) + len,
+      &len2));
+
+  result.resize(len + len2);
+  return result;
 }
 
 std::size_t folder_size(const std::string &path) {
