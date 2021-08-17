@@ -31,7 +31,7 @@
  <tr style="height: 56px;">
   <td id="projectalign" style="padding-left: 0.5em;">
    <div id="projectname">klib
-   &#160;<span id="projectnumber">0.2.9</span>
+   &#160;<span id="projectnumber">0.2.10</span>
    </div>
   </td>
    <td>        <div id="MSearchBox" class="MSearchBoxInactive">
@@ -107,6 +107,8 @@ $(document).ready(function(){initNavTree('util_8h.html',''); initResizable(); })
 <code>#include &lt;cstdint&gt;</code><br />
 <code>#include &lt;string&gt;</code><br />
 <code>#include &lt;string_view&gt;</code><br />
+<code>#include &lt;tuple&gt;</code><br />
+<code>#include &lt;vector&gt;</code><br />
 </div>
 <p><a href="util_8h_source.html">Go to the source code of this file.</a></p>
 <table class="memberdecls">
@@ -183,9 +185,36 @@ void&#160;</td><td class="memItemRight" valign="bottom"><b>klib::write_file</b> 
 <tr class="memitem:a3c2ec9974b36028257f8d8cbeb4ab65c"><td class="memItemLeft" align="right" valign="top">bool&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="util_8h.html#a3c2ec9974b36028257f8d8cbeb4ab65c">klib::is_chinese</a> (const std::string &amp;c)</td></tr>
 <tr class="memdesc:a3c2ec9974b36028257f8d8cbeb4ab65c"><td class="mdescLeft">&#160;</td><td class="mdescRight">Determine whether it is a Chinese character.  <a href="util_8h.html#a3c2ec9974b36028257f8d8cbeb4ab65c">More...</a><br /></td></tr>
 <tr class="separator:a3c2ec9974b36028257f8d8cbeb4ab65c"><td class="memSeparator" colspan="2">&#160;</td></tr>
-<tr class="memitem:aa28ba8404c080685ab449acaee513e7f"><td class="memItemLeft" align="right" valign="top">std::string&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="util_8h.html#aa28ba8404c080685ab449acaee513e7f">klib::sha3_512</a> (const std::string &amp;path)</td></tr>
-<tr class="memdesc:aa28ba8404c080685ab449acaee513e7f"><td class="mdescLeft">&#160;</td><td class="mdescRight">Calculate SHA3-512.  <a href="util_8h.html#aa28ba8404c080685ab449acaee513e7f">More...</a><br /></td></tr>
-<tr class="separator:aa28ba8404c080685ab449acaee513e7f"><td class="memSeparator" colspan="2">&#160;</td></tr>
+<tr class="memitem:a789f4aa89e5e78a6a42f7b1f1ce31738"><td class="memItemLeft" align="right" valign="top">std::string&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="util_8h.html#a789f4aa89e5e78a6a42f7b1f1ce31738">klib::base64_encode</a> (const std::string &amp;str)</td></tr>
+<tr class="memdesc:a789f4aa89e5e78a6a42f7b1f1ce31738"><td class="mdescLeft">&#160;</td><td class="mdescRight">Base64 encode.  <a href="util_8h.html#a789f4aa89e5e78a6a42f7b1f1ce31738">More...</a><br /></td></tr>
+<tr class="separator:a789f4aa89e5e78a6a42f7b1f1ce31738"><td class="memSeparator" colspan="2">&#160;</td></tr>
+<tr class="memitem:a3e8597062a26eb6d1d723aec7f85df2c"><td class="memItemLeft" align="right" valign="top">std::string&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="util_8h.html#a3e8597062a26eb6d1d723aec7f85df2c">klib::base64_decode</a> (const std::string &amp;str)</td></tr>
+<tr class="memdesc:a3e8597062a26eb6d1d723aec7f85df2c"><td class="mdescLeft">&#160;</td><td class="mdescRight">Base64 decode.  <a href="util_8h.html#a3e8597062a26eb6d1d723aec7f85df2c">More...</a><br /></td></tr>
+<tr class="separator:a3e8597062a26eb6d1d723aec7f85df2c"><td class="memSeparator" colspan="2">&#160;</td></tr>
+<tr class="memitem:a622c5644c9948a904650e0fe4cc7b6bb"><td class="memItemLeft" align="right" valign="top">std::string&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="util_8h.html#a622c5644c9948a904650e0fe4cc7b6bb">klib::sha_256</a> (const std::string &amp;str)</td></tr>
+<tr class="memdesc:a622c5644c9948a904650e0fe4cc7b6bb"><td class="mdescLeft">&#160;</td><td class="mdescRight">Calculate SHA-256.  <a href="util_8h.html#a622c5644c9948a904650e0fe4cc7b6bb">More...</a><br /></td></tr>
+<tr class="separator:a622c5644c9948a904650e0fe4cc7b6bb"><td class="memSeparator" colspan="2">&#160;</td></tr>
+<tr class="memitem:a6470715791bc35a28dba8af1e61472c7"><td class="memItemLeft" align="right" valign="top">std::vector&lt; std::uint8_t &gt;&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="util_8h.html#a6470715791bc35a28dba8af1e61472c7">klib::sha_256_raw</a> (const std::string &amp;str)</td></tr>
+<tr class="memdesc:a6470715791bc35a28dba8af1e61472c7"><td class="mdescLeft">&#160;</td><td class="mdescRight">Calculate SHA-256.  <a href="util_8h.html#a6470715791bc35a28dba8af1e61472c7">More...</a><br /></td></tr>
+<tr class="separator:a6470715791bc35a28dba8af1e61472c7"><td class="memSeparator" colspan="2">&#160;</td></tr>
+<tr class="memitem:a7aafac36754322a743e4eea7adf8fed7"><td class="memItemLeft" align="right" valign="top">std::string&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="util_8h.html#a7aafac36754322a743e4eea7adf8fed7">klib::sha_256_file</a> (const std::string &amp;path)</td></tr>
+<tr class="memdesc:a7aafac36754322a743e4eea7adf8fed7"><td class="mdescLeft">&#160;</td><td class="mdescRight">Calculate SHA-256.  <a href="util_8h.html#a7aafac36754322a743e4eea7adf8fed7">More...</a><br /></td></tr>
+<tr class="separator:a7aafac36754322a743e4eea7adf8fed7"><td class="memSeparator" colspan="2">&#160;</td></tr>
+<tr class="memitem:aad87a275a5ddd18df329dbe1bb6ee1c8"><td class="memItemLeft" align="right" valign="top">std::string&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="util_8h.html#aad87a275a5ddd18df329dbe1bb6ee1c8">klib::sha3_512</a> (const std::string &amp;str)</td></tr>
+<tr class="memdesc:aad87a275a5ddd18df329dbe1bb6ee1c8"><td class="mdescLeft">&#160;</td><td class="mdescRight">Calculate SHA3-512.  <a href="util_8h.html#aad87a275a5ddd18df329dbe1bb6ee1c8">More...</a><br /></td></tr>
+<tr class="separator:aad87a275a5ddd18df329dbe1bb6ee1c8"><td class="memSeparator" colspan="2">&#160;</td></tr>
+<tr class="memitem:a050e605ce0fd6b1f50cffa8fd01a3889"><td class="memItemLeft" align="right" valign="top">std::vector&lt; std::uint8_t &gt;&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="util_8h.html#a050e605ce0fd6b1f50cffa8fd01a3889">klib::sha3_512_raw</a> (const std::string &amp;str)</td></tr>
+<tr class="memdesc:a050e605ce0fd6b1f50cffa8fd01a3889"><td class="mdescLeft">&#160;</td><td class="mdescRight">Calculate SHA3-512.  <a href="util_8h.html#a050e605ce0fd6b1f50cffa8fd01a3889">More...</a><br /></td></tr>
+<tr class="separator:a050e605ce0fd6b1f50cffa8fd01a3889"><td class="memSeparator" colspan="2">&#160;</td></tr>
+<tr class="memitem:ab654eef1e5663bde551f79cfab771ad4"><td class="memItemLeft" align="right" valign="top">std::string&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="util_8h.html#ab654eef1e5663bde551f79cfab771ad4">klib::sha3_512_file</a> (const std::string &amp;path)</td></tr>
+<tr class="memdesc:ab654eef1e5663bde551f79cfab771ad4"><td class="mdescLeft">&#160;</td><td class="mdescRight">Calculate SHA3-512.  <a href="util_8h.html#ab654eef1e5663bde551f79cfab771ad4">More...</a><br /></td></tr>
+<tr class="separator:ab654eef1e5663bde551f79cfab771ad4"><td class="memSeparator" colspan="2">&#160;</td></tr>
+<tr class="memitem:afb7f580434626ea322b93f07445c3ee3"><td class="memItemLeft" align="right" valign="top">std::string&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="util_8h.html#afb7f580434626ea322b93f07445c3ee3">klib::aes_256_cbc_encrypt</a> (const std::string &amp;str, const std::vector&lt; std::uint8_t &gt; &amp;key, const std::vector&lt; std::uint8_t &gt; &amp;iv)</td></tr>
+<tr class="memdesc:afb7f580434626ea322b93f07445c3ee3"><td class="mdescLeft">&#160;</td><td class="mdescRight">AES 256-cbc encryption.  <a href="util_8h.html#afb7f580434626ea322b93f07445c3ee3">More...</a><br /></td></tr>
+<tr class="separator:afb7f580434626ea322b93f07445c3ee3"><td class="memSeparator" colspan="2">&#160;</td></tr>
+<tr class="memitem:a55d3053ed459fa8b2dd4b0757175ed17"><td class="memItemLeft" align="right" valign="top">std::string&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="util_8h.html#a55d3053ed459fa8b2dd4b0757175ed17">klib::aes_256_cbc_decrypt</a> (const std::string &amp;str, const std::vector&lt; std::uint8_t &gt; &amp;key, const std::vector&lt; std::uint8_t &gt; &amp;iv)</td></tr>
+<tr class="memdesc:a55d3053ed459fa8b2dd4b0757175ed17"><td class="mdescLeft">&#160;</td><td class="mdescRight">AES 256-cbc decryption.  <a href="util_8h.html#a55d3053ed459fa8b2dd4b0757175ed17">More...</a><br /></td></tr>
+<tr class="separator:a55d3053ed459fa8b2dd4b0757175ed17"><td class="memSeparator" colspan="2">&#160;</td></tr>
 <tr class="memitem:a6e1a6bca253ac0afc74f98f90bb48015"><td class="memItemLeft" align="right" valign="top">std::size_t&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="util_8h.html#a6e1a6bca253ac0afc74f98f90bb48015">klib::folder_size</a> (const std::string &amp;path)</td></tr>
 <tr class="memdesc:a6e1a6bca253ac0afc74f98f90bb48015"><td class="mdescLeft">&#160;</td><td class="mdescRight">Count the sum of the size of all files in the folder.  <a href="util_8h.html#a6e1a6bca253ac0afc74f98f90bb48015">More...</a><br /></td></tr>
 <tr class="separator:a6e1a6bca253ac0afc74f98f90bb48015"><td class="memSeparator" colspan="2">&#160;</td></tr>
@@ -198,10 +227,158 @@ void&#160;</td><td class="memItemRight" valign="bottom"><b>klib::write_file</b> 
 <tr class="memitem:a8328b07e32da01c28f3f245f43eecf18"><td class="memItemLeft" align="right" valign="top">void&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="util_8h.html#a8328b07e32da01c28f3f245f43eecf18">klib::execute_command</a> (const char *command)</td></tr>
 <tr class="memdesc:a8328b07e32da01c28f3f245f43eecf18"><td class="mdescLeft">&#160;</td><td class="mdescRight">Execute the given line as a shell command.  <a href="util_8h.html#a8328b07e32da01c28f3f245f43eecf18">More...</a><br /></td></tr>
 <tr class="separator:a8328b07e32da01c28f3f245f43eecf18"><td class="memSeparator" colspan="2">&#160;</td></tr>
+<tr class="memitem:a068f640d8df09ff35caf8822a9c1e0ac"><td class="memItemLeft" align="right" valign="top"><a id="a068f640d8df09ff35caf8822a9c1e0ac"></a>
+void&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="util_8h.html#a068f640d8df09ff35caf8822a9c1e0ac">klib::wait_for_child_process</a> ()</td></tr>
+<tr class="memdesc:a068f640d8df09ff35caf8822a9c1e0ac"><td class="mdescLeft">&#160;</td><td class="mdescRight">Wait for all child processes to exit. <br /></td></tr>
+<tr class="separator:a068f640d8df09ff35caf8822a9c1e0ac"><td class="memSeparator" colspan="2">&#160;</td></tr>
 </table>
 <a name="details" id="details"></a><h2 class="groupheader">Detailed Description</h2>
 <div class="textblock"><p>Contains declarations of some useful functions. </p>
 </div><h2 class="groupheader">Function Documentation</h2>
+<a id="a55d3053ed459fa8b2dd4b0757175ed17"></a>
+<h2 class="memtitle"><span class="permalink"><a href="#a55d3053ed459fa8b2dd4b0757175ed17">&#9670;&nbsp;</a></span>aes_256_cbc_decrypt()</h2>
+
+<div class="memitem">
+<div class="memproto">
+      <table class="memname">
+        <tr>
+          <td class="memname">std::string klib::aes_256_cbc_decrypt </td>
+          <td>(</td>
+          <td class="paramtype">const std::string &amp;&#160;</td>
+          <td class="paramname"><em>str</em>, </td>
+        </tr>
+        <tr>
+          <td class="paramkey"></td>
+          <td></td>
+          <td class="paramtype">const std::vector&lt; std::uint8_t &gt; &amp;&#160;</td>
+          <td class="paramname"><em>key</em>, </td>
+        </tr>
+        <tr>
+          <td class="paramkey"></td>
+          <td></td>
+          <td class="paramtype">const std::vector&lt; std::uint8_t &gt; &amp;&#160;</td>
+          <td class="paramname"><em>iv</em>&#160;</td>
+        </tr>
+        <tr>
+          <td></td>
+          <td>)</td>
+          <td></td><td></td>
+        </tr>
+      </table>
+</div><div class="memdoc">
+
+<p>AES 256-cbc decryption. </p>
+<dl class="params"><dt>Parameters</dt><dd>
+  <table class="params">
+    <tr><td class="paramname">str</td><td>Data to be decrypted </td></tr>
+    <tr><td class="paramname">key</td><td>Key </td></tr>
+    <tr><td class="paramname">iv</td><td>iv </td></tr>
+  </table>
+  </dd>
+</dl>
+<dl class="section return"><dt>Returns</dt><dd>Raw data </dd></dl>
+
+</div>
+</div>
+<a id="afb7f580434626ea322b93f07445c3ee3"></a>
+<h2 class="memtitle"><span class="permalink"><a href="#afb7f580434626ea322b93f07445c3ee3">&#9670;&nbsp;</a></span>aes_256_cbc_encrypt()</h2>
+
+<div class="memitem">
+<div class="memproto">
+      <table class="memname">
+        <tr>
+          <td class="memname">std::string klib::aes_256_cbc_encrypt </td>
+          <td>(</td>
+          <td class="paramtype">const std::string &amp;&#160;</td>
+          <td class="paramname"><em>str</em>, </td>
+        </tr>
+        <tr>
+          <td class="paramkey"></td>
+          <td></td>
+          <td class="paramtype">const std::vector&lt; std::uint8_t &gt; &amp;&#160;</td>
+          <td class="paramname"><em>key</em>, </td>
+        </tr>
+        <tr>
+          <td class="paramkey"></td>
+          <td></td>
+          <td class="paramtype">const std::vector&lt; std::uint8_t &gt; &amp;&#160;</td>
+          <td class="paramname"><em>iv</em>&#160;</td>
+        </tr>
+        <tr>
+          <td></td>
+          <td>)</td>
+          <td></td><td></td>
+        </tr>
+      </table>
+</div><div class="memdoc">
+
+<p>AES 256-cbc encryption. </p>
+<dl class="params"><dt>Parameters</dt><dd>
+  <table class="params">
+    <tr><td class="paramname">str</td><td>Data to be encrypted </td></tr>
+    <tr><td class="paramname">key</td><td>Key </td></tr>
+    <tr><td class="paramname">iv</td><td>iv </td></tr>
+  </table>
+  </dd>
+</dl>
+<dl class="section return"><dt>Returns</dt><dd>Encrypted data </dd></dl>
+
+</div>
+</div>
+<a id="a3e8597062a26eb6d1d723aec7f85df2c"></a>
+<h2 class="memtitle"><span class="permalink"><a href="#a3e8597062a26eb6d1d723aec7f85df2c">&#9670;&nbsp;</a></span>base64_decode()</h2>
+
+<div class="memitem">
+<div class="memproto">
+      <table class="memname">
+        <tr>
+          <td class="memname">std::string klib::base64_decode </td>
+          <td>(</td>
+          <td class="paramtype">const std::string &amp;&#160;</td>
+          <td class="paramname"><em>str</em></td><td>)</td>
+          <td></td>
+        </tr>
+      </table>
+</div><div class="memdoc">
+
+<p>Base64 decode. </p>
+<dl class="params"><dt>Parameters</dt><dd>
+  <table class="params">
+    <tr><td class="paramname">str</td><td>Data to be decoded </td></tr>
+  </table>
+  </dd>
+</dl>
+<dl class="section return"><dt>Returns</dt><dd>Raw data </dd></dl>
+
+</div>
+</div>
+<a id="a789f4aa89e5e78a6a42f7b1f1ce31738"></a>
+<h2 class="memtitle"><span class="permalink"><a href="#a789f4aa89e5e78a6a42f7b1f1ce31738">&#9670;&nbsp;</a></span>base64_encode()</h2>
+
+<div class="memitem">
+<div class="memproto">
+      <table class="memname">
+        <tr>
+          <td class="memname">std::string klib::base64_encode </td>
+          <td>(</td>
+          <td class="paramtype">const std::string &amp;&#160;</td>
+          <td class="paramname"><em>str</em></td><td>)</td>
+          <td></td>
+        </tr>
+      </table>
+</div><div class="memdoc">
+
+<p>Base64 encode. </p>
+<dl class="params"><dt>Parameters</dt><dd>
+  <table class="params">
+    <tr><td class="paramname">str</td><td>Data to be encoded </td></tr>
+  </table>
+  </dd>
+</dl>
+<dl class="section return"><dt>Returns</dt><dd>Base64 result </dd></dl>
+
+</div>
+</div>
 <a id="a8328b07e32da01c28f3f245f43eecf18"></a>
 <h2 class="memtitle"><span class="permalink"><a href="#a8328b07e32da01c28f3f245f43eecf18">&#9670;&nbsp;</a></span>execute_command() <span class="overload">[1/2]</span></h2>
 
@@ -481,14 +658,41 @@ void&#160;</td><td class="memItemRight" valign="bottom"><b>klib::write_file</b> 
 
 </div>
 </div>
-<a id="aa28ba8404c080685ab449acaee513e7f"></a>
-<h2 class="memtitle"><span class="permalink"><a href="#aa28ba8404c080685ab449acaee513e7f">&#9670;&nbsp;</a></span>sha3_512()</h2>
+<a id="aad87a275a5ddd18df329dbe1bb6ee1c8"></a>
+<h2 class="memtitle"><span class="permalink"><a href="#aad87a275a5ddd18df329dbe1bb6ee1c8">&#9670;&nbsp;</a></span>sha3_512()</h2>
 
 <div class="memitem">
 <div class="memproto">
       <table class="memname">
         <tr>
           <td class="memname">std::string klib::sha3_512 </td>
+          <td>(</td>
+          <td class="paramtype">const std::string &amp;&#160;</td>
+          <td class="paramname"><em>str</em></td><td>)</td>
+          <td></td>
+        </tr>
+      </table>
+</div><div class="memdoc">
+
+<p>Calculate SHA3-512. </p>
+<dl class="params"><dt>Parameters</dt><dd>
+  <table class="params">
+    <tr><td class="paramname">str</td><td>Data to be encrypted </td></tr>
+  </table>
+  </dd>
+</dl>
+<dl class="section return"><dt>Returns</dt><dd>SHA3-512 result </dd></dl>
+
+</div>
+</div>
+<a id="ab654eef1e5663bde551f79cfab771ad4"></a>
+<h2 class="memtitle"><span class="permalink"><a href="#ab654eef1e5663bde551f79cfab771ad4">&#9670;&nbsp;</a></span>sha3_512_file()</h2>
+
+<div class="memitem">
+<div class="memproto">
+      <table class="memname">
+        <tr>
+          <td class="memname">std::string klib::sha3_512_file </td>
           <td>(</td>
           <td class="paramtype">const std::string &amp;&#160;</td>
           <td class="paramname"><em>path</em></td><td>)</td>
@@ -505,6 +709,114 @@ void&#160;</td><td class="memItemRight" valign="bottom"><b>klib::write_file</b> 
   </dd>
 </dl>
 <dl class="section return"><dt>Returns</dt><dd>SHA3-512 result </dd></dl>
+
+</div>
+</div>
+<a id="a050e605ce0fd6b1f50cffa8fd01a3889"></a>
+<h2 class="memtitle"><span class="permalink"><a href="#a050e605ce0fd6b1f50cffa8fd01a3889">&#9670;&nbsp;</a></span>sha3_512_raw()</h2>
+
+<div class="memitem">
+<div class="memproto">
+      <table class="memname">
+        <tr>
+          <td class="memname">std::vector&lt;std::uint8_t&gt; klib::sha3_512_raw </td>
+          <td>(</td>
+          <td class="paramtype">const std::string &amp;&#160;</td>
+          <td class="paramname"><em>str</em></td><td>)</td>
+          <td></td>
+        </tr>
+      </table>
+</div><div class="memdoc">
+
+<p>Calculate SHA3-512. </p>
+<dl class="params"><dt>Parameters</dt><dd>
+  <table class="params">
+    <tr><td class="paramname">str</td><td>Data to be encrypted </td></tr>
+  </table>
+  </dd>
+</dl>
+<dl class="section return"><dt>Returns</dt><dd>SHA3-512 result </dd></dl>
+
+</div>
+</div>
+<a id="a622c5644c9948a904650e0fe4cc7b6bb"></a>
+<h2 class="memtitle"><span class="permalink"><a href="#a622c5644c9948a904650e0fe4cc7b6bb">&#9670;&nbsp;</a></span>sha_256()</h2>
+
+<div class="memitem">
+<div class="memproto">
+      <table class="memname">
+        <tr>
+          <td class="memname">std::string klib::sha_256 </td>
+          <td>(</td>
+          <td class="paramtype">const std::string &amp;&#160;</td>
+          <td class="paramname"><em>str</em></td><td>)</td>
+          <td></td>
+        </tr>
+      </table>
+</div><div class="memdoc">
+
+<p>Calculate SHA-256. </p>
+<dl class="params"><dt>Parameters</dt><dd>
+  <table class="params">
+    <tr><td class="paramname">str</td><td>Data to be encrypted </td></tr>
+  </table>
+  </dd>
+</dl>
+<dl class="section return"><dt>Returns</dt><dd>SHA-256 result </dd></dl>
+
+</div>
+</div>
+<a id="a7aafac36754322a743e4eea7adf8fed7"></a>
+<h2 class="memtitle"><span class="permalink"><a href="#a7aafac36754322a743e4eea7adf8fed7">&#9670;&nbsp;</a></span>sha_256_file()</h2>
+
+<div class="memitem">
+<div class="memproto">
+      <table class="memname">
+        <tr>
+          <td class="memname">std::string klib::sha_256_file </td>
+          <td>(</td>
+          <td class="paramtype">const std::string &amp;&#160;</td>
+          <td class="paramname"><em>path</em></td><td>)</td>
+          <td></td>
+        </tr>
+      </table>
+</div><div class="memdoc">
+
+<p>Calculate SHA-256. </p>
+<dl class="params"><dt>Parameters</dt><dd>
+  <table class="params">
+    <tr><td class="paramname">path</td><td>The path of the file to be calculated </td></tr>
+  </table>
+  </dd>
+</dl>
+<dl class="section return"><dt>Returns</dt><dd>SHA-256 result </dd></dl>
+
+</div>
+</div>
+<a id="a6470715791bc35a28dba8af1e61472c7"></a>
+<h2 class="memtitle"><span class="permalink"><a href="#a6470715791bc35a28dba8af1e61472c7">&#9670;&nbsp;</a></span>sha_256_raw()</h2>
+
+<div class="memitem">
+<div class="memproto">
+      <table class="memname">
+        <tr>
+          <td class="memname">std::vector&lt;std::uint8_t&gt; klib::sha_256_raw </td>
+          <td>(</td>
+          <td class="paramtype">const std::string &amp;&#160;</td>
+          <td class="paramname"><em>str</em></td><td>)</td>
+          <td></td>
+        </tr>
+      </table>
+</div><div class="memdoc">
+
+<p>Calculate SHA-256. </p>
+<dl class="params"><dt>Parameters</dt><dd>
+  <table class="params">
+    <tr><td class="paramname">str</td><td>Data to be encrypted </td></tr>
+  </table>
+  </dd>
+</dl>
+<dl class="section return"><dt>Returns</dt><dd>SHA-256 result </dd></dl>
 
 </div>
 </div>

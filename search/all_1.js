@@ -1,5 +1,5 @@
 var searchData=
 [
-  ['changeworkingdir_3',['ChangeWorkingDir',['../classklib_1_1ChangeWorkingDir.html#a7f462bcc7a307b5ca49648deaa350e08',1,'klib::ChangeWorkingDir::ChangeWorkingDir()'],['../classklib_1_1ChangeWorkingDir.html',1,'klib::ChangeWorkingDir']]],
-  ['compress_4',['compress',['../archive_8h.html#a60d8d0cfa4099f1cf8eb6f37e8e84e05',1,'klib::compress(const std::string &amp;path, Algorithm algorithm, const std::string &amp;file_name=&quot;&quot;, bool flag=true)'],['../archive_8h.html#a0ff19dfa8c910290eff014ba09f6c4bc',1,'klib::compress(const std::vector&lt; std::string &gt; &amp;paths, Algorithm algorithm, const std::string &amp;file_name)']]]
+  ['base64_5fdecode_5',['base64_decode',['../util_8h.html#a3e8597062a26eb6d1d723aec7f85df2c',1,'klib']]],
+  ['base64_5fencode_6',['base64_encode',['../util_8h.html#a789f4aa89e5e78a6a42f7b1f1ce31738',1,'klib']]]
 ];

@@ -1,7 +1,8 @@
 var searchData=
 [
-  ['read_5ffile_21',['read_file',['../util_8h.html#aff1e161e1457b1a895244581b50b9abd',1,'klib']]],
-  ['request_22',['Request',['../classklib_1_1Request.html',1,'klib::Request'],['../classklib_1_1Request.html#a0fe5c62e7c2d1adcb68f56fc644a7c61',1,'klib::Request::Request()']]],
-  ['response_23',['Response',['../classklib_1_1Response.html',1,'klib']]],
-  ['runtimeerror_24',['RuntimeError',['../classklib_1_1RuntimeError.html',1,'klib::RuntimeError'],['../classklib_1_1RuntimeError.html#aff3943e22b8fdc7a1895da4f68235a7c',1,'klib::RuntimeError::RuntimeError(const char *msg)'],['../classklib_1_1RuntimeError.html#ad2fd5d0096ab416c1fd8dd0a05d7a11e',1,'klib::RuntimeError::RuntimeError(const std::string &amp;msg)'],['../classklib_1_1RuntimeError.html#aa000c04b65c1a10a7b792e3688ed8587',1,'klib::RuntimeError::RuntimeError(std::string_view msg)'],['../classklib_1_1RuntimeError.html#a58f0f5ebc345d39344520a1dbc654632',1,'klib::RuntimeError::RuntimeError(std::string_view fmt, Args &amp;&amp;...args)']]]
+  ['klib_5fver_5fmajor_20',['KLIB_VER_MAJOR',['../version_8h.html#aa4a6f180b71183e6d86d7ef8358ef9cb',1,'version.h']]],
+  ['klib_5fver_5fminor_21',['KLIB_VER_MINOR',['../version_8h.html#a84c02cd32e54b547a6bafa579e1ff9dd',1,'version.h']]],
+  ['klib_5fver_5fpatch_22',['KLIB_VER_PATCH',['../version_8h.html#a845e221b12148c21e3473554cb9b5929',1,'version.h']]],
+  ['klib_5fversion_23',['klib_version',['../version_8h.html#a53ea8832d7f77aade266362d83dfbf5c',1,'klib']]],
+  ['klib_5fversion_5fstring_24',['KLIB_VERSION_STRING',['../version_8h.html#a871330643177c360cdceba479ffad657',1,'version.h']]]
 ];

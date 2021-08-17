@@ -1,5 +1,5 @@
 var searchData=
 [
-  ['_7echangeworkingdir_43',['~ChangeWorkingDir',['../classklib_1_1ChangeWorkingDir.html#a2f7d61bc70ba03d63148d0a0ec729d1c',1,'klib::ChangeWorkingDir']]],
-  ['_7erequest_44',['~Request',['../classklib_1_1Request.html#abf010562c66bb66def366522fb40b982',1,'klib::Request']]]
+  ['wait_5ffor_5fchild_5fprocess_51',['wait_for_child_process',['../util_8h.html#a068f640d8df09ff35caf8822a9c1e0ac',1,'klib']]],
+  ['write_5ffile_52',['write_file',['../util_8h.html#ad20740bb960a952fc137ca4247bbc179',1,'klib']]]
 ];

@@ -1,4 +1,4 @@
 var searchData=
 [
-  ['get_62',['get',['../classklib_1_1Request.html#aff734085e5025357e3151e2a56c8a681',1,'klib::Request']]]
+  ['folder_5fsize_75',['folder_size',['../util_8h.html#a6e1a6bca253ac0afc74f98f90bb48015',1,'klib']]]
 ];

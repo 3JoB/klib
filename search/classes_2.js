@@ -1,4 +1,4 @@
 var searchData=
 [
-  ['unicoderange_49',['UnicodeRange',['../classklib_1_1detail_1_1UnicodeRange.html',1,'klib::detail']]]
+  ['unicoderange_59',['UnicodeRange',['../classklib_1_1detail_1_1UnicodeRange.html',1,'klib::detail']]]
 ];
