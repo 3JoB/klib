@@ -22,24 +22,9 @@ TEST_CASE("download html", "[http]") {
 
   request.set_curl_user_agent();
   request.set_no_proxy();
+  request.use_http_1_1();
 
   response = request.get("https://www.baidu.com");
-
-  REQUIRE(response.status_code() == klib::Response::StatusCode::Ok);
-  REQUIRE(!std::empty(response.header()));
-  REQUIRE(!std::empty(response.text()));
-}
-
-TEST_CASE("google", "[http]") {
-  klib::Request request;
-  request.verbose(true);
-  request.set_browser_user_agent();
-
-#ifdef KLIB_TEST_USE_PROXY
-  request.set_proxy("socks5://127.0.0.1:1080");
-#endif
-
-  auto response = request.get("https://www.google.com.hk/", {{"hl", "zh_CN"}});
 
   REQUIRE(response.status_code() == klib::Response::StatusCode::Ok);
   REQUIRE(!std::empty(response.header()));
@@ -50,6 +35,7 @@ TEST_CASE("download file", "[http]") {
   klib::Request request;
   request.verbose(true);
   request.allow_redirects(true);
+  request.use_http_2();
 
 #ifdef KLIB_TEST_USE_PROXY
   request.set_proxy("socks5://127.0.0.1:1080");

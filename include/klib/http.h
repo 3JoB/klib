@@ -51,6 +51,16 @@ class Request {
   void allow_redirects(bool flag);
 
   /**
+   * @brief Use HTTP/1.1
+   */
+  void use_http_1_1();
+
+  /**
+   * @brief Use HTTP/2(Default)
+   */
+  void use_http_2();
+
+  /**
    * @brief Set up proxy
    * @param proxy: String representing proxy
    */

@@ -56,6 +56,8 @@ class Request::RequestImpl {
 
   void verbose(bool flag);
   void allow_redirects(bool flag);
+  void use_http_1_1();
+  void use_http_2();
   void set_proxy(const std::string &proxy);
   void set_no_proxy();
   void set_user_agent(const std::string &user_agent);
@@ -109,6 +111,16 @@ Request::RequestImpl::~RequestImpl() {
 
 void Request::RequestImpl::verbose(bool flag) {
   check_curl_correct(curl_easy_setopt(http_handle_, CURLOPT_VERBOSE, flag));
+}
+
+void Request::RequestImpl::use_http_1_1() {
+  check_curl_correct(curl_easy_setopt(http_handle_, CURLOPT_HTTP_VERSION,
+                                      CURL_HTTP_VERSION_1_1));
+}
+
+void Request::RequestImpl::use_http_2() {
+  check_curl_correct(curl_easy_setopt(http_handle_, CURLOPT_HTTP_VERSION,
+                                      CURL_HTTP_VERSION_2_0));
 }
 
 void Request::RequestImpl::allow_redirects(bool flag) {
@@ -202,6 +214,10 @@ Request::~Request() = default;
 void Request::verbose(bool flag) { impl_->verbose(flag); }
 
 void Request::allow_redirects(bool flag) { impl_->allow_redirects(flag); }
+
+void Request::use_http_1_1() { impl_->use_http_1_1(); }
+
+void Request::use_http_2() { impl_->use_http_2(); }
 
 void Request::set_proxy(const std::string &proxy) { impl_->set_proxy(proxy); }
 
