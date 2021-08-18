@@ -7,6 +7,7 @@
 
 #include <cstddef>
 #include <cstdint>
+#include <map>
 #include <string>
 #include <string_view>
 #include <vector>
@@ -264,5 +265,14 @@ void execute_command(const char *command);
  * @brief Wait for all child processes to exit
  */
 void wait_for_child_process();
+
+/**
+ * @brief Splicing url
+ * @param url: Requested url
+ * @param params: URL parameters
+ * @return Splicing url
+ */
+std::string splicing_url(const std::string &url,
+                         const std::map<std::string, std::string> &params);
 
 }  // namespace klib

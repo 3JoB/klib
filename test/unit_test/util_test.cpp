@@ -306,3 +306,9 @@ TEST_CASE("wait_for_child_process", "[util]") {
     std::filesystem::remove(file_name);
   }
 }
+
+TEST_CASE("splicing_url", "[util]") {
+  REQUIRE(klib::splicing_url("www.example.com",
+                             {{"a", "b"}, {"c", "书客123abc"}}) ==
+          "www.example.com?a=b&c=%E4%B9%A6%E5%AE%A2123abc");
+}

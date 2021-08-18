@@ -26,21 +26,6 @@ void check_curl_correct(CURLMcode code) {
   }
 }
 
-std::string splicing_url(const std::string &url,
-                         const std::map<std::string, std::string> &params) {
-  if (std::empty(params)) {
-    return url;
-  }
-
-  auto result = url + "?";
-  for (const auto &[key, value] : params) {
-    result.append(key).append("=").append(value).append("&");
-  }
-  result.pop_back();
-
-  return result;
-}
-
 }  // namespace
 
 class Request::RequestImpl {
@@ -152,7 +137,6 @@ void Request::RequestImpl::set_curl_user_agent() {
   set_user_agent("curl/7.78.0");
 }
 
-// TODO check url
 Response Request::RequestImpl::get(
     const std::string &url, const std::map<std::string, std::string> &params) {
   auto complete_url = splicing_url(url, params);
