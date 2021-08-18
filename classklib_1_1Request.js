@@ -5,7 +5,7 @@ var classklib_1_1Request =
     [ "Request", "classklib_1_1Request.html#aca2ecf7b7e7fb29eb71148ab97c82e55", null ],
     [ "~Request", "classklib_1_1Request.html#abf010562c66bb66def366522fb40b982", null ],
     [ "allow_redirects", "classklib_1_1Request.html#a3bd57350cde297d6e01d32c6354c6e78", null ],
-    [ "get", "classklib_1_1Request.html#a6c6e0a7c753104a77bcaa2f132e9a276", null ],
+    [ "get", "classklib_1_1Request.html#a5df30307f5ff4c8271f42384199fe82c", null ],
     [ "operator=", "classklib_1_1Request.html#a1bdd9d722384dfe377bc3a902f9ce4ab", null ],
     [ "operator=", "classklib_1_1Request.html#acd404419be226f1a1f63d6cf0562c065", null ],
     [ "set_browser_user_agent", "classklib_1_1Request.html#afa583b9071002118ad316a9690003256", null ],

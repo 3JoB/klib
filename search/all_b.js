@@ -13,6 +13,7 @@ var searchData=
   ['sha_5f256_39',['sha_256',['../util_8h.html#a622c5644c9948a904650e0fe4cc7b6bb',1,'klib']]],
   ['sha_5f256_5ffile_40',['sha_256_file',['../util_8h.html#a7aafac36754322a743e4eea7adf8fed7',1,'klib']]],
   ['sha_5f256_5fraw_41',['sha_256_raw',['../util_8h.html#a6470715791bc35a28dba8af1e61472c7',1,'klib']]],
-  ['status_5fcode_42',['status_code',['../classklib_1_1Response.html#aa839e6f6599e336147cbdacb0e99bddf',1,'klib::Response']]],
-  ['statuscode_43',['StatusCode',['../classklib_1_1Response.html#abbd230b0781eceb59a4851976ad5df32',1,'klib::Response']]]
+  ['splicing_5furl_42',['splicing_url',['../util_8h.html#a715a4d1c4577e7c32b0cbc73b0f22eaa',1,'klib']]],
+  ['status_5fcode_43',['status_code',['../classklib_1_1Response.html#aa839e6f6599e336147cbdacb0e99bddf',1,'klib::Response']]],
+  ['statuscode_44',['StatusCode',['../classklib_1_1Response.html#abbd230b0781eceb59a4851976ad5df32',1,'klib::Response']]]
 ];

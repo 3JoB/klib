@@ -31,7 +31,7 @@
  <tr style="height: 56px;">
   <td id="projectalign" style="padding-left: 0.5em;">
    <div id="projectname">klib
-   &#160;<span id="projectnumber">0.2.12</span>
+   &#160;<span id="projectnumber">0.2.13</span>
    </div>
   </td>
    <td>        <div id="MSearchBox" class="MSearchBoxInactive">
@@ -105,6 +105,7 @@ $(document).ready(function(){initNavTree('util_8h.html',''); initResizable(); })
 <a href="#details">More...</a></p>
 <div class="textblock"><code>#include &lt;cstddef&gt;</code><br />
 <code>#include &lt;cstdint&gt;</code><br />
+<code>#include &lt;map&gt;</code><br />
 <code>#include &lt;string&gt;</code><br />
 <code>#include &lt;string_view&gt;</code><br />
 <code>#include &lt;vector&gt;</code><br />
@@ -172,12 +173,24 @@ void&#160;</td><td class="memItemRight" valign="bottom"><b>klib::write_file</b> 
 <tr class="memitem:a618c7297574b1f62db6b5e8b19186f3b"><td class="memItemLeft" align="right" valign="top">std::u32string&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="util_8h.html#a618c7297574b1f62db6b5e8b19186f3b">klib::utf8_to_utf32</a> (const std::string &amp;str)</td></tr>
 <tr class="memdesc:a618c7297574b1f62db6b5e8b19186f3b"><td class="mdescLeft">&#160;</td><td class="mdescRight">Convert UTF-8 encoded string to UTF-32 encoded string.  <a href="util_8h.html#a618c7297574b1f62db6b5e8b19186f3b">More...</a><br /></td></tr>
 <tr class="separator:a618c7297574b1f62db6b5e8b19186f3b"><td class="memSeparator" colspan="2">&#160;</td></tr>
+<tr class="memitem:ae643f3a0b1f3cadf8b01d5c44c08ac2f"><td class="memItemLeft" align="right" valign="top">std::string&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="util_8h.html#ae643f3a0b1f3cadf8b01d5c44c08ac2f">klib::utf32_to_utf8</a> (char32_t c)</td></tr>
+<tr class="memdesc:ae643f3a0b1f3cadf8b01d5c44c08ac2f"><td class="mdescLeft">&#160;</td><td class="mdescRight">Convert UTF-32 encoded string to UTF-8 encoded string.  <a href="util_8h.html#ae643f3a0b1f3cadf8b01d5c44c08ac2f">More...</a><br /></td></tr>
+<tr class="separator:ae643f3a0b1f3cadf8b01d5c44c08ac2f"><td class="memSeparator" colspan="2">&#160;</td></tr>
+<tr class="memitem:a137702622c0905e43278959649acb981"><td class="memItemLeft" align="right" valign="top"><a id="a137702622c0905e43278959649acb981"></a>
+std::string&#160;</td><td class="memItemRight" valign="bottom"><b>klib::utf32_to_utf8</b> (const std::u32string &amp;str)</td></tr>
+<tr class="separator:a137702622c0905e43278959649acb981"><td class="memSeparator" colspan="2">&#160;</td></tr>
 <tr class="memitem:a775ac965af49c5c606872cb3fd4a3351"><td class="memItemLeft" align="right" valign="top">constexpr bool&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="util_8h.html#a775ac965af49c5c606872cb3fd4a3351">klib::is_ascii</a> (char c)</td></tr>
 <tr class="memdesc:a775ac965af49c5c606872cb3fd4a3351"><td class="mdescLeft">&#160;</td><td class="mdescRight">Determine whether it is an ASCII character.  <a href="util_8h.html#a775ac965af49c5c606872cb3fd4a3351">More...</a><br /></td></tr>
 <tr class="separator:a775ac965af49c5c606872cb3fd4a3351"><td class="memSeparator" colspan="2">&#160;</td></tr>
+<tr class="memitem:aea49cf08bb1621e46ed2db20b8346f48"><td class="memItemLeft" align="right" valign="top"><a id="aea49cf08bb1621e46ed2db20b8346f48"></a>
+constexpr bool&#160;</td><td class="memItemRight" valign="bottom"><b>klib::is_ascii</b> (char32_t c)</td></tr>
+<tr class="separator:aea49cf08bb1621e46ed2db20b8346f48"><td class="memSeparator" colspan="2">&#160;</td></tr>
 <tr class="memitem:a6e533084977cbc216fac214d8aad20a3"><td class="memItemLeft" align="right" valign="top">bool&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="util_8h.html#a6e533084977cbc216fac214d8aad20a3">klib::is_ascii</a> (const std::string &amp;str)</td></tr>
 <tr class="memdesc:a6e533084977cbc216fac214d8aad20a3"><td class="mdescLeft">&#160;</td><td class="mdescRight">Determine whether a string consisting of ASCII characters.  <a href="util_8h.html#a6e533084977cbc216fac214d8aad20a3">More...</a><br /></td></tr>
 <tr class="separator:a6e533084977cbc216fac214d8aad20a3"><td class="memSeparator" colspan="2">&#160;</td></tr>
+<tr class="memitem:aa5833035169c9354060885fcc1985673"><td class="memItemLeft" align="right" valign="top"><a id="aa5833035169c9354060885fcc1985673"></a>
+bool&#160;</td><td class="memItemRight" valign="bottom"><b>klib::is_ascii</b> (const std::u32string &amp;str)</td></tr>
+<tr class="separator:aa5833035169c9354060885fcc1985673"><td class="memSeparator" colspan="2">&#160;</td></tr>
 <tr class="memitem:a2b8a6386338a9fb7818772b9db40ccf4"><td class="memItemLeft" align="right" valign="top">constexpr bool&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="util_8h.html#a2b8a6386338a9fb7818772b9db40ccf4">klib::is_chinese</a> (char32_t c)</td></tr>
 <tr class="memdesc:a2b8a6386338a9fb7818772b9db40ccf4"><td class="mdescLeft">&#160;</td><td class="mdescRight">Determine whether it is a Chinese character.  <a href="util_8h.html#a2b8a6386338a9fb7818772b9db40ccf4">More...</a><br /></td></tr>
 <tr class="separator:a2b8a6386338a9fb7818772b9db40ccf4"><td class="memSeparator" colspan="2">&#160;</td></tr>
@@ -230,6 +243,9 @@ void&#160;</td><td class="memItemRight" valign="bottom"><b>klib::write_file</b> 
 void&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="util_8h.html#a068f640d8df09ff35caf8822a9c1e0ac">klib::wait_for_child_process</a> ()</td></tr>
 <tr class="memdesc:a068f640d8df09ff35caf8822a9c1e0ac"><td class="mdescLeft">&#160;</td><td class="mdescRight">Wait for all child processes to exit. <br /></td></tr>
 <tr class="separator:a068f640d8df09ff35caf8822a9c1e0ac"><td class="memSeparator" colspan="2">&#160;</td></tr>
+<tr class="memitem:a715a4d1c4577e7c32b0cbc73b0f22eaa"><td class="memItemLeft" align="right" valign="top">std::string&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="util_8h.html#a715a4d1c4577e7c32b0cbc73b0f22eaa">klib::splicing_url</a> (const std::string &amp;url, const std::map&lt; std::string, std::string &gt; &amp;params)</td></tr>
+<tr class="memdesc:a715a4d1c4577e7c32b0cbc73b0f22eaa"><td class="mdescLeft">&#160;</td><td class="mdescRight">Splicing url.  <a href="util_8h.html#a715a4d1c4577e7c32b0cbc73b0f22eaa">More...</a><br /></td></tr>
+<tr class="separator:a715a4d1c4577e7c32b0cbc73b0f22eaa"><td class="memSeparator" colspan="2">&#160;</td></tr>
 </table>
 <a name="details" id="details"></a><h2 class="groupheader">Detailed Description</h2>
 <div class="textblock"><p>Contains declarations of some useful functions. </p>
@@ -816,6 +832,71 @@ void&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="util
   </dd>
 </dl>
 <dl class="section return"><dt>Returns</dt><dd>SHA-256 result </dd></dl>
+
+</div>
+</div>
+<a id="a715a4d1c4577e7c32b0cbc73b0f22eaa"></a>
+<h2 class="memtitle"><span class="permalink"><a href="#a715a4d1c4577e7c32b0cbc73b0f22eaa">&#9670;&nbsp;</a></span>splicing_url()</h2>
+
+<div class="memitem">
+<div class="memproto">
+      <table class="memname">
+        <tr>
+          <td class="memname">std::string klib::splicing_url </td>
+          <td>(</td>
+          <td class="paramtype">const std::string &amp;&#160;</td>
+          <td class="paramname"><em>url</em>, </td>
+        </tr>
+        <tr>
+          <td class="paramkey"></td>
+          <td></td>
+          <td class="paramtype">const std::map&lt; std::string, std::string &gt; &amp;&#160;</td>
+          <td class="paramname"><em>params</em>&#160;</td>
+        </tr>
+        <tr>
+          <td></td>
+          <td>)</td>
+          <td></td><td></td>
+        </tr>
+      </table>
+</div><div class="memdoc">
+
+<p>Splicing url. </p>
+<dl class="params"><dt>Parameters</dt><dd>
+  <table class="params">
+    <tr><td class="paramname">url</td><td>Requested url </td></tr>
+    <tr><td class="paramname">params</td><td>URL parameters </td></tr>
+  </table>
+  </dd>
+</dl>
+<dl class="section return"><dt>Returns</dt><dd>Splicing url </dd></dl>
+
+</div>
+</div>
+<a id="ae643f3a0b1f3cadf8b01d5c44c08ac2f"></a>
+<h2 class="memtitle"><span class="permalink"><a href="#ae643f3a0b1f3cadf8b01d5c44c08ac2f">&#9670;&nbsp;</a></span>utf32_to_utf8()</h2>
+
+<div class="memitem">
+<div class="memproto">
+      <table class="memname">
+        <tr>
+          <td class="memname">std::string klib::utf32_to_utf8 </td>
+          <td>(</td>
+          <td class="paramtype">char32_t&#160;</td>
+          <td class="paramname"><em>c</em></td><td>)</td>
+          <td></td>
+        </tr>
+      </table>
+</div><div class="memdoc">
+
+<p>Convert UTF-32 encoded string to UTF-8 encoded string. </p>
+<dl class="params"><dt>Parameters</dt><dd>
+  <table class="params">
+    <tr><td class="paramname">c</td><td>UTF-32 encoded string </td></tr>
+  </table>
+  </dd>
+</dl>
+<dl class="section return"><dt>Returns</dt><dd>The converted UTF-8 encoded string </dd></dl>
 
 </div>
 </div>
