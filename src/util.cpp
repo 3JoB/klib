@@ -22,6 +22,7 @@
 #include <fmt/compile.h>
 #include <fmt/format.h>
 #include <openssl/aes.h>
+#include <openssl/bio.h>
 #include <openssl/err.h>
 #include <openssl/evp.h>
 #include <openssl/sha.h>
@@ -292,53 +293,35 @@ bool is_chinese(const std::string &c) {
 
 // https://stackoverflow.com/questions/5288076/base64-encoding-and-decoding-with-openssl
 std::string base64_encode(const std::string &str) {
-  const auto predicted_len = 4 * ((std::size(str) + 2) / 3);
-  const auto output_buffer =
-      std::make_unique<std::uint8_t[]>(predicted_len + 1);
+  std::unique_ptr<BIO, decltype(&BIO_free_all)> b64(BIO_new(BIO_f_base64()),
+                                                    BIO_free_all);
 
-  const std::size_t output_len = EVP_EncodeBlock(
-      reinterpret_cast<std::uint8_t *>(output_buffer.get()),
-      reinterpret_cast<const std::uint8_t *>(std::data(str)), std::size(str));
+  BIO_set_flags(b64.get(), BIO_FLAGS_BASE64_NO_NL);
+  BIO *sink = BIO_new(BIO_s_mem());
+  BIO_push(b64.get(), sink);
+  BIO_write(b64.get(), std::data(str), std::size(str));
+  BIO_flush(b64.get());
 
-  if (predicted_len != output_len) {
-    throw RuntimeError("Encode Base64 error");
-  }
-
-  std::string result;
-  result.reserve(output_len);
-  for (std::size_t i = 0; i < output_len; ++i) {
-    result.push_back(static_cast<char>(output_buffer[i]));
-  }
-  if (result.back() == '\0') {
-    result.pop_back();
-  }
-
-  return result;
+  const char *encoded;
+  const long len = BIO_get_mem_data(sink, &encoded);
+  return std::string(encoded, len);
 }
 
 std::string base64_decode(const std::string &str) {
-  const auto predicted_len = 3 * std::size(str) / 4;
-  const auto output_buffer =
-      std::make_unique<std::uint8_t[]>(predicted_len + 1);
+  std::unique_ptr<BIO, decltype(&BIO_free_all)> b64(BIO_new(BIO_f_base64()),
+                                                    BIO_free_all);
 
-  const std::size_t output_len = EVP_DecodeBlock(
-      reinterpret_cast<std::uint8_t *>(output_buffer.get()),
-      reinterpret_cast<const std::uint8_t *>(std::data(str)), std::size(str));
+  BIO_set_flags(b64.get(), BIO_FLAGS_BASE64_NO_NL);
+  BIO *source = BIO_new_mem_buf(std::data(str), -1);
+  BIO_push(b64.get(), source);
 
-  if (predicted_len != output_len) {
-    throw RuntimeError("Decode Base64 error");
-  }
+  const int max_len = std::size(str) / 4 * 3 + 1;
+  std::string decoded;
+  decoded.resize(max_len);
+  const int len = BIO_read(b64.get(), decoded.data(), max_len);
+  decoded.resize(len);
 
-  std::string result;
-  result.reserve(output_len);
-  for (std::size_t i = 0; i < output_len; ++i) {
-    result.push_back(static_cast<char>(output_buffer[i]));
-  }
-  if (result.back() == '\0') {
-    result.pop_back();
-  }
-
-  return result;
+  return decoded;
 }
 
 std::string sha_256(const std::string &str) {
