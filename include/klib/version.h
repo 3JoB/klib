@@ -20,7 +20,7 @@
 /**
  * @brief klib patch version
  */
-#define KLIB_VER_PATCH 12
+#define KLIB_VER_PATCH 13
 
 #define STRINGIZE2(s) #s
 #define STRINGIZE(s) STRINGIZE2(s)

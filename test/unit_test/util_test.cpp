@@ -57,12 +57,28 @@ TEST_CASE("utf8_to_utf32", "[util]") {
   REQUIRE(utf32[3] == 0x0001F34C);
 }
 
+TEST_CASE("utf32_to_utf8", "[util]") {
+  auto utf32 = klib::utf8_to_utf32("书客");
+  auto utf8 = klib::utf32_to_utf8(utf32);
+
+  REQUIRE(std::size(utf8) == 6);
+  REQUIRE(static_cast<std::uint8_t>(utf8[0]) == 0xE4);
+  REQUIRE(static_cast<std::uint8_t>(utf8[1]) == 0xB9);
+  REQUIRE(static_cast<std::uint8_t>(utf8[2]) == 0xA6);
+  REQUIRE(static_cast<std::uint8_t>(utf8[3]) == 0xE5);
+  REQUIRE(static_cast<std::uint8_t>(utf8[4]) == 0xAE);
+  REQUIRE(static_cast<std::uint8_t>(utf8[5]) == 0xA2);
+}
+
 TEST_CASE("is_ascii", "[util]") {
   REQUIRE(klib::is_ascii('A'));
   REQUIRE_FALSE(klib::is_ascii(static_cast<char>(190)));
 
   REQUIRE(klib::is_ascii("AAA"));
   REQUIRE_FALSE(klib::is_ascii("你"));
+
+  REQUIRE(klib::is_ascii(klib::utf8_to_utf32("AAA")));
+  REQUIRE_FALSE(klib::is_ascii(klib::utf8_to_utf32("你")));
 }
 
 TEST_CASE("is_chinese", "[util]") {

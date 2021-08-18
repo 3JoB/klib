@@ -26,9 +26,8 @@ void check_curl_correct(CURLMcode code) {
   }
 }
 
-std::string splicing_url(
-    const std::string &url,
-    const std::vector<std::pair<std::string, std::string>> &params) {
+std::string splicing_url(const std::string &url,
+                         const std::map<std::string, std::string> &params) {
   if (std::empty(params)) {
     return url;
   }
@@ -65,7 +64,7 @@ class Request::RequestImpl {
   void set_curl_user_agent();
 
   Response get(const std::string &url,
-               const std::vector<std::pair<std::string, std::string>> &params);
+               const std::map<std::string, std::string> &params);
 
  private:
   static std::size_t callback_func_std_string(void *contents, std::size_t size,
@@ -155,8 +154,7 @@ void Request::RequestImpl::set_curl_user_agent() {
 
 // TODO check url
 Response Request::RequestImpl::get(
-    const std::string &url,
-    const std::vector<std::pair<std::string, std::string>> &params) {
+    const std::string &url, const std::map<std::string, std::string> &params) {
   auto complete_url = splicing_url(url, params);
   Response response;
 
@@ -231,9 +229,8 @@ void Request::set_browser_user_agent() { impl_->set_browser_user_agent(); }
 
 void Request::set_curl_user_agent() { impl_->set_curl_user_agent(); }
 
-Response Request::get(
-    const std::string &url,
-    const std::vector<std::pair<std::string, std::string>> &params) {
+Response Request::get(const std::string &url,
+                      const std::map<std::string, std::string> &params) {
   return impl_->get(url, params);
 }
 

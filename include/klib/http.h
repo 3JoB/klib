@@ -7,10 +7,9 @@
 
 #include <cstdint>
 #include <experimental/propagate_const>
+#include <map>
 #include <memory>
 #include <string>
-#include <utility>
-#include <vector>
 
 namespace klib {
 
@@ -93,9 +92,8 @@ class Request {
    * @param params: URL parameters
    * @return Response content
    */
-  Response get(
-      const std::string &url,
-      const std::vector<std::pair<std::string, std::string>> &params = {});
+  Response get(const std::string &url,
+               const std::map<std::string, std::string> &params = {});
 
  private:
   class RequestImpl;

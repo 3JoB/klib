@@ -219,9 +219,44 @@ std::u32string utf8_to_utf32(const std::string &str) {
   return result;
 }
 
+// https://zh.cppreference.com/w/c/string/multibyte/c32rtomb
+std::string utf32_to_utf8(char32_t c) {
+  std::setlocale(LC_ALL, "en_US.utf8");
+
+  std::string result;
+  result.resize(MB_CUR_MAX);
+
+  mbstate_t state = {};
+  auto rc = std::c32rtomb(std::data(result), c, &state);
+
+  if (rc == static_cast<std::size_t>(-1)) {
+    throw RuntimeError(std::strerror(errno));
+  } else if (rc == 0) {
+    throw RuntimeError("utf32_to_utf8 error");
+  }
+
+  result.resize(rc);
+  return result;
+}
+
+std::string utf32_to_utf8(const std::u32string &str) {
+  std::string result;
+
+  for (auto c : str) {
+    result.append(utf32_to_utf8(c));
+  }
+
+  return result;
+}
+
 bool is_ascii(const std::string &str) {
   return std::all_of(std::begin(str), std::end(str),
                      [](char c) { return is_ascii(c); });
+}
+
+bool is_ascii(const std::u32string &str) {
+  return std::all_of(std::begin(str), std::end(str),
+                     [](char32_t c) { return is_ascii(c); });
 }
 
 bool is_chinese(const std::string &c) {
