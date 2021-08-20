@@ -120,6 +120,15 @@ class Request {
                 const std::map<std::string, std::string> &file = {},
                 const std::map<std::string, std::string> &header = {});
 
+  /**
+   * @brief Sends a POST request
+   * @param url: Requested url
+   * @param data: Data string
+   * @return Response content
+   */
+  Response post(const std::string &url, const std::string &data,
+                const std::map<std::string, std::string> &header = {});
+
  private:
   class RequestImpl;
   std::experimental::propagate_const<std::unique_ptr<RequestImpl>> impl_;
@@ -144,6 +153,7 @@ class Headers {
  private:
   void add(const std::string &key, const std::string &value);
 
+  // FIXME
   std::map<std::string, std::string> map_;
 };
 

@@ -116,3 +116,30 @@ TEST_CASE("POST", "[http]") {
   REQUIRE(std::filesystem::remove(file_a));
   REQUIRE(std::filesystem::remove(file_b));
 }
+
+TEST_CASE("POST json", "[http]") {
+  klib::Request request;
+
+#ifndef NDEBUG
+  request.verbose(true);
+#endif
+#ifdef KLIB_TEST_USE_PROXY
+  request.set_proxy(proxy);
+#endif
+
+  const std::string user_name = "kaiser";
+  const std::string password = "123456";
+
+  boost::json::object obj;
+  obj["user_name"] = user_name;
+  obj["password"] = password;
+
+  auto response =
+      request.post("http://httpbin.org/post", boost::json::serialize(obj),
+                   {{"Content-Type", "application/json"}});
+  REQUIRE(response.status_code() == klib::Response::StatusCode::Ok);
+
+  auto jv = boost::json::parse(response.text());
+
+  REQUIRE(jv.at("data").as_string() == boost::json::serialize(obj));
+}

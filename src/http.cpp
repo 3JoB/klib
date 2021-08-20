@@ -3,6 +3,7 @@
 #include <cassert>
 #include <cstddef>
 #include <filesystem>
+#include <string_view>
 
 #include <curl/curl.h>
 #include <fmt/compile.h>
@@ -234,8 +235,15 @@ class Request::RequestImpl {
                 const std::map<std::string, std::string> &data,
                 const std::map<std::string, std::string> &file,
                 const std::map<std::string, std::string> &header);
+  Response post(const std::string &url, const std::string &data,
+                const std::map<std::string, std::string> &header);
 
  private:
+  constexpr static std::string_view cookies_path = ".cookies.txt";
+  void set_cookies();
+
+  Response do_post();
+
   static std::size_t callback_func_std_string(void *contents, std::size_t size,
                                               std::size_t nmemb,
                                               std::string *s);
@@ -268,6 +276,9 @@ Request::RequestImpl::RequestImpl() {
                                         RequestImpl::callback_func_std_string));
     check_curl_correct(curl_easy_setopt(http_handle_, CURLOPT_HEADERFUNCTION,
                                         callback_func_std_string));
+
+    check_curl_correct(curl_easy_setopt(http_handle_, CURLOPT_COOKIEJAR,
+                                        RequestImpl::cookies_path.data()));
   } catch (...) {
     curl_easy_cleanup(http_handle_);
     curl_global_cleanup();
@@ -336,6 +347,9 @@ void Request::RequestImpl::set_connect_timeout(std::int64_t seconds) {
 Response Request::RequestImpl::get(
     const std::string &url, const std::map<std::string, std::string> &params,
     const std::map<std::string, std::string> &header) {
+  set_cookies();
+  check_curl_correct(curl_easy_setopt(http_handle_, CURLOPT_HTTPGET, 1L));
+
   AddHeader add_header(http_handle_, header);
 
   auto complete_url = splicing_url(url, params);
@@ -366,12 +380,40 @@ Response Request::RequestImpl::post(
     const std::string &url, const std::map<std::string, std::string> &data,
     const std::map<std::string, std::string> &file,
     const std::map<std::string, std::string> &header) {
+  set_cookies();
+  check_curl_correct(curl_easy_setopt(http_handle_, CURLOPT_HTTPPOST, 1L));
+
   AddForm add_form(http_handle_, data, file);
   AddHeader add_header(http_handle_, header);
-
   check_curl_correct(curl_easy_setopt(http_handle_, CURLOPT_URL, url.c_str()));
 
+  return do_post();
+}
+
+Response Request::RequestImpl::post(
+    const std::string &url, const std::string &data,
+    const std::map<std::string, std::string> &header) {
+  set_cookies();
+  check_curl_correct(curl_easy_setopt(http_handle_, CURLOPT_HTTPPOST, 1L));
+
+  AddHeader add_header(http_handle_, header);
+  check_curl_correct(curl_easy_setopt(http_handle_, CURLOPT_URL, url.c_str()));
+  check_curl_correct(
+      curl_easy_setopt(http_handle_, CURLOPT_POSTFIELDS, data.c_str()));
+
+  return do_post();
+}
+
+void Request::RequestImpl::set_cookies() {
+  if (std::filesystem::exists(RequestImpl::cookies_path)) {
+    check_curl_correct(curl_easy_setopt(http_handle_, CURLOPT_COOKIEFILE,
+                                        RequestImpl::cookies_path.data()));
+  }
+}
+
+Response Request::RequestImpl::do_post() {
   Response response;
+
   check_curl_correct(
       curl_easy_setopt(http_handle_, CURLOPT_WRITEDATA, &response.text_));
   check_curl_correct(
@@ -445,6 +487,11 @@ Response Request::post(const std::string &url,
                        const std::map<std::string, std::string> &file,
                        const std::map<std::string, std::string> &header) {
   return impl_->post(url, data, file, header);
+}
+
+Response Request::post(const std::string &url, const std::string &data,
+                       const std::map<std::string, std::string> &header) {
+  return impl_->post(url, data, header);
 }
 
 const std::string &Headers::at(const std::string &key) const {
