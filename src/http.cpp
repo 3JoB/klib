@@ -171,6 +171,7 @@ class Request::RequestImpl {
   void set_user_agent(const std::string &user_agent);
   void set_browser_user_agent();
   void set_curl_user_agent();
+  void set_timeout(std::int64_t seconds);
 
   Response get(const std::string &url,
                const std::map<std::string, std::string> &params,
@@ -268,6 +269,10 @@ void Request::RequestImpl::set_curl_user_agent() {
   set_user_agent("curl/7.78.0");
 }
 
+void Request::RequestImpl::set_timeout(std::int64_t seconds) {
+  check_curl_correct(curl_easy_setopt(http_handle_, CURLOPT_TIMEOUT, seconds));
+}
+
 Response Request::RequestImpl::get(
     const std::string &url, const std::map<std::string, std::string> &params,
     const std::map<std::string, std::string> &header) {
@@ -361,6 +366,8 @@ void Request::set_user_agent(const std::string &user_agent) {
 void Request::set_browser_user_agent() { impl_->set_browser_user_agent(); }
 
 void Request::set_curl_user_agent() { impl_->set_curl_user_agent(); }
+
+void Request::set_timeout(std::int64_t seconds) { impl_->set_timeout(seconds); }
 
 Response Request::get(const std::string &url,
                       const std::map<std::string, std::string> &params,

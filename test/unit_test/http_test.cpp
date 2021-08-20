@@ -9,6 +9,7 @@ TEST_CASE("download html", "[http]") {
   klib::Request request;
   request.verbose(true);
   request.set_browser_user_agent();
+  request.set_timeout(10);
 
 #ifdef KLIB_TEST_USE_PROXY
   request.set_proxy("socks5://127.0.0.1:1080");
@@ -55,4 +56,16 @@ TEST_CASE("download file", "[http]") {
           "2f7f0c4279edb7963fde41b08244edece4bbc8a6d6cdaa93344b174feaa3");
 
   std::filesystem::remove("8.0.1.zip");
+}
+
+TEST_CASE("post", "[http]") {
+  klib::Request request;
+  request.verbose(true);
+#ifdef KLIB_TEST_USE_PROXY
+  request.set_proxy("socks5://127.0.0.1:1080");
+#endif
+
+  auto response = request.post("", {});
+
+  REQUIRE(response.status_code() == klib::Response::StatusCode::Ok);
 }

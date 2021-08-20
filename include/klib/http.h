@@ -87,6 +87,12 @@ class Request {
   void set_curl_user_agent();
 
   /**
+   * @brief Set up timeout
+   * @param seconds: Time in seconds
+   */
+  void set_timeout(std::int64_t seconds);
+
+  /**
    * @brief Sends a GET request
    * @param url: Requested url
    * @param params: URL parameters
