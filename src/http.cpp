@@ -2,9 +2,11 @@
 
 #include <cassert>
 #include <cstddef>
+#include <filesystem>
 #include <memory>
 
 #include <curl/curl.h>
+#include <boost/algorithm/string.hpp>
 
 #include "klib/error.h"
 #include "klib/exception.h"
@@ -73,7 +75,8 @@ class AddHeader {
 
 class AddForm {
  public:
-  explicit AddForm(CURL *curl, const std::map<std::string, std::string> &data)
+  explicit AddForm(CURL *curl, const std::map<std::string, std::string> &data,
+                   const std::map<std::string, std::string> &file)
       : curl_(curl) {
     assert(curl_);
 
@@ -90,6 +93,18 @@ class AddForm {
         auto field = curl_mime_addpart(form_);
         curl_mime_name(field, key.c_str());
         curl_mime_data(field, value.c_str(), CURL_ZERO_TERMINATED);
+      }
+
+      for (const auto &[file_name, path] : file) {
+        assert(!std::empty(file_name) && !std::empty(path));
+
+        if (!std::filesystem::is_regular_file(path)) {
+          throw RuntimeError("file: {} not exist", path);
+        }
+
+        auto field = curl_mime_addpart(form_);
+        curl_mime_name(field, file_name.c_str());
+        curl_mime_filedata(field, path.c_str());
       }
 
       check_curl_correct(curl_easy_setopt(curl_, CURLOPT_MIMEPOST, form_));
@@ -172,12 +187,14 @@ class Request::RequestImpl {
   void set_browser_user_agent();
   void set_curl_user_agent();
   void set_timeout(std::int64_t seconds);
+  void set_connect_timeout(std::int64_t seconds);
 
   Response get(const std::string &url,
                const std::map<std::string, std::string> &params,
                const std::map<std::string, std::string> &header);
   Response post(const std::string &url,
                 const std::map<std::string, std::string> &data,
+                const std::map<std::string, std::string> &file,
                 const std::map<std::string, std::string> &header);
 
  private:
@@ -273,6 +290,11 @@ void Request::RequestImpl::set_timeout(std::int64_t seconds) {
   check_curl_correct(curl_easy_setopt(http_handle_, CURLOPT_TIMEOUT, seconds));
 }
 
+void Request::RequestImpl::set_connect_timeout(std::int64_t seconds) {
+  check_curl_correct(
+      curl_easy_setopt(http_handle_, CURLOPT_CONNECTTIMEOUT, seconds));
+}
+
 Response Request::RequestImpl::get(
     const std::string &url, const std::map<std::string, std::string> &params,
     const std::map<std::string, std::string> &header) {
@@ -304,8 +326,9 @@ Response Request::RequestImpl::get(
 
 Response Request::RequestImpl::post(
     const std::string &url, const std::map<std::string, std::string> &data,
+    const std::map<std::string, std::string> &file,
     const std::map<std::string, std::string> &header) {
-  AddForm add_form(http_handle_, data);
+  AddForm add_form(http_handle_, data, file);
   AddHeader add_header(http_handle_, header);
 
   check_curl_correct(curl_easy_setopt(http_handle_, CURLOPT_URL, url.c_str()));
@@ -369,6 +392,10 @@ void Request::set_curl_user_agent() { impl_->set_curl_user_agent(); }
 
 void Request::set_timeout(std::int64_t seconds) { impl_->set_timeout(seconds); }
 
+void Request::set_connect_timeout(std::int64_t seconds) {
+  impl_->set_connect_timeout(seconds);
+}
+
 Response Request::get(const std::string &url,
                       const std::map<std::string, std::string> &params,
                       const std::map<std::string, std::string> &header) {
@@ -377,13 +404,48 @@ Response Request::get(const std::string &url,
 
 Response Request::post(const std::string &url,
                        const std::map<std::string, std::string> &data,
+                       const std::map<std::string, std::string> &file,
                        const std::map<std::string, std::string> &header) {
-  return impl_->post(url, data, header);
+  return impl_->post(url, data, file, header);
+}
+
+const std::string &Header::at(const std::string &key) const {
+  auto key_lower = boost::to_lower_copy(key);
+  if (!map_.contains(key_lower)) {
+    throw RuntimeError("no key");
+  }
+
+  return map_.at(key_lower);
+}
+
+void Header::add(const std::string &key, const std::string &value) {
+  assert(!map_.contains(key));
+  map_.emplace(boost::to_lower_copy(key), boost::to_lower_copy(value));
 }
 
 std::int64_t Response::status_code() const { return status_code_; }
 
 std::string Response::header() const { return header_; }
+
+Header Response::header_map() const {
+  std::vector<std::string> lines;
+  boost::split(lines, header_, boost::is_any_of("\r\n"),
+               boost::token_compress_on);
+  // e.g. HTTP/1.1 200 OK
+  lines.erase(std::begin(lines));
+  if (std::empty(lines.back())) {
+    lines.pop_back();
+  }
+
+  Header result;
+
+  for (const auto &line : lines) {
+    auto index = line.find(':');
+    result.add(line.substr(0, index), line.substr(index + 2));
+  }
+
+  return result;
+}
 
 std::string Response::text() const { return text_; }
 

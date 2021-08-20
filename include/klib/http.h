@@ -93,6 +93,12 @@ class Request {
   void set_timeout(std::int64_t seconds);
 
   /**
+   * @brief Set up connect timeout
+   * @param seconds: Time in seconds
+   */
+  void set_connect_timeout(std::int64_t seconds);
+
+  /**
    * @brief Sends a GET request
    * @param url: Requested url
    * @param params: URL parameters
@@ -110,11 +116,26 @@ class Request {
    */
   Response post(const std::string &url,
                 const std::map<std::string, std::string> &data,
+                const std::map<std::string, std::string> &file = {},
                 const std::map<std::string, std::string> &header = {});
 
  private:
   class RequestImpl;
   std::experimental::propagate_const<std::unique_ptr<RequestImpl>> impl_;
+};
+
+class Response;
+
+class Header {
+  friend class Response;
+
+ public:
+  [[nodiscard]] const std::string &at(const std::string &key) const;
+
+ private:
+  void add(const std::string &key, const std::string &value);
+
+  std::map<std::string, std::string> map_;
 };
 
 /**
@@ -141,6 +162,8 @@ class Response {
    * @return Server response
    */
   [[nodiscard]] std::string header() const;
+
+  [[nodiscard]] Header header_map() const;
 
   /**
    * @brief Get response content
