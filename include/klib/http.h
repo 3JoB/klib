@@ -93,7 +93,18 @@ class Request {
    * @return Response content
    */
   Response get(const std::string &url,
-               const std::map<std::string, std::string> &params = {});
+               const std::map<std::string, std::string> &params = {},
+               const std::map<std::string, std::string> &header = {});
+
+  /**
+   * @brief Sends a POST request
+   * @param url: Requested url
+   * @param data: Data
+   * @return Response content
+   */
+  Response post(const std::string &url,
+                const std::map<std::string, std::string> &data,
+                const std::map<std::string, std::string> &header = {});
 
  private:
   class RequestImpl;

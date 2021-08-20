@@ -26,6 +26,7 @@
 #include <openssl/err.h>
 #include <openssl/evp.h>
 #include <openssl/sha.h>
+#include <boost/algorithm/string.hpp>
 
 #include "klib/error.h"
 #include "klib/exception.h"
@@ -149,6 +150,31 @@ std::string read_file(const char *path, bool binary_mode) {
   ifs.seekg(0, std::ifstream::beg).read(data.data(), size);
 
   return data;
+}
+
+std::vector<std::string> read_file_line(const std::string &path) {
+  return read_file_line(path.c_str());
+}
+
+std::vector<std::string> read_file_line(std::string_view path) {
+  return read_file_line(path.data());
+}
+
+std::vector<std::string> read_file_line(const char *path) {
+  auto str = read_file(path, false);
+
+  std::vector<std::string> result;
+  result.reserve(128);
+
+  boost::split(result, str, boost::is_any_of("\n"), boost::token_compress_on);
+  for (auto &line : result) {
+    boost::trim(line);
+  }
+
+  std::erase_if(result,
+                [](const std::string &line) { return std::empty(line); });
+
+  return result;
 }
 
 void write_file(const std::string &path, bool binary_mode,

@@ -77,6 +77,17 @@ std::string read_file(std::string_view path, bool binary_mode);
 std::string read_file(const char *path, bool binary_mode);
 
 /**
+ * @brief Read a file at a time and store it in a string
+ * @param path: File path
+ * @return A string that holds the contents of the file
+ */
+std::vector<std::string> read_file_line(const std::string &path);
+
+std::vector<std::string> read_file_line(std::string_view path);
+
+std::vector<std::string> read_file_line(const char *path);
+
+/**
  * @brief Write string to file
  * @param path: File path
  * @param binary_mode: Whether to open in binary mode

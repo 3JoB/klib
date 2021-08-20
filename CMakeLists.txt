@@ -66,6 +66,7 @@ find_package(PkgConfig REQUIRED)
 pkg_check_modules(tidy REQUIRED IMPORTED_TARGET tidy)
 
 find_package(fmt REQUIRED)
+find_package(Boost REQUIRED)
 
 set(THREADS_PREFER_PTHREAD_FLAG TRUE)
 find_package(Threads REQUIRED)

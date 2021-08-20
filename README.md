@@ -28,6 +28,7 @@ C++ Library
 - [curl](https://github.com/curl/curl)
 - [tidy-html5](https://github.com/htacg/tidy-html5)
 - [fmt](https://github.com/fmtlib/fmt)
+- [boost](https://www.boost.org/)
 
 ## Build
 

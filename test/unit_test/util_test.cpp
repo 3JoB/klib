@@ -5,6 +5,7 @@
 #include <filesystem>
 #include <fstream>
 #include <string>
+#include <string_view>
 #include <vector>
 
 #include <catch2/catch.hpp>
@@ -34,6 +35,20 @@ TEST_CASE("read_file & write_file", "[util]") {
   REQUIRE(std::filesystem::file_size("write-file.zip") == 644596);
 
   std::filesystem::remove("write-file.zip");
+}
+
+TEST_CASE("read_file_line", "[util]") {
+  std::string_view content = R"(aaa
+bbb
+
+ccc
+
+ dd)";
+  REQUIRE_NOTHROW(klib::write_file("write-file.txt", true, content));
+  REQUIRE(klib::read_file_line("write-file.txt") ==
+          std::vector<std::string>{"aaa", "bbb", "ccc", "dd"});
+
+  std::filesystem::remove("write-file.txt");
 }
 
 TEST_CASE("utf8_to_utf16", "[util]") {
