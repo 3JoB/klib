@@ -5,6 +5,7 @@ var classklib_1_1Request =
     [ "allow_redirects", "classklib_1_1Request.html#a3bd57350cde297d6e01d32c6354c6e78", null ],
     [ "get", "classklib_1_1Request.html#ad21903710f7f2db3d20f8565d644f227", null ],
     [ "post", "classklib_1_1Request.html#a063a16b045a85e261fe2fdf9946b61bd", null ],
+    [ "post", "classklib_1_1Request.html#a977eb6a746aa035d7d6bb7ef2cbe4a8c", null ],
     [ "set_browser_user_agent", "classklib_1_1Request.html#afa583b9071002118ad316a9690003256", null ],
     [ "set_connect_timeout", "classklib_1_1Request.html#aa2441e7ed0be65868c280c0d3115e11f", null ],
     [ "set_curl_user_agent", "classklib_1_1Request.html#a4aba7a126459a31beb9ba92d436949c8", null ],
