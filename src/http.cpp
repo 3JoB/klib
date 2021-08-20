@@ -3,7 +3,6 @@
 #include <cassert>
 #include <cstddef>
 #include <filesystem>
-#include <memory>
 
 #include <curl/curl.h>
 #include <boost/algorithm/string.hpp>
@@ -34,16 +33,16 @@ void check_curl_correct(CURLMcode code) {
 class AddHeader {
  public:
   explicit AddHeader(CURL *curl,
-                     const std::map<std::string, std::string> &header)
+                     const std::map<std::string, std::string> &headers)
       : curl_(curl) {
     assert(curl_);
 
-    if (std::empty(header)) {
+    if (std::empty(headers)) {
       return;
     }
 
     try {
-      for (const auto &[key, value] : header) {
+      for (const auto &[key, value] : headers) {
         assert(!std::empty(key) && !std::empty(value));
 
         std::string str = key;
@@ -279,7 +278,7 @@ void Request::RequestImpl::set_browser_user_agent() {
   // navigator.userAgent
   set_user_agent(
       "Mozilla/5.0 (X11; Linux x86_64) AppleWebKit/537.36 (KHTML, like Gecko) "
-      "Chrome/93.0.4577.18 Safari/537.36 Edg/93.0.961.11");
+      "Chrome/93.0.4577.25 Safari/537.36 Edg/93.0.961.18");
 }
 
 void Request::RequestImpl::set_curl_user_agent() {
@@ -308,7 +307,7 @@ Response Request::RequestImpl::get(
   check_curl_correct(
       curl_easy_setopt(http_handle_, CURLOPT_WRITEDATA, &response.text_));
   check_curl_correct(
-      curl_easy_setopt(http_handle_, CURLOPT_HEADERDATA, &response.header_));
+      curl_easy_setopt(http_handle_, CURLOPT_HEADERDATA, &response.headers_));
 
   Multi multi_handle(http_handle_);
   std::int32_t still_running = 1;
@@ -337,7 +336,7 @@ Response Request::RequestImpl::post(
   check_curl_correct(
       curl_easy_setopt(http_handle_, CURLOPT_WRITEDATA, &response.text_));
   check_curl_correct(
-      curl_easy_setopt(http_handle_, CURLOPT_HEADERDATA, &response.header_));
+      curl_easy_setopt(http_handle_, CURLOPT_HEADERDATA, &response.headers_));
 
   Multi multi_handle(http_handle_);
   std::int32_t still_running = 0;
@@ -409,7 +408,7 @@ Response Request::post(const std::string &url,
   return impl_->post(url, data, file, header);
 }
 
-const std::string &Header::at(const std::string &key) const {
+const std::string &Headers::at(const std::string &key) const {
   auto key_lower = boost::to_lower_copy(key);
   if (!map_.contains(key_lower)) {
     throw RuntimeError("no key");
@@ -418,18 +417,18 @@ const std::string &Header::at(const std::string &key) const {
   return map_.at(key_lower);
 }
 
-void Header::add(const std::string &key, const std::string &value) {
+void Headers::add(const std::string &key, const std::string &value) {
   assert(!map_.contains(key));
   map_.emplace(boost::to_lower_copy(key), boost::to_lower_copy(value));
 }
 
 std::int64_t Response::status_code() const { return status_code_; }
 
-std::string Response::header() const { return header_; }
+std::string Response::headers() const { return headers_; }
 
-Header Response::header_map() const {
+Headers Response::headers_map() const {
   std::vector<std::string> lines;
-  boost::split(lines, header_, boost::is_any_of("\r\n"),
+  boost::split(lines, headers_, boost::is_any_of("\r\n"),
                boost::token_compress_on);
   // e.g. HTTP/1.1 200 OK
   lines.erase(std::begin(lines));
@@ -437,7 +436,7 @@ Header Response::header_map() const {
     lines.pop_back();
   }
 
-  Header result;
+  Headers result;
 
   for (const auto &line : lines) {
     auto index = line.find(':');

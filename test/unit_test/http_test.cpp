@@ -57,7 +57,7 @@ TEST_CASE("GET", "[http]") {
   const std::string key1 = "a";
   const std::string value1 = "111";
   const std::string key2 = "b";
-  const std::string value2 = "书客";
+  const std::string value2 = "你好世界";
 
   auto response =
       request.get("http://httpbin.org/get", {{key1, value1}, {key2, value2}});
@@ -113,6 +113,6 @@ TEST_CASE("POST", "[http]") {
   REQUIRE(files.at(file_a).as_string() == klib::read_file(file_a, false));
   REQUIRE(files.at(file_b).as_string() == klib::read_file(file_b, false));
 
-  std::filesystem::remove(file_a);
-  std::filesystem::remove(file_b);
+  REQUIRE(std::filesystem::remove(file_a));
+  REQUIRE(std::filesystem::remove(file_b));
 }

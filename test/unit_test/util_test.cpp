@@ -13,7 +13,7 @@
 #include "klib/util.h"
 
 TEST_CASE("ChangeWorkingDir", "[util]") {
-  REQUIRE(!std::filesystem::exists("work-dir"));
+  REQUIRE_FALSE(std::filesystem::exists("work-dir"));
 
   {
     klib::ChangeWorkingDir dir("work-dir");
@@ -34,7 +34,7 @@ TEST_CASE("read_file & write_file", "[util]") {
   REQUIRE(std::filesystem::exists("write-file.zip"));
   REQUIRE(std::filesystem::file_size("write-file.zip") == 644596);
 
-  std::filesystem::remove("write-file.zip");
+  REQUIRE(std::filesystem::remove("write-file.zip"));
 }
 
 TEST_CASE("read_file_line", "[util]") {
@@ -48,7 +48,7 @@ ccc
   REQUIRE(klib::read_file_line("write-file.txt") ==
           std::vector<std::string>{"aaa", "bbb", "ccc", "dd"});
 
-  std::filesystem::remove("write-file.txt");
+  REQUIRE(std::filesystem::remove("write-file.txt"));
 }
 
 TEST_CASE("utf8_to_utf16", "[util]") {

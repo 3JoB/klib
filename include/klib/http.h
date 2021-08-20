@@ -111,7 +111,8 @@ class Request {
   /**
    * @brief Sends a POST request
    * @param url: Requested url
-   * @param data: Data
+   * @param data: Data name and value
+   * @param file: File name and content
    * @return Response content
    */
   Response post(const std::string &url,
@@ -126,10 +127,18 @@ class Request {
 
 class Response;
 
-class Header {
+/**
+ * @brief Response headers
+ */
+class Headers {
   friend class Response;
 
  public:
+  /**
+   * @brief Get the value specified by key(not case sensitive)
+   * @param key: Key
+   * @return The value
+   */
   [[nodiscard]] const std::string &at(const std::string &key) const;
 
  private:
@@ -161,9 +170,13 @@ class Response {
    * @brief Get server response
    * @return Server response
    */
-  [[nodiscard]] std::string header() const;
+  [[nodiscard]] std::string headers() const;
 
-  [[nodiscard]] Header header_map() const;
+  /**
+   * @brief Get server response
+   * @return Server response
+   */
+  [[nodiscard]] Headers headers_map() const;
 
   /**
    * @brief Get response content
@@ -180,7 +193,7 @@ class Response {
 
  private:
   std::int64_t status_code_ = StatusCode::None;
-  std::string header_;
+  std::string headers_;
   std::string text_;
 };
 
