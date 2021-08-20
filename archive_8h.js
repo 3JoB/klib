@@ -6,5 +6,5 @@ var archive_8h =
     ] ],
     [ "compress", "archive_8h.html#a60d8d0cfa4099f1cf8eb6f37e8e84e05", null ],
     [ "compress", "archive_8h.html#a0ff19dfa8c910290eff014ba09f6c4bc", null ],
-    [ "decompress", "archive_8h.html#a592124b0a2f1df676326dda164a75c86", null ]
+    [ "decompress", "archive_8h.html#a3a3e6cf0f6338ff9a48cb54ccc029eb7", null ]
 ];
