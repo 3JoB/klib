@@ -182,6 +182,13 @@ std::string base64_encode(const std::string &str);
 std::string base64_decode(const std::string &str);
 
 /**
+ * @brief MD5
+ * @param str: Data to be encoded
+ * @return MD5 result
+ */
+std::string md5(const std::string &str);
+
+/**
  * @brief Calculate SHA-256
  * @param str: Data to be encrypted
  * @return SHA-256 result

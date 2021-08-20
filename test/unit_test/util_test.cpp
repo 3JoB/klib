@@ -119,6 +119,13 @@ TEST_CASE("base64_decode", "[util]") {
         "How to resolve the \"EVP_DecryptFInal_ex: bad decrypt\"");
 }
 
+TEST_CASE("md5", "[util]") {
+  REQUIRE(klib::md5("MD5 online hash function") ==
+          "71f6cb39c6d09c6fae36b69ee0b2b9cd");
+  REQUIRE(klib::md5("SG93IHRvIHJlc29sdmUgdGhlICJFVlBfRGVjcnlwdEZJbmFsX2") ==
+          "ee60cfe37f9a60b9ceba008be6f1c034");
+}
+
 TEST_CASE("sha_256_file", "[util]") {
   REQUIRE(std::filesystem::exists("zlib-v1.2.11.tar.gz"));
 

@@ -25,6 +25,7 @@
 #include <openssl/bio.h>
 #include <openssl/err.h>
 #include <openssl/evp.h>
+#include <openssl/md5.h>
 #include <openssl/sha.h>
 #include <boost/algorithm/string.hpp>
 
@@ -329,6 +330,20 @@ std::string base64_decode(const std::string &str) {
   decoded.resize(len);
 
   return decoded;
+}
+
+std::string md5(const std::string &str) {
+  std::uint32_t digest_length = MD5_DIGEST_LENGTH;
+  auto digest = static_cast<std::uint8_t *>(OPENSSL_malloc(digest_length));
+
+  MD5(reinterpret_cast<const unsigned char *>(std::data(str)), std::size(str),
+      digest);
+
+  std::vector<std::uint8_t> output(digest, digest + digest_length);
+
+  OPENSSL_free(digest);
+
+  return bytes_to_hex_string(output);
 }
 
 std::string sha_256(const std::string &str) {
