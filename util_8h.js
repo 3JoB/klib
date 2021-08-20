@@ -13,6 +13,7 @@ var util_8h =
     [ "is_ascii", "util_8h.html#a6e533084977cbc216fac214d8aad20a3", null ],
     [ "is_chinese", "util_8h.html#a2b8a6386338a9fb7818772b9db40ccf4", null ],
     [ "is_chinese", "util_8h.html#a3c2ec9974b36028257f8d8cbeb4ab65c", null ],
+    [ "md5", "util_8h.html#a205b20d5eadbb7e7b2e843d61d00719e", null ],
     [ "read_file", "util_8h.html#aff1e161e1457b1a895244581b50b9abd", null ],
     [ "read_file_line", "util_8h.html#aeb12aa83527e021b6d976c4c6008791a", null ],
     [ "same_folder", "util_8h.html#a634a5cccf588c12cb1d7e1f4253775c6", null ],
