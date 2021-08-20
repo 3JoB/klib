@@ -28,6 +28,8 @@
 #include <openssl/md5.h>
 #include <openssl/sha.h>
 #include <boost/algorithm/string.hpp>
+#include <boost/uuid/uuid_generators.hpp>
+#include <boost/uuid/uuid_io.hpp>
 
 #include "klib/error.h"
 #include "klib/exception.h"
@@ -525,6 +527,11 @@ void wait_for_child_process() {
       throw RuntimeError("Waitpid error: {}", status);
     }
   }
+}
+
+std::string uuid() {
+  auto uuid = boost::uuids::random_generator()();
+  return boost::uuids::to_string(uuid);
 }
 
 }  // namespace klib

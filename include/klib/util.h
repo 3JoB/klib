@@ -284,4 +284,9 @@ void execute_command(const char *command);
  */
 void wait_for_child_process();
 
+/**
+ * @brief Generate uuid
+ */
+std::string uuid();
+
 }  // namespace klib
