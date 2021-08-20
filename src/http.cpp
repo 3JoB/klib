@@ -239,7 +239,7 @@ class Request::RequestImpl {
                 const std::map<std::string, std::string> &header);
 
  private:
-  constexpr static std::string_view cookies_path = ".cookies.txt";
+  constexpr static std::string_view cookies_path = "/tmp/cookies.txt";
   void set_cookies();
 
   Response do_post();
