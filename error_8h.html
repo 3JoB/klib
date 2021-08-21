@@ -5,7 +5,7 @@
 <meta http-equiv="X-UA-Compatible" content="IE=11"/>
 <meta name="generator" content="Doxygen 1.9.2"/>
 <meta name="viewport" content="width=device-width, initial-scale=1"/>
-<title>klib: /home/runner/work/klib/klib/include/klib/html.h File Reference</title>
+<title>klib: /home/runner/work/klib/klib/include/klib/error.h File Reference</title>
 <link href="tabs.css" rel="stylesheet" type="text/css"/>
 <script type="text/javascript" src="jquery.js"></script>
 <script type="text/javascript" src="dynsections.js"></script>
@@ -72,7 +72,7 @@ var searchBox = new SearchBox("searchBox", "search",'Search','.html');
 </div>
 <script type="text/javascript">
 /* @license magnet:?xt=urn:btih:d3d9a9a6595521f9666a5e94cc830dab83b65699&amp;dn=expat.txt MIT */
-$(document).ready(function(){initNavTree('html_8h.html',''); initResizable(); });
+$(document).ready(function(){initNavTree('error_8h.html',''); initResizable(); });
 /* @license-end */
 </script>
 <div id="doc-content">
@@ -93,49 +93,109 @@ $(document).ready(function(){initNavTree('html_8h.html',''); initResizable(); })
 <div class="header">
   <div class="summary">
 <a href="#func-members">Functions</a>  </div>
-  <div class="headertitle"><div class="title">html.h File Reference</div></div>
+  <div class="headertitle"><div class="title">error.h File Reference</div></div>
 </div><!--header-->
 <div class="contents">
 
-<p>Contains HTML Tidy module.  
+<p>Contains report error and warning modules.  
 <a href="#details">More...</a></p>
-<div class="textblock"><code>#include &lt;string&gt;</code><br />
+<div class="textblock"><code>#include &lt;cstdlib&gt;</code><br />
+<code>#include &lt;string_view&gt;</code><br />
+<code>#include &lt;utility&gt;</code><br />
+<code>#include &lt;fmt/color.h&gt;</code><br />
+<code>#include &lt;fmt/core.h&gt;</code><br />
 </div>
-<p><a href="html_8h_source.html">Go to the source code of this file.</a></p>
+<p><a href="error_8h_source.html">Go to the source code of this file.</a></p>
 <table class="memberdecls">
 <tr class="heading"><td colspan="2"><h2 class="groupheader"><a id="func-members" name="func-members"></a>
 Functions</h2></td></tr>
-<tr class="memitem:aa66388003e03ea8397cdb0677f454a4c"><td class="memItemLeft" align="right" valign="top">std::string&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="html_8h.html#aa66388003e03ea8397cdb0677f454a4c">klib::html_tidy</a> (const std::string &amp;html)</td></tr>
-<tr class="memdesc:aa66388003e03ea8397cdb0677f454a4c"><td class="mdescLeft">&#160;</td><td class="mdescRight">Execute HTML Tidy.  <a href="html_8h.html#aa66388003e03ea8397cdb0677f454a4c">More...</a><br /></td></tr>
-<tr class="separator:aa66388003e03ea8397cdb0677f454a4c"><td class="memSeparator" colspan="2">&#160;</td></tr>
+<tr class="memitem:a814c67e8ab648504e8d4e9c627aafdb7"><td class="memTemplParams" colspan="2">template&lt;typename... Args&gt; </td></tr>
+<tr class="memitem:a814c67e8ab648504e8d4e9c627aafdb7"><td class="memTemplItemLeft" align="right" valign="top">void&#160;</td><td class="memTemplItemRight" valign="bottom"><a class="el" href="error_8h.html#a814c67e8ab648504e8d4e9c627aafdb7">klib::warn</a> (std::string_view fmt, Args &amp;&amp;...args)</td></tr>
+<tr class="memdesc:a814c67e8ab648504e8d4e9c627aafdb7"><td class="mdescLeft">&#160;</td><td class="mdescRight">Report error.  <a href="error_8h.html#a814c67e8ab648504e8d4e9c627aafdb7">More...</a><br /></td></tr>
+<tr class="separator:a814c67e8ab648504e8d4e9c627aafdb7"><td class="memSeparator" colspan="2">&#160;</td></tr>
+<tr class="memitem:a34e63277994b403c9db07ea6f5b807d3"><td class="memTemplParams" colspan="2">template&lt;typename... Args&gt; </td></tr>
+<tr class="memitem:a34e63277994b403c9db07ea6f5b807d3"><td class="memTemplItemLeft" align="right" valign="top">void&#160;</td><td class="memTemplItemRight" valign="bottom"><a class="el" href="error_8h.html#a34e63277994b403c9db07ea6f5b807d3">klib::error</a> (std::string_view fmt, Args &amp;&amp;...args)</td></tr>
+<tr class="memdesc:a34e63277994b403c9db07ea6f5b807d3"><td class="mdescLeft">&#160;</td><td class="mdescRight">Report warning.  <a href="error_8h.html#a34e63277994b403c9db07ea6f5b807d3">More...</a><br /></td></tr>
+<tr class="separator:a34e63277994b403c9db07ea6f5b807d3"><td class="memSeparator" colspan="2">&#160;</td></tr>
 </table>
 <a name="details" id="details"></a><h2 class="groupheader">Detailed Description</h2>
-<div class="textblock"><p >Contains HTML Tidy module. </p>
+<div class="textblock"><p >Contains report error and warning modules. </p>
 </div><h2 class="groupheader">Function Documentation</h2>
-<a id="aa66388003e03ea8397cdb0677f454a4c" name="aa66388003e03ea8397cdb0677f454a4c"></a>
-<h2 class="memtitle"><span class="permalink"><a href="#aa66388003e03ea8397cdb0677f454a4c">&#9670;&nbsp;</a></span>html_tidy()</h2>
+<a id="a34e63277994b403c9db07ea6f5b807d3" name="a34e63277994b403c9db07ea6f5b807d3"></a>
+<h2 class="memtitle"><span class="permalink"><a href="#a34e63277994b403c9db07ea6f5b807d3">&#9670;&nbsp;</a></span>error()</h2>
 
 <div class="memitem">
 <div class="memproto">
+<div class="memtemplate">
+template&lt;typename... Args&gt; </div>
       <table class="memname">
         <tr>
-          <td class="memname">std::string klib::html_tidy </td>
+          <td class="memname">void klib::error </td>
           <td>(</td>
-          <td class="paramtype">const std::string &amp;&#160;</td>
-          <td class="paramname"><em>html</em></td><td>)</td>
+          <td class="paramtype">std::string_view&#160;</td>
+          <td class="paramname"><em>fmt</em>, </td>
+        </tr>
+        <tr>
+          <td class="paramkey"></td>
           <td></td>
+          <td class="paramtype">Args &amp;&amp;...&#160;</td>
+          <td class="paramname"><em>args</em>&#160;</td>
+        </tr>
+        <tr>
+          <td></td>
+          <td>)</td>
+          <td></td><td></td>
         </tr>
       </table>
 </div><div class="memdoc">
 
-<p>Execute HTML Tidy. </p>
+<p>Report warning. </p>
 <dl class="params"><dt>Parameters</dt><dd>
   <table class="params">
-    <tr><td class="paramname">html</td><td>The string containing the HTML document </td></tr>
+    <tr><td class="paramname">fmt</td><td>Format string </td></tr>
+    <tr><td class="paramname">args</td><td>Parameter </td></tr>
   </table>
   </dd>
 </dl>
-<dl class="section return"><dt>Returns</dt><dd>Tidy HTML document </dd></dl>
+
+</div>
+</div>
+<a id="a814c67e8ab648504e8d4e9c627aafdb7" name="a814c67e8ab648504e8d4e9c627aafdb7"></a>
+<h2 class="memtitle"><span class="permalink"><a href="#a814c67e8ab648504e8d4e9c627aafdb7">&#9670;&nbsp;</a></span>warn()</h2>
+
+<div class="memitem">
+<div class="memproto">
+<div class="memtemplate">
+template&lt;typename... Args&gt; </div>
+      <table class="memname">
+        <tr>
+          <td class="memname">void klib::warn </td>
+          <td>(</td>
+          <td class="paramtype">std::string_view&#160;</td>
+          <td class="paramname"><em>fmt</em>, </td>
+        </tr>
+        <tr>
+          <td class="paramkey"></td>
+          <td></td>
+          <td class="paramtype">Args &amp;&amp;...&#160;</td>
+          <td class="paramname"><em>args</em>&#160;</td>
+        </tr>
+        <tr>
+          <td></td>
+          <td>)</td>
+          <td></td><td></td>
+        </tr>
+      </table>
+</div><div class="memdoc">
+
+<p>Report error. </p>
+<dl class="params"><dt>Parameters</dt><dd>
+  <table class="params">
+    <tr><td class="paramname">fmt</td><td>Format string </td></tr>
+    <tr><td class="paramname">args</td><td>Parameter </td></tr>
+  </table>
+  </dd>
+</dl>
 
 </div>
 </div>
@@ -144,7 +204,7 @@ Functions</h2></td></tr>
 <!-- start footer part -->
 <div id="nav-path" class="navpath"><!-- id is needed for treeview function! -->
   <ul>
-    <li class="navelem"><a class="el" href="dir_d44c64559bbebec7f509842c48db8b23.html">include</a></li><li class="navelem"><a class="el" href="dir_c4deac73006ad3d1787e421f2d774b3c.html">klib</a></li><li class="navelem"><a class="el" href="html_8h.html">html.h</a></li>
+    <li class="navelem"><a class="el" href="dir_d44c64559bbebec7f509842c48db8b23.html">include</a></li><li class="navelem"><a class="el" href="dir_c4deac73006ad3d1787e421f2d774b3c.html">klib</a></li><li class="navelem"><a class="el" href="error_8h.html">error.h</a></li>
     <li class="footer">Generated by <a href="https://www.doxygen.org/index.html"><img class="footer" src="doxygen.svg" width="104" height="31" alt="doxygen"/></a> 1.9.2 </li>
   </ul>
 </div>

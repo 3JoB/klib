@@ -1,7 +1,7 @@
 var dir_c4deac73006ad3d1787e421f2d774b3c =
 [
     [ "archive.h", "archive_8h.html", "archive_8h" ],
-    [ "error.h", "error_8h_source.html", null ],
+    [ "error.h", "error_8h.html", "error_8h" ],
     [ "exception.h", "exception_8h.html", [
       [ "klib::RuntimeError", "classklib_1_1RuntimeError.html", "classklib_1_1RuntimeError" ]
     ] ],

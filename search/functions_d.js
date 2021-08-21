@@ -15,5 +15,6 @@ var searchData=
   ['sha_5f256_12',['sha_256',['../util_8h.html#a622c5644c9948a904650e0fe4cc7b6bb',1,'klib']]],
   ['sha_5f256_5ffile_13',['sha_256_file',['../util_8h.html#a7aafac36754322a743e4eea7adf8fed7',1,'klib']]],
   ['sha_5f256_5fraw_14',['sha_256_raw',['../util_8h.html#a68ee09e389f643de69cc6a41f237b6e1',1,'klib']]],
-  ['status_5fcode_15',['status_code',['../classklib_1_1Response.html#aa839e6f6599e336147cbdacb0e99bddf',1,'klib::Response']]]
+  ['split_5fstr_15',['split_str',['../util_8h.html#ab8656c14dc5e6fe66b30a9ea9fde7001',1,'klib']]],
+  ['status_5fcode_16',['status_code',['../classklib_1_1Response.html#aa839e6f6599e336147cbdacb0e99bddf',1,'klib::Response']]]
 ];

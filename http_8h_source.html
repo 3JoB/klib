@@ -30,7 +30,7 @@
  <tbody>
  <tr style="height: 56px;">
   <td id="projectalign" style="padding-left: 0.5em;">
-   <div id="projectname">klib<span id="projectnumber">&#160;0.3.4</span>
+   <div id="projectname">klib<span id="projectnumber">&#160;0.3.5</span>
    </div>
   </td>
     <td>        <div id="MSearchBox" class="MSearchBoxInactive">
@@ -99,9 +99,9 @@ $(document).ready(function(){initNavTree('http_8h_source.html',''); initResizabl
 <div class="line"><a id="l00007" name="l00007"></a><span class="lineno">    7</span> </div>
 <div class="line"><a id="l00008" name="l00008"></a><span class="lineno">    8</span><span class="preprocessor">#include &lt;cstdint&gt;</span></div>
 <div class="line"><a id="l00009" name="l00009"></a><span class="lineno">    9</span><span class="preprocessor">#include &lt;experimental/propagate_const&gt;</span></div>
-<div class="line"><a id="l00010" name="l00010"></a><span class="lineno">   10</span><span class="preprocessor">#include &lt;map&gt;</span></div>
-<div class="line"><a id="l00011" name="l00011"></a><span class="lineno">   11</span><span class="preprocessor">#include &lt;memory&gt;</span></div>
-<div class="line"><a id="l00012" name="l00012"></a><span class="lineno">   12</span><span class="preprocessor">#include &lt;string&gt;</span></div>
+<div class="line"><a id="l00010" name="l00010"></a><span class="lineno">   10</span><span class="preprocessor">#include &lt;memory&gt;</span></div>
+<div class="line"><a id="l00011" name="l00011"></a><span class="lineno">   11</span><span class="preprocessor">#include &lt;string&gt;</span></div>
+<div class="line"><a id="l00012" name="l00012"></a><span class="lineno">   12</span><span class="preprocessor">#include &lt;unordered_map&gt;</span></div>
 <div class="line"><a id="l00013" name="l00013"></a><span class="lineno">   13</span> </div>
 <div class="line"><a id="l00014" name="l00014"></a><span class="lineno">   14</span><span class="keyword">namespace </span>klib {</div>
 <div class="line"><a id="l00015" name="l00015"></a><span class="lineno">   15</span> </div>
@@ -142,87 +142,89 @@ $(document).ready(function(){initNavTree('http_8h_source.html',''); initResizabl
 <div class="line"><a id="l00094" name="l00094"></a><span class="lineno">   94</span> </div>
 <div class="line"><a id="l00099" name="l00099"></a><span class="lineno"><a class="line" href="classklib_1_1Request.html#aa2441e7ed0be65868c280c0d3115e11f">   99</a></span>  <span class="keywordtype">void</span> <a class="code hl_function" href="classklib_1_1Request.html#aa2441e7ed0be65868c280c0d3115e11f">set_connect_timeout</a>(std::int64_t seconds);</div>
 <div class="line"><a id="l00100" name="l00100"></a><span class="lineno">  100</span> </div>
-<div class="line"><a id="l00107" name="l00107"></a><span class="lineno"><a class="line" href="classklib_1_1Request.html#ad21903710f7f2db3d20f8565d644f227">  107</a></span>  <a class="code hl_class" href="classklib_1_1Response.html">Response</a> <a class="code hl_function" href="classklib_1_1Request.html#ad21903710f7f2db3d20f8565d644f227">get</a>(<span class="keyword">const</span> std::string &amp;url,</div>
-<div class="line"><a id="l00108" name="l00108"></a><span class="lineno">  108</span>               <span class="keyword">const</span> std::map&lt;std::string, std::string&gt; &amp;params = {},</div>
-<div class="line"><a id="l00109" name="l00109"></a><span class="lineno">  109</span>               <span class="keyword">const</span> std::map&lt;std::string, std::string&gt; &amp;header = {});</div>
+<div class="line"><a id="l00107" name="l00107"></a><span class="lineno"><a class="line" href="classklib_1_1Request.html#a08393c2a120cca598fb10ad2ce356b8b">  107</a></span>  <a class="code hl_class" href="classklib_1_1Response.html">Response</a> <a class="code hl_function" href="classklib_1_1Request.html#a08393c2a120cca598fb10ad2ce356b8b">get</a>(<span class="keyword">const</span> std::string &amp;url,</div>
+<div class="line"><a id="l00108" name="l00108"></a><span class="lineno">  108</span>               <span class="keyword">const</span> std::unordered_map&lt;std::string, std::string&gt; &amp;params = {},</div>
+<div class="line"><a id="l00109" name="l00109"></a><span class="lineno">  109</span>               <span class="keyword">const</span> std::unordered_map&lt;std::string, std::string&gt; &amp;header = {});</div>
 <div class="line"><a id="l00110" name="l00110"></a><span class="lineno">  110</span> </div>
-<div class="line"><a id="l00118" name="l00118"></a><span class="lineno"><a class="line" href="classklib_1_1Request.html#a063a16b045a85e261fe2fdf9946b61bd">  118</a></span>  <a class="code hl_class" href="classklib_1_1Response.html">Response</a> <a class="code hl_function" href="classklib_1_1Request.html#a063a16b045a85e261fe2fdf9946b61bd">post</a>(<span class="keyword">const</span> std::string &amp;url,</div>
-<div class="line"><a id="l00119" name="l00119"></a><span class="lineno">  119</span>                <span class="keyword">const</span> std::map&lt;std::string, std::string&gt; &amp;data,</div>
-<div class="line"><a id="l00120" name="l00120"></a><span class="lineno">  120</span>                <span class="keyword">const</span> std::map&lt;std::string, std::string&gt; &amp;file = {},</div>
-<div class="line"><a id="l00121" name="l00121"></a><span class="lineno">  121</span>                <span class="keyword">const</span> std::map&lt;std::string, std::string&gt; &amp;header = {});</div>
-<div class="line"><a id="l00122" name="l00122"></a><span class="lineno">  122</span> </div>
-<div class="line"><a id="l00129" name="l00129"></a><span class="lineno"><a class="line" href="classklib_1_1Request.html#a977eb6a746aa035d7d6bb7ef2cbe4a8c">  129</a></span>  <a class="code hl_class" href="classklib_1_1Response.html">Response</a> <a class="code hl_function" href="classklib_1_1Request.html#a977eb6a746aa035d7d6bb7ef2cbe4a8c">post</a>(<span class="keyword">const</span> std::string &amp;url, <span class="keyword">const</span> std::string &amp;data,</div>
-<div class="line"><a id="l00130" name="l00130"></a><span class="lineno">  130</span>                <span class="keyword">const</span> std::map&lt;std::string, std::string&gt; &amp;header = {});</div>
-<div class="line"><a id="l00131" name="l00131"></a><span class="lineno">  131</span> </div>
-<div class="line"><a id="l00132" name="l00132"></a><span class="lineno">  132</span> <span class="keyword">private</span>:</div>
-<div class="line"><a id="l00133" name="l00133"></a><span class="lineno">  133</span>  <span class="keyword">class </span>RequestImpl;</div>
-<div class="line"><a id="l00134" name="l00134"></a><span class="lineno">  134</span>  std::experimental::propagate_const&lt;std::unique_ptr&lt;RequestImpl&gt;&gt; impl_;</div>
-<div class="line"><a id="l00135" name="l00135"></a><span class="lineno">  135</span>};</div>
-<div class="line"><a id="l00136" name="l00136"></a><span class="lineno">  136</span> </div>
-<div class="line"><a id="l00137" name="l00137"></a><span class="lineno">  137</span><span class="keyword">class </span>Response;</div>
+<div class="line"><a id="l00118" name="l00118"></a><span class="lineno"><a class="line" href="classklib_1_1Request.html#a71b568d99bee37b877cdd2d2b2ce5728">  118</a></span>  <a class="code hl_class" href="classklib_1_1Response.html">Response</a> <a class="code hl_function" href="classklib_1_1Request.html#a71b568d99bee37b877cdd2d2b2ce5728">post</a>(</div>
+<div class="line"><a id="l00119" name="l00119"></a><span class="lineno">  119</span>      <span class="keyword">const</span> std::string &amp;url,</div>
+<div class="line"><a id="l00120" name="l00120"></a><span class="lineno">  120</span>      <span class="keyword">const</span> std::unordered_map&lt;std::string, std::string&gt; &amp;data,</div>
+<div class="line"><a id="l00121" name="l00121"></a><span class="lineno">  121</span>      <span class="keyword">const</span> std::unordered_map&lt;std::string, std::string&gt; &amp;file = {},</div>
+<div class="line"><a id="l00122" name="l00122"></a><span class="lineno">  122</span>      <span class="keyword">const</span> std::unordered_map&lt;std::string, std::string&gt; &amp;header = {});</div>
+<div class="line"><a id="l00123" name="l00123"></a><span class="lineno">  123</span> </div>
+<div class="line"><a id="l00130" name="l00130"></a><span class="lineno"><a class="line" href="classklib_1_1Request.html#a914264be7702af8cfbaa444da9124fba">  130</a></span>  <a class="code hl_class" href="classklib_1_1Response.html">Response</a> <a class="code hl_function" href="classklib_1_1Request.html#a914264be7702af8cfbaa444da9124fba">post</a>(</div>
+<div class="line"><a id="l00131" name="l00131"></a><span class="lineno">  131</span>      <span class="keyword">const</span> std::string &amp;url, <span class="keyword">const</span> std::string &amp;data,</div>
+<div class="line"><a id="l00132" name="l00132"></a><span class="lineno">  132</span>      <span class="keyword">const</span> std::unordered_map&lt;std::string, std::string&gt; &amp;header = {});</div>
+<div class="line"><a id="l00133" name="l00133"></a><span class="lineno">  133</span> </div>
+<div class="line"><a id="l00134" name="l00134"></a><span class="lineno">  134</span> <span class="keyword">private</span>:</div>
+<div class="line"><a id="l00135" name="l00135"></a><span class="lineno">  135</span>  <span class="keyword">class </span>RequestImpl;</div>
+<div class="line"><a id="l00136" name="l00136"></a><span class="lineno">  136</span>  std::experimental::propagate_const&lt;std::unique_ptr&lt;RequestImpl&gt;&gt; impl_;</div>
+<div class="line"><a id="l00137" name="l00137"></a><span class="lineno">  137</span>};</div>
 <div class="line"><a id="l00138" name="l00138"></a><span class="lineno">  138</span> </div>
-<div class="line"><a id="l00142" name="l00142"></a><span class="lineno"><a class="line" href="classklib_1_1Headers.html">  142</a></span><span class="keyword">class </span><a class="code hl_class" href="classklib_1_1Headers.html">Headers</a> {</div>
-<div class="line"><a id="l00143" name="l00143"></a><span class="lineno">  143</span>  <span class="keyword">friend</span> <span class="keyword">class </span><a class="code hl_class" href="classklib_1_1Response.html">Response</a>;</div>
-<div class="line"><a id="l00144" name="l00144"></a><span class="lineno">  144</span> </div>
-<div class="line"><a id="l00145" name="l00145"></a><span class="lineno">  145</span> <span class="keyword">public</span>:</div>
-<div class="line"><a id="l00151" name="l00151"></a><span class="lineno"><a class="line" href="classklib_1_1Headers.html#a9ea038c02beb15d1beec0d767721379e">  151</a></span>  [[nodiscard]] <span class="keyword">const</span> std::string &amp;<a class="code hl_function" href="classklib_1_1Headers.html#a9ea038c02beb15d1beec0d767721379e">at</a>(<span class="keyword">const</span> std::string &amp;key) <span class="keyword">const</span>;</div>
-<div class="line"><a id="l00152" name="l00152"></a><span class="lineno">  152</span> </div>
-<div class="line"><a id="l00153" name="l00153"></a><span class="lineno">  153</span> <span class="keyword">private</span>:</div>
-<div class="line"><a id="l00154" name="l00154"></a><span class="lineno">  154</span>  <span class="keywordtype">void</span> add(<span class="keyword">const</span> std::string &amp;key, <span class="keyword">const</span> std::string &amp;value);</div>
-<div class="line"><a id="l00155" name="l00155"></a><span class="lineno">  155</span> </div>
-<div class="line"><a id="l00156" name="l00156"></a><span class="lineno">  156</span>  <span class="comment">// FIXME</span></div>
-<div class="line"><a id="l00157" name="l00157"></a><span class="lineno">  157</span>  std::map&lt;std::string, std::string&gt; map_;</div>
-<div class="line"><a id="l00158" name="l00158"></a><span class="lineno">  158</span>};</div>
+<div class="line"><a id="l00139" name="l00139"></a><span class="lineno">  139</span><span class="keyword">class </span>Response;</div>
+<div class="line"><a id="l00140" name="l00140"></a><span class="lineno">  140</span> </div>
+<div class="line"><a id="l00144" name="l00144"></a><span class="lineno"><a class="line" href="classklib_1_1Headers.html">  144</a></span><span class="keyword">class </span><a class="code hl_class" href="classklib_1_1Headers.html">Headers</a> {</div>
+<div class="line"><a id="l00145" name="l00145"></a><span class="lineno">  145</span>  <span class="keyword">friend</span> <span class="keyword">class </span><a class="code hl_class" href="classklib_1_1Response.html">Response</a>;</div>
+<div class="line"><a id="l00146" name="l00146"></a><span class="lineno">  146</span> </div>
+<div class="line"><a id="l00147" name="l00147"></a><span class="lineno">  147</span> <span class="keyword">public</span>:</div>
+<div class="line"><a id="l00153" name="l00153"></a><span class="lineno"><a class="line" href="classklib_1_1Headers.html#a9ea038c02beb15d1beec0d767721379e">  153</a></span>  [[nodiscard]] <span class="keyword">const</span> std::string &amp;<a class="code hl_function" href="classklib_1_1Headers.html#a9ea038c02beb15d1beec0d767721379e">at</a>(<span class="keyword">const</span> std::string &amp;key) <span class="keyword">const</span>;</div>
+<div class="line"><a id="l00154" name="l00154"></a><span class="lineno">  154</span> </div>
+<div class="line"><a id="l00155" name="l00155"></a><span class="lineno">  155</span>  <span class="keywordtype">bool</span> empty()<span class="keyword"> const </span>{ <span class="keywordflow">return</span> std::empty(map_); }</div>
+<div class="line"><a id="l00156" name="l00156"></a><span class="lineno">  156</span> </div>
+<div class="line"><a id="l00157" name="l00157"></a><span class="lineno">  157</span> <span class="keyword">private</span>:</div>
+<div class="line"><a id="l00158" name="l00158"></a><span class="lineno">  158</span>  <span class="keywordtype">void</span> add(<span class="keyword">const</span> std::string &amp;key, <span class="keyword">const</span> std::string &amp;value);</div>
 <div class="line"><a id="l00159" name="l00159"></a><span class="lineno">  159</span> </div>
-<div class="line"><a id="l00163" name="l00163"></a><span class="lineno"><a class="line" href="classklib_1_1Response.html">  163</a></span><span class="keyword">class </span><a class="code hl_class" href="classklib_1_1Response.html">Response</a> {</div>
-<div class="line"><a id="l00164" name="l00164"></a><span class="lineno">  164</span>  <span class="keyword">friend</span> <span class="keyword">class </span>Request::RequestImpl;</div>
-<div class="line"><a id="l00165" name="l00165"></a><span class="lineno">  165</span> </div>
-<div class="line"><a id="l00166" name="l00166"></a><span class="lineno">  166</span> <span class="keyword">public</span>:</div>
-<div class="line"><a id="l00171" name="l00171"></a><span class="lineno"><a class="line" href="classklib_1_1Response.html#abbd230b0781eceb59a4851976ad5df32">  171</a></span>  <span class="keyword">enum</span> <a class="code hl_enumeration" href="classklib_1_1Response.html#abbd230b0781eceb59a4851976ad5df32">StatusCode</a> : std::int64_t { None, Ok = 200 };</div>
-<div class="line"><a id="l00172" name="l00172"></a><span class="lineno">  172</span> </div>
-<div class="line"><a id="l00177" name="l00177"></a><span class="lineno"><a class="line" href="classklib_1_1Response.html#aa839e6f6599e336147cbdacb0e99bddf">  177</a></span>  [[nodiscard]] std::int64_t <a class="code hl_function" href="classklib_1_1Response.html#aa839e6f6599e336147cbdacb0e99bddf">status_code</a>() <span class="keyword">const</span>;</div>
-<div class="line"><a id="l00178" name="l00178"></a><span class="lineno">  178</span> </div>
-<div class="line"><a id="l00183" name="l00183"></a><span class="lineno"><a class="line" href="classklib_1_1Response.html#a55d152ffc87ded19485b581691318212">  183</a></span>  [[nodiscard]] std::string <a class="code hl_function" href="classklib_1_1Response.html#a55d152ffc87ded19485b581691318212">headers</a>() <span class="keyword">const</span>;</div>
-<div class="line"><a id="l00184" name="l00184"></a><span class="lineno">  184</span> </div>
-<div class="line"><a id="l00189" name="l00189"></a><span class="lineno"><a class="line" href="classklib_1_1Response.html#ac3520a7fd0ac02a065c6983a0caf1ecf">  189</a></span>  [[nodiscard]] <a class="code hl_class" href="classklib_1_1Headers.html">Headers</a> <a class="code hl_function" href="classklib_1_1Response.html#ac3520a7fd0ac02a065c6983a0caf1ecf">headers_map</a>() <span class="keyword">const</span>;</div>
-<div class="line"><a id="l00190" name="l00190"></a><span class="lineno">  190</span> </div>
-<div class="line"><a id="l00195" name="l00195"></a><span class="lineno"><a class="line" href="classklib_1_1Response.html#a305b99dcd743ae31007c48c639b99713">  195</a></span>  [[nodiscard]] std::string <a class="code hl_function" href="classklib_1_1Response.html#a305b99dcd743ae31007c48c639b99713">text</a>() <span class="keyword">const</span>;</div>
-<div class="line"><a id="l00196" name="l00196"></a><span class="lineno">  196</span> </div>
-<div class="line"><a id="l00202" name="l00202"></a><span class="lineno"><a class="line" href="classklib_1_1Response.html#a06c3d6a2557cca10a102646067e00a09">  202</a></span>  <span class="keywordtype">void</span> <a class="code hl_function" href="classklib_1_1Response.html#a06c3d6a2557cca10a102646067e00a09">save_to_file</a>(<span class="keyword">const</span> std::string &amp;path, <span class="keywordtype">bool</span> binary_mode) <span class="keyword">const</span>;</div>
-<div class="line"><a id="l00203" name="l00203"></a><span class="lineno">  203</span> </div>
-<div class="line"><a id="l00204" name="l00204"></a><span class="lineno">  204</span> <span class="keyword">private</span>:</div>
-<div class="line"><a id="l00205" name="l00205"></a><span class="lineno">  205</span>  std::int64_t status_code_ = StatusCode::None;</div>
-<div class="line"><a id="l00206" name="l00206"></a><span class="lineno">  206</span>  std::string headers_;</div>
-<div class="line"><a id="l00207" name="l00207"></a><span class="lineno">  207</span>  std::string text_;</div>
-<div class="line"><a id="l00208" name="l00208"></a><span class="lineno">  208</span>};</div>
-<div class="line"><a id="l00209" name="l00209"></a><span class="lineno">  209</span> </div>
-<div class="line"><a id="l00210" name="l00210"></a><span class="lineno">  210</span>}  <span class="comment">// namespace klib</span></div>
-<div class="ttc" id="aclassklib_1_1Headers_html"><div class="ttname"><a href="classklib_1_1Headers.html">klib::Headers</a></div><div class="ttdoc">Response headers.</div><div class="ttdef"><b>Definition:</b> http.h:142</div></div>
+<div class="line"><a id="l00160" name="l00160"></a><span class="lineno">  160</span>  std::unordered_map&lt;std::string, std::string&gt; map_;</div>
+<div class="line"><a id="l00161" name="l00161"></a><span class="lineno">  161</span>};</div>
+<div class="line"><a id="l00162" name="l00162"></a><span class="lineno">  162</span> </div>
+<div class="line"><a id="l00166" name="l00166"></a><span class="lineno"><a class="line" href="classklib_1_1Response.html">  166</a></span><span class="keyword">class </span><a class="code hl_class" href="classklib_1_1Response.html">Response</a> {</div>
+<div class="line"><a id="l00167" name="l00167"></a><span class="lineno">  167</span>  <span class="keyword">friend</span> <span class="keyword">class </span>Request::RequestImpl;</div>
+<div class="line"><a id="l00168" name="l00168"></a><span class="lineno">  168</span> </div>
+<div class="line"><a id="l00169" name="l00169"></a><span class="lineno">  169</span> <span class="keyword">public</span>:</div>
+<div class="line"><a id="l00174" name="l00174"></a><span class="lineno"><a class="line" href="classklib_1_1Response.html#abbd230b0781eceb59a4851976ad5df32">  174</a></span>  <span class="keyword">enum</span> <a class="code hl_enumeration" href="classklib_1_1Response.html#abbd230b0781eceb59a4851976ad5df32">StatusCode</a> : std::int64_t { None, Ok = 200 };</div>
+<div class="line"><a id="l00175" name="l00175"></a><span class="lineno">  175</span> </div>
+<div class="line"><a id="l00180" name="l00180"></a><span class="lineno"><a class="line" href="classklib_1_1Response.html#aa839e6f6599e336147cbdacb0e99bddf">  180</a></span>  [[nodiscard]] std::int64_t <a class="code hl_function" href="classklib_1_1Response.html#aa839e6f6599e336147cbdacb0e99bddf">status_code</a>() <span class="keyword">const</span>;</div>
+<div class="line"><a id="l00181" name="l00181"></a><span class="lineno">  181</span> </div>
+<div class="line"><a id="l00186" name="l00186"></a><span class="lineno"><a class="line" href="classklib_1_1Response.html#a2d9f92835eb0d64b80764b4c1001e1da">  186</a></span>  [[nodiscard]] <span class="keyword">const</span> <a class="code hl_class" href="classklib_1_1Headers.html">Headers</a> &amp;<a class="code hl_function" href="classklib_1_1Response.html#a2d9f92835eb0d64b80764b4c1001e1da">headers_map</a>();</div>
+<div class="line"><a id="l00187" name="l00187"></a><span class="lineno">  187</span> </div>
+<div class="line"><a id="l00192" name="l00192"></a><span class="lineno"><a class="line" href="classklib_1_1Response.html#a305b99dcd743ae31007c48c639b99713">  192</a></span>  [[nodiscard]] std::string <a class="code hl_function" href="classklib_1_1Response.html#a305b99dcd743ae31007c48c639b99713">text</a>() <span class="keyword">const</span>;</div>
+<div class="line"><a id="l00193" name="l00193"></a><span class="lineno">  193</span> </div>
+<div class="line"><a id="l00199" name="l00199"></a><span class="lineno"><a class="line" href="classklib_1_1Response.html#a06c3d6a2557cca10a102646067e00a09">  199</a></span>  <span class="keywordtype">void</span> <a class="code hl_function" href="classklib_1_1Response.html#a06c3d6a2557cca10a102646067e00a09">save_to_file</a>(<span class="keyword">const</span> std::string &amp;path, <span class="keywordtype">bool</span> binary_mode) <span class="keyword">const</span>;</div>
+<div class="line"><a id="l00200" name="l00200"></a><span class="lineno">  200</span> </div>
+<div class="line"><a id="l00201" name="l00201"></a><span class="lineno">  201</span> <span class="keyword">private</span>:</div>
+<div class="line"><a id="l00202" name="l00202"></a><span class="lineno">  202</span>  std::int64_t status_code_ = StatusCode::None;</div>
+<div class="line"><a id="l00203" name="l00203"></a><span class="lineno">  203</span>  std::string headers_;</div>
+<div class="line"><a id="l00204" name="l00204"></a><span class="lineno">  204</span>  std::string text_;</div>
+<div class="line"><a id="l00205" name="l00205"></a><span class="lineno">  205</span> </div>
+<div class="line"><a id="l00206" name="l00206"></a><span class="lineno">  206</span>  <a class="code hl_class" href="classklib_1_1Headers.html">Headers</a> headers_map_;</div>
+<div class="line"><a id="l00207" name="l00207"></a><span class="lineno">  207</span>};</div>
+<div class="line"><a id="l00208" name="l00208"></a><span class="lineno">  208</span> </div>
+<div class="line"><a id="l00209" name="l00209"></a><span class="lineno">  209</span>}  <span class="comment">// namespace klib</span></div>
+<div class="ttc" id="aclassklib_1_1Headers_html"><div class="ttname"><a href="classklib_1_1Headers.html">klib::Headers</a></div><div class="ttdoc">Response headers.</div><div class="ttdef"><b>Definition:</b> http.h:144</div></div>
 <div class="ttc" id="aclassklib_1_1Headers_html_a9ea038c02beb15d1beec0d767721379e"><div class="ttname"><a href="classklib_1_1Headers.html#a9ea038c02beb15d1beec0d767721379e">klib::Headers::at</a></div><div class="ttdeci">const std::string &amp; at(const std::string &amp;key) const</div><div class="ttdoc">Get the value specified by key(not case sensitive)</div></div>
 <div class="ttc" id="aclassklib_1_1Request_html"><div class="ttname"><a href="classklib_1_1Request.html">klib::Request</a></div><div class="ttdoc">Constructs and sends a Request.</div><div class="ttdef"><b>Definition:</b> http.h:21</div></div>
 <div class="ttc" id="aclassklib_1_1Request_html_a049dedc37a3f347c03784b1147455546"><div class="ttname"><a href="classklib_1_1Request.html#a049dedc37a3f347c03784b1147455546">klib::Request::verbose</a></div><div class="ttdeci">void verbose(bool flag)</div><div class="ttdoc">Whether to display verbose information(The default is false)</div></div>
-<div class="ttc" id="aclassklib_1_1Request_html_a063a16b045a85e261fe2fdf9946b61bd"><div class="ttname"><a href="classklib_1_1Request.html#a063a16b045a85e261fe2fdf9946b61bd">klib::Request::post</a></div><div class="ttdeci">Response post(const std::string &amp;url, const std::map&lt; std::string, std::string &gt; &amp;data, const std::map&lt; std::string, std::string &gt; &amp;file={}, const std::map&lt; std::string, std::string &gt; &amp;header={})</div><div class="ttdoc">Sends a POST request.</div></div>
+<div class="ttc" id="aclassklib_1_1Request_html_a08393c2a120cca598fb10ad2ce356b8b"><div class="ttname"><a href="classklib_1_1Request.html#a08393c2a120cca598fb10ad2ce356b8b">klib::Request::get</a></div><div class="ttdeci">Response get(const std::string &amp;url, const std::unordered_map&lt; std::string, std::string &gt; &amp;params={}, const std::unordered_map&lt; std::string, std::string &gt; &amp;header={})</div><div class="ttdoc">Sends a GET request.</div></div>
 <div class="ttc" id="aclassklib_1_1Request_html_a0fe5c62e7c2d1adcb68f56fc644a7c61"><div class="ttname"><a href="classklib_1_1Request.html#a0fe5c62e7c2d1adcb68f56fc644a7c61">klib::Request::Request</a></div><div class="ttdeci">Request()</div><div class="ttdoc">Default constructor.</div></div>
 <div class="ttc" id="aclassklib_1_1Request_html_a3bd57350cde297d6e01d32c6354c6e78"><div class="ttname"><a href="classklib_1_1Request.html#a3bd57350cde297d6e01d32c6354c6e78">klib::Request::allow_redirects</a></div><div class="ttdeci">void allow_redirects(bool flag)</div><div class="ttdoc">Whether to follow any location(The default is true)</div></div>
 <div class="ttc" id="aclassklib_1_1Request_html_a4aba7a126459a31beb9ba92d436949c8"><div class="ttname"><a href="classklib_1_1Request.html#a4aba7a126459a31beb9ba92d436949c8">klib::Request::set_curl_user_agent</a></div><div class="ttdeci">void set_curl_user_agent()</div><div class="ttdoc">Set up curl user agent.</div></div>
 <div class="ttc" id="aclassklib_1_1Request_html_a547240deba77773cd7b84a0b5cdebab6"><div class="ttname"><a href="classklib_1_1Request.html#a547240deba77773cd7b84a0b5cdebab6">klib::Request::use_http_1_1</a></div><div class="ttdeci">void use_http_1_1()</div><div class="ttdoc">Use HTTP/1.1.</div></div>
 <div class="ttc" id="aclassklib_1_1Request_html_a5c3d793a8690ae8d728d3b8469b4b45d"><div class="ttname"><a href="classklib_1_1Request.html#a5c3d793a8690ae8d728d3b8469b4b45d">klib::Request::use_http_2</a></div><div class="ttdeci">void use_http_2()</div><div class="ttdoc">Use HTTP/2(Default)</div></div>
-<div class="ttc" id="aclassklib_1_1Request_html_a977eb6a746aa035d7d6bb7ef2cbe4a8c"><div class="ttname"><a href="classklib_1_1Request.html#a977eb6a746aa035d7d6bb7ef2cbe4a8c">klib::Request::post</a></div><div class="ttdeci">Response post(const std::string &amp;url, const std::string &amp;data, const std::map&lt; std::string, std::string &gt; &amp;header={})</div><div class="ttdoc">Sends a POST request.</div></div>
+<div class="ttc" id="aclassklib_1_1Request_html_a71b568d99bee37b877cdd2d2b2ce5728"><div class="ttname"><a href="classklib_1_1Request.html#a71b568d99bee37b877cdd2d2b2ce5728">klib::Request::post</a></div><div class="ttdeci">Response post(const std::string &amp;url, const std::unordered_map&lt; std::string, std::string &gt; &amp;data, const std::unordered_map&lt; std::string, std::string &gt; &amp;file={}, const std::unordered_map&lt; std::string, std::string &gt; &amp;header={})</div><div class="ttdoc">Sends a POST request.</div></div>
+<div class="ttc" id="aclassklib_1_1Request_html_a914264be7702af8cfbaa444da9124fba"><div class="ttname"><a href="classklib_1_1Request.html#a914264be7702af8cfbaa444da9124fba">klib::Request::post</a></div><div class="ttdeci">Response post(const std::string &amp;url, const std::string &amp;data, const std::unordered_map&lt; std::string, std::string &gt; &amp;header={})</div><div class="ttdoc">Sends a POST request.</div></div>
 <div class="ttc" id="aclassklib_1_1Request_html_a9df61892054dd4c36920e27a43b42bd9"><div class="ttname"><a href="classklib_1_1Request.html#a9df61892054dd4c36920e27a43b42bd9">klib::Request::set_timeout</a></div><div class="ttdeci">void set_timeout(std::int64_t seconds)</div><div class="ttdoc">Set up timeout.</div></div>
 <div class="ttc" id="aclassklib_1_1Request_html_aa2441e7ed0be65868c280c0d3115e11f"><div class="ttname"><a href="classklib_1_1Request.html#aa2441e7ed0be65868c280c0d3115e11f">klib::Request::set_connect_timeout</a></div><div class="ttdeci">void set_connect_timeout(std::int64_t seconds)</div><div class="ttdoc">Set up connect timeout.</div></div>
 <div class="ttc" id="aclassklib_1_1Request_html_aa6db2a71c4c12c8f054715e3f8fc71ae"><div class="ttname"><a href="classklib_1_1Request.html#aa6db2a71c4c12c8f054715e3f8fc71ae">klib::Request::set_no_proxy</a></div><div class="ttdeci">void set_no_proxy()</div><div class="ttdoc">No proxy.</div></div>
 <div class="ttc" id="aclassklib_1_1Request_html_abc72456d5b46d7081dbea3980fefc68b"><div class="ttname"><a href="classklib_1_1Request.html#abc72456d5b46d7081dbea3980fefc68b">klib::Request::set_user_agent</a></div><div class="ttdeci">void set_user_agent(const std::string &amp;user_agent)</div><div class="ttdoc">Set up user agent.</div></div>
 <div class="ttc" id="aclassklib_1_1Request_html_abf010562c66bb66def366522fb40b982"><div class="ttname"><a href="classklib_1_1Request.html#abf010562c66bb66def366522fb40b982">klib::Request::~Request</a></div><div class="ttdeci">~Request()</div><div class="ttdoc">Destructor.</div></div>
 <div class="ttc" id="aclassklib_1_1Request_html_ac2cf384a73a9a958c5a49979db7a4633"><div class="ttname"><a href="classklib_1_1Request.html#ac2cf384a73a9a958c5a49979db7a4633">klib::Request::set_proxy</a></div><div class="ttdeci">void set_proxy(const std::string &amp;proxy)</div><div class="ttdoc">Set up proxy.</div></div>
-<div class="ttc" id="aclassklib_1_1Request_html_ad21903710f7f2db3d20f8565d644f227"><div class="ttname"><a href="classklib_1_1Request.html#ad21903710f7f2db3d20f8565d644f227">klib::Request::get</a></div><div class="ttdeci">Response get(const std::string &amp;url, const std::map&lt; std::string, std::string &gt; &amp;params={}, const std::map&lt; std::string, std::string &gt; &amp;header={})</div><div class="ttdoc">Sends a GET request.</div></div>
 <div class="ttc" id="aclassklib_1_1Request_html_afa583b9071002118ad316a9690003256"><div class="ttname"><a href="classklib_1_1Request.html#afa583b9071002118ad316a9690003256">klib::Request::set_browser_user_agent</a></div><div class="ttdeci">void set_browser_user_agent()</div><div class="ttdoc">Set up browser user agent.</div></div>
-<div class="ttc" id="aclassklib_1_1Response_html"><div class="ttname"><a href="classklib_1_1Response.html">klib::Response</a></div><div class="ttdoc">Response content.</div><div class="ttdef"><b>Definition:</b> http.h:163</div></div>
+<div class="ttc" id="aclassklib_1_1Response_html"><div class="ttname"><a href="classklib_1_1Response.html">klib::Response</a></div><div class="ttdoc">Response content.</div><div class="ttdef"><b>Definition:</b> http.h:166</div></div>
 <div class="ttc" id="aclassklib_1_1Response_html_a06c3d6a2557cca10a102646067e00a09"><div class="ttname"><a href="classklib_1_1Response.html#a06c3d6a2557cca10a102646067e00a09">klib::Response::save_to_file</a></div><div class="ttdeci">void save_to_file(const std::string &amp;path, bool binary_mode) const</div><div class="ttdoc">Save response content to file.</div></div>
+<div class="ttc" id="aclassklib_1_1Response_html_a2d9f92835eb0d64b80764b4c1001e1da"><div class="ttname"><a href="classklib_1_1Response.html#a2d9f92835eb0d64b80764b4c1001e1da">klib::Response::headers_map</a></div><div class="ttdeci">const Headers &amp; headers_map()</div><div class="ttdoc">Get server response.</div></div>
 <div class="ttc" id="aclassklib_1_1Response_html_a305b99dcd743ae31007c48c639b99713"><div class="ttname"><a href="classklib_1_1Response.html#a305b99dcd743ae31007c48c639b99713">klib::Response::text</a></div><div class="ttdeci">std::string text() const</div><div class="ttdoc">Get response content.</div></div>
-<div class="ttc" id="aclassklib_1_1Response_html_a55d152ffc87ded19485b581691318212"><div class="ttname"><a href="classklib_1_1Response.html#a55d152ffc87ded19485b581691318212">klib::Response::headers</a></div><div class="ttdeci">std::string headers() const</div><div class="ttdoc">Get server response.</div></div>
 <div class="ttc" id="aclassklib_1_1Response_html_aa839e6f6599e336147cbdacb0e99bddf"><div class="ttname"><a href="classklib_1_1Response.html#aa839e6f6599e336147cbdacb0e99bddf">klib::Response::status_code</a></div><div class="ttdeci">std::int64_t status_code() const</div><div class="ttdoc">Get status code.</div></div>
-<div class="ttc" id="aclassklib_1_1Response_html_abbd230b0781eceb59a4851976ad5df32"><div class="ttname"><a href="classklib_1_1Response.html#abbd230b0781eceb59a4851976ad5df32">klib::Response::StatusCode</a></div><div class="ttdeci">StatusCode</div><div class="ttdoc">HTTP Status Code.</div><div class="ttdef"><b>Definition:</b> http.h:171</div></div>
-<div class="ttc" id="aclassklib_1_1Response_html_ac3520a7fd0ac02a065c6983a0caf1ecf"><div class="ttname"><a href="classklib_1_1Response.html#ac3520a7fd0ac02a065c6983a0caf1ecf">klib::Response::headers_map</a></div><div class="ttdeci">Headers headers_map() const</div><div class="ttdoc">Get server response.</div></div>
+<div class="ttc" id="aclassklib_1_1Response_html_abbd230b0781eceb59a4851976ad5df32"><div class="ttname"><a href="classklib_1_1Response.html#abbd230b0781eceb59a4851976ad5df32">klib::Response::StatusCode</a></div><div class="ttdeci">StatusCode</div><div class="ttdoc">HTTP Status Code.</div><div class="ttdef"><b>Definition:</b> http.h:174</div></div>
 </div><!-- fragment --></div><!-- contents -->
 </div><!-- doc-content -->
 <!-- start footer part -->

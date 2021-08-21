@@ -30,7 +30,7 @@
  <tbody>
  <tr style="height: 56px;">
   <td id="projectalign" style="padding-left: 0.5em;">
-   <div id="projectname">klib<span id="projectnumber">&#160;0.3.4</span>
+   <div id="projectname">klib<span id="projectnumber">&#160;0.3.5</span>
    </div>
   </td>
     <td>        <div id="MSearchBox" class="MSearchBoxInactive">
@@ -118,12 +118,9 @@ Public Member Functions</h2></td></tr>
 <tr class="memitem:aa839e6f6599e336147cbdacb0e99bddf"><td class="memItemLeft" align="right" valign="top">std::int64_t&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="classklib_1_1Response.html#aa839e6f6599e336147cbdacb0e99bddf">status_code</a> () const</td></tr>
 <tr class="memdesc:aa839e6f6599e336147cbdacb0e99bddf"><td class="mdescLeft">&#160;</td><td class="mdescRight">Get status code.  <a href="classklib_1_1Response.html#aa839e6f6599e336147cbdacb0e99bddf">More...</a><br /></td></tr>
 <tr class="separator:aa839e6f6599e336147cbdacb0e99bddf"><td class="memSeparator" colspan="2">&#160;</td></tr>
-<tr class="memitem:a55d152ffc87ded19485b581691318212"><td class="memItemLeft" align="right" valign="top">std::string&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="classklib_1_1Response.html#a55d152ffc87ded19485b581691318212">headers</a> () const</td></tr>
-<tr class="memdesc:a55d152ffc87ded19485b581691318212"><td class="mdescLeft">&#160;</td><td class="mdescRight">Get server response.  <a href="classklib_1_1Response.html#a55d152ffc87ded19485b581691318212">More...</a><br /></td></tr>
-<tr class="separator:a55d152ffc87ded19485b581691318212"><td class="memSeparator" colspan="2">&#160;</td></tr>
-<tr class="memitem:ac3520a7fd0ac02a065c6983a0caf1ecf"><td class="memItemLeft" align="right" valign="top"><a class="el" href="classklib_1_1Headers.html">Headers</a>&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="classklib_1_1Response.html#ac3520a7fd0ac02a065c6983a0caf1ecf">headers_map</a> () const</td></tr>
-<tr class="memdesc:ac3520a7fd0ac02a065c6983a0caf1ecf"><td class="mdescLeft">&#160;</td><td class="mdescRight">Get server response.  <a href="classklib_1_1Response.html#ac3520a7fd0ac02a065c6983a0caf1ecf">More...</a><br /></td></tr>
-<tr class="separator:ac3520a7fd0ac02a065c6983a0caf1ecf"><td class="memSeparator" colspan="2">&#160;</td></tr>
+<tr class="memitem:a2d9f92835eb0d64b80764b4c1001e1da"><td class="memItemLeft" align="right" valign="top">const <a class="el" href="classklib_1_1Headers.html">Headers</a> &amp;&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="classklib_1_1Response.html#a2d9f92835eb0d64b80764b4c1001e1da">headers_map</a> ()</td></tr>
+<tr class="memdesc:a2d9f92835eb0d64b80764b4c1001e1da"><td class="mdescLeft">&#160;</td><td class="mdescRight">Get server response.  <a href="classklib_1_1Response.html#a2d9f92835eb0d64b80764b4c1001e1da">More...</a><br /></td></tr>
+<tr class="separator:a2d9f92835eb0d64b80764b4c1001e1da"><td class="memSeparator" colspan="2">&#160;</td></tr>
 <tr class="memitem:a305b99dcd743ae31007c48c639b99713"><td class="memItemLeft" align="right" valign="top">std::string&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="classklib_1_1Response.html#a305b99dcd743ae31007c48c639b99713">text</a> () const</td></tr>
 <tr class="memdesc:a305b99dcd743ae31007c48c639b99713"><td class="mdescLeft">&#160;</td><td class="mdescRight">Get response content.  <a href="classklib_1_1Response.html#a305b99dcd743ae31007c48c639b99713">More...</a><br /></td></tr>
 <tr class="separator:a305b99dcd743ae31007c48c639b99713"><td class="memSeparator" colspan="2">&#160;</td></tr>
@@ -158,37 +155,17 @@ class&#160;</td><td class="memItemRight" valign="bottom"><b>Request::RequestImpl
 </div>
 </div>
 <h2 class="groupheader">Member Function Documentation</h2>
-<a id="a55d152ffc87ded19485b581691318212" name="a55d152ffc87ded19485b581691318212"></a>
-<h2 class="memtitle"><span class="permalink"><a href="#a55d152ffc87ded19485b581691318212">&#9670;&nbsp;</a></span>headers()</h2>
+<a id="a2d9f92835eb0d64b80764b4c1001e1da" name="a2d9f92835eb0d64b80764b4c1001e1da"></a>
+<h2 class="memtitle"><span class="permalink"><a href="#a2d9f92835eb0d64b80764b4c1001e1da">&#9670;&nbsp;</a></span>headers_map()</h2>
 
 <div class="memitem">
 <div class="memproto">
       <table class="memname">
         <tr>
-          <td class="memname">std::string klib::Response::headers </td>
+          <td class="memname">const <a class="el" href="classklib_1_1Headers.html">Headers</a> &amp; klib::Response::headers_map </td>
           <td>(</td>
           <td class="paramname"></td><td>)</td>
-          <td> const</td>
-        </tr>
-      </table>
-</div><div class="memdoc">
-
-<p>Get server response. </p>
-<dl class="section return"><dt>Returns</dt><dd>Server response </dd></dl>
-
-</div>
-</div>
-<a id="ac3520a7fd0ac02a065c6983a0caf1ecf" name="ac3520a7fd0ac02a065c6983a0caf1ecf"></a>
-<h2 class="memtitle"><span class="permalink"><a href="#ac3520a7fd0ac02a065c6983a0caf1ecf">&#9670;&nbsp;</a></span>headers_map()</h2>
-
-<div class="memitem">
-<div class="memproto">
-      <table class="memname">
-        <tr>
-          <td class="memname"><a class="el" href="classklib_1_1Headers.html">Headers</a> klib::Response::headers_map </td>
-          <td>(</td>
-          <td class="paramname"></td><td>)</td>
-          <td> const</td>
+          <td></td>
         </tr>
       </table>
 </div><div class="memdoc">
