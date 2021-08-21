@@ -23,6 +23,16 @@ TEST_CASE("ChangeWorkingDir", "[util]") {
   REQUIRE(std::filesystem::remove("work-dir"));
 }
 
+TEST_CASE("find_last", "[util]") {
+  std::vector<std::int32_t> v{1, 2, 2, 3, 4, 5, 6, 2, 5, 4};
+  auto iter = klib::find_last(std::begin(v), std::end(v), 2);
+  REQUIRE(iter - std::begin(v) == 7);
+
+  v = {2, 1, 1, 1, 1, 1};
+  iter = klib::find_last(std::begin(v), std::end(v), 2);
+  REQUIRE(iter - std::begin(v) == 0);
+}
+
 TEST_CASE("read_file & write_file", "[util]") {
   REQUIRE(std::filesystem::exists("zlib-v1.2.11.tar.gz"));
 

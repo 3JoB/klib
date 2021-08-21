@@ -5,6 +5,7 @@
 
 #pragma once
 
+#include <concepts>
 #include <cstddef>
 #include <cstdint>
 #include <map>
@@ -63,6 +64,39 @@ class ChangeWorkingDir {
  private:
   std::string backup_;
 };
+
+template <typename InputIt, typename T>
+requires std::same_as<typename InputIt::value_type, T>
+constexpr inline InputIt find_last(InputIt first, InputIt last,
+                                   const T &value) {
+  for (; last != first;) {
+    --last;
+
+    if (*last == value) {
+      return last;
+    }
+  }
+
+  return last;
+}
+
+template <class InputIt, class UnaryPredicate>
+requires std::predicate<UnaryPredicate, typename InputIt::value_type>
+constexpr inline InputIt find_last(InputIt first, InputIt last,
+                                   UnaryPredicate p) {
+  for (; last != first;) {
+    --last;
+
+    if (p(*last)) {
+      return last;
+    }
+  }
+
+  return last;
+}
+
+std::vector<std::string> split_str(const std::string &str,
+                                   const std::string &separate);
 
 /**
  * @brief Read a file at a time and store it in a string

@@ -7,9 +7,9 @@
 
 #include <cstdint>
 #include <experimental/propagate_const>
-#include <map>
 #include <memory>
 #include <string>
+#include <unordered_map>
 
 namespace klib {
 
@@ -105,8 +105,8 @@ class Request {
    * @return Response content
    */
   Response get(const std::string &url,
-               const std::map<std::string, std::string> &params = {},
-               const std::map<std::string, std::string> &header = {});
+               const std::unordered_map<std::string, std::string> &params = {},
+               const std::unordered_map<std::string, std::string> &header = {});
 
   /**
    * @brief Sends a POST request
@@ -115,10 +115,11 @@ class Request {
    * @param file: File name and content
    * @return Response content
    */
-  Response post(const std::string &url,
-                const std::map<std::string, std::string> &data,
-                const std::map<std::string, std::string> &file = {},
-                const std::map<std::string, std::string> &header = {});
+  Response post(
+      const std::string &url,
+      const std::unordered_map<std::string, std::string> &data,
+      const std::unordered_map<std::string, std::string> &file = {},
+      const std::unordered_map<std::string, std::string> &header = {});
 
   /**
    * @brief Sends a POST request
@@ -126,8 +127,9 @@ class Request {
    * @param data: Data string
    * @return Response content
    */
-  Response post(const std::string &url, const std::string &data,
-                const std::map<std::string, std::string> &header = {});
+  Response post(
+      const std::string &url, const std::string &data,
+      const std::unordered_map<std::string, std::string> &header = {});
 
  private:
   class RequestImpl;
@@ -154,7 +156,7 @@ class Headers {
   void add(const std::string &key, const std::string &value);
 
   // FIXME
-  std::map<std::string, std::string> map_;
+  std::unordered_map<std::string, std::string> map_;
 };
 
 /**

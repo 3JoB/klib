@@ -52,8 +52,9 @@ std::string convert_non_ascii(const std::string &str) {
   return result;
 }
 
-std::string splicing_url(const std::string &url,
-                         const std::map<std::string, std::string> &params) {
+std::string splicing_url(
+    const std::string &url,
+    const std::unordered_map<std::string, std::string> &params) {
   if (std::empty(params)) {
     return url;
   }
@@ -72,8 +73,8 @@ std::string splicing_url(const std::string &url,
 
 class AddHeader {
  public:
-  explicit AddHeader(CURL *curl,
-                     const std::map<std::string, std::string> &headers)
+  explicit AddHeader(
+      CURL *curl, const std::unordered_map<std::string, std::string> &headers)
       : curl_(curl) {
     assert(curl_);
 
@@ -114,8 +115,9 @@ class AddHeader {
 
 class AddForm {
  public:
-  explicit AddForm(CURL *curl, const std::map<std::string, std::string> &data,
-                   const std::map<std::string, std::string> &file)
+  explicit AddForm(CURL *curl,
+                   const std::unordered_map<std::string, std::string> &data,
+                   const std::unordered_map<std::string, std::string> &file)
       : curl_(curl) {
     assert(curl_);
 
@@ -229,14 +231,14 @@ class Request::RequestImpl {
   void set_connect_timeout(std::int64_t seconds);
 
   Response get(const std::string &url,
-               const std::map<std::string, std::string> &params,
-               const std::map<std::string, std::string> &header);
+               const std::unordered_map<std::string, std::string> &params,
+               const std::unordered_map<std::string, std::string> &header);
   Response post(const std::string &url,
-                const std::map<std::string, std::string> &data,
-                const std::map<std::string, std::string> &file,
-                const std::map<std::string, std::string> &header);
+                const std::unordered_map<std::string, std::string> &data,
+                const std::unordered_map<std::string, std::string> &file,
+                const std::unordered_map<std::string, std::string> &header);
   Response post(const std::string &url, const std::string &data,
-                const std::map<std::string, std::string> &header);
+                const std::unordered_map<std::string, std::string> &header);
 
  private:
   constexpr static std::string_view cookies_path = "/tmp/cookies.txt";
@@ -345,8 +347,9 @@ void Request::RequestImpl::set_connect_timeout(std::int64_t seconds) {
 }
 
 Response Request::RequestImpl::get(
-    const std::string &url, const std::map<std::string, std::string> &params,
-    const std::map<std::string, std::string> &header) {
+    const std::string &url,
+    const std::unordered_map<std::string, std::string> &params,
+    const std::unordered_map<std::string, std::string> &header) {
   set_cookies();
   check_curl_correct(curl_easy_setopt(http_handle_, CURLOPT_HTTPGET, 1L));
 
@@ -377,9 +380,10 @@ Response Request::RequestImpl::get(
 }
 
 Response Request::RequestImpl::post(
-    const std::string &url, const std::map<std::string, std::string> &data,
-    const std::map<std::string, std::string> &file,
-    const std::map<std::string, std::string> &header) {
+    const std::string &url,
+    const std::unordered_map<std::string, std::string> &data,
+    const std::unordered_map<std::string, std::string> &file,
+    const std::unordered_map<std::string, std::string> &header) {
   set_cookies();
   check_curl_correct(curl_easy_setopt(http_handle_, CURLOPT_HTTPPOST, 1L));
 
@@ -392,7 +396,7 @@ Response Request::RequestImpl::post(
 
 Response Request::RequestImpl::post(
     const std::string &url, const std::string &data,
-    const std::map<std::string, std::string> &header) {
+    const std::unordered_map<std::string, std::string> &header) {
   set_cookies();
   check_curl_correct(curl_easy_setopt(http_handle_, CURLOPT_HTTPPOST, 1L));
 
@@ -476,36 +480,46 @@ void Request::set_connect_timeout(std::int64_t seconds) {
   impl_->set_connect_timeout(seconds);
 }
 
-Response Request::get(const std::string &url,
-                      const std::map<std::string, std::string> &params,
-                      const std::map<std::string, std::string> &header) {
+Response Request::get(
+    const std::string &url,
+    const std::unordered_map<std::string, std::string> &params,
+    const std::unordered_map<std::string, std::string> &header) {
   return impl_->get(url, params, header);
 }
 
-Response Request::post(const std::string &url,
-                       const std::map<std::string, std::string> &data,
-                       const std::map<std::string, std::string> &file,
-                       const std::map<std::string, std::string> &header) {
+Response Request::post(
+    const std::string &url,
+    const std::unordered_map<std::string, std::string> &data,
+    const std::unordered_map<std::string, std::string> &file,
+    const std::unordered_map<std::string, std::string> &header) {
   return impl_->post(url, data, file, header);
 }
 
-Response Request::post(const std::string &url, const std::string &data,
-                       const std::map<std::string, std::string> &header) {
+Response Request::post(
+    const std::string &url, const std::string &data,
+    const std::unordered_map<std::string, std::string> &header) {
   return impl_->post(url, data, header);
 }
 
 const std::string &Headers::at(const std::string &key) const {
-  auto key_lower = boost::to_lower_copy(key);
-  if (!map_.contains(key_lower)) {
+  auto lower_key = boost::to_lower_copy(key);
+  if (!map_.contains(lower_key)) {
     throw RuntimeError("no key");
   }
 
-  return map_.at(key_lower);
+  return map_.at(lower_key);
 }
 
 void Headers::add(const std::string &key, const std::string &value) {
-  assert(!map_.contains(key));
-  map_.emplace(boost::to_lower_copy(key), boost::to_lower_copy(value));
+  auto lower_key = boost::to_lower_copy(key);
+  auto lower_value = boost::to_lower_copy(value);
+
+  if (map_.contains(lower_key)) {
+    auto old = map_[lower_key];
+    map_[lower_key] = old + ", " + lower_value;
+  } else {
+    map_.emplace(lower_key, lower_value);
+  }
 }
 
 std::int64_t Response::status_code() const { return status_code_; }
@@ -513,20 +527,22 @@ std::int64_t Response::status_code() const { return status_code_; }
 std::string Response::headers() const { return headers_; }
 
 Headers Response::headers_map() const {
-  std::vector<std::string> lines;
-  boost::split(lines, headers_, boost::is_any_of("\r\n"),
-               boost::token_compress_on);
+  auto lines = split_str(headers_, "\r\n");
   // e.g. HTTP/1.1 200 OK
   lines.erase(std::begin(lines));
-  if (std::empty(lines.back())) {
-    lines.pop_back();
-  }
+
+  auto iter = find_last(
+      std::begin(lines), std::end(lines),
+      [](const std::string &line) { return line.starts_with("HTTP/"); });
+  std::vector<std::string> last_headers(iter + 1, std::end(lines));
 
   Headers result;
 
-  for (const auto &line : lines) {
+  for (const auto &line : last_headers) {
     auto index = line.find(':');
-    result.add(line.substr(0, index), line.substr(index + 2));
+    auto key = line.substr(0, index);
+    auto value = line.substr(index + 2);
+    result.add(key, value);
   }
 
   return result;

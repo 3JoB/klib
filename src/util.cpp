@@ -103,6 +103,23 @@ ChangeWorkingDir::~ChangeWorkingDir() {
   }
 }
 
+std::vector<std::string> split_str(const std::string &str,
+                                   const std::string &separate) {
+  std::vector<std::string> result;
+  result.reserve(128);
+
+  boost::split(result, str, boost::is_any_of(separate),
+               boost::token_compress_on);
+  for (auto &line : result) {
+    boost::trim(line);
+  }
+
+  std::erase_if(result,
+                [](const std::string &line) { return std::empty(line); });
+
+  return result;
+}
+
 std::string read_file(const std::string &path, bool binary_mode) {
   return read_file(path.c_str(), binary_mode);
 }
@@ -146,19 +163,7 @@ std::vector<std::string> read_file_line(std::string_view path) {
 
 std::vector<std::string> read_file_line(const char *path) {
   auto str = read_file(path, false);
-
-  std::vector<std::string> result;
-  result.reserve(128);
-
-  boost::split(result, str, boost::is_any_of("\n"), boost::token_compress_on);
-  for (auto &line : result) {
-    boost::trim(line);
-  }
-
-  std::erase_if(result,
-                [](const std::string &line) { return std::empty(line); });
-
-  return result;
+  return split_str(str, "\n");
 }
 
 void write_file(const std::string &path, bool binary_mode,
