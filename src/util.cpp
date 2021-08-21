@@ -4,7 +4,6 @@
 #include <wait.h>
 
 #include <algorithm>
-#include <cassert>
 #include <cerrno>
 #include <clocale>
 #include <cstdlib>
@@ -45,8 +44,6 @@ void check_openssl(std::int32_t rc) {
 }
 
 std::string bytes_to_hex_string(const std::vector<std::uint8_t> &bytes) {
-  assert(!std::empty(bytes));
-
   std::string str;
 
   // https://zh.wikipedia.org/wiki/SHA-3#SHA_%E5%AE%B6%E6%97%8F%E5%87%BD%E6%95%B0%E7%9A%84%E6%AF%94%E8%BE%83
@@ -194,7 +191,9 @@ void write_file(const char *path, bool binary_mode, const char *content,
 
 // https://zh.cppreference.com/w/c/string/multibyte/mbrtoc16
 std::u16string utf8_to_utf16(const std::string &str) {
-  assert(!std::empty(str));
+  if (std::empty(str)) {
+    return {};
+  }
 
   std::setlocale(LC_ALL, "en_US.utf8");
 
@@ -225,7 +224,9 @@ std::u16string utf8_to_utf16(const std::string &str) {
 
 // https://zh.cppreference.com/w/c/string/multibyte/mbrtoc32
 std::u32string utf8_to_utf32(const std::string &str) {
-  assert(!std::empty(str));
+  if (std::empty(str)) {
+    return {};
+  }
 
   std::setlocale(LC_ALL, "en_US.utf8");
 
@@ -237,8 +238,6 @@ std::u32string utf8_to_utf32(const std::string &str) {
   mbstate_t state = {};
 
   while (auto rc = std::mbrtoc32(&out, begin, size, &state)) {
-    assert(rc != static_cast<std::size_t>(-3));
-
     if (rc == static_cast<std::size_t>(-1)) {
       throw RuntimeError(std::strerror(errno));
     }
@@ -295,7 +294,9 @@ bool is_ascii(const std::u32string &str) {
 }
 
 bool is_chinese(const std::string &c) {
-  assert(!std::empty(c));
+  if (std::empty(c)) {
+    return false;
+  }
 
   auto utf32 = utf8_to_utf32(c);
 
@@ -318,7 +319,7 @@ std::string base64_encode(const std::string &str) {
   BIO_flush(b64.get());
 
   const char *encoded;
-  const long len = BIO_get_mem_data(sink, &encoded);
+  auto len = BIO_get_mem_data(sink, &encoded);
   return std::string(encoded, len);
 }
 
@@ -330,7 +331,7 @@ std::string base64_decode(const std::string &str) {
   BIO *source = BIO_new_mem_buf(std::data(str), -1);
   BIO_push(b64.get(), source);
 
-  const int max_len = std::size(str) / 4 * 3 + 1;
+  auto max_len = std::size(str) / 4 * 3 + 1;
   std::string decoded;
   decoded.resize(max_len);
   const int len = BIO_read(b64.get(), decoded.data(), max_len);
@@ -340,6 +341,10 @@ std::string base64_decode(const std::string &str) {
 }
 
 std::string md5(const std::string &str) {
+  return bytes_to_hex_string(md5_raw(str));
+}
+
+std::vector<std::uint8_t> md5_raw(const std::string &str) {
   std::uint32_t digest_length = MD5_DIGEST_LENGTH;
   auto digest = static_cast<std::uint8_t *>(OPENSSL_malloc(digest_length));
 
@@ -350,7 +355,11 @@ std::string md5(const std::string &str) {
 
   OPENSSL_free(digest);
 
-  return bytes_to_hex_string(output);
+  return output;
+}
+
+std::string md5_file(const std::string &path) {
+  return md5(read_file(path, true));
 }
 
 std::string sha_256(const std::string &str) {
@@ -511,12 +520,17 @@ bool same_folder(const std::string &path1, const std::string &path2) {
 }
 
 void execute_command(const std::string &command) {
-  assert(!std::empty(command));
+  if (std::empty(command)) {
+    return;
+  }
+
   execute_command(command.c_str());
 }
 
 void execute_command(const char *command) {
-  assert(command);
+  if (!command) {
+    return;
+  }
 
   auto status = std::system(command);
   if (status == -1 || !WIFEXITED(status) || WEXITSTATUS(status)) {

@@ -65,6 +65,14 @@ class ChangeWorkingDir {
   std::string backup_;
 };
 
+/**
+ * @brief Search for an element equal to value
+ * @param first: Starting iterator
+ * @param last: Post-tail iterator
+ * @param value: Value to compare the elements to
+ * @return Iterator to the first element satisfying the condition or last if no
+ * such element is found
+ */
 template <typename InputIt, typename T>
 requires std::same_as<typename InputIt::value_type, T>
 constexpr inline InputIt find_last(InputIt first, InputIt last,
@@ -80,6 +88,14 @@ constexpr inline InputIt find_last(InputIt first, InputIt last,
   return last;
 }
 
+/**
+ * @brief Search for an element for which predicate p returns true
+ * @param first: Starting iterator
+ * @param last: Post-tail iterator
+ * @param p: Unary predicate which returns true for the required element
+ * @return Iterator to the first element satisfying the condition or last if no
+ * such element is found
+ */
 template <class InputIt, class UnaryPredicate>
 requires std::predicate<UnaryPredicate, typename InputIt::value_type>
 constexpr inline InputIt find_last(InputIt first, InputIt last,
@@ -95,6 +111,12 @@ constexpr inline InputIt find_last(InputIt first, InputIt last,
   return last;
 }
 
+/**
+ * @brief Split string
+ * @param str: String to be split
+ * @param separate: Separate characters
+ * @return Result after separation
+ */
 std::vector<std::string> split_str(const std::string &str,
                                    const std::string &separate);
 
@@ -216,11 +238,25 @@ std::string base64_encode(const std::string &str);
 std::string base64_decode(const std::string &str);
 
 /**
- * @brief MD5
+ * @brief Calculate MD5
  * @param str: Data to be encoded
  * @return MD5 result
  */
 std::string md5(const std::string &str);
+
+/**
+ * @brief Calculate MD5
+ * @param str: Data to be encoded
+ * @return MD5 result
+ */
+std::vector<std::uint8_t> md5_raw(const std::string &str);
+
+/**
+ * @brief Calculate MD5
+ * @param path: The path of the file to be calculated
+ * @return MD5 result
+ */
+std::string md5_file(const std::string &path);
 
 /**
  * @brief Calculate SHA-256

@@ -1,6 +1,5 @@
 #include "klib/html.h"
 
-#include <cassert>
 #include <memory>
 
 #include <tidy.h>
@@ -22,7 +21,9 @@ void check_opt_set(bool ok) {
 
 // https://www.html-tidy.org/developer/
 std::string html_tidy(const std::string &html) {
-  assert(!std::empty(html));
+  if (std::empty(html)) {
+    return "";
+  }
 
   auto free_tidy_doc = [](TidyDoc *doc) { tidyRelease(*doc); };
   TidyDoc temp_doc = tidyCreate();

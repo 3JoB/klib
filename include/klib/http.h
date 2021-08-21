@@ -152,10 +152,11 @@ class Headers {
    */
   [[nodiscard]] const std::string &at(const std::string &key) const;
 
+  bool empty() const { return std::empty(map_); }
+
  private:
   void add(const std::string &key, const std::string &value);
 
-  // FIXME
   std::unordered_map<std::string, std::string> map_;
 };
 
@@ -182,13 +183,7 @@ class Response {
    * @brief Get server response
    * @return Server response
    */
-  [[nodiscard]] std::string headers() const;
-
-  /**
-   * @brief Get server response
-   * @return Server response
-   */
-  [[nodiscard]] Headers headers_map() const;
+  [[nodiscard]] const Headers &headers_map();
 
   /**
    * @brief Get response content
@@ -207,6 +202,8 @@ class Response {
   std::int64_t status_code_ = StatusCode::None;
   std::string headers_;
   std::string text_;
+
+  Headers headers_map_;
 };
 
 }  // namespace klib

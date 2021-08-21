@@ -33,6 +33,16 @@ TEST_CASE("find_last", "[util]") {
   REQUIRE(iter - std::begin(v) == 0);
 }
 
+TEST_CASE("split_str", "[util]") {
+  const std::vector<std::string> std_vec = {"123", "123", "123"};
+
+  auto result = klib::split_str("123abc123abc123abc", "abc");
+  REQUIRE(result == std_vec);
+
+  result = klib::split_str("|||123?123|123!", "|?!");
+  REQUIRE(result == std_vec);
+}
+
 TEST_CASE("read_file & write_file", "[util]") {
   REQUIRE(std::filesystem::exists("zlib-v1.2.11.tar.gz"));
 

@@ -127,9 +127,6 @@ TEST_CASE("POST", "[http]") {
                    {{file_a, file_a}, {file_b, file_b}});
   REQUIRE(response.status_code() == klib::Response::StatusCode::Ok);
 
-  auto map = response.headers_map();
-  REQUIRE(map.at("content-TYPE") == "application/json");
-
   auto jv = boost::json::parse(response.text());
 
   const auto& form = jv.at("form");

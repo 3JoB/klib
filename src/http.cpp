@@ -1,6 +1,5 @@
 #include "klib/http.h"
 
-#include <cassert>
 #include <cstddef>
 #include <filesystem>
 #include <string_view>
@@ -76,7 +75,9 @@ class AddHeader {
   explicit AddHeader(
       CURL *curl, const std::unordered_map<std::string, std::string> &headers)
       : curl_(curl) {
-    assert(curl_);
+    if (!curl_) {
+      throw RuntimeError("curl is null");
+    }
 
     if (std::empty(headers)) {
       return;
@@ -84,7 +85,9 @@ class AddHeader {
 
     try {
       for (const auto &[key, value] : headers) {
-        assert(!std::empty(key) && !std::empty(value));
+        if (std::empty(key) || std::empty(value)) {
+          throw RuntimeError("The header key and value can not be empty");
+        }
 
         std::string str = key;
         str.append(": ").append(value);
@@ -119,7 +122,9 @@ class AddForm {
                    const std::unordered_map<std::string, std::string> &data,
                    const std::unordered_map<std::string, std::string> &file)
       : curl_(curl) {
-    assert(curl_);
+    if (!curl_) {
+      throw RuntimeError("curl is null");
+    }
 
     if (std::empty(data)) {
       return;
@@ -129,7 +134,9 @@ class AddForm {
       form_ = curl_mime_init(curl_);
 
       for (const auto &[key, value] : data) {
-        assert(!std::empty(key) && !std::empty(value));
+        if (std::empty(key) || std::empty(value)) {
+          throw RuntimeError("The post form key and value can not be empty");
+        }
 
         auto field = curl_mime_addpart(form_);
         curl_mime_name(field, key.c_str());
@@ -137,7 +144,9 @@ class AddForm {
       }
 
       for (const auto &[file_name, path] : file) {
-        assert(!std::empty(file_name) && !std::empty(path));
+        if (std::empty(file_name) || std::empty(path)) {
+          throw RuntimeError("The post file_name and path can not be empty");
+        }
 
         if (!std::filesystem::is_regular_file(path)) {
           throw RuntimeError("file: {} not exist", path);
@@ -173,7 +182,9 @@ class AddForm {
 class Multi {
  public:
   explicit Multi(CURL *curl) : curl_(curl), multi_(curl_multi_init()) {
-    assert(curl_);
+    if (!curl_) {
+      throw RuntimeError("curl is null");
+    }
 
     if (!multi_) {
       throw RuntimeError("create multi_handle error");
@@ -524,28 +535,26 @@ void Headers::add(const std::string &key, const std::string &value) {
 
 std::int64_t Response::status_code() const { return status_code_; }
 
-std::string Response::headers() const { return headers_; }
+const Headers &Response::headers_map() {
+  if (!headers_map_.empty()) {
+    return headers_map_;
+  }
 
-Headers Response::headers_map() const {
   auto lines = split_str(headers_, "\r\n");
-  // e.g. HTTP/1.1 200 OK
-  lines.erase(std::begin(lines));
 
   auto iter = find_last(
       std::begin(lines), std::end(lines),
       [](const std::string &line) { return line.starts_with("HTTP/"); });
   std::vector<std::string> last_headers(iter + 1, std::end(lines));
 
-  Headers result;
-
   for (const auto &line : last_headers) {
     auto index = line.find(':');
     auto key = line.substr(0, index);
     auto value = line.substr(index + 2);
-    result.add(key, value);
+    headers_map_.add(key, value);
   }
 
-  return result;
+  return headers_map_;
 }
 
 std::string Response::text() const { return text_; }

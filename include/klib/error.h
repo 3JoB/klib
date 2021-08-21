@@ -1,3 +1,8 @@
+/**
+ * @file error.h
+ * @brief Contains report error and warning modules
+ */
+
 #pragma once
 
 #include <cstdlib>
