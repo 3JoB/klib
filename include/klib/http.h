@@ -99,6 +99,12 @@ class Request {
   void set_connect_timeout(std::int64_t seconds);
 
   /**
+   * @brief Use cookies
+   * @param flag: True to use cookies
+   */
+  void use_cookies(bool flag);
+
+  /**
    * @brief Sends a GET request
    * @param url: Requested url
    * @param params: URL parameters

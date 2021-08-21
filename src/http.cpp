@@ -240,6 +240,7 @@ class Request::RequestImpl {
   void set_curl_user_agent();
   void set_timeout(std::int64_t seconds);
   void set_connect_timeout(std::int64_t seconds);
+  void use_cookies(bool flag);
 
   Response get(const std::string &url,
                const std::unordered_map<std::string, std::string> &params,
@@ -253,6 +254,8 @@ class Request::RequestImpl {
 
  private:
   constexpr static std::string_view cookies_path = "/tmp/cookies.txt";
+  bool use_cookies_ = true;
+
   void set_cookies();
 
   Response do_post();
@@ -357,6 +360,8 @@ void Request::RequestImpl::set_connect_timeout(std::int64_t seconds) {
       curl_easy_setopt(http_handle_, CURLOPT_CONNECTTIMEOUT, seconds));
 }
 
+void Request::RequestImpl::use_cookies(bool flag) { use_cookies_ = flag; }
+
 Response Request::RequestImpl::get(
     const std::string &url,
     const std::unordered_map<std::string, std::string> &params,
@@ -420,9 +425,12 @@ Response Request::RequestImpl::post(
 }
 
 void Request::RequestImpl::set_cookies() {
-  if (std::filesystem::exists(RequestImpl::cookies_path)) {
+  if (use_cookies_ && std::filesystem::exists(RequestImpl::cookies_path)) {
     check_curl_correct(curl_easy_setopt(http_handle_, CURLOPT_COOKIEFILE,
                                         RequestImpl::cookies_path.data()));
+  } else {
+    check_curl_correct(
+        curl_easy_setopt(http_handle_, CURLOPT_COOKIEFILE, nullptr));
   }
 }
 
@@ -490,6 +498,8 @@ void Request::set_timeout(std::int64_t seconds) { impl_->set_timeout(seconds); }
 void Request::set_connect_timeout(std::int64_t seconds) {
   impl_->set_connect_timeout(seconds);
 }
+
+void Request::use_cookies(bool flag) { impl_->use_cookies(flag); }
 
 Response Request::get(
     const std::string &url,

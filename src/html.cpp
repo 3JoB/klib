@@ -20,7 +20,7 @@ void check_opt_set(bool ok) {
 }  // namespace
 
 // https://www.html-tidy.org/developer/
-std::string html_tidy(const std::string &html) {
+std::string html_tidy(const std::string &html, bool ignore_error) {
   if (std::empty(html)) {
     return "";
   }
@@ -63,7 +63,7 @@ std::string html_tidy(const std::string &html) {
 
   std::string xhtml;
   if (rc >= 0) {
-    if (rc > 1) {
+    if (rc > 1 && !ignore_error) {
       throw RuntimeError("{}",
                          reinterpret_cast<const char *>(error_buffer->bp));
     }
