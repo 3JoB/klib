@@ -16,7 +16,6 @@
         "CMAKE_BUILD_TYPE": "Debug",
         "KLIB_BUILD_TEST": "ON",
         "KLIB_BUILD_EXTRA_TEST": "ON",
-        "KLIB_TEST_USE_PROXY": "ON",
         "KLIB_BUILD_DOC": "ON",
         "KLIB_FORMAT": "ON",
         "KLIB_SANITIZER": "ON",
@@ -38,7 +37,6 @@
         "CMAKE_BUILD_TYPE": "Release",
         "KLIB_BUILD_TEST": "ON",
         "KLIB_BUILD_EXTRA_TEST": "ON",
-        "KLIB_TEST_USE_PROXY": "ON",
         "KLIB_BUILD_BENCH": "ON",
         "KLIB_BUILD_DOC": "ON",
         "KLIB_FORMAT": "ON"
@@ -59,7 +57,6 @@
         "CMAKE_BUILD_TYPE": "Debug",
         "KLIB_BUILD_TEST": "ON",
         "KLIB_BUILD_EXTRA_TEST": "ON",
-        "KLIB_TEST_USE_PROXY": "ON",
         "KLIB_BUILD_DOC": "ON",
         "KLIB_FORMAT": "ON",
         "KLIB_SANITIZER": "ON",
@@ -81,7 +78,6 @@
         "CMAKE_BUILD_TYPE": "Release",
         "KLIB_BUILD_TEST": "ON",
         "KLIB_BUILD_EXTRA_TEST": "ON",
-        "KLIB_TEST_USE_PROXY": "ON",
         "KLIB_BUILD_BENCH": "ON",
         "KLIB_BUILD_DOC": "ON",
         "KLIB_FORMAT": "ON"

@@ -71,10 +71,6 @@ find_package(Boost REQUIRED)
 set(THREADS_PREFER_PTHREAD_FLAG TRUE)
 find_package(Threads REQUIRED)
 
-if(KLIB_TEST_USE_PROXY)
-  add_definitions(-DKLIB_TEST_USE_PROXY)
-endif()
-
 # ---------------------------------------------------------------------------------------
 # Build static library
 # ---------------------------------------------------------------------------------------

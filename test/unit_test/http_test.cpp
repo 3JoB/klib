@@ -7,9 +7,7 @@
 #include "klib/http.h"
 #include "klib/util.h"
 
-#ifdef KLIB_TEST_USE_PROXY
-const char* const proxy = "socks5://127.0.0.1:1080";
-#endif
+const std::string httpbin_url = "http://localhost:80";
 
 TEST_CASE("request headers", "[http]") {
   klib::Request request;
@@ -21,20 +19,17 @@ TEST_CASE("request headers", "[http]") {
 #ifndef NDEBUG
   request.verbose(true);
 #endif
-#ifdef KLIB_TEST_USE_PROXY
-  request.set_proxy(proxy);
-#endif
 
   const std::string header_key = "Authorization";
   const std::string header_value = "123456";
 
-  auto response = request.get("https://httpbin.org/headers", {},
-                              {{header_key, header_value}});
+  auto response =
+      request.get(httpbin_url + "/headers", {}, {{header_key, header_value}});
   REQUIRE(response.status_code() == klib::Response::StatusCode::Ok);
   auto headers = boost::json::parse(response.text()).at("headers");
   REQUIRE(headers.at(header_key).as_string() == header_value);
 
-  response = request.get("https://httpbin.org/headers");
+  response = request.get(httpbin_url + "/headers");
   REQUIRE(response.status_code() == klib::Response::StatusCode::Ok);
   headers = boost::json::parse(response.text()).at("headers");
   REQUIRE_FALSE(headers.as_object().contains(header_key));
@@ -50,16 +45,13 @@ TEST_CASE("response headers", "[http]") {
 #ifndef NDEBUG
   request.verbose(true);
 #endif
-#ifdef KLIB_TEST_USE_PROXY
-  request.set_proxy(proxy);
-#endif
 
   const std::string cookie1 = "a";
   const std::string value1 = "111";
   const std::string cookie2 = "b";
   const std::string value2 = "222";
 
-  auto response = request.get("https://httpbin.org/cookies/set",
+  auto response = request.get(httpbin_url + "/cookies/set",
                               {{cookie1, value1}, {cookie2, value2}});
   REQUIRE(response.status_code() == klib::Response::StatusCode::Ok);
 
@@ -77,17 +69,13 @@ TEST_CASE("GET", "[http]") {
 #ifndef NDEBUG
   request.verbose(true);
 #endif
-#ifdef KLIB_TEST_USE_PROXY
-  request.set_proxy(proxy);
-#endif
-
   const std::string key1 = "a";
   const std::string value1 = "111";
   const std::string key2 = "b";
   const std::string value2 = "你好世界";
 
   auto response =
-      request.get("https://httpbin.org/get", {{key1, value1}, {key2, value2}});
+      request.get(httpbin_url + "/get", {{key1, value1}, {key2, value2}});
   REQUIRE(response.status_code() == klib::Response::StatusCode::Ok);
 
   auto args = boost::json::parse(response.text()).at("args");
@@ -105,9 +93,6 @@ TEST_CASE("POST", "[http]") {
 #ifndef NDEBUG
   request.verbose(true);
 #endif
-#ifdef KLIB_TEST_USE_PROXY
-  request.set_proxy(proxy);
-#endif
 
   const std::string user_name = "kaiser";
   const std::string password = "123456";
@@ -121,10 +106,9 @@ TEST_CASE("POST", "[http]") {
   REQUIRE(std::filesystem::exists(file_a));
   REQUIRE(std::filesystem::exists(file_b));
 
-  auto response =
-      request.post("https://httpbin.org/post",
-                   {{"user_name", user_name}, {"password", password}},
-                   {{file_a, file_a}, {file_b, file_b}});
+  auto response = request.post(
+      httpbin_url + "/post", {{"user_name", user_name}, {"password", password}},
+      {{file_a, file_a}, {file_b, file_b}});
   REQUIRE(response.status_code() == klib::Response::StatusCode::Ok);
 
   auto jv = boost::json::parse(response.text());
@@ -147,9 +131,6 @@ TEST_CASE("POST json", "[http]") {
 #ifndef NDEBUG
   request.verbose(true);
 #endif
-#ifdef KLIB_TEST_USE_PROXY
-  request.set_proxy(proxy);
-#endif
 
   const std::string user_name = "kaiser";
   const std::string password = "123456";
@@ -159,7 +140,7 @@ TEST_CASE("POST json", "[http]") {
   obj["password"] = password;
 
   auto response =
-      request.post("https://httpbin.org/post", boost::json::serialize(obj),
+      request.post(httpbin_url + "/post", boost::json::serialize(obj),
                    {{"Content-Type", "application/json"}});
   REQUIRE(response.status_code() == klib::Response::StatusCode::Ok);
 

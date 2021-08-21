@@ -5,10 +5,6 @@ project(dummy_import LANGUAGES CXX)
 # https://stackoverflow.com/questions/7980784/cmake-add-sub-directory-which-is-not-sub-directory-on-real-directory
 add_subdirectory(${KLIB_SOURCE_DIR} ${CMAKE_CURRENT_BINARY_DIR}/klib)
 
-if(KLIB_TEST_USE_PROXY)
-  add_definitions(-DKLIB_TEST_USE_PROXY)
-endif()
-
 add_executable(with_namespace_target main.cpp)
 target_link_libraries(with_namespace_target PRIVATE klib::klib)
 add_custom_command(

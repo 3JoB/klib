@@ -41,6 +41,8 @@ if [[ "$OSTYPE" == "linux-gnu"* ]]; then
 
   kpkg install lcov doxygen catch2 fmt libarchive curl openssl tidy-html5 boost
   sudo ldconfig
+
+  sudo docker run -d -p 80:80 kennethreitz/httpbin
 else
   echo "The system does not support: $OSTYPE"
   exit 1
