@@ -428,6 +428,8 @@ void Request::RequestImpl::set_cookies() {
   if (use_cookies_) {
     check_curl_correct(curl_easy_setopt(http_handle_, CURLOPT_COOKIEFILE,
                                         RequestImpl::cookies_path.data()));
+  } else {
+    check_curl_correct(curl_easy_setopt(http_handle_, CURLOPT_COOKIEFILE, ""));
   }
 }
 
