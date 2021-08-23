@@ -15,6 +15,7 @@ TEST_CASE("request headers", "[http]") {
   request.set_connect_timeout(5);
   request.set_timeout(30);
   request.set_curl_user_agent();
+  request.use_cookies(false);
 
 #ifndef NDEBUG
   request.verbose(true);

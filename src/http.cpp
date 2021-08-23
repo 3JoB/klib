@@ -292,9 +292,6 @@ Request::RequestImpl::RequestImpl() {
                                         RequestImpl::callback_func_std_string));
     check_curl_correct(curl_easy_setopt(http_handle_, CURLOPT_HEADERFUNCTION,
                                         callback_func_std_string));
-
-    check_curl_correct(curl_easy_setopt(http_handle_, CURLOPT_COOKIEJAR,
-                                        RequestImpl::cookies_path.data()));
   } catch (...) {
     curl_easy_cleanup(http_handle_);
     curl_global_cleanup();
@@ -426,9 +423,12 @@ Response Request::RequestImpl::post(
 
 void Request::RequestImpl::set_cookies() {
   if (use_cookies_) {
+    check_curl_correct(curl_easy_setopt(http_handle_, CURLOPT_COOKIEJAR,
+                                        RequestImpl::cookies_path.data()));
     check_curl_correct(curl_easy_setopt(http_handle_, CURLOPT_COOKIEFILE,
                                         RequestImpl::cookies_path.data()));
   } else {
+    check_curl_correct(curl_easy_setopt(http_handle_, CURLOPT_COOKIEJAR, ""));
     check_curl_correct(curl_easy_setopt(http_handle_, CURLOPT_COOKIEFILE, ""));
   }
 }
