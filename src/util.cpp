@@ -76,6 +76,24 @@ std::map<std::string, std::string> read_folder(const std::string &path) {
   return folder;
 }
 
+std::vector<std::uint8_t> do_evp(const std::string &str,
+                                 std::uint32_t digest_length,
+                                 const EVP_MD *algorithm) {
+  auto digest = static_cast<std::uint8_t *>(OPENSSL_malloc(digest_length));
+
+  EVP_MD_CTX *context = EVP_MD_CTX_new();
+  EVP_DigestInit_ex(context, algorithm, nullptr);
+  EVP_DigestUpdate(context, str.c_str(), std::size(str));
+  EVP_DigestFinal_ex(context, digest, &digest_length);
+  EVP_MD_CTX_destroy(context);
+
+  std::vector<std::uint8_t> output(digest, digest + digest_length);
+
+  OPENSSL_free(digest);
+
+  return output;
+}
+
 }  // namespace
 
 ChangeWorkingDir::ChangeWorkingDir(const std::string &path) {
@@ -345,17 +363,7 @@ std::string md5(const std::string &str) {
 }
 
 std::vector<std::uint8_t> md5_raw(const std::string &str) {
-  std::uint32_t digest_length = MD5_DIGEST_LENGTH;
-  auto digest = static_cast<std::uint8_t *>(OPENSSL_malloc(digest_length));
-
-  MD5(reinterpret_cast<const unsigned char *>(std::data(str)), std::size(str),
-      digest);
-
-  std::vector<std::uint8_t> output(digest, digest + digest_length);
-
-  OPENSSL_free(digest);
-
-  return output;
+  return do_evp(str, MD5_DIGEST_LENGTH, EVP_md5());
 }
 
 std::string md5_file(const std::string &path) {
@@ -367,21 +375,7 @@ std::string sha_256(const std::string &str) {
 }
 
 std::vector<std::uint8_t> sha_256_raw(const std::string &str) {
-  std::uint32_t digest_length = SHA256_DIGEST_LENGTH;
-  auto digest = static_cast<std::uint8_t *>(OPENSSL_malloc(digest_length));
-
-  EVP_MD_CTX *context = EVP_MD_CTX_new();
-  auto algorithm = EVP_sha256();
-  EVP_DigestInit_ex(context, algorithm, nullptr);
-  EVP_DigestUpdate(context, str.c_str(), std::size(str));
-  EVP_DigestFinal_ex(context, digest, &digest_length);
-  EVP_MD_CTX_destroy(context);
-
-  std::vector<std::uint8_t> output(digest, digest + digest_length);
-
-  OPENSSL_free(digest);
-
-  return output;
+  return do_evp(str, SHA256_DIGEST_LENGTH, EVP_sha256());
 }
 
 std::string sha_256_file(const std::string &path) {
@@ -393,21 +387,7 @@ std::string sha3_512(const std::string &str) {
 }
 
 std::vector<std::uint8_t> sha3_512_raw(const std::string &str) {
-  std::uint32_t digest_length = SHA512_DIGEST_LENGTH;
-  auto digest = static_cast<std::uint8_t *>(OPENSSL_malloc(digest_length));
-
-  EVP_MD_CTX *context = EVP_MD_CTX_new();
-  auto algorithm = EVP_sha3_512();
-  EVP_DigestInit_ex(context, algorithm, nullptr);
-  EVP_DigestUpdate(context, str.c_str(), std::size(str));
-  EVP_DigestFinal_ex(context, digest, &digest_length);
-  EVP_MD_CTX_destroy(context);
-
-  std::vector<std::uint8_t> output(digest, digest + digest_length);
-
-  OPENSSL_free(digest);
-
-  return output;
+  return do_evp(str, SHA512_DIGEST_LENGTH, EVP_sha3_512());
 }
 
 std::string sha3_512_file(const std::string &path) {

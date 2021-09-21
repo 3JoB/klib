@@ -59,7 +59,10 @@ include(CompilerOptions)
 # Find package
 # ---------------------------------------------------------------------------------------
 find_package(LibArchive REQUIRED)
+
+add_definitions(-DOPENSSL_NO_DEPRECATED)
 find_package(OpenSSL REQUIRED)
+
 find_package(CURL CONFIG REQUIRED)
 
 find_package(PkgConfig REQUIRED)
