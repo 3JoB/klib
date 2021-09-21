@@ -21,7 +21,6 @@
 #include <fmt/compile.h>
 #include <fmt/format.h>
 #include <openssl/aes.h>
-#include <openssl/bio.h>
 #include <openssl/err.h>
 #include <openssl/evp.h>
 #include <openssl/md5.h>
@@ -79,16 +78,16 @@ std::map<std::string, std::string> read_folder(const std::string &path) {
 std::vector<std::uint8_t> do_evp(const std::string &str,
                                  std::uint32_t digest_length,
                                  const EVP_MD *algorithm) {
-  auto digest = static_cast<std::uint8_t *>(OPENSSL_malloc(digest_length));
-
-  EVP_MD_CTX *context = EVP_MD_CTX_new();
-  EVP_DigestInit_ex(context, algorithm, nullptr);
+  auto context = EVP_MD_CTX_new();
+  EVP_DigestInit(context, algorithm);
   EVP_DigestUpdate(context, str.c_str(), std::size(str));
-  EVP_DigestFinal_ex(context, digest, &digest_length);
+
+  auto digest = static_cast<std::uint8_t *>(OPENSSL_malloc(digest_length));
+  EVP_DigestFinal(context, digest, &digest_length);
+
   EVP_MD_CTX_destroy(context);
 
   std::vector<std::uint8_t> output(digest, digest + digest_length);
-
   OPENSSL_free(digest);
 
   return output;
@@ -325,37 +324,54 @@ bool is_chinese(const std::string &c) {
   return is_chinese(utf32.front());
 }
 
-// https://stackoverflow.com/questions/5288076/base64-encoding-and-decoding-with-openssl
+// https://github.com/gspark/cryptool/blob/main/src/crypto/digest/base64.cpp
 std::string base64_encode(const std::string &str) {
-  std::unique_ptr<BIO, decltype(&BIO_free_all)> b64(BIO_new(BIO_f_base64()),
-                                                    BIO_free_all);
+  auto context = EVP_ENCODE_CTX_new();
+  EVP_EncodeInit(context);
 
-  BIO_set_flags(b64.get(), BIO_FLAGS_BASE64_NO_NL);
-  BIO *sink = BIO_new(BIO_s_mem());
-  BIO_push(b64.get(), sink);
-  BIO_write(b64.get(), std::data(str), std::size(str));
-  BIO_flush(b64.get());
+  std::int32_t chunk_len = 0;
+  auto size = std::size(str);
+  auto digest =
+      static_cast<std::uint8_t *>(OPENSSL_malloc(EVP_ENCODE_LENGTH(size)));
+  EVP_EncodeUpdate(context, digest, &chunk_len,
+                   reinterpret_cast<const unsigned char *>(std::data(str)),
+                   size);
 
-  const char *encoded;
-  auto len = BIO_get_mem_data(sink, &encoded);
-  return std::string(encoded, len);
+  std::int32_t output_len = chunk_len;
+  EVP_EncodeFinal(context, digest + chunk_len, &chunk_len);
+  output_len += chunk_len;
+
+  EVP_ENCODE_CTX_free(context);
+
+  auto output = std::string(reinterpret_cast<const char *>(digest), output_len);
+  OPENSSL_free(digest);
+
+  boost::replace_all(output, "\n", "");
+  return output;
 }
 
 std::string base64_decode(const std::string &str) {
-  std::unique_ptr<BIO, decltype(&BIO_free_all)> b64(BIO_new(BIO_f_base64()),
-                                                    BIO_free_all);
+  auto context = EVP_ENCODE_CTX_new();
+  EVP_DecodeInit(context);
 
-  BIO_set_flags(b64.get(), BIO_FLAGS_BASE64_NO_NL);
-  BIO *source = BIO_new_mem_buf(std::data(str), -1);
-  BIO_push(b64.get(), source);
+  std::int32_t chunk_len = 0;
+  auto size = std::size(str);
+  auto digest =
+      static_cast<std::uint8_t *>(OPENSSL_malloc(EVP_DECODE_LENGTH(size)));
+  EVP_DecodeUpdate(context, digest, &chunk_len,
+                   reinterpret_cast<const unsigned char *>(std::data(str)),
+                   size);
 
-  auto max_len = std::size(str) / 4 * 3 + 1;
-  std::string decoded;
-  decoded.resize(max_len);
-  const int len = BIO_read(b64.get(), decoded.data(), max_len);
-  decoded.resize(len);
+  std::int32_t output_len = chunk_len;
+  EVP_DecodeFinal(context, digest + chunk_len, &chunk_len);
+  output_len += chunk_len;
 
-  return decoded;
+  EVP_ENCODE_CTX_free(context);
+
+  auto output = std::string(reinterpret_cast<const char *>(digest), output_len);
+  OPENSSL_free(digest);
+
+  return output;
 }
 
 std::string md5(const std::string &str) {
