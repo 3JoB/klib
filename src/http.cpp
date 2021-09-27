@@ -231,8 +231,6 @@ class Request::RequestImpl {
 
   void verbose(bool flag);
   void allow_redirects(bool flag);
-  void use_http_1_1();
-  void use_http_2();
   void set_proxy(const std::string &proxy);
   void set_no_proxy();
   void set_user_agent(const std::string &user_agent);
@@ -244,13 +242,16 @@ class Request::RequestImpl {
 
   Response get(const std::string &url,
                const std::unordered_map<std::string, std::string> &params,
-               const std::unordered_map<std::string, std::string> &header);
+               const std::unordered_map<std::string, std::string> &header,
+               bool multi);
   Response post(const std::string &url,
                 const std::unordered_map<std::string, std::string> &data,
                 const std::unordered_map<std::string, std::string> &file,
-                const std::unordered_map<std::string, std::string> &header);
+                const std::unordered_map<std::string, std::string> &header,
+                bool multi);
   Response post(const std::string &url, const std::string &data,
-                const std::unordered_map<std::string, std::string> &header);
+                const std::unordered_map<std::string, std::string> &header,
+                bool multi);
 
  private:
   constexpr static std::string_view cookies_path = "/tmp/cookies.txt";
@@ -258,7 +259,7 @@ class Request::RequestImpl {
 
   void set_cookies();
 
-  Response do_post();
+  Response do_post(bool multi);
 
   static std::size_t callback_func_std_string(void *contents, std::size_t size,
                                               std::size_t nmemb,
@@ -308,16 +309,6 @@ void Request::RequestImpl::verbose(bool flag) {
   check_curl_correct(curl_easy_setopt(http_handle_, CURLOPT_VERBOSE, flag));
 }
 
-void Request::RequestImpl::use_http_1_1() {
-  check_curl_correct(curl_easy_setopt(http_handle_, CURLOPT_HTTP_VERSION,
-                                      CURL_HTTP_VERSION_1_1));
-}
-
-void Request::RequestImpl::use_http_2() {
-  check_curl_correct(curl_easy_setopt(http_handle_, CURLOPT_HTTP_VERSION,
-                                      CURL_HTTP_VERSION_2_0));
-}
-
 void Request::RequestImpl::allow_redirects(bool flag) {
   check_curl_correct(
       curl_easy_setopt(http_handle_, CURLOPT_FOLLOWLOCATION, flag));
@@ -341,11 +332,11 @@ void Request::RequestImpl::set_browser_user_agent() {
   // navigator.userAgent
   set_user_agent(
       "Mozilla/5.0 (X11; Linux x86_64) AppleWebKit/537.36 (KHTML, like Gecko) "
-      "Chrome/93.0.4577.25 Safari/537.36 Edg/93.0.961.18");
+      "Chrome/94.0.4606.61 Safari/537.36 Edg/94.0.992.31");
 }
 
 void Request::RequestImpl::set_curl_user_agent() {
-  set_user_agent("curl/7.78.0");
+  set_user_agent("curl/7.79.1");
 }
 
 void Request::RequestImpl::set_timeout(std::int64_t seconds) {
@@ -362,7 +353,7 @@ void Request::RequestImpl::use_cookies(bool flag) { use_cookies_ = flag; }
 Response Request::RequestImpl::get(
     const std::string &url,
     const std::unordered_map<std::string, std::string> &params,
-    const std::unordered_map<std::string, std::string> &header) {
+    const std::unordered_map<std::string, std::string> &header, bool multi) {
   set_cookies();
   check_curl_correct(curl_easy_setopt(http_handle_, CURLOPT_HTTPGET, 1L));
 
@@ -378,13 +369,18 @@ Response Request::RequestImpl::get(
   check_curl_correct(
       curl_easy_setopt(http_handle_, CURLOPT_HEADERDATA, &response.headers_));
 
-  Multi multi_handle(http_handle_);
-  std::int32_t still_running = 1;
-  do {
-    check_curl_correct(curl_multi_perform(multi_handle.get(), &still_running));
-    check_curl_correct(
-        curl_multi_poll(multi_handle.get(), nullptr, 0, 1000, nullptr));
-  } while (still_running);
+  if (multi) {
+    Multi multi_handle(http_handle_);
+    std::int32_t still_running = 1;
+    do {
+      check_curl_correct(
+          curl_multi_perform(multi_handle.get(), &still_running));
+      check_curl_correct(
+          curl_multi_poll(multi_handle.get(), nullptr, 0, 1000, nullptr));
+    } while (still_running);
+  } else {
+    check_curl_correct(curl_easy_perform(http_handle_));
+  }
 
   check_curl_correct(curl_easy_getinfo(http_handle_, CURLINFO_RESPONSE_CODE,
                                        &response.status_code_));
@@ -396,7 +392,7 @@ Response Request::RequestImpl::post(
     const std::string &url,
     const std::unordered_map<std::string, std::string> &data,
     const std::unordered_map<std::string, std::string> &file,
-    const std::unordered_map<std::string, std::string> &header) {
+    const std::unordered_map<std::string, std::string> &header, bool multi) {
   set_cookies();
   check_curl_correct(curl_easy_setopt(http_handle_, CURLOPT_HTTPPOST, 1L));
 
@@ -404,12 +400,12 @@ Response Request::RequestImpl::post(
   AddHeader add_header(http_handle_, header);
   check_curl_correct(curl_easy_setopt(http_handle_, CURLOPT_URL, url.c_str()));
 
-  return do_post();
+  return do_post(multi);
 }
 
 Response Request::RequestImpl::post(
     const std::string &url, const std::string &data,
-    const std::unordered_map<std::string, std::string> &header) {
+    const std::unordered_map<std::string, std::string> &header, bool multi) {
   set_cookies();
   check_curl_correct(curl_easy_setopt(http_handle_, CURLOPT_HTTPPOST, 1L));
 
@@ -418,7 +414,7 @@ Response Request::RequestImpl::post(
   check_curl_correct(
       curl_easy_setopt(http_handle_, CURLOPT_POSTFIELDS, data.c_str()));
 
-  return do_post();
+  return do_post(multi);
 }
 
 void Request::RequestImpl::set_cookies() {
@@ -433,7 +429,7 @@ void Request::RequestImpl::set_cookies() {
   }
 }
 
-Response Request::RequestImpl::do_post() {
+Response Request::RequestImpl::do_post(bool multi) {
   Response response;
 
   check_curl_correct(
@@ -441,18 +437,22 @@ Response Request::RequestImpl::do_post() {
   check_curl_correct(
       curl_easy_setopt(http_handle_, CURLOPT_HEADERDATA, &response.headers_));
 
-  Multi multi_handle(http_handle_);
-  std::int32_t still_running = 0;
-  do {
-    auto mc = curl_multi_perform(multi_handle.get(), &still_running);
-    if (still_running) {
-      mc = curl_multi_poll(multi_handle.get(), nullptr, 0, 1000, nullptr);
-    }
+  if (multi) {
+    Multi multi_handle(http_handle_);
+    std::int32_t still_running = 0;
+    do {
+      auto mc = curl_multi_perform(multi_handle.get(), &still_running);
+      if (still_running) {
+        mc = curl_multi_poll(multi_handle.get(), nullptr, 0, 1000, nullptr);
+      }
 
-    if (mc) {
-      break;
-    }
-  } while (still_running);
+      if (mc) {
+        break;
+      }
+    } while (still_running);
+  } else {
+    check_curl_correct(curl_easy_perform(http_handle_));
+  }
 
   check_curl_correct(curl_easy_getinfo(http_handle_, CURLINFO_RESPONSE_CODE,
                                        &response.status_code_));
@@ -475,10 +475,6 @@ Request::~Request() = default;
 void Request::verbose(bool flag) { impl_->verbose(flag); }
 
 void Request::allow_redirects(bool flag) { impl_->allow_redirects(flag); }
-
-void Request::use_http_1_1() { impl_->use_http_1_1(); }
-
-void Request::use_http_2() { impl_->use_http_2(); }
 
 void Request::set_proxy(const std::string &proxy) { impl_->set_proxy(proxy); }
 
@@ -503,22 +499,22 @@ void Request::use_cookies(bool flag) { impl_->use_cookies(flag); }
 Response Request::get(
     const std::string &url,
     const std::unordered_map<std::string, std::string> &params,
-    const std::unordered_map<std::string, std::string> &header) {
-  return impl_->get(url, params, header);
+    const std::unordered_map<std::string, std::string> &header, bool multi) {
+  return impl_->get(url, params, header, multi);
 }
 
 Response Request::post(
     const std::string &url,
     const std::unordered_map<std::string, std::string> &data,
     const std::unordered_map<std::string, std::string> &file,
-    const std::unordered_map<std::string, std::string> &header) {
-  return impl_->post(url, data, file, header);
+    const std::unordered_map<std::string, std::string> &header, bool multi) {
+  return impl_->post(url, data, file, header, multi);
 }
 
 Response Request::post(
     const std::string &url, const std::string &data,
-    const std::unordered_map<std::string, std::string> &header) {
-  return impl_->post(url, data, header);
+    const std::unordered_map<std::string, std::string> &header, bool multi) {
+  return impl_->post(url, data, header, multi);
 }
 
 const std::string &Headers::at(const std::string &key) const {

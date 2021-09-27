@@ -50,16 +50,6 @@ class Request {
   void allow_redirects(bool flag);
 
   /**
-   * @brief Use HTTP/1.1
-   */
-  void use_http_1_1();
-
-  /**
-   * @brief Use HTTP/2(Default)
-   */
-  void use_http_2();
-
-  /**
    * @brief Set up proxy
    * @param proxy: String representing proxy
    */
@@ -112,7 +102,8 @@ class Request {
    */
   Response get(const std::string &url,
                const std::unordered_map<std::string, std::string> &params = {},
-               const std::unordered_map<std::string, std::string> &header = {});
+               const std::unordered_map<std::string, std::string> &header = {},
+               bool multi = false);
 
   /**
    * @brief Sends a POST request
@@ -121,11 +112,11 @@ class Request {
    * @param file: File name and content
    * @return Response content
    */
-  Response post(
-      const std::string &url,
-      const std::unordered_map<std::string, std::string> &data,
-      const std::unordered_map<std::string, std::string> &file = {},
-      const std::unordered_map<std::string, std::string> &header = {});
+  Response post(const std::string &url,
+                const std::unordered_map<std::string, std::string> &data,
+                const std::unordered_map<std::string, std::string> &file = {},
+                const std::unordered_map<std::string, std::string> &header = {},
+                bool multi = false);
 
   /**
    * @brief Sends a POST request
@@ -133,9 +124,9 @@ class Request {
    * @param data: Data string
    * @return Response content
    */
-  Response post(
-      const std::string &url, const std::string &data,
-      const std::unordered_map<std::string, std::string> &header = {});
+  Response post(const std::string &url, const std::string &data,
+                const std::unordered_map<std::string, std::string> &header = {},
+                bool multi = false);
 
  private:
   class RequestImpl;
@@ -177,7 +168,13 @@ class Response {
    * @brief HTTP Status Code
    * @see https://developer.mozilla.org/zh-CN/docs/Web/HTTP/Status
    */
-  enum StatusCode : std::int64_t { None, Ok = 200 };
+  enum StatusCode : std::int64_t {
+    None,
+    Ok = 200,
+    Unauthorized = 401,
+    Forbidden = 403,
+    NotFound = 404
+  };
 
   /**
    * @brief Get status code

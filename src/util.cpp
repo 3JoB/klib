@@ -78,19 +78,19 @@ std::map<std::string, std::string> read_folder(const std::string &path) {
 std::vector<std::uint8_t> do_evp(const std::string &str,
                                  std::uint32_t digest_length,
                                  const EVP_MD *algorithm) {
-  auto context = EVP_MD_CTX_new();
-  EVP_DigestInit(context, algorithm);
-  EVP_DigestUpdate(context, str.c_str(), std::size(str));
+  std::unique_ptr<EVP_MD_CTX, decltype(EVP_MD_CTX_free) *> context(
+      EVP_MD_CTX_new(), EVP_MD_CTX_free);
+  if (!context) {
+    throw RuntimeError(ERR_error_string(ERR_get_error(), nullptr));
+  }
 
-  auto digest = static_cast<std::uint8_t *>(OPENSSL_malloc(digest_length));
-  EVP_DigestFinal(context, digest, &digest_length);
+  check_openssl(EVP_DigestInit(context.get(), algorithm));
+  check_openssl(EVP_DigestUpdate(context.get(), str.c_str(), std::size(str)));
 
-  EVP_MD_CTX_destroy(context);
+  auto digest = std::make_unique<std::uint8_t[]>(digest_length);
+  check_openssl(EVP_DigestFinal(context.get(), digest.get(), &digest_length));
 
-  std::vector<std::uint8_t> output(digest, digest + digest_length);
-  OPENSSL_free(digest);
-
-  return output;
+  return std::vector<std::uint8_t>(digest.get(), digest.get() + digest_length);
 }
 
 }  // namespace
@@ -326,52 +326,60 @@ bool is_chinese(const std::string &c) {
 
 // https://github.com/gspark/cryptool/blob/main/src/crypto/digest/base64.cpp
 std::string base64_encode(const std::string &str) {
-  auto context = EVP_ENCODE_CTX_new();
-  EVP_EncodeInit(context);
+  std::unique_ptr<EVP_ENCODE_CTX, decltype(EVP_ENCODE_CTX_free) *> context(
+      EVP_ENCODE_CTX_new(), EVP_ENCODE_CTX_free);
+  if (!context) {
+    throw RuntimeError(ERR_error_string(ERR_get_error(), nullptr));
+  }
+
+  EVP_EncodeInit(context.get());
 
   std::int32_t chunk_len = 0;
   auto size = std::size(str);
-  auto digest =
-      static_cast<std::uint8_t *>(OPENSSL_malloc(EVP_ENCODE_LENGTH(size)));
-  EVP_EncodeUpdate(context, digest, &chunk_len,
-                   reinterpret_cast<const unsigned char *>(std::data(str)),
-                   size);
+  auto digest = std::make_unique<std::uint8_t[]>(EVP_ENCODE_LENGTH(size));
+  if (auto code = EVP_EncodeUpdate(
+          context.get(), digest.get(), &chunk_len,
+          reinterpret_cast<const unsigned char *>(std::data(str)), size);
+      code != 0 && code != 1) {
+    throw RuntimeError(ERR_error_string(ERR_get_error(), nullptr));
+  }
 
   std::int32_t output_len = chunk_len;
-  EVP_EncodeFinal(context, digest + chunk_len, &chunk_len);
+  EVP_EncodeFinal(context.get(), digest.get() + chunk_len, &chunk_len);
   output_len += chunk_len;
 
-  EVP_ENCODE_CTX_free(context);
-
-  auto output = std::string(reinterpret_cast<const char *>(digest), output_len);
-  OPENSSL_free(digest);
+  auto output =
+      std::string(reinterpret_cast<const char *>(digest.get()), output_len);
 
   boost::replace_all(output, "\n", "");
   return output;
 }
 
 std::string base64_decode(const std::string &str) {
-  auto context = EVP_ENCODE_CTX_new();
-  EVP_DecodeInit(context);
+  std::unique_ptr<EVP_ENCODE_CTX, decltype(EVP_ENCODE_CTX_free) *> context(
+      EVP_ENCODE_CTX_new(), EVP_ENCODE_CTX_free);
+  if (!context) {
+    throw RuntimeError(ERR_error_string(ERR_get_error(), nullptr));
+  }
+
+  EVP_DecodeInit(context.get());
 
   std::int32_t chunk_len = 0;
   auto size = std::size(str);
-  auto digest =
-      static_cast<std::uint8_t *>(OPENSSL_malloc(EVP_DECODE_LENGTH(size)));
-  EVP_DecodeUpdate(context, digest, &chunk_len,
-                   reinterpret_cast<const unsigned char *>(std::data(str)),
-                   size);
+  auto digest = std::make_unique<std::uint8_t[]>(EVP_DECODE_LENGTH(size));
+  if (auto code = EVP_DecodeUpdate(
+          context.get(), digest.get(), &chunk_len,
+          reinterpret_cast<const unsigned char *>(std::data(str)), size);
+      code != 0 && code != 1) {
+    throw RuntimeError(ERR_error_string(ERR_get_error(), nullptr));
+  }
 
   std::int32_t output_len = chunk_len;
-  EVP_DecodeFinal(context, digest + chunk_len, &chunk_len);
+  check_openssl(
+      EVP_DecodeFinal(context.get(), digest.get() + chunk_len, &chunk_len));
   output_len += chunk_len;
 
-  EVP_ENCODE_CTX_free(context);
-
-  auto output = std::string(reinterpret_cast<const char *>(digest), output_len);
-  OPENSSL_free(digest);
-
-  return output;
+  return std::string(reinterpret_cast<const char *>(digest.get()), output_len);
 }
 
 std::string md5(const std::string &str) {
@@ -421,7 +429,7 @@ std::string aes_256_cbc_encrypt(const std::string &str,
     throw RuntimeError("The iv is not 16 bit");
   }
 
-  EVP_add_cipher(EVP_aes_256_cbc());
+  check_openssl(EVP_add_cipher(EVP_aes_256_cbc()));
   std::unique_ptr<EVP_CIPHER_CTX, decltype(&EVP_CIPHER_CTX_free)> ctx(
       EVP_CIPHER_CTX_new(), EVP_CIPHER_CTX_free);
   if (!ctx) {
@@ -463,7 +471,7 @@ std::string aes_256_cbc_decrypt(const std::string &str,
     throw RuntimeError("The iv is not 16 bit");
   }
 
-  EVP_add_cipher(EVP_aes_256_cbc());
+  check_openssl(EVP_add_cipher(EVP_aes_256_cbc()));
   std::unique_ptr<EVP_CIPHER_CTX, decltype(&EVP_CIPHER_CTX_free)> ctx(
       EVP_CIPHER_CTX_new(), EVP_CIPHER_CTX_free);
   if (!ctx) {

@@ -24,8 +24,8 @@ TEST_CASE("request headers", "[http]") {
   const std::string header_key = "Authorization";
   const std::string header_value = "123456";
 
-  auto response =
-      request.get(httpbin_url + "/headers", {}, {{header_key, header_value}});
+  auto response = request.get(httpbin_url + "/headers", {},
+                              {{header_key, header_value}}, true);
   REQUIRE(response.status_code() == klib::Response::StatusCode::Ok);
   auto headers = boost::json::parse(response.text()).at("headers");
   REQUIRE(headers.at(header_key).as_string() == header_value);
@@ -62,7 +62,6 @@ TEST_CASE("response headers", "[http]") {
 
 TEST_CASE("GET", "[http]") {
   klib::Request request;
-  request.use_http_2();
   request.set_connect_timeout(5);
   request.set_timeout(30);
   request.set_browser_user_agent();
@@ -86,7 +85,6 @@ TEST_CASE("GET", "[http]") {
 
 TEST_CASE("POST", "[http]") {
   klib::Request request;
-  request.use_http_1_1();
   request.set_connect_timeout(5);
   request.set_timeout(30);
   request.set_browser_user_agent();
@@ -142,7 +140,7 @@ TEST_CASE("POST json", "[http]") {
 
   auto response =
       request.post(httpbin_url + "/post", boost::json::serialize(obj),
-                   {{"Content-Type", "application/json"}});
+                   {{"Content-Type", "application/json"}}, true);
   REQUIRE(response.status_code() == klib::Response::StatusCode::Ok);
 
   auto jv = boost::json::parse(response.text());
