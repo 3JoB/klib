@@ -44,7 +44,7 @@ if(${CMAKE_GENERATOR} STREQUAL "Ninja")
   string(REPLACE "\n" ";" GENERATOR_VERSION ${GENERATOR_VERSION})
   list(GET GENERATOR_VERSION 0 GENERATOR_VERSION)
 
-  message(STATUS "CMake Generator: ${GENERATOR_VERSION}")
+  message(STATUS "CMake Generator: Ninja ${GENERATOR_VERSION}")
 else()
   message(WARNING "The generator recommends using Ninja: ${CMAKE_GENERATOR}")
 endif()
