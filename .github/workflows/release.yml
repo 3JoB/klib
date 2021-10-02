@@ -75,8 +75,7 @@ jobs:
 
       # https://github.com/softprops/action-gh-release
       - name: Release
-        # FIXME
-        uses: softprops/action-gh-release@59c3b4891632ff9a897f99a91d7bc557467a3a22
+        uses: softprops/action-gh-release@v1
         if: ${{ matrix.compiler.cxx == 'g++' && matrix.build_type == 'Release'}}
         with:
           files: |
