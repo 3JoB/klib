@@ -17,7 +17,7 @@ C++ Library
 ## Environment
 
 - Ubuntu 20.04
-- GCC 11 or Clang 12
+- GCC 11 or Clang 13
 
 ## Dependency
 
