@@ -5,8 +5,6 @@
 #include <string_view>
 
 #include <curl/curl.h>
-#include <fmt/compile.h>
-#include <fmt/format.h>
 #include <boost/algorithm/string.hpp>
 
 #include "klib/error.h"
