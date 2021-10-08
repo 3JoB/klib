@@ -169,7 +169,7 @@ class Response {
    * @see https://developer.mozilla.org/zh-CN/docs/Web/HTTP/Status
    */
   enum StatusCode : std::int64_t {
-    None,
+    None = 0,
     Ok = 200,
     Unauthorized = 401,
     Forbidden = 403,
