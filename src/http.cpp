@@ -32,27 +32,8 @@ void check_curl_correct(CURLMcode code) {
   }
 }
 
-std::string convert_non_ascii(const std::string &str) {
-  std::string result;
-  auto utf32 = utf8_to_utf32(str);
-
-  for (auto c : utf32) {
-    if (!is_ascii(c)) {
-      auto utf8 = utf32_to_utf8(c);
-      for (auto cc : utf8) {
-        result +=
-            fmt::format(FMT_COMPILE("%{:02X}"), static_cast<std::uint8_t>(cc));
-      }
-    } else {
-      result.append(utf32_to_utf8(c));
-    }
-  }
-
-  return result;
-}
-
 std::string splicing_url(
-    const std::string &url,
+    CURL *curl, const std::string &url,
     const std::unordered_map<std::string, std::string> &params) {
   if (std::empty(params)) {
     return url;
@@ -60,10 +41,9 @@ std::string splicing_url(
 
   auto result = url + "?";
   for (const auto &[key, value] : params) {
-    result.append(convert_non_ascii(key))
-        .append("=")
-        .append(convert_non_ascii(value))
-        .append("&");
+    std::unique_ptr<char, decltype(curl_free) *> ptr(
+        curl_easy_escape(curl, value.c_str(), std::size(value)), curl_free);
+    result.append(key).append("=").append(ptr.get()).append("&");
   }
   result.pop_back();
 
@@ -359,7 +339,7 @@ Response Request::RequestImpl::get(
 
   AddHeader add_header(http_handle_, header);
 
-  auto complete_url = splicing_url(url, params);
+  auto complete_url = splicing_url(http_handle_, url, params);
   check_curl_correct(
       curl_easy_setopt(http_handle_, CURLOPT_URL, complete_url.c_str()));
 
