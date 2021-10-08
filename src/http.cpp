@@ -39,9 +39,15 @@ std::string splicing_url(
 
   auto result = url + "?";
   for (const auto &[key, value] : params) {
-    std::unique_ptr<char, decltype(curl_free) *> ptr(
+    std::unique_ptr<char, decltype(curl_free) *> key_ptr(
+        curl_easy_escape(curl, key.c_str(), std::size(key)), curl_free);
+    std::unique_ptr<char, decltype(curl_free) *> value_ptr(
         curl_easy_escape(curl, value.c_str(), std::size(value)), curl_free);
-    result.append(key).append("=").append(ptr.get()).append("&");
+
+    result.append(key_ptr.get())
+        .append("=")
+        .append(value_ptr.get())
+        .append("&");
   }
   result.pop_back();
 
