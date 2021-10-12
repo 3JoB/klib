@@ -3,6 +3,7 @@
 #include <catch2/catch.hpp>
 
 #include "klib/archive.h"
+#include "klib/hash_lib.h"
 #include "klib/util.h"
 
 TEST_CASE("compress") {
@@ -31,7 +32,8 @@ TEST_CASE("compress") {
 
 TEST_CASE("decompress") {
   REQUIRE(std::filesystem::exists("zlib-v1.2.11.tar.gz"));
-  REQUIRE(klib::sha3_512_file("zlib-v1.2.11.tar.gz") ==
+  REQUIRE(klib::HashLib::sha3_512(klib::read_file("zlib-v1.2.11.tar.gz", true))
+              .digest() ==
           "38af19362e48ec80f6565cf18245f520c8ee5348374cb0c11286f3b23cc93fd05a6a"
           "2a2b8784f20bb2307211a2a776241797857b133056f4b33de1d363db7bb2");
 
