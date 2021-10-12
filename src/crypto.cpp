@@ -136,6 +136,12 @@ std::string do_base64(const std::string &data, Crypt crypt) {
            static_cast<std::int32_t>(input_size));
 
   result.resize(output_size);
+  if (crypt == Crypt::Decrypt) {
+    while (result.ends_with('\0')) {
+      result.pop_back();
+    }
+  }
+
   return result;
 }
 
