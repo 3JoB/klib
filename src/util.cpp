@@ -3,29 +3,11 @@
 #include <unistd.h>
 #include <wait.h>
 
-#include <algorithm>
-#include <cerrno>
-#include <clocale>
-#include <cstdlib>
-#include <cstring>
-#include <cuchar>
 #include <filesystem>
 #include <fstream>
-#include <limits>
 #include <map>
-#include <memory>
-#include <string_view>
-#include <utility>
-#include <vector>
 
-#include <fmt/compile.h>
-#include <fmt/format.h>
-#include <openssl/aes.h>
 #include <openssl/crypto.h>
-#include <openssl/err.h>
-#include <openssl/evp.h>
-#include <openssl/md5.h>
-#include <openssl/sha.h>
 #include <boost/algorithm/string.hpp>
 #include <boost/uuid/uuid_generators.hpp>
 #include <boost/uuid/uuid_io.hpp>
@@ -225,8 +207,8 @@ std::string uuid() {
 }
 
 void cleanse(std::string &data) {
-  cleanse(static_cast<void *>(std::data(data)), std::size(data));
   data.clear();
+  cleanse(static_cast<void *>(std::data(data)), std::size(data));
 }
 
 void cleanse(void *data, std::size_t size) { OPENSSL_cleanse(data, size); }

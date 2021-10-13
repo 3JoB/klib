@@ -53,7 +53,6 @@ class HashLib::HashLibImpl {
 HashLib::HashLibImpl::HashLibImpl(HashLib::Algorithm kind)
     : algorithm_(HashLibImpl::get_algorithm(kind)) {
   if (!ctx_) {
-    EVP_MD_CTX_free(ctx_);
     throw klib::RuntimeError(openssl_err_msg());
   }
 }

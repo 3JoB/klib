@@ -30,7 +30,7 @@ std::string generate_iv() {
   }
 
   std::string iv;
-  iv.resize(16);
+  iv.resize(EVP_MAX_IV_LENGTH);
   check_openssl_return_value(RAND_bytes(
       reinterpret_cast<unsigned char *>(std::data(iv)), std::size(iv)));
 
@@ -52,8 +52,7 @@ const EVP_CIPHER *get_algorithm(AesMode aes_mode) {
     case AesMode::XTS:
       return EVP_aes_256_xts();
     default:
-      // TODO logic error
-      return nullptr;
+      throw LogicError("Unknown algorithm");
   }
 }
 
@@ -72,8 +71,7 @@ std::int32_t get_padding_mode(PaddingMode padding_mode) {
     case PaddingMode::ZERO:
       return EVP_PADDING_ZERO;
     default:
-      // TODO logic error
-      return 0;
+      throw LogicError("Unknown padding mode");
   }
 }
 
@@ -84,13 +82,13 @@ std::string do_aes_crypt(const std::string &data, const std::string &key,
                          const std::string &iv, AesMode aes_mode,
                          PaddingMode padding_mode, Crypt crypt) {
   if (std::size(key) != 32) {
-    throw klib::RuntimeError("key must be 32 byte");
+    throw klib::RuntimeError("key must be 256 bit");
   }
-  if (std::size(iv) != 16 && !std::empty(iv)) {
-    throw klib::RuntimeError("iv must be 16 byte");
+  if (std::size(iv) != EVP_MAX_IV_LENGTH && !std::empty(iv)) {
+    throw klib::RuntimeError("iv must be 128 bit");
   }
   if (!std::empty(iv) && aes_mode == AesMode::ECB) {
-    throw klib::RuntimeError("can not use iv");
+    throw klib::RuntimeError("ecb can not use iv");
   }
 
   std::unique_ptr<EVP_CIPHER_CTX, decltype(EVP_CIPHER_CTX_free) *> ctx(
@@ -104,7 +102,7 @@ std::string do_aes_crypt(const std::string &data, const std::string &key,
                            do_encrypt);
   check_openssl_return_value(rc);
   OPENSSL_assert(EVP_CIPHER_CTX_get_key_length(ctx.get()) == 32);
-  OPENSSL_assert(EVP_CIPHER_CTX_get_iv_length(ctx.get()) == 16);
+  OPENSSL_assert(EVP_CIPHER_CTX_get_iv_length(ctx.get()) == EVP_MAX_IV_LENGTH);
 
   rc = EVP_CipherInit(
       ctx.get(), nullptr,
@@ -144,10 +142,10 @@ std::string do_aes_crypt(const std::string &data, const std::string &key,
 }
 
 std::string do_base64(const std::string &data, Crypt crypt) {
-  decltype(EVP_EncodeBlock) *func = nullptr;
+  decltype(EVP_EncodeBlock) *func;
 
   auto input_size = std::size(data);
-  std::size_t size = 0;
+  std::size_t size;
   if (crypt == Crypt::Decrypt) {
     func = EVP_DecodeBlock;
     size = EVP_DECODE_LENGTH(input_size);
@@ -163,8 +161,8 @@ std::string do_base64(const std::string &data, Crypt crypt) {
       func(reinterpret_cast<unsigned char *>(std::data(result)),
            reinterpret_cast<const unsigned char *>(std::data(data)),
            static_cast<std::int32_t>(input_size));
-
   result.resize(output_size);
+
   if (crypt == Crypt::Decrypt) {
     while (result.ends_with('\0')) {
       result.pop_back();
@@ -196,17 +194,17 @@ std::string aes_256_encrypt(const std::string &data, const std::string &key,
          do_aes_crypt(data, key, iv, aes_mode, padding_mode, Crypt::Encrypt);
 }
 
+std::string aes_256_encrypt(const std::string &data, const std::string &key,
+                            const std::string &iv, AesMode aes_mode,
+                            PaddingMode padding_mode) {
+  return do_aes_crypt(data, key, iv, aes_mode, padding_mode, Crypt::Encrypt);
+}
+
 std::string aes_256_encrypt_base64(const std::string &data,
                                    const std::string &key, bool use_iv,
                                    AesMode aes_mode, PaddingMode padding_mode) {
   return base64_encode(
       aes_256_encrypt(data, key, use_iv, aes_mode, padding_mode));
-}
-
-std::string aes_256_encrypt(const std::string &data, const std::string &key,
-                            const std::string &iv, AesMode aes_mode,
-                            PaddingMode padding_mode) {
-  return do_aes_crypt(data, key, iv, aes_mode, padding_mode, Crypt::Encrypt);
 }
 
 std::string aes_256_encrypt_base64(const std::string &data,
@@ -228,17 +226,17 @@ std::string aes_256_decrypt(const std::string &data, const std::string &key,
   }
 }
 
+std::string aes_256_decrypt(const std::string &data, const std::string &key,
+                            const std::string &iv, AesMode aes_mode,
+                            PaddingMode padding_mode) {
+  return do_aes_crypt(data, key, iv, aes_mode, padding_mode, Crypt::Decrypt);
+}
+
 std::string aes_256_decrypt_base64(const std::string &data,
                                    const std::string &key, bool has_iv,
                                    AesMode aes_mode, PaddingMode padding_mode) {
   return aes_256_decrypt(base64_decode(data), key, has_iv, aes_mode,
                          padding_mode);
-}
-
-std::string aes_256_decrypt(const std::string &data, const std::string &key,
-                            const std::string &iv, AesMode aes_mode,
-                            PaddingMode padding_mode) {
-  return do_aes_crypt(data, key, iv, aes_mode, padding_mode, Crypt::Decrypt);
 }
 
 std::string aes_256_decrypt_base64(const std::string &data,

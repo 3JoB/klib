@@ -22,7 +22,7 @@ void check_opt_set(bool ok) {
 // https://www.html-tidy.org/developer/
 std::string html_tidy(const std::string &html, bool ignore_error) {
   if (std::empty(html)) {
-    return "";
+    return {};
   }
 
   auto free_tidy_doc = [](TidyDoc *doc) { tidyRelease(*doc); };
