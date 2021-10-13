@@ -171,4 +171,8 @@ void wait_for_child_process();
  */
 std::string uuid();
 
+void cleanse(std::string &data);
+
+void cleanse(void *data, std::size_t size);
+
 }  // namespace klib

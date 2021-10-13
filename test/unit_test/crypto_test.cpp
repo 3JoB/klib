@@ -22,23 +22,49 @@ TEST_CASE("base64_decode", "[crypto]") {
         "How to resolve the \"EVP_DecryptFInal_ex: bad decrypt\"");
 }
 
+// https://tool.lmeee.com/jiami/aes
 TEST_CASE("aes_256_cbc_encrypt", "[crypto]") {
+  std::string iv = "1234567890abcdef";
+  REQUIRE(klib::aes_256_encrypt_base64("Advanced Encryption Standard",
+                                       "1234567890abcdef1234567890abcdef",
+                                       iv) ==
+          "x/+2Hp/n7E4BKs4p5YoCwvys4O2Ugt39cJ/rWEwpBjY=");
+
+  REQUIRE(klib::aes_256_decrypt_base64(
+              "x/+2Hp/n7E4BKs4p5YoCwvys4O2Ugt39cJ/rWEwpBjY=",
+              "1234567890abcdef1234567890abcdef",
+              iv) == "Advanced Encryption Standard");
+
+  auto encrypt = klib::aes_256_encrypt_base64(
+      "Advanced Encryption Standard",
+      klib::HashLib::sha3_256("1234567890abcdef1234567890abcdef").digest());
+  REQUIRE(
+      klib::aes_256_decrypt_base64(
+          encrypt, klib::HashLib::sha3_256("1234567890abcdef1234567890abcdef")
+                       .digest()) == "Advanced Encryption Standard");
+
   REQUIRE(
       klib::aes_256_encrypt_base64(
           "{\"code\":\"100000\",\"data\":{\"login_token\":"
           "\"06d3b540ecde7843d79fa0c790b4c968\",\"user_code\":"
-          "\"9827638bc3c6ae0a43174f2a2d25d35b\",\"reader_info\":{\"reader_id\":"
-          "\"9986391\",\"account\":\"\\u4e66\\u5ba287999639162\",\"is_bind\":"
+          "\"9827638bc3c6ae0a43174f2a2d25d35b\",\"reader_info\":{\"reader_"
+          "id\":"
+          "\"9986391\",\"account\":\"\\u4e66\\u5ba287999639162\",\"is_"
+          "bind\":"
           "\"1\","
-          "\"is_bind_qq\":\"0\",\"is_bind_weixin\":\"0\",\"is_bind_huawei\":"
+          "\"is_bind_qq\":\"0\",\"is_bind_weixin\":\"0\",\"is_bind_"
+          "huawei\":"
           "\"0\","
           "\"is_bind_apple\":\"0\",\"phone_num\":\"15041557811\",\"phone_"
           "crypto\":"
           "\"HOcCgi\\/"
-          "crmKmnAKvlSoZbQ==\",\"mobileVal\":\"1\",\"email\":\"\",\"license\":"
+          "crmKmnAKvlSoZbQ==\",\"mobileVal\":\"1\",\"email\":\"\","
+          "\"license\":"
           "\"\","
-          "\"reader_name\":\"\\u4e66\\u5ba287999639162\",\"avatar_url\":\"\","
-          "\"avatar_thumb_url\":\"\",\"base_status\":\"1\",\"exp_lv\":\"4\","
+          "\"reader_name\":\"\\u4e66\\u5ba287999639162\",\"avatar_url\":"
+          "\"\","
+          "\"avatar_thumb_url\":\"\",\"base_status\":\"1\",\"exp_lv\":"
+          "\"4\","
           "\"exp_"
           "value\":\"697\",\"gender\":\"1\",\"vip_lv\":\"0\",\"vip_value\":"
           "\"0\","
@@ -48,22 +74,25 @@ TEST_CASE("aes_256_cbc_encrypt", "[crypto]") {
           "\"decoration_url\":\"https:\\/\\/app.hbooker.com\\/resources\\/"
           "image\\/"
           "decoration\\/"
-          "pendant_82.png\",\"decoration_id\":\"82\",\"reader_decoration_id\":"
+          "pendant_82.png\",\"decoration_id\":\"82\",\"reader_decoration_"
+          "id\":"
           "\"2631577\"}],\"rank\":\"0\",\"ctime\":\"2021-06-04 "
-          "16:43:55\"},\"prop_info\":{\"rest_gift_hlb\":\"10\",\"rest_hlb\":"
+          "16:43:55\"},\"prop_info\":{\"rest_gift_hlb\":\"10\",\"rest_"
+          "hlb\":"
           "\"10\","
           "\"rest_yp\":\"0\",\"rest_recommend\":\"2\",\"rest_total_blade\":"
           "\"0\","
-          "\"rest_month_blade\":\"0\",\"rest_total_100\":\"0\",\"rest_total_"
+          "\"rest_month_blade\":\"0\",\"rest_total_100\":\"0\",\"rest_"
+          "total_"
           "588\":"
-          "\"0\",\"rest_total_1688\":\"0\",\"rest_total_5000\":\"0\",\"rest_"
+          "\"0\",\"rest_total_1688\":\"0\",\"rest_total_5000\":\"0\","
+          "\"rest_"
           "total_"
           "10000\":\"0\",\"rest_total_100000\":\"0\",\"rest_total_50000\":"
           "\"0\","
           "\"rest_total_160000\":\"0\"},\"is_set_young\":\"0\"}}",
           klib::HashLib::sha_256("zG2nSeEfSHfvTCHy5LCcqtBbQehKNLXn").digest(),
-          std::string(16, '\0'), klib::AesMode::CBC,
-          klib::PaddingMode::PKCS7) ==
+          false) ==
       "IT+LcNazRBcK54/"
       "p1lMtcyRwpZ01VQ4tFr6GBslpnwMezmEBbIYc3GokHiTGB6XV/"
       "I3oWkrqLXB3DTQJUIlvLRRHe2GmNqGS8xHXeyq8BgBLCBxLcIFRtK+V6/"
@@ -102,8 +131,6 @@ TEST_CASE("aes_256_cbc_encrypt", "[crypto]") {
 }
 
 TEST_CASE("aes_256_cbc_decrypt", "[crypto]") {
-  std::string iv(16, '\0');
-
   REQUIRE(
       klib::aes_256_decrypt_base64(
           "IT+LcNazRBcK54/"
@@ -142,7 +169,7 @@ TEST_CASE("aes_256_cbc_decrypt", "[crypto]") {
           "hXhhg2mw2KUT2QnyJ9en9jPkjEOd04V8ja3Aoqk3chTTQJksU8D/"
           "XLOyDgEkWNaX5I4WgTtkOeLyEQVg2yzrAwjgayCXWj71JDe4",
           klib::HashLib::sha_256("zG2nSeEfSHfvTCHy5LCcqtBbQehKNLXn").digest(),
-          iv, klib::AesMode::CBC, klib::PaddingMode::PKCS7) ==
+          false) ==
       "{\"code\":\"100000\",\"data\":{\"login_token\":"
       "\"06d3b540ecde7843d79fa0c790b4c968\",\"user_code\":"
       "\"9827638bc3c6ae0a43174f2a2d25d35b\",\"reader_info\":{\"reader_id\":"
@@ -596,6 +623,6 @@ TEST_CASE("aes_256_cbc_decrypt", "[crypto]") {
   REQUIRE(std::size(base64) == 15856);
   REQUIRE_NOTHROW(klib::aes_256_decrypt(
       base64,
-      klib::HashLib::sha_256("913d8e1ebca5ef2193b4fea1fdbe0394").digest(), iv,
-      klib::AesMode::CBC, klib::PaddingMode::PKCS7));
+      klib::HashLib::sha_256("913d8e1ebca5ef2193b4fea1fdbe0394").digest(),
+      false));
 }

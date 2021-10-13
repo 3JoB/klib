@@ -1,3 +1,8 @@
+/**
+ * @file hash_lib.h
+ * @brief Contains secure hash module
+ */
+
 #pragma once
 
 #include <experimental/propagate_const>
@@ -6,8 +11,14 @@
 
 namespace klib {
 
+/**
+ * @brief Contains a series of secure hash algorithms
+ */
 class HashLib {
  public:
+  /**
+   * @brief Supported secure hash algorithm
+   */
   enum class Algorithm {
     MD5,
     SHA_224,
@@ -20,6 +31,10 @@ class HashLib {
     SHA3_512
   };
 
+  /**
+   * @brief Constructor
+   * @param kind: Specify the algorithm used
+   */
   explicit HashLib(Algorithm kind);
 
   HashLib(const HashLib &) = delete;
@@ -28,8 +43,23 @@ class HashLib {
   HashLib &operator=(HashLib &&) = delete;
   ~HashLib() = default;
 
+  /**
+   * @brief Update the hash object
+   * @param Bytes used to update the hash object
+   * @return Hash object
+   */
   HashLib &update(const std::string &data);
+
+  /**
+   * @brief Return the digest of the data passed to the update() method so far
+   * @return
+   */
   std::string digest();
+
+  /**
+   *
+   * @return
+   */
   std::string hex_digest();
 
   static HashLib &md5(const std::string &data);

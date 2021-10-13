@@ -15,9 +15,9 @@
 namespace klib {
 
 /**
- * @brief Report error
+ * @brief Report error and exit
  * @param fmt: Format string
- * @param args: Parameter
+ * @param args: Format string parameters
  */
 template <typename... Args>
 void warn(std::string_view fmt, Args &&...args) {
@@ -29,7 +29,7 @@ void warn(std::string_view fmt, Args &&...args) {
 /**
  * @brief Report warning
  * @param fmt: Format string
- * @param args: Parameter
+ * @param args: Format string parameters
  */
 template <typename... Args>
 [[noreturn]] void error(std::string_view fmt, Args &&...args) {

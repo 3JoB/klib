@@ -21,6 +21,7 @@
 #include <fmt/compile.h>
 #include <fmt/format.h>
 #include <openssl/aes.h>
+#include <openssl/crypto.h>
 #include <openssl/err.h>
 #include <openssl/evp.h>
 #include <openssl/md5.h>
@@ -222,5 +223,11 @@ std::string uuid() {
   auto uuid = boost::uuids::random_generator()();
   return boost::uuids::to_string(uuid);
 }
+
+void cleanse(std::string &data) {
+  cleanse(static_cast<void *>(std::data(data)), std::size(data));
+}
+
+void cleanse(void *data, std::size_t size) { OPENSSL_cleanse(data, size); }
 
 }  // namespace klib

@@ -40,11 +40,45 @@ class RuntimeError : public std::runtime_error {
   /**
    * @brief Constructor
    * @param fmt: Format string
-   * @param args: Parameter
+   * @param args: Format string parameters
    */
   template <typename... Args>
   explicit RuntimeError(std::string_view fmt, Args &&...args)
       : RuntimeError(
+            fmt::format(fmt::runtime(fmt), std::forward<Args>(args)...)) {}
+};
+
+/**
+ * @brief Exception class, which means logic error
+ */
+class LogicError : public std::logic_error {
+ public:
+  /**
+   * @brief Constructor
+   * @param msg: Exception information
+   */
+  explicit LogicError(const char *msg) : std::logic_error(msg) {}
+
+  /**
+   * @brief Constructor
+   * @param msg: Exception information
+   */
+  explicit LogicError(const std::string &msg) : std::logic_error(msg) {}
+
+  /**
+   * @brief Constructor
+   * @param msg: Exception information
+   */
+  explicit LogicError(std::string_view msg) : LogicError(msg.data()) {}
+
+  /**
+   * @brief Constructor
+   * @param fmt: Format string
+   * @param args: Format string parameters
+   */
+  template <typename... Args>
+  explicit LogicError(std::string_view fmt, Args &&...args)
+      : LogicError(
             fmt::format(fmt::runtime(fmt), std::forward<Args>(args)...)) {}
 };
 
