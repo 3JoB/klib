@@ -207,8 +207,8 @@ std::string uuid() {
 }
 
 void cleanse(std::string &data) {
-  data.clear();
   cleanse(static_cast<void *>(std::data(data)), std::size(data));
+  data.clear();
 }
 
 void cleanse(void *data, std::size_t size) { OPENSSL_cleanse(data, size); }
