@@ -1,9 +1,12 @@
 var searchData=
 [
-  ['aes_5f256_5fcbc_5fdecrypt_0',['aes_256_cbc_decrypt',['../util_8h.html#a55d3053ed459fa8b2dd4b0757175ed17',1,'klib']]],
-  ['aes_5f256_5fcbc_5fencrypt_1',['aes_256_cbc_encrypt',['../util_8h.html#afb7f580434626ea322b93f07445c3ee3',1,'klib']]],
-  ['algorithm_2',['Algorithm',['../archive_8h.html#a00dd09aa9984a80a30a64727d6a7ac99',1,'klib']]],
-  ['allow_5fredirects_3',['allow_redirects',['../classklib_1_1Request.html#a3bd57350cde297d6e01d32c6354c6e78',1,'klib::Request']]],
-  ['archive_2eh_4',['archive.h',['../archive_8h.html',1,'']]],
-  ['at_5',['at',['../classklib_1_1Headers.html#a9ea038c02beb15d1beec0d767721379e',1,'klib::Headers']]]
+  ['aes_5f256_5fdecrypt_0',['aes_256_decrypt',['../crypto_8h.html#a07e51b3fcf2159311be2b6358e146c51',1,'klib::aes_256_decrypt(const std::string &amp;data, const std::string &amp;key, bool has_iv=true, AesMode aes_mode=AesMode::CBC, PaddingMode padding_mode=PaddingMode::PKCS7)'],['../crypto_8h.html#ae8feec402cd8c42cfb8c4571b440a70f',1,'klib::aes_256_decrypt(const std::string &amp;data, const std::string &amp;key, const std::string &amp;iv, AesMode aes_mode=AesMode::CBC, PaddingMode padding_mode=PaddingMode::PKCS7)']]],
+  ['aes_5f256_5fdecrypt_5fbase64_1',['aes_256_decrypt_base64',['../crypto_8h.html#a95dc63b47e815fbf020efcd9724bd5fd',1,'klib::aes_256_decrypt_base64(const std::string &amp;data, const std::string &amp;key, bool has_iv=true, AesMode aes_mode=AesMode::CBC, PaddingMode padding_mode=PaddingMode::PKCS7)'],['../crypto_8h.html#a6fc03a4a2fda508586c303408900f8e3',1,'klib::aes_256_decrypt_base64(const std::string &amp;data, const std::string &amp;key, const std::string &amp;iv, AesMode aes_mode=AesMode::CBC, PaddingMode padding_mode=PaddingMode::PKCS7)']]],
+  ['aes_5f256_5fencrypt_2',['aes_256_encrypt',['../crypto_8h.html#a62eab636372ddced59526b1b28c6b898',1,'klib::aes_256_encrypt(const std::string &amp;data, const std::string &amp;key, bool use_iv=true, AesMode aes_mode=AesMode::CBC, PaddingMode padding_mode=PaddingMode::PKCS7)'],['../crypto_8h.html#ac2554ad367f7310b015d7f440d2fea15',1,'klib::aes_256_encrypt(const std::string &amp;data, const std::string &amp;key, const std::string &amp;iv, AesMode aes_mode=AesMode::CBC, PaddingMode padding_mode=PaddingMode::PKCS7)']]],
+  ['aes_5f256_5fencrypt_5fbase64_3',['aes_256_encrypt_base64',['../crypto_8h.html#a8fb6dcf40bc2ea7ca674a0b091ec8ceb',1,'klib::aes_256_encrypt_base64(const std::string &amp;data, const std::string &amp;key, bool use_iv=true, AesMode aes_mode=AesMode::CBC, PaddingMode padding_mode=PaddingMode::PKCS7)'],['../crypto_8h.html#acc1e7885c04ab70f7c6a9a5a2fda5e0a',1,'klib::aes_256_encrypt_base64(const std::string &amp;data, const std::string &amp;key, const std::string &amp;iv, AesMode aes_mode=AesMode::CBC, PaddingMode padding_mode=PaddingMode::PKCS7)']]],
+  ['aesmode_4',['AesMode',['../crypto_8h.html#a5c25463fa7defef16a4f027d0a33134d',1,'klib']]],
+  ['algorithm_5',['Algorithm',['../classklib_1_1HashLib.html#afada062b2761c5edf01aad1785ef2a27',1,'klib::HashLib::Algorithm()'],['../archive_8h.html#a00dd09aa9984a80a30a64727d6a7ac99',1,'klib::Algorithm()']]],
+  ['allow_5fredirects_6',['allow_redirects',['../classklib_1_1Request.html#a3bd57350cde297d6e01d32c6354c6e78',1,'klib::Request']]],
+  ['archive_2eh_7',['archive.h',['../archive_8h.html',1,'']]],
+  ['at_8',['at',['../classklib_1_1Headers.html#a9ea038c02beb15d1beec0d767721379e',1,'klib::Headers']]]
 ];

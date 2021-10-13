@@ -30,7 +30,7 @@
  <tbody>
  <tr style="height: 56px;">
   <td id="projectalign" style="padding-left: 0.5em;">
-   <div id="projectname">klib<span id="projectnumber">&#160;0.4.2</span>
+   <div id="projectname">klib<span id="projectnumber">&#160;0.5.0</span>
    </div>
   </td>
     <td>        <div id="MSearchBox" class="MSearchBoxInactive">
@@ -111,11 +111,11 @@ $(document).ready(function(){initNavTree('error_8h.html',''); initResizable(); }
 Functions</h2></td></tr>
 <tr class="memitem:a814c67e8ab648504e8d4e9c627aafdb7"><td class="memTemplParams" colspan="2">template&lt;typename... Args&gt; </td></tr>
 <tr class="memitem:a814c67e8ab648504e8d4e9c627aafdb7"><td class="memTemplItemLeft" align="right" valign="top">void&#160;</td><td class="memTemplItemRight" valign="bottom"><a class="el" href="error_8h.html#a814c67e8ab648504e8d4e9c627aafdb7">klib::warn</a> (std::string_view fmt, Args &amp;&amp;...args)</td></tr>
-<tr class="memdesc:a814c67e8ab648504e8d4e9c627aafdb7"><td class="mdescLeft">&#160;</td><td class="mdescRight">Report error.  <a href="error_8h.html#a814c67e8ab648504e8d4e9c627aafdb7">More...</a><br /></td></tr>
+<tr class="memdesc:a814c67e8ab648504e8d4e9c627aafdb7"><td class="mdescLeft">&#160;</td><td class="mdescRight">Report warning.  <a href="error_8h.html#a814c67e8ab648504e8d4e9c627aafdb7">More...</a><br /></td></tr>
 <tr class="separator:a814c67e8ab648504e8d4e9c627aafdb7"><td class="memSeparator" colspan="2">&#160;</td></tr>
 <tr class="memitem:a34e63277994b403c9db07ea6f5b807d3"><td class="memTemplParams" colspan="2">template&lt;typename... Args&gt; </td></tr>
 <tr class="memitem:a34e63277994b403c9db07ea6f5b807d3"><td class="memTemplItemLeft" align="right" valign="top">void&#160;</td><td class="memTemplItemRight" valign="bottom"><a class="el" href="error_8h.html#a34e63277994b403c9db07ea6f5b807d3">klib::error</a> (std::string_view fmt, Args &amp;&amp;...args)</td></tr>
-<tr class="memdesc:a34e63277994b403c9db07ea6f5b807d3"><td class="mdescLeft">&#160;</td><td class="mdescRight">Report warning.  <a href="error_8h.html#a34e63277994b403c9db07ea6f5b807d3">More...</a><br /></td></tr>
+<tr class="memdesc:a34e63277994b403c9db07ea6f5b807d3"><td class="mdescLeft">&#160;</td><td class="mdescRight">Report error and exit.  <a href="error_8h.html#a34e63277994b403c9db07ea6f5b807d3">More...</a><br /></td></tr>
 <tr class="separator:a34e63277994b403c9db07ea6f5b807d3"><td class="memSeparator" colspan="2">&#160;</td></tr>
 </table>
 <a name="details" id="details"></a><h2 class="groupheader">Detailed Description</h2>
@@ -149,11 +149,11 @@ template&lt;typename... Args&gt; </div>
       </table>
 </div><div class="memdoc">
 
-<p>Report warning. </p>
+<p>Report error and exit. </p>
 <dl class="params"><dt>Parameters</dt><dd>
   <table class="params">
     <tr><td class="paramname">fmt</td><td>Format string </td></tr>
-    <tr><td class="paramname">args</td><td>Parameter </td></tr>
+    <tr><td class="paramname">args</td><td>Format string parameters </td></tr>
   </table>
   </dd>
 </dl>
@@ -188,11 +188,11 @@ template&lt;typename... Args&gt; </div>
       </table>
 </div><div class="memdoc">
 
-<p>Report error. </p>
+<p>Report warning. </p>
 <dl class="params"><dt>Parameters</dt><dd>
   <table class="params">
     <tr><td class="paramname">fmt</td><td>Format string </td></tr>
-    <tr><td class="paramname">args</td><td>Parameter </td></tr>
+    <tr><td class="paramname">args</td><td>Format string parameters </td></tr>
   </table>
   </dd>
 </dl>
