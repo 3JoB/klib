@@ -6,8 +6,17 @@
 #include "klib/util.h"
 
 TEST_CASE("md5", "[hash_lib]") {
-  REQUIRE(klib::HashLib::md5("MD5 online hash function").hex_digest() ==
+  klib::HashLib md5(klib::HashLib::Algorithm::MD5);
+
+  REQUIRE(md5.update("MD5 online hash function").hex_digest() ==
           "71f6cb39c6d09c6fae36b69ee0b2b9cd");
+  REQUIRE(md5.update("MD5 online hash function").hex_digest() ==
+          "71f6cb39c6d09c6fae36b69ee0b2b9cd");
+  REQUIRE(md5.update("MD5 online hash function").hex_digest() ==
+          "71f6cb39c6d09c6fae36b69ee0b2b9cd");
+  REQUIRE(md5.update("MD5 online hash function").hex_digest() ==
+          "71f6cb39c6d09c6fae36b69ee0b2b9cd");
+
   REQUIRE(
       klib::HashLib::md5("SG93IHRvIHJlc29sdmUgdGhlICJFVlBfRGVjcnlwdEZJbmFsX2")
           .hex_digest() == "ee60cfe37f9a60b9ceba008be6f1c034");

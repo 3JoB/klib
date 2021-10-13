@@ -6,8 +6,6 @@
 #include <fmt/format.h>
 #include <openssl/err.h>
 #include <openssl/evp.h>
-#include <openssl/md5.h>
-#include <openssl/sha.h>
 
 #include "klib/exception.h"
 
@@ -43,28 +41,20 @@ class HashLib::HashLibImpl {
   ~HashLibImpl();
 
  private:
-  static std::pair<const EVP_MD *, std::uint32_t> get_info(
-      HashLib::Algorithm kind);
+  static const EVP_MD *get_algorithm(HashLib::Algorithm kind);
   static std::string bytes_to_hex_string(const std::string &bytes);
 
   EVP_MD_CTX *ctx_ = EVP_MD_CTX_new();
-
-  std::uint32_t digest_length_ = 0;
-  const EVP_MD *algorithm_ = nullptr;
+  const EVP_MD *algorithm_;
 
   bool doing_ = false;
 };
 
-HashLib::HashLibImpl::HashLibImpl(HashLib::Algorithm kind) {
-  try {
-    if (!ctx_) {
-      throw klib::RuntimeError(openssl_err_msg());
-    }
-
-    std::tie(algorithm_, digest_length_) = HashLibImpl::get_info(kind);
-  } catch (...) {
+HashLib::HashLibImpl::HashLibImpl(HashLib::Algorithm kind)
+    : algorithm_(HashLibImpl::get_algorithm(kind)) {
+  if (!ctx_) {
     EVP_MD_CTX_free(ctx_);
-    throw;
+    throw klib::RuntimeError(openssl_err_msg());
   }
 }
 
@@ -80,13 +70,17 @@ void HashLib::HashLibImpl::update(const std::string &data) {
 }
 
 std::string HashLib::HashLibImpl::digest() {
-  std::string digest;
+  if (!doing_) {
+    throw LogicError("must call update() first");
+  }
 
-  digest.resize(digest_length_);
+  std::string digest;
+  digest.resize(EVP_MAX_MD_SIZE);
+
+  std::uint32_t size;
   check_openssl_return_value(EVP_DigestFinal(
-      ctx_, reinterpret_cast<unsigned char *>(std::data(digest)),
-      &digest_length_));
-  digest.resize(digest_length_);
+      ctx_, reinterpret_cast<unsigned char *>(std::data(digest)), &size));
+  digest.resize(size);
 
   doing_ = false;
   return digest;
@@ -101,7 +95,7 @@ HashLib::HashLibImpl::~HashLibImpl() { EVP_MD_CTX_free(ctx_); }
 std::string HashLib::HashLibImpl::bytes_to_hex_string(
     const std::string &bytes) {
   std::string str;
-  str.reserve(SHA512_DIGEST_LENGTH);
+  str.reserve(EVP_MAX_MD_SIZE);
 
   for (auto byte : bytes) {
     str += fmt::format(FMT_COMPILE("{:02x}"), static_cast<std::uint8_t>(byte));
@@ -110,58 +104,48 @@ std::string HashLib::HashLibImpl::bytes_to_hex_string(
   return str;
 }
 
-std::pair<const EVP_MD *, std::uint32_t> HashLib::HashLibImpl::get_info(
-    HashLib::Algorithm kind) {
+const EVP_MD *HashLib::HashLibImpl::get_algorithm(HashLib::Algorithm kind) {
   const EVP_MD *algorithm = nullptr;
-  std::uint32_t digest_length = 0;
 
   switch (kind) {
     case HashLib::Algorithm::MD5:
       algorithm = EVP_md5();
-      digest_length = MD5_DIGEST_LENGTH;
       break;
     case HashLib::Algorithm::SHA_224:
       algorithm = EVP_sha224();
-      digest_length = SHA224_DIGEST_LENGTH;
       break;
     case HashLib::Algorithm::SHA_256:
       algorithm = EVP_sha256();
-      digest_length = SHA256_DIGEST_LENGTH;
       break;
     case HashLib::Algorithm::SHA_384:
       algorithm = EVP_sha384();
-      digest_length = SHA384_DIGEST_LENGTH;
       break;
     case HashLib::Algorithm::SHA_512:
       algorithm = EVP_sha512();
-      digest_length = SHA512_DIGEST_LENGTH;
       break;
     case HashLib::Algorithm::SHA3_224:
       algorithm = EVP_sha3_224();
-      digest_length = SHA224_DIGEST_LENGTH;
       break;
     case HashLib::Algorithm::SHA3_256:
       algorithm = EVP_sha3_256();
-      digest_length = SHA256_DIGEST_LENGTH;
       break;
     case HashLib::Algorithm::SHA3_384:
       algorithm = EVP_sha3_384();
-      digest_length = SHA384_DIGEST_LENGTH;
       break;
     case HashLib::Algorithm::SHA3_512:
       algorithm = EVP_sha3_512();
-      digest_length = SHA512_DIGEST_LENGTH;
       break;
     default:
       algorithm = nullptr;
-      digest_length = 0;
   }
 
-  return {algorithm, digest_length};
+  return algorithm;
 }
 
 HashLib::HashLib(HashLib::Algorithm kind)
     : impl_(std::make_unique<HashLibImpl>(kind)) {}
+
+HashLib::~HashLib() = default;
 
 HashLib &HashLib::update(const std::string &data) {
   impl_->update(data);

@@ -8,7 +8,6 @@
 #include <concepts>
 #include <cstddef>
 #include <cstdint>
-#include <map>
 #include <string>
 #include <string_view>
 #include <vector>
@@ -171,8 +170,17 @@ void wait_for_child_process();
  */
 std::string uuid();
 
+/**
+ * @brief Clear data
+ * @param data: Data to be cleared
+ */
 void cleanse(std::string &data);
 
-void cleanse(void *data, std::size_t size);
+/**
+ * @brief Clear data
+ * @param ptr: Point to the data to be cleared
+ * @param size: The size of the data to be cleared
+ */
+void cleanse(void *ptr, std::size_t size);
 
 }  // namespace klib

@@ -133,8 +133,6 @@ class Request {
   std::experimental::propagate_const<std::unique_ptr<RequestImpl>> impl_;
 };
 
-class Response;
-
 /**
  * @brief Response headers
  */

@@ -1,3 +1,8 @@
+/**
+ * @file unicode.h
+ * @brief Contains an Unicode module
+ */
+
 #pragma once
 
 #include <cstdint>

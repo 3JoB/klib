@@ -41,27 +41,36 @@ class HashLib {
   HashLib(HashLib &&) = delete;
   HashLib &operator=(const HashLib &) = delete;
   HashLib &operator=(HashLib &&) = delete;
-  ~HashLib() = default;
+
+  /**
+   * @brief Destructor
+   */
+  ~HashLib();
 
   /**
    * @brief Update the hash object
-   * @param Bytes used to update the hash object
+   * @param data: Bytes used to update the hash object
    * @return Hash object
    */
   HashLib &update(const std::string &data);
 
   /**
-   * @brief Return the digest of the data passed to the update() method so far
-   * @return
+   * @brief Get the hash result
+   * @return Hash result
    */
   std::string digest();
 
   /**
-   *
-   * @return
+   * @brief Get the hash result
+   * @return Hash result in hexadecimal form
    */
   std::string hex_digest();
 
+  /**
+   * @brief Get the hash object and calculate the hash value
+   * @param data: Data to be hashed
+   * @return Hash object
+   */
   static HashLib &md5(const std::string &data);
   static HashLib &sha_224(const std::string &data);
   static HashLib &sha_256(const std::string &data);
