@@ -23,7 +23,7 @@ TEST_CASE("base64_decode", "[crypto]") {
 }
 
 // https://tool.lmeee.com/jiami/aes
-TEST_CASE("aes_256_cbc_encrypt", "[crypto]") {
+TEST_CASE("aes_256_cbc", "[crypto]") {
   std::string iv = "1234567890abcdef";
   REQUIRE(klib::aes_256_encrypt_base64("Advanced Encryption Standard",
                                        "1234567890abcdef1234567890abcdef",
@@ -128,9 +128,7 @@ TEST_CASE("aes_256_cbc_encrypt", "[crypto]") {
       "s3ZbTuChHMCAh75IY1an6E2QJddEOBRfszEtWcGcy+u9ACV/"
       "hXhhg2mw2KUT2QnyJ9en9jPkjEOd04V8ja3Aoqk3chTTQJksU8D/"
       "XLOyDgEkWNaX5I4WgTtkOeLyEQVg2yzrAwjgayCXWj71JDe4");
-}
 
-TEST_CASE("aes_256_cbc_decrypt", "[crypto]") {
   REQUIRE(
       klib::aes_256_decrypt_base64(
           "IT+LcNazRBcK54/"
