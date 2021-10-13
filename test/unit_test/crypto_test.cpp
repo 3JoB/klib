@@ -6,20 +6,22 @@
 #include "klib/hash_lib.h"
 
 TEST_CASE("base64_encode", "[crypto]") {
-  CHECK(klib::base64_encode("hello") == "aGVsbG8=");
-  CHECK(klib::base64_encode("Online Tools") == "T25saW5lIFRvb2xz");
-  CHECK(klib::base64_encode(
-            "How to resolve the \"EVP_DecryptFInal_ex: bad decrypt\"") ==
-        "SG93IHRvIHJlc29sdmUgdGhlICJFVlBfRGVjcnlwdEZJbmFsX2V4OiBiYWQgZGVjcnlwdC"
-        "I=");
+  REQUIRE(klib::base64_encode("hello") == "aGVsbG8=");
+  REQUIRE(klib::base64_encode("Online Tools") == "T25saW5lIFRvb2xz");
+  REQUIRE(
+      klib::base64_encode(
+          "How to resolve the \"EVP_DecryptFInal_ex: bad decrypt\"") ==
+      "SG93IHRvIHJlc29sdmUgdGhlICJFVlBfRGVjcnlwdEZJbmFsX2V4OiBiYWQgZGVjcnlwdC"
+      "I=");
 }
 
 TEST_CASE("base64_decode", "[crypto]") {
-  CHECK(klib::base64_decode("aGVsbG8=") == "hello");
-  CHECK(klib::base64_decode("T25saW5lIFRvb2xz") == "Online Tools");
-  CHECK(klib::base64_decode("SG93IHRvIHJlc29sdmUgdGhlICJFVlBfRGVjcnlwdEZJbmFsX2"
-                            "V4OiBiYWQgZGVjcnlwdCI=") ==
-        "How to resolve the \"EVP_DecryptFInal_ex: bad decrypt\"");
+  REQUIRE(klib::base64_decode("aGVsbG8=") == "hello");
+  REQUIRE(klib::base64_decode("T25saW5lIFRvb2xz") == "Online Tools");
+  REQUIRE(
+      klib::base64_decode("SG93IHRvIHJlc29sdmUgdGhlICJFVlBfRGVjcnlwdEZJbmFsX2"
+                          "V4OiBiYWQgZGVjcnlwdCI=") ==
+      "How to resolve the \"EVP_DecryptFInal_ex: bad decrypt\"");
 }
 
 // https://tool.lmeee.com/jiami/aes

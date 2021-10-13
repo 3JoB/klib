@@ -83,3 +83,11 @@ TEST_CASE("execute_command", "[util]") {
   std::string command = "gcc -v";
   REQUIRE_NOTHROW(klib::execute_command(command));
 }
+
+TEST_CASE("cleanse", "[util]") {
+  std::string password = "123456";
+  klib::cleanse(password);
+
+  REQUIRE(std::empty(password));
+  REQUIRE(*(std::data(password) + 5) == 0);
+}
