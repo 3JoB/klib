@@ -4,34 +4,24 @@
 #include <memory>
 
 #include <openssl/aes.h>
-#include <openssl/err.h>
 #include <openssl/evp.h>
 #include <openssl/rand.h>
 
+#include "klib/detail/openssl_error.h"
 #include "klib/exception.h"
 
 namespace klib {
 
 namespace {
 
-std::string openssl_err_msg() {
-  return ERR_error_string(ERR_get_error(), nullptr);
-}
-
-void check_openssl_return_value(std::int32_t rc) {
-  if (rc != 1) {
-    throw RuntimeError(openssl_err_msg());
-  }
-}
-
 std::string generate_iv() {
   if (RAND_status() == 0) {
-    check_openssl_return_value(RAND_poll());
+    detail::check_openssl_return_value(RAND_poll());
   }
 
   std::string iv;
   iv.resize(EVP_MAX_IV_LENGTH);
-  check_openssl_return_value(RAND_bytes(
+  detail::check_openssl_return_value(RAND_bytes(
       reinterpret_cast<unsigned char *>(std::data(iv)), std::size(iv)));
 
   return iv;
@@ -94,13 +84,13 @@ std::string do_aes_crypt(const std::string &data, const std::string &key,
   std::unique_ptr<EVP_CIPHER_CTX, decltype(EVP_CIPHER_CTX_free) *> ctx(
       EVP_CIPHER_CTX_new(), EVP_CIPHER_CTX_free);
   if (!ctx) {
-    throw RuntimeError(openssl_err_msg());
+    throw RuntimeError(detail::openssl_err_msg());
   }
 
   auto do_encrypt = crypt == Crypt::Encrypt ? 1 : 0;
   auto rc = EVP_CipherInit(ctx.get(), get_algorithm(aes_mode), nullptr, nullptr,
                            do_encrypt);
-  check_openssl_return_value(rc);
+  detail::check_openssl_return_value(rc);
   OPENSSL_assert(EVP_CIPHER_CTX_get_key_length(ctx.get()) == 32);
   OPENSSL_assert(EVP_CIPHER_CTX_get_iv_length(ctx.get()) == EVP_MAX_IV_LENGTH);
 
@@ -110,12 +100,12 @@ std::string do_aes_crypt(const std::string &data, const std::string &key,
       std::empty(iv) ? nullptr
                      : reinterpret_cast<const unsigned char *>(std::data(iv)),
       do_encrypt);
-  check_openssl_return_value(rc);
+  detail::check_openssl_return_value(rc);
 
   if (auto padding_mode_num = get_padding_mode(padding_mode);
       padding_mode_num != 0) {
     rc = EVP_CIPHER_CTX_set_padding(ctx.get(), padding_mode_num);
-    check_openssl_return_value(rc);
+    detail::check_openssl_return_value(rc);
   }
 
   std::string result;
@@ -127,14 +117,14 @@ std::string do_aes_crypt(const std::string &data, const std::string &key,
       ctx.get(), reinterpret_cast<unsigned char *>(std::data(result)),
       &chunk_len, reinterpret_cast<const unsigned char *>(std::data(data)),
       input_size);
-  check_openssl_return_value(rc);
+  detail::check_openssl_return_value(rc);
 
   std::int32_t output_len = chunk_len;
   rc = EVP_CipherFinal(
       ctx.get(),
       reinterpret_cast<unsigned char *>(std::data(result)) + chunk_len,
       &chunk_len);
-  check_openssl_return_value(rc);
+  detail::check_openssl_return_value(rc);
   output_len += chunk_len;
 
   result.resize(output_len);

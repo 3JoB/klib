@@ -4,26 +4,12 @@
 
 #include <fmt/compile.h>
 #include <fmt/format.h>
-#include <openssl/err.h>
 #include <openssl/evp.h>
 
+#include "klib/detail/openssl_error.h"
 #include "klib/exception.h"
 
 namespace klib {
-
-namespace {
-
-std::string openssl_err_msg() {
-  return ERR_error_string(ERR_get_error(), nullptr);
-}
-
-void check_openssl_return_value(std::int32_t rc) {
-  if (rc != 1) {
-    throw klib::RuntimeError(openssl_err_msg());
-  }
-}
-
-}  // namespace
 
 class HashLib::HashLibImpl {
  public:
@@ -53,18 +39,18 @@ class HashLib::HashLibImpl {
 HashLib::HashLibImpl::HashLibImpl(HashLib::Algorithm kind)
     : algorithm_(HashLibImpl::get_algorithm(kind)) {
   if (!ctx_) {
-    throw klib::RuntimeError(openssl_err_msg());
+    throw RuntimeError(detail::openssl_err_msg());
   }
 }
 
 // https://www.openssl.org/docs/man3.0/man3/EVP_DigestUpdate.html
 void HashLib::HashLibImpl::update(const std::string &data) {
   if (!doing_) {
-    check_openssl_return_value(EVP_DigestInit(ctx_, algorithm_));
+    detail::check_openssl_return_value(EVP_DigestInit(ctx_, algorithm_));
     doing_ = true;
   }
 
-  check_openssl_return_value(
+  detail::check_openssl_return_value(
       EVP_DigestUpdate(ctx_, std::data(data), std::size(data)));
 }
 
@@ -77,7 +63,7 @@ std::string HashLib::HashLibImpl::digest() {
   digest.resize(EVP_MAX_MD_SIZE);
 
   std::uint32_t size;
-  check_openssl_return_value(EVP_DigestFinal(
+  detail::check_openssl_return_value(EVP_DigestFinal(
       ctx_, reinterpret_cast<unsigned char *>(std::data(digest)), &size));
   digest.resize(size);
 
