@@ -8,7 +8,7 @@
 #include "klib/hash_lib.h"
 #include "klib/util.h"
 
-TEST_CASE("Compress and decompress using the zip algorithm", "[archive]") {
+TEST_CASE("zip", "[archive]") {
   REQUIRE(std::filesystem::is_directory("madler-zlib-7085a61"));
   REQUIRE(klib::folder_size("madler-zlib-7085a61") == 2984209);
 
@@ -23,50 +23,7 @@ TEST_CASE("Compress and decompress using the zip algorithm", "[archive]") {
 
   std::filesystem::remove("zlib.zip");
   std::filesystem::remove_all("zip");
-}
 
-TEST_CASE("Compress and decompress using the gzip algorithm", "[archive]") {
-  REQUIRE(std::filesystem::is_directory("madler-zlib-7085a61"));
-  REQUIRE(klib::folder_size("madler-zlib-7085a61") == 2984209);
-
-  REQUIRE_NOTHROW(klib::compress("madler-zlib-7085a61", klib::Algorithm::Gzip,
-                                 "zlib.tar.gz"));
-  REQUIRE(std::filesystem::is_regular_file("zlib.tar.gz"));
-
-  REQUIRE(klib::decompress("zlib.tar.gz", "gzip") == "madler-zlib-7085a61");
-  REQUIRE(std::filesystem::is_directory("gzip/madler-zlib-7085a61"));
-  REQUIRE(klib::folder_size("gzip/madler-zlib-7085a61") == 2984209);
-  REQUIRE(klib::same_folder("madler-zlib-7085a61", "gzip/madler-zlib-7085a61"));
-
-  std::filesystem::remove("zlib.tar.gz");
-  std::filesystem::remove_all("gzip");
-}
-
-TEST_CASE("Decompress using the gzip algorithm, compressed file from github",
-          "[archive]") {
-  REQUIRE(std::filesystem::exists("zlib-v1.2.11.tar.gz"));
-  REQUIRE(klib::sha3_512_hex(klib::read_file("zlib-v1.2.11.tar.gz", true)) ==
-          "38af19362e48ec80f6565cf18245f520c8ee5348374cb0c11286f3b23cc93fd05a6a"
-          "2a2b8784f20bb2307211a2a776241797857b133056f4b33de1d363db7bb2");
-
-  REQUIRE(klib::decompress("zlib-v1.2.11.tar.gz", "std-gzip") ==
-          "madler-zlib-7085a61");
-
-  REQUIRE(std::filesystem::is_directory("std-gzip/madler-zlib-7085a61"));
-  REQUIRE(klib::folder_size("std-gzip/madler-zlib-7085a61") == 2984209);
-
-  REQUIRE(std::filesystem::is_directory("madler-zlib-7085a61"));
-  REQUIRE(klib::folder_size("madler-zlib-7085a61") == 2984209);
-  REQUIRE(
-      klib::same_folder("madler-zlib-7085a61", "std-gzip/madler-zlib-7085a61"));
-
-  std::filesystem::remove_all("std-gzip");
-}
-
-TEST_CASE(
-    "Compress and decompress using the zip algorithm, excluding the outermost "
-    "folder",
-    "[archive]") {
   REQUIRE(std::filesystem::is_directory("madler-zlib-7085a61"));
   REQUIRE(klib::folder_size("madler-zlib-7085a61") == 2984209);
 
@@ -101,4 +58,39 @@ TEST_CASE(
   std::filesystem::remove_all("flag");
   std::filesystem::remove("zlib.zip");
   std::filesystem::remove_all("files");
+}
+
+TEST_CASE("gzip", "[archive]") {
+  REQUIRE(std::filesystem::is_directory("madler-zlib-7085a61"));
+  REQUIRE(klib::folder_size("madler-zlib-7085a61") == 2984209);
+
+  REQUIRE_NOTHROW(klib::compress("madler-zlib-7085a61", klib::Algorithm::Gzip,
+                                 "zlib.tar.gz"));
+  REQUIRE(std::filesystem::is_regular_file("zlib.tar.gz"));
+
+  REQUIRE(klib::decompress("zlib.tar.gz", "gzip") == "madler-zlib-7085a61");
+  REQUIRE(std::filesystem::is_directory("gzip/madler-zlib-7085a61"));
+  REQUIRE(klib::folder_size("gzip/madler-zlib-7085a61") == 2984209);
+  REQUIRE(klib::same_folder("madler-zlib-7085a61", "gzip/madler-zlib-7085a61"));
+
+  std::filesystem::remove("zlib.tar.gz");
+  std::filesystem::remove_all("gzip");
+
+  REQUIRE(std::filesystem::exists("zlib-v1.2.11.tar.gz"));
+  REQUIRE(klib::sha3_512_hex(klib::read_file("zlib-v1.2.11.tar.gz", true)) ==
+          "38af19362e48ec80f6565cf18245f520c8ee5348374cb0c11286f3b23cc93fd05a6a"
+          "2a2b8784f20bb2307211a2a776241797857b133056f4b33de1d363db7bb2");
+
+  REQUIRE(klib::decompress("zlib-v1.2.11.tar.gz", "std-gzip") ==
+          "madler-zlib-7085a61");
+
+  REQUIRE(std::filesystem::is_directory("std-gzip/madler-zlib-7085a61"));
+  REQUIRE(klib::folder_size("std-gzip/madler-zlib-7085a61") == 2984209);
+
+  REQUIRE(std::filesystem::is_directory("madler-zlib-7085a61"));
+  REQUIRE(klib::folder_size("madler-zlib-7085a61") == 2984209);
+  REQUIRE(
+      klib::same_folder("madler-zlib-7085a61", "std-gzip/madler-zlib-7085a61"));
+
+  std::filesystem::remove_all("std-gzip");
 }
