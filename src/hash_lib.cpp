@@ -121,7 +121,7 @@ const EVP_MD *HashLib::HashLibImpl::get_algorithm(HashLib::Algorithm kind) {
       algorithm = EVP_sha3_512();
       break;
     default:
-      algorithm = nullptr;
+      throw LogicError("Unknown padding mode");
   }
 
   return algorithm;

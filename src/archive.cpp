@@ -1,6 +1,5 @@
 #include "klib/archive.h"
 
-#include <cassert>
 #include <cstddef>
 #include <cstdint>
 #include <filesystem>
@@ -100,7 +99,7 @@ std::string compressed_file_name(const std::string &path, Algorithm algorithm) {
   } else if (algorithm == Algorithm::Gzip) {
     name += ".tar.gz";
   } else {
-    assert(false);
+    throw LogicError("Unknown algorithm");
   }
 
   return name;
@@ -169,7 +168,7 @@ void compress(const std::vector<std::string> &paths, Algorithm algorithm,
     checked_archive_func(archive_write_set_format_gnutar, archive.get());
     checked_archive_func(archive_write_add_filter_gzip, archive.get());
   } else {
-    assert(false);
+    throw LogicError("Unknown algorithm");
   }
 
   check_archive_correctness(

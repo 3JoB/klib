@@ -151,14 +151,17 @@ std::string do_base64(const std::string &data, Crypt crypt) {
       func(reinterpret_cast<unsigned char *>(std::data(result)),
            reinterpret_cast<const unsigned char *>(std::data(data)),
            static_cast<std::int32_t>(input_size));
-  result.resize(output_size);
 
+  // https://gist.github.com/cameronehrlich/6f77a4982f141ee516fe52242eb803db
   if (crypt == Crypt::Decrypt) {
-    while (result.ends_with('\0')) {
-      result.pop_back();
+    if (data[input_size - 2] == '=') {
+      output_size -= 2;
+    } else if (data[input_size - 1] == '=') {
+      output_size -= 1;
     }
   }
 
+  result.resize(output_size);
   return result;
 }
 
