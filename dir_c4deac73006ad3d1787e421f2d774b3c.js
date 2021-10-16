@@ -7,9 +7,7 @@ var dir_c4deac73006ad3d1787e421f2d774b3c =
       [ "klib::RuntimeError", "classklib_1_1RuntimeError.html", "classklib_1_1RuntimeError" ],
       [ "klib::LogicError", "classklib_1_1LogicError.html", "classklib_1_1LogicError" ]
     ] ],
-    [ "hash_lib.h", "hash__lib_8h.html", [
-      [ "klib::HashLib", "classklib_1_1HashLib.html", "classklib_1_1HashLib" ]
-    ] ],
+    [ "hash_lib.h", "hash__lib_8h.html", "hash__lib_8h" ],
     [ "html.h", "html_8h.html", "html_8h" ],
     [ "http.h", "http_8h.html", [
       [ "klib::Request", "classklib_1_1Request.html", "classklib_1_1Request" ],

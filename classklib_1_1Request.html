@@ -30,7 +30,7 @@
  <tbody>
  <tr style="height: 56px;">
   <td id="projectalign" style="padding-left: 0.5em;">
-   <div id="projectname">klib<span id="projectnumber">&#160;0.5.0</span>
+   <div id="projectname">klib<span id="projectnumber">&#160;0.6.0</span>
    </div>
   </td>
     <td>        <div id="MSearchBox" class="MSearchBoxInactive">
@@ -132,13 +132,16 @@ Public Member Functions</h2></td></tr>
 <tr class="memitem:a3bd57350cde297d6e01d32c6354c6e78"><td class="memItemLeft" align="right" valign="top">void&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="classklib_1_1Request.html#a3bd57350cde297d6e01d32c6354c6e78">allow_redirects</a> (bool flag)</td></tr>
 <tr class="memdesc:a3bd57350cde297d6e01d32c6354c6e78"><td class="mdescLeft">&#160;</td><td class="mdescRight">Whether to follow any location(The default is true)  <a href="classklib_1_1Request.html#a3bd57350cde297d6e01d32c6354c6e78">More...</a><br /></td></tr>
 <tr class="separator:a3bd57350cde297d6e01d32c6354c6e78"><td class="memSeparator" colspan="2">&#160;</td></tr>
-<tr class="memitem:ac2cf384a73a9a958c5a49979db7a4633"><td class="memItemLeft" align="right" valign="top">void&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="classklib_1_1Request.html#ac2cf384a73a9a958c5a49979db7a4633">set_proxy</a> (const std::string &amp;proxy)</td></tr>
-<tr class="memdesc:ac2cf384a73a9a958c5a49979db7a4633"><td class="mdescLeft">&#160;</td><td class="mdescRight">Set up proxy.  <a href="classklib_1_1Request.html#ac2cf384a73a9a958c5a49979db7a4633">More...</a><br /></td></tr>
+<tr class="memitem:ac2cf384a73a9a958c5a49979db7a4633"><td class="memItemLeft" align="right" valign="top"><a id="ac2cf384a73a9a958c5a49979db7a4633" name="ac2cf384a73a9a958c5a49979db7a4633"></a>
+void&#160;</td><td class="memItemRight" valign="bottom"><b>set_proxy</b> (const std::string &amp;proxy)</td></tr>
 <tr class="separator:ac2cf384a73a9a958c5a49979db7a4633"><td class="memSeparator" colspan="2">&#160;</td></tr>
 <tr class="memitem:aa6db2a71c4c12c8f054715e3f8fc71ae"><td class="memItemLeft" align="right" valign="top"><a id="aa6db2a71c4c12c8f054715e3f8fc71ae" name="aa6db2a71c4c12c8f054715e3f8fc71ae"></a>
 void&#160;</td><td class="memItemRight" valign="bottom"><b>set_no_proxy</b> ()</td></tr>
 <tr class="memdesc:aa6db2a71c4c12c8f054715e3f8fc71ae"><td class="mdescLeft">&#160;</td><td class="mdescRight">No proxy. <br /></td></tr>
 <tr class="separator:aa6db2a71c4c12c8f054715e3f8fc71ae"><td class="memSeparator" colspan="2">&#160;</td></tr>
+<tr class="memitem:a162a25604f3336d0f091c21db20e3e28"><td class="memItemLeft" align="right" valign="top"><a id="a162a25604f3336d0f091c21db20e3e28" name="a162a25604f3336d0f091c21db20e3e28"></a>
+void&#160;</td><td class="memItemRight" valign="bottom"><b>set_doh_url</b> (const std::string &amp;url)</td></tr>
+<tr class="separator:a162a25604f3336d0f091c21db20e3e28"><td class="memSeparator" colspan="2">&#160;</td></tr>
 <tr class="memitem:abc72456d5b46d7081dbea3980fefc68b"><td class="memItemLeft" align="right" valign="top">void&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="classklib_1_1Request.html#abc72456d5b46d7081dbea3980fefc68b">set_user_agent</a> (const std::string &amp;user_agent)</td></tr>
 <tr class="memdesc:abc72456d5b46d7081dbea3980fefc68b"><td class="mdescLeft">&#160;</td><td class="mdescRight">Set up user agent.  <a href="classklib_1_1Request.html#abc72456d5b46d7081dbea3980fefc68b">More...</a><br /></td></tr>
 <tr class="separator:abc72456d5b46d7081dbea3980fefc68b"><td class="memSeparator" colspan="2">&#160;</td></tr>
@@ -165,9 +168,9 @@ void&#160;</td><td class="memItemRight" valign="bottom"><b>set_curl_user_agent</
 <tr class="memitem:a41a2838dd71f6a7d4cbebb8e53552a65"><td class="memItemLeft" align="right" valign="top"><a class="el" href="classklib_1_1Response.html">Response</a>&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="classklib_1_1Request.html#a41a2838dd71f6a7d4cbebb8e53552a65">post</a> (const std::string &amp;url, const std::unordered_map&lt; std::string, std::string &gt; &amp;data, const std::unordered_map&lt; std::string, std::string &gt; &amp;file={}, const std::unordered_map&lt; std::string, std::string &gt; &amp;header={}, bool multi=false)</td></tr>
 <tr class="memdesc:a41a2838dd71f6a7d4cbebb8e53552a65"><td class="mdescLeft">&#160;</td><td class="mdescRight">Sends a POST request.  <a href="classklib_1_1Request.html#a41a2838dd71f6a7d4cbebb8e53552a65">More...</a><br /></td></tr>
 <tr class="separator:a41a2838dd71f6a7d4cbebb8e53552a65"><td class="memSeparator" colspan="2">&#160;</td></tr>
-<tr class="memitem:a615da94aeaaddafb763f3a4fe18edad9"><td class="memItemLeft" align="right" valign="top"><a class="el" href="classklib_1_1Response.html">Response</a>&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="classklib_1_1Request.html#a615da94aeaaddafb763f3a4fe18edad9">post</a> (const std::string &amp;url, const std::string &amp;data, const std::unordered_map&lt; std::string, std::string &gt; &amp;header={}, bool multi=false)</td></tr>
-<tr class="memdesc:a615da94aeaaddafb763f3a4fe18edad9"><td class="mdescLeft">&#160;</td><td class="mdescRight">Sends a POST request.  <a href="classklib_1_1Request.html#a615da94aeaaddafb763f3a4fe18edad9">More...</a><br /></td></tr>
-<tr class="separator:a615da94aeaaddafb763f3a4fe18edad9"><td class="memSeparator" colspan="2">&#160;</td></tr>
+<tr class="memitem:ab6999228a067c5b248e0e1a80728de06"><td class="memItemLeft" align="right" valign="top"><a class="el" href="classklib_1_1Response.html">Response</a>&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="classklib_1_1Request.html#ab6999228a067c5b248e0e1a80728de06">post</a> (const std::string &amp;url, const std::string &amp;json, const std::unordered_map&lt; std::string, std::string &gt; &amp;header={}, bool multi=false)</td></tr>
+<tr class="memdesc:ab6999228a067c5b248e0e1a80728de06"><td class="mdescLeft">&#160;</td><td class="mdescRight">Sends a POST request.  <a href="classklib_1_1Request.html#ab6999228a067c5b248e0e1a80728de06">More...</a><br /></td></tr>
+<tr class="separator:ab6999228a067c5b248e0e1a80728de06"><td class="memSeparator" colspan="2">&#160;</td></tr>
 </table><table class="memberdecls">
 <tr class="heading"><td colspan="2"><h2 class="groupheader"><a id="friends" name="friends"></a>
 Friends</h2></td></tr>
@@ -254,8 +257,8 @@ class&#160;</td><td class="memItemRight" valign="bottom"><b>Response</b></td></t
 
 </div>
 </div>
-<a id="a615da94aeaaddafb763f3a4fe18edad9" name="a615da94aeaaddafb763f3a4fe18edad9"></a>
-<h2 class="memtitle"><span class="permalink"><a href="#a615da94aeaaddafb763f3a4fe18edad9">&#9670;&nbsp;</a></span>post() <span class="overload">[1/2]</span></h2>
+<a id="ab6999228a067c5b248e0e1a80728de06" name="ab6999228a067c5b248e0e1a80728de06"></a>
+<h2 class="memtitle"><span class="permalink"><a href="#ab6999228a067c5b248e0e1a80728de06">&#9670;&nbsp;</a></span>post() <span class="overload">[1/2]</span></h2>
 
 <div class="memitem">
 <div class="memproto">
@@ -270,7 +273,7 @@ class&#160;</td><td class="memItemRight" valign="bottom"><b>Response</b></td></t
           <td class="paramkey"></td>
           <td></td>
           <td class="paramtype">const std::string &amp;&#160;</td>
-          <td class="paramname"><em>data</em>, </td>
+          <td class="paramname"><em>json</em>, </td>
         </tr>
         <tr>
           <td class="paramkey"></td>
@@ -381,32 +384,6 @@ class&#160;</td><td class="memItemRight" valign="bottom"><b>Response</b></td></t
 <dl class="params"><dt>Parameters</dt><dd>
   <table class="params">
     <tr><td class="paramname">seconds</td><td>Time in seconds </td></tr>
-  </table>
-  </dd>
-</dl>
-
-</div>
-</div>
-<a id="ac2cf384a73a9a958c5a49979db7a4633" name="ac2cf384a73a9a958c5a49979db7a4633"></a>
-<h2 class="memtitle"><span class="permalink"><a href="#ac2cf384a73a9a958c5a49979db7a4633">&#9670;&nbsp;</a></span>set_proxy()</h2>
-
-<div class="memitem">
-<div class="memproto">
-      <table class="memname">
-        <tr>
-          <td class="memname">void klib::Request::set_proxy </td>
-          <td>(</td>
-          <td class="paramtype">const std::string &amp;&#160;</td>
-          <td class="paramname"><em>proxy</em></td><td>)</td>
-          <td></td>
-        </tr>
-      </table>
-</div><div class="memdoc">
-
-<p>Set up proxy. </p>
-<dl class="params"><dt>Parameters</dt><dd>
-  <table class="params">
-    <tr><td class="paramname">proxy</td><td>String representing proxy </td></tr>
   </table>
   </dd>
 </dl>
