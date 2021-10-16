@@ -157,7 +157,8 @@ TEST_CASE("download", "[http]") {
 #ifdef KLIB_TEST_USE_PROXY
   request.set_proxy("socks5://127.0.0.1:1080");
 #endif
-  request.set_doh_url("https://cloudflare-dns.com/dns-query");
+  request.set_browser_user_agent();
+  request.set_doh_url("https://dns.google/dns-query");
 
   auto response = request.get(
       "https://github.com/facebook/zstd/archive/refs/tags/v1.5.0.tar.gz");

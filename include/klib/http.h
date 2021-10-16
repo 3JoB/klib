@@ -64,7 +64,7 @@ class Request {
   /**
    * @brief Set up a URL for the DoH server
    * @param url: DoH server URL
-   * @example request.set_doh_url("https://cloudflare-dns.com/dns-query");
+   * @example request.set_doh_url("https://dns.google/dns-query");
    * @see https://github.com/curl/curl/wiki/DNS-over-HTTPS
    */
   void set_doh_url(const std::string &url);
