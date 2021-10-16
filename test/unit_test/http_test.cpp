@@ -4,6 +4,7 @@
 #include <boost/json.hpp>
 #include <catch2/catch.hpp>
 
+#include "klib/hash_lib.h"
 #include "klib/http.h"
 #include "klib/util.h"
 
@@ -139,11 +140,32 @@ TEST_CASE("POST json", "[http]") {
   obj["password"] = password;
 
   auto response =
-      request.post(httpbin_url + "/post", boost::json::serialize(obj),
-                   {{"Content-Type", "application/json"}}, true);
+      request.post(httpbin_url + "/post", boost::json::serialize(obj));
   REQUIRE(response.status_code() == klib::Response::StatusCode::Ok);
 
   auto jv = boost::json::parse(response.text());
 
   REQUIRE(jv.at("data").as_string() == boost::json::serialize(obj));
+}
+
+TEST_CASE("download", "[http]") {
+  klib::Request request;
+
+#ifndef NDEBUG
+  request.verbose(true);
+#endif
+#ifdef KLIB_TEST_USE_PROXY
+  request.set_proxy("socks5://127.0.0.1:1080");
+#endif
+  request.set_doh_url("https://cloudflare-dns.com/dns-query");
+
+  auto response = request.get(
+      "https://github.com/madler/zlib/archive/refs/tags/v1.2.11.tar.gz");
+  REQUIRE(response.status_code() == klib::Response::StatusCode::Ok);
+  response.save_to_file("zlib-v1.2.11.tar.gz", true);
+
+  REQUIRE(std::filesystem::is_regular_file("zlib-v1.2.11.tar.gz"));
+  REQUIRE(klib::HashLib::sha_256(klib::read_file("zlib-v1.2.11.tar.gz", true))
+              .hex_digest() ==
+          "629380c90a77b964d896ed37163f5c3a34f6e6d897311f1df2a7016355c45eff");
 }

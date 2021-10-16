@@ -1,3 +1,7 @@
+if(KLIB_TEST_USE_PROXY)
+  add_definitions(-DKLIB_TEST_USE_PROXY)
+endif()
+
 find_package(Boost CONFIG REQUIRED COMPONENTS json)
 
 file(COPY ${KLIB_SOURCE_DIR}/data/zlib-v1.2.11.tar.gz

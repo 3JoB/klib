@@ -11,6 +11,7 @@ option(KLIB_BUILD_SHARED "Build shared library" ON)
 
 option(KLIB_BUILD_TEST "Build test" OFF)
 option(KLIB_BUILD_EXTRA_TEST "Build extra test" OFF)
+option(KLIB_TEST_USE_PROXY "Use proxy when running test" OFF)
 
 option(KLIB_BUILD_BENCH "Build benchmark" OFF)
 option(KLIB_BUILD_DOC "Build documentation" OFF)

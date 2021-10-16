@@ -52,6 +52,7 @@ class Request {
   /**
    * @brief Set up proxy
    * @param proxy: String representing proxy
+   * @example request.set_proxy("socks5://127.0.0.1:1080");
    */
   void set_proxy(const std::string &proxy);
 
@@ -59,6 +60,14 @@ class Request {
    * @brief No proxy
    */
   void set_no_proxy();
+
+  /**
+   * @brief Set up a URL for the DoH server
+   * @param url: DoH server URL
+   * @example request.set_doh_url("https://cloudflare-dns.com/dns-query");
+   * @see https://github.com/curl/curl/wiki/DNS-over-HTTPS
+   */
+  void set_doh_url(const std::string &url);
 
   /**
    * @brief Set up user agent
@@ -124,7 +133,7 @@ class Request {
    * @param data: Data string
    * @return Response content
    */
-  Response post(const std::string &url, const std::string &data,
+  Response post(const std::string &url, const std::string &json,
                 const std::unordered_map<std::string, std::string> &header = {},
                 bool multi = false);
 

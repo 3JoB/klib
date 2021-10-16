@@ -217,6 +217,7 @@ class Request::RequestImpl {
   void allow_redirects(bool flag);
   void set_proxy(const std::string &proxy);
   void set_no_proxy();
+  void set_doh_url(const std::string &url);
   void set_user_agent(const std::string &user_agent);
   void set_browser_user_agent();
   void set_curl_user_agent();
@@ -233,7 +234,7 @@ class Request::RequestImpl {
                 const std::unordered_map<std::string, std::string> &file,
                 const std::unordered_map<std::string, std::string> &header,
                 bool multi);
-  Response post(const std::string &url, const std::string &data,
+  Response post(const std::string &url, const std::string &json,
                 const std::unordered_map<std::string, std::string> &header,
                 bool multi);
 
@@ -269,6 +270,7 @@ Request::RequestImpl::RequestImpl() {
         curl_easy_setopt(http_handle_, CURLOPT_CAPATH, "/etc/ssl/certs"));
     check_curl_correct(curl_easy_setopt(http_handle_, CURLOPT_CAINFO,
                                         "/etc/ssl/certs/ca-certificates.crt"));
+    // TODO Support HTTP/3
     check_curl_correct(curl_easy_setopt(http_handle_, CURLOPT_HTTP_VERSION,
                                         CURL_HTTP_VERSION_2_0));
     check_curl_correct(
@@ -305,6 +307,11 @@ void Request::RequestImpl::set_proxy(const std::string &proxy) {
 
 void Request::RequestImpl::set_no_proxy() {
   check_curl_correct(curl_easy_setopt(http_handle_, CURLOPT_NOPROXY, "*"));
+}
+
+void Request::RequestImpl::set_doh_url(const std::string &url) {
+  check_curl_correct(
+      curl_easy_setopt(http_handle_, CURLOPT_DOH_URL, url.c_str()));
 }
 
 void Request::RequestImpl::set_user_agent(const std::string &user_agent) {
@@ -388,15 +395,17 @@ Response Request::RequestImpl::post(
 }
 
 Response Request::RequestImpl::post(
-    const std::string &url, const std::string &data,
+    const std::string &url, const std::string &json,
     const std::unordered_map<std::string, std::string> &header, bool multi) {
   set_cookies();
   check_curl_correct(curl_easy_setopt(http_handle_, CURLOPT_HTTPPOST, 1L));
 
-  AddHeader add_header(http_handle_, header);
+  auto header_copy = header;
+  header_copy["Content-Type"] = "application/json";
+  AddHeader add_header(http_handle_, header_copy);
   check_curl_correct(curl_easy_setopt(http_handle_, CURLOPT_URL, url.c_str()));
   check_curl_correct(
-      curl_easy_setopt(http_handle_, CURLOPT_POSTFIELDS, data.c_str()));
+      curl_easy_setopt(http_handle_, CURLOPT_POSTFIELDS, json.c_str()));
 
   return do_post(multi);
 }
@@ -464,6 +473,8 @@ void Request::set_proxy(const std::string &proxy) { impl_->set_proxy(proxy); }
 
 void Request::set_no_proxy() { impl_->set_no_proxy(); }
 
+void Request::set_doh_url(const std::string &url) { impl_->set_doh_url(url); }
+
 void Request::set_user_agent(const std::string &user_agent) {
   impl_->set_user_agent(user_agent);
 }
@@ -496,9 +507,9 @@ Response Request::post(
 }
 
 Response Request::post(
-    const std::string &url, const std::string &data,
+    const std::string &url, const std::string &json,
     const std::unordered_map<std::string, std::string> &header, bool multi) {
-  return impl_->post(url, data, header, multi);
+  return impl_->post(url, json, header, multi);
 }
 
 const std::string &Headers::at(const std::string &key) const {
