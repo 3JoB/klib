@@ -141,58 +141,112 @@ std::string HashLib::digest() { return impl_->digest(); }
 
 std::string HashLib::hex_digest() { return impl_->hex_digest(); }
 
-HashLib &HashLib::md5(const std::string &data) {
-  static HashLib hash_lib(HashLib::Algorithm::MD5);
+std::string md5(const std::string &data) {
+  HashLib hash_lib(HashLib::Algorithm::MD5);
   hash_lib.update(data);
-  return hash_lib;
+  return hash_lib.digest();
 }
 
-HashLib &HashLib::sha_224(const std::string &data) {
-  static HashLib hash_lib(HashLib::Algorithm::SHA_224);
+std::string md5_hex(const std::string &data) {
+  HashLib hash_lib(HashLib::Algorithm::MD5);
   hash_lib.update(data);
-  return hash_lib;
+  return hash_lib.hex_digest();
 }
 
-HashLib &HashLib::sha_256(const std::string &data) {
-  static HashLib hash_lib(HashLib::Algorithm::SHA_256);
+std::string sha_224(const std::string &data) {
+  HashLib hash_lib(HashLib::Algorithm::SHA_224);
   hash_lib.update(data);
-  return hash_lib;
+  return hash_lib.digest();
 }
 
-HashLib &HashLib::sha_384(const std::string &data) {
-  static HashLib hash_lib(HashLib::Algorithm::SHA_384);
+std::string sha_224_hex(const std::string &data) {
+  HashLib hash_lib(HashLib::Algorithm::SHA_224);
   hash_lib.update(data);
-  return hash_lib;
+  return hash_lib.hex_digest();
 }
 
-HashLib &HashLib::sha_512(const std::string &data) {
-  static HashLib hash_lib(HashLib::Algorithm::SHA_512);
+std::string sha_256(const std::string &data) {
+  HashLib hash_lib(HashLib::Algorithm::SHA_256);
   hash_lib.update(data);
-  return hash_lib;
+  return hash_lib.digest();
 }
 
-HashLib &HashLib::sha3_224(const std::string &data) {
-  static HashLib hash_lib(HashLib::Algorithm::SHA3_224);
+std::string sha_256_hex(const std::string &data) {
+  HashLib hash_lib(HashLib::Algorithm::SHA_256);
   hash_lib.update(data);
-  return hash_lib;
+  return hash_lib.hex_digest();
 }
 
-HashLib &HashLib::sha3_256(const std::string &data) {
-  static HashLib hash_lib(HashLib::Algorithm::SHA3_256);
+std::string sha_384(const std::string &data) {
+  HashLib hash_lib(HashLib::Algorithm::SHA_384);
   hash_lib.update(data);
-  return hash_lib;
+  return hash_lib.digest();
 }
 
-HashLib &HashLib::sha3_384(const std::string &data) {
-  static HashLib hash_lib(HashLib::Algorithm::SHA3_384);
+std::string sha_384_hex(const std::string &data) {
+  HashLib hash_lib(HashLib::Algorithm::SHA_384);
   hash_lib.update(data);
-  return hash_lib;
+  return hash_lib.hex_digest();
 }
 
-HashLib &HashLib::sha3_512(const std::string &data) {
-  static HashLib hash_lib(HashLib::Algorithm::SHA3_512);
+std::string sha_512(const std::string &data) {
+  HashLib hash_lib(HashLib::Algorithm::SHA_512);
   hash_lib.update(data);
-  return hash_lib;
+  return hash_lib.digest();
+}
+
+std::string sha_512_hex(const std::string &data) {
+  HashLib hash_lib(HashLib::Algorithm::SHA_512);
+  hash_lib.update(data);
+  return hash_lib.hex_digest();
+}
+
+std::string sha3_224(const std::string &data) {
+  HashLib hash_lib(HashLib::Algorithm::SHA3_224);
+  hash_lib.update(data);
+  return hash_lib.digest();
+}
+
+std::string sha3_224_hex(const std::string &data) {
+  HashLib hash_lib(HashLib::Algorithm::SHA3_224);
+  hash_lib.update(data);
+  return hash_lib.hex_digest();
+}
+
+std::string sha3_256(const std::string &data) {
+  HashLib hash_lib(HashLib::Algorithm::SHA3_256);
+  hash_lib.update(data);
+  return hash_lib.digest();
+}
+
+std::string sha3_256_hex(const std::string &data) {
+  HashLib hash_lib(HashLib::Algorithm::SHA3_256);
+  hash_lib.update(data);
+  return hash_lib.hex_digest();
+}
+
+std::string sha3_384(const std::string &data) {
+  HashLib hash_lib(HashLib::Algorithm::SHA3_384);
+  hash_lib.update(data);
+  return hash_lib.digest();
+}
+
+std::string sha3_384_hex(const std::string &data) {
+  HashLib hash_lib(HashLib::Algorithm::SHA3_384);
+  hash_lib.update(data);
+  return hash_lib.hex_digest();
+}
+
+std::string sha3_512(const std::string &data) {
+  HashLib hash_lib(HashLib::Algorithm::SHA3_512);
+  hash_lib.update(data);
+  return hash_lib.digest();
+}
+
+std::string sha3_512_hex(const std::string &data) {
+  HashLib hash_lib(HashLib::Algorithm::SHA3_512);
+  hash_lib.update(data);
+  return hash_lib.hex_digest();
 }
 
 }  // namespace klib

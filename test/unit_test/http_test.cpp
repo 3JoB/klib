@@ -165,7 +165,6 @@ TEST_CASE("download", "[http]") {
   response.save_to_file("zlib-v1.2.11.tar.gz", true);
 
   REQUIRE(std::filesystem::is_regular_file("zlib-v1.2.11.tar.gz"));
-  REQUIRE(klib::HashLib::sha_256(klib::read_file("zlib-v1.2.11.tar.gz", true))
-              .hex_digest() ==
+  REQUIRE(klib::sha_256_hex(klib::read_file("zlib-v1.2.11.tar.gz", true)) ==
           "629380c90a77b964d896ed37163f5c3a34f6e6d897311f1df2a7016355c45eff");
 }

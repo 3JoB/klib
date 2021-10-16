@@ -66,24 +66,33 @@ class HashLib {
    */
   std::string hex_digest();
 
-  /**
-   * @brief Get the hash object and calculate the hash value
-   * @param data: Data to be hashed
-   * @return Hash object
-   */
-  static HashLib &md5(const std::string &data);
-  static HashLib &sha_224(const std::string &data);
-  static HashLib &sha_256(const std::string &data);
-  static HashLib &sha_384(const std::string &data);
-  static HashLib &sha_512(const std::string &data);
-  static HashLib &sha3_224(const std::string &data);
-  static HashLib &sha3_256(const std::string &data);
-  static HashLib &sha3_384(const std::string &data);
-  static HashLib &sha3_512(const std::string &data);
-
  private:
   class HashLibImpl;
   std::experimental::propagate_const<std::unique_ptr<HashLibImpl>> impl_;
 };
+
+/**
+ * @brief Get the hash object and calculate the hash value
+ * @param data: Data to be hashed
+ * @return Hash result
+ */
+std::string md5(const std::string &data);
+std::string md5_hex(const std::string &data);
+std::string sha_224(const std::string &data);
+std::string sha_224_hex(const std::string &data);
+std::string sha_256(const std::string &data);
+std::string sha_256_hex(const std::string &data);
+std::string sha_384(const std::string &data);
+std::string sha_384_hex(const std::string &data);
+std::string sha_512(const std::string &data);
+std::string sha_512_hex(const std::string &data);
+std::string sha3_224(const std::string &data);
+std::string sha3_224_hex(const std::string &data);
+std::string sha3_256(const std::string &data);
+std::string sha3_256_hex(const std::string &data);
+std::string sha3_384(const std::string &data);
+std::string sha3_384_hex(const std::string &data);
+std::string sha3_512(const std::string &data);
+std::string sha3_512_hex(const std::string &data);
 
 }  // namespace klib
