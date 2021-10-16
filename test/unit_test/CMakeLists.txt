@@ -1,6 +1,10 @@
 if(KLIB_TEST_USE_PROXY)
   add_definitions(-DKLIB_TEST_USE_PROXY)
 endif()
+# FIXME
+if(KLIB_VALGRIND)
+  add_definitions(-DKLIB_VALGRIND)
+endif()
 
 find_package(Boost CONFIG REQUIRED COMPONENTS json)
 
