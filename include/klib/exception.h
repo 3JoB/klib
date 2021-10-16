@@ -35,7 +35,7 @@ class RuntimeError : public std::runtime_error {
    * @brief Constructor
    * @param msg: Exception information
    */
-  explicit RuntimeError(std::string_view msg) : RuntimeError(msg.data()) {}
+  explicit RuntimeError(std::string_view msg) : RuntimeError(std::data(msg)) {}
 
   /**
    * @brief Constructor
@@ -69,7 +69,7 @@ class LogicError : public std::logic_error {
    * @brief Constructor
    * @param msg: Exception information
    */
-  explicit LogicError(std::string_view msg) : LogicError(msg.data()) {}
+  explicit LogicError(std::string_view msg) : LogicError(std::data(msg)) {}
 
   /**
    * @brief Constructor

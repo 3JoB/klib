@@ -201,7 +201,7 @@ void compress(const std::vector<std::string> &paths, Algorithm algorithm,
       if (std::filesystem::is_regular_file(source_path)) {
         data = read_file(source_path, true);
       }
-      archive_write_data(archive.get(), data.data(), std::size(data));
+      archive_write_data(archive.get(), std::data(data), std::size(data));
     }
   }
 }

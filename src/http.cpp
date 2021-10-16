@@ -413,9 +413,9 @@ Response Request::RequestImpl::post(
 void Request::RequestImpl::set_cookies() {
   if (use_cookies_) {
     check_curl_correct(curl_easy_setopt(http_handle_, CURLOPT_COOKIEJAR,
-                                        RequestImpl::cookies_path.data()));
+                                        std::data(RequestImpl::cookies_path)));
     check_curl_correct(curl_easy_setopt(http_handle_, CURLOPT_COOKIEFILE,
-                                        RequestImpl::cookies_path.data()));
+                                        std::data(RequestImpl::cookies_path)));
   } else {
     check_curl_correct(curl_easy_setopt(http_handle_, CURLOPT_COOKIEJAR, ""));
     check_curl_correct(curl_easy_setopt(http_handle_, CURLOPT_COOKIEFILE, ""));

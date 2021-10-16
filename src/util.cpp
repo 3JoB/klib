@@ -85,7 +85,7 @@ std::string read_file(const std::string &path, bool binary_mode) {
 }
 
 std::string read_file(std::string_view path, bool binary_mode) {
-  return read_file(path.data(), binary_mode);
+  return read_file(std::data(path), binary_mode);
 }
 
 std::string read_file(const char *path, bool binary_mode) {
@@ -108,7 +108,7 @@ std::string read_file(const char *path, bool binary_mode) {
 
   auto size = ifs.seekg(0, std::ifstream::end).tellg();
   data.resize(size);
-  ifs.seekg(0, std::ifstream::beg).read(data.data(), size);
+  ifs.seekg(0, std::ifstream::beg).read(std::data(data), size);
 
   return data;
 }
@@ -118,7 +118,7 @@ std::vector<std::string> read_file_line(const std::string &path) {
 }
 
 std::vector<std::string> read_file_line(std::string_view path) {
-  return read_file_line(path.data());
+  return read_file_line(std::data(path));
 }
 
 std::vector<std::string> read_file_line(const char *path) {
@@ -133,7 +133,8 @@ void write_file(const std::string &path, bool binary_mode,
 
 void write_file(std::string_view path, bool binary_mode,
                 std::string_view content) {
-  write_file(path.data(), binary_mode, content.data(), std::size(content));
+  write_file(std::data(path), binary_mode, std::data(content),
+             std::size(content));
 }
 
 void write_file(const char *path, bool binary_mode, const char *content,
