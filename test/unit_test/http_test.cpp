@@ -8,7 +8,11 @@
 #include "klib/http.h"
 #include "klib/util.h"
 
+#ifdef KLIB_TEST_USE_PROXY
+const std::string httpbin_url = "https://httpbin.org";
+#else
 const std::string httpbin_url = "http://localhost:80";
+#endif
 
 TEST_CASE("request headers", "[http]") {
   klib::Request request;

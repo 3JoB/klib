@@ -263,6 +263,13 @@ Request::RequestImpl::RequestImpl() {
 
   try {
     check_curl_correct(
+        curl_easy_setopt(http_handle_, CURLOPT_BUFFERSIZE, 102400L));
+    check_curl_correct(curl_easy_setopt(http_handle_, CURLOPT_NOPROGRESS, 1L));
+
+    check_curl_correct(
+        curl_easy_setopt(http_handle_, CURLOPT_TCP_KEEPALIVE, 1L));
+
+    check_curl_correct(
         curl_easy_setopt(http_handle_, CURLOPT_SSL_VERIFYPEER, 1L));
     check_curl_correct(
         curl_easy_setopt(http_handle_, CURLOPT_SSL_VERIFYHOST, 2L));
@@ -272,9 +279,12 @@ Request::RequestImpl::RequestImpl() {
                                         "/etc/ssl/certs/ca-certificates.crt"));
     // TODO Support HTTP/3
     check_curl_correct(curl_easy_setopt(http_handle_, CURLOPT_HTTP_VERSION,
-                                        CURL_HTTP_VERSION_2_0));
+                                        CURL_HTTP_VERSION_2TLS));
+
+    check_curl_correct(curl_easy_setopt(http_handle_, CURLOPT_MAXREDIRS, 50L));
     check_curl_correct(
         curl_easy_setopt(http_handle_, CURLOPT_FOLLOWLOCATION, 1L));
+
     check_curl_correct(curl_easy_setopt(http_handle_, CURLOPT_WRITEFUNCTION,
                                         RequestImpl::callback_func_std_string));
     check_curl_correct(curl_easy_setopt(http_handle_, CURLOPT_HEADERFUNCTION,
