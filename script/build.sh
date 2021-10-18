@@ -39,7 +39,7 @@ if [[ "$OSTYPE" == "linux-gnu"* ]]; then
   fi
   cd dependencies
 
-  kpkg install lcov doxygen catch2 fmt libarchive curl openssl tidy-html5 boost
+  kpkg install lcov doxygen catch2 libarchive tidy-html5 curl openssl fmt boost
   sudo ldconfig
 
   sudo docker run -d -p 80:80 kennethreitz/httpbin
