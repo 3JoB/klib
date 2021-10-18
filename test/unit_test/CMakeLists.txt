@@ -33,5 +33,7 @@ add_custom_target(
   COMMENT "Unpacking zlib-v1.2.11.tar.gz")
 add_dependencies(${TEST_EXECUTABLE} test_decompress)
 
-include(Catch)
-catch_discover_tests(${TEST_EXECUTABLE} REPORTER compact)
+if(NOT KLIB_VALGRIND)
+  include(Catch)
+  catch_discover_tests(${TEST_EXECUTABLE} REPORTER compact)
+endif()
