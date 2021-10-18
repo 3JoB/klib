@@ -80,7 +80,7 @@ find_package(Threads REQUIRED)
 if(KLIB_BUILD_STATIC)
   message(STATUS "Build static library")
 
-  add_definitions(-DCURL_STATICLIB -DFMT_LOCALE)
+  add_definitions(-DLIBARCHIVE_STATIC -DCURL_STATICLIB -DFMT_LOCALE)
 
   add_library(${LIBRARY} STATIC ${LIBRARY_SRC})
   add_library(${LIBRARY}::${LIBRARY} ALIAS ${LIBRARY})
