@@ -58,18 +58,18 @@ include(CompilerOptions)
 # ---------------------------------------------------------------------------------------
 # Find package
 # ---------------------------------------------------------------------------------------
-find_package(LibArchive REQUIRED)
+find_package(PkgConfig REQUIRED)
+
+pkg_check_modules(zlib REQUIRED IMPORTED_TARGET zlib)
+pkg_check_modules(libarchive REQUIRED IMPORTED_TARGET libarchive)
+pkg_check_modules(tidy REQUIRED IMPORTED_TARGET tidy)
+pkg_check_modules(libcurl REQUIRED IMPORTED_TARGET libcurl)
+pkg_check_modules(openssl REQUIRED IMPORTED_TARGET openssl)
 
 add_definitions(-DOPENSSL_NO_DEPRECATED)
-find_package(OpenSSL REQUIRED)
-
-find_package(CURL CONFIG REQUIRED)
-
-find_package(PkgConfig REQUIRED)
-pkg_check_modules(tidy REQUIRED IMPORTED_TARGET tidy)
 
 find_package(fmt REQUIRED)
-find_package(Boost REQUIRED)
+find_package(Boost REQUIRED CONFIG)
 
 set(THREADS_PREFER_PTHREAD_FLAG TRUE)
 find_package(Threads REQUIRED)
@@ -108,12 +108,12 @@ if(KLIB_BUILD_STATIC)
     COMMAND ar -x $<TARGET_FILE:${LIBRARY}>
     COMMAND ar -x /usr/local/lib/libz.a
     COMMAND ar -x /usr/local/lib/libarchive.a
+    COMMAND ar -x /usr/local/lib/libtidy.a
+    COMMAND ar -x /usr/local/lib/libcurl.a
     COMMAND ar -x /usr/local/lib/libcrypto.a
     COMMAND ar -x /usr/local/lib/libssl.a
-    COMMAND ar -x /usr/local/lib/libnghttp2.a
-    COMMAND ar -x /usr/local/lib/libcurl.a
-    COMMAND ar -x /usr/local/lib/libtidy.a
     COMMAND ar -x /usr/local/lib/libfmt.a
+    COMMAND ar -x /usr/local/lib/libnghttp2.a
     COMMAND ar -qcs ${KLIB_BINARY_DIR}/lib${LIBRARY}.a *.o
     WORKING_DIRECTORY ${KLIB_BINARY_DIR}/third_party
     COMMENT "Combined static library")
@@ -133,8 +133,14 @@ if(KLIB_BUILD_SHARED)
                              "$<INSTALL_INTERFACE:${CMAKE_INSTALL_INCLUDEDIR}>")
   target_compile_features(${LIBRARY}-shared INTERFACE cxx_std_20)
   target_link_libraries(
-    ${LIBRARY}-shared PRIVATE ${LibArchive_LIBRARIES} OpenSSL::Crypto
-                              CURL::libcurl PkgConfig::tidy fmt::fmt)
+    ${LIBRARY}-shared
+    PRIVATE PkgConfig::zlib
+            PkgConfig::libarchive
+            PkgConfig::tidy
+            PkgConfig::libcurl
+            PkgConfig::openssl
+            fmt::fmt
+            ${Boost_LIBRARIES})
 
   set_target_properties(
     ${LIBRARY}-shared
