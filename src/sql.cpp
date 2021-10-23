@@ -66,11 +66,13 @@ class SqlDatabase::SqlDatabaseImpl {
   explicit SqlDatabaseImpl(const std::string &table_name, OpenType open_type);
   ~SqlDatabaseImpl();
 
+  void transaction();
   void commit();
   void rollback();
 
+  void drop_table(const std::string &table_name);
   [[nodiscard]] bool table_exists(SqlDatabase &database,
-                                  const std::string &name) const;
+                                  const std::string &table_name) const;
   void exec(std::string_view sql);
 
  private:
@@ -203,22 +205,26 @@ SqlDatabase::SqlDatabaseImpl::SqlDatabaseImpl(const std::string &table_name,
     check_sqlite(rc);
     throw klib::RuntimeError(msg);
   }
-
-  exec("BEGIN TRANSACTION;");
 }
 
 SqlDatabase::SqlDatabaseImpl::~SqlDatabaseImpl() { sqlite3_close_v2(db_); }
 
-void SqlDatabase::SqlDatabaseImpl::commit() { exec("COMMIT"); }
+void SqlDatabase::SqlDatabaseImpl::transaction() { exec("BEGIN TRANSACTION;"); }
 
-void SqlDatabase::SqlDatabaseImpl::rollback() { exec("ROLLBACK"); }
+void SqlDatabase::SqlDatabaseImpl::commit() { exec("COMMIT;"); }
 
-bool SqlDatabase::SqlDatabaseImpl::table_exists(SqlDatabase &database,
-                                                const std::string &name) const {
+void SqlDatabase::SqlDatabaseImpl::rollback() { exec("ROLLBACK;"); }
+
+void SqlDatabase::SqlDatabaseImpl::drop_table(const std::string &table_name) {
+  exec(fmt::format(FMT_COMPILE("DROP TABLE IF EXISTS {};"), table_name));
+}
+
+bool SqlDatabase::SqlDatabaseImpl::table_exists(
+    SqlDatabase &database, const std::string &table_name) const {
   SqlQuery query(
       database,
       "SELECT count(*) FROM sqlite_master WHERE type='table' AND name=?");
-  query.bind(1, name);
+  query.bind(1, table_name);
   (void)query.next();
 
   return query.get_column(0).as_int32() == 1;
@@ -282,9 +288,15 @@ SqlDatabase::SqlDatabase(const std::string &table_name,
 
 SqlDatabase::~SqlDatabase() = default;
 
+void SqlDatabase::transaction() { impl_->transaction(); }
+
 void SqlDatabase::commit() { impl_->commit(); }
 
 void SqlDatabase::rollback() { impl_->rollback(); }
+
+void SqlDatabase::drop_table(const std::string &table_name) {
+  impl_->drop_table(table_name);
+}
 
 bool SqlDatabase::table_exists(const std::string &name) {
   return impl_->table_exists(*this, name);

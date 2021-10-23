@@ -75,10 +75,12 @@ class SqlDatabase {
   SqlDatabase &operator=(SqlDatabase &&) = delete;
   ~SqlDatabase();
 
+  void transaction();
   void commit();
   void rollback();
 
-  [[nodiscard]] bool table_exists(const std::string &name);
+  void drop_table(const std::string &table_name);
+  [[nodiscard]] bool table_exists(const std::string &table_name);
   void exec(std::string_view sql);
 
  private:

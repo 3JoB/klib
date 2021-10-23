@@ -7,8 +7,9 @@
 
 TEST_CASE("sql", "[sql]") {
   klib::SqlDatabase db("test.db", klib::SqlDatabase::ReadWrite);
-  db.exec("DROP TABLE IF EXISTS Cars;");
+  db.drop_table("Cars");
 
+  db.transaction();
   std::string_view sql =
       "CREATE TABLE Cars(Id INTEGER PRIMARY KEY, Name TEXT, Price INT);"
       "INSERT INTO Cars(Name, Price) VALUES('Audi', 52642);"
