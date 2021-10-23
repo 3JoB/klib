@@ -2,7 +2,6 @@
 
 #include <catch2/catch.hpp>
 
-#include <iostream>
 #include "klib/sql.h"
 
 TEST_CASE("sql", "[sql]") {
@@ -11,7 +10,7 @@ TEST_CASE("sql", "[sql]") {
 
   db.transaction();
   std::string_view sql =
-      "CREATE TABLE Cars(Id INTEGER PRIMARY KEY, Name TEXT, Price INT);"
+      "CREATE TABLE Cars(Name TEXT, Price INT);"
       "INSERT INTO Cars(Name, Price) VALUES('Audi', 52642);"
       "INSERT INTO Cars(Name, Price) VALUES('Mercedes', 57127);"
       "INSERT INTO Cars(Name, Price) VALUES('Skoda', 9000);"
@@ -30,8 +29,7 @@ TEST_CASE("sql", "[sql]") {
   klib::SqlQuery query(db, sql);
 
   while (query.next()) {
-    std::cout << query.get_column(0).as_int32() << ' ';
-    std::cout << query.get_column(1).as_string() << ' ';
-    std::cout << query.get_column(2).as_int32() << '\n';
+    REQUIRE_NOTHROW(query.get_column(0).as_string());
+    REQUIRE_NOTHROW(query.get_column(1).as_int32());
   }
 }

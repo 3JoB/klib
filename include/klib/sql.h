@@ -81,6 +81,7 @@ class SqlDatabase {
 
   void drop_table(const std::string &table_name);
   [[nodiscard]] bool table_exists(const std::string &table_name);
+
   void exec(std::string_view sql);
 
  private:
