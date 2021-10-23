@@ -65,6 +65,7 @@ pkg_check_modules(libarchive REQUIRED IMPORTED_TARGET libarchive)
 pkg_check_modules(tidy REQUIRED IMPORTED_TARGET tidy)
 pkg_check_modules(libcurl REQUIRED IMPORTED_TARGET libcurl)
 pkg_check_modules(openssl REQUIRED IMPORTED_TARGET openssl)
+pkg_check_modules(sqlite3 REQUIRED IMPORTED_TARGET sqlite3)
 
 add_definitions(-DOPENSSL_NO_DEPRECATED)
 
@@ -112,6 +113,7 @@ if(KLIB_BUILD_STATIC)
     COMMAND ar -x /usr/local/lib/libcurl.a
     COMMAND ar -x /usr/local/lib/libcrypto.a
     COMMAND ar -x /usr/local/lib/libssl.a
+    COMMAND ar -x /usr/local/lib/libsqlite3.a
     COMMAND ar -x /usr/local/lib/libfmt.a
     COMMAND ar -x /usr/local/lib/libnghttp2.a
     COMMAND ar -qcs ${KLIB_BINARY_DIR}/lib${LIBRARY}.a *.o
@@ -139,6 +141,7 @@ if(KLIB_BUILD_SHARED)
             PkgConfig::tidy
             PkgConfig::libcurl
             PkgConfig::openssl
+            PkgConfig::sqlite3
             fmt::fmt
             ${Boost_LIBRARIES})
 
