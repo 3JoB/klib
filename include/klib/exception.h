@@ -83,4 +83,37 @@ class LogicError : public std::logic_error {
             fmt::format(fmt::runtime(fmt), std::forward<Args>(args)...)) {}
 };
 
+class InvalidArgument : std::invalid_argument {
+ public:
+  /**
+   * @brief Constructor
+   * @param msg: Exception information
+   */
+  explicit InvalidArgument(const char *msg) : std::invalid_argument(msg) {}
+
+  /**
+   * @brief Constructor
+   * @param msg: Exception information
+   */
+  explicit InvalidArgument(const std::string &msg)
+      : std::invalid_argument(msg) {}
+
+  /**
+   * @brief Constructor
+   * @param msg: Exception information
+   */
+  explicit InvalidArgument(std::string_view msg)
+      : InvalidArgument(std::data(msg)) {}
+
+  /**
+   * @brief Constructor
+   * @param fmt: Format string
+   * @param args: Format string parameters
+   */
+  template <typename... Args>
+  explicit InvalidArgument(std::string_view fmt, Args &&...args)
+      : InvalidArgument(
+            fmt::format(fmt::runtime(fmt), std::forward<Args>(args)...)) {}
+};
+
 }  // namespace klib
