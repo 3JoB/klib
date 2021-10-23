@@ -40,7 +40,7 @@ class SqlQuery {
   friend class SqlDatabase;
 
  public:
-  SqlQuery(const SqlDatabase &database, std::string_view sql);
+  explicit SqlQuery(const SqlDatabase &database);
 
   SqlQuery(const SqlQuery &) = delete;
   SqlQuery(SqlQuery &&) = delete;
@@ -48,13 +48,20 @@ class SqlQuery {
   SqlQuery &operator=(SqlQuery &&) = delete;
   ~SqlQuery();
 
+  void prepare(std::string_view sql);
+
   void bind(std::int32_t index, std::int32_t value);
   void bind(std::int32_t index, std::int64_t value);
   void bind(std::int32_t index, double value);
   void bind(std::int32_t index, const std::string &value);
 
+  void step();
+
   [[nodiscard]] bool next();
+
   [[nodiscard]] Column get_column(std::int32_t index);
+
+  void exec(std::string_view sql);
 
  private:
   class SqlQueryImpl;

@@ -44,18 +44,26 @@ class SqlQuery::SqlQueryImpl {
   friend class Column::ColumnImpl;
 
  public:
-  SqlQueryImpl(const SqlDatabase &database, std::string_view sql);
+  explicit SqlQueryImpl(const SqlDatabase &database);
   ~SqlQueryImpl();
+
+  void prepare(std::string_view sql);
 
   void bind(std::int32_t index, std::int32_t value);
   void bind(std::int32_t index, std::int64_t value);
   void bind(std::int32_t index, double value);
   void bind(std::int32_t index, const std::string &value);
 
-  bool next();
+  void step();
+
+  [[nodiscard]] bool next();
+
   [[nodiscard]] Column get_column(SqlQuery &sql_query, std::int32_t index);
 
+  void exec(std::string_view sql);
+
  private:
+  sqlite3 *db_ = nullptr;
   sqlite3_stmt *stmt_ = nullptr;
 };
 
@@ -143,23 +151,18 @@ bool Column::ColumnImpl::is_text() const {
 
 bool Column::ColumnImpl::is_blob() const { return get_type() == SQLITE_BLOB; }
 
-SqlQuery::SqlQueryImpl::SqlQueryImpl(const SqlDatabase &database,
-                                     std::string_view sql) {
-  if (sqlite3_prepare_v2(database.impl_->db_, sql.data(),
-                         static_cast<std::int32_t>(std::size(sql)), &stmt_,
-                         nullptr) != SQLITE_OK) {
-    auto msg = std::string("Failed to fetch data: ") +
-               sqlite3_errmsg(database.impl_->db_);
-    auto rc = sqlite3_finalize(stmt_);
-    check_sqlite(rc);
-    throw klib::RuntimeError(msg);
-  }
-}
+SqlQuery::SqlQueryImpl::SqlQueryImpl(const SqlDatabase &database)
+    : db_(database.impl_->db_) {}
 
 SqlQuery::SqlQueryImpl::~SqlQueryImpl() { sqlite3_finalize(stmt_); }
 
 bool SqlQuery::SqlQueryImpl::next() {
-  return sqlite3_step(stmt_) == SQLITE_ROW;
+  if (auto rc = sqlite3_step(stmt_); rc != SQLITE_ROW) {
+    sqlite3_reset(stmt_);
+    return false;
+  }
+
+  return true;
 }
 
 void SqlQuery::SqlQueryImpl::bind(std::int32_t index, std::int32_t value) {
@@ -184,9 +187,43 @@ void SqlQuery::SqlQueryImpl::bind(std::int32_t index,
   check_sqlite(rc);
 }
 
+void SqlQuery::SqlQueryImpl::prepare(std::string_view sql) {
+  auto rc = sqlite3_finalize(stmt_);
+  check_sqlite(rc);
+
+  rc = sqlite3_prepare_v2(db_, std::data(sql),
+                          static_cast<std::int32_t>(std::size(sql)), &stmt_,
+                          nullptr);
+
+  if (rc != SQLITE_OK) {
+    std::string msg = sqlite3_errstr(rc);
+    rc = sqlite3_finalize(stmt_);
+    check_sqlite(rc);
+
+    throw RuntimeError(msg);
+  }
+}
+
+void SqlQuery::SqlQueryImpl::step() {
+  if (auto rc = sqlite3_step(stmt_); rc != SQLITE_DONE) {
+    throw klib::RuntimeError(sqlite3_errstr(rc));
+  }
+  sqlite3_reset(stmt_);
+}
+
 Column SqlQuery::SqlQueryImpl::get_column(SqlQuery &sql_query,
                                           std::int32_t index) {
   return Column(sql_query, index);
+}
+
+void SqlQuery::SqlQueryImpl::exec(std::string_view sql) {
+  char *err_msg = nullptr;
+  if (sqlite3_exec(db_, sql.data(), nullptr, nullptr, &err_msg) != SQLITE_OK) {
+    std::string msg = err_msg;
+    sqlite3_free(err_msg);
+    throw RuntimeError(msg);
+  }
+  sqlite3_free(err_msg);
 }
 
 SqlDatabase::SqlDatabaseImpl::SqlDatabaseImpl(const std::string &table_name,
@@ -221,8 +258,8 @@ void SqlDatabase::SqlDatabaseImpl::drop_table(const std::string &table_name) {
 
 bool SqlDatabase::SqlDatabaseImpl::table_exists(
     SqlDatabase &database, const std::string &table_name) const {
-  SqlQuery query(
-      database,
+  SqlQuery query(database);
+  query.prepare(
       "SELECT count(*) FROM sqlite_master WHERE type='table' AND name=?");
   query.bind(1, table_name);
   (void)query.next();
@@ -255,12 +292,12 @@ std::string Column::as_blob() const { return impl_->as_blob(); }
 Column::Column(SqlQuery &sql_query, std::int32_t index)
     : impl_(std::make_unique<ColumnImpl>(sql_query, index)) {}
 
-SqlQuery::SqlQuery(const SqlDatabase &database, std::string_view sql)
-    : impl_(std::make_unique<SqlQueryImpl>(database, sql)) {}
-
-bool SqlQuery::next() { return impl_->next(); }
+SqlQuery::SqlQuery(const SqlDatabase &database)
+    : impl_(std::make_unique<SqlQueryImpl>(database)) {}
 
 SqlQuery::~SqlQuery() = default;
+
+void SqlQuery::prepare(std::string_view sql) { impl_->prepare(sql); }
 
 void SqlQuery::bind(std::int32_t index, std::int32_t value) {
   impl_->bind(index, value);
@@ -278,9 +315,15 @@ void SqlQuery::bind(std::int32_t index, const std::string &value) {
   impl_->bind(index, value);
 }
 
+void SqlQuery::step() { impl_->step(); }
+
+bool SqlQuery::next() { return impl_->next(); }
+
 Column SqlQuery::get_column(std::int32_t index) {
   return impl_->get_column(*this, index);
 }
+
+void SqlQuery::exec(std::string_view sql) { impl_->exec(sql); }
 
 SqlDatabase::SqlDatabase(const std::string &table_name,
                          SqlDatabase::OpenType open_type)
