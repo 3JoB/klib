@@ -91,6 +91,8 @@ class SqlDatabase {
   void rollback();
 
   void drop_table(const std::string &table_name);
+  void drop_table_if_exists(const std::string &table_name);
+
   [[nodiscard]] bool table_exists(const std::string &table_name);
   std::int64_t table_line_count(const std::string &table_name);
 

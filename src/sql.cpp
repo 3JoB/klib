@@ -84,6 +84,8 @@ class SqlDatabase::SqlDatabaseImpl {
   void rollback();
 
   void drop_table(const std::string &table_name);
+  void drop_table_if_exists(const std::string &table_name);
+
   [[nodiscard]] bool table_exists(SqlDatabase &database,
                                   const std::string &table_name) const;
   std::int64_t table_line_count(SqlDatabase &database,
@@ -278,6 +280,11 @@ void SqlDatabase::SqlDatabaseImpl::commit() { exec("COMMIT;"); }
 void SqlDatabase::SqlDatabaseImpl::rollback() { exec("ROLLBACK;"); }
 
 void SqlDatabase::SqlDatabaseImpl::drop_table(const std::string &table_name) {
+  exec(fmt::format(FMT_COMPILE("DROP TABLE {};"), table_name));
+}
+
+void SqlDatabase::SqlDatabaseImpl::drop_table_if_exists(
+    const std::string &table_name) {
   exec(fmt::format(FMT_COMPILE("DROP TABLE IF EXISTS {};"), table_name));
 }
 
@@ -381,6 +388,10 @@ void SqlDatabase::rollback() { impl_->rollback(); }
 
 void SqlDatabase::drop_table(const std::string &table_name) {
   impl_->drop_table(table_name);
+}
+
+void SqlDatabase::drop_table_if_exists(const std::string &table_name) {
+  impl_->drop_table_if_exists(table_name);
 }
 
 bool SqlDatabase::table_exists(const std::string &name) {

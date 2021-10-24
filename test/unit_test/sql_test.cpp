@@ -16,7 +16,7 @@ TEST_CASE("sql", "[sql]") {
                                       350000, 21000, 41400, 21600};
 
   klib::SqlDatabase db("test.db", klib::SqlDatabase::ReadWrite);
-  REQUIRE_NOTHROW(db.drop_table("Cars"));
+  REQUIRE_NOTHROW(db.drop_table_if_exists("Cars"));
   REQUIRE_NOTHROW(db.exec("CREATE TABLE Cars(Name TEXT, Price INT);"));
 
   REQUIRE_NOTHROW(db.transaction());
@@ -48,6 +48,8 @@ TEST_CASE("sql", "[sql]") {
     REQUIRE_NOTHROW(std::cout << query.get_column(0).as_string() << ' ');
     REQUIRE_NOTHROW(std::cout << query.get_column(1).as_int32() << '\n');
   }
+
+  std::cout << '\n';
   while (query.next()) {
     REQUIRE_NOTHROW(std::cout << query.get_column(0).as_string() << ' ');
     REQUIRE_NOTHROW(std::cout << query.get_column(1).as_int32() << '\n');
