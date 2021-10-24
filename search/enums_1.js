@@ -1,4 +1,4 @@
 var searchData=
 [
-  ['paddingmode_0',['PaddingMode',['../crypto_8h.html#aa16057edd7d5f36cdd54fb434e0eae59',1,'klib']]]
+  ['openmode_0',['OpenMode',['../classklib_1_1SqlDatabase.html#af28d36a69db3a108f4c393854a852491',1,'klib::SqlDatabase']]]
 ];

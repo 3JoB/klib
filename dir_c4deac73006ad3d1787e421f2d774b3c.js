@@ -5,7 +5,9 @@ var dir_c4deac73006ad3d1787e421f2d774b3c =
     [ "error.h", "error_8h.html", "error_8h" ],
     [ "exception.h", "exception_8h.html", [
       [ "klib::RuntimeError", "classklib_1_1RuntimeError.html", "classklib_1_1RuntimeError" ],
-      [ "klib::LogicError", "classklib_1_1LogicError.html", "classklib_1_1LogicError" ]
+      [ "klib::LogicError", "classklib_1_1LogicError.html", "classklib_1_1LogicError" ],
+      [ "klib::InvalidArgument", "classklib_1_1InvalidArgument.html", "classklib_1_1InvalidArgument" ],
+      [ "klib::OutOfRange", "classklib_1_1OutOfRange.html", "classklib_1_1OutOfRange" ]
     ] ],
     [ "hash_lib.h", "hash__lib_8h.html", "hash__lib_8h" ],
     [ "html.h", "html_8h.html", "html_8h" ],
@@ -13,6 +15,11 @@ var dir_c4deac73006ad3d1787e421f2d774b3c =
       [ "klib::Request", "classklib_1_1Request.html", "classklib_1_1Request" ],
       [ "klib::Headers", "classklib_1_1Headers.html", "classklib_1_1Headers" ],
       [ "klib::Response", "classklib_1_1Response.html", "classklib_1_1Response" ]
+    ] ],
+    [ "sql.h", "sql_8h.html", [
+      [ "klib::Column", "classklib_1_1Column.html", "classklib_1_1Column" ],
+      [ "klib::SqlQuery", "classklib_1_1SqlQuery.html", "classklib_1_1SqlQuery" ],
+      [ "klib::SqlDatabase", "classklib_1_1SqlDatabase.html", "classklib_1_1SqlDatabase" ]
     ] ],
     [ "unicode.h", "unicode_8h.html", "unicode_8h" ],
     [ "util.h", "util_8h.html", "util_8h" ],

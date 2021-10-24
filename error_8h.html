@@ -30,7 +30,7 @@
  <tbody>
  <tr style="height: 56px;">
   <td id="projectalign" style="padding-left: 0.5em;">
-   <div id="projectname">klib<span id="projectnumber">&#160;0.6.6</span>
+   <div id="projectname">klib<span id="projectnumber">&#160;0.7.0</span>
    </div>
   </td>
     <td>        <div id="MSearchBox" class="MSearchBoxInactive">
@@ -92,6 +92,7 @@ $(document).ready(function(){initNavTree('error_8h.html',''); initResizable(); }
 
 <div class="header">
   <div class="summary">
+<a href="#define-members">Macros</a> &#124;
 <a href="#func-members">Functions</a>  </div>
   <div class="headertitle"><div class="title">error.h File Reference</div></div>
 </div><!--header-->
@@ -100,6 +101,7 @@ $(document).ready(function(){initNavTree('error_8h.html',''); initResizable(); }
 <p>Contains report error and warning modules.  
 <a href="#details">More...</a></p>
 <div class="textblock"><code>#include &lt;cstdlib&gt;</code><br />
+<code>#include &lt;experimental/source_location&gt;</code><br />
 <code>#include &lt;string_view&gt;</code><br />
 <code>#include &lt;utility&gt;</code><br />
 <code>#include &lt;fmt/color.h&gt;</code><br />
@@ -107,22 +109,83 @@ $(document).ready(function(){initNavTree('error_8h.html',''); initResizable(); }
 </div>
 <p><a href="error_8h_source.html">Go to the source code of this file.</a></p>
 <table class="memberdecls">
+<tr class="heading"><td colspan="2"><h2 class="groupheader"><a id="define-members" name="define-members"></a>
+Macros</h2></td></tr>
+<tr class="memitem:a47a9fdd54312df06b06767868a31ab8d"><td class="memItemLeft" align="right" valign="top"><a id="a47a9fdd54312df06b06767868a31ab8d" name="a47a9fdd54312df06b06767868a31ab8d"></a>
+#define&#160;</td><td class="memItemRight" valign="bottom"><b>KLIB_CURR_LOC</b>&#160;&#160;&#160;std::experimental::source_location::current()</td></tr>
+<tr class="memdesc:a47a9fdd54312df06b06767868a31ab8d"><td class="mdescLeft">&#160;</td><td class="mdescRight">Current location information. <br /></td></tr>
+<tr class="separator:a47a9fdd54312df06b06767868a31ab8d"><td class="memSeparator" colspan="2">&#160;</td></tr>
+</table><table class="memberdecls">
 <tr class="heading"><td colspan="2"><h2 class="groupheader"><a id="func-members" name="func-members"></a>
 Functions</h2></td></tr>
 <tr class="memitem:a814c67e8ab648504e8d4e9c627aafdb7"><td class="memTemplParams" colspan="2">template&lt;typename... Args&gt; </td></tr>
 <tr class="memitem:a814c67e8ab648504e8d4e9c627aafdb7"><td class="memTemplItemLeft" align="right" valign="top">void&#160;</td><td class="memTemplItemRight" valign="bottom"><a class="el" href="error_8h.html#a814c67e8ab648504e8d4e9c627aafdb7">klib::warn</a> (std::string_view fmt, Args &amp;&amp;...args)</td></tr>
 <tr class="memdesc:a814c67e8ab648504e8d4e9c627aafdb7"><td class="mdescLeft">&#160;</td><td class="mdescRight">Report warning.  <a href="error_8h.html#a814c67e8ab648504e8d4e9c627aafdb7">More...</a><br /></td></tr>
 <tr class="separator:a814c67e8ab648504e8d4e9c627aafdb7"><td class="memSeparator" colspan="2">&#160;</td></tr>
+<tr class="memitem:a35066f1f6e39b0cf91b538b1edece47e"><td class="memTemplParams" colspan="2">template&lt;typename... Args&gt; </td></tr>
+<tr class="memitem:a35066f1f6e39b0cf91b538b1edece47e"><td class="memTemplItemLeft" align="right" valign="top">void&#160;</td><td class="memTemplItemRight" valign="bottom"><a class="el" href="error_8h.html#a35066f1f6e39b0cf91b538b1edece47e">klib::warn</a> (const std::experimental::source_location &amp;loc, std::string_view fmt, Args &amp;&amp;...args)</td></tr>
+<tr class="memdesc:a35066f1f6e39b0cf91b538b1edece47e"><td class="mdescLeft">&#160;</td><td class="mdescRight">Report warning.  <a href="error_8h.html#a35066f1f6e39b0cf91b538b1edece47e">More...</a><br /></td></tr>
+<tr class="separator:a35066f1f6e39b0cf91b538b1edece47e"><td class="memSeparator" colspan="2">&#160;</td></tr>
 <tr class="memitem:a34e63277994b403c9db07ea6f5b807d3"><td class="memTemplParams" colspan="2">template&lt;typename... Args&gt; </td></tr>
 <tr class="memitem:a34e63277994b403c9db07ea6f5b807d3"><td class="memTemplItemLeft" align="right" valign="top">void&#160;</td><td class="memTemplItemRight" valign="bottom"><a class="el" href="error_8h.html#a34e63277994b403c9db07ea6f5b807d3">klib::error</a> (std::string_view fmt, Args &amp;&amp;...args)</td></tr>
 <tr class="memdesc:a34e63277994b403c9db07ea6f5b807d3"><td class="mdescLeft">&#160;</td><td class="mdescRight">Report error and exit.  <a href="error_8h.html#a34e63277994b403c9db07ea6f5b807d3">More...</a><br /></td></tr>
 <tr class="separator:a34e63277994b403c9db07ea6f5b807d3"><td class="memSeparator" colspan="2">&#160;</td></tr>
+<tr class="memitem:a2ac922962b80c0b6e3397fe867e9f784"><td class="memTemplParams" colspan="2">template&lt;typename... Args&gt; </td></tr>
+<tr class="memitem:a2ac922962b80c0b6e3397fe867e9f784"><td class="memTemplItemLeft" align="right" valign="top">void&#160;</td><td class="memTemplItemRight" valign="bottom"><a class="el" href="error_8h.html#a2ac922962b80c0b6e3397fe867e9f784">klib::error</a> (const std::experimental::source_location &amp;loc, std::string_view fmt, Args &amp;&amp;...args)</td></tr>
+<tr class="memdesc:a2ac922962b80c0b6e3397fe867e9f784"><td class="mdescLeft">&#160;</td><td class="mdescRight">Report error and exit.  <a href="error_8h.html#a2ac922962b80c0b6e3397fe867e9f784">More...</a><br /></td></tr>
+<tr class="separator:a2ac922962b80c0b6e3397fe867e9f784"><td class="memSeparator" colspan="2">&#160;</td></tr>
 </table>
 <a name="details" id="details"></a><h2 class="groupheader">Detailed Description</h2>
 <div class="textblock"><p >Contains report error and warning modules. </p>
 </div><h2 class="groupheader">Function Documentation</h2>
+<a id="a2ac922962b80c0b6e3397fe867e9f784" name="a2ac922962b80c0b6e3397fe867e9f784"></a>
+<h2 class="memtitle"><span class="permalink"><a href="#a2ac922962b80c0b6e3397fe867e9f784">&#9670;&nbsp;</a></span>error() <span class="overload">[1/2]</span></h2>
+
+<div class="memitem">
+<div class="memproto">
+<div class="memtemplate">
+template&lt;typename... Args&gt; </div>
+      <table class="memname">
+        <tr>
+          <td class="memname">void klib::error </td>
+          <td>(</td>
+          <td class="paramtype">const std::experimental::source_location &amp;&#160;</td>
+          <td class="paramname"><em>loc</em>, </td>
+        </tr>
+        <tr>
+          <td class="paramkey"></td>
+          <td></td>
+          <td class="paramtype">std::string_view&#160;</td>
+          <td class="paramname"><em>fmt</em>, </td>
+        </tr>
+        <tr>
+          <td class="paramkey"></td>
+          <td></td>
+          <td class="paramtype">Args &amp;&amp;...&#160;</td>
+          <td class="paramname"><em>args</em>&#160;</td>
+        </tr>
+        <tr>
+          <td></td>
+          <td>)</td>
+          <td></td><td></td>
+        </tr>
+      </table>
+</div><div class="memdoc">
+
+<p>Report error and exit. </p>
+<dl class="params"><dt>Parameters</dt><dd>
+  <table class="params">
+    <tr><td class="paramname">loc</td><td>Location information </td></tr>
+    <tr><td class="paramname">fmt</td><td>Format string </td></tr>
+    <tr><td class="paramname">args</td><td>Format string parameters </td></tr>
+  </table>
+  </dd>
+</dl>
+
+</div>
+</div>
 <a id="a34e63277994b403c9db07ea6f5b807d3" name="a34e63277994b403c9db07ea6f5b807d3"></a>
-<h2 class="memtitle"><span class="permalink"><a href="#a34e63277994b403c9db07ea6f5b807d3">&#9670;&nbsp;</a></span>error()</h2>
+<h2 class="memtitle"><span class="permalink"><a href="#a34e63277994b403c9db07ea6f5b807d3">&#9670;&nbsp;</a></span>error() <span class="overload">[2/2]</span></h2>
 
 <div class="memitem">
 <div class="memproto">
@@ -160,8 +223,54 @@ template&lt;typename... Args&gt; </div>
 
 </div>
 </div>
+<a id="a35066f1f6e39b0cf91b538b1edece47e" name="a35066f1f6e39b0cf91b538b1edece47e"></a>
+<h2 class="memtitle"><span class="permalink"><a href="#a35066f1f6e39b0cf91b538b1edece47e">&#9670;&nbsp;</a></span>warn() <span class="overload">[1/2]</span></h2>
+
+<div class="memitem">
+<div class="memproto">
+<div class="memtemplate">
+template&lt;typename... Args&gt; </div>
+      <table class="memname">
+        <tr>
+          <td class="memname">void klib::warn </td>
+          <td>(</td>
+          <td class="paramtype">const std::experimental::source_location &amp;&#160;</td>
+          <td class="paramname"><em>loc</em>, </td>
+        </tr>
+        <tr>
+          <td class="paramkey"></td>
+          <td></td>
+          <td class="paramtype">std::string_view&#160;</td>
+          <td class="paramname"><em>fmt</em>, </td>
+        </tr>
+        <tr>
+          <td class="paramkey"></td>
+          <td></td>
+          <td class="paramtype">Args &amp;&amp;...&#160;</td>
+          <td class="paramname"><em>args</em>&#160;</td>
+        </tr>
+        <tr>
+          <td></td>
+          <td>)</td>
+          <td></td><td></td>
+        </tr>
+      </table>
+</div><div class="memdoc">
+
+<p>Report warning. </p>
+<dl class="params"><dt>Parameters</dt><dd>
+  <table class="params">
+    <tr><td class="paramname">loc</td><td>Location information </td></tr>
+    <tr><td class="paramname">fmt</td><td>Format string </td></tr>
+    <tr><td class="paramname">args</td><td>Format string parameters </td></tr>
+  </table>
+  </dd>
+</dl>
+
+</div>
+</div>
 <a id="a814c67e8ab648504e8d4e9c627aafdb7" name="a814c67e8ab648504e8d4e9c627aafdb7"></a>
-<h2 class="memtitle"><span class="permalink"><a href="#a814c67e8ab648504e8d4e9c627aafdb7">&#9670;&nbsp;</a></span>warn()</h2>
+<h2 class="memtitle"><span class="permalink"><a href="#a814c67e8ab648504e8d4e9c627aafdb7">&#9670;&nbsp;</a></span>warn() <span class="overload">[2/2]</span></h2>
 
 <div class="memitem">
 <div class="memproto">

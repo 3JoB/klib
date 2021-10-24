@@ -1,4 +1,4 @@
 var searchData=
 [
-  ['unicoderange_0',['UnicodeRange',['../classklib_1_1detail_1_1UnicodeRange.html',1,'klib::detail']]]
+  ['outofrange_0',['OutOfRange',['../classklib_1_1OutOfRange.html',1,'klib']]]
 ];

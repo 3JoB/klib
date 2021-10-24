@@ -1,4 +1,4 @@
 var searchData=
 [
-  ['logicerror_0',['LogicError',['../classklib_1_1LogicError.html',1,'klib']]]
+  ['invalidargument_0',['InvalidArgument',['../classklib_1_1InvalidArgument.html',1,'klib']]]
 ];

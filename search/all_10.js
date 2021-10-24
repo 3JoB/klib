@@ -1,12 +1,17 @@
 var searchData=
 [
-  ['unicode_2eh_0',['unicode.h',['../unicode_8h.html',1,'']]],
-  ['unicoderange_1',['UnicodeRange',['../classklib_1_1detail_1_1UnicodeRange.html',1,'klib::detail']]],
-  ['update_2',['update',['../classklib_1_1HashLib.html#a8dce7910dcede83578db286cc76b5ad4',1,'klib::HashLib']]],
-  ['use_5fcookies_3',['use_cookies',['../classklib_1_1Request.html#acf7345e979cdd1a277a2ad7ce191ad95',1,'klib::Request']]],
-  ['utf32_5fto_5futf8_4',['utf32_to_utf8',['../unicode_8h.html#ae643f3a0b1f3cadf8b01d5c44c08ac2f',1,'klib']]],
-  ['utf8_5fto_5futf16_5',['utf8_to_utf16',['../unicode_8h.html#afd9c11f7bcfa0aacc5111a78bfb42bac',1,'klib']]],
-  ['utf8_5fto_5futf32_6',['utf8_to_utf32',['../unicode_8h.html#a618c7297574b1f62db6b5e8b19186f3b',1,'klib']]],
-  ['util_2eh_7',['util.h',['../util_8h.html',1,'']]],
-  ['uuid_8',['uuid',['../util_8h.html#a04c05579273b722fad57a8362193d573',1,'klib']]]
+  ['same_5ffolder_0',['same_folder',['../util_8h.html#a634a5cccf588c12cb1d7e1f4253775c6',1,'klib']]],
+  ['save_5fto_5ffile_1',['save_to_file',['../classklib_1_1Response.html#a06c3d6a2557cca10a102646067e00a09',1,'klib::Response']]],
+  ['set_5fbrowser_5fuser_5fagent_2',['set_browser_user_agent',['../classklib_1_1Request.html#afa583b9071002118ad316a9690003256',1,'klib::Request']]],
+  ['set_5fconnect_5ftimeout_3',['set_connect_timeout',['../classklib_1_1Request.html#aa2441e7ed0be65868c280c0d3115e11f',1,'klib::Request']]],
+  ['set_5fcurl_5fuser_5fagent_4',['set_curl_user_agent',['../classklib_1_1Request.html#a4aba7a126459a31beb9ba92d436949c8',1,'klib::Request']]],
+  ['set_5fno_5fproxy_5',['set_no_proxy',['../classklib_1_1Request.html#aa6db2a71c4c12c8f054715e3f8fc71ae',1,'klib::Request']]],
+  ['set_5ftimeout_6',['set_timeout',['../classklib_1_1Request.html#a9df61892054dd4c36920e27a43b42bd9',1,'klib::Request']]],
+  ['set_5fuser_5fagent_7',['set_user_agent',['../classklib_1_1Request.html#abc72456d5b46d7081dbea3980fefc68b',1,'klib::Request']]],
+  ['split_5fstr_8',['split_str',['../util_8h.html#ab8656c14dc5e6fe66b30a9ea9fde7001',1,'klib']]],
+  ['sql_2eh_9',['sql.h',['../sql_8h.html',1,'']]],
+  ['sqldatabase_10',['SqlDatabase',['../classklib_1_1SqlDatabase.html',1,'klib::SqlDatabase'],['../classklib_1_1SqlDatabase.html#a99c3e24baaab686fd301690fda83fb23',1,'klib::SqlDatabase::SqlDatabase()']]],
+  ['sqlquery_11',['SqlQuery',['../classklib_1_1SqlQuery.html',1,'klib::SqlQuery'],['../classklib_1_1SqlQuery.html#a0d1d4bb9d49459b482755cb48a1d14b8',1,'klib::SqlQuery::SqlQuery()']]],
+  ['status_5fcode_12',['status_code',['../classklib_1_1Response.html#aa839e6f6599e336147cbdacb0e99bddf',1,'klib::Response']]],
+  ['statuscode_13',['StatusCode',['../classklib_1_1Response.html#abbd230b0781eceb59a4851976ad5df32',1,'klib::Response']]]
 ];
