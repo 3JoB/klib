@@ -94,3 +94,12 @@ TEST_CASE("gzip", "[archive]") {
 
   std::filesystem::remove_all("std-gzip");
 }
+
+TEST_CASE("zstd", "[archive]") {
+  std::string data = "test string";
+  std::string compressed, decompressed;
+
+  REQUIRE_NOTHROW(compressed = klib::compress_str(data));
+  REQUIRE_NOTHROW(decompressed = klib::decompress_str(compressed));
+  REQUIRE(data == decompressed);
+}

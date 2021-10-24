@@ -51,6 +51,8 @@ class SqlQuery {
   SqlQuery &operator=(SqlQuery &&) = delete;
   ~SqlQuery();
 
+  void finalize();
+
   std::string get_column_name(std::int32_t index);
 
   void prepare(std::string_view sql);

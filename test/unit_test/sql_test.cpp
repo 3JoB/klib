@@ -8,6 +8,7 @@
 
 #include "klib/hash_lib.h"
 #include "klib/sql.h"
+#include "klib/util.h"
 
 TEST_CASE("sql", "[sql]") {
   {
@@ -90,4 +91,35 @@ TEST_CASE("sql", "[sql]") {
       REQUIRE_NOTHROW(std::cout << query.get_column(1).as_int32() << '\n');
     }
   }
+}
+
+TEST_CASE("blob", "[sql]") {
+  klib::SqlDatabase db("test2.db", klib::SqlDatabase::ReadWrite,
+                       klib::sha_256("zG2nSeEfSHfvTCHy5LCcqtBbQehKNLXn"));
+
+  REQUIRE_NOTHROW(db.drop_table_if_exists("BlobTest"));
+  REQUIRE_NOTHROW(db.transaction());
+
+  REQUIRE_NOTHROW(db.exec("CREATE TABLE BlobTest(Data BLOB);"));
+
+  REQUIRE(std::filesystem::exists("zlib-v1.2.11.tar.gz"));
+  std::string blob = klib::read_file("zlib-v1.2.11.tar.gz", true);
+
+  REQUIRE(klib::sha3_512_hex(blob) ==
+          "38af19362e48ec80f6565cf18245f520c8ee5348374cb0c11286f3b23cc93fd05a6a"
+          "2a2b8784f20bb2307211a2a776241797857b133056f4b33de1d363db7bb2");
+
+  klib::SqlQuery query(db);
+  REQUIRE_NOTHROW(query.prepare("INSERT INTO BlobTest(Data) VALUES(?);"));
+  REQUIRE_NOTHROW(query.bind(1, std::data(blob), std::size(blob)));
+  REQUIRE_NOTHROW(query.step());
+
+  REQUIRE_NOTHROW(db.commit());
+
+  REQUIRE_NOTHROW(query.prepare("SELECT * FROM BlobTest"));
+  REQUIRE(query.next());
+  REQUIRE(query.get_column(0).as_blob() == blob);
+  query.finalize();
+
+  REQUIRE_NOTHROW(db.vacuum());
 }

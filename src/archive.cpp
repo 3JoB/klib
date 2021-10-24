@@ -1,6 +1,5 @@
 #include "klib/archive.h"
 
-#include <cstddef>
 #include <cstdint>
 #include <filesystem>
 #include <functional>
@@ -8,6 +7,7 @@
 
 #include <archive.h>
 #include <archive_entry.h>
+#include <zstd.h>
 
 #include "klib/exception.h"
 #include "klib/util.h"
@@ -121,6 +121,12 @@ void copy_data(struct archive *ar, struct archive *aw) {
 
     check_archive_correctness(archive_write_data_block(aw, buff, size, offset),
                               aw);
+  }
+}
+
+void check_zstd(std::size_t error) {
+  if (ZSTD_isError(error)) {
+    throw RuntimeError(ZSTD_getErrorName(error));
   }
 }
 
@@ -268,6 +274,48 @@ std::optional<std::string> decompress(const std::string &file_name,
   }
 
   return dir;
+}
+
+std::string compress_str(const std::string &data) {
+  return compress_str(std::data(data), std::size(data));
+}
+
+std::string compress_str(const char *data, std::size_t size) {
+  auto compress_size = ZSTD_compressBound(size);
+  std::string compress_data;
+  compress_data.resize(compress_size);
+
+  compress_size =
+      ZSTD_compress(compress_data.data(), compress_size, data, size, 1);
+  check_zstd(compress_size);
+  compress_data.resize(compress_size);
+
+  return compress_data;
+}
+
+std::string decompress_str(const std::string &data) {
+  return decompress_str(std::data(data), std::size(data));
+}
+
+std::string decompress_str(const char *data, std::size_t size) {
+  auto decompress_size = ZSTD_getFrameContentSize(data, size);
+  if (decompress_size == ZSTD_CONTENTSIZE_ERROR) {
+    throw RuntimeError("not compressed by zstd");
+  } else if (decompress_size == ZSTD_CONTENTSIZE_UNKNOWN) {
+    throw RuntimeError("original size unknown");
+  }
+
+  std::string decompress_data;
+  decompress_data.resize(decompress_size);
+  auto decompress_size_new =
+      ZSTD_decompress(decompress_data.data(), decompress_size, data, size);
+  check_zstd(decompress_size_new);
+
+  if (decompress_size != decompress_size_new) {
+    throw RuntimeError("Impossible because zstd will check this condition");
+  }
+
+  return decompress_data;
 }
 
 }  // namespace klib

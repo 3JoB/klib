@@ -4,6 +4,7 @@
 #include <fmt/format.h>
 #include <sqlcipher/sqlite3.h>
 
+#include "klib/archive.h"
 #include "klib/exception.h"
 
 namespace klib {
@@ -48,6 +49,8 @@ class SqlQuery::SqlQueryImpl {
  public:
   explicit SqlQueryImpl(const SqlDatabase &database);
   ~SqlQueryImpl();
+
+  void finalize();
 
   std::string get_column_name(std::int32_t index);
 
@@ -140,7 +143,7 @@ std::string Column::ColumnImpl::as_blob() const {
     throw klib::InvalidArgument("not a blob");
   }
 
-  return std::string(
+  return decompress_str(
       reinterpret_cast<const char *>(sqlite3_column_blob(stmt_, index_)),
       sqlite3_column_bytes(stmt_, index_));
 }
@@ -168,7 +171,18 @@ bool Column::ColumnImpl::is_null() const { return get_type() == SQLITE_NULL; }
 SqlQuery::SqlQueryImpl::SqlQueryImpl(const SqlDatabase &database)
     : db_(database.impl_->db_) {}
 
-SqlQuery::SqlQueryImpl::~SqlQueryImpl() { sqlite3_finalize(stmt_); }
+SqlQuery::SqlQueryImpl::~SqlQueryImpl() {
+  try {
+    finalize();
+  } catch (...) {
+  }
+}
+
+void SqlQuery::SqlQueryImpl::finalize() {
+  auto rc = sqlite3_finalize(stmt_);
+  check_sqlite(rc);
+  stmt_ = nullptr;
+}
 
 bool SqlQuery::SqlQueryImpl::next() {
   if (!stmt_) {
@@ -207,7 +221,9 @@ void SqlQuery::SqlQueryImpl::bind(std::int32_t index,
 
 void SqlQuery::SqlQueryImpl::bind(std::int32_t index, const char *value,
                                   std::size_t size) {
-  auto rc = sqlite3_bind_blob(stmt_, index, value, size, SQLITE_TRANSIENT);
+  auto compressed_data = compress_str(value, size);
+  auto rc = sqlite3_bind_blob(stmt_, index, std::data(compressed_data),
+                              std::size(compressed_data), SQLITE_TRANSIENT);
   check_sqlite(rc);
 }
 
@@ -220,20 +236,16 @@ std::string SqlQuery::SqlQueryImpl::get_column_name(std::int32_t index) {
 }
 
 void SqlQuery::SqlQueryImpl::prepare(std::string_view sql) {
-  auto rc = sqlite3_finalize(stmt_);
-  check_sqlite(rc);
+  finalize();
   column_count_ = 0;
 
-  rc = sqlite3_prepare_v2(db_, std::data(sql),
-                          static_cast<std::int32_t>(std::size(sql)), &stmt_,
-                          nullptr);
+  auto rc = sqlite3_prepare_v2(db_, std::data(sql),
+                               static_cast<std::int32_t>(std::size(sql)),
+                               &stmt_, nullptr);
 
   if (rc != SQLITE_OK) {
-    std::string msg = sqlite3_errmsg(db_);
-    rc = sqlite3_finalize(stmt_);
-    check_sqlite(rc);
-
-    throw RuntimeError(msg);
+    finalize();
+    throw RuntimeError(sqlite3_errmsg(db_));
   }
 
   column_count_ = sqlite3_column_count(stmt_);
@@ -353,6 +365,8 @@ SqlQuery::SqlQuery(const SqlDatabase &database)
     : impl_(std::make_unique<SqlQueryImpl>(database)) {}
 
 SqlQuery::~SqlQuery() = default;
+
+void SqlQuery::finalize() { impl_->finalize(); }
 
 std::string SqlQuery::get_column_name(std::int32_t index) {
   return impl_->get_column_name(index);

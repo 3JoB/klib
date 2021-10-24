@@ -5,6 +5,7 @@
 
 #pragma once
 
+#include <cstddef>
 #include <optional>
 #include <string>
 #include <vector>
@@ -46,5 +47,13 @@ void compress(const std::vector<std::string> &paths, Algorithm algorithm,
  */
 std::optional<std::string> decompress(
     const std::string &path, const std::string &decompressed_path = "");
+
+std::string compress_str(const std::string &data);
+
+std::string compress_str(const char *data, std::size_t size);
+
+std::string decompress_str(const std::string &data);
+
+std::string decompress_str(const char *data, std::size_t size);
 
 }  // namespace klib
