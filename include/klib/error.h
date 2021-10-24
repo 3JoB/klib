@@ -29,6 +29,7 @@ void warn(std::string_view fmt, Args &&...args) {
 
 /**
  * @brief Report warning
+ * @param loc: Location information
  * @param fmt: Format string
  * @param args: Format string parameters
  */
@@ -57,6 +58,7 @@ template <typename... Args>
 
 /**
  * @brief Report error and exit
+ * @param loc: Location information
  * @param fmt: Format string
  * @param args: Format string parameters
  */
@@ -70,6 +72,9 @@ template <typename... Args>
   std::exit(EXIT_FAILURE);
 }
 
+/**
+ * @brief Current location information
+ */
 #define KLIB_CURR_LOC std::experimental::source_location::current()
 
 }  // namespace klib

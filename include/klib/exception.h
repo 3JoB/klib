@@ -83,6 +83,9 @@ class LogicError : public std::logic_error {
             fmt::format(fmt::runtime(fmt), std::forward<Args>(args)...)) {}
 };
 
+/**
+ * @brief Exception class, which means invalid argument
+ */
 class InvalidArgument : std::invalid_argument {
  public:
   /**
@@ -116,6 +119,9 @@ class InvalidArgument : std::invalid_argument {
             fmt::format(fmt::runtime(fmt), std::forward<Args>(args)...)) {}
 };
 
+/**
+ * @brief Exception class, which means out of range
+ */
 class OutOfRange : std::out_of_range {
  public:
   /**

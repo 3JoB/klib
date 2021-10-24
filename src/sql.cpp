@@ -1,7 +1,7 @@
 #include "klib/sql.h"
 
-#include <fmt/compile.h>
-#include <fmt/format.h>
+#include <climits>
+
 #include <sqlcipher/sqlite3.h>
 
 #include "klib/archive.h"
@@ -13,7 +13,13 @@ namespace {
 
 void check_sqlite(std::int32_t rc) {
   if (rc != SQLITE_OK) {
-    throw klib::RuntimeError(sqlite3_errstr(rc));
+    throw RuntimeError(sqlite3_errstr(rc));
+  }
+}
+
+void check_sqlite(std::int32_t rc, sqlite3 *db) {
+  if (rc != SQLITE_OK) {
+    throw RuntimeError(sqlite3_errmsg(db));
   }
 }
 
@@ -28,7 +34,7 @@ class Column::ColumnImpl {
   [[nodiscard]] std::int32_t as_int32() const;
   [[nodiscard]] std::int64_t as_int64() const;
   [[nodiscard]] double as_double() const;
-  [[nodiscard]] std::string as_string() const;
+  [[nodiscard]] std::string as_text() const;
   [[nodiscard]] std::string as_blob() const;
 
  private:
@@ -47,12 +53,16 @@ class SqlQuery::SqlQueryImpl {
   friend class Column::ColumnImpl;
 
  public:
-  explicit SqlQueryImpl(const SqlDatabase &database);
+  explicit SqlQueryImpl(SqlDatabase &db);
+
+  SqlQueryImpl(const SqlQueryImpl &) = delete;
+  SqlQueryImpl(SqlQueryImpl &&) = delete;
+  SqlQueryImpl &operator=(const SqlQueryImpl &) = delete;
+  SqlQueryImpl &operator=(SqlQueryImpl &&) = delete;
+
   ~SqlQueryImpl();
 
   void finalize();
-
-  std::string get_column_name(std::int32_t index);
 
   void prepare(std::string_view sql);
 
@@ -62,11 +72,14 @@ class SqlQuery::SqlQueryImpl {
   void bind(std::int32_t index, const std::string &value);
   void bind(std::int32_t index, const char *value, std::size_t size);
 
-  void step();
+  std::int32_t exec();
 
   [[nodiscard]] bool next();
 
-  [[nodiscard]] Column get_column(SqlQuery &sql_query, std::int32_t index);
+  [[nodiscard]] std::string get_column_name(std::int32_t index);
+
+  [[nodiscard]] Column get_column(SqlQuery &sql_query,
+                                  std::int32_t index) const;
 
  private:
   sqlite3 *db_ = nullptr;
@@ -79,8 +92,14 @@ class SqlDatabase::SqlDatabaseImpl {
   friend SqlQuery::SqlQueryImpl;
 
  public:
-  explicit SqlDatabaseImpl(const std::string &table_name, OpenType open_type,
+  explicit SqlDatabaseImpl(const std::string &db_name, OpenMode open_mode,
                            const std::string &key);
+
+  SqlDatabaseImpl(const SqlDatabaseImpl &) = delete;
+  SqlDatabaseImpl(SqlDatabaseImpl &&) = delete;
+  SqlDatabaseImpl &operator=(const SqlDatabaseImpl &) = delete;
+  SqlDatabaseImpl &operator=(SqlDatabaseImpl &&) = delete;
+
   ~SqlDatabaseImpl();
 
   void transaction();
@@ -88,26 +107,30 @@ class SqlDatabase::SqlDatabaseImpl {
   void rollback();
   void vacuum();
 
-  void drop_table(const std::string &table_name);
-  void drop_table_if_exists(const std::string &table_name);
+  [[nodiscard]] static bool table_exists(SqlDatabase &db,
+                                         const std::string &table_name);
 
-  [[nodiscard]] bool table_exists(SqlDatabase &database,
-                                  const std::string &table_name) const;
-  std::int64_t table_line_count(SqlDatabase &database,
-                                const std::string &table_name);
+  void drop_table(const std::string &table_name);
+  bool drop_table_if_exists(const std::string &table_name);
+
+  [[nodiscard]] static std::int64_t table_line_count(
+      SqlDatabase &db, const std::string &table_name);
 
   std::int32_t exec(std::string_view sql);
 
  private:
+  inline constexpr static std::size_t key_size = 32;
   sqlite3 *db_ = nullptr;
 };
 
 Column::ColumnImpl::ColumnImpl(SqlQuery &sql_query, std::int32_t index)
     : stmt_(sql_query.impl_->stmt_), index_(index) {}
 
+bool Column::ColumnImpl::is_null() const { return get_type() == SQLITE_NULL; }
+
 std::int32_t Column::ColumnImpl::as_int32() const {
   if (!is_integer()) {
-    throw klib::InvalidArgument("not a integer");
+    throw InvalidArgument("Not a integer");
   }
 
   return sqlite3_column_int(stmt_, index_);
@@ -115,7 +138,7 @@ std::int32_t Column::ColumnImpl::as_int32() const {
 
 std::int64_t Column::ColumnImpl::as_int64() const {
   if (!is_integer()) {
-    throw klib::InvalidArgument("not a integer");
+    throw InvalidArgument("Not a integer");
   }
 
   return sqlite3_column_int64(stmt_, index_);
@@ -123,15 +146,15 @@ std::int64_t Column::ColumnImpl::as_int64() const {
 
 double Column::ColumnImpl::as_double() const {
   if (!is_float()) {
-    throw klib::InvalidArgument("not a float");
+    throw InvalidArgument("Not a float");
   }
 
   return sqlite3_column_double(stmt_, index_);
 }
 
-std::string Column::ColumnImpl::as_string() const {
+std::string Column::ColumnImpl::as_text() const {
   if (!is_text()) {
-    throw klib::InvalidArgument("not a string");
+    throw InvalidArgument("Not a text");
   }
 
   return std::string(
@@ -140,7 +163,7 @@ std::string Column::ColumnImpl::as_string() const {
 
 std::string Column::ColumnImpl::as_blob() const {
   if (!is_blob()) {
-    throw klib::InvalidArgument("not a blob");
+    throw InvalidArgument("Not a blob");
   }
 
   return decompress_str(
@@ -158,18 +181,11 @@ bool Column::ColumnImpl::is_integer() const {
 
 bool Column::ColumnImpl::is_float() const { return get_type() == SQLITE_FLOAT; }
 
-bool Column::ColumnImpl::is_text() const {
-  auto fuck = get_type();
-  (void)fuck;
-  return get_type() == SQLITE_TEXT;
-}
+bool Column::ColumnImpl::is_text() const { return get_type() == SQLITE_TEXT; }
 
 bool Column::ColumnImpl::is_blob() const { return get_type() == SQLITE_BLOB; }
 
-bool Column::ColumnImpl::is_null() const { return get_type() == SQLITE_NULL; }
-
-SqlQuery::SqlQueryImpl::SqlQueryImpl(const SqlDatabase &database)
-    : db_(database.impl_->db_) {}
+SqlQuery::SqlQueryImpl::SqlQueryImpl(SqlDatabase &db) : db_(db.impl_->db_) {}
 
 SqlQuery::SqlQueryImpl::~SqlQueryImpl() {
   try {
@@ -180,43 +196,44 @@ SqlQuery::SqlQueryImpl::~SqlQueryImpl() {
 
 void SqlQuery::SqlQueryImpl::finalize() {
   auto rc = sqlite3_finalize(stmt_);
-  check_sqlite(rc);
+  check_sqlite(rc, db_);
   stmt_ = nullptr;
 }
 
-bool SqlQuery::SqlQueryImpl::next() {
-  if (!stmt_) {
-    throw RuntimeError("call prepare first");
+void SqlQuery::SqlQueryImpl::prepare(std::string_view sql) {
+  finalize();
+
+  auto rc =
+      sqlite3_prepare_v2(db_, std::data(sql), std::size(sql), &stmt_, nullptr);
+
+  if (rc != SQLITE_OK) {
+    finalize();
+    throw RuntimeError(sqlite3_errmsg(db_));
   }
 
-  if (auto rc = sqlite3_step(stmt_); rc != SQLITE_ROW) {
-    sqlite3_reset(stmt_);
-    return false;
-  }
-
-  return true;
+  column_count_ = sqlite3_column_count(stmt_);
 }
 
 void SqlQuery::SqlQueryImpl::bind(std::int32_t index, std::int32_t value) {
   auto rc = sqlite3_bind_int(stmt_, index, value);
-  check_sqlite(rc);
+  check_sqlite(rc, db_);
 }
 
 void SqlQuery::SqlQueryImpl::bind(std::int32_t index, std::int64_t value) {
   auto rc = sqlite3_bind_int64(stmt_, index, value);
-  check_sqlite(rc);
+  check_sqlite(rc, db_);
 }
 
 void SqlQuery::SqlQueryImpl::bind(std::int32_t index, double value) {
   auto rc = sqlite3_bind_double(stmt_, index, value);
-  check_sqlite(rc);
+  check_sqlite(rc, db_);
 }
 
 void SqlQuery::SqlQueryImpl::bind(std::int32_t index,
                                   const std::string &value) {
   auto rc = sqlite3_bind_text(stmt_, index, value.c_str(), std::size(value),
                               SQLITE_TRANSIENT);
-  check_sqlite(rc);
+  check_sqlite(rc, db_);
 }
 
 void SqlQuery::SqlQueryImpl::bind(std::int32_t index, const char *value,
@@ -224,7 +241,33 @@ void SqlQuery::SqlQueryImpl::bind(std::int32_t index, const char *value,
   auto compressed_data = compress_str(value, size);
   auto rc = sqlite3_bind_blob(stmt_, index, std::data(compressed_data),
                               std::size(compressed_data), SQLITE_TRANSIENT);
-  check_sqlite(rc);
+  check_sqlite(rc, db_);
+}
+
+std::int32_t SqlQuery::SqlQueryImpl::exec() {
+  if (!stmt_) {
+    throw LogicError("Call prepare first");
+  }
+
+  if (auto rc = sqlite3_step(stmt_); rc != SQLITE_DONE) {
+    throw RuntimeError(sqlite3_errmsg(db_));
+  }
+  check_sqlite(sqlite3_reset(stmt_), db_);
+
+  return sqlite3_changes(db_);
+}
+
+bool SqlQuery::SqlQueryImpl::next() {
+  if (!stmt_) {
+    throw LogicError("Call prepare first");
+  }
+
+  if (auto rc = sqlite3_step(stmt_); rc != SQLITE_ROW) {
+    check_sqlite(sqlite3_reset(stmt_), db_);
+    return false;
+  }
+
+  return true;
 }
 
 std::string SqlQuery::SqlQueryImpl::get_column_name(std::int32_t index) {
@@ -235,31 +278,8 @@ std::string SqlQuery::SqlQueryImpl::get_column_name(std::int32_t index) {
   return sqlite3_column_name(stmt_, index);
 }
 
-void SqlQuery::SqlQueryImpl::prepare(std::string_view sql) {
-  finalize();
-  column_count_ = 0;
-
-  auto rc = sqlite3_prepare_v2(db_, std::data(sql),
-                               static_cast<std::int32_t>(std::size(sql)),
-                               &stmt_, nullptr);
-
-  if (rc != SQLITE_OK) {
-    finalize();
-    throw RuntimeError(sqlite3_errmsg(db_));
-  }
-
-  column_count_ = sqlite3_column_count(stmt_);
-}
-
-void SqlQuery::SqlQueryImpl::step() {
-  if (auto rc = sqlite3_step(stmt_); rc != SQLITE_DONE) {
-    throw klib::RuntimeError(sqlite3_errstr(rc));
-  }
-  sqlite3_reset(stmt_);
-}
-
 Column SqlQuery::SqlQueryImpl::get_column(SqlQuery &sql_query,
-                                          std::int32_t index) {
+                                          std::int32_t index) const {
   if (index >= column_count_) {
     throw OutOfRange("Column index out of range");
   }
@@ -267,29 +287,29 @@ Column SqlQuery::SqlQueryImpl::get_column(SqlQuery &sql_query,
   return Column(sql_query, index);
 }
 
-SqlDatabase::SqlDatabaseImpl::SqlDatabaseImpl(const std::string &table_name,
-                                              SqlDatabase::OpenType open_type,
+SqlDatabase::SqlDatabaseImpl::SqlDatabaseImpl(const std::string &db_name,
+                                              OpenMode open_mode,
                                               const std::string &key) {
-  if (std::size(key) != 32) {
-    throw InvalidArgument("key must be 256 bit");
+  if (std::size(key) != SqlDatabaseImpl::key_size) {
+    throw InvalidArgument("Key must be {} bit",
+                          SqlDatabaseImpl::key_size * CHAR_BIT);
   }
 
   std::int32_t flag = 0;
-  if (open_type == OpenType::ReadOnly) {
+  if (open_mode == OpenMode::ReadOnly) {
     flag = SQLITE_OPEN_READONLY;
-  } else if (open_type == OpenType::ReadWrite) {
+  } else if (open_mode == OpenMode::ReadWrite) {
     flag = SQLITE_OPEN_READWRITE | SQLITE_OPEN_CREATE;
   }
 
-  if (sqlite3_open_v2(table_name.c_str(), &db_, flag, nullptr) != SQLITE_OK) {
-    auto msg = fmt::format(FMT_COMPILE("Can't open database '{}': {}"),
-                           table_name, sqlite3_errmsg(db_));
-    auto rc = sqlite3_close_v2(db_);
-    check_sqlite(rc);
-    throw klib::RuntimeError(msg);
+  if (sqlite3_open_v2(db_name.c_str(), &db_, flag, nullptr) != SQLITE_OK) {
+    std::string msg = sqlite3_errmsg(db_);
+    check_sqlite(sqlite3_close_v2(db_));
+    throw RuntimeError(msg);
   }
 
-  sqlite3_key(db_, std::data(key), 32);
+  auto rc = sqlite3_key(db_, std::data(key), SqlDatabaseImpl::key_size);
+  check_sqlite(rc, db_);
 }
 
 SqlDatabase::SqlDatabaseImpl::~SqlDatabaseImpl() { sqlite3_close_v2(db_); }
@@ -302,18 +322,9 @@ void SqlDatabase::SqlDatabaseImpl::rollback() { exec("ROLLBACK"); }
 
 void SqlDatabase::SqlDatabaseImpl::vacuum() { exec("VACUUM"); }
 
-void SqlDatabase::SqlDatabaseImpl::drop_table(const std::string &table_name) {
-  exec(fmt::format(FMT_COMPILE("DROP TABLE {};"), table_name));
-}
-
-void SqlDatabase::SqlDatabaseImpl::drop_table_if_exists(
-    const std::string &table_name) {
-  exec(fmt::format(FMT_COMPILE("DROP TABLE IF EXISTS {};"), table_name));
-}
-
-bool SqlDatabase::SqlDatabaseImpl::table_exists(
-    SqlDatabase &database, const std::string &table_name) const {
-  SqlQuery query(database);
+bool SqlDatabase::SqlDatabaseImpl::table_exists(SqlDatabase &db,
+                                                const std::string &table_name) {
+  SqlQuery query(db);
   query.prepare(
       "SELECT count(*) FROM sqlite_master WHERE type='table' AND name=?");
   query.bind(1, table_name);
@@ -322,9 +333,20 @@ bool SqlDatabase::SqlDatabaseImpl::table_exists(
   return query.get_column(0).as_int32() == 1;
 }
 
+void SqlDatabase::SqlDatabaseImpl::drop_table(const std::string &table_name) {
+  if (exec("DROP TABLE " + table_name) != 1) {
+    throw RuntimeError("Drop table failed");
+  }
+}
+
+bool SqlDatabase::SqlDatabaseImpl::drop_table_if_exists(
+    const std::string &table_name) {
+  return exec("DROP TABLE IF EXISTS " + table_name);
+}
+
 std::int64_t SqlDatabase::SqlDatabaseImpl::table_line_count(
-    SqlDatabase &database, const std::string &table_name) {
-  SqlQuery query(database);
+    SqlDatabase &db, const std::string &table_name) {
+  SqlQuery query(db);
   query.prepare("SELECT count(*) FROM " + table_name);
   (void)query.next();
 
@@ -336,11 +358,10 @@ std::int32_t SqlDatabase::SqlDatabaseImpl::exec(std::string_view sql) {
   if (sqlite3_exec(db_, sql.data(), nullptr, nullptr, &err_msg) != SQLITE_OK) {
     std::string msg = err_msg;
     sqlite3_free(err_msg);
-    throw klib::RuntimeError(msg);
+    throw RuntimeError(msg);
   }
   sqlite3_free(err_msg);
 
-  // INSERT, UPDATE or DELETE only
   return sqlite3_changes(db_);
 }
 
@@ -354,23 +375,19 @@ std::int64_t Column::as_int64() const { return impl_->as_int64(); }
 
 double Column::as_double() const { return impl_->as_double(); }
 
-std::string Column::as_string() const { return impl_->as_string(); }
+std::string Column::as_text() const { return impl_->as_text(); }
 
 std::string Column::as_blob() const { return impl_->as_blob(); }
 
 Column::Column(SqlQuery &sql_query, std::int32_t index)
     : impl_(std::make_unique<ColumnImpl>(sql_query, index)) {}
 
-SqlQuery::SqlQuery(const SqlDatabase &database)
-    : impl_(std::make_unique<SqlQueryImpl>(database)) {}
+SqlQuery::SqlQuery(SqlDatabase &db)
+    : impl_(std::make_unique<SqlQueryImpl>(db)) {}
 
 SqlQuery::~SqlQuery() = default;
 
 void SqlQuery::finalize() { impl_->finalize(); }
-
-std::string SqlQuery::get_column_name(std::int32_t index) {
-  return impl_->get_column_name(index);
-}
 
 void SqlQuery::prepare(std::string_view sql) { impl_->prepare(sql); }
 
@@ -394,18 +411,22 @@ void SqlQuery::bind(std::int32_t index, const char *value, std::size_t size) {
   impl_->bind(index, value, size);
 }
 
-void SqlQuery::step() { impl_->step(); }
+std::int32_t SqlQuery::exec() { return impl_->exec(); }
 
 bool SqlQuery::next() { return impl_->next(); }
+
+std::string SqlQuery::get_column_name(std::int32_t index) {
+  return impl_->get_column_name(index);
+}
 
 Column SqlQuery::get_column(std::int32_t index) {
   return impl_->get_column(*this, index);
 }
 
-SqlDatabase::SqlDatabase(const std::string &table_name,
-                         SqlDatabase::OpenType open_type,
+SqlDatabase::SqlDatabase(const std::string &db_name,
+                         SqlDatabase::OpenMode open_type,
                          const std::string &key)
-    : impl_(std::make_unique<SqlDatabaseImpl>(table_name, open_type, key)) {}
+    : impl_(std::make_unique<SqlDatabaseImpl>(db_name, open_type, key)) {}
 
 SqlDatabase::~SqlDatabase() = default;
 
@@ -417,16 +438,16 @@ void SqlDatabase::rollback() { impl_->rollback(); }
 
 void SqlDatabase::vacuum() { impl_->vacuum(); }
 
+bool SqlDatabase::table_exists(const std::string &name) {
+  return impl_->table_exists(*this, name);
+}
+
 void SqlDatabase::drop_table(const std::string &table_name) {
   impl_->drop_table(table_name);
 }
 
-void SqlDatabase::drop_table_if_exists(const std::string &table_name) {
-  impl_->drop_table_if_exists(table_name);
-}
-
-bool SqlDatabase::table_exists(const std::string &name) {
-  return impl_->table_exists(*this, name);
+bool SqlDatabase::drop_table_if_exists(const std::string &table_name) {
+  return impl_->drop_table_if_exists(table_name);
 }
 
 std::int64_t SqlDatabase::table_line_count(const std::string &table_name) {
