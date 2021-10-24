@@ -58,6 +58,7 @@ class SqlQuery {
   void bind(std::int32_t index, std::int64_t value);
   void bind(std::int32_t index, double value);
   void bind(std::int32_t index, const std::string &value);
+  // TODO blob
 
   void step();
 
@@ -90,6 +91,7 @@ class SqlDatabase {
 
   void drop_table(const std::string &table_name);
   [[nodiscard]] bool table_exists(const std::string &table_name);
+  std::int64_t table_line_count(const std::string &table_name);
 
   void exec(std::string_view sql);
 

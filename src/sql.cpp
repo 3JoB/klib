@@ -85,6 +85,9 @@ class SqlDatabase::SqlDatabaseImpl {
   void drop_table(const std::string &table_name);
   [[nodiscard]] bool table_exists(SqlDatabase &database,
                                   const std::string &table_name) const;
+  std::int64_t table_line_count(SqlDatabase &database,
+                                const std::string &table_name);
+
   void exec(std::string_view sql);
 
  private:
@@ -282,6 +285,15 @@ bool SqlDatabase::SqlDatabaseImpl::table_exists(
   return query.get_column(0).as_int32() == 1;
 }
 
+std::int64_t SqlDatabase::SqlDatabaseImpl::table_line_count(
+    SqlDatabase &database, const std::string &table_name) {
+  SqlQuery query(database);
+  query.prepare("SELECT count(*) FROM " + table_name);
+  (void)query.next();
+
+  return query.get_column(0).as_int64();
+}
+
 void SqlDatabase::SqlDatabaseImpl::exec(std::string_view sql) {
   char *err_msg = nullptr;
   if (sqlite3_exec(db_, sql.data(), nullptr, nullptr, &err_msg) != SQLITE_OK) {
@@ -362,6 +374,10 @@ void SqlDatabase::drop_table(const std::string &table_name) {
 
 bool SqlDatabase::table_exists(const std::string &name) {
   return impl_->table_exists(*this, name);
+}
+
+std::int64_t SqlDatabase::table_line_count(const std::string &table_name) {
+  return impl_->table_line_count(*this, table_name);
 }
 
 void SqlDatabase::exec(std::string_view sql) { return impl_->exec(sql); }

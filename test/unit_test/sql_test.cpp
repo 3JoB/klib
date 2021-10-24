@@ -31,12 +31,13 @@ TEST_CASE("sql", "[sql]") {
 
   REQUIRE(std::filesystem::exists("test.db"));
   REQUIRE(db.table_exists("Cars"));
+  REQUIRE(db.table_line_count("Cars") == 8);
 
   REQUIRE_NOTHROW(query.prepare("SELECT * FROM Cars WHERE Price > ?"));
   REQUIRE_NOTHROW(query.bind(1, 50000));
   while (query.next()) {
     REQUIRE(query.get_column_name(0) == "Name");
-    REQUIRE(query.get_column_name(13) == "Price");
+    REQUIRE(query.get_column_name(1) == "Price");
     REQUIRE_NOTHROW(std::cout << query.get_column(0).as_string() << ' ');
     REQUIRE_NOTHROW(std::cout << query.get_column(1).as_int32() << '\n');
   }
