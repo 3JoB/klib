@@ -69,6 +69,7 @@ pkg_check_modules(sqlcipher REQUIRED IMPORTED_TARGET sqlcipher)
 
 add_definitions(-DOPENSSL_NO_DEPRECATED -DSQLITE_HAS_CODEC)
 
+find_package(zstd REQUIRED)
 find_package(fmt REQUIRED)
 find_package(Boost REQUIRED CONFIG)
 
@@ -114,6 +115,7 @@ if(KLIB_BUILD_STATIC)
     COMMAND ar -x /usr/local/lib/libcrypto.a
     COMMAND ar -x /usr/local/lib/libssl.a
     COMMAND ar -x /usr/local/lib/libsqlcipher.a
+    COMMAND ar -x /usr/local/liblibzstd.a
     COMMAND ar -x /usr/local/lib/libfmt.a
     COMMAND ar -x /usr/local/lib/libnghttp2.a
     COMMAND ar -qcs ${KLIB_BINARY_DIR}/lib${LIBRARY}.a *.o
@@ -143,6 +145,7 @@ if(KLIB_BUILD_SHARED)
             PkgConfig::libcurl
             PkgConfig::openssl
             PkgConfig::sqlcipher
+            zstd::libzstd_static
             fmt::fmt
             ${Boost_LIBRARIES})
 
