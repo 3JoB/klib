@@ -115,7 +115,7 @@ if(KLIB_BUILD_STATIC)
     COMMAND ar -x /usr/local/lib/libcrypto.a
     COMMAND ar -x /usr/local/lib/libssl.a
     COMMAND ar -x /usr/local/lib/libsqlcipher.a
-    COMMAND ar -x /usr/local/liblibzstd.a
+    COMMAND ar -x /usr/local/lib/libzstd.a
     COMMAND ar -x /usr/local/lib/libfmt.a
     COMMAND ar -x /usr/local/lib/libnghttp2.a
     COMMAND ar -qcs ${KLIB_BINARY_DIR}/lib${LIBRARY}.a *.o
