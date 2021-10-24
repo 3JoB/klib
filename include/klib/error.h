@@ -6,6 +6,7 @@
 #pragma once
 
 #include <cstdlib>
+#include <experimental/source_location>
 #include <string_view>
 #include <utility>
 
@@ -27,6 +28,20 @@ void warn(std::string_view fmt, Args &&...args) {
 }
 
 /**
+ * @brief Report warning
+ * @param fmt: Format string
+ * @param args: Format string parameters
+ */
+template <typename... Args>
+void warn(const std::experimental::source_location &loc, std::string_view fmt,
+          Args &&...args) {
+  fmt::print(fmt::fg(fmt::color::yellow), "{}:{}: warning: ", loc.file_name(),
+             loc.line());
+  fmt::print(fmt::fg(fmt::color::yellow), fmt, std::forward<Args>(args)...);
+  fmt::print("\n");
+}
+
+/**
  * @brief Report error and exit
  * @param fmt: Format string
  * @param args: Format string parameters
@@ -39,5 +54,22 @@ template <typename... Args>
 
   std::exit(EXIT_FAILURE);
 }
+
+/**
+ * @brief Report error and exit
+ * @param fmt: Format string
+ * @param args: Format string parameters
+ */
+template <typename... Args>
+[[noreturn]] void error(const std::experimental::source_location &loc,
+                        std::string_view fmt, Args &&...args) {
+  fmt::print(fmt::fg(fmt::color::red), "{}:{}: error: ", loc.file_name(),
+             loc.line());
+  fmt::print(fmt::fg(fmt::color::red), fmt, std::forward<Args>(args)...);
+  fmt::print("\n");
+  std::exit(EXIT_FAILURE);
+}
+
+#define KLIB_CURR_LOC std::experimental::source_location::current()
 
 }  // namespace klib
