@@ -76,7 +76,8 @@ class SqlDatabase::SqlDatabaseImpl {
   friend SqlQuery::SqlQueryImpl;
 
  public:
-  explicit SqlDatabaseImpl(const std::string &table_name, OpenType open_type);
+  explicit SqlDatabaseImpl(const std::string &table_name, OpenType open_type,
+                           const std::string &key);
   ~SqlDatabaseImpl();
 
   void transaction();
@@ -254,7 +255,12 @@ Column SqlQuery::SqlQueryImpl::get_column(SqlQuery &sql_query,
 }
 
 SqlDatabase::SqlDatabaseImpl::SqlDatabaseImpl(const std::string &table_name,
-                                              SqlDatabase::OpenType open_type) {
+                                              SqlDatabase::OpenType open_type,
+                                              const std::string &key) {
+  if (std::size(key) != 32) {
+    throw InvalidArgument("key must be 256 bit");
+  }
+
   std::int32_t flag = 0;
   if (open_type == OpenType::ReadOnly) {
     flag = SQLITE_OPEN_READONLY;
@@ -269,6 +275,8 @@ SqlDatabase::SqlDatabaseImpl::SqlDatabaseImpl(const std::string &table_name,
     check_sqlite(rc);
     throw klib::RuntimeError(msg);
   }
+
+  sqlite3_key(db_, std::data(key), 32);
 }
 
 SqlDatabase::SqlDatabaseImpl::~SqlDatabaseImpl() { sqlite3_close_v2(db_); }
@@ -378,8 +386,9 @@ Column SqlQuery::get_column(std::int32_t index) {
 }
 
 SqlDatabase::SqlDatabase(const std::string &table_name,
-                         SqlDatabase::OpenType open_type)
-    : impl_(std::make_unique<SqlDatabaseImpl>(table_name, open_type)) {}
+                         SqlDatabase::OpenType open_type,
+                         const std::string &key)
+    : impl_(std::make_unique<SqlDatabaseImpl>(table_name, open_type, key)) {}
 
 SqlDatabase::~SqlDatabase() = default;
 

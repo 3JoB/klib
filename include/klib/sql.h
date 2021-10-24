@@ -78,7 +78,8 @@ class SqlDatabase {
  public:
   enum OpenType { ReadOnly, ReadWrite };
 
-  SqlDatabase(const std::string &table_name, OpenType open_type);
+  SqlDatabase(const std::string &table_name, OpenType open_type,
+              const std::string &key);
 
   SqlDatabase(const SqlDatabase &) = delete;
   SqlDatabase(SqlDatabase &&) = delete;
