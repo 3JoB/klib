@@ -57,6 +57,7 @@ class SqlQuery::SqlQueryImpl {
   void bind(std::int32_t index, std::int64_t value);
   void bind(std::int32_t index, double value);
   void bind(std::int32_t index, const std::string &value);
+  void bind(std::int32_t index, const char *value, std::size_t size);
 
   void step();
 
@@ -197,6 +198,12 @@ void SqlQuery::SqlQueryImpl::bind(std::int32_t index,
                                   const std::string &value) {
   auto rc = sqlite3_bind_text(stmt_, index, value.c_str(), std::size(value),
                               SQLITE_TRANSIENT);
+  check_sqlite(rc);
+}
+
+void SqlQuery::SqlQueryImpl::bind(std::int32_t index, const char *value,
+                                  std::size_t size) {
+  auto rc = sqlite3_bind_blob(stmt_, index, value, size, SQLITE_TRANSIENT);
   check_sqlite(rc);
 }
 
@@ -346,6 +353,10 @@ void SqlQuery::bind(std::int32_t index, double value) {
 
 void SqlQuery::bind(std::int32_t index, const std::string &value) {
   impl_->bind(index, value);
+}
+
+void SqlQuery::bind(std::int32_t index, const char *value, std::size_t size) {
+  impl_->bind(index, value, size);
 }
 
 void SqlQuery::step() { impl_->step(); }

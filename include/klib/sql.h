@@ -1,5 +1,6 @@
 #pragma once
 
+#include <cstddef>
 #include <cstdint>
 #include <experimental/propagate_const>
 #include <memory>
@@ -58,7 +59,7 @@ class SqlQuery {
   void bind(std::int32_t index, std::int64_t value);
   void bind(std::int32_t index, double value);
   void bind(std::int32_t index, const std::string &value);
-  // TODO blob
+  void bind(std::int32_t index, const char *value, std::size_t size);
 
   void step();
 
