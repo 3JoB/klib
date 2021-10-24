@@ -96,7 +96,7 @@ class SqlDatabase {
   [[nodiscard]] bool table_exists(const std::string &table_name);
   std::int64_t table_line_count(const std::string &table_name);
 
-  void exec(std::string_view sql);
+  std::int32_t exec(std::string_view sql);
 
  private:
   class SqlDatabaseImpl;

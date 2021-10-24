@@ -91,7 +91,7 @@ class SqlDatabase::SqlDatabaseImpl {
   std::int64_t table_line_count(SqlDatabase &database,
                                 const std::string &table_name);
 
-  void exec(std::string_view sql);
+  std::int32_t exec(std::string_view sql);
 
  private:
   sqlite3 *db_ = nullptr;
@@ -273,11 +273,11 @@ SqlDatabase::SqlDatabaseImpl::SqlDatabaseImpl(const std::string &table_name,
 
 SqlDatabase::SqlDatabaseImpl::~SqlDatabaseImpl() { sqlite3_close_v2(db_); }
 
-void SqlDatabase::SqlDatabaseImpl::transaction() { exec("BEGIN TRANSACTION;"); }
+void SqlDatabase::SqlDatabaseImpl::transaction() { exec("BEGIN"); }
 
-void SqlDatabase::SqlDatabaseImpl::commit() { exec("COMMIT;"); }
+void SqlDatabase::SqlDatabaseImpl::commit() { exec("COMMIT"); }
 
-void SqlDatabase::SqlDatabaseImpl::rollback() { exec("ROLLBACK;"); }
+void SqlDatabase::SqlDatabaseImpl::rollback() { exec("ROLLBACK"); }
 
 void SqlDatabase::SqlDatabaseImpl::drop_table(const std::string &table_name) {
   exec(fmt::format(FMT_COMPILE("DROP TABLE {};"), table_name));
@@ -308,7 +308,7 @@ std::int64_t SqlDatabase::SqlDatabaseImpl::table_line_count(
   return query.get_column(0).as_int64();
 }
 
-void SqlDatabase::SqlDatabaseImpl::exec(std::string_view sql) {
+std::int32_t SqlDatabase::SqlDatabaseImpl::exec(std::string_view sql) {
   char *err_msg = nullptr;
   if (sqlite3_exec(db_, sql.data(), nullptr, nullptr, &err_msg) != SQLITE_OK) {
     std::string msg = err_msg;
@@ -316,6 +316,9 @@ void SqlDatabase::SqlDatabaseImpl::exec(std::string_view sql) {
     throw klib::RuntimeError(msg);
   }
   sqlite3_free(err_msg);
+
+  // INSERT, UPDATE or DELETE only
+  return sqlite3_changes(db_);
 }
 
 Column::~Column() = default;
@@ -402,6 +405,8 @@ std::int64_t SqlDatabase::table_line_count(const std::string &table_name) {
   return impl_->table_line_count(*this, table_name);
 }
 
-void SqlDatabase::exec(std::string_view sql) { return impl_->exec(sql); }
+std::int32_t SqlDatabase::exec(std::string_view sql) {
+  return impl_->exec(sql);
+}
 
 }  // namespace klib

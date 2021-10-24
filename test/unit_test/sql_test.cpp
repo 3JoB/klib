@@ -27,6 +27,7 @@ TEST_CASE("sql", "[sql]") {
     REQUIRE_NOTHROW(query.bind(2, prices[i]));
     REQUIRE_NOTHROW(query.step());
   }
+  REQUIRE(db.exec("UPDATE Cars SET Name='aaa' WHERE Price > 50000") == 3);
   REQUIRE_NOTHROW(db.commit());
 
   REQUIRE(std::filesystem::exists("test.db"));
