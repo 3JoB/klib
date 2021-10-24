@@ -20,6 +20,8 @@ class Column {
   Column &operator=(Column &&) = delete;
   ~Column();
 
+  [[nodiscard]] bool is_null() const;
+
   [[nodiscard]] std::int32_t as_int32() const;
   [[nodiscard]] std::int64_t as_int64() const;
   [[nodiscard]] double as_double() const;
@@ -36,8 +38,8 @@ class Column {
 class SqlDatabase;
 
 class SqlQuery {
-  friend class Column::ColumnImpl;
   friend class SqlDatabase;
+  friend class Column::ColumnImpl;
 
  public:
   explicit SqlQuery(const SqlDatabase &database);
@@ -47,6 +49,8 @@ class SqlQuery {
   SqlQuery &operator=(const SqlQuery &) = delete;
   SqlQuery &operator=(SqlQuery &&) = delete;
   ~SqlQuery();
+
+  std::string get_column_name(std::int32_t index);
 
   void prepare(std::string_view sql);
 
@@ -60,8 +64,6 @@ class SqlQuery {
   [[nodiscard]] bool next();
 
   [[nodiscard]] Column get_column(std::int32_t index);
-
-  void exec(std::string_view sql);
 
  private:
   class SqlQueryImpl;

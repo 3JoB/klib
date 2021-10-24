@@ -22,6 +22,8 @@ class Column::ColumnImpl {
  public:
   ColumnImpl(SqlQuery &sql_query, std::int32_t index);
 
+  [[nodiscard]] bool is_null() const;
+
   [[nodiscard]] std::int32_t as_int32() const;
   [[nodiscard]] std::int64_t as_int64() const;
   [[nodiscard]] double as_double() const;
@@ -47,6 +49,8 @@ class SqlQuery::SqlQueryImpl {
   explicit SqlQueryImpl(const SqlDatabase &database);
   ~SqlQueryImpl();
 
+  std::string get_column_name(std::int32_t index);
+
   void prepare(std::string_view sql);
 
   void bind(std::int32_t index, std::int32_t value);
@@ -60,11 +64,11 @@ class SqlQuery::SqlQueryImpl {
 
   [[nodiscard]] Column get_column(SqlQuery &sql_query, std::int32_t index);
 
-  void exec(std::string_view sql);
-
  private:
   sqlite3 *db_ = nullptr;
   sqlite3_stmt *stmt_ = nullptr;
+
+  std::int32_t column_count_ = 0;
 };
 
 class SqlDatabase::SqlDatabaseImpl {
@@ -151,12 +155,18 @@ bool Column::ColumnImpl::is_text() const {
 
 bool Column::ColumnImpl::is_blob() const { return get_type() == SQLITE_BLOB; }
 
+bool Column::ColumnImpl::is_null() const { return get_type() == SQLITE_NULL; }
+
 SqlQuery::SqlQueryImpl::SqlQueryImpl(const SqlDatabase &database)
     : db_(database.impl_->db_) {}
 
 SqlQuery::SqlQueryImpl::~SqlQueryImpl() { sqlite3_finalize(stmt_); }
 
 bool SqlQuery::SqlQueryImpl::next() {
+  if (!stmt_) {
+    throw RuntimeError("call prepare first");
+  }
+
   if (auto rc = sqlite3_step(stmt_); rc != SQLITE_ROW) {
     sqlite3_reset(stmt_);
     return false;
@@ -187,21 +197,32 @@ void SqlQuery::SqlQueryImpl::bind(std::int32_t index,
   check_sqlite(rc);
 }
 
+std::string SqlQuery::SqlQueryImpl::get_column_name(std::int32_t index) {
+  if (index >= column_count_) {
+    throw OutOfRange("Column index out of range");
+  }
+
+  return sqlite3_column_name(stmt_, index);
+}
+
 void SqlQuery::SqlQueryImpl::prepare(std::string_view sql) {
   auto rc = sqlite3_finalize(stmt_);
   check_sqlite(rc);
+  column_count_ = 0;
 
   rc = sqlite3_prepare_v2(db_, std::data(sql),
                           static_cast<std::int32_t>(std::size(sql)), &stmt_,
                           nullptr);
 
   if (rc != SQLITE_OK) {
-    std::string msg = sqlite3_errstr(rc);
+    std::string msg = sqlite3_errmsg(db_);
     rc = sqlite3_finalize(stmt_);
     check_sqlite(rc);
 
     throw RuntimeError(msg);
   }
+
+  column_count_ = sqlite3_column_count(stmt_);
 }
 
 void SqlQuery::SqlQueryImpl::step() {
@@ -213,17 +234,11 @@ void SqlQuery::SqlQueryImpl::step() {
 
 Column SqlQuery::SqlQueryImpl::get_column(SqlQuery &sql_query,
                                           std::int32_t index) {
-  return Column(sql_query, index);
-}
-
-void SqlQuery::SqlQueryImpl::exec(std::string_view sql) {
-  char *err_msg = nullptr;
-  if (sqlite3_exec(db_, sql.data(), nullptr, nullptr, &err_msg) != SQLITE_OK) {
-    std::string msg = err_msg;
-    sqlite3_free(err_msg);
-    throw RuntimeError(msg);
+  if (index >= column_count_) {
+    throw OutOfRange("Column index out of range");
   }
-  sqlite3_free(err_msg);
+
+  return Column(sql_query, index);
 }
 
 SqlDatabase::SqlDatabaseImpl::SqlDatabaseImpl(const std::string &table_name,
@@ -279,6 +294,8 @@ void SqlDatabase::SqlDatabaseImpl::exec(std::string_view sql) {
 
 Column::~Column() = default;
 
+bool Column::is_null() const { return impl_->is_null(); }
+
 std::int32_t Column::as_int32() const { return impl_->as_int32(); }
 
 std::int64_t Column::as_int64() const { return impl_->as_int64(); }
@@ -296,6 +313,10 @@ SqlQuery::SqlQuery(const SqlDatabase &database)
     : impl_(std::make_unique<SqlQueryImpl>(database)) {}
 
 SqlQuery::~SqlQuery() = default;
+
+std::string SqlQuery::get_column_name(std::int32_t index) {
+  return impl_->get_column_name(index);
+}
 
 void SqlQuery::prepare(std::string_view sql) { impl_->prepare(sql); }
 
@@ -322,8 +343,6 @@ bool SqlQuery::next() { return impl_->next(); }
 Column SqlQuery::get_column(std::int32_t index) {
   return impl_->get_column(*this, index);
 }
-
-void SqlQuery::exec(std::string_view sql) { impl_->exec(sql); }
 
 SqlDatabase::SqlDatabase(const std::string &table_name,
                          SqlDatabase::OpenType open_type)

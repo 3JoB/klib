@@ -17,10 +17,10 @@ TEST_CASE("sql", "[sql]") {
 
   klib::SqlDatabase db("test.db", klib::SqlDatabase::ReadWrite);
   REQUIRE_NOTHROW(db.drop_table("Cars"));
+  REQUIRE_NOTHROW(db.exec("CREATE TABLE Cars(Name TEXT, Price INT);"));
 
   REQUIRE_NOTHROW(db.transaction());
   klib::SqlQuery query(db);
-  REQUIRE_NOTHROW(query.exec("CREATE TABLE Cars(Name TEXT, Price INT);"));
   REQUIRE_NOTHROW(query.prepare("INSERT INTO Cars(Name, Price) VALUES(?, ?);"));
   for (std::size_t i = 0; i < 8; ++i) {
     REQUIRE_NOTHROW(query.bind(1, names[i]));
@@ -35,12 +35,18 @@ TEST_CASE("sql", "[sql]") {
   REQUIRE_NOTHROW(query.prepare("SELECT * FROM Cars WHERE Price > ?"));
   REQUIRE_NOTHROW(query.bind(1, 50000));
   while (query.next()) {
+    REQUIRE(query.get_column_name(0) == "Name");
+    REQUIRE(query.get_column_name(13) == "Price");
     REQUIRE_NOTHROW(std::cout << query.get_column(0).as_string() << ' ');
     REQUIRE_NOTHROW(std::cout << query.get_column(1).as_int32() << '\n');
   }
 
   std::cout << '\n';
   REQUIRE_NOTHROW(query.prepare("SELECT * FROM Cars"));
+  while (query.next()) {
+    REQUIRE_NOTHROW(std::cout << query.get_column(0).as_string() << ' ');
+    REQUIRE_NOTHROW(std::cout << query.get_column(1).as_int32() << '\n');
+  }
   while (query.next()) {
     REQUIRE_NOTHROW(std::cout << query.get_column(0).as_string() << ' ');
     REQUIRE_NOTHROW(std::cout << query.get_column(1).as_int32() << '\n');

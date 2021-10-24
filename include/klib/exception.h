@@ -116,4 +116,35 @@ class InvalidArgument : std::invalid_argument {
             fmt::format(fmt::runtime(fmt), std::forward<Args>(args)...)) {}
 };
 
+class OutOfRange : std::out_of_range {
+ public:
+  /**
+   * @brief Constructor
+   * @param msg: Exception information
+   */
+  explicit OutOfRange(const char *msg) : std::out_of_range(msg) {}
+
+  /**
+   * @brief Constructor
+   * @param msg: Exception information
+   */
+  explicit OutOfRange(const std::string &msg) : std::out_of_range(msg) {}
+
+  /**
+   * @brief Constructor
+   * @param msg: Exception information
+   */
+  explicit OutOfRange(std::string_view msg) : OutOfRange(std::data(msg)) {}
+
+  /**
+   * @brief Constructor
+   * @param fmt: Format string
+   * @param args: Format string parameters
+   */
+  template <typename... Args>
+  explicit OutOfRange(std::string_view fmt, Args &&...args)
+      : OutOfRange(
+            fmt::format(fmt::runtime(fmt), std::forward<Args>(args)...)) {}
+};
+
 }  // namespace klib
