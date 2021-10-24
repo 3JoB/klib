@@ -29,7 +29,7 @@ if [[ "$OSTYPE" == "linux-gnu"* ]]; then
   sudo update-alternatives --install /usr/bin/llvm-cov llvm-cov /usr/bin/llvm-cov-13 400
   sudo update-alternatives --install /usr/bin/llvm-symbolizer llvm-symbolizer /usr/bin/llvm-symbolizer-13 400
 
-  curl -L https://github.com/KaiserLancelot/kpkg/releases/download/v0.5.10/kpkg-v0.5.10-ubuntu-20.04.deb \
+  curl -L https://github.com/KaiserLancelot/kpkg/releases/download/v0.5.11/kpkg-v0.5.11-ubuntu-20.04.deb \
       -o kpkg.deb
   sudo dpkg -i kpkg.deb
 
@@ -39,7 +39,7 @@ if [[ "$OSTYPE" == "linux-gnu"* ]]; then
   fi
   cd dependencies
 
-  kpkg install lcov doxygen catch2 libarchive tidy-html5 curl openssl fmt boost sqlite
+  kpkg install lcov doxygen catch2 libarchive tidy-html5 curl openssl fmt boost sqlcipher
   sudo ldconfig
 
   sudo docker run -d -p 80:80 kennethreitz/httpbin

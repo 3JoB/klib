@@ -65,9 +65,9 @@ pkg_check_modules(libarchive REQUIRED IMPORTED_TARGET libarchive)
 pkg_check_modules(tidy REQUIRED IMPORTED_TARGET tidy)
 pkg_check_modules(libcurl REQUIRED IMPORTED_TARGET libcurl)
 pkg_check_modules(openssl REQUIRED IMPORTED_TARGET openssl)
-pkg_check_modules(sqlite3 REQUIRED IMPORTED_TARGET sqlite3)
+pkg_check_modules(sqlcipher REQUIRED IMPORTED_TARGET sqlcipher)
 
-add_definitions(-DOPENSSL_NO_DEPRECATED)
+add_definitions(-DOPENSSL_NO_DEPRECATED -DSQLITE_HAS_CODEC)
 
 find_package(fmt REQUIRED)
 find_package(Boost REQUIRED CONFIG)
@@ -113,10 +113,11 @@ if(KLIB_BUILD_STATIC)
     COMMAND ar -x /usr/local/lib/libcurl.a
     COMMAND ar -x /usr/local/lib/libcrypto.a
     COMMAND ar -x /usr/local/lib/libssl.a
-    COMMAND ar -x /usr/local/lib/libsqlite3.a
+    COMMAND ar -x /usr/local/lib/libsqlcipher.a
     COMMAND ar -x /usr/local/lib/libfmt.a
     COMMAND ar -x /usr/local/lib/libnghttp2.a
     COMMAND ar -qcs ${KLIB_BINARY_DIR}/lib${LIBRARY}.a *.o
+    COMMAND ranlib ${KLIB_BINARY_DIR}/lib${LIBRARY}.a
     WORKING_DIRECTORY ${KLIB_BINARY_DIR}/third_party
     COMMENT "Combined static library")
 endif()
@@ -141,7 +142,7 @@ if(KLIB_BUILD_SHARED)
             PkgConfig::tidy
             PkgConfig::libcurl
             PkgConfig::openssl
-            PkgConfig::sqlite3
+            PkgConfig::sqlcipher
             fmt::fmt
             ${Boost_LIBRARIES})
 

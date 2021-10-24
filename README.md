@@ -27,7 +27,7 @@ C++ Library
 - [nghttp2](https://github.com/nghttp2/nghttp2)
 - [curl](https://github.com/curl/curl)
 - [tidy-html5](https://github.com/htacg/tidy-html5)
-- [sqlite](https://github.com/sqlite/sqlite)
+- [sqlcipher](https://github.com/sqlcipher/sqlcipher)
 - [fmt](https://github.com/fmtlib/fmt)
 - [boost](https://www.boost.org/)
 
