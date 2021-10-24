@@ -83,6 +83,7 @@ class SqlDatabase::SqlDatabaseImpl {
   void transaction();
   void commit();
   void rollback();
+  void vacuum();
 
   void drop_table(const std::string &table_name);
   void drop_table_if_exists(const std::string &table_name);
@@ -287,6 +288,8 @@ void SqlDatabase::SqlDatabaseImpl::commit() { exec("COMMIT"); }
 
 void SqlDatabase::SqlDatabaseImpl::rollback() { exec("ROLLBACK"); }
 
+void SqlDatabase::SqlDatabaseImpl::vacuum() { exec("VACUUM"); }
+
 void SqlDatabase::SqlDatabaseImpl::drop_table(const std::string &table_name) {
   exec(fmt::format(FMT_COMPILE("DROP TABLE {};"), table_name));
 }
@@ -397,6 +400,8 @@ void SqlDatabase::transaction() { impl_->transaction(); }
 void SqlDatabase::commit() { impl_->commit(); }
 
 void SqlDatabase::rollback() { impl_->rollback(); }
+
+void SqlDatabase::vacuum() { impl_->vacuum(); }
 
 void SqlDatabase::drop_table(const std::string &table_name) {
   impl_->drop_table(table_name);

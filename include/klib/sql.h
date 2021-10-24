@@ -90,6 +90,7 @@ class SqlDatabase {
   void transaction();
   void commit();
   void rollback();
+  void vacuum();
 
   void drop_table(const std::string &table_name);
   void drop_table_if_exists(const std::string &table_name);
