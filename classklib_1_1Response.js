@@ -8,6 +8,7 @@ var classklib_1_1Response =
       [ "NotFound", "classklib_1_1Response.html#abbd230b0781eceb59a4851976ad5df32a53e94e5d31a4deafcb1ac05f603dfb99", null ]
     ] ],
     [ "headers_map", "classklib_1_1Response.html#a2d9f92835eb0d64b80764b4c1001e1da", null ],
+    [ "ok", "classklib_1_1Response.html#a7f2322528daf4336dfb2a76136b064cf", null ],
     [ "save_to_file", "classklib_1_1Response.html#a06c3d6a2557cca10a102646067e00a09", null ],
     [ "status_code", "classklib_1_1Response.html#aa839e6f6599e336147cbdacb0e99bddf", null ],
     [ "text", "classklib_1_1Response.html#a305b99dcd743ae31007c48c639b99713", null ]
