@@ -190,6 +190,12 @@ class Response {
   [[nodiscard]] std::int64_t status_code() const;
 
   /**
+   * @brief Determine whether the status code is OK
+   * @return True if the status code is OK
+   */
+  [[nodiscard]] bool ok() const;
+
+  /**
    * @brief Get server response
    * @return Server response
    */

@@ -545,6 +545,8 @@ void Headers::add(const std::string &key, const std::string &value) {
 
 std::int64_t Response::status_code() const { return status_code_; }
 
+bool Response::ok() const { return status_code_ == StatusCode::Ok; }
+
 const Headers &Response::headers_map() {
   if (!headers_map_.empty()) {
     return headers_map_;

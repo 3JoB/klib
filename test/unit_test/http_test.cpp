@@ -31,12 +31,12 @@ TEST_CASE("request headers", "[http]") {
 
   auto response = request.get(httpbin_url + "/headers", {},
                               {{header_key, header_value}}, true);
-  REQUIRE(response.status_code() == klib::Response::StatusCode::Ok);
+  REQUIRE(response.ok());
   auto headers = boost::json::parse(response.text()).at("headers");
   REQUIRE(headers.at(header_key).as_string() == header_value);
 
   response = request.get(httpbin_url + "/headers");
-  REQUIRE(response.status_code() == klib::Response::StatusCode::Ok);
+  REQUIRE(response.ok());
   headers = boost::json::parse(response.text()).at("headers");
   REQUIRE_FALSE(headers.as_object().contains(header_key));
 }
@@ -59,7 +59,7 @@ TEST_CASE("response headers", "[http]") {
 
   auto response = request.get(httpbin_url + "/cookies/set",
                               {{cookie1, value1}, {cookie2, value2}});
-  REQUIRE(response.status_code() == klib::Response::StatusCode::Ok);
+  REQUIRE(response.ok());
 
   auto map = response.headers_map();
   REQUIRE(map.at("content-type") == "application/json");
@@ -81,7 +81,7 @@ TEST_CASE("GET", "[http]") {
 
   auto response =
       request.get(httpbin_url + "/get", {{key1, value1}, {key2, value2}});
-  REQUIRE(response.status_code() == klib::Response::StatusCode::Ok);
+  REQUIRE(response.ok());
 
   auto args = boost::json::parse(response.text()).at("args");
   REQUIRE(args.at(key1).as_string() == value1);
@@ -113,7 +113,7 @@ TEST_CASE("POST", "[http]") {
   auto response = request.post(
       httpbin_url + "/post", {{"user_name", user_name}, {"password", password}},
       {{file_a, file_a}, {file_b, file_b}});
-  REQUIRE(response.status_code() == klib::Response::StatusCode::Ok);
+  REQUIRE(response.ok());
 
   auto jv = boost::json::parse(response.text());
 
@@ -145,7 +145,7 @@ TEST_CASE("POST json", "[http]") {
 
   auto response =
       request.post(httpbin_url + "/post", boost::json::serialize(obj));
-  REQUIRE(response.status_code() == klib::Response::StatusCode::Ok);
+  REQUIRE(response.ok());
 
   auto jv = boost::json::parse(response.text());
 
@@ -169,7 +169,7 @@ TEST_CASE("download", "[http]") {
 
   auto response = request.get(
       "https://github.com/facebook/zstd/archive/refs/tags/v1.5.0.tar.gz");
-  REQUIRE(response.status_code() == klib::Response::StatusCode::Ok);
+  REQUIRE(response.ok());
   response.save_to_file("zstd-1.5.0.tar.gz", true);
 
   REQUIRE(std::filesystem::is_regular_file("zstd-1.5.0.tar.gz"));
