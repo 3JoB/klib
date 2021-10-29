@@ -267,6 +267,9 @@ Request::RequestImpl::RequestImpl() {
     check_curl_correct(curl_easy_setopt(http_handle_, CURLOPT_NOPROGRESS, 1L));
 
     check_curl_correct(
+        curl_easy_setopt(http_handle_, CURLOPT_TCP_KEEPALIVE, 1L));
+
+    check_curl_correct(
         curl_easy_setopt(http_handle_, CURLOPT_SSL_VERIFYPEER, 1L));
     check_curl_correct(
         curl_easy_setopt(http_handle_, CURLOPT_SSL_VERIFYHOST, 2L));
