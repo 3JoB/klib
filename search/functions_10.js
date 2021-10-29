@@ -9,7 +9,7 @@ var searchData=
   ['set_5ftimeout_6',['set_timeout',['../classklib_1_1Request.html#a9df61892054dd4c36920e27a43b42bd9',1,'klib::Request']]],
   ['set_5fuser_5fagent_7',['set_user_agent',['../classklib_1_1Request.html#abc72456d5b46d7081dbea3980fefc68b',1,'klib::Request']]],
   ['split_5fstr_8',['split_str',['../util_8h.html#ab8656c14dc5e6fe66b30a9ea9fde7001',1,'klib']]],
-  ['sqldatabase_9',['SqlDatabase',['../classklib_1_1SqlDatabase.html#a99c3e24baaab686fd301690fda83fb23',1,'klib::SqlDatabase']]],
+  ['sqldatabase_9',['SqlDatabase',['../classklib_1_1SqlDatabase.html#aa7281a180fce361c924a7e198873303d',1,'klib::SqlDatabase']]],
   ['sqlquery_10',['SqlQuery',['../classklib_1_1SqlQuery.html#a0d1d4bb9d49459b482755cb48a1d14b8',1,'klib::SqlQuery']]],
   ['status_5fcode_11',['status_code',['../classklib_1_1Response.html#aa839e6f6599e336147cbdacb0e99bddf',1,'klib::Response']]]
 ];

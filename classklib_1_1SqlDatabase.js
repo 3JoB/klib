@@ -4,7 +4,7 @@ var classklib_1_1SqlDatabase =
       [ "ReadOnly", "classklib_1_1SqlDatabase.html#af28d36a69db3a108f4c393854a852491a0cecf3b7bdf693d04c59d69b1722d506", null ],
       [ "ReadWrite", "classklib_1_1SqlDatabase.html#af28d36a69db3a108f4c393854a852491ad47296a7ae3ad10f08c92068668e6c33", null ]
     ] ],
-    [ "SqlDatabase", "classklib_1_1SqlDatabase.html#a99c3e24baaab686fd301690fda83fb23", null ],
+    [ "SqlDatabase", "classklib_1_1SqlDatabase.html#aa7281a180fce361c924a7e198873303d", null ],
     [ "~SqlDatabase", "classklib_1_1SqlDatabase.html#a0499478ec55c71a89eb91b47f30260ab", null ],
     [ "commit", "classklib_1_1SqlDatabase.html#a17df51a89cc3c98a71721e4173f1067d", null ],
     [ "drop_table", "classklib_1_1SqlDatabase.html#a93e343b8272bf15e459e0b57d6ebeca4", null ],
