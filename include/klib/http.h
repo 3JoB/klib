@@ -104,6 +104,12 @@ class Request {
   void use_cookies(bool flag);
 
   /**
+   * @brief TCP keep alive(The default is true)
+   * @param flag: True to keep TCP alive
+   */
+  void tcp_keep_alive(bool flag);
+
+  /**
    * @brief Sends a GET request
    * @param url: Requested url
    * @param params: URL parameters

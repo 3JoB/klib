@@ -224,6 +224,7 @@ class Request::RequestImpl {
   void set_timeout(std::int64_t seconds);
   void set_connect_timeout(std::int64_t seconds);
   void use_cookies(bool flag);
+  void tcp_keep_alive(bool flag);
 
   Response get(const std::string &url,
                const std::unordered_map<std::string, std::string> &params,
@@ -350,6 +351,11 @@ void Request::RequestImpl::set_connect_timeout(std::int64_t seconds) {
 }
 
 void Request::RequestImpl::use_cookies(bool flag) { use_cookies_ = flag; }
+
+void Request::RequestImpl::tcp_keep_alive(bool flag) {
+  check_curl_correct(
+      curl_easy_setopt(http_handle_, CURLOPT_TCP_KEEPALIVE, flag));
+}
 
 Response Request::RequestImpl::get(
     const std::string &url,
@@ -500,6 +506,8 @@ void Request::set_connect_timeout(std::int64_t seconds) {
 }
 
 void Request::use_cookies(bool flag) { impl_->use_cookies(flag); }
+
+void Request::tcp_keep_alive(bool flag) { impl_->tcp_keep_alive(flag); }
 
 Response Request::get(
     const std::string &url,
