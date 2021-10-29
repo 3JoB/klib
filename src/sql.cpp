@@ -93,7 +93,7 @@ class SqlDatabase::SqlDatabaseImpl {
 
  public:
   explicit SqlDatabaseImpl(const std::string &db_name, OpenMode open_mode,
-                           const std::string &key);
+                           const std::string &password);
 
   SqlDatabaseImpl(const SqlDatabaseImpl &) = delete;
   SqlDatabaseImpl(SqlDatabaseImpl &&) = delete;
@@ -119,7 +119,6 @@ class SqlDatabase::SqlDatabaseImpl {
   std::int32_t exec(std::string_view sql);
 
  private:
-  inline constexpr static std::size_t key_size = 32;
   sqlite3 *db_ = nullptr;
 };
 
@@ -289,12 +288,7 @@ Column SqlQuery::SqlQueryImpl::get_column(SqlQuery &sql_query,
 
 SqlDatabase::SqlDatabaseImpl::SqlDatabaseImpl(const std::string &db_name,
                                               OpenMode open_mode,
-                                              const std::string &key) {
-  if (std::size(key) != SqlDatabaseImpl::key_size) {
-    throw InvalidArgument("Key must be {} bit",
-                          SqlDatabaseImpl::key_size * CHAR_BIT);
-  }
-
+                                              const std::string &password) {
   std::int32_t flag = 0;
   if (open_mode == OpenMode::ReadOnly) {
     flag = SQLITE_OPEN_READONLY;
@@ -308,8 +302,10 @@ SqlDatabase::SqlDatabaseImpl::SqlDatabaseImpl(const std::string &db_name,
     throw RuntimeError(msg);
   }
 
-  auto rc = sqlite3_key(db_, std::data(key), SqlDatabaseImpl::key_size);
-  check_sqlite(rc, db_);
+  if (!std::empty(password)) {
+    auto rc = sqlite3_key(db_, std::data(password), std::size(password));
+    check_sqlite(rc, db_);
+  }
 }
 
 SqlDatabase::SqlDatabaseImpl::~SqlDatabaseImpl() { sqlite3_close_v2(db_); }
@@ -425,8 +421,8 @@ Column SqlQuery::get_column(std::int32_t index) {
 
 SqlDatabase::SqlDatabase(const std::string &db_name,
                          SqlDatabase::OpenMode open_type,
-                         const std::string &key)
-    : impl_(std::make_unique<SqlDatabaseImpl>(db_name, open_type, key)) {}
+                         const std::string &password)
+    : impl_(std::make_unique<SqlDatabaseImpl>(db_name, open_type, password)) {}
 
 SqlDatabase::~SqlDatabase() = default;
 

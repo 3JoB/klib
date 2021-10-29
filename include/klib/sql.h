@@ -203,10 +203,11 @@ class SqlDatabase {
    * @brief Open the database
    * @param db_name: Database name
    * @param open_mode: Database open mode
-   * @param key: Key(using 256 bit AES encryption)
+   * @param password: Database password(If it is empty, the database is not
+   * encrypted)
    */
   SqlDatabase(const std::string &db_name, OpenMode open_mode,
-              const std::string &key);
+              const std::string &password);
 
   SqlDatabase(const SqlDatabase &) = delete;
   SqlDatabase(SqlDatabase &&) = delete;

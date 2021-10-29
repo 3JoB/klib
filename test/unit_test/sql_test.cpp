@@ -13,7 +13,7 @@
 TEST_CASE("sql", "[sql]") {
   {
     klib::SqlDatabase db("test.db", klib::SqlDatabase::ReadWrite,
-                         klib::sha_256("zG2nSeEfSHfvTCHy5LCcqtBbQehKNLXn"));
+                         "6K4VpQY5&b*WRR^Y");
 
     REQUIRE_NOTHROW(db.transaction());
     REQUIRE_NOTHROW(db.drop_table_if_exists("Cars"));
@@ -75,7 +75,7 @@ TEST_CASE("sql", "[sql]") {
 
   {
     klib::SqlDatabase db("test.db", klib::SqlDatabase::ReadWrite,
-                         klib::sha_256("zG2nSeEfSHfvTCHy5LCcqtBbQehKNLXn"));
+                         "6K4VpQY5&b*WRR^Y");
 
     REQUIRE(db.table_exists("Cars"));
     REQUIRE(db.table_line_count("Cars") == 8);
@@ -91,8 +91,7 @@ TEST_CASE("sql", "[sql]") {
 }
 
 TEST_CASE("blob", "[sql]") {
-  klib::SqlDatabase db("test2.db", klib::SqlDatabase::ReadWrite,
-                       klib::sha_256("zG2nSeEfSHfvTCHy5LCcqtBbQehKNLXn"));
+  klib::SqlDatabase db("test2.db", klib::SqlDatabase::ReadWrite, "");
 
   REQUIRE_NOTHROW(db.transaction());
   REQUIRE_NOTHROW(db.drop_table_if_exists("BlobTest"));
