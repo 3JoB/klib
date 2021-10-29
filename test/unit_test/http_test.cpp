@@ -160,7 +160,7 @@ TEST_CASE("download", "[http]") {
   request.verbose(true);
 #endif
 #ifdef KLIB_TEST_USE_PROXY
-  request.set_proxy("socks5://127.0.0.1:1080");
+  request.set_proxy("http://127.0.0.1:1080");
 #endif
   // FIXME
 #ifndef KLIB_VALGRIND

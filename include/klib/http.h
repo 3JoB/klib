@@ -52,7 +52,7 @@ class Request {
   /**
    * @brief Set up proxy
    * @param proxy: String representing proxy
-   * @example request.set_proxy("socks5://127.0.0.1:1080");
+   * @example request.set_proxy("http://127.0.0.1:1080");
    */
   void set_proxy(const std::string &proxy);
 
