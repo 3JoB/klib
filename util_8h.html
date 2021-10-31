@@ -30,7 +30,7 @@
  <tbody>
  <tr style="height: 56px;">
   <td id="projectalign" style="padding-left: 0.5em;">
-   <div id="projectname">klib<span id="projectnumber">&#160;0.7.8</span>
+   <div id="projectname">klib<span id="projectnumber">&#160;0.7.9</span>
    </div>
   </td>
     <td>        <div id="MSearchBox" class="MSearchBoxInactive">
@@ -183,6 +183,9 @@ std::string&#160;</td><td class="memItemRight" valign="bottom"><b>klib::uuid</b>
 <tr class="memitem:a055c8fc630203151acb0b746065d32c8"><td class="memItemLeft" align="right" valign="top">void&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="util_8h.html#a055c8fc630203151acb0b746065d32c8">klib::cleanse</a> (void *ptr, std::size_t size)</td></tr>
 <tr class="memdesc:a055c8fc630203151acb0b746065d32c8"><td class="mdescLeft">&#160;</td><td class="mdescRight">Clear data.  <a href="util_8h.html#a055c8fc630203151acb0b746065d32c8">More...</a><br /></td></tr>
 <tr class="separator:a055c8fc630203151acb0b746065d32c8"><td class="memSeparator" colspan="2">&#160;</td></tr>
+<tr class="memitem:aa4e57655515047da3c99a9cf3d7b870b"><td class="memItemLeft" align="right" valign="top">std::string&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="util_8h.html#aa4e57655515047da3c99a9cf3d7b870b">klib::make_file_or_dir_name_legal</a> (const std::string &amp;file_name)</td></tr>
+<tr class="memdesc:aa4e57655515047da3c99a9cf3d7b870b"><td class="mdescLeft">&#160;</td><td class="mdescRight">According to the given file or directory name, return a legal file or directory name.  <a href="util_8h.html#aa4e57655515047da3c99a9cf3d7b870b">More...</a><br /></td></tr>
+<tr class="separator:aa4e57655515047da3c99a9cf3d7b870b"><td class="memSeparator" colspan="2">&#160;</td></tr>
 </table>
 <a name="details" id="details"></a><h2 class="groupheader">Detailed Description</h2>
 <div class="textblock"><p >Contains declarations of some useful functions. </p>
@@ -438,6 +441,34 @@ requires std::predicate&lt;UnaryPredicate, typename InputIt::value_type&gt;</div
   </dd>
 </dl>
 <dl class="section return"><dt>Returns</dt><dd>Folder size </dd></dl>
+
+</div>
+</div>
+<a id="aa4e57655515047da3c99a9cf3d7b870b" name="aa4e57655515047da3c99a9cf3d7b870b"></a>
+<h2 class="memtitle"><span class="permalink"><a href="#aa4e57655515047da3c99a9cf3d7b870b">&#9670;&nbsp;</a></span>make_file_or_dir_name_legal()</h2>
+
+<div class="memitem">
+<div class="memproto">
+      <table class="memname">
+        <tr>
+          <td class="memname">std::string klib::make_file_or_dir_name_legal </td>
+          <td>(</td>
+          <td class="paramtype">const std::string &amp;&#160;</td>
+          <td class="paramname"><em>file_name</em></td><td>)</td>
+          <td></td>
+        </tr>
+      </table>
+</div><div class="memdoc">
+
+<p>According to the given file or directory name, return a legal file or directory name. </p>
+<dl class="params"><dt>Parameters</dt><dd>
+  <table class="params">
+    <tr><td class="paramname">file_name</td><td>File or directory name </td></tr>
+  </table>
+  </dd>
+</dl>
+<dl class="section return"><dt>Returns</dt><dd>Legal file or directory name </dd></dl>
+<dl class="section see"><dt>See also</dt><dd><a href="https://docs.microsoft.com/zh-cn/windows/win32/fileio/naming-a-file#file-and-directory-names">https://docs.microsoft.com/zh-cn/windows/win32/fileio/naming-a-file#file-and-directory-names</a> </dd></dl>
 
 </div>
 </div>

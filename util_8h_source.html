@@ -30,7 +30,7 @@
  <tbody>
  <tr style="height: 56px;">
   <td id="projectalign" style="padding-left: 0.5em;">
-   <div id="projectname">klib<span id="projectnumber">&#160;0.7.8</span>
+   <div id="projectname">klib<span id="projectnumber">&#160;0.7.9</span>
    </div>
   </td>
     <td>        <div id="MSearchBox" class="MSearchBoxInactive">
@@ -191,7 +191,9 @@ $(document).ready(function(){initNavTree('util_8h_source.html',''); initResizabl
 <div class="line"><a id="l00178" name="l00178"></a><span class="lineno">  178</span> </div>
 <div class="line"><a id="l00184" name="l00184"></a><span class="lineno"><a class="line" href="util_8h.html#a055c8fc630203151acb0b746065d32c8">  184</a></span><span class="keywordtype">void</span> <a class="code hl_function" href="util_8h.html#a6c26f8611ddb29717c0c1f563a06b3ab">cleanse</a>(<span class="keywordtype">void</span> *ptr, std::size_t size);</div>
 <div class="line"><a id="l00185" name="l00185"></a><span class="lineno">  185</span> </div>
-<div class="line"><a id="l00186" name="l00186"></a><span class="lineno">  186</span>}  <span class="comment">// namespace klib</span></div>
+<div class="line"><a id="l00194" name="l00194"></a><span class="lineno"><a class="line" href="util_8h.html#aa4e57655515047da3c99a9cf3d7b870b">  194</a></span>std::string <a class="code hl_function" href="util_8h.html#aa4e57655515047da3c99a9cf3d7b870b">make_file_or_dir_name_legal</a>(<span class="keyword">const</span> std::string &amp;file_name);</div>
+<div class="line"><a id="l00195" name="l00195"></a><span class="lineno">  195</span> </div>
+<div class="line"><a id="l00196" name="l00196"></a><span class="lineno">  196</span>}  <span class="comment">// namespace klib</span></div>
 <div class="ttc" id="aclassklib_1_1ChangeWorkingDir_html"><div class="ttname"><a href="classklib_1_1ChangeWorkingDir.html">klib::ChangeWorkingDir</a></div><div class="ttdoc">Change working directory.</div><div class="ttdef"><b>Definition:</b> util.h:20</div></div>
 <div class="ttc" id="aclassklib_1_1ChangeWorkingDir_html_a2f7d61bc70ba03d63148d0a0ec729d1c"><div class="ttname"><a href="classklib_1_1ChangeWorkingDir.html#a2f7d61bc70ba03d63148d0a0ec729d1c">klib::ChangeWorkingDir::~ChangeWorkingDir</a></div><div class="ttdeci">~ChangeWorkingDir()</div><div class="ttdoc">Destructor.</div></div>
 <div class="ttc" id="aclassklib_1_1ChangeWorkingDir_html_a7f462bcc7a307b5ca49648deaa350e08"><div class="ttname"><a href="classklib_1_1ChangeWorkingDir.html#a7f462bcc7a307b5ca49648deaa350e08">klib::ChangeWorkingDir::ChangeWorkingDir</a></div><div class="ttdeci">ChangeWorkingDir(const std::string &amp;path=&quot;&quot;)</div><div class="ttdoc">Default constructor.</div></div>
@@ -202,6 +204,7 @@ $(document).ready(function(){initNavTree('util_8h_source.html',''); initResizabl
 <div class="ttc" id="autil_8h_html_a6c26f8611ddb29717c0c1f563a06b3ab"><div class="ttname"><a href="util_8h.html#a6c26f8611ddb29717c0c1f563a06b3ab">klib::cleanse</a></div><div class="ttdeci">void cleanse(std::string &amp;data)</div><div class="ttdoc">Clear data.</div></div>
 <div class="ttc" id="autil_8h_html_a6e1a6bca253ac0afc74f98f90bb48015"><div class="ttname"><a href="util_8h.html#a6e1a6bca253ac0afc74f98f90bb48015">klib::folder_size</a></div><div class="ttdeci">std::size_t folder_size(const std::string &amp;path)</div><div class="ttdoc">Count the sum of the size of all files in the folder.</div></div>
 <div class="ttc" id="autil_8h_html_a7b9b631266e2587c0aae0fee4842091e"><div class="ttname"><a href="util_8h.html#a7b9b631266e2587c0aae0fee4842091e">klib::find_last</a></div><div class="ttdeci">constexpr InputIt find_last(InputIt first, InputIt last, const T &amp;value)</div><div class="ttdoc">Search for an element equal to value.</div><div class="ttdef"><b>Definition:</b> util.h:53</div></div>
+<div class="ttc" id="autil_8h_html_aa4e57655515047da3c99a9cf3d7b870b"><div class="ttname"><a href="util_8h.html#aa4e57655515047da3c99a9cf3d7b870b">klib::make_file_or_dir_name_legal</a></div><div class="ttdeci">std::string make_file_or_dir_name_legal(const std::string &amp;file_name)</div><div class="ttdoc">According to the given file or directory name, return a legal file or directory name.</div></div>
 <div class="ttc" id="autil_8h_html_ab8656c14dc5e6fe66b30a9ea9fde7001"><div class="ttname"><a href="util_8h.html#ab8656c14dc5e6fe66b30a9ea9fde7001">klib::split_str</a></div><div class="ttdeci">std::vector&lt; std::string &gt; split_str(const std::string &amp;str, const std::string &amp;separate)</div><div class="ttdoc">Split string.</div></div>
 <div class="ttc" id="autil_8h_html_ad20740bb960a952fc137ca4247bbc179"><div class="ttname"><a href="util_8h.html#ad20740bb960a952fc137ca4247bbc179">klib::write_file</a></div><div class="ttdeci">void write_file(const std::string &amp;path, bool binary_mode, const std::string &amp;content)</div><div class="ttdoc">Write string to file.</div></div>
 <div class="ttc" id="autil_8h_html_aeb12aa83527e021b6d976c4c6008791a"><div class="ttname"><a href="util_8h.html#aeb12aa83527e021b6d976c4c6008791a">klib::read_file_line</a></div><div class="ttdeci">std::vector&lt; std::string &gt; read_file_line(const std::string &amp;path)</div><div class="ttdoc">Read a file at a time and store it in a string.</div></div>
