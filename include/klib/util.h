@@ -183,4 +183,14 @@ void cleanse(std::string &data);
  */
 void cleanse(void *ptr, std::size_t size);
 
+/**
+ * @brief According to the given file or directory name, return a legal file or
+ * directory name
+ * @param file_name: File or directory name
+ * @return Legal file or directory name
+ * @see
+ * https://docs.microsoft.com/zh-cn/windows/win32/fileio/naming-a-file#file-and-directory-names
+ */
+std::string make_file_or_dir_name_legal(const std::string &file_name);
+
 }  // namespace klib

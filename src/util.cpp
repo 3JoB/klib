@@ -3,6 +3,8 @@
 #include <unistd.h>
 #include <wait.h>
 
+#include <cctype>
+#include <cerrno>
 #include <filesystem>
 #include <fstream>
 #include <map>
@@ -174,21 +176,15 @@ bool same_folder(const std::string &path1, const std::string &path2) {
 }
 
 void execute_command(const std::string &command) {
-  if (std::empty(command)) {
-    return;
-  }
-
   execute_command(command.c_str());
 }
 
 void execute_command(const char *command) {
-  if (!command) {
-    return;
-  }
-
   auto status = std::system(command);
   if (status == -1 || !WIFEXITED(status) || WEXITSTATUS(status)) {
-    throw RuntimeError("execute command error: '{}'", command);
+    throw RuntimeError(
+        "When running command line '{}', error '{}' is encountered", command,
+        std::strerror(errno));
   }
 }
 
@@ -197,7 +193,7 @@ void wait_for_child_process() {
 
   while (waitpid(-1, &status, 0) > 0) {
     if (!WIFEXITED(status) || WEXITSTATUS(status)) {
-      throw RuntimeError("Waitpid error: {}", status);
+      throw RuntimeError("Waitpid error: {}", std::strerror(errno));
     }
   }
 }
@@ -213,5 +209,29 @@ void cleanse(std::string &data) {
 }
 
 void cleanse(void *data, std::size_t size) { OPENSSL_cleanse(data, size); }
+
+std::string make_file_or_dir_name_legal(const std::string &file_name) {
+  auto copy = file_name;
+
+  boost::replace_all(copy, "<", " ");
+  boost::replace_all(copy, ">", " ");
+  boost::replace_all(copy, ":", " ");
+  boost::replace_all(copy, "\"", " ");
+  boost::replace_all(copy, "/", " ");
+  boost::replace_all(copy, "\\", " ");
+  boost::replace_all(copy, "|", " ");
+  boost::replace_all(copy, "?", " ");
+  boost::replace_all(copy, "*", " ");
+
+  // https://zh.cppreference.com/w/c/string/byte/iscntrl
+  std::erase_if(copy, [](char c) { return std::iscntrl(c); });
+
+  if (copy.ends_with('.')) {
+    copy.pop_back();
+  }
+  boost::trim(copy);
+
+  return copy;
+}
 
 }  // namespace klib

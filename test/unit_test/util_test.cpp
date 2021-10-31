@@ -80,8 +80,8 @@ TEST_CASE("same_folder", "[util]") {
 }
 
 TEST_CASE("execute_command", "[util]") {
-  std::string command = "gcc -v";
-  REQUIRE_NOTHROW(klib::execute_command(command));
+  REQUIRE_NOTHROW(klib::execute_command("gcc -v"));
+  REQUIRE_NOTHROW(klib::execute_command(""));
 }
 
 TEST_CASE("cleanse", "[util]") {
@@ -90,4 +90,13 @@ TEST_CASE("cleanse", "[util]") {
 
   REQUIRE(std::empty(password));
   REQUIRE(*(std::data(password) + 5) == 0);
+}
+
+TEST_CASE("make_file_or_dir_name_legal", "[util]") {
+  REQUIRE(klib::make_file_or_dir_name_legal("你好世界 .") == "你好世界");
+  REQUIRE(klib::make_file_or_dir_name_legal("你好\n世界") == "你好世界");
+  REQUIRE(klib::make_file_or_dir_name_legal("你好世界***") == "你好世界");
+  REQUIRE(klib::make_file_or_dir_name_legal("你好?世界 .") == "你好 世界");
+  REQUIRE(klib::make_file_or_dir_name_legal("    你好|\\/世界 .") ==
+          "你好   世界");
 }
