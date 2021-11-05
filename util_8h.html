@@ -30,7 +30,7 @@
  <tbody>
  <tr style="height: 56px;">
   <td id="projectalign" style="padding-left: 0.5em;">
-   <div id="projectname">klib<span id="projectnumber">&#160;0.7.9</span>
+   <div id="projectname">klib<span id="projectnumber">&#160;0.7.10</span>
    </div>
   </td>
     <td>        <div id="MSearchBox" class="MSearchBoxInactive">
@@ -163,12 +163,24 @@ void&#160;</td><td class="memItemRight" valign="bottom"><b>klib::write_file</b> 
 <tr class="memitem:a634a5cccf588c12cb1d7e1f4253775c6"><td class="memItemLeft" align="right" valign="top">bool&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="util_8h.html#a634a5cccf588c12cb1d7e1f4253775c6">klib::same_folder</a> (const std::string &amp;path1, const std::string &amp;path2)</td></tr>
 <tr class="memdesc:a634a5cccf588c12cb1d7e1f4253775c6"><td class="mdescLeft">&#160;</td><td class="mdescRight">Determine whether the two folders are the same.  <a href="util_8h.html#a634a5cccf588c12cb1d7e1f4253775c6">More...</a><br /></td></tr>
 <tr class="separator:a634a5cccf588c12cb1d7e1f4253775c6"><td class="memSeparator" colspan="2">&#160;</td></tr>
-<tr class="memitem:a35fd01e366f38537ad663c0ca3d5cbb2"><td class="memItemLeft" align="right" valign="top">void&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="util_8h.html#a35fd01e366f38537ad663c0ca3d5cbb2">klib::execute_command</a> (const std::string &amp;command)</td></tr>
-<tr class="memdesc:a35fd01e366f38537ad663c0ca3d5cbb2"><td class="mdescLeft">&#160;</td><td class="mdescRight">Execute the given line as a shell command.  <a href="util_8h.html#a35fd01e366f38537ad663c0ca3d5cbb2">More...</a><br /></td></tr>
-<tr class="separator:a35fd01e366f38537ad663c0ca3d5cbb2"><td class="memSeparator" colspan="2">&#160;</td></tr>
-<tr class="memitem:a8328b07e32da01c28f3f245f43eecf18"><td class="memItemLeft" align="right" valign="top">void&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="util_8h.html#a8328b07e32da01c28f3f245f43eecf18">klib::execute_command</a> (const char *command)</td></tr>
-<tr class="memdesc:a8328b07e32da01c28f3f245f43eecf18"><td class="mdescLeft">&#160;</td><td class="mdescRight">Execute the given line as a shell command.  <a href="util_8h.html#a8328b07e32da01c28f3f245f43eecf18">More...</a><br /></td></tr>
-<tr class="separator:a8328b07e32da01c28f3f245f43eecf18"><td class="memSeparator" colspan="2">&#160;</td></tr>
+<tr class="memitem:a51f2e4f28098072d9f2f16c63b4b3829"><td class="memItemLeft" align="right" valign="top">void&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="util_8h.html#a51f2e4f28098072d9f2f16c63b4b3829">klib::exec</a> (const std::string &amp;cmd)</td></tr>
+<tr class="memdesc:a51f2e4f28098072d9f2f16c63b4b3829"><td class="mdescLeft">&#160;</td><td class="mdescRight">Execute the given line as a shell command.  <a href="util_8h.html#a51f2e4f28098072d9f2f16c63b4b3829">More...</a><br /></td></tr>
+<tr class="separator:a51f2e4f28098072d9f2f16c63b4b3829"><td class="memSeparator" colspan="2">&#160;</td></tr>
+<tr class="memitem:a1e1698d0a500a8d343d9fee0ac35c331"><td class="memItemLeft" align="right" valign="top">void&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="util_8h.html#a1e1698d0a500a8d343d9fee0ac35c331">klib::exec</a> (const char *cmd)</td></tr>
+<tr class="memdesc:a1e1698d0a500a8d343d9fee0ac35c331"><td class="mdescLeft">&#160;</td><td class="mdescRight">Execute the given line as a shell command.  <a href="util_8h.html#a1e1698d0a500a8d343d9fee0ac35c331">More...</a><br /></td></tr>
+<tr class="separator:a1e1698d0a500a8d343d9fee0ac35c331"><td class="memSeparator" colspan="2">&#160;</td></tr>
+<tr class="memitem:a4e77f7c0321a0ebd9343a7abe22402ac"><td class="memItemLeft" align="right" valign="top">std::string&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="util_8h.html#a4e77f7c0321a0ebd9343a7abe22402ac">klib::exec_with_output</a> (const std::string &amp;cmd)</td></tr>
+<tr class="memdesc:a4e77f7c0321a0ebd9343a7abe22402ac"><td class="mdescLeft">&#160;</td><td class="mdescRight">Execute the given line as a shell command and return its output.  <a href="util_8h.html#a4e77f7c0321a0ebd9343a7abe22402ac">More...</a><br /></td></tr>
+<tr class="separator:a4e77f7c0321a0ebd9343a7abe22402ac"><td class="memSeparator" colspan="2">&#160;</td></tr>
+<tr class="memitem:a01e50e0fc8c242ccdf7bdd10ae55f8e3"><td class="memItemLeft" align="right" valign="top">std::string&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="util_8h.html#a01e50e0fc8c242ccdf7bdd10ae55f8e3">klib::exec_with_output</a> (const char *cmd)</td></tr>
+<tr class="memdesc:a01e50e0fc8c242ccdf7bdd10ae55f8e3"><td class="mdescLeft">&#160;</td><td class="mdescRight">Execute the given line as a shell command and return its output.  <a href="util_8h.html#a01e50e0fc8c242ccdf7bdd10ae55f8e3">More...</a><br /></td></tr>
+<tr class="separator:a01e50e0fc8c242ccdf7bdd10ae55f8e3"><td class="memSeparator" colspan="2">&#160;</td></tr>
+<tr class="memitem:a20375e8cd2d50b89c3a3ff3c415c5969"><td class="memItemLeft" align="right" valign="top">void&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="util_8h.html#a20375e8cd2d50b89c3a3ff3c415c5969">klib::exec_without_output</a> (const std::string &amp;cmd)</td></tr>
+<tr class="memdesc:a20375e8cd2d50b89c3a3ff3c415c5969"><td class="mdescLeft">&#160;</td><td class="mdescRight">Execute the given line as a shell command and does not show its output.  <a href="util_8h.html#a20375e8cd2d50b89c3a3ff3c415c5969">More...</a><br /></td></tr>
+<tr class="separator:a20375e8cd2d50b89c3a3ff3c415c5969"><td class="memSeparator" colspan="2">&#160;</td></tr>
+<tr class="memitem:a91b6c017b644123ba68359bc185c35c0"><td class="memItemLeft" align="right" valign="top">void&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="util_8h.html#a91b6c017b644123ba68359bc185c35c0">klib::exec_without_output</a> (const char *cmd)</td></tr>
+<tr class="memdesc:a91b6c017b644123ba68359bc185c35c0"><td class="mdescLeft">&#160;</td><td class="mdescRight">Execute the given line as a shell command and does not show its output.  <a href="util_8h.html#a91b6c017b644123ba68359bc185c35c0">More...</a><br /></td></tr>
+<tr class="separator:a91b6c017b644123ba68359bc185c35c0"><td class="memSeparator" colspan="2">&#160;</td></tr>
 <tr class="memitem:a068f640d8df09ff35caf8822a9c1e0ac"><td class="memItemLeft" align="right" valign="top"><a id="a068f640d8df09ff35caf8822a9c1e0ac" name="a068f640d8df09ff35caf8822a9c1e0ac"></a>
 void&#160;</td><td class="memItemRight" valign="bottom"><b>klib::wait_for_child_process</b> ()</td></tr>
 <tr class="memdesc:a068f640d8df09ff35caf8822a9c1e0ac"><td class="mdescLeft">&#160;</td><td class="mdescRight">Wait for all child processes to exit. <br /></td></tr>
@@ -253,17 +265,17 @@ std::string&#160;</td><td class="memItemRight" valign="bottom"><b>klib::uuid</b>
 
 </div>
 </div>
-<a id="a8328b07e32da01c28f3f245f43eecf18" name="a8328b07e32da01c28f3f245f43eecf18"></a>
-<h2 class="memtitle"><span class="permalink"><a href="#a8328b07e32da01c28f3f245f43eecf18">&#9670;&nbsp;</a></span>execute_command() <span class="overload">[1/2]</span></h2>
+<a id="a1e1698d0a500a8d343d9fee0ac35c331" name="a1e1698d0a500a8d343d9fee0ac35c331"></a>
+<h2 class="memtitle"><span class="permalink"><a href="#a1e1698d0a500a8d343d9fee0ac35c331">&#9670;&nbsp;</a></span>exec() <span class="overload">[1/2]</span></h2>
 
 <div class="memitem">
 <div class="memproto">
       <table class="memname">
         <tr>
-          <td class="memname">void klib::execute_command </td>
+          <td class="memname">void klib::exec </td>
           <td>(</td>
           <td class="paramtype">const char *&#160;</td>
-          <td class="paramname"><em>command</em></td><td>)</td>
+          <td class="paramname"><em>cmd</em></td><td>)</td>
           <td></td>
         </tr>
       </table>
@@ -272,24 +284,24 @@ std::string&#160;</td><td class="memItemRight" valign="bottom"><b>klib::uuid</b>
 <p>Execute the given line as a shell command. </p>
 <dl class="params"><dt>Parameters</dt><dd>
   <table class="params">
-    <tr><td class="paramname">command</td><td>Command to be execute </td></tr>
+    <tr><td class="paramname">cmd</td><td>Command to be execute </td></tr>
   </table>
   </dd>
 </dl>
 
 </div>
 </div>
-<a id="a35fd01e366f38537ad663c0ca3d5cbb2" name="a35fd01e366f38537ad663c0ca3d5cbb2"></a>
-<h2 class="memtitle"><span class="permalink"><a href="#a35fd01e366f38537ad663c0ca3d5cbb2">&#9670;&nbsp;</a></span>execute_command() <span class="overload">[2/2]</span></h2>
+<a id="a51f2e4f28098072d9f2f16c63b4b3829" name="a51f2e4f28098072d9f2f16c63b4b3829"></a>
+<h2 class="memtitle"><span class="permalink"><a href="#a51f2e4f28098072d9f2f16c63b4b3829">&#9670;&nbsp;</a></span>exec() <span class="overload">[2/2]</span></h2>
 
 <div class="memitem">
 <div class="memproto">
       <table class="memname">
         <tr>
-          <td class="memname">void klib::execute_command </td>
+          <td class="memname">void klib::exec </td>
           <td>(</td>
           <td class="paramtype">const std::string &amp;&#160;</td>
-          <td class="paramname"><em>command</em></td><td>)</td>
+          <td class="paramname"><em>cmd</em></td><td>)</td>
           <td></td>
         </tr>
       </table>
@@ -298,7 +310,113 @@ std::string&#160;</td><td class="memItemRight" valign="bottom"><b>klib::uuid</b>
 <p>Execute the given line as a shell command. </p>
 <dl class="params"><dt>Parameters</dt><dd>
   <table class="params">
-    <tr><td class="paramname">command</td><td>Command to be execute </td></tr>
+    <tr><td class="paramname">cmd</td><td>Command to be execute </td></tr>
+  </table>
+  </dd>
+</dl>
+
+</div>
+</div>
+<a id="a01e50e0fc8c242ccdf7bdd10ae55f8e3" name="a01e50e0fc8c242ccdf7bdd10ae55f8e3"></a>
+<h2 class="memtitle"><span class="permalink"><a href="#a01e50e0fc8c242ccdf7bdd10ae55f8e3">&#9670;&nbsp;</a></span>exec_with_output() <span class="overload">[1/2]</span></h2>
+
+<div class="memitem">
+<div class="memproto">
+      <table class="memname">
+        <tr>
+          <td class="memname">std::string klib::exec_with_output </td>
+          <td>(</td>
+          <td class="paramtype">const char *&#160;</td>
+          <td class="paramname"><em>cmd</em></td><td>)</td>
+          <td></td>
+        </tr>
+      </table>
+</div><div class="memdoc">
+
+<p>Execute the given line as a shell command and return its output. </p>
+<dl class="params"><dt>Parameters</dt><dd>
+  <table class="params">
+    <tr><td class="paramname">cmd</td><td>Command to be execute </td></tr>
+  </table>
+  </dd>
+</dl>
+<dl class="section return"><dt>Returns</dt><dd>Command line output </dd></dl>
+
+</div>
+</div>
+<a id="a4e77f7c0321a0ebd9343a7abe22402ac" name="a4e77f7c0321a0ebd9343a7abe22402ac"></a>
+<h2 class="memtitle"><span class="permalink"><a href="#a4e77f7c0321a0ebd9343a7abe22402ac">&#9670;&nbsp;</a></span>exec_with_output() <span class="overload">[2/2]</span></h2>
+
+<div class="memitem">
+<div class="memproto">
+      <table class="memname">
+        <tr>
+          <td class="memname">std::string klib::exec_with_output </td>
+          <td>(</td>
+          <td class="paramtype">const std::string &amp;&#160;</td>
+          <td class="paramname"><em>cmd</em></td><td>)</td>
+          <td></td>
+        </tr>
+      </table>
+</div><div class="memdoc">
+
+<p>Execute the given line as a shell command and return its output. </p>
+<dl class="params"><dt>Parameters</dt><dd>
+  <table class="params">
+    <tr><td class="paramname">cmd</td><td>Command to be execute </td></tr>
+  </table>
+  </dd>
+</dl>
+<dl class="section return"><dt>Returns</dt><dd>Command line output </dd></dl>
+
+</div>
+</div>
+<a id="a91b6c017b644123ba68359bc185c35c0" name="a91b6c017b644123ba68359bc185c35c0"></a>
+<h2 class="memtitle"><span class="permalink"><a href="#a91b6c017b644123ba68359bc185c35c0">&#9670;&nbsp;</a></span>exec_without_output() <span class="overload">[1/2]</span></h2>
+
+<div class="memitem">
+<div class="memproto">
+      <table class="memname">
+        <tr>
+          <td class="memname">void klib::exec_without_output </td>
+          <td>(</td>
+          <td class="paramtype">const char *&#160;</td>
+          <td class="paramname"><em>cmd</em></td><td>)</td>
+          <td></td>
+        </tr>
+      </table>
+</div><div class="memdoc">
+
+<p>Execute the given line as a shell command and does not show its output. </p>
+<dl class="params"><dt>Parameters</dt><dd>
+  <table class="params">
+    <tr><td class="paramname">cmd</td><td>Command to be execute </td></tr>
+  </table>
+  </dd>
+</dl>
+
+</div>
+</div>
+<a id="a20375e8cd2d50b89c3a3ff3c415c5969" name="a20375e8cd2d50b89c3a3ff3c415c5969"></a>
+<h2 class="memtitle"><span class="permalink"><a href="#a20375e8cd2d50b89c3a3ff3c415c5969">&#9670;&nbsp;</a></span>exec_without_output() <span class="overload">[2/2]</span></h2>
+
+<div class="memitem">
+<div class="memproto">
+      <table class="memname">
+        <tr>
+          <td class="memname">void klib::exec_without_output </td>
+          <td>(</td>
+          <td class="paramtype">const std::string &amp;&#160;</td>
+          <td class="paramname"><em>cmd</em></td><td>)</td>
+          <td></td>
+        </tr>
+      </table>
+</div><div class="memdoc">
+
+<p>Execute the given line as a shell command and does not show its output. </p>
+<dl class="params"><dt>Parameters</dt><dd>
+  <table class="params">
+    <tr><td class="paramname">cmd</td><td>Command to be execute </td></tr>
   </table>
   </dd>
 </dl>

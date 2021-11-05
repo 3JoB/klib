@@ -30,7 +30,7 @@
  <tbody>
  <tr style="height: 56px;">
   <td id="projectalign" style="padding-left: 0.5em;">
-   <div id="projectname">klib<span id="projectnumber">&#160;0.7.9</span>
+   <div id="projectname">klib<span id="projectnumber">&#160;0.7.10</span>
    </div>
   </td>
     <td>        <div id="MSearchBox" class="MSearchBoxInactive">
@@ -97,30 +97,21 @@ $(document).ready(function(){initNavTree('version_8h_source.html',''); initResiz
 <a href="version_8h.html">Go to the documentation of this file.</a><div class="fragment"><div class="line"><a id="l00001" name="l00001"></a><span class="lineno">    1</span> </div>
 <div class="line"><a id="l00006" name="l00006"></a><span class="lineno">    6</span><span class="preprocessor">#pragma once</span></div>
 <div class="line"><a id="l00007" name="l00007"></a><span class="lineno">    7</span> </div>
-<div class="line"><a id="l00008" name="l00008"></a><span class="lineno">    8</span><span class="preprocessor">#include &lt;string&gt;</span></div>
-<div class="line"><a id="l00009" name="l00009"></a><span class="lineno">    9</span> </div>
-<div class="line"><a id="l00013" name="l00013"></a><span class="lineno"><a class="line" href="version_8h.html#aa4a6f180b71183e6d86d7ef8358ef9cb">   13</a></span><span class="preprocessor">#define KLIB_VER_MAJOR 0</span></div>
-<div class="line"><a id="l00014" name="l00014"></a><span class="lineno">   14</span> </div>
-<div class="line"><a id="l00018" name="l00018"></a><span class="lineno"><a class="line" href="version_8h.html#a84c02cd32e54b547a6bafa579e1ff9dd">   18</a></span><span class="preprocessor">#define KLIB_VER_MINOR 7</span></div>
-<div class="line"><a id="l00019" name="l00019"></a><span class="lineno">   19</span> </div>
-<div class="line"><a id="l00023" name="l00023"></a><span class="lineno"><a class="line" href="version_8h.html#a845e221b12148c21e3473554cb9b5929">   23</a></span><span class="preprocessor">#define KLIB_VER_PATCH 9</span></div>
-<div class="line"><a id="l00024" name="l00024"></a><span class="lineno">   24</span> </div>
-<div class="line"><a id="l00025" name="l00025"></a><span class="lineno">   25</span><span class="preprocessor">#define STRINGIZE2(s) #s</span></div>
-<div class="line"><a id="l00026" name="l00026"></a><span class="lineno">   26</span><span class="preprocessor">#define STRINGIZE(s) STRINGIZE2(s)</span></div>
-<div class="line"><a id="l00027" name="l00027"></a><span class="lineno">   27</span> </div>
-<div class="line"><a id="l00031" name="l00031"></a><span class="lineno"><a class="line" href="version_8h.html#a871330643177c360cdceba479ffad657">   31</a></span><span class="preprocessor">#define KLIB_VERSION_STRING \</span></div>
-<div class="line"><a id="l00032" name="l00032"></a><span class="lineno">   32</span><span class="preprocessor">  &quot;v&quot;</span> STRINGIZE(KLIB_VER_MAJOR) &quot;.&quot; STRINGIZE(KLIB_VER_MINOR) &quot;.&quot; STRINGIZE(KLIB_VER_PATCH)</div>
-<div class="line"><a id="l00033" name="l00033"></a><span class="lineno">   33</span> </div>
-<div class="line"><a id="l00034" name="l00034"></a><span class="lineno">   34</span><span class="keyword">namespace </span>klib {</div>
-<div class="line"><a id="l00035" name="l00035"></a><span class="lineno">   35</span> </div>
-<div class="line"><a id="l00040" name="l00040"></a><span class="lineno"><a class="line" href="version_8h.html#a53ea8832d7f77aade266362d83dfbf5c">   40</a></span><span class="keyword">inline</span> std::string <a class="code hl_function" href="version_8h.html#a53ea8832d7f77aade266362d83dfbf5c">klib_version</a>() { <span class="keywordflow">return</span> <a class="code hl_define" href="version_8h.html#a871330643177c360cdceba479ffad657">KLIB_VERSION_STRING</a>; }</div>
-<div class="line"><a id="l00041" name="l00041"></a><span class="lineno">   41</span> </div>
-<div class="line"><a id="l00042" name="l00042"></a><span class="lineno">   42</span>}  <span class="comment">// namespace klib</span></div>
-<div class="line"><a id="l00043" name="l00043"></a><span class="lineno">   43</span> </div>
-<div class="line"><a id="l00044" name="l00044"></a><span class="lineno">   44</span><span class="preprocessor">#undef STRINGIZE2</span></div>
-<div class="line"><a id="l00045" name="l00045"></a><span class="lineno">   45</span><span class="preprocessor">#undef STRINGIZE</span></div>
-<div class="ttc" id="aversion_8h_html_a53ea8832d7f77aade266362d83dfbf5c"><div class="ttname"><a href="version_8h.html#a53ea8832d7f77aade266362d83dfbf5c">klib::klib_version</a></div><div class="ttdeci">std::string klib_version()</div><div class="ttdoc">Get klib version string.</div><div class="ttdef"><b>Definition:</b> version.h:40</div></div>
-<div class="ttc" id="aversion_8h_html_a871330643177c360cdceba479ffad657"><div class="ttname"><a href="version_8h.html#a871330643177c360cdceba479ffad657">KLIB_VERSION_STRING</a></div><div class="ttdeci">#define KLIB_VERSION_STRING</div><div class="ttdoc">klib version string</div><div class="ttdef"><b>Definition:</b> version.h:31</div></div>
+<div class="line"><a id="l00011" name="l00011"></a><span class="lineno"><a class="line" href="version_8h.html#aa4a6f180b71183e6d86d7ef8358ef9cb">   11</a></span><span class="preprocessor">#define KLIB_VER_MAJOR 0</span></div>
+<div class="line"><a id="l00012" name="l00012"></a><span class="lineno">   12</span> </div>
+<div class="line"><a id="l00016" name="l00016"></a><span class="lineno"><a class="line" href="version_8h.html#a84c02cd32e54b547a6bafa579e1ff9dd">   16</a></span><span class="preprocessor">#define KLIB_VER_MINOR 7</span></div>
+<div class="line"><a id="l00017" name="l00017"></a><span class="lineno">   17</span> </div>
+<div class="line"><a id="l00021" name="l00021"></a><span class="lineno"><a class="line" href="version_8h.html#a845e221b12148c21e3473554cb9b5929">   21</a></span><span class="preprocessor">#define KLIB_VER_PATCH 10</span></div>
+<div class="line"><a id="l00022" name="l00022"></a><span class="lineno">   22</span> </div>
+<div class="line"><a id="l00026" name="l00026"></a><span class="lineno"><a class="line" href="version_8h.html#a2a59a15a01e819d9493cceef8ee06c08">   26</a></span><span class="preprocessor">#define KLIB_VERSION \</span></div>
+<div class="line"><a id="l00027" name="l00027"></a><span class="lineno">   27</span><span class="preprocessor">  (KLIB_VER_MAJOR * 10000 + KLIB_VER_MINOR * 100 + KLIB_VER_PATCH)</span></div>
+<div class="line"><a id="l00028" name="l00028"></a><span class="lineno">   28</span> </div>
+<div class="line"><a id="l00029" name="l00029"></a><span class="lineno">   29</span><span class="preprocessor">#define KLIB_STRINGIZE2(s) #s</span></div>
+<div class="line"><a id="l00030" name="l00030"></a><span class="lineno">   30</span><span class="preprocessor">#define KLIB_STRINGIZE(s) KLIB_STRINGIZE2(s)</span></div>
+<div class="line"><a id="l00031" name="l00031"></a><span class="lineno">   31</span> </div>
+<div class="line"><a id="l00035" name="l00035"></a><span class="lineno"><a class="line" href="version_8h.html#a871330643177c360cdceba479ffad657">   35</a></span><span class="preprocessor">#define KLIB_VERSION_STRING      \</span></div>
+<div class="line"><a id="l00036" name="l00036"></a><span class="lineno">   36</span><span class="preprocessor">  KLIB_STRINGIZE(KLIB_VER_MAJOR) \</span></div>
+<div class="line"><a id="l00037" name="l00037"></a><span class="lineno">   37</span><span class="preprocessor">  &quot;.&quot;</span> KLIB_STRINGIZE(KLIB_VER_MINOR) &quot;.&quot; KLIB_STRINGIZE(KLIB_VER_PATCH)</div>
 </div><!-- fragment --></div><!-- contents -->
 </div><!-- doc-content -->
 <!-- start footer part -->

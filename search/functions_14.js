@@ -1,6 +1,9 @@
 var searchData=
 [
-  ['wait_5ffor_5fchild_5fprocess_0',['wait_for_child_process',['../util_8h.html#a068f640d8df09ff35caf8822a9c1e0ac',1,'klib']]],
-  ['warn_1',['warn',['../error_8h.html#a814c67e8ab648504e8d4e9c627aafdb7',1,'klib::warn(std::string_view fmt, Args &amp;&amp;...args)'],['../error_8h.html#a35066f1f6e39b0cf91b538b1edece47e',1,'klib::warn(const std::experimental::source_location &amp;loc, std::string_view fmt, Args &amp;&amp;...args)']]],
-  ['write_5ffile_2',['write_file',['../util_8h.html#ad20740bb960a952fc137ca4247bbc179',1,'klib']]]
+  ['_7echangeworkingdir_0',['~ChangeWorkingDir',['../classklib_1_1ChangeWorkingDir.html#a2f7d61bc70ba03d63148d0a0ec729d1c',1,'klib::ChangeWorkingDir']]],
+  ['_7ecolumn_1',['~Column',['../classklib_1_1Column.html#a251f901d2edaeff0426262567e19f18a',1,'klib::Column']]],
+  ['_7ehashlib_2',['~HashLib',['../classklib_1_1HashLib.html#abdef74ea4c20c060a915c8163183003d',1,'klib::HashLib']]],
+  ['_7erequest_3',['~Request',['../classklib_1_1Request.html#abf010562c66bb66def366522fb40b982',1,'klib::Request']]],
+  ['_7esqldatabase_4',['~SqlDatabase',['../classklib_1_1SqlDatabase.html#a0499478ec55c71a89eb91b47f30260ab',1,'klib::SqlDatabase']]],
+  ['_7esqlquery_5',['~SqlQuery',['../classklib_1_1SqlQuery.html#a7d1d3a38a77f9f8c79d35c3b1d1a8b59',1,'klib::SqlQuery']]]
 ];
