@@ -150,15 +150,41 @@ bool same_folder(const std::string &path1, const std::string &path2);
 
 /**
  * @brief Execute the given line as a shell command
- * @param command: Command to be execute
+ * @param cmd: Command to be execute
  */
-void execute_command(const std::string &command);
+void exec(const std::string &cmd);
 
 /**
  * @brief Execute the given line as a shell command
- * @param command: Command to be execute
+ * @param cmd: Command to be execute
  */
-void execute_command(const char *command);
+void exec(const char *cmd);
+
+/**
+ * @brief Execute the given line as a shell command and return its output
+ * @param cmd: Command to be execute
+ * @return Command line output
+ */
+std::string exec_with_output(const std::string &cmd);
+
+/**
+ * @brief Execute the given line as a shell command and return its output
+ * @param cmd: Command to be execute
+ * @return Command line output
+ */
+std::string exec_with_output(const char *cmd);
+
+/**
+ * @brief Execute the given line as a shell command and does not show its output
+ * @param cmd: Command to be execute
+ */
+void exec_without_output(const std::string &cmd);
+
+/**
+ * @brief Execute the given line as a shell command and does not show its output
+ * @param cmd: Command to be execute
+ */
+void exec_without_output(const char *cmd);
 
 /**
  * @brief Wait for all child processes to exit

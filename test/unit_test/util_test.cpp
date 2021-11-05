@@ -80,8 +80,11 @@ TEST_CASE("same_folder", "[util]") {
 }
 
 TEST_CASE("execute_command", "[util]") {
-  REQUIRE_NOTHROW(klib::execute_command("gcc -v"));
-  REQUIRE_NOTHROW(klib::execute_command(""));
+  REQUIRE_NOTHROW(klib::exec("gcc -v"));
+  REQUIRE_NOTHROW(klib::exec(""));
+
+  REQUIRE_NOTHROW(klib::exec_with_output("clang -v"));
+  REQUIRE_NOTHROW(klib::exec_without_output("gcc -v"));
 }
 
 TEST_CASE("cleanse", "[util]") {

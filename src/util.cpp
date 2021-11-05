@@ -1,10 +1,12 @@
 #include "klib/util.h"
 
+#include <sys/wait.h>
 #include <unistd.h>
-#include <wait.h>
 
 #include <cctype>
 #include <cerrno>
+#include <cstdio>
+#include <cstdlib>
 #include <filesystem>
 #include <fstream>
 #include <map>
@@ -39,6 +41,10 @@ std::map<std::string, std::string> read_folder(const std::string &path) {
   }
 
   return folder;
+}
+
+bool wait_error(std::int32_t status) {
+  return !WIFEXITED(status) || WEXITSTATUS(status);
 }
 
 }  // namespace
@@ -175,16 +181,67 @@ bool same_folder(const std::string &path1, const std::string &path2) {
   return read_folder(path1) == read_folder(path2);
 }
 
-void execute_command(const std::string &command) {
-  execute_command(command.c_str());
+void exec(const std::string &cmd) { exec(cmd.c_str()); }
+
+void exec(const char *cmd) {
+  auto status = std::system(cmd);
+  if (status == -1 || wait_error(status)) {
+    throw RuntimeError(
+        "When running command line '{}', error '{}' is encountered", cmd,
+        std::strerror(errno));
+  }
+  if (status != 0) {
+    throw RuntimeError("Failed when running command line '{}', status: {}", cmd,
+                       status);
+  }
 }
 
-void execute_command(const char *command) {
-  auto status = std::system(command);
-  if (status == -1 || !WIFEXITED(status) || WEXITSTATUS(status)) {
-    throw RuntimeError(
-        "When running command line '{}', error '{}' is encountered", command,
-        std::strerror(errno));
+std::string exec_with_output(const std::string &cmd) {
+  return exec_with_output(cmd.c_str());
+}
+
+// https://stackoverflow.com/questions/478898/how-do-i-execute-a-command-and-get-the-output-of-the-command-within-c-using-po?rq=1
+std::string exec_with_output(const char *cmd) {
+  auto pipe = popen(cmd, "r");
+  if (!pipe) {
+    throw RuntimeError("popen() failed");
+  }
+
+  char buffer[128];
+  std::string result;
+  while (std::fgets(buffer, 128, pipe) != nullptr) {
+    result += buffer;
+  }
+
+  auto status = pclose(pipe);
+  if (status == -1) {
+    throw RuntimeError("pclose() failed");
+  }
+  if (status != 0) {
+    throw RuntimeError("Failed when running command line '{}', status: {}", cmd,
+                       status);
+  }
+
+  return result;
+}
+
+void exec_without_output(const std::string &cmd) {
+  exec_with_output(cmd.c_str());
+}
+
+void exec_without_output(const char *cmd) {
+  auto pipe = popen(cmd, "r");
+  if (!pipe) {
+    throw RuntimeError("popen() failed");
+  }
+
+  auto status = pclose(pipe);
+  if (status == -1) {
+    throw RuntimeError("pclose() failed");
+  }
+  if (status != 0) {
+    throw RuntimeError("Failed when running command line '{}', status: {}", cmd,
+                       status);
   }
 }
 
@@ -192,7 +249,7 @@ void wait_for_child_process() {
   std::int32_t status = 0;
 
   while (waitpid(-1, &status, 0) > 0) {
-    if (!WIFEXITED(status) || WEXITSTATUS(status)) {
+    if (wait_error(status)) {
       throw RuntimeError("Waitpid error: {}", std::strerror(errno));
     }
   }

@@ -5,8 +5,6 @@
 
 #pragma once
 
-#include <string>
-
 /**
  * @brief klib major version
  */
@@ -20,26 +18,20 @@
 /**
  * @brief klib patch version
  */
-#define KLIB_VER_PATCH 9
+#define KLIB_VER_PATCH 10
 
-#define STRINGIZE2(s) #s
-#define STRINGIZE(s) STRINGIZE2(s)
+/**
+ * @brief klib version
+ */
+#define KLIB_VERSION \
+  (KLIB_VER_MAJOR * 10000 + KLIB_VER_MINOR * 100 + KLIB_VER_PATCH)
+
+#define KLIB_STRINGIZE2(s) #s
+#define KLIB_STRINGIZE(s) KLIB_STRINGIZE2(s)
 
 /**
  * @brief klib version string
  */
-#define KLIB_VERSION_STRING \
-  "v" STRINGIZE(KLIB_VER_MAJOR) "." STRINGIZE(KLIB_VER_MINOR) "." STRINGIZE(KLIB_VER_PATCH)
-
-namespace klib {
-
-/**
- * @brief Get klib version string
- * @return klib version string
- */
-inline std::string klib_version() { return KLIB_VERSION_STRING; }
-
-}  // namespace klib
-
-#undef STRINGIZE2
-#undef STRINGIZE
+#define KLIB_VERSION_STRING      \
+  KLIB_STRINGIZE(KLIB_VER_MAJOR) \
+  "." KLIB_STRINGIZE(KLIB_VER_MINOR) "." KLIB_STRINGIZE(KLIB_VER_PATCH)
