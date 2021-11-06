@@ -93,6 +93,8 @@ if(KLIB_BUILD_STATIC)
     ${LIBRARY} PUBLIC "$<BUILD_INTERFACE:${KLIB_SOURCE_DIR}/include>"
                       "$<INSTALL_INTERFACE:${CMAKE_INSTALL_INCLUDEDIR}>")
   target_compile_features(${LIBRARY} INTERFACE cxx_std_20)
+  # TODO DO not use fmt
+  target_compile_definitions(${LIBRARY} INTERFACE FMT_LOCALE)
   target_link_libraries(${LIBRARY} PUBLIC ${CMAKE_THREAD_LIBS_INIT})
 
   set_target_properties(
@@ -145,8 +147,9 @@ if(KLIB_BUILD_SHARED)
             PkgConfig::openssl
             PkgConfig::sqlcipher
             zstd::libzstd_static
-            fmt::fmt
             ${Boost_LIBRARIES})
+  # TODO DO not use fmt
+  target_link_libraries(${LIBRARY}-shared PUBLIC fmt::fmt)
 
   set_target_properties(
     ${LIBRARY}-shared

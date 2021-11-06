@@ -11,9 +11,8 @@ TEST_CASE("compress") {
   REQUIRE(klib::folder_size("madler-zlib-7085a61") == 2984209);
 
   BENCHMARK_ADVANCED("tar compress")(Catch::Benchmark::Chronometer meter) {
-    meter.measure([] {
-      klib::execute_command("tar -zcf zlib.tar.gz madler-zlib-7085a61");
-    });
+    meter.measure(
+        [] { klib::exec("tar -zcf zlib.tar.gz madler-zlib-7085a61"); });
 
     REQUIRE(std::filesystem::is_regular_file("zlib.tar.gz"));
     std::filesystem::remove("zlib.tar.gz");
@@ -37,8 +36,7 @@ TEST_CASE("decompress") {
           "2a2b8784f20bb2307211a2a776241797857b133056f4b33de1d363db7bb2");
 
   BENCHMARK_ADVANCED("tar decompress")(Catch::Benchmark::Chronometer meter) {
-    meter.measure(
-        [] { klib::execute_command("tar -zxf zlib-v1.2.11.tar.gz"); });
+    meter.measure([] { klib::exec("tar -zxf zlib-v1.2.11.tar.gz"); });
 
     REQUIRE(std::filesystem::is_directory("madler-zlib-7085a61"));
     REQUIRE(klib::folder_size("madler-zlib-7085a61") == 2984209);

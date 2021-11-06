@@ -21,14 +21,14 @@ C++ Library
 
 ## Dependency
 
+- [tidy-html5](https://github.com/htacg/tidy-html5)
 - [zlib](https://github.com/madler/zlib)
 - [libarchive](https://github.com/libarchive/libarchive)
 - [openssl](https://github.com/openssl/openssl)
 - [nghttp2](https://github.com/nghttp2/nghttp2)
 - [curl](https://github.com/curl/curl)
-- [tidy-html5](https://github.com/htacg/tidy-html5)
-- [sqlcipher](https://github.com/sqlcipher/sqlcipher)
 - [zstd](https://github.com/facebook/zstd)
+- [sqlcipher](https://github.com/sqlcipher/sqlcipher)
 - [fmt](https://github.com/fmtlib/fmt)
 - [boost](https://www.boost.org/)
 

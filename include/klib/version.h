@@ -18,7 +18,7 @@
 /**
  * @brief klib patch version
  */
-#define KLIB_VER_PATCH 10
+#define KLIB_VER_PATCH 11
 
 /**
  * @brief klib version

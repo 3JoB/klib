@@ -31,11 +31,14 @@ set(KLIB_PROJECT_CONFIG_OUT
 set(KLIB_VERSION_CONFIG_FILE
     "${CMAKE_CURRENT_BINARY_DIR}/${LIBRARY}ConfigVersion.cmake")
 
-configure_file(${KLIB_PROJECT_CONFIG_IN} ${KLIB_PROJECT_CONFIG_OUT} @ONLY)
-
+# https://cmake.org/cmake/help/latest/module/CMakePackageConfigHelpers.html#example-generating-package-files
 include(CMakePackageConfigHelpers)
+configure_package_config_file(
+  ${KLIB_PROJECT_CONFIG_IN} ${KLIB_PROJECT_CONFIG_OUT}
+  INSTALL_DESTINATION ${KLIB_EXPORT_DEST_DIR})
 write_basic_package_version_file(${KLIB_VERSION_CONFIG_FILE}
                                  COMPATIBILITY SameMajorVersion)
+
 install(FILES ${KLIB_PROJECT_CONFIG_OUT} ${KLIB_VERSION_CONFIG_FILE}
         DESTINATION ${KLIB_EXPORT_DEST_DIR})
 
