@@ -29,6 +29,7 @@ C++ Library
 - [curl](https://github.com/curl/curl)
 - [zstd](https://github.com/facebook/zstd)
 - [sqlcipher](https://github.com/sqlcipher/sqlcipher)
+- [argon2](https://github.com/P-H-C/phc-winner-argon2)
 - [fmt](https://github.com/fmtlib/fmt)
 - [boost](https://www.boost.org/)
 

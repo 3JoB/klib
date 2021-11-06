@@ -66,6 +66,7 @@ pkg_check_modules(tidy REQUIRED IMPORTED_TARGET tidy)
 pkg_check_modules(libcurl REQUIRED IMPORTED_TARGET libcurl)
 pkg_check_modules(openssl REQUIRED IMPORTED_TARGET openssl)
 pkg_check_modules(sqlcipher REQUIRED IMPORTED_TARGET sqlcipher)
+pkg_check_modules(libargon2 REQUIRED IMPORTED_TARGET libargon2)
 
 add_definitions(-DOPENSSL_NO_DEPRECATED -DSQLITE_HAS_CODEC)
 
@@ -116,6 +117,7 @@ if(KLIB_BUILD_STATIC)
     COMMAND ar -x /usr/local/lib/libcrypto.a
     COMMAND ar -x /usr/local/lib/libssl.a
     COMMAND ar -x /usr/local/lib/libsqlcipher.a
+    COMMAND ar -x /usr/local/lib/libargon2.a
     COMMAND ar -x /usr/local/lib/libzstd.a
     COMMAND ar -x /usr/local/lib/libfmt.a
     COMMAND ar -x /usr/local/lib/libnghttp2.a
@@ -146,6 +148,7 @@ if(KLIB_BUILD_SHARED)
             PkgConfig::libcurl
             PkgConfig::openssl
             PkgConfig::sqlcipher
+            PkgConfig::libargon2
             zstd::libzstd_static
             ${Boost_LIBRARIES})
   # TODO DO not use fmt
