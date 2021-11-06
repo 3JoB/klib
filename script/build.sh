@@ -3,7 +3,7 @@
 set -e
 
 if [[ "$OSTYPE" == "linux-gnu"* ]]; then
-  sudo add-apt-repository -y ppa:ubuntu-toolchain-r/test
+  sudo add-apt-repository -y ppa:ubuntu-toolchain-r/ppa
   sudo apt update
   sudo apt install -y gcc-11 g++-11
 
@@ -29,7 +29,7 @@ if [[ "$OSTYPE" == "linux-gnu"* ]]; then
   sudo update-alternatives --install /usr/bin/llvm-cov llvm-cov /usr/bin/llvm-cov-13 400
   sudo update-alternatives --install /usr/bin/llvm-symbolizer llvm-symbolizer /usr/bin/llvm-symbolizer-13 400
 
-  curl -L https://github.com/KaiserLancelot/kpkg/releases/download/v0.7.4/kpkg-v0.7.4-ubuntu-20.04.deb \
+  curl -L https://github.com/KaiserLancelot/kpkg/releases/download/v0.7.5/kpkg-v0.7.5-ubuntu-20.04.deb \
     -o kpkg.deb
   sudo dpkg -i kpkg.deb
 
