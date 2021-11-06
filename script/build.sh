@@ -3,6 +3,7 @@
 set -e
 
 if [[ "$OSTYPE" == "linux-gnu"* ]]; then
+  sudo add-apt-repository -y -r ppa:ubuntu-toolchain-r/test
   sudo add-apt-repository -y ppa:ubuntu-toolchain-r/ppa
   sudo apt update
   sudo apt install -y gcc-11 g++-11
