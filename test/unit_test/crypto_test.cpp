@@ -1,5 +1,6 @@
 #include <string>
 
+#include <boost/core/ignore_unused.hpp>
 #include <catch2/catch.hpp>
 
 #include "klib/crypto.h"
@@ -44,11 +45,12 @@ TEST_CASE("aes_256_cbc", "[crypto]") {
               "1234567890abcdef1234567890abcdef",
               iv) == "Advanced Encryption Standard");
 
-  auto encrypt = klib::aes_256_encrypt_base64(
-      "Advanced Encryption Standard",
-      klib::sha3_256("1234567890abcdef1234567890abcdef"));
-  REQUIRE(klib::aes_256_decrypt_base64(
-              encrypt, klib::sha3_256("1234567890abcdef1234567890abcdef")) ==
+  std::string password = "test-password";
+  auto [hash, salt] = klib::password_hash_raw(password);
+  boost::ignore_unused(salt);
+  auto encrypt =
+      klib::aes_256_encrypt_base64("Advanced Encryption Standard", hash);
+  REQUIRE(klib::aes_256_decrypt_base64(encrypt, hash) ==
           "Advanced Encryption Standard");
 
   REQUIRE(klib::aes_256_encrypt_base64(

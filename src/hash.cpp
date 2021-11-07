@@ -1,9 +1,5 @@
 #include "klib/hash.h"
 
-#include <sys/sysinfo.h>
-
-#include <cstdint>
-
 #include <argon2.h>
 #include <fmt/compile.h>
 #include <fmt/format.h>
@@ -274,15 +270,6 @@ std::pair<std::string, std::string> password_hash_raw(
   return {hash, salt};
 }
 
-std::pair<std::string, std::string> password_hash_raw_hex(
-    const std::string &password, std::uint32_t time_cost,
-    std::uint32_t memory_cost, std::uint32_t parallelism, std::int32_t hash_len,
-    std::int32_t salt_len) {
-  auto [hash, salt] = password_hash_raw(password, time_cost, memory_cost,
-                                        parallelism, hash_len, salt_len);
-  return {bytes_to_hex_string(hash), bytes_to_hex_string(salt)};
-}
-
 std::string password_hash_encoded(const std::string &password,
                                   std::uint32_t time_cost,
                                   std::uint32_t memory_cost,
@@ -311,7 +298,7 @@ std::string password_hash_encoded(const std::string &password,
 }
 
 bool password_verify(const std::string &password, const std::string &encoded) {
-  return argon2id_verify(std::data(encoded), std::data(password),
+  return argon2id_verify(encoded.c_str(), std::data(password),
                          std::size(password)) == ARGON2_OK;
 }
 
