@@ -3,7 +3,7 @@
 #include <catch2/catch.hpp>
 
 #include "klib/crypto.h"
-#include "klib/hash_lib.h"
+#include "klib/hash.h"
 
 TEST_CASE("base64_encode", "[crypto]") {
   REQUIRE(klib::base64_encode("hello") == "aGVsbG8=");

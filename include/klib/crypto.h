@@ -27,7 +27,7 @@ std::string base64_decode(const std::string &data);
  * @brief Block cipher mode of operation
  * @see https://en.wikipedia.org/wiki/Block_cipher_mode_of_operation
  */
-enum class AesMode { ECB, CBC, OFB, CFB, CTR, XTS };
+enum class AesMode { CBC, OFB, CFB, CTR, XTS };
 
 /**
  * @brief Padding mode

@@ -4,7 +4,7 @@
 #include <boost/json.hpp>
 #include <catch2/catch.hpp>
 
-#include "klib/hash_lib.h"
+#include "klib/hash.h"
 #include "klib/http.h"
 #include "klib/util.h"
 

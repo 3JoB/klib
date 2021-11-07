@@ -1,13 +1,15 @@
 /**
- * @file hash_lib.h
+ * @file hash.h
  * @brief Contains secure hash module
  */
 
 #pragma once
 
+#include <cstdint>
 #include <experimental/propagate_const>
 #include <memory>
 #include <string>
+#include <utility>
 
 namespace klib {
 
@@ -94,5 +96,36 @@ std::string sha3_384(const std::string &data);
 std::string sha3_384_hex(const std::string &data);
 std::string sha3_512(const std::string &data);
 std::string sha3_512_hex(const std::string &data);
+
+/**
+ * @brief Create a password hash
+ * @param password: Password to be hashed
+ * @return Hash result
+ * @see https://github.com/P-H-C/phc-winner-argon2/issues/235
+ * @see https://www.tomczhen.com/2016/10/10/hashing-security/
+ */
+std::pair<std::string, std::string> password_hash_raw(
+    const std::string &password, std::uint32_t time_cost = 1,
+    std::uint32_t memory_cost = 1 * 1024 * 1024, std::uint32_t parallelism = 16,
+    std::int32_t hash_len = 32, std::int32_t salt_len = 32);
+
+std::pair<std::string, std::string> password_hash_raw_hex(
+    const std::string &password, std::uint32_t time_cost = 1,
+    std::uint32_t memory_cost = 1 * 1024 * 1024, std::uint32_t parallelism = 16,
+    std::int32_t hash_len = 32, std::int32_t salt_len = 32);
+
+std::string password_hash_encoded(const std::string &password,
+                                  std::uint32_t time_cost = 1,
+                                  std::uint32_t memory_cost = 1 * 1024 * 1024,
+                                  std::uint32_t parallelism = 16,
+                                  std::int32_t hash_len = 32,
+                                  std::int32_t salt_len = 32);
+
+bool password_verify(const std::string &password, const std::string &encoded);
+
+bool password_verify(const std::string &password, const std::string &hash,
+                     const std::string &salt, std::uint32_t time_cost = 1,
+                     std::uint32_t memory_cost = 1 * 1024 * 1024,
+                     std::uint32_t parallelism = 16);
 
 }  // namespace klib

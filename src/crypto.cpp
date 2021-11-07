@@ -5,32 +5,16 @@
 
 #include <openssl/aes.h>
 #include <openssl/evp.h>
-#include <openssl/rand.h>
 
-#include "klib/detail/openssl_error.h"
+#include "klib/detail/openssl_util.h"
 #include "klib/exception.h"
 
 namespace klib {
 
 namespace {
 
-std::string generate_iv() {
-  if (RAND_status() == 0) {
-    detail::check_openssl_return_value(RAND_poll());
-  }
-
-  std::string iv;
-  iv.resize(EVP_MAX_IV_LENGTH);
-  detail::check_openssl_return_value(RAND_bytes(
-      reinterpret_cast<unsigned char *>(std::data(iv)), std::size(iv)));
-
-  return iv;
-}
-
 const EVP_CIPHER *get_algorithm(AesMode aes_mode) {
   switch (aes_mode) {
-    case AesMode::ECB:
-      return EVP_aes_256_ecb();
     case AesMode::CBC:
       return EVP_aes_256_cbc();
     case AesMode::OFB:
@@ -76,9 +60,6 @@ std::string do_aes_crypt(const std::string &data, const std::string &key,
   }
   if (std::size(iv) != EVP_MAX_IV_LENGTH && !std::empty(iv)) {
     throw klib::RuntimeError("iv must be 128 bit");
-  }
-  if (!std::empty(iv) && aes_mode == AesMode::ECB) {
-    throw klib::RuntimeError("ecb can not use iv");
   }
 
   std::unique_ptr<EVP_CIPHER_CTX, decltype(EVP_CIPHER_CTX_free) *> ctx(
@@ -180,7 +161,7 @@ std::string aes_256_encrypt(const std::string &data, const std::string &key,
                             PaddingMode padding_mode) {
   std::string iv;
   if (use_iv) {
-    iv = generate_iv();
+    iv = detail::generate_random_bytes(EVP_MAX_IV_LENGTH);
   }
 
   return iv +

@@ -1,6 +1,6 @@
 #include <iostream>
 
-#include <klib/hash_lib.h>
+#include <klib/hash.h>
 #include <klib/http.h>
 #include <klib/util.h>
 

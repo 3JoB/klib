@@ -6,6 +6,10 @@ if(KLIB_VALGRIND)
   add_definitions(-DKLIB_VALGRIND)
 endif()
 
+if(NOT (${CMAKE_BUILD_TYPE} STREQUAL "Debug"))
+  add_definitions(-DDBG_MACRO_DISABLE -DDBG_MACRO_NO_WARNING)
+endif()
+
 find_package(Boost CONFIG REQUIRED COMPONENTS json)
 
 file(COPY ${KLIB_SOURCE_DIR}/data/zlib-v1.2.11.tar.gz

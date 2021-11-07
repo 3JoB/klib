@@ -5,7 +5,7 @@
 #include <catch2/catch.hpp>
 
 #include "klib/archive.h"
-#include "klib/hash_lib.h"
+#include "klib/hash.h"
 #include "klib/util.h"
 
 TEST_CASE("zip", "[archive]") {
