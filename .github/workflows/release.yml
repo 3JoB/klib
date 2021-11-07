@@ -51,6 +51,7 @@ jobs:
 
       - name: CPack
         run: |
+          strip --strip-debug --strip-unneeded libklib*
           cpack
           mv klib-${{ env.RELEASE_VERSION }}-Linux.deb \
           klib-v${{ env.RELEASE_VERSION }}-ubuntu-20.04.deb
