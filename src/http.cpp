@@ -30,29 +30,44 @@ void check_curl_correct(CURLMcode code) {
   }
 }
 
-std::string splicing_url(
-    CURL *curl, const std::string &url,
-    const std::unordered_map<std::string, std::string> &params) {
-  if (std::empty(params)) {
-    return url;
+void check_curl_correct(CURLUcode code) {
+  if (code != CURLUcode::CURLUE_OK) {
+    throw RuntimeError(curl_url_strerror(code));
   }
-
-  auto result = url + "?";
-  for (const auto &[key, value] : params) {
-    std::unique_ptr<char, decltype(curl_free) *> key_ptr(
-        curl_easy_escape(curl, key.c_str(), std::size(key)), curl_free);
-    std::unique_ptr<char, decltype(curl_free) *> value_ptr(
-        curl_easy_escape(curl, value.c_str(), std::size(value)), curl_free);
-
-    result.append(key_ptr.get())
-        .append("=")
-        .append(value_ptr.get())
-        .append("&");
-  }
-  result.pop_back();
-
-  return result;
 }
+
+class AddURL {
+ public:
+  explicit AddURL(
+      CURL *curl, const std::string &url,
+      const std::unordered_map<std::string, std::string> &params = {})
+      : curl_(curl), url_(curl_url()) {
+    if (!curl_) {
+      throw RuntimeError("curl is null");
+    }
+
+    check_curl_correct(curl_url_set(url_, CURLUPART_URL, url.c_str(), 0));
+
+    try {
+      for (const auto &[key, value] : params) {
+        std::string query = key + "=" + value;
+        check_curl_correct(curl_url_set(url_, CURLUPART_QUERY, query.c_str(),
+                                        CURLU_APPENDQUERY | CURLU_URLENCODE));
+      }
+
+      check_curl_correct(curl_easy_setopt(curl_, CURLOPT_CURLU, url_));
+    } catch (...) {
+      curl_url_cleanup(url_);
+      throw;
+    }
+  }
+
+  ~AddURL() { curl_url_cleanup(url_); }
+
+ private:
+  CURL *curl_ = nullptr;
+  CURLU *url_ = nullptr;
+};
 
 class AddHeader {
  public:
@@ -318,11 +333,11 @@ void Request::RequestImpl::set_browser_user_agent() {
   // navigator.userAgent
   set_user_agent(
       "Mozilla/5.0 (X11; Linux x86_64) AppleWebKit/537.36 (KHTML, like Gecko) "
-      "Chrome/95.0.4638.54 Safari/537.36 Edg/95.0.1020.38");
+      "Chrome/95.0.4638.69 Safari/537.36");
 }
 
 void Request::RequestImpl::set_curl_user_agent() {
-  set_user_agent("curl/7.79.1");
+  set_user_agent("curl/7.80.0");
 }
 
 void Request::RequestImpl::set_timeout(std::int64_t seconds) {
@@ -344,10 +359,7 @@ Response Request::RequestImpl::get(
   check_curl_correct(curl_easy_setopt(http_handle_, CURLOPT_HTTPGET, 1L));
 
   AddHeader add_header(http_handle_, header);
-
-  auto complete_url = splicing_url(http_handle_, url, params);
-  check_curl_correct(
-      curl_easy_setopt(http_handle_, CURLOPT_URL, complete_url.c_str()));
+  AddURL add_url(http_handle_, url, params);
 
   Response response;
   check_curl_correct(
@@ -384,7 +396,7 @@ Response Request::RequestImpl::post(
 
   AddForm add_form(http_handle_, data, file);
   AddHeader add_header(http_handle_, header);
-  check_curl_correct(curl_easy_setopt(http_handle_, CURLOPT_URL, url.c_str()));
+  AddURL add_url(http_handle_, url);
 
   return do_post(multi);
 }
@@ -398,7 +410,9 @@ Response Request::RequestImpl::post(
   auto header_copy = header;
   header_copy["Content-Type"] = "application/json";
   AddHeader add_header(http_handle_, header_copy);
-  check_curl_correct(curl_easy_setopt(http_handle_, CURLOPT_URL, url.c_str()));
+
+  AddURL add_url(http_handle_, url);
+
   check_curl_correct(
       curl_easy_setopt(http_handle_, CURLOPT_POSTFIELDS, json.c_str()));
 
