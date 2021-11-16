@@ -17,7 +17,9 @@ std::u16string utf8_to_utf16(const std::string &str) {
     return {};
   }
 
-  std::setlocale(LC_ALL, "en_US.utf8");
+  if (std::setlocale(LC_ALL, "en_US.utf8") == nullptr) {
+    throw RuntimeError("The request cannot be honored");
+  }
 
   std::u16string result;
 
@@ -50,7 +52,9 @@ std::u32string utf8_to_utf32(const std::string &str) {
     return {};
   }
 
-  std::setlocale(LC_ALL, "en_US.utf8");
+  if (std::setlocale(LC_ALL, "en_US.utf8") == nullptr) {
+    throw RuntimeError("The request cannot be honored");
+  }
 
   std::u32string result;
 
@@ -77,7 +81,9 @@ std::u32string utf8_to_utf32(const std::string &str) {
 
 // https://zh.cppreference.com/w/c/string/multibyte/c32rtomb
 std::string utf32_to_utf8(char32_t c) {
-  std::setlocale(LC_ALL, "en_US.utf8");
+  if (std::setlocale(LC_ALL, "en_US.utf8") == nullptr) {
+    throw RuntimeError("The request cannot be honored");
+  }
 
   std::string result;
   result.resize(MB_CUR_MAX);
