@@ -7,9 +7,8 @@ on:
 
 jobs:
   build:
-    # https://docs.github.com/cn/actions/reference/workflow-syntax-for-github-actions
-    # https://github.com/actions/virtual-environments/blob/main/images/linux/Ubuntu2004-README.md
-    runs-on: ubuntu-20.04
+    runs-on: ubuntu-latest
+    container: kaiserlancelot/kenv:latest
     strategy:
       matrix:
         # https://cmake.org/cmake/help/latest/variable/CMAKE_BUILD_TYPE.html
@@ -23,46 +22,20 @@ jobs:
       - name: Checkout
         uses: actions/checkout@v2
 
-      # https://github.com/actions/cache
-      - name: Get date
-        id: get-date
-        run: echo "::set-output name=date::$(/bin/date -u "+%Y%m")"
-        shell: bash
-
-      - name: Cache dependencies
-        uses: actions/cache@v2
-        with:
-          path: dependencies
-          key: ${{ steps.get-date.outputs.date }}
-
-      - name: Install dependencies
-        run: sudo bash script/build.sh
-
       - name: Configure
         run: cmake -S . -B build -DCMAKE_BUILD_TYPE=Release
 
       - name: Build
         run: cmake --build build --config Release -j"$(nproc)"
 
-      - name: Get version
-        run: echo "RELEASE_VERSION=${TAG_NAME:1}" >> $GITHUB_ENV
-        env:
-          TAG_NAME: ${{ github.event.release.tag_name }}
-
       - name: CPack
-        run: |
-          strip --strip-debug --strip-unneeded libklib*
-          cpack
-          mv klib-${{ env.RELEASE_VERSION }}-Linux.deb \
-          klib-v${{ env.RELEASE_VERSION }}-ubuntu-20.04.deb
-          mv klib-${{ env.RELEASE_VERSION }}-Linux.tar.gz \
-          klib-v${{ env.RELEASE_VERSION }}-ubuntu-20.04.tar.gz
+        run: cpack
         working-directory: build
 
       - name: Install
         run: |
-          sudo dpkg -i klib-v${{ env.RELEASE_VERSION }}-ubuntu-20.04.deb
-          sudo ldconfig
+          dpkg -i klib*.deb
+          ldconfig
         working-directory: build
 
       - name: Build example
@@ -80,5 +53,5 @@ jobs:
         if: ${{ matrix.compiler.cxx == 'g++' && matrix.build_type == 'Release'}}
         with:
           files: |
-            build/klib-v${{ env.RELEASE_VERSION }}-ubuntu-20.04.deb
-            build/klib-v${{ env.RELEASE_VERSION }}-ubuntu-20.04.tar.gz
+            build/klib*.deb
+            build/klib*.tar.gz

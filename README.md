@@ -1,6 +1,6 @@
 # klib
 
-[![Open in Visual Studio Code](https://open.vscode.dev/badges/open-in-vscode.svg)](https://open.vscode.dev/KaiserLancelot/klib)
+[![Platform](https://img.shields.io/badge/Platform-Debian%2011-brightgreen)](https://www.debian.org/)
 [![Build](https://github.com/KaiserLancelot/klib/actions/workflows/build.yml/badge.svg)](https://github.com/KaiserLancelot/klib/actions/workflows/build.yml)
 [![Coverage Status](https://coveralls.io/repos/github/KaiserLancelot/klib/badge.svg?branch=main)](https://coveralls.io/github/KaiserLancelot/klib?branch=main)
 [![Documentation](https://img.shields.io/badge/docs-doxygen-blue)](https://kaiserlancelot.github.io/klib)
@@ -8,7 +8,6 @@
 [![996.icu](https://img.shields.io/badge/link-996.icu-red.svg)](https://996.icu)
 [![GitHub Releases](https://img.shields.io/github/release/KaiserLancelot/klib)](https://github.com/KaiserLancelot/klib/releases/latest)
 [![GitHub Downloads](https://img.shields.io/github/downloads/KaiserLancelot/klib/total)](https://github.com/KaiserLancelot/klib/releases)
-[![Bugs](https://img.shields.io/github/issues/KaiserLancelot/klib/bug)](https://github.com/KaiserLancelot/klib/issues?q=is%3Aopen+is%3Aissue+label%3Abug)
 
 ---
 
@@ -16,7 +15,7 @@ C++ Library
 
 ## Environment
 
-- Ubuntu 20.04
+- Debian 11
 - GCC 11 or Clang 13
 
 ## Dependency
@@ -30,8 +29,8 @@ C++ Library
 - [zstd](https://github.com/facebook/zstd)
 - [sqlcipher](https://github.com/sqlcipher/sqlcipher)
 - [argon2](https://github.com/P-H-C/phc-winner-argon2)
+- [Boost](https://www.boost.org/)
 - [fmt](https://github.com/fmtlib/fmt)
-- [boost](https://www.boost.org/)
 
 ## Build
 
