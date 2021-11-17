@@ -13,8 +13,6 @@ const std::string httpbin_url = "https://httpbin.org";
 TEST_CASE("request headers", "[http]") {
   klib::Request request;
   request.allow_redirects(false);
-  request.set_connect_timeout(5);
-  request.set_timeout(30);
   request.set_curl_user_agent();
   request.use_cookies(false);
 
@@ -40,8 +38,6 @@ TEST_CASE("request headers", "[http]") {
 TEST_CASE("response headers", "[http]") {
   klib::Request request;
   request.allow_redirects(true);
-  request.set_connect_timeout(5);
-  request.set_timeout(30);
   request.set_curl_user_agent();
 
 #ifndef NDEBUG
@@ -63,8 +59,6 @@ TEST_CASE("response headers", "[http]") {
 
 TEST_CASE("GET", "[http]") {
   klib::Request request;
-  request.set_connect_timeout(5);
-  request.set_timeout(30);
   request.set_browser_user_agent();
 
 #ifndef NDEBUG
@@ -86,8 +80,6 @@ TEST_CASE("GET", "[http]") {
 
 TEST_CASE("POST", "[http]") {
   klib::Request request;
-  request.set_connect_timeout(5);
-  request.set_timeout(30);
   request.set_browser_user_agent();
 
 #ifndef NDEBUG
