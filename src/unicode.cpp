@@ -11,15 +11,25 @@
 
 namespace klib {
 
+namespace {
+
+void set_locale() {
+  const char *locale = "en_US.utf8";
+
+  if (std::setlocale(LC_ALL, locale) == nullptr) {
+    throw RuntimeError("Does not support '{}'", locale);
+  }
+}
+
+}  // namespace
+
 // https://zh.cppreference.com/w/c/string/multibyte/mbrtoc16
 std::u16string utf8_to_utf16(const std::string &str) {
   if (std::empty(str)) {
     return {};
   }
 
-  if (std::setlocale(LC_ALL, "en_US.utf8") == nullptr) {
-    throw RuntimeError("The request cannot be honored");
-  }
+  set_locale();
 
   std::u16string result;
 
@@ -52,9 +62,7 @@ std::u32string utf8_to_utf32(const std::string &str) {
     return {};
   }
 
-  if (std::setlocale(LC_ALL, "en_US.utf8") == nullptr) {
-    throw RuntimeError("The request cannot be honored");
-  }
+  set_locale();
 
   std::u32string result;
 
@@ -81,9 +89,7 @@ std::u32string utf8_to_utf32(const std::string &str) {
 
 // https://zh.cppreference.com/w/c/string/multibyte/c32rtomb
 std::string utf32_to_utf8(char32_t c) {
-  if (std::setlocale(LC_ALL, "en_US.utf8") == nullptr) {
-    throw RuntimeError("The request cannot be honored");
-  }
+  set_locale();
 
   std::string result;
   result.resize(MB_CUR_MAX);
