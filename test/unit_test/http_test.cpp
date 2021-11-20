@@ -81,6 +81,27 @@ TEST_CASE("GET", "[http]") {
 
 TEST_CASE("POST", "[http]") {
   klib::Request request;
+
+#ifndef NDEBUG
+  request.verbose(true);
+#endif
+
+  const std::string user_name = "你好kaiser";
+  const std::string password = "123456";
+
+  auto response = request.post(httpbin_url + "/post", {{"user_name", user_name},
+                                                       {"password", password}});
+  REQUIRE(response.ok());
+
+  auto jv = boost::json::parse(response.text());
+
+  const auto& form = jv.at("form");
+  REQUIRE(form.at("user_name").as_string() == user_name);
+  REQUIRE(form.at("password").as_string() == password);
+}
+
+TEST_CASE("POST mime", "[http]") {
+  klib::Request request;
   request.set_browser_user_agent();
 
 #ifndef NDEBUG
@@ -99,7 +120,7 @@ TEST_CASE("POST", "[http]") {
   REQUIRE(std::filesystem::exists(file_a));
   REQUIRE(std::filesystem::exists(file_b));
 
-  auto response = request.post(
+  auto response = request.post_mime(
       httpbin_url + "/post", {{"user_name", user_name}, {"password", password}},
       {{file_a, file_a}, {file_b, file_b}});
   REQUIRE(response.ok());

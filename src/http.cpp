@@ -245,11 +245,15 @@ class Request::RequestImpl {
                const std::unordered_map<std::string, std::string> &params,
                const std::unordered_map<std::string, std::string> &header,
                bool multi);
+  Response post_mime(const std::string &url,
+                     const std::unordered_map<std::string, std::string> &data,
+                     const std::unordered_map<std::string, std::string> &file,
+                     const std::unordered_map<std::string, std::string> &header,
+                     bool multi);
   Response post(const std::string &url,
                 const std::unordered_map<std::string, std::string> &data,
-                const std::unordered_map<std::string, std::string> &file,
-                const std::unordered_map<std::string, std::string> &header,
-                bool multi);
+                const std::unordered_map<std::string, std::string> &header = {},
+                bool multi = false);
   Response post(const std::string &url, const std::string &json,
                 const std::unordered_map<std::string, std::string> &header,
                 bool multi);
@@ -393,7 +397,7 @@ Response Request::RequestImpl::get(
   return response;
 }
 
-Response Request::RequestImpl::post(
+Response Request::RequestImpl::post_mime(
     const std::string &url,
     const std::unordered_map<std::string, std::string> &data,
     const std::unordered_map<std::string, std::string> &file,
@@ -409,19 +413,51 @@ Response Request::RequestImpl::post(
 }
 
 Response Request::RequestImpl::post(
+    const std::string &url,
+    const std::unordered_map<std::string, std::string> &data,
+    const std::unordered_map<std::string, std::string> &header, bool multi) {
+  set_cookies();
+  check_curl_correct(curl_easy_setopt(http_handle_, CURLOPT_HTTPPOST, 1L));
+
+  std::string data_str;
+  for (const auto &[key, value] : data) {
+    std::unique_ptr<char, decltype(curl_free) *> key_ptr(
+        curl_easy_escape(http_handle_, key.c_str(), std::size(key)), curl_free);
+    std::unique_ptr<char, decltype(curl_free) *> value_ptr(
+        curl_easy_escape(http_handle_, value.c_str(), std::size(value)),
+        curl_free);
+
+    data_str.append(key_ptr.get());
+    data_str.append("=");
+    data_str.append(value_ptr.get());
+    data_str.append("&");
+  }
+  if (data_str.ends_with("&")) {
+    data_str.pop_back();
+  }
+  check_curl_correct(
+      curl_easy_setopt(http_handle_, CURLOPT_POSTFIELDS, data_str.c_str()));
+
+  AddHeader add_header(http_handle_, header);
+  AddURL add_url(http_handle_, url);
+
+  return do_post(multi);
+}
+
+Response Request::RequestImpl::post(
     const std::string &url, const std::string &json,
     const std::unordered_map<std::string, std::string> &header, bool multi) {
   set_cookies();
   check_curl_correct(curl_easy_setopt(http_handle_, CURLOPT_HTTPPOST, 1L));
+
+  check_curl_correct(
+      curl_easy_setopt(http_handle_, CURLOPT_POSTFIELDS, json.c_str()));
 
   auto header_copy = header;
   header_copy["Content-Type"] = "application/json";
   AddHeader add_header(http_handle_, header_copy);
 
   AddURL add_url(http_handle_, url);
-
-  check_curl_correct(
-      curl_easy_setopt(http_handle_, CURLOPT_POSTFIELDS, json.c_str()));
 
   return do_post(multi);
 }
@@ -518,12 +554,19 @@ Response Request::get(
   return impl_->get(url, params, header, multi);
 }
 
-Response Request::post(
+Response Request::post_mime(
     const std::string &url,
     const std::unordered_map<std::string, std::string> &data,
     const std::unordered_map<std::string, std::string> &file,
     const std::unordered_map<std::string, std::string> &header, bool multi) {
-  return impl_->post(url, data, file, header, multi);
+  return impl_->post_mime(url, data, file, header, multi);
+}
+
+Response Request::post(
+    const std::string &url,
+    const std::unordered_map<std::string, std::string> &data,
+    const std::unordered_map<std::string, std::string> &header, bool multi) {
+  return impl_->post(url, data, header, multi);
 }
 
 Response Request::post(

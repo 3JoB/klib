@@ -128,9 +128,21 @@ class Request {
    * @param file: File name and content
    * @return Response content
    */
+  Response post_mime(
+      const std::string &url,
+      const std::unordered_map<std::string, std::string> &data,
+      const std::unordered_map<std::string, std::string> &file,
+      const std::unordered_map<std::string, std::string> &header = {},
+      bool multi = false);
+
+  /**
+   * @brief Sends a POST request
+   * @param url: Requested url
+   * @param data: Data name and value
+   * @return Response content
+   */
   Response post(const std::string &url,
                 const std::unordered_map<std::string, std::string> &data,
-                const std::unordered_map<std::string, std::string> &file = {},
                 const std::unordered_map<std::string, std::string> &header = {},
                 bool multi = false);
 
