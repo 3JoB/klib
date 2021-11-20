@@ -178,6 +178,7 @@ var NAVTREEINDEX0 =
 "http_8h_source.html":[1,0,0,0,6],
 "index.html":[],
 "pages.html":[],
+"request_8set_accept_encoding-example.html":[2,2],
 "request_8set_doh_url-example.html":[2,1],
 "request_8set_proxy-example.html":[2,0],
 "sql_8h.html":[1,0,0,0,7],
