@@ -104,6 +104,13 @@ class Request {
   void use_cookies(bool flag);
 
   /**
+   * @brief Set Accept-Encoding
+   * @param accept_encoding: Accept-Encoding
+   * @example request.set_accept_encoding("gzip, deflate");
+   */
+  void set_accept_encoding(const std::string &accept_encoding);
+
+  /**
    * @brief Sends a GET request
    * @param url: Requested url
    * @param params: URL parameters

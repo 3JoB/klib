@@ -239,6 +239,7 @@ class Request::RequestImpl {
   void set_timeout(std::int64_t seconds);
   void set_connect_timeout(std::int64_t seconds);
   void use_cookies(bool flag);
+  void set_accept_encoding(const std::string &accept_encoding);
 
   Response get(const std::string &url,
                const std::unordered_map<std::string, std::string> &params,
@@ -333,7 +334,7 @@ void Request::RequestImpl::set_browser_user_agent() {
   // navigator.userAgent
   set_user_agent(
       "Mozilla/5.0 (X11; Linux x86_64) AppleWebKit/537.36 (KHTML, like Gecko) "
-      "Chrome/95.0.4638.69 Safari/537.36");
+      "Chrome/95.0.4638.69 Safari/537.36 Edg/95.0.1020.53");
 }
 
 void Request::RequestImpl::set_curl_user_agent() {
@@ -350,6 +351,12 @@ void Request::RequestImpl::set_connect_timeout(std::int64_t seconds) {
 }
 
 void Request::RequestImpl::use_cookies(bool flag) { use_cookies_ = flag; }
+
+void Request::RequestImpl::set_accept_encoding(
+    const std::string &accept_encoding) {
+  check_curl_correct(curl_easy_setopt(http_handle_, CURLOPT_ACCEPT_ENCODING,
+                                      accept_encoding.c_str()));
+}
 
 Response Request::RequestImpl::get(
     const std::string &url,
@@ -499,6 +506,10 @@ void Request::set_connect_timeout(std::int64_t seconds) {
 }
 
 void Request::use_cookies(bool flag) { impl_->use_cookies(flag); }
+
+void Request::set_accept_encoding(const std::string &accept_encoding) {
+  impl_->set_accept_encoding(accept_encoding);
+}
 
 Response Request::get(
     const std::string &url,
