@@ -8,10 +8,10 @@ if(KLIB_VALGRIND)
   endif()
 
   add_test(
-    NAME ${TEST_EXECUTABLE}-valgrind
+    NAME ${KLIB_TEST_EXECUTABLE}-valgrind
     COMMAND
       ${VALGRIND_EXECUTABLE} --leak-check=full --show-leak-kinds=all
       --leak-resolution=med --track-origins=yes --vgdb=no --tool=memcheck
-      --gen-suppressions=all --error-exitcode=1 ./${TEST_EXECUTABLE}
+      --gen-suppressions=all --error-exitcode=1 ./${KLIB_TEST_EXECUTABLE}
     WORKING_DIRECTORY ${KLIB_BINARY_DIR}/test/unit_test)
 endif()

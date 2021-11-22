@@ -18,7 +18,7 @@ if(KLIB_BUILD_COVERAGE)
     add_custom_target(
       coverage
       COMMAND ${LCOV_EXECUTABLE} -d ${KLIB_BINARY_DIR} -z
-      COMMAND ${TEST_EXECUTABLE}
+      COMMAND ${KLIB_TEST_EXECUTABLE}
       COMMAND
         ${LCOV_EXECUTABLE} -d ${KLIB_BINARY_DIR} --include
         '${KLIB_SOURCE_DIR}/src/*.cpp' --include
@@ -30,7 +30,7 @@ if(KLIB_BUILD_COVERAGE)
       COMMAND mv lcov.info ${KLIB_BINARY_DIR}/lcov.info
       COMMAND mv coverage ${KLIB_BINARY_DIR}/coverage
       WORKING_DIRECTORY ${KLIB_BINARY_DIR}/test/unit_test
-      DEPENDS ${TEST_EXECUTABLE}
+      DEPENDS ${KLIB_TEST_EXECUTABLE}
       COMMENT "Generate HTML report: ${KLIB_BINARY_DIR}/coverage/index.html")
   else()
     message(
@@ -51,24 +51,24 @@ if(KLIB_BUILD_COVERAGE)
     # https://llvm.org/docs/CommandGuide/llvm-cov.html
     add_custom_target(
       coverage
-      COMMAND ${TEST_EXECUTABLE}
+      COMMAND ${KLIB_TEST_EXECUTABLE}
       COMMAND ${LLVM_PROFDATA_EXECUTABLE} merge -sparse -o
-              ${TEST_EXECUTABLE}.profdata default.profraw
+              ${KLIB_TEST_EXECUTABLE}.profdata default.profraw
       COMMAND
-        ${LLVM_COV_EXECUTABLE} show ./${TEST_EXECUTABLE}
-        -instr-profile=${TEST_EXECUTABLE}.profdata -show-branches=percent
+        ${LLVM_COV_EXECUTABLE} show ./${KLIB_TEST_EXECUTABLE}
+        -instr-profile=${KLIB_TEST_EXECUTABLE}.profdata -show-branches=percent
         -show-line-counts-or-regions
         -ignore-filename-regex=${KLIB_SOURCE_DIR}/test/* -format=html
         -output-dir=coverage
       COMMAND
-        ${LLVM_COV_EXECUTABLE} export ./${TEST_EXECUTABLE}
-        -instr-profile=${TEST_EXECUTABLE}.profdata -format=lcov
+        ${LLVM_COV_EXECUTABLE} export ./${KLIB_TEST_EXECUTABLE}
+        -instr-profile=${KLIB_TEST_EXECUTABLE}.profdata -format=lcov
         -ignore-filename-regex=${KLIB_SOURCE_DIR}/test/* > lcov.info
       COMMAND rm -rf ${KLIB_BINARY_DIR}/coverage
       COMMAND mv lcov.info ${KLIB_BINARY_DIR}/lcov.info
       COMMAND mv coverage ${KLIB_BINARY_DIR}/coverage
       WORKING_DIRECTORY ${KLIB_BINARY_DIR}/test/unit_test
-      DEPENDS ${TEST_EXECUTABLE}
+      DEPENDS ${KLIB_TEST_EXECUTABLE}
       COMMENT "Generate HTML report: ${KLIB_BINARY_DIR}/coverage/index.html")
   endif()
 endif()

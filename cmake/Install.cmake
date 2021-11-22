@@ -6,7 +6,7 @@ include(GNUInstallDirs)
 install(DIRECTORY "include/" DESTINATION ${CMAKE_INSTALL_INCLUDEDIR})
 
 install(
-  TARGETS ${LIBRARY} ${LIBRARY}-shared
+  TARGETS ${KLIB_LIBRARY} ${KLIB_LIBRARY}-shared
   EXPORT KLIB_EXPORTS
   LIBRARY DESTINATION ${CMAKE_INSTALL_LIBDIR}
   ARCHIVE DESTINATION ${CMAKE_INSTALL_LIBDIR}
@@ -15,21 +15,21 @@ install(
 # ---------------------------------------------------------------------------------------
 # Install CMake config files
 # ---------------------------------------------------------------------------------------
-set(KLIB_EXPORT_DEST_DIR "${CMAKE_INSTALL_LIBDIR}/cmake/${LIBRARY}")
-set(KLIB_CONFIG_TARGETS_FILE "${LIBRARY}ConfigTargets.cmake")
+set(KLIB_EXPORT_DEST_DIR "${CMAKE_INSTALL_LIBDIR}/cmake/${KLIB_LIBRARY}")
+set(KLIB_CONFIG_TARGETS_FILE "${KLIB_LIBRARY}ConfigTargets.cmake")
 
 install(
   EXPORT KLIB_EXPORTS
   DESTINATION ${KLIB_EXPORT_DEST_DIR}
-  NAMESPACE ${LIBRARY}::
+  NAMESPACE ${KLIB_LIBRARY}::
   FILE ${KLIB_CONFIG_TARGETS_FILE})
 
 set(KLIB_PROJECT_CONFIG_IN
-    "${CMAKE_CURRENT_SOURCE_DIR}/cmake/${LIBRARY}Config.cmake.in")
+    "${CMAKE_CURRENT_SOURCE_DIR}/cmake/${KLIB_LIBRARY}Config.cmake.in")
 set(KLIB_PROJECT_CONFIG_OUT
-    "${CMAKE_CURRENT_BINARY_DIR}/${LIBRARY}Config.cmake")
+    "${CMAKE_CURRENT_BINARY_DIR}/${KLIB_LIBRARY}Config.cmake")
 set(KLIB_VERSION_CONFIG_FILE
-    "${CMAKE_CURRENT_BINARY_DIR}/${LIBRARY}ConfigVersion.cmake")
+    "${CMAKE_CURRENT_BINARY_DIR}/${KLIB_LIBRARY}ConfigVersion.cmake")
 
 # https://cmake.org/cmake/help/latest/module/CMakePackageConfigHelpers.html#example-generating-package-files
 include(CMakePackageConfigHelpers)

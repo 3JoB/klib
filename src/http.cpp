@@ -11,9 +11,6 @@
 #include "klib/exception.h"
 #include "klib/util.h"
 
-// https://curl.se/libcurl/c/multi-single.html
-// https://curl.se/libcurl/c/http2-download.html
-// https://curl.se/libcurl/c/multi-post.html
 namespace klib {
 
 namespace {
@@ -24,16 +21,33 @@ void check_curl_correct(CURLcode code) {
   }
 }
 
-void check_curl_correct(CURLMcode code) {
-  if (code != CURLMcode::CURLM_OK) {
-    throw RuntimeError(curl_multi_strerror(code));
-  }
-}
-
 void check_curl_correct(CURLUcode code) {
   if (code != CURLUcode::CURLUE_OK) {
     throw RuntimeError(curl_url_strerror(code));
   }
+}
+
+std::string splicing_post_fields(
+    CURL *curl, const std::unordered_map<std::string, std::string> &data) {
+  std::string result;
+
+  for (const auto &[key, value] : data) {
+    std::unique_ptr<char, decltype(curl_free) *> key_ptr(
+        curl_easy_escape(curl, key.c_str(), std::size(key)), curl_free);
+    std::unique_ptr<char, decltype(curl_free) *> value_ptr(
+        curl_easy_escape(curl, value.c_str(), std::size(value)), curl_free);
+
+    result.append(key_ptr.get());
+    result.append("=");
+    result.append(value_ptr.get());
+    result.append("&");
+  }
+
+  if (result.ends_with("&")) {
+    result.pop_back();
+  }
+
+  return result;
 }
 
 class AddURL {
@@ -178,44 +192,6 @@ class AddForm {
   curl_mime *form_ = nullptr;
 };
 
-class Multi {
- public:
-  explicit Multi(CURL *curl) : curl_(curl), multi_(curl_multi_init()) {
-    if (!curl_) {
-      throw RuntimeError("curl is null");
-    }
-
-    if (!multi_) {
-      throw RuntimeError("create multi_handle error");
-    }
-
-    try {
-      check_curl_correct(curl_multi_add_handle(multi_, curl_));
-    } catch (...) {
-      if (curl_multi_cleanup(multi_) != CURLMcode::CURLM_OK) {
-        error("curl_multi_cleanup error");
-      } else {
-        throw;
-      }
-    }
-  }
-
-  ~Multi() {
-    try {
-      check_curl_correct(curl_multi_remove_handle(multi_, curl_));
-      check_curl_correct(curl_multi_cleanup(multi_));
-    } catch (...) {
-      error("Error destroying multi");
-    }
-  }
-
-  [[nodiscard]] CURLM *get() const { return multi_; }
-
- private:
-  CURL *curl_ = nullptr;
-  CURLM *multi_ = nullptr;
-};
-
 }  // namespace
 
 class Request::RequestImpl {
@@ -243,20 +219,17 @@ class Request::RequestImpl {
 
   Response get(const std::string &url,
                const std::unordered_map<std::string, std::string> &params,
-               const std::unordered_map<std::string, std::string> &header,
-               bool multi);
-  Response post_mime(const std::string &url,
-                     const std::unordered_map<std::string, std::string> &data,
-                     const std::unordered_map<std::string, std::string> &file,
-                     const std::unordered_map<std::string, std::string> &header,
-                     bool multi);
+               const std::unordered_map<std::string, std::string> &headers);
   Response post(const std::string &url,
                 const std::unordered_map<std::string, std::string> &data,
-                const std::unordered_map<std::string, std::string> &header = {},
-                bool multi = false);
+                const std::unordered_map<std::string, std::string> &headers);
   Response post(const std::string &url, const std::string &json,
-                const std::unordered_map<std::string, std::string> &header,
-                bool multi);
+                const std::unordered_map<std::string, std::string> &headers);
+  Response post_mime(
+      const std::string &url,
+      const std::unordered_map<std::string, std::string> &data,
+      const std::unordered_map<std::string, std::string> &file,
+      const std::unordered_map<std::string, std::string> &headers);
 
  private:
   constexpr static std::string_view cookies_path = "/tmp/cookies.txt";
@@ -264,7 +237,7 @@ class Request::RequestImpl {
 
   void set_cookies();
 
-  Response do_post(bool multi);
+  Response do_post();
 
   static std::size_t callback_func_std_string(void *contents, std::size_t size,
                                               std::size_t nmemb,
@@ -365,11 +338,11 @@ void Request::RequestImpl::set_accept_encoding(
 Response Request::RequestImpl::get(
     const std::string &url,
     const std::unordered_map<std::string, std::string> &params,
-    const std::unordered_map<std::string, std::string> &header, bool multi) {
+    const std::unordered_map<std::string, std::string> &headers) {
   set_cookies();
   check_curl_correct(curl_easy_setopt(http_handle_, CURLOPT_HTTPGET, 1L));
 
-  AddHeader add_header(http_handle_, header);
+  AddHeader add_header(http_handle_, headers);
   AddURL add_url(http_handle_, url, params);
 
   Response response;
@@ -378,18 +351,7 @@ Response Request::RequestImpl::get(
   check_curl_correct(
       curl_easy_setopt(http_handle_, CURLOPT_HEADERDATA, &response.headers_));
 
-  if (multi) {
-    Multi multi_handle(http_handle_);
-    std::int32_t still_running = 1;
-    do {
-      check_curl_correct(
-          curl_multi_perform(multi_handle.get(), &still_running));
-      check_curl_correct(
-          curl_multi_poll(multi_handle.get(), nullptr, 0, 1000, nullptr));
-    } while (still_running);
-  } else {
-    check_curl_correct(curl_easy_perform(http_handle_));
-  }
+  check_curl_correct(curl_easy_perform(http_handle_));
 
   check_curl_correct(curl_easy_getinfo(http_handle_, CURLINFO_RESPONSE_CODE,
                                        &response.status_code_));
@@ -397,69 +359,54 @@ Response Request::RequestImpl::get(
   return response;
 }
 
-Response Request::RequestImpl::post_mime(
-    const std::string &url,
-    const std::unordered_map<std::string, std::string> &data,
-    const std::unordered_map<std::string, std::string> &file,
-    const std::unordered_map<std::string, std::string> &header, bool multi) {
-  set_cookies();
-  check_curl_correct(curl_easy_setopt(http_handle_, CURLOPT_HTTPPOST, 1L));
-
-  AddForm add_form(http_handle_, data, file);
-  AddHeader add_header(http_handle_, header);
-  AddURL add_url(http_handle_, url);
-
-  return do_post(multi);
-}
-
 Response Request::RequestImpl::post(
     const std::string &url,
     const std::unordered_map<std::string, std::string> &data,
-    const std::unordered_map<std::string, std::string> &header, bool multi) {
+    const std::unordered_map<std::string, std::string> &headers) {
   set_cookies();
   check_curl_correct(curl_easy_setopt(http_handle_, CURLOPT_HTTPPOST, 1L));
 
-  std::string data_str;
-  for (const auto &[key, value] : data) {
-    std::unique_ptr<char, decltype(curl_free) *> key_ptr(
-        curl_easy_escape(http_handle_, key.c_str(), std::size(key)), curl_free);
-    std::unique_ptr<char, decltype(curl_free) *> value_ptr(
-        curl_easy_escape(http_handle_, value.c_str(), std::size(value)),
-        curl_free);
-
-    data_str.append(key_ptr.get());
-    data_str.append("=");
-    data_str.append(value_ptr.get());
-    data_str.append("&");
-  }
-  if (data_str.ends_with("&")) {
-    data_str.pop_back();
-  }
+  auto post_fields = splicing_post_fields(http_handle_, data);
   check_curl_correct(
-      curl_easy_setopt(http_handle_, CURLOPT_POSTFIELDS, data_str.c_str()));
+      curl_easy_setopt(http_handle_, CURLOPT_POSTFIELDS, post_fields.c_str()));
 
-  AddHeader add_header(http_handle_, header);
+  AddHeader add_header(http_handle_, headers);
   AddURL add_url(http_handle_, url);
 
-  return do_post(multi);
+  return do_post();
 }
 
 Response Request::RequestImpl::post(
     const std::string &url, const std::string &json,
-    const std::unordered_map<std::string, std::string> &header, bool multi) {
+    const std::unordered_map<std::string, std::string> &headers) {
   set_cookies();
   check_curl_correct(curl_easy_setopt(http_handle_, CURLOPT_HTTPPOST, 1L));
 
   check_curl_correct(
       curl_easy_setopt(http_handle_, CURLOPT_POSTFIELDS, json.c_str()));
 
-  auto header_copy = header;
-  header_copy["Content-Type"] = "application/json";
-  AddHeader add_header(http_handle_, header_copy);
+  auto headers_copy = headers;
+  headers_copy["Content-Type"] = "application/json";
+  AddHeader add_header(http_handle_, headers_copy);
 
   AddURL add_url(http_handle_, url);
 
-  return do_post(multi);
+  return do_post();
+}
+
+Response Request::RequestImpl::post_mime(
+    const std::string &url,
+    const std::unordered_map<std::string, std::string> &data,
+    const std::unordered_map<std::string, std::string> &file,
+    const std::unordered_map<std::string, std::string> &headers) {
+  set_cookies();
+  check_curl_correct(curl_easy_setopt(http_handle_, CURLOPT_HTTPPOST, 1L));
+
+  AddForm add_form(http_handle_, data, file);
+  AddHeader add_header(http_handle_, headers);
+  AddURL add_url(http_handle_, url);
+
+  return do_post();
 }
 
 void Request::RequestImpl::set_cookies() {
@@ -474,7 +421,7 @@ void Request::RequestImpl::set_cookies() {
   }
 }
 
-Response Request::RequestImpl::do_post(bool multi) {
+Response Request::RequestImpl::do_post() {
   Response response;
 
   check_curl_correct(
@@ -482,22 +429,7 @@ Response Request::RequestImpl::do_post(bool multi) {
   check_curl_correct(
       curl_easy_setopt(http_handle_, CURLOPT_HEADERDATA, &response.headers_));
 
-  if (multi) {
-    Multi multi_handle(http_handle_);
-    std::int32_t still_running = 0;
-    do {
-      auto mc = curl_multi_perform(multi_handle.get(), &still_running);
-      if (still_running) {
-        mc = curl_multi_poll(multi_handle.get(), nullptr, 0, 1000, nullptr);
-      }
-
-      if (mc) {
-        break;
-      }
-    } while (still_running);
-  } else {
-    check_curl_correct(curl_easy_perform(http_handle_));
-  }
+  check_curl_correct(curl_easy_perform(http_handle_));
 
   check_curl_correct(curl_easy_getinfo(http_handle_, CURLINFO_RESPONSE_CODE,
                                        &response.status_code_));
@@ -550,29 +482,29 @@ void Request::set_accept_encoding(const std::string &accept_encoding) {
 Response Request::get(
     const std::string &url,
     const std::unordered_map<std::string, std::string> &params,
-    const std::unordered_map<std::string, std::string> &header, bool multi) {
-  return impl_->get(url, params, header, multi);
+    const std::unordered_map<std::string, std::string> &header) {
+  return impl_->get(url, params, header);
+}
+
+Response Request::post(
+    const std::string &url,
+    const std::unordered_map<std::string, std::string> &data,
+    const std::unordered_map<std::string, std::string> &header) {
+  return impl_->post(url, data, header);
+}
+
+Response Request::post(
+    const std::string &url, const std::string &json,
+    const std::unordered_map<std::string, std::string> &header) {
+  return impl_->post(url, json, header);
 }
 
 Response Request::post_mime(
     const std::string &url,
     const std::unordered_map<std::string, std::string> &data,
     const std::unordered_map<std::string, std::string> &file,
-    const std::unordered_map<std::string, std::string> &header, bool multi) {
-  return impl_->post_mime(url, data, file, header, multi);
-}
-
-Response Request::post(
-    const std::string &url,
-    const std::unordered_map<std::string, std::string> &data,
-    const std::unordered_map<std::string, std::string> &header, bool multi) {
-  return impl_->post(url, data, header, multi);
-}
-
-Response Request::post(
-    const std::string &url, const std::string &json,
-    const std::unordered_map<std::string, std::string> &header, bool multi) {
-  return impl_->post(url, json, header, multi);
+    const std::unordered_map<std::string, std::string> &header) {
+  return impl_->post_mime(url, data, file, header);
 }
 
 const std::string &Headers::at(const std::string &key) const {

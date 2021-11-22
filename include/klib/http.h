@@ -114,47 +114,50 @@ class Request {
    * @brief Sends a GET request
    * @param url: Requested url
    * @param params: URL parameters
+   * @param headers: HTTP headers
    * @return Response content
    */
-  Response get(const std::string &url,
-               const std::unordered_map<std::string, std::string> &params = {},
-               const std::unordered_map<std::string, std::string> &header = {},
-               bool multi = false);
+  Response get(
+      const std::string &url,
+      const std::unordered_map<std::string, std::string> &params = {},
+      const std::unordered_map<std::string, std::string> &headers = {});
+
+  /**
+   * @brief Sends a POST request
+   * @param url: Requested url
+   * @param data: Data name and value
+   * @param headers: HTTP headers
+   * @return Response content
+   */
+  Response post(
+      const std::string &url,
+      const std::unordered_map<std::string, std::string> &data,
+      const std::unordered_map<std::string, std::string> &headers = {});
+
+  /**
+   * @brief Sends a POST request
+   * @param url: Requested url
+   * @param data: Data string
+   * @param headers: HTTP headers
+   * @return Response content
+   */
+  Response post(
+      const std::string &url, const std::string &json,
+      const std::unordered_map<std::string, std::string> &headers = {});
 
   /**
    * @brief Sends a POST request
    * @param url: Requested url
    * @param data: Data name and value
    * @param file: File name and content
+   * @param headers: HTTP headers
    * @return Response content
    */
   Response post_mime(
       const std::string &url,
       const std::unordered_map<std::string, std::string> &data,
       const std::unordered_map<std::string, std::string> &file,
-      const std::unordered_map<std::string, std::string> &header = {},
-      bool multi = false);
-
-  /**
-   * @brief Sends a POST request
-   * @param url: Requested url
-   * @param data: Data name and value
-   * @return Response content
-   */
-  Response post(const std::string &url,
-                const std::unordered_map<std::string, std::string> &data,
-                const std::unordered_map<std::string, std::string> &header = {},
-                bool multi = false);
-
-  /**
-   * @brief Sends a POST request
-   * @param url: Requested url
-   * @param data: Data string
-   * @return Response content
-   */
-  Response post(const std::string &url, const std::string &json,
-                const std::unordered_map<std::string, std::string> &header = {},
-                bool multi = false);
+      const std::unordered_map<std::string, std::string> &headers = {});
 
  private:
   class RequestImpl;

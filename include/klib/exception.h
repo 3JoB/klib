@@ -10,7 +10,6 @@
 #include <string_view>
 #include <utility>
 
-// TODO DO not use fmt
 #include <fmt/format.h>
 
 namespace klib {

@@ -32,15 +32,16 @@ message(STATUS "Build type: " ${CMAKE_BUILD_TYPE})
 # ---------------------------------------------------------------------------------------
 # Set variables
 # ---------------------------------------------------------------------------------------
-set(LIBRARY ${PROJECT_NAME})
-set(TEST_EXECUTABLE ${LIBRARY}-test)
-set(BENCH_EXECUTABLE ${LIBRARY}-bench)
+set(KLIB_LIBRARY ${PROJECT_NAME})
+set(KLIB_TEST_EXECUTABLE ${KLIB_LIBRARY}-test)
+set(KLIB_BENCH_EXECUTABLE ${KLIB_LIBRARY}-bench)
 
 set(KLIB_SOURCE_DIR ${CMAKE_CURRENT_SOURCE_DIR})
 set(KLIB_BINARY_DIR ${CMAKE_CURRENT_BINARY_DIR})
 
 # https://cmake.org/cmake/help/latest/command/file.html#glob-recurse
-file(GLOB_RECURSE LIBRARY_SRC CONFIGURE_DEPENDS "${KLIB_SOURCE_DIR}/src/*.cpp")
+file(GLOB_RECURSE KLIB_LIBRARY_SRC CONFIGURE_DEPENDS
+     "${KLIB_SOURCE_DIR}/src/*.cpp")
 
 # ---------------------------------------------------------------------------------------
 # Include CMake module
@@ -85,31 +86,30 @@ if(KLIB_BUILD_STATIC)
 
   add_definitions(-DLIBARCHIVE_STATIC -DCURL_STATICLIB -DFMT_LOCALE)
 
-  add_library(${LIBRARY} STATIC ${LIBRARY_SRC})
-  add_library(${LIBRARY}::${LIBRARY} ALIAS ${LIBRARY})
+  add_library(${KLIB_LIBRARY} STATIC ${KLIB_LIBRARY_SRC})
+  add_library(${KLIB_LIBRARY}::${KLIB_LIBRARY} ALIAS ${KLIB_LIBRARY})
 
   # https://cmake.org/cmake/help/latest/command/target_include_directories.html
   # https://stackoverflow.com/questions/26037954/cmake-target-link-libraries-interface-dependencies
   target_include_directories(
-    ${LIBRARY} PUBLIC "$<BUILD_INTERFACE:${KLIB_SOURCE_DIR}/include>"
-                      "$<INSTALL_INTERFACE:${CMAKE_INSTALL_INCLUDEDIR}>")
-  target_compile_features(${LIBRARY} INTERFACE cxx_std_20)
-  # TODO DO not use fmt
-  target_compile_definitions(${LIBRARY} INTERFACE FMT_LOCALE)
-  target_link_libraries(${LIBRARY} PUBLIC ${CMAKE_THREAD_LIBS_INIT})
+    ${KLIB_LIBRARY} PUBLIC "$<BUILD_INTERFACE:${KLIB_SOURCE_DIR}/include>"
+                           "$<INSTALL_INTERFACE:${CMAKE_INSTALL_INCLUDEDIR}>")
+  target_compile_features(${KLIB_LIBRARY} INTERFACE cxx_std_20)
+  target_compile_definitions(${KLIB_LIBRARY} INTERFACE FMT_LOCALE)
+  target_link_libraries(${KLIB_LIBRARY} PUBLIC ${CMAKE_THREAD_LIBS_INIT})
 
   set_target_properties(
-    ${LIBRARY}
-    PROPERTIES OUTPUT_NAME ${LIBRARY}
+    ${KLIB_LIBRARY}
+    PROPERTIES OUTPUT_NAME ${KLIB_LIBRARY}
                POSITION_INDEPENDENT_CODE ON
                INTERPROCEDURAL_OPTIMIZATION FALSE)
 
   # https://stackoverflow.com/questions/37924383/combining-several-static-libraries-into-one-using-cmake
   file(MAKE_DIRECTORY ${KLIB_BINARY_DIR}/third_party)
   add_custom_command(
-    TARGET ${LIBRARY}
+    TARGET ${KLIB_LIBRARY}
     POST_BUILD
-    COMMAND ar -x $<TARGET_FILE:${LIBRARY}>
+    COMMAND ar -x $<TARGET_FILE:${KLIB_LIBRARY}>
     COMMAND ar -x /usr/local/lib/libz.a
     COMMAND ar -x /usr/local/lib/libarchive.a
     COMMAND ar -x /usr/local/lib/libtidy.a
@@ -121,8 +121,8 @@ if(KLIB_BUILD_STATIC)
     COMMAND ar -x /usr/local/lib/libzstd.a
     COMMAND ar -x /usr/local/lib/libfmt.a
     COMMAND ar -x /usr/local/lib/libnghttp2.a
-    COMMAND ar -qcs ${KLIB_BINARY_DIR}/lib${LIBRARY}.a *.o
-    COMMAND ranlib ${KLIB_BINARY_DIR}/lib${LIBRARY}.a
+    COMMAND ar -qcs ${KLIB_BINARY_DIR}/lib${KLIB_LIBRARY}.a *.o
+    COMMAND ranlib ${KLIB_BINARY_DIR}/lib${KLIB_LIBRARY}.a
     WORKING_DIRECTORY ${KLIB_BINARY_DIR}/third_party
     COMMENT "Combined static library")
 endif()
@@ -133,15 +133,17 @@ endif()
 if(KLIB_BUILD_SHARED)
   message(STATUS "Build shared library")
 
-  add_library(${LIBRARY}-shared SHARED ${LIBRARY_SRC})
-  add_library(${LIBRARY}::${LIBRARY}-shared ALIAS ${LIBRARY}-shared)
+  add_library(${KLIB_LIBRARY}-shared SHARED ${KLIB_LIBRARY_SRC})
+  add_library(${KLIB_LIBRARY}::${KLIB_LIBRARY}-shared ALIAS
+              ${KLIB_LIBRARY}-shared)
 
   target_include_directories(
-    ${LIBRARY}-shared PUBLIC "$<BUILD_INTERFACE:${KLIB_SOURCE_DIR}/include>"
-                             "$<INSTALL_INTERFACE:${CMAKE_INSTALL_INCLUDEDIR}>")
-  target_compile_features(${LIBRARY}-shared INTERFACE cxx_std_20)
+    ${KLIB_LIBRARY}-shared
+    PUBLIC "$<BUILD_INTERFACE:${KLIB_SOURCE_DIR}/include>"
+           "$<INSTALL_INTERFACE:${CMAKE_INSTALL_INCLUDEDIR}>")
+  target_compile_features(${KLIB_LIBRARY}-shared INTERFACE cxx_std_20)
   target_link_libraries(
-    ${LIBRARY}-shared
+    ${KLIB_LIBRARY}-shared
     PRIVATE PkgConfig::zlib
             PkgConfig::libarchive
             PkgConfig::tidy
@@ -151,12 +153,11 @@ if(KLIB_BUILD_SHARED)
             PkgConfig::libargon2
             zstd::libzstd_static
             ${Boost_LIBRARIES})
-  # TODO DO not use fmt
-  target_link_libraries(${LIBRARY}-shared PUBLIC fmt::fmt)
+  target_link_libraries(${KLIB_LIBRARY}-shared PUBLIC fmt::fmt)
 
   set_target_properties(
-    ${LIBRARY}-shared
-    PROPERTIES OUTPUT_NAME ${LIBRARY}
+    ${KLIB_LIBRARY}-shared
+    PROPERTIES OUTPUT_NAME ${KLIB_LIBRARY}
                VERSION ${KLIB_VERSION}
                SOVERSION ${KLIB_VERSION_MAJOR})
 endif()

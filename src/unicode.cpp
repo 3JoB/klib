@@ -6,6 +6,7 @@
 #include <cstddef>
 #include <cuchar>
 #include <limits>
+#include <string_view>
 
 #include "klib/exception.h"
 
@@ -13,10 +14,8 @@ namespace klib {
 
 namespace {
 
-void set_locale() {
-  const char *locale = "en_US.utf8";
-
-  if (std::setlocale(LC_ALL, locale) == nullptr) {
+void set_locale(std::string_view locale = "en_US.utf8") {
+  if (std::setlocale(LC_ALL, locale.data()) == nullptr) {
     throw RuntimeError("Does not support '{}'", locale);
   }
 }

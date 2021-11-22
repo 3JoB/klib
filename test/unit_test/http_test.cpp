@@ -23,8 +23,8 @@ TEST_CASE("request headers", "[http]") {
   const std::string header_key = "Authorization";
   const std::string header_value = "123456";
 
-  auto response = request.get(httpbin_url + "/headers", {},
-                              {{header_key, header_value}}, true);
+  auto response =
+      request.get(httpbin_url + "/headers", {}, {{header_key, header_value}});
   REQUIRE(response.ok());
   auto headers = boost::json::parse(response.text()).at("headers");
   REQUIRE(headers.at(header_key).as_string() == header_value);
@@ -165,16 +165,13 @@ TEST_CASE("POST json", "[http]") {
 TEST_CASE("download", "[http]") {
   klib::Request request;
   request.set_browser_user_agent();
+  request.set_doh_url("https://dns.google/dns-query");
 
 #ifndef NDEBUG
   request.verbose(true);
 #endif
 #ifdef KLIB_TEST_USE_PROXY
   request.set_proxy("http://127.0.0.1:1080");
-#endif
-  // FIXME
-#ifndef KLIB_VALGRIND
-  request.set_doh_url("https://dns.google/dns-query");
 #endif
 
   auto response = request.get(
