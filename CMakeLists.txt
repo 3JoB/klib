@@ -74,6 +74,7 @@ add_definitions(-DOPENSSL_NO_DEPRECATED -DCURL_NO_OLDIES -DSQLITE_HAS_CODEC)
 find_package(zstd REQUIRED)
 find_package(fmt REQUIRED)
 find_package(Boost REQUIRED CONFIG)
+find_package(scope_guard REQUIRED)
 
 set(THREADS_PREFER_PTHREAD_FLAG TRUE)
 find_package(Threads REQUIRED)
@@ -152,6 +153,7 @@ if(KLIB_BUILD_SHARED)
             PkgConfig::sqlcipher
             PkgConfig::libargon2
             zstd::libzstd_static
+            scope_guard::scope_guard
             ${Boost_LIBRARIES})
   target_link_libraries(${KLIB_LIBRARY}-shared PUBLIC fmt::fmt)
 
