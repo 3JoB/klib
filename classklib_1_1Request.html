@@ -30,7 +30,7 @@
  <tbody>
  <tr style="height: 56px;">
   <td id="projectalign" style="padding-left: 0.5em;">
-   <div id="projectname">klib<span id="projectnumber">&#160;0.8.5</span>
+   <div id="projectname">klib<span id="projectnumber">&#160;0.8.6</span>
    </div>
   </td>
     <td>        <div id="MSearchBox" class="MSearchBoxInactive">
@@ -165,6 +165,12 @@ void&#160;</td><td class="memItemRight" valign="bottom"><b>set_curl_user_agent</
 <tr class="memitem:a05c3c6d1aba4192f65342bb0a4b8aa6e"><td class="memItemLeft" align="right" valign="top"><a id="a05c3c6d1aba4192f65342bb0a4b8aa6e" name="a05c3c6d1aba4192f65342bb0a4b8aa6e"></a>
 void&#160;</td><td class="memItemRight" valign="bottom"><b>set_accept_encoding</b> (const std::string &amp;accept_encoding)</td></tr>
 <tr class="separator:a05c3c6d1aba4192f65342bb0a4b8aa6e"><td class="memSeparator" colspan="2">&#160;</td></tr>
+<tr class="memitem:a821a5ecba97e28f1bb8029e2aa11673a"><td class="memItemLeft" align="right" valign="top">std::string&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="classklib_1_1Request.html#a821a5ecba97e28f1bb8029e2aa11673a">url_encode</a> (const std::string &amp;str)</td></tr>
+<tr class="memdesc:a821a5ecba97e28f1bb8029e2aa11673a"><td class="mdescLeft">&#160;</td><td class="mdescRight">Encoding URL string.  <a href="classklib_1_1Request.html#a821a5ecba97e28f1bb8029e2aa11673a">More...</a><br /></td></tr>
+<tr class="separator:a821a5ecba97e28f1bb8029e2aa11673a"><td class="memSeparator" colspan="2">&#160;</td></tr>
+<tr class="memitem:a0dcd41db916b56c1bb834d1ba836c8e5"><td class="memItemLeft" align="right" valign="top">std::string&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="classklib_1_1Request.html#a0dcd41db916b56c1bb834d1ba836c8e5">url_decode</a> (const std::string &amp;str)</td></tr>
+<tr class="memdesc:a0dcd41db916b56c1bb834d1ba836c8e5"><td class="mdescLeft">&#160;</td><td class="mdescRight">Decoding URL string.  <a href="classklib_1_1Request.html#a0dcd41db916b56c1bb834d1ba836c8e5">More...</a><br /></td></tr>
+<tr class="separator:a0dcd41db916b56c1bb834d1ba836c8e5"><td class="memSeparator" colspan="2">&#160;</td></tr>
 <tr class="memitem:aad26489f1661e13e6ce71f1f40d04bd5"><td class="memItemLeft" align="right" valign="top"><a class="el" href="classklib_1_1Response.html">Response</a>&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="classklib_1_1Request.html#aad26489f1661e13e6ce71f1f40d04bd5">get</a> (const std::string &amp;url, const std::unordered_map&lt; std::string, std::string &gt; &amp;params={}, const std::unordered_map&lt; std::string, std::string &gt; &amp;headers={})</td></tr>
 <tr class="memdesc:aad26489f1661e13e6ce71f1f40d04bd5"><td class="mdescLeft">&#160;</td><td class="mdescRight">Sends a GET request.  <a href="classklib_1_1Request.html#aad26489f1661e13e6ce71f1f40d04bd5">More...</a><br /></td></tr>
 <tr class="separator:aad26489f1661e13e6ce71f1f40d04bd5"><td class="memSeparator" colspan="2">&#160;</td></tr>
@@ -475,6 +481,60 @@ class&#160;</td><td class="memItemRight" valign="bottom"><b>Response</b></td></t
   </table>
   </dd>
 </dl>
+
+</div>
+</div>
+<a id="a0dcd41db916b56c1bb834d1ba836c8e5" name="a0dcd41db916b56c1bb834d1ba836c8e5"></a>
+<h2 class="memtitle"><span class="permalink"><a href="#a0dcd41db916b56c1bb834d1ba836c8e5">&#9670;&nbsp;</a></span>url_decode()</h2>
+
+<div class="memitem">
+<div class="memproto">
+      <table class="memname">
+        <tr>
+          <td class="memname">std::string klib::Request::url_decode </td>
+          <td>(</td>
+          <td class="paramtype">const std::string &amp;&#160;</td>
+          <td class="paramname"><em>str</em></td><td>)</td>
+          <td></td>
+        </tr>
+      </table>
+</div><div class="memdoc">
+
+<p>Decoding URL string. </p>
+<dl class="params"><dt>Parameters</dt><dd>
+  <table class="params">
+    <tr><td class="paramname">str</td><td>String to be decoded </td></tr>
+  </table>
+  </dd>
+</dl>
+<dl class="section return"><dt>Returns</dt><dd>Decoded string </dd></dl>
+
+</div>
+</div>
+<a id="a821a5ecba97e28f1bb8029e2aa11673a" name="a821a5ecba97e28f1bb8029e2aa11673a"></a>
+<h2 class="memtitle"><span class="permalink"><a href="#a821a5ecba97e28f1bb8029e2aa11673a">&#9670;&nbsp;</a></span>url_encode()</h2>
+
+<div class="memitem">
+<div class="memproto">
+      <table class="memname">
+        <tr>
+          <td class="memname">std::string klib::Request::url_encode </td>
+          <td>(</td>
+          <td class="paramtype">const std::string &amp;&#160;</td>
+          <td class="paramname"><em>str</em></td><td>)</td>
+          <td></td>
+        </tr>
+      </table>
+</div><div class="memdoc">
+
+<p>Encoding URL string. </p>
+<dl class="params"><dt>Parameters</dt><dd>
+  <table class="params">
+    <tr><td class="paramname">str</td><td>String to be encoded </td></tr>
+  </table>
+  </dd>
+</dl>
+<dl class="section return"><dt>Returns</dt><dd>Encoded string </dd></dl>
 
 </div>
 </div>
