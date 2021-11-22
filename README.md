@@ -11,7 +11,7 @@
 
 ---
 
-C++ Library
+A C++ library, which wraps several important C libraries and provides some convenient functions
 
 ## Environment
 
