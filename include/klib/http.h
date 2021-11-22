@@ -111,6 +111,20 @@ class Request {
   void set_accept_encoding(const std::string &accept_encoding);
 
   /**
+   * @brief Encoding URL string
+   * @param str: String to be encoded
+   * @return Encoded string
+   */
+  std::string url_encode(const std::string &str);
+
+  /**
+   * @brief Decoding URL string
+   * @param str: String to be decoded
+   * @return Decoded string
+   */
+  std::string url_decode(const std::string &str);
+
+  /**
    * @brief Sends a GET request
    * @param url: Requested url
    * @param params: URL parameters

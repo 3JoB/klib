@@ -21,13 +21,14 @@ TEST_CASE("request headers", "[http]") {
 #endif
 
   const std::string header_key = "Authorization";
-  const std::string header_value = "123456";
+  const std::string header_value = "你好123456";
 
-  auto response =
-      request.get(httpbin_url + "/headers", {}, {{header_key, header_value}});
+  auto response = request.get(httpbin_url + "/headers", {},
+                              {{header_key, request.url_encode(header_value)}});
   REQUIRE(response.ok());
   auto headers = boost::json::parse(response.text()).at("headers");
-  REQUIRE(headers.at(header_key).as_string() == header_value);
+  REQUIRE(request.url_decode(headers.at(header_key).as_string().c_str()) ==
+          header_value);
 
   response = request.get(httpbin_url + "/headers");
   REQUIRE(response.ok());
@@ -111,8 +112,8 @@ TEST_CASE("POST mime", "[http]") {
   const std::string user_name = "kaiser";
   const std::string password = "123456";
 
-  const std::string file_a = "a.txt";
-  const std::string content_a = "aaa";
+  const std::string file_a = "你好.txt";
+  const std::string content_a = "你好你好";
   const std::string file_b = "b.txt";
   const std::string content_b = "bbb";
   klib::write_file(file_a, false, content_a);
@@ -146,7 +147,7 @@ TEST_CASE("POST json", "[http]") {
   request.verbose(true);
 #endif
 
-  const std::string user_name = "kaiser";
+  const std::string user_name = "你好kaiser";
   const std::string password = "123456";
 
   boost::json::object obj;

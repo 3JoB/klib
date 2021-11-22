@@ -6,6 +6,7 @@
 
 #include <curl/curl.h>
 #include <boost/algorithm/string.hpp>
+#include <scope_guard.hpp>
 
 #include "klib/error.h"
 #include "klib/exception.h"
@@ -25,29 +26,6 @@ void check_curl_correct(CURLUcode code) {
   if (code != CURLUcode::CURLUE_OK) {
     throw RuntimeError(curl_url_strerror(code));
   }
-}
-
-std::string splicing_post_fields(
-    CURL *curl, const std::unordered_map<std::string, std::string> &data) {
-  std::string result;
-
-  for (const auto &[key, value] : data) {
-    std::unique_ptr<char, decltype(curl_free) *> key_ptr(
-        curl_easy_escape(curl, key.c_str(), std::size(key)), curl_free);
-    std::unique_ptr<char, decltype(curl_free) *> value_ptr(
-        curl_easy_escape(curl, value.c_str(), std::size(value)), curl_free);
-
-    result.append(key_ptr.get());
-    result.append("=");
-    result.append(value_ptr.get());
-    result.append("&");
-  }
-
-  if (result.ends_with("&")) {
-    result.pop_back();
-  }
-
-  return result;
 }
 
 class AddURL {
@@ -216,6 +194,8 @@ class Request::RequestImpl {
   void set_connect_timeout(std::int64_t seconds);
   void use_cookies(bool flag);
   void set_accept_encoding(const std::string &accept_encoding);
+  std::string url_encode(const std::string &str);
+  std::string url_decode(const std::string &str);
 
   Response get(const std::string &url,
                const std::unordered_map<std::string, std::string> &params,
@@ -242,6 +222,8 @@ class Request::RequestImpl {
   static std::size_t callback_func_std_string(void *contents, std::size_t size,
                                               std::size_t nmemb,
                                               std::string *s);
+  std::string splicing_post_fields(
+      const std::unordered_map<std::string, std::string> &data);
 
   CURL *http_handle_;
 };
@@ -335,6 +317,28 @@ void Request::RequestImpl::set_accept_encoding(
                                       accept_encoding.c_str()));
 }
 
+std::string Request::RequestImpl::url_encode(const std::string &str) {
+  auto ptr = curl_easy_escape(http_handle_, str.c_str(), std::size(str));
+  SCOPE_EXIT { curl_free(ptr); };
+  if (!ptr) {
+    throw RuntimeError("curl_easy_escape error");
+  }
+
+  return ptr;
+}
+
+std::string Request::RequestImpl::url_decode(const std::string &str) {
+  std::int32_t length;
+  auto ptr =
+      curl_easy_unescape(http_handle_, str.c_str(), std::size(str), &length);
+  SCOPE_EXIT { curl_free(ptr); };
+  if (!ptr) {
+    throw RuntimeError("curl_easy_unescape error");
+  }
+
+  return std::string(ptr, length);
+}
+
 Response Request::RequestImpl::get(
     const std::string &url,
     const std::unordered_map<std::string, std::string> &params,
@@ -366,7 +370,7 @@ Response Request::RequestImpl::post(
   set_cookies();
   check_curl_correct(curl_easy_setopt(http_handle_, CURLOPT_HTTPPOST, 1L));
 
-  auto post_fields = splicing_post_fields(http_handle_, data);
+  auto post_fields = splicing_post_fields(data);
   check_curl_correct(
       curl_easy_setopt(http_handle_, CURLOPT_POSTFIELDS, post_fields.c_str()));
 
@@ -445,6 +449,24 @@ std::size_t Request::RequestImpl::callback_func_std_string(void *contents,
   return size * nmemb;
 }
 
+std::string Request::RequestImpl::splicing_post_fields(
+    const std::unordered_map<std::string, std::string> &data) {
+  std::string result;
+
+  for (const auto &[key, value] : data) {
+    result.append(url_encode(key));
+    result.append("=");
+    result.append(url_encode(value));
+    result.append("&");
+  }
+
+  if (result.ends_with("&")) {
+    result.pop_back();
+  }
+
+  return result;
+}
+
 Request::Request() : impl_(std::make_unique<RequestImpl>()) {}
 
 Request::~Request() = default;
@@ -477,6 +499,14 @@ void Request::use_cookies(bool flag) { impl_->use_cookies(flag); }
 
 void Request::set_accept_encoding(const std::string &accept_encoding) {
   impl_->set_accept_encoding(accept_encoding);
+}
+
+std::string Request::url_encode(const std::string &str) {
+  return impl_->url_encode(str);
+}
+
+std::string Request::url_decode(const std::string &str) {
+  return impl_->url_decode(str);
 }
 
 Response Request::get(
