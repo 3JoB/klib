@@ -33,8 +33,8 @@ jobs:
       - name: Install
         if: ${{ matrix.build_type == 'Release' }}
         run: |
-          cmake --build build --config ${{ matrix.build_type }} --target install
-          ldconfig
+          sudo cmake --build build --config ${{ matrix.build_type }} --target install
+          sudo ldconfig
 
       - name: Test
         run: ctest -C ${{ matrix.build_type }} -j"$(nproc)" --output-on-failure
@@ -42,4 +42,4 @@ jobs:
 
       - name: Uninstall
         if: ${{ matrix.build_type == 'Release' }}
-        run: cmake --build build --config ${{ matrix.build_type }} --target uninstall
+        run: sudo cmake --build build --config ${{ matrix.build_type }} --target uninstall

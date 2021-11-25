@@ -85,7 +85,3 @@ if((${CMAKE_BUILD_TYPE} STREQUAL "Debug") AND KLIB_BUILD_BENCH)
   message(
     FATAL_ERROR "The CMAKE_BUILD_TYPE cannot be Debug when building benchmark")
 endif()
-
-if(NOT (BUILD_TESTING AND KLIB_BUILD_TEST) AND KLIB_SANITIZER)
-  message(FATAL_ERROR "Must build test when using AddressSanitizer")
-endif()
