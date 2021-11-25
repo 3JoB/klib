@@ -4,10 +4,12 @@
 #include <filesystem>
 #include <functional>
 #include <memory>
+#include <unordered_set>
 
 #include <archive.h>
 #include <archive_entry.h>
 #include <zstd.h>
+#include <boost/core/ignore_unused.hpp>
 
 #include "klib/exception.h"
 #include "klib/util.h"
@@ -17,6 +19,18 @@
 namespace klib {
 
 namespace {
+
+std::string get_top_level_dir(const std::filesystem::path &path) {
+  if (path.has_parent_path()) {
+    return get_top_level_dir(path.parent_path());
+  }
+
+  if (std::filesystem::is_directory(path)) {
+    return path;
+  }
+
+  return {};
+}
 
 void check_file_exists(const std::string &path) {
   if (!std::filesystem::exists(path)) {
@@ -148,7 +162,7 @@ void compress(const std::string &path, Algorithm algorithm,
     paths.push_back(path);
   } else {
     ptr = std::make_unique<ChangeWorkingDir>(path);
-    (void)ptr;
+    boost::ignore_unused(ptr);
 
     for (const auto &item :
          std::filesystem::directory_iterator(std::filesystem::current_path())) {
@@ -236,10 +250,9 @@ std::optional<std::string> decompress(const std::string &file_name,
       archive.get());
 
   ChangeWorkingDir change_work_dir(path);
-  (void)change_work_dir;
+  boost::ignore_unused(change_work_dir);
 
-  std::optional<std::string> dir;
-  bool first = true;
+  std::unordered_set<std::string> dirs;
   while (true) {
     struct archive_entry *entry = nullptr;
     auto status = archive_read_next_header(archive.get(), &entry);
@@ -253,14 +266,7 @@ std::optional<std::string> decompress(const std::string &file_name,
     check_archive_correctness(archive_write_header(extract.get(), entry),
                               extract.get());
 
-    if (first) {
-      dir = archive_entry_pathname(entry);
-      first = false;
-    } else if (dir) {
-      if (!std::string(archive_entry_pathname(entry)).starts_with(*dir)) {
-        dir.reset();
-      }
-    }
+    dirs.insert(get_top_level_dir(archive_entry_pathname(entry)));
 
     if (archive_entry_size(entry) > 0) {
       copy_data(archive.get(), extract.get());
@@ -269,11 +275,15 @@ std::optional<std::string> decompress(const std::string &file_name,
     checked_archive_func(archive_write_finish_entry, extract.get());
   }
 
-  if (dir && dir->ends_with("/")) {
-    return dir->substr(0, std::size(*dir) - 1);
+  if (std::size(dirs) == 1) {
+    auto dir = *dirs.begin();
+    if (dir.ends_with("/")) {
+      dir = dir.substr(0, std::size(dir) - 1);
+    }
+    return dir;
   }
 
-  return dir;
+  return {};
 }
 
 std::string compress_str(const std::string &data) {

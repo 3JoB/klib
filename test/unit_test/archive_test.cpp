@@ -95,6 +95,16 @@ TEST_CASE("gzip", "[archive]") {
   std::filesystem::remove_all("std-gzip");
 }
 
+TEST_CASE("gzip2", "[archive]") {
+  REQUIRE(std::filesystem::exists("bzip2-v1.0.8.tar.gz"));
+
+  auto dir = klib::decompress("bzip2-v1.0.8.tar.gz");
+  REQUIRE(dir.has_value());
+  REQUIRE(*dir == "bzip2-1.0.8");
+
+  std::filesystem::remove_all("bzip2-1.0.8");
+}
+
 TEST_CASE("zstd", "[archive]") {
   std::string data = "test string";
   std::string compressed, decompressed;
