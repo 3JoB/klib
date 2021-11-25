@@ -26,5 +26,3 @@ include(CMakeDependentOption)
 cmake_dependent_option(
   KLIB_BUILD_COVERAGE "Build test with coverage information" OFF
   "BUILD_TESTING;KLIB_BUILD_TEST" OFF)
-cmake_dependent_option(KLIB_VALGRIND "Execute test with valgrind" OFF
-                       "BUILD_TESTING;KLIB_BUILD_TEST" OFF)

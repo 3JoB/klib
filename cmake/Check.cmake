@@ -86,15 +86,6 @@ if((${CMAKE_BUILD_TYPE} STREQUAL "Debug") AND KLIB_BUILD_BENCH)
     FATAL_ERROR "The CMAKE_BUILD_TYPE cannot be Debug when building benchmark")
 endif()
 
-if(KLIB_SANITIZER AND KLIB_VALGRIND)
-  message(
-    FATAL_ERROR "AddressSanitizer and valgrind cannot be used at the same time")
-endif()
-
 if(NOT (BUILD_TESTING AND KLIB_BUILD_TEST) AND KLIB_SANITIZER)
   message(FATAL_ERROR "Must build test when using AddressSanitizer")
-endif()
-
-if(NOT (BUILD_TESTING AND KLIB_BUILD_TEST) AND KLIB_VALGRIND)
-  message(FATAL_ERROR "Must build test when using valgrind")
 endif()

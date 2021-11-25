@@ -8,4 +8,3 @@ if(KLIB_BUILD_EXTRA_TEST)
 endif()
 
 include(Coverage)
-include(Valgrind)
