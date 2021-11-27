@@ -31,6 +31,7 @@ A C++ library, which wraps several important C libraries and provides some conve
 - [argon2](https://github.com/P-H-C/phc-winner-argon2)
 - [Boost](https://www.boost.org/)
 - [fmt](https://github.com/fmtlib/fmt)
+- [spdlog](https://github.com/gabime/spdlog)
 - [scope_guard](https://github.com/Neargye/scope_guard)
 
 ## Build

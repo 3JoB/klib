@@ -73,6 +73,7 @@ add_definitions(-DOPENSSL_NO_DEPRECATED -DCURL_NO_OLDIES -DSQLITE_HAS_CODEC)
 
 find_package(zstd REQUIRED)
 find_package(fmt REQUIRED)
+find_package(spdlog REQUIRED)
 find_package(Boost REQUIRED CONFIG)
 find_package(scope_guard REQUIRED)
 
@@ -85,7 +86,8 @@ find_package(Threads REQUIRED)
 if(KLIB_BUILD_STATIC)
   message(STATUS "Build static library")
 
-  add_definitions(-DLIBARCHIVE_STATIC -DCURL_STATICLIB -DFMT_LOCALE)
+  add_definitions(-DLIBARCHIVE_STATIC -DCURL_STATICLIB -DFMT_LOCALE
+                  -DSPDLOG_COMPILED_LIB -DSPDLOG_FMT_EXTERNAL)
 
   add_library(${KLIB_LIBRARY} STATIC ${KLIB_LIBRARY_SRC})
   add_library(${KLIB_LIBRARY}::${KLIB_LIBRARY} ALIAS ${KLIB_LIBRARY})
@@ -96,7 +98,9 @@ if(KLIB_BUILD_STATIC)
     ${KLIB_LIBRARY} PUBLIC "$<BUILD_INTERFACE:${KLIB_SOURCE_DIR}/include>"
                            "$<INSTALL_INTERFACE:${CMAKE_INSTALL_INCLUDEDIR}>")
   target_compile_features(${KLIB_LIBRARY} INTERFACE cxx_std_20)
-  target_compile_definitions(${KLIB_LIBRARY} INTERFACE FMT_LOCALE)
+  target_compile_definitions(
+    ${KLIB_LIBRARY} INTERFACE FMT_LOCALE SPDLOG_COMPILED_LIB
+                              SPDLOG_FMT_EXTERNAL)
   target_link_libraries(${KLIB_LIBRARY} PUBLIC ${CMAKE_THREAD_LIBS_INIT})
 
   set_target_properties(
@@ -121,6 +125,7 @@ if(KLIB_BUILD_STATIC)
     COMMAND ar -x /usr/local/lib/libargon2.a
     COMMAND ar -x /usr/local/lib/libzstd.a
     COMMAND ar -x /usr/local/lib/libfmt.a
+    COMMAND ar -x /usr/local/lib/libspdlog.a
     COMMAND ar -x /usr/local/lib/libnghttp2.a
     COMMAND ar -qcs ${KLIB_BINARY_DIR}/lib${KLIB_LIBRARY}.a *.o
     COMMAND ranlib ${KLIB_BINARY_DIR}/lib${KLIB_LIBRARY}.a
@@ -155,7 +160,7 @@ if(KLIB_BUILD_SHARED)
             zstd::libzstd_static
             scope_guard::scope_guard
             ${Boost_LIBRARIES})
-  target_link_libraries(${KLIB_LIBRARY}-shared PUBLIC fmt::fmt)
+  target_link_libraries(${KLIB_LIBRARY}-shared PUBLIC fmt::fmt spdlog::spdlog)
 
   set_target_properties(
     ${KLIB_LIBRARY}-shared

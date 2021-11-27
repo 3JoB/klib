@@ -4,6 +4,7 @@ set(KLIB_BUILD_SHARED @KLIB_BUILD_SHARED@)
 if(KLIB_BUILD_SHARED)
   include(CMakeFindDependencyMacro)
   find_dependency(fmt REQUIRED)
+  find_dependency(spdlog REQUIRED)
 endif()
 
 include("${CMAKE_CURRENT_LIST_DIR}/@KLIB_CONFIG_TARGETS_FILE@")
