@@ -2,7 +2,6 @@ var dir_c4deac73006ad3d1787e421f2d774b3c =
 [
     [ "archive.h", "archive_8h.html", "archive_8h" ],
     [ "crypto.h", "crypto_8h.html", "crypto_8h" ],
-    [ "error.h", "error_8h.html", "error_8h" ],
     [ "exception.h", "exception_8h.html", [
       [ "klib::RuntimeError", "classklib_1_1RuntimeError.html", "classklib_1_1RuntimeError" ],
       [ "klib::LogicError", "classklib_1_1LogicError.html", "classklib_1_1LogicError" ],
@@ -16,6 +15,7 @@ var dir_c4deac73006ad3d1787e421f2d774b3c =
       [ "klib::Headers", "classklib_1_1Headers.html", "classklib_1_1Headers" ],
       [ "klib::Response", "classklib_1_1Response.html", "classklib_1_1Response" ]
     ] ],
+    [ "log.h", "log_8h_source.html", null ],
     [ "sql.h", "sql_8h.html", [
       [ "klib::Column", "classklib_1_1Column.html", "classklib_1_1Column" ],
       [ "klib::SqlQuery", "classklib_1_1SqlQuery.html", "classklib_1_1SqlQuery" ],
