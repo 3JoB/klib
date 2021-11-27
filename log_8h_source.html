@@ -30,7 +30,7 @@
  <tbody>
  <tr style="height: 56px;">
   <td id="projectalign" style="padding-left: 0.5em;">
-   <div id="projectname">klib<span id="projectnumber">&#160;0.9.1</span>
+   <div id="projectname">klib<span id="projectnumber">&#160;0.9.2</span>
    </div>
   </td>
     <td>        <div id="MSearchBox" class="MSearchBoxInactive">
@@ -109,28 +109,24 @@ $(document).ready(function(){initNavTree('log_8h_source.html',''); initResizable
 <div class="line"><a id="l00017" name="l00017"></a><span class="lineno">   17</span><span class="keyword">namespace </span>klib {</div>
 <div class="line"><a id="l00018" name="l00018"></a><span class="lineno">   18</span> </div>
 <div class="line"><a id="l00024" name="l00024"></a><span class="lineno">   24</span><span class="keyword">template</span> &lt;<span class="keyword">typename</span>... Args&gt;</div>
-<div class="line"><a id="l00025" name="l00025"></a><span class="lineno"><a class="line" href="log_8h.html#abb610194ecc3cefc8bad87940c8f1b22">   25</a></span><span class="keywordtype">void</span> <a class="code hl_function" href="log_8h.html#abb610194ecc3cefc8bad87940c8f1b22">info</a>(std::string_view fmt, Args &amp;&amp;...args) {</div>
-<div class="line"><a id="l00026" name="l00026"></a><span class="lineno">   26</span>  spdlog::info(fmt::runtime(fmt), std::forward&lt;Args&gt;(args)...);</div>
-<div class="line"><a id="l00027" name="l00027"></a><span class="lineno">   27</span>}</div>
-<div class="line"><a id="l00028" name="l00028"></a><span class="lineno">   28</span> </div>
-<div class="line"><a id="l00034" name="l00034"></a><span class="lineno">   34</span><span class="keyword">template</span> &lt;<span class="keyword">typename</span>... Args&gt;</div>
-<div class="line"><a id="l00035" name="l00035"></a><span class="lineno"><a class="line" href="log_8h.html#a814c67e8ab648504e8d4e9c627aafdb7">   35</a></span><span class="keywordtype">void</span> <a class="code hl_function" href="log_8h.html#a814c67e8ab648504e8d4e9c627aafdb7">warn</a>(std::string_view fmt, Args &amp;&amp;...args) {</div>
-<div class="line"><a id="l00036" name="l00036"></a><span class="lineno">   36</span>  spdlog::warn(fmt::runtime(fmt), std::forward&lt;Args&gt;(args)...);</div>
-<div class="line"><a id="l00037" name="l00037"></a><span class="lineno">   37</span>}</div>
-<div class="line"><a id="l00038" name="l00038"></a><span class="lineno">   38</span> </div>
-<div class="line"><a id="l00044" name="l00044"></a><span class="lineno">   44</span><span class="keyword">template</span> &lt;<span class="keyword">typename</span>... Args&gt;</div>
-<div class="line"><a id="l00045" name="l00045"></a><span class="lineno"><a class="line" href="log_8h.html#a2ff77ad6fbf2e2cc00499160a8c3a70d">   45</a></span>[[noreturn]] <span class="keywordtype">void</span> <a class="code hl_function" href="log_8h.html#a2ff77ad6fbf2e2cc00499160a8c3a70d">error</a>(detail::format_with_location fmt_with_loc,</div>
-<div class="line"><a id="l00046" name="l00046"></a><span class="lineno">   46</span>                        Args &amp;&amp;...args) {</div>
-<div class="line"><a id="l00047" name="l00047"></a><span class="lineno">   47</span>  spdlog::default_logger_raw()-&gt;log(fmt_with_loc.loc_, spdlog::level::err,</div>
-<div class="line"><a id="l00048" name="l00048"></a><span class="lineno">   48</span>                                    fmt::runtime(fmt_with_loc.fmt_),</div>
-<div class="line"><a id="l00049" name="l00049"></a><span class="lineno">   49</span>                                    std::forward&lt;Args&gt;(args)...);</div>
-<div class="line"><a id="l00050" name="l00050"></a><span class="lineno">   50</span>  std::exit(EXIT_FAILURE);</div>
-<div class="line"><a id="l00051" name="l00051"></a><span class="lineno">   51</span>}</div>
-<div class="line"><a id="l00052" name="l00052"></a><span class="lineno">   52</span> </div>
-<div class="line"><a id="l00053" name="l00053"></a><span class="lineno">   53</span>}  <span class="comment">// namespace klib</span></div>
-<div class="ttc" id="alog_8h_html_a2ff77ad6fbf2e2cc00499160a8c3a70d"><div class="ttname"><a href="log_8h.html#a2ff77ad6fbf2e2cc00499160a8c3a70d">klib::error</a></div><div class="ttdeci">void error(detail::format_with_location fmt_with_loc, Args &amp;&amp;...args)</div><div class="ttdoc">Report error and exit.</div><div class="ttdef"><b>Definition:</b> log.h:45</div></div>
-<div class="ttc" id="alog_8h_html_a814c67e8ab648504e8d4e9c627aafdb7"><div class="ttname"><a href="log_8h.html#a814c67e8ab648504e8d4e9c627aafdb7">klib::warn</a></div><div class="ttdeci">void warn(std::string_view fmt, Args &amp;&amp;...args)</div><div class="ttdoc">Report warning.</div><div class="ttdef"><b>Definition:</b> log.h:35</div></div>
-<div class="ttc" id="alog_8h_html_abb610194ecc3cefc8bad87940c8f1b22"><div class="ttname"><a href="log_8h.html#abb610194ecc3cefc8bad87940c8f1b22">klib::info</a></div><div class="ttdeci">void info(std::string_view fmt, Args &amp;&amp;...args)</div><div class="ttdoc">Report info.</div><div class="ttdef"><b>Definition:</b> log.h:25</div></div>
+<div class="line"><a id="l00025" name="l00025"></a><span class="lineno"><a class="line" href="log_8h.html#a1ac4ebc31d958a77807dce7092cf8baf">   25</a></span><span class="keywordtype">void</span> <a class="code hl_function" href="log_8h.html#a1ac4ebc31d958a77807dce7092cf8baf">warn</a>(detail::format_with_location fmt_with_loc, Args &amp;&amp;...args) {</div>
+<div class="line"><a id="l00026" name="l00026"></a><span class="lineno">   26</span>  spdlog::default_logger_raw()-&gt;log(fmt_with_loc.loc_, spdlog::level::warn,</div>
+<div class="line"><a id="l00027" name="l00027"></a><span class="lineno">   27</span>                                    fmt::runtime(fmt_with_loc.fmt_),</div>
+<div class="line"><a id="l00028" name="l00028"></a><span class="lineno">   28</span>                                    std::forward&lt;Args&gt;(args)...);</div>
+<div class="line"><a id="l00029" name="l00029"></a><span class="lineno">   29</span>}</div>
+<div class="line"><a id="l00030" name="l00030"></a><span class="lineno">   30</span> </div>
+<div class="line"><a id="l00036" name="l00036"></a><span class="lineno">   36</span><span class="keyword">template</span> &lt;<span class="keyword">typename</span>... Args&gt;</div>
+<div class="line"><a id="l00037" name="l00037"></a><span class="lineno"><a class="line" href="log_8h.html#a2ff77ad6fbf2e2cc00499160a8c3a70d">   37</a></span>[[noreturn]] <span class="keywordtype">void</span> <a class="code hl_function" href="log_8h.html#a2ff77ad6fbf2e2cc00499160a8c3a70d">error</a>(detail::format_with_location fmt_with_loc,</div>
+<div class="line"><a id="l00038" name="l00038"></a><span class="lineno">   38</span>                        Args &amp;&amp;...args) {</div>
+<div class="line"><a id="l00039" name="l00039"></a><span class="lineno">   39</span>  spdlog::default_logger_raw()-&gt;log(fmt_with_loc.loc_, spdlog::level::err,</div>
+<div class="line"><a id="l00040" name="l00040"></a><span class="lineno">   40</span>                                    fmt::runtime(fmt_with_loc.fmt_),</div>
+<div class="line"><a id="l00041" name="l00041"></a><span class="lineno">   41</span>                                    std::forward&lt;Args&gt;(args)...);</div>
+<div class="line"><a id="l00042" name="l00042"></a><span class="lineno">   42</span>  std::exit(EXIT_FAILURE);</div>
+<div class="line"><a id="l00043" name="l00043"></a><span class="lineno">   43</span>}</div>
+<div class="line"><a id="l00044" name="l00044"></a><span class="lineno">   44</span> </div>
+<div class="line"><a id="l00045" name="l00045"></a><span class="lineno">   45</span>}  <span class="comment">// namespace klib</span></div>
+<div class="ttc" id="alog_8h_html_a1ac4ebc31d958a77807dce7092cf8baf"><div class="ttname"><a href="log_8h.html#a1ac4ebc31d958a77807dce7092cf8baf">klib::warn</a></div><div class="ttdeci">void warn(detail::format_with_location fmt_with_loc, Args &amp;&amp;...args)</div><div class="ttdoc">Report warning.</div><div class="ttdef"><b>Definition:</b> log.h:25</div></div>
+<div class="ttc" id="alog_8h_html_a2ff77ad6fbf2e2cc00499160a8c3a70d"><div class="ttname"><a href="log_8h.html#a2ff77ad6fbf2e2cc00499160a8c3a70d">klib::error</a></div><div class="ttdeci">void error(detail::format_with_location fmt_with_loc, Args &amp;&amp;...args)</div><div class="ttdoc">Report error and exit.</div><div class="ttdef"><b>Definition:</b> log.h:37</div></div>
 </div><!-- fragment --></div><!-- contents -->
 </div><!-- doc-content -->
 <!-- start footer part -->
