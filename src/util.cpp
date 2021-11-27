@@ -16,8 +16,8 @@
 #include <boost/uuid/uuid_generators.hpp>
 #include <boost/uuid/uuid_io.hpp>
 
-#include "klib/error.h"
 #include "klib/exception.h"
+#include "klib/log.h"
 
 namespace klib {
 

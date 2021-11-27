@@ -1,9 +1,9 @@
 #include <cassert>
 #include <iostream>
 
-#include <klib/error.h>
 #include <klib/exception.h>
 #include <klib/http.h>
+#include <klib/log.h>
 
 int main() try {
   klib::Request request;

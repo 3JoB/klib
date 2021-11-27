@@ -1,6 +1,6 @@
 /**
- * @file error.h
- * @brief Contains report error and warning modules
+ * @file log.h
+ * @brief Contains log module
  */
 
 #pragma once

@@ -8,8 +8,8 @@
 #include <boost/algorithm/string.hpp>
 #include <scope_guard.hpp>
 
-#include "klib/error.h"
 #include "klib/exception.h"
+#include "klib/log.h"
 #include "klib/util.h"
 
 namespace klib {
