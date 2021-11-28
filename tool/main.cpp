@@ -9,6 +9,7 @@
 #include <fmt/core.h>
 #include <spdlog/spdlog.h>
 #include <CLI/CLI.hpp>
+#include <gsl/gsl-lite.hpp>
 
 #include "klib/archive.h"
 #include "klib/crypto.h"
@@ -28,6 +29,8 @@ std::string version_str() {
 
   result += "Libraries: ";
   result += fmt::format(FMT_COMPILE("klib/{} "), KLIB_VERSION_STRING);
+  result += fmt::format(FMT_COMPILE("gsl-lite/{}.{}.{} "), gsl_lite_MAJOR,
+                        gsl_lite_MINOR, gsl_lite_PATCH);
   result += fmt::format(FMT_COMPILE("CLI11/{} "), CLI11_VERSION);
   result += fmt::format(FMT_COMPILE("fmt/{}.{}.{} "), FMT_VERSION / 10000,
                         FMT_VERSION / 100 % 100, FMT_VERSION % 100);
@@ -50,9 +53,7 @@ std::string version_str() {
 }
 
 std::string num_to_str(std::int32_t num) {
-  if (num >= 1'0000'0000 || num <= 0) {
-    klib::error("num error");
-  }
+  Expects(num >= 1'0000'0000 || num <= 0);
 
   auto str = std::to_string(num);
   return std::string(8 - std::size(str), '0') + str;
