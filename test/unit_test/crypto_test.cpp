@@ -27,7 +27,7 @@ TEST_CASE("base64_decode", "[crypto]") {
 
 // https://tool.lmeee.com/jiami/aes
 TEST_CASE("aes_256_cbc", "[crypto]") {
-  CHECK_NOTHROW(klib::aes_256_decrypt_base64(
+  REQUIRE_NOTHROW(klib::aes_256_decrypt_base64(
       "IT+LcNazRBcK54/"
       "p1lMtc0ewNTdT1AVsc0v5Lkpy4zrcof0UsF79jMasF+"
       "DAdQ25w5OK1zXMTP6bRUQ0VKArkTvxhkzLERGM4DCCinEBTd2V+9q8iNFJG2O/"
@@ -626,6 +626,6 @@ TEST_CASE("aes_256_cbc", "[crypto]") {
       "O/uZPzFvph5oAaTwqrvsFFVEqajRZ9Ekq3MMa9lzRH9A==");
 
   REQUIRE(std::size(base64) == 15856);
-  CHECK_NOTHROW(klib::aes_256_decrypt(
+  REQUIRE_NOTHROW(klib::aes_256_decrypt(
       base64, klib::sha_256("913d8e1ebca5ef2193b4fea1fdbe0394"), false));
 }
