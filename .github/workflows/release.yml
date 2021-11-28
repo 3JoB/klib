@@ -33,9 +33,8 @@ jobs:
         working-directory: build
 
       - name: Install
-        run: |
-          sudo cmake --build build --config ${{ matrix.build_type }} --target install
-          sudo ldconfig
+        run: sudo dpkg -i klib*.deb
+        working-directory: build
 
       - name: Build example
         run: |
