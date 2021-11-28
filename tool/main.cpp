@@ -53,7 +53,7 @@ std::string version_str() {
 }
 
 std::string num_to_str(std::int32_t num) {
-  Expects(num >= 1'0000'0000 || num <= 0);
+  Expects(num < 1'0000'0000 && num > 0);
 
   auto str = std::to_string(num);
   return std::string(8 - std::size(str), '0') + str;
