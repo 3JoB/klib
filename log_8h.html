@@ -30,7 +30,7 @@
  <tbody>
  <tr style="height: 56px;">
   <td id="projectalign" style="padding-left: 0.5em;">
-   <div id="projectname">klib<span id="projectnumber">&#160;0.9.2</span>
+   <div id="projectname">klib<span id="projectnumber">&#160;0.10.0</span>
    </div>
   </td>
     <td>        <div id="MSearchBox" class="MSearchBoxInactive">
@@ -110,10 +110,10 @@ $(document).ready(function(){initNavTree('log_8h.html',''); initResizable(); });
 <table class="memberdecls">
 <tr class="heading"><td colspan="2"><h2 class="groupheader"><a id="func-members" name="func-members"></a>
 Functions</h2></td></tr>
-<tr class="memitem:a1ac4ebc31d958a77807dce7092cf8baf"><td class="memTemplParams" colspan="2">template&lt;typename... Args&gt; </td></tr>
-<tr class="memitem:a1ac4ebc31d958a77807dce7092cf8baf"><td class="memTemplItemLeft" align="right" valign="top">void&#160;</td><td class="memTemplItemRight" valign="bottom"><a class="el" href="log_8h.html#a1ac4ebc31d958a77807dce7092cf8baf">klib::warn</a> (detail::format_with_location fmt_with_loc, Args &amp;&amp;...args)</td></tr>
-<tr class="memdesc:a1ac4ebc31d958a77807dce7092cf8baf"><td class="mdescLeft">&#160;</td><td class="mdescRight">Report warning.  <a href="log_8h.html#a1ac4ebc31d958a77807dce7092cf8baf">More...</a><br /></td></tr>
-<tr class="separator:a1ac4ebc31d958a77807dce7092cf8baf"><td class="memSeparator" colspan="2">&#160;</td></tr>
+<tr class="memitem:a814c67e8ab648504e8d4e9c627aafdb7"><td class="memTemplParams" colspan="2">template&lt;typename... Args&gt; </td></tr>
+<tr class="memitem:a814c67e8ab648504e8d4e9c627aafdb7"><td class="memTemplItemLeft" align="right" valign="top">void&#160;</td><td class="memTemplItemRight" valign="bottom"><a class="el" href="log_8h.html#a814c67e8ab648504e8d4e9c627aafdb7">klib::warn</a> (std::string_view fmt, Args &amp;&amp;...args)</td></tr>
+<tr class="memdesc:a814c67e8ab648504e8d4e9c627aafdb7"><td class="mdescLeft">&#160;</td><td class="mdescRight">Report warning.  <a href="log_8h.html#a814c67e8ab648504e8d4e9c627aafdb7">More...</a><br /></td></tr>
+<tr class="separator:a814c67e8ab648504e8d4e9c627aafdb7"><td class="memSeparator" colspan="2">&#160;</td></tr>
 <tr class="memitem:a2ff77ad6fbf2e2cc00499160a8c3a70d"><td class="memTemplParams" colspan="2">template&lt;typename... Args&gt; </td></tr>
 <tr class="memitem:a2ff77ad6fbf2e2cc00499160a8c3a70d"><td class="memTemplItemLeft" align="right" valign="top">void&#160;</td><td class="memTemplItemRight" valign="bottom"><a class="el" href="log_8h.html#a2ff77ad6fbf2e2cc00499160a8c3a70d">klib::error</a> (detail::format_with_location fmt_with_loc, Args &amp;&amp;...args)</td></tr>
 <tr class="memdesc:a2ff77ad6fbf2e2cc00499160a8c3a70d"><td class="mdescLeft">&#160;</td><td class="mdescRight">Report error and exit.  <a href="log_8h.html#a2ff77ad6fbf2e2cc00499160a8c3a70d">More...</a><br /></td></tr>
@@ -161,8 +161,8 @@ template&lt;typename... Args&gt; </div>
 
 </div>
 </div>
-<a id="a1ac4ebc31d958a77807dce7092cf8baf" name="a1ac4ebc31d958a77807dce7092cf8baf"></a>
-<h2 class="memtitle"><span class="permalink"><a href="#a1ac4ebc31d958a77807dce7092cf8baf">&#9670;&nbsp;</a></span>warn()</h2>
+<a id="a814c67e8ab648504e8d4e9c627aafdb7" name="a814c67e8ab648504e8d4e9c627aafdb7"></a>
+<h2 class="memtitle"><span class="permalink"><a href="#a814c67e8ab648504e8d4e9c627aafdb7">&#9670;&nbsp;</a></span>warn()</h2>
 
 <div class="memitem">
 <div class="memproto">
@@ -172,8 +172,8 @@ template&lt;typename... Args&gt; </div>
         <tr>
           <td class="memname">void klib::warn </td>
           <td>(</td>
-          <td class="paramtype">detail::format_with_location&#160;</td>
-          <td class="paramname"><em>fmt_with_loc</em>, </td>
+          <td class="paramtype">std::string_view&#160;</td>
+          <td class="paramname"><em>fmt</em>, </td>
         </tr>
         <tr>
           <td class="paramkey"></td>
@@ -192,7 +192,7 @@ template&lt;typename... Args&gt; </div>
 <p>Report warning. </p>
 <dl class="params"><dt>Parameters</dt><dd>
   <table class="params">
-    <tr><td class="paramname">fmt_with_loc</td><td>Format string with source location information </td></tr>
+    <tr><td class="paramname">fmt</td><td>Format string </td></tr>
     <tr><td class="paramname">args</td><td>Format string parameters </td></tr>
   </table>
   </dd>

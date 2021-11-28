@@ -30,7 +30,7 @@
  <tbody>
  <tr style="height: 56px;">
   <td id="projectalign" style="padding-left: 0.5em;">
-   <div id="projectname">klib<span id="projectnumber">&#160;0.9.2</span>
+   <div id="projectname">klib<span id="projectnumber">&#160;0.10.0</span>
    </div>
   </td>
     <td>        <div id="MSearchBox" class="MSearchBoxInactive">
@@ -198,6 +198,9 @@ std::string&#160;</td><td class="memItemRight" valign="bottom"><b>klib::uuid</b>
 <tr class="memitem:aa4e57655515047da3c99a9cf3d7b870b"><td class="memItemLeft" align="right" valign="top">std::string&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="util_8h.html#aa4e57655515047da3c99a9cf3d7b870b">klib::make_file_or_dir_name_legal</a> (const std::string &amp;file_name)</td></tr>
 <tr class="memdesc:aa4e57655515047da3c99a9cf3d7b870b"><td class="mdescLeft">&#160;</td><td class="mdescRight">According to the given file or directory name, return a legal file or directory name.  <a href="util_8h.html#aa4e57655515047da3c99a9cf3d7b870b">More...</a><br /></td></tr>
 <tr class="separator:aa4e57655515047da3c99a9cf3d7b870b"><td class="memSeparator" colspan="2">&#160;</td></tr>
+<tr class="memitem:aa2173416ed35c8a0d962f3f8426d81af"><td class="memItemLeft" align="right" valign="top">std::string&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="util_8h.html#aa2173416ed35c8a0d962f3f8426d81af">klib::generate_random_bytes</a> (std::int32_t num)</td></tr>
+<tr class="memdesc:aa2173416ed35c8a0d962f3f8426d81af"><td class="mdescLeft">&#160;</td><td class="mdescRight">Generate random data of specified bytes.  <a href="util_8h.html#aa2173416ed35c8a0d962f3f8426d81af">More...</a><br /></td></tr>
+<tr class="separator:aa2173416ed35c8a0d962f3f8426d81af"><td class="memSeparator" colspan="2">&#160;</td></tr>
 </table>
 <a name="details" id="details"></a><h2 class="groupheader">Detailed Description</h2>
 <div class="textblock"><p >Contains declarations of some useful functions. </p>
@@ -559,6 +562,33 @@ requires std::predicate&lt;UnaryPredicate, typename InputIt::value_type&gt;</div
   </dd>
 </dl>
 <dl class="section return"><dt>Returns</dt><dd>Folder size </dd></dl>
+
+</div>
+</div>
+<a id="aa2173416ed35c8a0d962f3f8426d81af" name="aa2173416ed35c8a0d962f3f8426d81af"></a>
+<h2 class="memtitle"><span class="permalink"><a href="#aa2173416ed35c8a0d962f3f8426d81af">&#9670;&nbsp;</a></span>generate_random_bytes()</h2>
+
+<div class="memitem">
+<div class="memproto">
+      <table class="memname">
+        <tr>
+          <td class="memname">std::string klib::generate_random_bytes </td>
+          <td>(</td>
+          <td class="paramtype">std::int32_t&#160;</td>
+          <td class="paramname"><em>num</em></td><td>)</td>
+          <td></td>
+        </tr>
+      </table>
+</div><div class="memdoc">
+
+<p>Generate random data of specified bytes. </p>
+<dl class="params"><dt>Parameters</dt><dd>
+  <table class="params">
+    <tr><td class="paramname">num</td><td>The number of bytes to generate </td></tr>
+  </table>
+  </dd>
+</dl>
+<dl class="section return"><dt>Returns</dt><dd>Random data generated </dd></dl>
 
 </div>
 </div>

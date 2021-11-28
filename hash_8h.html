@@ -30,7 +30,7 @@
  <tbody>
  <tr style="height: 56px;">
   <td id="projectalign" style="padding-left: 0.5em;">
-   <div id="projectname">klib<span id="projectnumber">&#160;0.9.2</span>
+   <div id="projectname">klib<span id="projectnumber">&#160;0.10.0</span>
    </div>
   </td>
     <td>        <div id="MSearchBox" class="MSearchBoxInactive">
@@ -170,18 +170,21 @@ std::string&#160;</td><td class="memItemRight" valign="bottom"><b>klib::sha3_512
 <tr class="memitem:a19d88a2e9d65f2ad393013f147c2b229"><td class="memItemLeft" align="right" valign="top"><a id="a19d88a2e9d65f2ad393013f147c2b229" name="a19d88a2e9d65f2ad393013f147c2b229"></a>
 std::string&#160;</td><td class="memItemRight" valign="bottom"><b>klib::sha3_512_hex</b> (const std::string &amp;data)</td></tr>
 <tr class="separator:a19d88a2e9d65f2ad393013f147c2b229"><td class="memSeparator" colspan="2">&#160;</td></tr>
-<tr class="memitem:a7fa4ce31251213fda11eed0f99e057b2"><td class="memItemLeft" align="right" valign="top">std::pair&lt; std::string, std::string &gt;&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="hash_8h.html#a7fa4ce31251213fda11eed0f99e057b2">klib::password_hash_raw</a> (const std::string &amp;password, std::uint32_t time_cost=1, std::uint32_t memory_cost=1 *1024 *1024, std::uint32_t parallelism=16, std::int32_t hash_len=32, std::int32_t salt_len=32)</td></tr>
-<tr class="memdesc:a7fa4ce31251213fda11eed0f99e057b2"><td class="mdescLeft">&#160;</td><td class="mdescRight">Hashes a password.  <a href="hash_8h.html#a7fa4ce31251213fda11eed0f99e057b2">More...</a><br /></td></tr>
-<tr class="separator:a7fa4ce31251213fda11eed0f99e057b2"><td class="memSeparator" colspan="2">&#160;</td></tr>
-<tr class="memitem:a22178136bb8f5535040751670c5d6190"><td class="memItemLeft" align="right" valign="top">std::string&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="hash_8h.html#a22178136bb8f5535040751670c5d6190">klib::password_hash_encoded</a> (const std::string &amp;password, std::uint32_t time_cost=1, std::uint32_t memory_cost=1 *1024 *1024, std::uint32_t parallelism=16, std::int32_t hash_len=32, std::int32_t salt_len=32)</td></tr>
-<tr class="memdesc:a22178136bb8f5535040751670c5d6190"><td class="mdescLeft">&#160;</td><td class="mdescRight">Hashes a password, producing an encoded hash.  <a href="hash_8h.html#a22178136bb8f5535040751670c5d6190">More...</a><br /></td></tr>
-<tr class="separator:a22178136bb8f5535040751670c5d6190"><td class="memSeparator" colspan="2">&#160;</td></tr>
+<tr class="memitem:ad254d8c2ed77209a16c351a65ec6490b"><td class="memItemLeft" align="right" valign="top">std::pair&lt; std::string, std::string &gt;&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="hash_8h.html#ad254d8c2ed77209a16c351a65ec6490b">klib::password_hash_raw</a> (const std::string &amp;password, std::uint32_t time_cost=1, std::uint32_t memory_cost=4 *1024 *1024, std::uint32_t parallelism=16, std::int32_t hash_len=32, std::int32_t salt_len=32)</td></tr>
+<tr class="memdesc:ad254d8c2ed77209a16c351a65ec6490b"><td class="mdescLeft">&#160;</td><td class="mdescRight">Hashes a password.  <a href="hash_8h.html#ad254d8c2ed77209a16c351a65ec6490b">More...</a><br /></td></tr>
+<tr class="separator:ad254d8c2ed77209a16c351a65ec6490b"><td class="memSeparator" colspan="2">&#160;</td></tr>
+<tr class="memitem:a15721f1f0d638ed7902054bd6443f757"><td class="memItemLeft" align="right" valign="top">std::string&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="hash_8h.html#a15721f1f0d638ed7902054bd6443f757">klib::password_hash_raw</a> (const std::string &amp;password, const std::string &amp;salt, std::uint32_t time_cost=1, std::uint32_t memory_cost=4 *1024 *1024, std::uint32_t parallelism=16, std::int32_t hash_len=32)</td></tr>
+<tr class="memdesc:a15721f1f0d638ed7902054bd6443f757"><td class="mdescLeft">&#160;</td><td class="mdescRight">Hashes a password.  <a href="hash_8h.html#a15721f1f0d638ed7902054bd6443f757">More...</a><br /></td></tr>
+<tr class="separator:a15721f1f0d638ed7902054bd6443f757"><td class="memSeparator" colspan="2">&#160;</td></tr>
+<tr class="memitem:afd47172c370d42e3bf072419057776b9"><td class="memItemLeft" align="right" valign="top">std::string&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="hash_8h.html#afd47172c370d42e3bf072419057776b9">klib::password_hash_encoded</a> (const std::string &amp;password, std::uint32_t time_cost=1, std::uint32_t memory_cost=4 *1024 *1024, std::uint32_t parallelism=16, std::int32_t hash_len=32, std::int32_t salt_len=32)</td></tr>
+<tr class="memdesc:afd47172c370d42e3bf072419057776b9"><td class="mdescLeft">&#160;</td><td class="mdescRight">Hashes a password, producing an encoded hash.  <a href="hash_8h.html#afd47172c370d42e3bf072419057776b9">More...</a><br /></td></tr>
+<tr class="separator:afd47172c370d42e3bf072419057776b9"><td class="memSeparator" colspan="2">&#160;</td></tr>
 <tr class="memitem:aeb6c17112e4c044c0893cb393cf69a35"><td class="memItemLeft" align="right" valign="top">bool&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="hash_8h.html#aeb6c17112e4c044c0893cb393cf69a35">klib::password_verify</a> (const std::string &amp;password, const std::string &amp;encoded)</td></tr>
 <tr class="memdesc:aeb6c17112e4c044c0893cb393cf69a35"><td class="mdescLeft">&#160;</td><td class="mdescRight">Verifies a password against an encoded string.  <a href="hash_8h.html#aeb6c17112e4c044c0893cb393cf69a35">More...</a><br /></td></tr>
 <tr class="separator:aeb6c17112e4c044c0893cb393cf69a35"><td class="memSeparator" colspan="2">&#160;</td></tr>
-<tr class="memitem:a0ed8dbee7a1265148c9b830294c6fb1f"><td class="memItemLeft" align="right" valign="top">bool&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="hash_8h.html#a0ed8dbee7a1265148c9b830294c6fb1f">klib::password_verify</a> (const std::string &amp;password, const std::string &amp;hash, const std::string &amp;salt, std::uint32_t time_cost=1, std::uint32_t memory_cost=1 *1024 *1024, std::uint32_t parallelism=16)</td></tr>
-<tr class="memdesc:a0ed8dbee7a1265148c9b830294c6fb1f"><td class="mdescLeft">&#160;</td><td class="mdescRight">Verifies a password against raw hash and salt.  <a href="hash_8h.html#a0ed8dbee7a1265148c9b830294c6fb1f">More...</a><br /></td></tr>
-<tr class="separator:a0ed8dbee7a1265148c9b830294c6fb1f"><td class="memSeparator" colspan="2">&#160;</td></tr>
+<tr class="memitem:a5f70596a527fbfbb39dfe92d2684ee72"><td class="memItemLeft" align="right" valign="top">bool&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="hash_8h.html#a5f70596a527fbfbb39dfe92d2684ee72">klib::password_verify</a> (const std::string &amp;password, const std::string &amp;hash, const std::string &amp;salt, std::uint32_t time_cost=1, std::uint32_t memory_cost=4 *1024 *1024, std::uint32_t parallelism=16)</td></tr>
+<tr class="memdesc:a5f70596a527fbfbb39dfe92d2684ee72"><td class="mdescLeft">&#160;</td><td class="mdescRight">Verifies a password against raw hash and salt.  <a href="hash_8h.html#a5f70596a527fbfbb39dfe92d2684ee72">More...</a><br /></td></tr>
+<tr class="separator:a5f70596a527fbfbb39dfe92d2684ee72"><td class="memSeparator" colspan="2">&#160;</td></tr>
 </table>
 <a name="details" id="details"></a><h2 class="groupheader">Detailed Description</h2>
 <div class="textblock"><p >Contains secure hash module. </p>
@@ -213,8 +216,8 @@ std::string&#160;</td><td class="memItemRight" valign="bottom"><b>klib::sha3_512
 
 </div>
 </div>
-<a id="a22178136bb8f5535040751670c5d6190" name="a22178136bb8f5535040751670c5d6190"></a>
-<h2 class="memtitle"><span class="permalink"><a href="#a22178136bb8f5535040751670c5d6190">&#9670;&nbsp;</a></span>password_hash_encoded()</h2>
+<a id="afd47172c370d42e3bf072419057776b9" name="afd47172c370d42e3bf072419057776b9"></a>
+<h2 class="memtitle"><span class="permalink"><a href="#afd47172c370d42e3bf072419057776b9">&#9670;&nbsp;</a></span>password_hash_encoded()</h2>
 
 <div class="memitem">
 <div class="memproto">
@@ -235,7 +238,7 @@ std::string&#160;</td><td class="memItemRight" valign="bottom"><b>klib::sha3_512
           <td class="paramkey"></td>
           <td></td>
           <td class="paramtype">std::uint32_t&#160;</td>
-          <td class="paramname"><em>memory_cost</em> = <code>1&#160;*1024&#160;*1024</code>, </td>
+          <td class="paramname"><em>memory_cost</em> = <code>4&#160;*1024&#160;*1024</code>, </td>
         </tr>
         <tr>
           <td class="paramkey"></td>
@@ -282,8 +285,77 @@ std::string&#160;</td><td class="memItemRight" valign="bottom"><b>klib::sha3_512
 
 </div>
 </div>
-<a id="a7fa4ce31251213fda11eed0f99e057b2" name="a7fa4ce31251213fda11eed0f99e057b2"></a>
-<h2 class="memtitle"><span class="permalink"><a href="#a7fa4ce31251213fda11eed0f99e057b2">&#9670;&nbsp;</a></span>password_hash_raw()</h2>
+<a id="a15721f1f0d638ed7902054bd6443f757" name="a15721f1f0d638ed7902054bd6443f757"></a>
+<h2 class="memtitle"><span class="permalink"><a href="#a15721f1f0d638ed7902054bd6443f757">&#9670;&nbsp;</a></span>password_hash_raw() <span class="overload">[1/2]</span></h2>
+
+<div class="memitem">
+<div class="memproto">
+      <table class="memname">
+        <tr>
+          <td class="memname">std::string klib::password_hash_raw </td>
+          <td>(</td>
+          <td class="paramtype">const std::string &amp;&#160;</td>
+          <td class="paramname"><em>password</em>, </td>
+        </tr>
+        <tr>
+          <td class="paramkey"></td>
+          <td></td>
+          <td class="paramtype">const std::string &amp;&#160;</td>
+          <td class="paramname"><em>salt</em>, </td>
+        </tr>
+        <tr>
+          <td class="paramkey"></td>
+          <td></td>
+          <td class="paramtype">std::uint32_t&#160;</td>
+          <td class="paramname"><em>time_cost</em> = <code>1</code>, </td>
+        </tr>
+        <tr>
+          <td class="paramkey"></td>
+          <td></td>
+          <td class="paramtype">std::uint32_t&#160;</td>
+          <td class="paramname"><em>memory_cost</em> = <code>4&#160;*1024&#160;*1024</code>, </td>
+        </tr>
+        <tr>
+          <td class="paramkey"></td>
+          <td></td>
+          <td class="paramtype">std::uint32_t&#160;</td>
+          <td class="paramname"><em>parallelism</em> = <code>16</code>, </td>
+        </tr>
+        <tr>
+          <td class="paramkey"></td>
+          <td></td>
+          <td class="paramtype">std::int32_t&#160;</td>
+          <td class="paramname"><em>hash_len</em> = <code>32</code>&#160;</td>
+        </tr>
+        <tr>
+          <td></td>
+          <td>)</td>
+          <td></td><td></td>
+        </tr>
+      </table>
+</div><div class="memdoc">
+
+<p>Hashes a password. </p>
+<dl class="params"><dt>Parameters</dt><dd>
+  <table class="params">
+    <tr><td class="paramname">password</td><td>The password to be hashed </td></tr>
+    <tr><td class="paramname">salt</td><td>Salt </td></tr>
+    <tr><td class="paramname">time_cost</td><td>Number of iterations </td></tr>
+    <tr><td class="paramname">memory_cost</td><td>Sets memory usage to memory_cost KB </td></tr>
+    <tr><td class="paramname">parallelism</td><td>Number of threads and compute lanes </td></tr>
+    <tr><td class="paramname">hash_len</td><td>Desired length of the hash in bytes </td></tr>
+  </table>
+  </dd>
+</dl>
+<dl class="section return"><dt>Returns</dt><dd>Raw hash </dd></dl>
+<dl class="section see"><dt>See also</dt><dd><a href="https://github.com/P-H-C/phc-winner-argon2/issues/235">https://github.com/P-H-C/phc-winner-argon2/issues/235</a> </dd>
+<dd>
+<a href="https://www.tomczhen.com/2016/10/10/hashing-security/">https://www.tomczhen.com/2016/10/10/hashing-security/</a> </dd></dl>
+
+</div>
+</div>
+<a id="ad254d8c2ed77209a16c351a65ec6490b" name="ad254d8c2ed77209a16c351a65ec6490b"></a>
+<h2 class="memtitle"><span class="permalink"><a href="#ad254d8c2ed77209a16c351a65ec6490b">&#9670;&nbsp;</a></span>password_hash_raw() <span class="overload">[2/2]</span></h2>
 
 <div class="memitem">
 <div class="memproto">
@@ -304,7 +376,7 @@ std::string&#160;</td><td class="memItemRight" valign="bottom"><b>klib::sha3_512
           <td class="paramkey"></td>
           <td></td>
           <td class="paramtype">std::uint32_t&#160;</td>
-          <td class="paramname"><em>memory_cost</em> = <code>1&#160;*1024&#160;*1024</code>, </td>
+          <td class="paramname"><em>memory_cost</em> = <code>4&#160;*1024&#160;*1024</code>, </td>
         </tr>
         <tr>
           <td class="paramkey"></td>
@@ -389,8 +461,8 @@ std::string&#160;</td><td class="memItemRight" valign="bottom"><b>klib::sha3_512
 
 </div>
 </div>
-<a id="a0ed8dbee7a1265148c9b830294c6fb1f" name="a0ed8dbee7a1265148c9b830294c6fb1f"></a>
-<h2 class="memtitle"><span class="permalink"><a href="#a0ed8dbee7a1265148c9b830294c6fb1f">&#9670;&nbsp;</a></span>password_verify() <span class="overload">[2/2]</span></h2>
+<a id="a5f70596a527fbfbb39dfe92d2684ee72" name="a5f70596a527fbfbb39dfe92d2684ee72"></a>
+<h2 class="memtitle"><span class="permalink"><a href="#a5f70596a527fbfbb39dfe92d2684ee72">&#9670;&nbsp;</a></span>password_verify() <span class="overload">[2/2]</span></h2>
 
 <div class="memitem">
 <div class="memproto">
@@ -423,7 +495,7 @@ std::string&#160;</td><td class="memItemRight" valign="bottom"><b>klib::sha3_512
           <td class="paramkey"></td>
           <td></td>
           <td class="paramtype">std::uint32_t&#160;</td>
-          <td class="paramname"><em>memory_cost</em> = <code>1&#160;*1024&#160;*1024</code>, </td>
+          <td class="paramname"><em>memory_cost</em> = <code>4&#160;*1024&#160;*1024</code>, </td>
         </tr>
         <tr>
           <td class="paramkey"></td>

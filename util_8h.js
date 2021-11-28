@@ -12,6 +12,7 @@ var util_8h =
     [ "find_last", "util_8h.html#a7b9b631266e2587c0aae0fee4842091e", null ],
     [ "find_last", "util_8h.html#a5064add32b7fb4bc60e43cd60bab54e8", null ],
     [ "folder_size", "util_8h.html#a6e1a6bca253ac0afc74f98f90bb48015", null ],
+    [ "generate_random_bytes", "util_8h.html#aa2173416ed35c8a0d962f3f8426d81af", null ],
     [ "make_file_or_dir_name_legal", "util_8h.html#aa4e57655515047da3c99a9cf3d7b870b", null ],
     [ "read_file", "util_8h.html#aff1e161e1457b1a895244581b50b9abd", null ],
     [ "read_file_line", "util_8h.html#aeb12aa83527e021b6d976c4c6008791a", null ],
