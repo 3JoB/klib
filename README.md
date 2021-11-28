@@ -33,6 +33,7 @@ A C++ library, which wraps several important C libraries and provides some conve
 - [fmt](https://github.com/fmtlib/fmt)
 - [spdlog](https://github.com/gabime/spdlog)
 - [scope_guard](https://github.com/Neargye/scope_guard)
+- [CLI11](https://github.com/CLIUtils/CLI11)
 
 ## Build
 

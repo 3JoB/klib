@@ -7,6 +7,7 @@
 
 #include "klib/detail/openssl_util.h"
 #include "klib/exception.h"
+#include "klib/util.h"
 
 namespace klib {
 
@@ -59,11 +60,11 @@ HashLib::HashLibImpl::HashLibImpl(HashLib::Algorithm kind)
 // https://www.openssl.org/docs/man3.0/man3/EVP_DigestUpdate.html
 void HashLib::HashLibImpl::update(const std::string &data) {
   if (!doing_) {
-    detail::check_openssl_return_value(EVP_DigestInit(ctx_, algorithm_));
+    detail::check_openssl_return_1(EVP_DigestInit(ctx_, algorithm_));
     doing_ = true;
   }
 
-  detail::check_openssl_return_value(
+  detail::check_openssl_return_1(
       EVP_DigestUpdate(ctx_, std::data(data), std::size(data)));
 }
 
@@ -76,7 +77,7 @@ std::string HashLib::HashLibImpl::digest() {
   digest.resize(EVP_MAX_MD_SIZE);
 
   std::uint32_t size;
-  detail::check_openssl_return_value(EVP_DigestFinal(
+  detail::check_openssl_return_1(EVP_DigestFinal(
       ctx_, reinterpret_cast<unsigned char *>(std::data(digest)), &size));
   digest.resize(size);
 
@@ -257,7 +258,7 @@ std::pair<std::string, std::string> password_hash_raw(
   std::string hash;
   hash.resize(hash_len);
 
-  auto salt = detail::generate_random_bytes(salt_len);
+  auto salt = generate_random_bytes(salt_len);
 
   auto rc =
       argon2id_hash_raw(time_cost, memory_cost, parallelism,
@@ -268,6 +269,25 @@ std::pair<std::string, std::string> password_hash_raw(
   }
 
   return {hash, salt};
+}
+
+std::string password_hash_raw(const std::string &password,
+                              const std::string &salt, std::uint32_t time_cost,
+                              std::uint32_t memory_cost,
+                              std::uint32_t parallelism,
+                              std::int32_t hash_len) {
+  std::string hash;
+  hash.resize(hash_len);
+
+  auto rc = argon2id_hash_raw(time_cost, memory_cost, parallelism,
+                              std::data(password), std::size(password),
+                              std::data(salt), std::size(salt), std::data(hash),
+                              hash_len);
+  if (rc != ARGON2_OK) {
+    throw RuntimeError(argon2_error_message(rc));
+  }
+
+  return hash;
 }
 
 std::string password_hash_encoded(const std::string &password,
@@ -282,7 +302,7 @@ std::string password_hash_encoded(const std::string &password,
   std::string encoded;
   encoded.resize(encode_len);
 
-  auto salt = detail::generate_random_bytes(salt_len);
+  auto salt = generate_random_bytes(salt_len);
 
   auto rc = argon2id_hash_encoded(time_cost, memory_cost, parallelism,
                                   std::data(password), std::size(password),

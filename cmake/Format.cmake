@@ -19,7 +19,8 @@ if(KLIB_FORMAT)
     "${CMAKE_CURRENT_SOURCE_DIR}/example/*.cpp"
     "${CMAKE_CURRENT_SOURCE_DIR}/include/*.h"
     "${CMAKE_CURRENT_SOURCE_DIR}/src/*.cpp"
-    "${CMAKE_CURRENT_SOURCE_DIR}/test/*.cpp")
+    "${CMAKE_CURRENT_SOURCE_DIR}/test/*.cpp"
+    "${CMAKE_CURRENT_SOURCE_DIR}/tool/*.cpp")
 
   file(
     GLOB_RECURSE
@@ -29,6 +30,7 @@ if(KLIB_FORMAT)
     "${CMAKE_CURRENT_SOURCE_DIR}/cmake/*.cmake"
     "${CMAKE_CURRENT_SOURCE_DIR}/example/CMakeLists.txt"
     "${CMAKE_CURRENT_SOURCE_DIR}/test/CMakeLists.txt"
+    "${CMAKE_CURRENT_SOURCE_DIR}/tool/CMakeLists.txt"
     "${CMAKE_CURRENT_SOURCE_DIR}/CMakeLists.txt")
 
   add_custom_target(

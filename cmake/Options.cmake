@@ -8,6 +8,7 @@ endif()
 
 option(KLIB_BUILD_STATIC "Build static library" ON)
 option(KLIB_BUILD_SHARED "Build shared library" ON)
+option(KLIB_BUILD_EXECUTABLE "Build executable program" ON)
 
 option(KLIB_BUILD_TEST "Build test" OFF)
 option(KLIB_BUILD_EXTRA_TEST "Build extra test" OFF)

@@ -12,10 +12,12 @@
 #include <map>
 
 #include <openssl/crypto.h>
+#include <openssl/rand.h>
 #include <boost/algorithm/string.hpp>
 #include <boost/uuid/uuid_generators.hpp>
 #include <boost/uuid/uuid_io.hpp>
 
+#include "klib/detail/openssl_util.h"
 #include "klib/exception.h"
 #include "klib/log.h"
 
@@ -289,6 +291,19 @@ std::string make_file_or_dir_name_legal(const std::string &file_name) {
   boost::trim(copy);
 
   return copy;
+}
+
+std::string generate_random_bytes(std::int32_t num) {
+  if (RAND_status() == 0) {
+    detail::check_openssl_return_1(RAND_poll());
+  }
+
+  std::string bytes;
+  bytes.resize(num);
+  detail::check_openssl_return_1(RAND_bytes(
+      reinterpret_cast<unsigned char *>(std::data(bytes)), std::size(bytes)));
+
+  return bytes;
 }
 
 }  // namespace klib

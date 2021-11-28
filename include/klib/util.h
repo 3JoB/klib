@@ -219,4 +219,11 @@ void cleanse(void *ptr, std::size_t size);
  */
 std::string make_file_or_dir_name_legal(const std::string &file_name);
 
+/**
+ * @brief Generate random data of specified bytes
+ * @param num: The number of bytes to generate
+ * @return Random data generated
+ */
+std::string generate_random_bytes(std::int32_t num);
+
 }  // namespace klib

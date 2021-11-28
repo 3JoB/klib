@@ -1,13 +1,16 @@
 #include "klib/crypto.h"
 
 #include <cstddef>
-#include <memory>
+#include <cstdint>
 
 #include <openssl/aes.h>
 #include <openssl/evp.h>
+#include <boost/algorithm/string.hpp>
+#include <scope_guard.hpp>
 
 #include "klib/detail/openssl_util.h"
 #include "klib/exception.h"
+#include "klib/util.h"
 
 namespace klib {
 
@@ -49,6 +52,21 @@ std::int32_t get_padding_mode(PaddingMode padding_mode) {
   }
 }
 
+std::pair<const unsigned char *, std::int32_t> read_string(
+    const std::string &str, std::size_t &last_read, std::int32_t n) {
+  std::int32_t read_size = 0;
+  if (last_read + n > std::size(str)) {
+    read_size = std::size(str) - last_read;
+  } else {
+    read_size = n;
+  }
+
+  auto begin = reinterpret_cast<const unsigned char *>(str.data()) + last_read;
+  last_read += read_size;
+
+  return {begin, read_size};
+}
+
 enum class Crypt { Encrypt, Decrypt };
 
 // https://www.openssl.org/docs/man3.0/man3/EVP_EncryptInit_ex.html
@@ -56,93 +74,130 @@ std::string do_aes_crypt(const std::string &data, const std::string &key,
                          const std::string &iv, AesMode aes_mode,
                          PaddingMode padding_mode, Crypt crypt) {
   if (std::size(key) != 32) {
-    throw klib::RuntimeError("key must be 256 bit");
+    throw klib::RuntimeError("The key must be 256 bit");
   }
   if (std::size(iv) != EVP_MAX_IV_LENGTH && !std::empty(iv)) {
-    throw klib::RuntimeError("iv must be 128 bit");
+    throw klib::RuntimeError("Initialization vector must be 128 bit");
   }
 
-  std::unique_ptr<EVP_CIPHER_CTX, decltype(EVP_CIPHER_CTX_free) *> ctx(
-      EVP_CIPHER_CTX_new(), EVP_CIPHER_CTX_free);
+  auto ctx = EVP_CIPHER_CTX_new();
+  SCOPE_EXIT { EVP_CIPHER_CTX_free(ctx); };
   if (!ctx) {
     throw RuntimeError(detail::openssl_err_msg());
   }
 
   auto do_encrypt = crypt == Crypt::Encrypt ? 1 : 0;
-  auto rc = EVP_CipherInit(ctx.get(), get_algorithm(aes_mode), nullptr, nullptr,
+  auto rc = EVP_CipherInit(ctx, get_algorithm(aes_mode), nullptr, nullptr,
                            do_encrypt);
-  detail::check_openssl_return_value(rc);
-  OPENSSL_assert(EVP_CIPHER_CTX_get_key_length(ctx.get()) == 32);
-  OPENSSL_assert(EVP_CIPHER_CTX_get_iv_length(ctx.get()) == EVP_MAX_IV_LENGTH);
+  detail::check_openssl_return_1(rc);
+  OPENSSL_assert(EVP_CIPHER_CTX_get_key_length(ctx) == 32);
+  OPENSSL_assert(EVP_CIPHER_CTX_get_iv_length(ctx) == EVP_MAX_IV_LENGTH);
 
   rc = EVP_CipherInit(
-      ctx.get(), nullptr,
-      reinterpret_cast<const unsigned char *>(std::data(key)),
+      ctx, nullptr, reinterpret_cast<const unsigned char *>(std::data(key)),
       std::empty(iv) ? nullptr
                      : reinterpret_cast<const unsigned char *>(std::data(iv)),
       do_encrypt);
-  detail::check_openssl_return_value(rc);
+  detail::check_openssl_return_1(rc);
 
   if (auto padding_mode_num = get_padding_mode(padding_mode);
       padding_mode_num != 0) {
-    rc = EVP_CIPHER_CTX_set_padding(ctx.get(), padding_mode_num);
-    detail::check_openssl_return_value(rc);
+    rc = EVP_CIPHER_CTX_set_padding(ctx, padding_mode_num);
+    detail::check_openssl_return_1(rc);
   }
 
   std::string result;
   auto input_size = std::size(data);
   result.resize(input_size + EVP_MAX_BLOCK_LENGTH);
 
-  std::int32_t chunk_len = 0;
-  rc = EVP_CipherUpdate(
-      ctx.get(), reinterpret_cast<unsigned char *>(std::data(result)),
-      &chunk_len, reinterpret_cast<const unsigned char *>(std::data(data)),
-      input_size);
-  detail::check_openssl_return_value(rc);
+  std::size_t output_len = 0;
+  std::int32_t write_len = 0;
+  std::size_t last_read = 0;
+  while (true) {
+    auto [ptr, read_size] = read_string(data, last_read, 102400);
+    if (read_size == 0) {
+      break;
+    }
 
-  std::int32_t output_len = chunk_len;
+    rc = EVP_CipherUpdate(
+        ctx, reinterpret_cast<unsigned char *>(std::data(result)) + output_len,
+        &write_len, ptr, read_size);
+    detail::check_openssl_return_1(rc);
+    output_len += write_len;
+  }
+
   rc = EVP_CipherFinal(
-      ctx.get(),
-      reinterpret_cast<unsigned char *>(std::data(result)) + chunk_len,
-      &chunk_len);
-  detail::check_openssl_return_value(rc);
-  output_len += chunk_len;
+      ctx, reinterpret_cast<unsigned char *>(std::data(result)) + output_len,
+      &write_len);
+  detail::check_openssl_return_1(rc);
+  output_len += write_len;
 
   result.resize(output_len);
   return result;
 }
 
 std::string do_base64(const std::string &data, Crypt crypt) {
-  decltype(EVP_EncodeBlock) *func;
-
-  auto input_size = std::size(data);
-  std::size_t size;
-  if (crypt == Crypt::Decrypt) {
-    func = EVP_DecodeBlock;
-    size = EVP_DECODE_LENGTH(input_size);
-  } else {
-    func = EVP_EncodeBlock;
-    size = EVP_ENCODE_LENGTH(input_size);
+  auto ctx = EVP_ENCODE_CTX_new();
+  SCOPE_EXIT { EVP_ENCODE_CTX_free(ctx); };
+  if (!ctx) {
+    throw RuntimeError(detail::openssl_err_msg());
   }
 
   std::string result;
-  result.resize(size);
+  auto input_size = std::size(data);
 
-  auto output_size =
-      func(reinterpret_cast<unsigned char *>(std::data(result)),
-           reinterpret_cast<const unsigned char *>(std::data(data)),
-           static_cast<std::int32_t>(input_size));
-
-  // https://gist.github.com/cameronehrlich/6f77a4982f141ee516fe52242eb803db
-  if (crypt == Crypt::Decrypt) {
-    if (data[input_size - 2] == '=') {
-      output_size -= 2;
-    } else if (data[input_size - 1] == '=') {
-      output_size -= 1;
-    }
+  if (crypt == Crypt::Encrypt) {
+    EVP_EncodeInit(ctx);
+    result.resize(EVP_ENCODE_LENGTH(input_size));
+  } else {
+    EVP_DecodeInit(ctx);
+    result.resize(EVP_DECODE_LENGTH(input_size));
   }
 
-  result.resize(output_size);
+  std::size_t output_len = 0;
+  std::int32_t write_len = 0;
+  std::size_t last_read = 0;
+  while (true) {
+    auto [ptr, read_size] = read_string(data, last_read, 102400);
+    if (read_size == 0) {
+      break;
+    }
+
+    if (crypt == Crypt::Encrypt) {
+      auto rc = EVP_EncodeUpdate(
+          ctx,
+          reinterpret_cast<unsigned char *>(std::data(result)) + output_len,
+          &write_len, ptr, read_size);
+      detail::check_openssl_return_1(rc);
+    } else {
+      auto rc = EVP_DecodeUpdate(
+          ctx,
+          reinterpret_cast<unsigned char *>(std::data(result)) + output_len,
+          &write_len, ptr, read_size);
+      detail::check_openssl_return_1_or_0(rc);
+    }
+
+    output_len += write_len;
+  }
+
+  if (crypt == Crypt::Encrypt) {
+    EVP_EncodeFinal(
+        ctx, reinterpret_cast<unsigned char *>(std::data(result)) + output_len,
+        &write_len);
+    output_len += write_len;
+  } else {
+    auto rc = EVP_DecodeFinal(
+        ctx, reinterpret_cast<unsigned char *>(std::data(result)) + output_len,
+        &write_len);
+    detail::check_openssl_return_1(rc);
+    output_len += write_len;
+  }
+
+  result.resize(output_len);
+  if (crypt == Crypt::Encrypt) {
+    boost::replace_all(result, "\n", "");
+  }
+
   return result;
 }
 
@@ -161,7 +216,7 @@ std::string aes_256_encrypt(const std::string &data, const std::string &key,
                             PaddingMode padding_mode) {
   std::string iv;
   if (use_iv) {
-    iv = detail::generate_random_bytes(EVP_MAX_IV_LENGTH);
+    iv = generate_random_bytes(EVP_MAX_IV_LENGTH);
   }
 
   return iv +

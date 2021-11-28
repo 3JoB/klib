@@ -1,7 +1,7 @@
 # ---------------------------------------------------------------------------------------
 # CMake version
 # ---------------------------------------------------------------------------------------
-cmake_minimum_required(VERSION 3.20)
+cmake_minimum_required(VERSION 3.22)
 message(STATUS "CMake version: ${CMAKE_VERSION}")
 
 # ---------------------------------------------------------------------------------------
@@ -14,8 +14,9 @@ klib_extract_version()
 
 project(
   klib
+  LANGUAGES CXX
   VERSION ${KLIB_VERSION}
-  LANGUAGES CXX)
+  HOMEPAGE_URL https://github.com/KaiserLancelot/klib)
 
 message(STATUS "${PROJECT_NAME} version: ${KLIB_VERSION}")
 
@@ -33,6 +34,7 @@ message(STATUS "Build type: " ${CMAKE_BUILD_TYPE})
 # Set variables
 # ---------------------------------------------------------------------------------------
 set(KLIB_LIBRARY ${PROJECT_NAME})
+set(KLIB_EXECUTABLE kencrypt)
 set(KLIB_TEST_EXECUTABLE ${KLIB_LIBRARY}-test)
 set(KLIB_BENCH_EXECUTABLE ${KLIB_LIBRARY}-bench)
 
@@ -183,6 +185,14 @@ endif()
 if(KLIB_BUILD_BENCH)
   message(STATUS "Build benchmark")
   add_subdirectory(bench)
+endif()
+
+# ---------------------------------------------------------------------------------------
+# Build executable
+# ---------------------------------------------------------------------------------------
+if(KLIB_BUILD_EXECUTABLE)
+  message(STATUS "Build executable program")
+  add_subdirectory(tool)
 endif()
 
 # ---------------------------------------------------------------------------------------
