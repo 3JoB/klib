@@ -2,7 +2,7 @@ var hierarchy =
 [
     [ "klib::ChangeWorkingDir", "classklib_1_1ChangeWorkingDir.html", null ],
     [ "klib::Column", "classklib_1_1Column.html", null ],
-    [ "klib::HashLib", "classklib_1_1HashLib.html", null ],
+    [ "klib::FastHash", "classklib_1_1FastHash.html", null ],
     [ "klib::Headers", "classklib_1_1Headers.html", null ],
     [ "std::invalid_argument", null, [
       [ "klib::InvalidArgument", "classklib_1_1InvalidArgument.html", null ]
@@ -18,6 +18,7 @@ var hierarchy =
     [ "std::runtime_error", null, [
       [ "klib::RuntimeError", "classklib_1_1RuntimeError.html", null ]
     ] ],
+    [ "klib::SecureHash", "classklib_1_1SecureHash.html", null ],
     [ "klib::SqlDatabase", "classklib_1_1SqlDatabase.html", null ],
     [ "klib::SqlQuery", "classklib_1_1SqlQuery.html", null ],
     [ "klib::detail::UnicodeRange< a, b >", "classklib_1_1detail_1_1UnicodeRange.html", null ]

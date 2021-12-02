@@ -30,7 +30,7 @@
  <tbody>
  <tr style="height: 56px;">
   <td id="projectalign" style="padding-left: 0.5em;">
-   <div id="projectname">klib<span id="projectnumber">&#160;0.10.3</span>
+   <div id="projectname">klib<span id="projectnumber">&#160;0.10.4</span>
    </div>
   </td>
     <td>        <div id="MSearchBox" class="MSearchBoxInactive">
@@ -98,9 +98,10 @@ $(document).ready(function(){initNavTree('hash_8h.html',''); initResizable(); })
 </div><!--header-->
 <div class="contents">
 
-<p>Contains secure hash module.  
+<p>Contains hash module.  
 <a href="#details">More...</a></p>
-<div class="textblock"><code>#include &lt;cstdint&gt;</code><br />
+<div class="textblock"><code>#include &lt;cstddef&gt;</code><br />
+<code>#include &lt;cstdint&gt;</code><br />
 <code>#include &lt;experimental/propagate_const&gt;</code><br />
 <code>#include &lt;memory&gt;</code><br />
 <code>#include &lt;string&gt;</code><br />
@@ -110,12 +111,21 @@ $(document).ready(function(){initNavTree('hash_8h.html',''); initResizable(); })
 <table class="memberdecls">
 <tr class="heading"><td colspan="2"><h2 class="groupheader"><a id="nested-classes" name="nested-classes"></a>
 Classes</h2></td></tr>
-<tr class="memitem:"><td class="memItemLeft" align="right" valign="top">class &#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="classklib_1_1HashLib.html">klib::HashLib</a></td></tr>
-<tr class="memdesc:"><td class="mdescLeft">&#160;</td><td class="mdescRight">Contains a series of secure hash algorithms.  <a href="classklib_1_1HashLib.html#details">More...</a><br /></td></tr>
+<tr class="memitem:"><td class="memItemLeft" align="right" valign="top">class &#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="classklib_1_1FastHash.html">klib::FastHash</a></td></tr>
+<tr class="memdesc:"><td class="mdescLeft">&#160;</td><td class="mdescRight">Contains fast hashing algorithm.  <a href="classklib_1_1FastHash.html#details">More...</a><br /></td></tr>
+<tr class="separator:"><td class="memSeparator" colspan="2">&#160;</td></tr>
+<tr class="memitem:"><td class="memItemLeft" align="right" valign="top">class &#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="classklib_1_1SecureHash.html">klib::SecureHash</a></td></tr>
+<tr class="memdesc:"><td class="mdescLeft">&#160;</td><td class="mdescRight">Contains a series of secure hash algorithms.  <a href="classklib_1_1SecureHash.html#details">More...</a><br /></td></tr>
 <tr class="separator:"><td class="memSeparator" colspan="2">&#160;</td></tr>
 </table><table class="memberdecls">
 <tr class="heading"><td colspan="2"><h2 class="groupheader"><a id="func-members" name="func-members"></a>
 Functions</h2></td></tr>
+<tr class="memitem:aba64b42882d6e54255da7e44bee74690"><td class="memItemLeft" align="right" valign="top">std::size_t&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="hash_8h.html#aba64b42882d6e54255da7e44bee74690">klib::fast_hash</a> (const std::string &amp;data)</td></tr>
+<tr class="memdesc:aba64b42882d6e54255da7e44bee74690"><td class="mdescLeft">&#160;</td><td class="mdescRight">Get the hash object and calculate the hash value.  <a href="hash_8h.html#aba64b42882d6e54255da7e44bee74690">More...</a><br /></td></tr>
+<tr class="separator:aba64b42882d6e54255da7e44bee74690"><td class="memSeparator" colspan="2">&#160;</td></tr>
+<tr class="memitem:aebe750c2e1719aa849149275b63177ab"><td class="memItemLeft" align="right" valign="top"><a id="aebe750c2e1719aa849149275b63177ab" name="aebe750c2e1719aa849149275b63177ab"></a>
+std::string&#160;</td><td class="memItemRight" valign="bottom"><b>klib::fast_hash_hex</b> (const std::string &amp;data)</td></tr>
+<tr class="separator:aebe750c2e1719aa849149275b63177ab"><td class="memSeparator" colspan="2">&#160;</td></tr>
 <tr class="memitem:ac0e8cb916043fdb8394793429045f100"><td class="memItemLeft" align="right" valign="top">std::string&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="hash_8h.html#ac0e8cb916043fdb8394793429045f100">klib::md5</a> (const std::string &amp;data)</td></tr>
 <tr class="memdesc:ac0e8cb916043fdb8394793429045f100"><td class="mdescLeft">&#160;</td><td class="mdescRight">Get the hash object and calculate the hash value.  <a href="hash_8h.html#ac0e8cb916043fdb8394793429045f100">More...</a><br /></td></tr>
 <tr class="separator:ac0e8cb916043fdb8394793429045f100"><td class="memSeparator" colspan="2">&#160;</td></tr>
@@ -187,8 +197,35 @@ std::string&#160;</td><td class="memItemRight" valign="bottom"><b>klib::sha3_512
 <tr class="separator:a5f70596a527fbfbb39dfe92d2684ee72"><td class="memSeparator" colspan="2">&#160;</td></tr>
 </table>
 <a name="details" id="details"></a><h2 class="groupheader">Detailed Description</h2>
-<div class="textblock"><p >Contains secure hash module. </p>
+<div class="textblock"><p >Contains hash module. </p>
 </div><h2 class="groupheader">Function Documentation</h2>
+<a id="aba64b42882d6e54255da7e44bee74690" name="aba64b42882d6e54255da7e44bee74690"></a>
+<h2 class="memtitle"><span class="permalink"><a href="#aba64b42882d6e54255da7e44bee74690">&#9670;&nbsp;</a></span>fast_hash()</h2>
+
+<div class="memitem">
+<div class="memproto">
+      <table class="memname">
+        <tr>
+          <td class="memname">std::size_t klib::fast_hash </td>
+          <td>(</td>
+          <td class="paramtype">const std::string &amp;&#160;</td>
+          <td class="paramname"><em>data</em></td><td>)</td>
+          <td></td>
+        </tr>
+      </table>
+</div><div class="memdoc">
+
+<p>Get the hash object and calculate the hash value. </p>
+<dl class="params"><dt>Parameters</dt><dd>
+  <table class="params">
+    <tr><td class="paramname">data</td><td>Data to be hashed </td></tr>
+  </table>
+  </dd>
+</dl>
+<dl class="section return"><dt>Returns</dt><dd>Hash result </dd></dl>
+
+</div>
+</div>
 <a id="ac0e8cb916043fdb8394793429045f100" name="ac0e8cb916043fdb8394793429045f100"></a>
 <h2 class="memtitle"><span class="permalink"><a href="#ac0e8cb916043fdb8394793429045f100">&#9670;&nbsp;</a></span>md5()</h2>
 

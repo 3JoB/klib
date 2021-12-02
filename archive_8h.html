@@ -30,7 +30,7 @@
  <tbody>
  <tr style="height: 56px;">
   <td id="projectalign" style="padding-left: 0.5em;">
-   <div id="projectname">klib<span id="projectnumber">&#160;0.10.3</span>
+   <div id="projectname">klib<span id="projectnumber">&#160;0.10.4</span>
    </div>
   </td>
     <td>        <div id="MSearchBox" class="MSearchBoxInactive">
@@ -111,6 +111,7 @@ $(document).ready(function(){initNavTree('archive_8h.html',''); initResizable();
 Enumerations</h2></td></tr>
 <tr class="memitem:a00dd09aa9984a80a30a64727d6a7ac99"><td class="memItemLeft" align="right" valign="top"><a id="a00dd09aa9984a80a30a64727d6a7ac99" name="a00dd09aa9984a80a30a64727d6a7ac99"></a>enum class &#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="archive_8h.html#a00dd09aa9984a80a30a64727d6a7ac99">klib::Algorithm</a> { <b>Zip</b>
 , <b>Gzip</b>
+, <b>Zstd</b>
  }</td></tr>
 <tr class="memdesc:a00dd09aa9984a80a30a64727d6a7ac99"><td class="mdescLeft">&#160;</td><td class="mdescRight">Algorithm used for compression. <br /></td></tr>
 <tr class="separator:a00dd09aa9984a80a30a64727d6a7ac99"><td class="memSeparator" colspan="2">&#160;</td></tr>
@@ -123,20 +124,20 @@ Functions</h2></td></tr>
 <tr class="memitem:a0ff19dfa8c910290eff014ba09f6c4bc"><td class="memItemLeft" align="right" valign="top">void&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="archive_8h.html#a0ff19dfa8c910290eff014ba09f6c4bc">klib::compress</a> (const std::vector&lt; std::string &gt; &amp;paths, Algorithm algorithm, const std::string &amp;file_name)</td></tr>
 <tr class="memdesc:a0ff19dfa8c910290eff014ba09f6c4bc"><td class="mdescLeft">&#160;</td><td class="mdescRight">Compress files or folders.  <a href="archive_8h.html#a0ff19dfa8c910290eff014ba09f6c4bc">More...</a><br /></td></tr>
 <tr class="separator:a0ff19dfa8c910290eff014ba09f6c4bc"><td class="memSeparator" colspan="2">&#160;</td></tr>
-<tr class="memitem:a3a3e6cf0f6338ff9a48cb54ccc029eb7"><td class="memItemLeft" align="right" valign="top">std::optional&lt; std::string &gt;&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="archive_8h.html#a3a3e6cf0f6338ff9a48cb54ccc029eb7">klib::decompress</a> (const std::string &amp;path, const std::string &amp;decompressed_path=&quot;&quot;)</td></tr>
-<tr class="memdesc:a3a3e6cf0f6338ff9a48cb54ccc029eb7"><td class="mdescLeft">&#160;</td><td class="mdescRight">Decompress file.  <a href="archive_8h.html#a3a3e6cf0f6338ff9a48cb54ccc029eb7">More...</a><br /></td></tr>
-<tr class="separator:a3a3e6cf0f6338ff9a48cb54ccc029eb7"><td class="memSeparator" colspan="2">&#160;</td></tr>
+<tr class="memitem:ae7534a03c6a19a5cdaeb6eacebef9c02"><td class="memItemLeft" align="right" valign="top">std::optional&lt; std::string &gt;&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="archive_8h.html#ae7534a03c6a19a5cdaeb6eacebef9c02">klib::decompress</a> (const std::string &amp;path, const std::string &amp;decompressed_path=&quot;&quot;, const std::string &amp;password=&quot;&quot;)</td></tr>
+<tr class="memdesc:ae7534a03c6a19a5cdaeb6eacebef9c02"><td class="mdescLeft">&#160;</td><td class="mdescRight">Decompress file.  <a href="archive_8h.html#ae7534a03c6a19a5cdaeb6eacebef9c02">More...</a><br /></td></tr>
+<tr class="separator:ae7534a03c6a19a5cdaeb6eacebef9c02"><td class="memSeparator" colspan="2">&#160;</td></tr>
 <tr class="memitem:ae8450f2125ec32f20f75144c144a325f"><td class="memItemLeft" align="right" valign="top">std::string&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="archive_8h.html#ae8450f2125ec32f20f75144c144a325f">klib::compress_str</a> (const std::string &amp;data)</td></tr>
-<tr class="memdesc:ae8450f2125ec32f20f75144c144a325f"><td class="mdescLeft">&#160;</td><td class="mdescRight">Use Zstandard algorithm to compress data.  <a href="archive_8h.html#ae8450f2125ec32f20f75144c144a325f">More...</a><br /></td></tr>
+<tr class="memdesc:ae8450f2125ec32f20f75144c144a325f"><td class="mdescLeft">&#160;</td><td class="mdescRight">Compress data.  <a href="archive_8h.html#ae8450f2125ec32f20f75144c144a325f">More...</a><br /></td></tr>
 <tr class="separator:ae8450f2125ec32f20f75144c144a325f"><td class="memSeparator" colspan="2">&#160;</td></tr>
 <tr class="memitem:adcde0e6723d9397db836be762f8f0221"><td class="memItemLeft" align="right" valign="top">std::string&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="archive_8h.html#adcde0e6723d9397db836be762f8f0221">klib::compress_str</a> (const char *data, std::size_t size)</td></tr>
-<tr class="memdesc:adcde0e6723d9397db836be762f8f0221"><td class="mdescLeft">&#160;</td><td class="mdescRight">Use Zstandard algorithm to compress data.  <a href="archive_8h.html#adcde0e6723d9397db836be762f8f0221">More...</a><br /></td></tr>
+<tr class="memdesc:adcde0e6723d9397db836be762f8f0221"><td class="mdescLeft">&#160;</td><td class="mdescRight">Compress data.  <a href="archive_8h.html#adcde0e6723d9397db836be762f8f0221">More...</a><br /></td></tr>
 <tr class="separator:adcde0e6723d9397db836be762f8f0221"><td class="memSeparator" colspan="2">&#160;</td></tr>
 <tr class="memitem:ae7c9d47cf816d075f2dc036bb704871d"><td class="memItemLeft" align="right" valign="top">std::string&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="archive_8h.html#ae7c9d47cf816d075f2dc036bb704871d">klib::decompress_str</a> (const std::string &amp;data)</td></tr>
-<tr class="memdesc:ae7c9d47cf816d075f2dc036bb704871d"><td class="mdescLeft">&#160;</td><td class="mdescRight">Use Zstandard algorithm to decompress data.  <a href="archive_8h.html#ae7c9d47cf816d075f2dc036bb704871d">More...</a><br /></td></tr>
+<tr class="memdesc:ae7c9d47cf816d075f2dc036bb704871d"><td class="mdescLeft">&#160;</td><td class="mdescRight">Decompress data.  <a href="archive_8h.html#ae7c9d47cf816d075f2dc036bb704871d">More...</a><br /></td></tr>
 <tr class="separator:ae7c9d47cf816d075f2dc036bb704871d"><td class="memSeparator" colspan="2">&#160;</td></tr>
 <tr class="memitem:a74d11f96078ac9abe7c2155d42275e18"><td class="memItemLeft" align="right" valign="top">std::string&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="archive_8h.html#a74d11f96078ac9abe7c2155d42275e18">klib::decompress_str</a> (const char *data, std::size_t size)</td></tr>
-<tr class="memdesc:a74d11f96078ac9abe7c2155d42275e18"><td class="mdescLeft">&#160;</td><td class="mdescRight">Use Zstandard algorithm to decompress data.  <a href="archive_8h.html#a74d11f96078ac9abe7c2155d42275e18">More...</a><br /></td></tr>
+<tr class="memdesc:a74d11f96078ac9abe7c2155d42275e18"><td class="mdescLeft">&#160;</td><td class="mdescRight">Decompress data.  <a href="archive_8h.html#a74d11f96078ac9abe7c2155d42275e18">More...</a><br /></td></tr>
 <tr class="separator:a74d11f96078ac9abe7c2155d42275e18"><td class="memSeparator" colspan="2">&#160;</td></tr>
 </table>
 <a name="details" id="details"></a><h2 class="groupheader">Detailed Description</h2>
@@ -263,7 +264,7 @@ Functions</h2></td></tr>
       </table>
 </div><div class="memdoc">
 
-<p>Use Zstandard algorithm to compress data. </p>
+<p>Compress data. </p>
 <dl class="params"><dt>Parameters</dt><dd>
   <table class="params">
     <tr><td class="paramname">data</td><td>Data to be compressed </td></tr>
@@ -291,7 +292,7 @@ Functions</h2></td></tr>
       </table>
 </div><div class="memdoc">
 
-<p>Use Zstandard algorithm to compress data. </p>
+<p>Compress data. </p>
 <dl class="params"><dt>Parameters</dt><dd>
   <table class="params">
     <tr><td class="paramname">data</td><td>Data to be compressed </td></tr>
@@ -302,8 +303,8 @@ Functions</h2></td></tr>
 
 </div>
 </div>
-<a id="a3a3e6cf0f6338ff9a48cb54ccc029eb7" name="a3a3e6cf0f6338ff9a48cb54ccc029eb7"></a>
-<h2 class="memtitle"><span class="permalink"><a href="#a3a3e6cf0f6338ff9a48cb54ccc029eb7">&#9670;&nbsp;</a></span>decompress()</h2>
+<a id="ae7534a03c6a19a5cdaeb6eacebef9c02" name="ae7534a03c6a19a5cdaeb6eacebef9c02"></a>
+<h2 class="memtitle"><span class="permalink"><a href="#ae7534a03c6a19a5cdaeb6eacebef9c02">&#9670;&nbsp;</a></span>decompress()</h2>
 
 <div class="memitem">
 <div class="memproto">
@@ -318,7 +319,13 @@ Functions</h2></td></tr>
           <td class="paramkey"></td>
           <td></td>
           <td class="paramtype">const std::string &amp;&#160;</td>
-          <td class="paramname"><em>decompressed_path</em> = <code>&quot;&quot;</code>&#160;</td>
+          <td class="paramname"><em>decompressed_path</em> = <code>&quot;&quot;</code>, </td>
+        </tr>
+        <tr>
+          <td class="paramkey"></td>
+          <td></td>
+          <td class="paramtype">const std::string &amp;&#160;</td>
+          <td class="paramname"><em>password</em> = <code>&quot;&quot;</code>&#160;</td>
         </tr>
         <tr>
           <td></td>
@@ -333,6 +340,7 @@ Functions</h2></td></tr>
   <table class="params">
     <tr><td class="paramname">path</td><td>Compressed file path </td></tr>
     <tr><td class="paramname">decompressed_path</td><td>Specify the location of the decompressed content(If it is empty, decompress to the current directory) </td></tr>
+    <tr><td class="paramname">password</td><td>Compressed file password </td></tr>
   </table>
   </dd>
 </dl>
@@ -366,7 +374,7 @@ Functions</h2></td></tr>
       </table>
 </div><div class="memdoc">
 
-<p>Use Zstandard algorithm to decompress data. </p>
+<p>Decompress data. </p>
 <dl class="params"><dt>Parameters</dt><dd>
   <table class="params">
     <tr><td class="paramname">data</td><td>Data to be decompressed </td></tr>
@@ -394,7 +402,7 @@ Functions</h2></td></tr>
       </table>
 </div><div class="memdoc">
 
-<p>Use Zstandard algorithm to decompress data. </p>
+<p>Decompress data. </p>
 <dl class="params"><dt>Parameters</dt><dd>
   <table class="params">
     <tr><td class="paramname">data</td><td>Data to be decompressed </td></tr>

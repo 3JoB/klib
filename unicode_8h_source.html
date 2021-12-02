@@ -30,7 +30,7 @@
  <tbody>
  <tr style="height: 56px;">
   <td id="projectalign" style="padding-left: 0.5em;">
-   <div id="projectname">klib<span id="projectnumber">&#160;0.10.3</span>
+   <div id="projectname">klib<span id="projectnumber">&#160;0.10.4</span>
    </div>
   </td>
     <td>        <div id="MSearchBox" class="MSearchBoxInactive">
@@ -107,7 +107,7 @@ $(document).ready(function(){initNavTree('unicode_8h_source.html',''); initResiz
 <div class="line"><a id="l00015" name="l00015"></a><span class="lineno">   15</span><span class="comment">// https://stackoverflow.com/questions/62531882/is-there-a-way-to-detect-chinese-characters-in-c-using-boost</span></div>
 <div class="line"><a id="l00016" name="l00016"></a><span class="lineno">   16</span><span class="keyword">template</span> &lt;<span class="keywordtype">char</span>32_t a, <span class="keywordtype">char</span>32_t b&gt;</div>
 <div class="line"><a id="l00017" name="l00017"></a><span class="lineno"><a class="line" href="classklib_1_1detail_1_1UnicodeRange.html">   17</a></span><span class="keyword">class </span><a class="code hl_class" href="classklib_1_1detail_1_1UnicodeRange.html">UnicodeRange</a> {</div>
-<div class="line"><a id="l00018" name="l00018"></a><span class="lineno">   18</span>  <span class="keyword">static_assert</span>(a &lt;= b, <span class="stringliteral">&quot;proper range&quot;</span>);</div>
+<div class="line"><a id="l00018" name="l00018"></a><span class="lineno">   18</span>  <span class="keyword">static_assert</span>(a &lt;= b, <span class="stringliteral">&quot;Proper range&quot;</span>);</div>
 <div class="line"><a id="l00019" name="l00019"></a><span class="lineno">   19</span> </div>
 <div class="line"><a id="l00020" name="l00020"></a><span class="lineno">   20</span> <span class="keyword">public</span>:</div>
 <div class="line"><a id="l00021" name="l00021"></a><span class="lineno">   21</span>  <span class="keyword">constexpr</span> <span class="keywordtype">bool</span> operator()(char32_t x) <span class="keyword">const</span> <span class="keyword">noexcept</span> {</div>
@@ -128,39 +128,42 @@ $(document).ready(function(){initNavTree('unicode_8h_source.html',''); initResiz
 <div class="line"><a id="l00036" name="l00036"></a><span class="lineno">   36</span> </div>
 <div class="line"><a id="l00042" name="l00042"></a><span class="lineno"><a class="line" href="unicode_8h.html#afd9c11f7bcfa0aacc5111a78bfb42bac">   42</a></span>std::u16string <a class="code hl_function" href="unicode_8h.html#afd9c11f7bcfa0aacc5111a78bfb42bac">utf8_to_utf16</a>(<span class="keyword">const</span> std::string &amp;str);</div>
 <div class="line"><a id="l00043" name="l00043"></a><span class="lineno">   43</span> </div>
-<div class="line"><a id="l00049" name="l00049"></a><span class="lineno"><a class="line" href="unicode_8h.html#a618c7297574b1f62db6b5e8b19186f3b">   49</a></span>std::u32string <a class="code hl_function" href="unicode_8h.html#a618c7297574b1f62db6b5e8b19186f3b">utf8_to_utf32</a>(<span class="keyword">const</span> std::string &amp;str);</div>
+<div class="line"><a id="l00049" name="l00049"></a><span class="lineno"><a class="line" href="unicode_8h.html#a307c51d968ca389408db8534cf8d3ace">   49</a></span>std::string <a class="code hl_function" href="unicode_8h.html#a307c51d968ca389408db8534cf8d3ace">utf16_to_utf8</a>(<span class="keyword">const</span> std::u16string &amp;str);</div>
 <div class="line"><a id="l00050" name="l00050"></a><span class="lineno">   50</span> </div>
-<div class="line"><a id="l00056" name="l00056"></a><span class="lineno"><a class="line" href="unicode_8h.html#ae643f3a0b1f3cadf8b01d5c44c08ac2f">   56</a></span>std::string <a class="code hl_function" href="unicode_8h.html#ae643f3a0b1f3cadf8b01d5c44c08ac2f">utf32_to_utf8</a>(char32_t c);</div>
+<div class="line"><a id="l00056" name="l00056"></a><span class="lineno"><a class="line" href="unicode_8h.html#a618c7297574b1f62db6b5e8b19186f3b">   56</a></span>std::u32string <a class="code hl_function" href="unicode_8h.html#a618c7297574b1f62db6b5e8b19186f3b">utf8_to_utf32</a>(<span class="keyword">const</span> std::string &amp;str);</div>
 <div class="line"><a id="l00057" name="l00057"></a><span class="lineno">   57</span> </div>
-<div class="line"><a id="l00058" name="l00058"></a><span class="lineno">   58</span>std::string <a class="code hl_function" href="unicode_8h.html#ae643f3a0b1f3cadf8b01d5c44c08ac2f">utf32_to_utf8</a>(<span class="keyword">const</span> std::u32string &amp;str);</div>
-<div class="line"><a id="l00059" name="l00059"></a><span class="lineno">   59</span> </div>
-<div class="line"><a id="l00065" name="l00065"></a><span class="lineno"><a class="line" href="unicode_8h.html#a775ac965af49c5c606872cb3fd4a3351">   65</a></span><span class="keyword">constexpr</span> <span class="keywordtype">bool</span> <a class="code hl_function" href="unicode_8h.html#a775ac965af49c5c606872cb3fd4a3351">is_ascii</a>(<span class="keywordtype">char</span> c) { <span class="keywordflow">return</span> <span class="keyword">static_cast&lt;</span>std::uint8_t<span class="keyword">&gt;</span>(c) &lt;= 0x7F; }</div>
-<div class="line"><a id="l00066" name="l00066"></a><span class="lineno">   66</span> </div>
-<div class="line"><a id="l00067" name="l00067"></a><span class="lineno">   67</span><span class="keyword">constexpr</span> <span class="keywordtype">bool</span> is_ascii(char32_t c) {</div>
-<div class="line"><a id="l00068" name="l00068"></a><span class="lineno">   68</span>  <span class="keywordflow">return</span> <span class="keyword">static_cast&lt;</span>std::uint32_t<span class="keyword">&gt;</span>(c) &lt;= 0x7F;</div>
-<div class="line"><a id="l00069" name="l00069"></a><span class="lineno">   69</span>}</div>
-<div class="line"><a id="l00070" name="l00070"></a><span class="lineno">   70</span> </div>
-<div class="line"><a id="l00077" name="l00077"></a><span class="lineno"><a class="line" href="unicode_8h.html#a6e533084977cbc216fac214d8aad20a3">   77</a></span><span class="keywordtype">bool</span> <a class="code hl_function" href="unicode_8h.html#a775ac965af49c5c606872cb3fd4a3351">is_ascii</a>(<span class="keyword">const</span> std::string &amp;str);</div>
+<div class="line"><a id="l00063" name="l00063"></a><span class="lineno"><a class="line" href="unicode_8h.html#a137702622c0905e43278959649acb981">   63</a></span>std::string <a class="code hl_function" href="unicode_8h.html#a137702622c0905e43278959649acb981">utf32_to_utf8</a>(<span class="keyword">const</span> std::u32string &amp;str);</div>
+<div class="line"><a id="l00064" name="l00064"></a><span class="lineno">   64</span> </div>
+<div class="line"><a id="l00070" name="l00070"></a><span class="lineno"><a class="line" href="unicode_8h.html#ae643f3a0b1f3cadf8b01d5c44c08ac2f">   70</a></span>std::string <a class="code hl_function" href="unicode_8h.html#a137702622c0905e43278959649acb981">utf32_to_utf8</a>(char32_t c);</div>
+<div class="line"><a id="l00071" name="l00071"></a><span class="lineno">   71</span> </div>
+<div class="line"><a id="l00077" name="l00077"></a><span class="lineno"><a class="line" href="unicode_8h.html#a775ac965af49c5c606872cb3fd4a3351">   77</a></span><span class="keyword">constexpr</span> <span class="keywordtype">bool</span> <a class="code hl_function" href="unicode_8h.html#a775ac965af49c5c606872cb3fd4a3351">is_ascii</a>(<span class="keywordtype">char</span> c) { <span class="keywordflow">return</span> <span class="keyword">static_cast&lt;</span>std::uint8_t<span class="keyword">&gt;</span>(c) &lt;= 0x7F; }</div>
 <div class="line"><a id="l00078" name="l00078"></a><span class="lineno">   78</span> </div>
-<div class="line"><a id="l00079" name="l00079"></a><span class="lineno">   79</span><span class="keywordtype">bool</span> <a class="code hl_function" href="unicode_8h.html#a775ac965af49c5c606872cb3fd4a3351">is_ascii</a>(<span class="keyword">const</span> std::u32string &amp;str);</div>
-<div class="line"><a id="l00080" name="l00080"></a><span class="lineno">   80</span> </div>
-<div class="line"><a id="l00086" name="l00086"></a><span class="lineno"><a class="line" href="unicode_8h.html#a2b8a6386338a9fb7818772b9db40ccf4">   86</a></span><span class="keyword">constexpr</span> <span class="keywordtype">bool</span> <a class="code hl_function" href="unicode_8h.html#a2b8a6386338a9fb7818772b9db40ccf4">is_chinese</a>(char32_t c) {</div>
-<div class="line"><a id="l00087" name="l00087"></a><span class="lineno">   87</span>  <span class="keyword">using namespace </span>detail;</div>
-<div class="line"><a id="l00088" name="l00088"></a><span class="lineno">   88</span> </div>
-<div class="line"><a id="l00089" name="l00089"></a><span class="lineno">   89</span>  <span class="keywordflow">return</span> UnifiedIdeographs{}(c) || UnifiedIdeographsA{}(c) ||</div>
-<div class="line"><a id="l00090" name="l00090"></a><span class="lineno">   90</span>         UnifiedIdeographsB{}(c) || UnifiedIdeographsC{}(c) ||</div>
-<div class="line"><a id="l00091" name="l00091"></a><span class="lineno">   91</span>         UnifiedIdeographsD{}(c) || UnifiedIdeographsE{}(c) ||</div>
-<div class="line"><a id="l00092" name="l00092"></a><span class="lineno">   92</span>         CompatibilityIdeographs{}(c) || CompatibilityIdeographsSupplement{}(c);</div>
-<div class="line"><a id="l00093" name="l00093"></a><span class="lineno">   93</span>}</div>
-<div class="line"><a id="l00094" name="l00094"></a><span class="lineno">   94</span> </div>
-<div class="line"><a id="l00100" name="l00100"></a><span class="lineno"><a class="line" href="unicode_8h.html#a3c2ec9974b36028257f8d8cbeb4ab65c">  100</a></span><span class="keywordtype">bool</span> <a class="code hl_function" href="unicode_8h.html#a2b8a6386338a9fb7818772b9db40ccf4">is_chinese</a>(<span class="keyword">const</span> std::string &amp;c);</div>
-<div class="line"><a id="l00101" name="l00101"></a><span class="lineno">  101</span> </div>
-<div class="line"><a id="l00102" name="l00102"></a><span class="lineno">  102</span>}  <span class="comment">// namespace klib</span></div>
+<div class="line"><a id="l00079" name="l00079"></a><span class="lineno">   79</span><span class="keyword">constexpr</span> <span class="keywordtype">bool</span> is_ascii(char32_t c) {</div>
+<div class="line"><a id="l00080" name="l00080"></a><span class="lineno">   80</span>  <span class="keywordflow">return</span> <span class="keyword">static_cast&lt;</span>std::uint32_t<span class="keyword">&gt;</span>(c) &lt;= 0x7F;</div>
+<div class="line"><a id="l00081" name="l00081"></a><span class="lineno">   81</span>}</div>
+<div class="line"><a id="l00082" name="l00082"></a><span class="lineno">   82</span> </div>
+<div class="line"><a id="l00089" name="l00089"></a><span class="lineno"><a class="line" href="unicode_8h.html#a6e533084977cbc216fac214d8aad20a3">   89</a></span><span class="keywordtype">bool</span> <a class="code hl_function" href="unicode_8h.html#a775ac965af49c5c606872cb3fd4a3351">is_ascii</a>(<span class="keyword">const</span> std::string &amp;str);</div>
+<div class="line"><a id="l00090" name="l00090"></a><span class="lineno">   90</span> </div>
+<div class="line"><a id="l00091" name="l00091"></a><span class="lineno">   91</span><span class="keywordtype">bool</span> <a class="code hl_function" href="unicode_8h.html#a775ac965af49c5c606872cb3fd4a3351">is_ascii</a>(<span class="keyword">const</span> std::u32string &amp;str);</div>
+<div class="line"><a id="l00092" name="l00092"></a><span class="lineno">   92</span> </div>
+<div class="line"><a id="l00098" name="l00098"></a><span class="lineno"><a class="line" href="unicode_8h.html#a2b8a6386338a9fb7818772b9db40ccf4">   98</a></span><span class="keyword">constexpr</span> <span class="keywordtype">bool</span> <a class="code hl_function" href="unicode_8h.html#a2b8a6386338a9fb7818772b9db40ccf4">is_chinese</a>(char32_t c) {</div>
+<div class="line"><a id="l00099" name="l00099"></a><span class="lineno">   99</span>  <span class="keyword">using namespace </span>detail;</div>
+<div class="line"><a id="l00100" name="l00100"></a><span class="lineno">  100</span> </div>
+<div class="line"><a id="l00101" name="l00101"></a><span class="lineno">  101</span>  <span class="keywordflow">return</span> UnifiedIdeographs{}(c) || UnifiedIdeographsA{}(c) ||</div>
+<div class="line"><a id="l00102" name="l00102"></a><span class="lineno">  102</span>         UnifiedIdeographsB{}(c) || UnifiedIdeographsC{}(c) ||</div>
+<div class="line"><a id="l00103" name="l00103"></a><span class="lineno">  103</span>         UnifiedIdeographsD{}(c) || UnifiedIdeographsE{}(c) ||</div>
+<div class="line"><a id="l00104" name="l00104"></a><span class="lineno">  104</span>         CompatibilityIdeographs{}(c) || CompatibilityIdeographsSupplement{}(c);</div>
+<div class="line"><a id="l00105" name="l00105"></a><span class="lineno">  105</span>}</div>
+<div class="line"><a id="l00106" name="l00106"></a><span class="lineno">  106</span> </div>
+<div class="line"><a id="l00112" name="l00112"></a><span class="lineno"><a class="line" href="unicode_8h.html#a3c2ec9974b36028257f8d8cbeb4ab65c">  112</a></span><span class="keywordtype">bool</span> <a class="code hl_function" href="unicode_8h.html#a2b8a6386338a9fb7818772b9db40ccf4">is_chinese</a>(<span class="keyword">const</span> std::string &amp;c);</div>
+<div class="line"><a id="l00113" name="l00113"></a><span class="lineno">  113</span> </div>
+<div class="line"><a id="l00114" name="l00114"></a><span class="lineno">  114</span>}  <span class="comment">// namespace klib</span></div>
 <div class="ttc" id="aclassklib_1_1detail_1_1UnicodeRange_html"><div class="ttname"><a href="classklib_1_1detail_1_1UnicodeRange.html">klib::detail::UnicodeRange</a></div><div class="ttdef"><b>Definition:</b> unicode.h:17</div></div>
-<div class="ttc" id="aunicode_8h_html_a2b8a6386338a9fb7818772b9db40ccf4"><div class="ttname"><a href="unicode_8h.html#a2b8a6386338a9fb7818772b9db40ccf4">klib::is_chinese</a></div><div class="ttdeci">constexpr bool is_chinese(char32_t c)</div><div class="ttdoc">Determine whether it is a Chinese character.</div><div class="ttdef"><b>Definition:</b> unicode.h:86</div></div>
+<div class="ttc" id="aunicode_8h_html_a137702622c0905e43278959649acb981"><div class="ttname"><a href="unicode_8h.html#a137702622c0905e43278959649acb981">klib::utf32_to_utf8</a></div><div class="ttdeci">std::string utf32_to_utf8(const std::u32string &amp;str)</div><div class="ttdoc">Convert UTF-32 encoded string to UTF-8 encoded string.</div></div>
+<div class="ttc" id="aunicode_8h_html_a2b8a6386338a9fb7818772b9db40ccf4"><div class="ttname"><a href="unicode_8h.html#a2b8a6386338a9fb7818772b9db40ccf4">klib::is_chinese</a></div><div class="ttdeci">constexpr bool is_chinese(char32_t c)</div><div class="ttdoc">Determine whether it is a Chinese character.</div><div class="ttdef"><b>Definition:</b> unicode.h:98</div></div>
+<div class="ttc" id="aunicode_8h_html_a307c51d968ca389408db8534cf8d3ace"><div class="ttname"><a href="unicode_8h.html#a307c51d968ca389408db8534cf8d3ace">klib::utf16_to_utf8</a></div><div class="ttdeci">std::string utf16_to_utf8(const std::u16string &amp;str)</div><div class="ttdoc">Convert UTF-16 encoded string to UTF-8 encoded string.</div></div>
 <div class="ttc" id="aunicode_8h_html_a618c7297574b1f62db6b5e8b19186f3b"><div class="ttname"><a href="unicode_8h.html#a618c7297574b1f62db6b5e8b19186f3b">klib::utf8_to_utf32</a></div><div class="ttdeci">std::u32string utf8_to_utf32(const std::string &amp;str)</div><div class="ttdoc">Convert UTF-8 encoded string to UTF-32 encoded string.</div></div>
-<div class="ttc" id="aunicode_8h_html_a775ac965af49c5c606872cb3fd4a3351"><div class="ttname"><a href="unicode_8h.html#a775ac965af49c5c606872cb3fd4a3351">klib::is_ascii</a></div><div class="ttdeci">constexpr bool is_ascii(char c)</div><div class="ttdoc">Determine whether it is an ASCII character.</div><div class="ttdef"><b>Definition:</b> unicode.h:65</div></div>
-<div class="ttc" id="aunicode_8h_html_ae643f3a0b1f3cadf8b01d5c44c08ac2f"><div class="ttname"><a href="unicode_8h.html#ae643f3a0b1f3cadf8b01d5c44c08ac2f">klib::utf32_to_utf8</a></div><div class="ttdeci">std::string utf32_to_utf8(char32_t c)</div><div class="ttdoc">Convert UTF-32 encoded string to UTF-8 encoded string.</div></div>
+<div class="ttc" id="aunicode_8h_html_a775ac965af49c5c606872cb3fd4a3351"><div class="ttname"><a href="unicode_8h.html#a775ac965af49c5c606872cb3fd4a3351">klib::is_ascii</a></div><div class="ttdeci">constexpr bool is_ascii(char c)</div><div class="ttdoc">Determine whether it is an ASCII character.</div><div class="ttdef"><b>Definition:</b> unicode.h:77</div></div>
 <div class="ttc" id="aunicode_8h_html_afd9c11f7bcfa0aacc5111a78bfb42bac"><div class="ttname"><a href="unicode_8h.html#afd9c11f7bcfa0aacc5111a78bfb42bac">klib::utf8_to_utf16</a></div><div class="ttdeci">std::u16string utf8_to_utf16(const std::string &amp;str)</div><div class="ttdoc">Convert UTF-8 encoded string to UTF-16 encoded string.</div></div>
 </div><!-- fragment --></div><!-- contents -->
 </div><!-- doc-content -->

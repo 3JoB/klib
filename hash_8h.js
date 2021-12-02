@@ -1,6 +1,8 @@
 var hash_8h =
 [
-    [ "klib::HashLib", "classklib_1_1HashLib.html", "classklib_1_1HashLib" ],
+    [ "klib::FastHash", "classklib_1_1FastHash.html", "classklib_1_1FastHash" ],
+    [ "klib::SecureHash", "classklib_1_1SecureHash.html", "classklib_1_1SecureHash" ],
+    [ "fast_hash", "hash_8h.html#aba64b42882d6e54255da7e44bee74690", null ],
     [ "md5", "hash_8h.html#ac0e8cb916043fdb8394793429045f100", null ],
     [ "password_hash_encoded", "hash_8h.html#afd47172c370d42e3bf072419057776b9", null ],
     [ "password_hash_raw", "hash_8h.html#a15721f1f0d638ed7902054bd6443f757", null ],

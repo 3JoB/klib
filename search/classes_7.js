@@ -1,4 +1,6 @@
 var searchData=
 [
-  ['unicoderange_0',['UnicodeRange',['../classklib_1_1detail_1_1UnicodeRange.html',1,'klib::detail']]]
+  ['securehash_0',['SecureHash',['../classklib_1_1SecureHash.html',1,'klib']]],
+  ['sqldatabase_1',['SqlDatabase',['../classklib_1_1SqlDatabase.html',1,'klib']]],
+  ['sqlquery_2',['SqlQuery',['../classklib_1_1SqlQuery.html',1,'klib']]]
 ];
