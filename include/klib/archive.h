@@ -43,6 +43,7 @@ void compress(const std::vector<std::string> &paths, Algorithm algorithm,
  * @param path: Compressed file path
  * @param decompressed_path: Specify the location of the decompressed content(If
  * it is empty, decompress to the current directory)
+ * @param password: Compressed file password
  * @return Outermost folder name(If there is not only one folder, then empty)
  */
 std::optional<std::string> decompress(const std::string &path,
@@ -50,14 +51,14 @@ std::optional<std::string> decompress(const std::string &path,
                                       const std::string &password = "");
 
 /**
- * @brief Use Zstandard algorithm to compress data
+ * @brief Compress data
  * @param data: Data to be compressed
  * @return Compressed data
  */
 std::string compress_str(const std::string &data);
 
 /**
- * @brief Use Zstandard algorithm to compress data
+ * @brief Compress data
  * @param data: Data to be compressed
  * @param size: The size of the data to be compressed
  * @return Compressed data
@@ -65,14 +66,14 @@ std::string compress_str(const std::string &data);
 std::string compress_str(const char *data, std::size_t size);
 
 /**
- * @brief Use Zstandard algorithm to decompress data
+ * @brief Decompress data
  * @param data: Data to be decompressed
  * @return Decompressed data
  */
 std::string decompress_str(const std::string &data);
 
 /**
- * @brief Use Zstandard algorithm to decompress data
+ * @brief Decompress data
  * @param data: Data to be decompressed
  * @param size: The size of the data to be decompressed
  * @return Decompressed data

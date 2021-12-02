@@ -2,7 +2,6 @@
 
 #include <cstdint>
 #include <filesystem>
-#include <functional>
 #include <memory>
 #include <unordered_set>
 
@@ -10,6 +9,7 @@
 #include <archive_entry.h>
 #include <zstd.h>
 #include <boost/core/ignore_unused.hpp>
+#include <scope_guard.hpp>
 
 #include "klib/exception.h"
 #include "klib/util.h"
@@ -32,77 +32,16 @@ std::string get_top_level_dir(const std::filesystem::path &path) {
   return {};
 }
 
-void check_file_exists(const std::string &path) {
-  if (!std::filesystem::exists(path)) {
-    throw RuntimeError("The file does not exist: '{}'", path);
-  }
-
-  if (!std::filesystem::is_regular_file(path)) {
-    throw RuntimeError("The path does not correspond to a file: '{}'", path);
-  }
-}
-
-void check_file_or_folder_exists(const std::string &path) {
-  if (!std::filesystem::exists(path)) {
-    throw RuntimeError("The file or folder does not exist: '{}'", path);
-  }
-
-  if (!std::filesystem::is_regular_file(path) &&
-      !std::filesystem::is_directory(path)) {
-    throw RuntimeError("The path does not correspond to a file or folder: '{}'",
-                       path);
-  }
-}
-
-void check_archive_correctness(std::int32_t code, struct archive *archive) {
-  if (code != ARCHIVE_OK) {
+void check_archive(std::int32_t rc, archive *archive) {
+  if (rc != ARCHIVE_OK) {
     throw RuntimeError(archive_error_string(archive));
   }
 }
 
-void checked_archive_func(
-    const std::function<std::int32_t(struct archive *)> &func,
-    struct archive *archive) {
-  check_archive_correctness(func(archive), archive);
-}
-
-auto create_unique_ptr(
-    const std::function<struct archive *()> &init,
-    const std::vector<std::function<std::int32_t(struct archive *)>>
-        &free_func) {
-  auto free_archive = [free_func](struct archive *archive) {
-    for (const auto &func : free_func) {
-      checked_archive_func(func, archive);
-    }
-  };
-
-  auto archive = std::unique_ptr<struct archive, decltype(free_archive)>(
-      init(), free_archive);
-
-  if (!archive) {
-    throw RuntimeError("create archive error");
+void check_zstd(std::size_t rc) {
+  if (ZSTD_isError(rc)) {
+    throw RuntimeError(ZSTD_getErrorName(rc));
   }
-
-  return archive;
-}
-
-auto create_unique_ptr(
-    const std::function<struct archive_entry *()> &init,
-    const std::vector<std::function<void(struct archive_entry *)>> &free_func) {
-  auto free_archive = [free_func](struct archive_entry *archive) {
-    for (const auto &func : free_func) {
-      func(archive);
-    }
-  };
-
-  auto entry = std::unique_ptr<struct archive_entry, decltype(free_archive)>(
-      init(), free_archive);
-
-  if (!entry) {
-    throw RuntimeError("create archive_entry error");
-  }
-
-  return entry;
 }
 
 std::string compressed_file_name(const std::string &path, Algorithm algorithm) {
@@ -121,28 +60,20 @@ std::string compressed_file_name(const std::string &path, Algorithm algorithm) {
   return name;
 }
 
-void copy_data(struct archive *ar, struct archive *aw) {
+void copy_data(archive *archive_read, archive *archive_write) {
   while (true) {
-    const void *buff = nullptr;
-    std::size_t size = 0;
-    la_int64_t offset = 0;
+    const void *buff;
+    std::size_t size;
+    la_int64_t offset;
 
-    auto status = archive_read_data_block(ar, &buff, &size, &offset);
-    if (status == ARCHIVE_EOF) {
+    auto rc = archive_read_data_block(archive_read, &buff, &size, &offset);
+    if (rc == ARCHIVE_EOF) {
       return;
     }
-    if (status != ARCHIVE_OK) {
-      throw RuntimeError(archive_error_string(ar));
-    }
+    check_archive(rc, archive_read);
 
-    check_archive_correctness(archive_write_data_block(aw, buff, size, offset),
-                              aw);
-  }
-}
-
-void check_zstd(std::size_t error) {
-  if (ZSTD_isError(error)) {
-    throw RuntimeError(ZSTD_getErrorName(error));
+    rc = archive_write_data_block(archive_write, buff, size, offset);
+    check_archive(rc, archive_write);
   }
 }
 
@@ -150,8 +81,6 @@ void check_zstd(std::size_t error) {
 
 void compress(const std::string &path, Algorithm algorithm,
               const std::string &file_name, bool flag) {
-  check_file_or_folder_exists(path);
-
   std::string out =
       (std::empty(file_name) ? compressed_file_name(path, algorithm)
                              : file_name);
@@ -177,56 +106,69 @@ void compress(const std::string &path, Algorithm algorithm,
 
 void compress(const std::vector<std::string> &paths, Algorithm algorithm,
               const std::string &file_name) {
-  for (const auto &path : paths) {
-    check_file_or_folder_exists(path);
-  }
+  auto archive = archive_write_new();
+  SCOPE_EXIT {
+    archive_write_close(archive);
+    archive_write_free(archive);
+  };
 
-  auto archive = create_unique_ptr(archive_write_new,
-                                   {archive_write_close, archive_write_free});
+  std::int32_t rc;
 
   if (algorithm == Algorithm::Zip) {
-    checked_archive_func(archive_write_set_format_zip, archive.get());
+    rc = archive_write_set_format_zip(archive);
+    check_archive(rc, archive);
   } else if (algorithm == Algorithm::Gzip) {
-    checked_archive_func(archive_write_set_format_gnutar, archive.get());
-    checked_archive_func(archive_write_add_filter_gzip, archive.get());
+    rc = archive_write_set_format_gnutar(archive);
+    check_archive(rc, archive);
+    rc = archive_write_add_filter_gzip(archive);
+    check_archive(rc, archive);
   } else if (algorithm == Algorithm::Zstd) {
-    checked_archive_func(archive_write_set_format_gnutar, archive.get());
-    checked_archive_func(archive_write_add_filter_zstd, archive.get());
+    rc = archive_write_set_format_gnutar(archive);
+    check_archive(rc, archive);
+    rc = archive_write_add_filter_zstd(archive);
+    check_archive(rc, archive);
   } else {
     throw LogicError("Unknown algorithm");
   }
 
-  check_archive_correctness(
-      archive_write_open_filename(archive.get(), file_name.c_str()),
-      archive.get());
+  rc = archive_write_open_filename(archive, file_name.c_str());
+  check_archive(rc, archive);
 
   for (const auto &item : paths) {
-    auto disk = create_unique_ptr(archive_read_disk_new,
-                                  {archive_read_close, archive_read_free});
+    auto disk = archive_read_disk_new();
+    SCOPE_EXIT {
+      archive_read_close(disk);
+      archive_read_free(disk);
+    };
 
-    checked_archive_func(archive_read_disk_set_standard_lookup, disk.get());
-    check_archive_correctness(archive_read_disk_open(disk.get(), item.c_str()),
-                              disk.get());
+    rc = archive_read_disk_set_standard_lookup(disk);
+    check_archive(rc, disk);
+
+    rc = archive_read_disk_open(disk, item.c_str());
+    check_archive(rc, disk);
 
     while (true) {
-      auto entry = create_unique_ptr(archive_entry_new, {archive_entry_free});
+      auto entry = archive_entry_new();
+      SCOPE_EXIT { archive_entry_free(entry); };
 
-      auto status = archive_read_next_header2(disk.get(), entry.get());
-      if (status == ARCHIVE_EOF) {
+      rc = archive_read_next_header2(disk, entry);
+      if (rc == ARCHIVE_EOF) {
         break;
       }
-      check_archive_correctness(status, disk.get());
+      check_archive(rc, disk);
 
-      checked_archive_func(archive_read_disk_descend, disk.get());
-      check_archive_correctness(
-          archive_write_header(archive.get(), entry.get()), archive.get());
+      rc = archive_read_disk_descend(disk);
+      check_archive(rc, disk);
+
+      rc = archive_write_header(archive, entry);
+      check_archive(rc, archive);
 
       std::string data;
-      const auto source_path = archive_entry_sourcepath(entry.get());
-      if (std::filesystem::is_regular_file(source_path)) {
+      if (auto source_path = archive_entry_sourcepath(entry);
+          std::filesystem::is_regular_file(source_path)) {
         data = read_file(source_path, true);
       }
-      archive_write_data(archive.get(), std::data(data), std::size(data));
+      archive_write_data(archive, std::data(data), std::size(data));
     }
   }
 }
@@ -234,55 +176,69 @@ void compress(const std::vector<std::string> &paths, Algorithm algorithm,
 std::optional<std::string> decompress(const std::string &file_name,
                                       const std::string &path,
                                       const std::string &password) {
-  check_file_exists(file_name);
+  auto archive = archive_read_new();
+  SCOPE_EXIT {
+    archive_read_close(archive);
+    archive_read_free(archive);
+  };
 
-  std::int32_t flags = (ARCHIVE_EXTRACT_TIME | ARCHIVE_EXTRACT_PERM |
-                        ARCHIVE_EXTRACT_ACL | ARCHIVE_EXTRACT_FFLAGS);
+  auto rc = archive_read_support_format_zip(archive);
+  check_archive(rc, archive);
 
-  auto archive = create_unique_ptr(archive_read_new,
-                                   {archive_read_close, archive_read_free});
-  checked_archive_func(archive_read_support_format_gnutar, archive.get());
-  checked_archive_func(archive_read_support_format_zip, archive.get());
-  checked_archive_func(archive_read_support_filter_gzip, archive.get());
-  checked_archive_func(archive_read_support_filter_zstd, archive.get());
+  rc = archive_read_support_format_gnutar(archive);
+  check_archive(rc, archive);
+
+  rc = archive_read_support_filter_gzip(archive);
+  check_archive(rc, archive);
+
+  rc = archive_read_support_filter_zstd(archive);
+  check_archive(rc, archive);
+
   if (!std::empty(password)) {
-    archive_read_add_passphrase(archive.get(), password.c_str());
+    rc = archive_read_add_passphrase(archive, password.c_str());
+    check_archive(rc, archive);
   }
 
-  auto extract = create_unique_ptr(archive_write_disk_new,
-                                   {archive_write_close, archive_write_free});
-  check_archive_correctness(
-      archive_write_disk_set_options(extract.get(), flags), extract.get());
-  checked_archive_func(archive_write_disk_set_standard_lookup, extract.get());
+  auto extract = archive_write_disk_new();
+  SCOPE_EXIT {
+    archive_write_close(extract);
+    archive_write_free(extract);
+  };
 
-  check_archive_correctness(
-      archive_read_open_filename(archive.get(), file_name.c_str(), 10240),
-      archive.get());
+  rc = archive_write_disk_set_options(
+      extract, ARCHIVE_EXTRACT_TIME | ARCHIVE_EXTRACT_PERM |
+                   ARCHIVE_EXTRACT_ACL | ARCHIVE_EXTRACT_FFLAGS);
+  check_archive(rc, extract);
+
+  rc = archive_write_disk_set_standard_lookup(extract);
+  check_archive(rc, extract);
+
+  rc = archive_read_open_filename(archive, file_name.c_str(), 102400);
+  check_archive(rc, extract);
 
   ChangeWorkingDir change_work_dir(path);
   boost::ignore_unused(change_work_dir);
 
   std::unordered_set<std::string> dirs;
   while (true) {
-    struct archive_entry *entry = nullptr;
-    auto status = archive_read_next_header(archive.get(), &entry);
-    if (status == ARCHIVE_EOF) {
+    archive_entry *entry;
+    rc = archive_read_next_header(archive, &entry);
+    if (rc == ARCHIVE_EOF) {
       break;
     }
-    if (status != ARCHIVE_OK) {
-      throw RuntimeError(archive_error_string(archive.get()));
-    }
+    check_archive(rc, archive);
 
-    check_archive_correctness(archive_write_header(extract.get(), entry),
-                              extract.get());
+    rc = archive_write_header(extract, entry);
+    check_archive(rc, extract);
 
     dirs.insert(get_top_level_dir(archive_entry_pathname(entry)));
 
     if (archive_entry_size(entry) > 0) {
-      copy_data(archive.get(), extract.get());
+      copy_data(archive, extract);
     }
 
-    checked_archive_func(archive_write_finish_entry, extract.get());
+    rc = archive_write_finish_entry(extract);
+    check_archive(rc, extract);
   }
 
   if (std::size(dirs) == 1) {
