@@ -57,15 +57,25 @@ class FastHash::FastHashImpl {
   bool doing_ = false;
 };
 
-FastHash::FastHashImpl::FastHashImpl() : status_(XXH3_createState()) {}
+FastHash::FastHashImpl::FastHashImpl() : status_(XXH3_createState()) {
+  if (!status_) {
+    throw RuntimeError("XXH3_createState failed");
+  }
+}
 
 void FastHash::FastHashImpl::update(const std::string &data) {
   if (!doing_) {
-    XXH3_64bits_reset(status_);
+    if (XXH3_64bits_reset(status_) == XXH_ERROR) {
+      throw RuntimeError("XXH3_64bits_reset failed");
+    }
+
     doing_ = true;
   }
 
-  XXH3_64bits_update(status_, std::data(data), std::size(data));
+  if (XXH3_64bits_update(status_, std::data(data), std::size(data)) ==
+      XXH_ERROR) {
+    throw RuntimeError("XXH3_64bits_update failed");
+  }
 }
 
 std::size_t FastHash::FastHashImpl::digest() {

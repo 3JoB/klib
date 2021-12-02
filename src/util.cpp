@@ -99,10 +99,6 @@ std::string read_file(std::string_view path, bool binary_mode) {
 }
 
 std::string read_file(const char *path, bool binary_mode) {
-  if (!std::filesystem::is_regular_file(path)) {
-    throw RuntimeError("'{}' is not a file", path);
-  }
-
   std::ifstream ifs;
   if (binary_mode) {
     ifs.open(path, std::ifstream::binary);
@@ -111,7 +107,7 @@ std::string read_file(const char *path, bool binary_mode) {
   }
 
   if (!ifs) {
-    throw RuntimeError("can not open file: '{}'", path);
+    throw RuntimeError("Can not open file: '{}'", path);
   }
 
   std::string data;
@@ -157,7 +153,7 @@ void write_file(const char *path, bool binary_mode, const char *content,
   }
 
   if (!ofs) {
-    throw RuntimeError("can not open file: '{}'", path);
+    throw RuntimeError("Can not open file: '{}'", path);
   }
 
   ofs.write(content, length);

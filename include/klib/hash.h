@@ -15,13 +15,12 @@
 namespace klib {
 
 /**
- * @brief Contains a series of secure hash algorithms
+ * @brief Contains fast hashing algorithm
  */
 class FastHash {
  public:
   /**
    * @brief Constructor
-   * @param kind: Specify the algorithm used
    */
   explicit FastHash();
 
@@ -59,6 +58,11 @@ class FastHash {
   std::experimental::propagate_const<std::unique_ptr<FastHashImpl>> impl_;
 };
 
+/**
+ * @brief Get the hash object and calculate the hash value
+ * @param data: Data to be hashed
+ * @return Hash result
+ */
 std::size_t fast_hash(const std::string &data);
 std::string fast_hash_hex(const std::string &data);
 

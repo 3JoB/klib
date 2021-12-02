@@ -15,7 +15,7 @@ namespace detail {
 // https://stackoverflow.com/questions/62531882/is-there-a-way-to-detect-chinese-characters-in-c-using-boost
 template <char32_t a, char32_t b>
 class UnicodeRange {
-  static_assert(a <= b, "proper range");
+  static_assert(a <= b, "Proper range");
 
  public:
   constexpr bool operator()(char32_t x) const noexcept {
@@ -41,6 +41,11 @@ using CompatibilityIdeographsSupplement = UnicodeRange<0x2F800, 0x2FA1F>;
  */
 std::u16string utf8_to_utf16(const std::string &str);
 
+/**
+ * @brief Convert UTF-16 encoded string to UTF-8 encoded string
+ * @param str: UTF-16 encoded string
+ * @return The converted UTF-8 encoded string
+ */
 std::string utf16_to_utf8(const std::u16string &str);
 
 /**
@@ -52,12 +57,17 @@ std::u32string utf8_to_utf32(const std::string &str);
 
 /**
  * @brief Convert UTF-32 encoded string to UTF-8 encoded string
- * @param c: UTF-32 encoded string
+ * @param str: UTF-32 encoded string
+ * @return The converted UTF-8 encoded string
+ */
+std::string utf32_to_utf8(const std::u32string &str);
+
+/**
+ * @brief Convert UTF-32 encoded string to UTF-8 encoded string
+ * @param c: UTF-32 encoded char
  * @return The converted UTF-8 encoded string
  */
 std::string utf32_to_utf8(char32_t c);
-
-std::string utf32_to_utf8(const std::u32string &str);
 
 /**
  * @brief Determine whether it is an ASCII character

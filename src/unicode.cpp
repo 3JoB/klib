@@ -137,10 +137,6 @@ bool is_ascii(const std::u32string &str) {
 }
 
 bool is_chinese(const std::string &c) {
-  if (std::empty(c)) {
-    return false;
-  }
-
   auto utf32 = utf8_to_utf32(c);
 
   if (std::size(utf32) != 1) {
