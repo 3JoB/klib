@@ -29,6 +29,8 @@ A C++ library, which wraps several important C libraries and provides some conve
 - [zstd](https://github.com/facebook/zstd)
 - [sqlcipher](https://github.com/sqlcipher/sqlcipher)
 - [argon2](https://github.com/P-H-C/phc-winner-argon2)
+- [xxHash](https://github.com/Cyan4973/xxHash)
+- [simdutf](https://github.com/simdutf/simdutf)
 - [Boost](https://www.boost.org/)
 - [fmt](https://github.com/fmtlib/fmt)
 - [spdlog](https://github.com/gabime/spdlog)
