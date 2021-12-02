@@ -70,6 +70,7 @@ pkg_check_modules(libcurl REQUIRED IMPORTED_TARGET libcurl)
 pkg_check_modules(openssl REQUIRED IMPORTED_TARGET openssl)
 pkg_check_modules(sqlcipher REQUIRED IMPORTED_TARGET sqlcipher)
 pkg_check_modules(libargon2 REQUIRED IMPORTED_TARGET libargon2)
+pkg_check_modules(libbrotlicommon REQUIRED IMPORTED_TARGET libbrotlicommon)
 
 add_definitions(-DOPENSSL_NO_DEPRECATED -DCURL_NO_OLDIES -DSQLITE_HAS_CODEC)
 
@@ -78,6 +79,8 @@ find_package(fmt REQUIRED)
 find_package(spdlog REQUIRED)
 find_package(Boost REQUIRED CONFIG)
 find_package(scope_guard REQUIRED)
+find_package(simdutf REQUIRED)
+find_package(xxHash REQUIRED)
 
 set(THREADS_PREFER_PTHREAD_FLAG TRUE)
 find_package(Threads REQUIRED)
@@ -113,6 +116,7 @@ if(KLIB_BUILD_STATIC)
 
   # https://stackoverflow.com/questions/37924383/combining-several-static-libraries-into-one-using-cmake
   file(MAKE_DIRECTORY ${KLIB_BINARY_DIR}/third_party)
+  file(MAKE_DIRECTORY ${KLIB_BINARY_DIR}/third_party/xxhash)
   add_custom_command(
     TARGET ${KLIB_LIBRARY}
     POST_BUILD
@@ -120,6 +124,8 @@ if(KLIB_BUILD_STATIC)
     COMMAND ar -x /usr/local/lib/libz.a
     COMMAND ar -x /usr/local/lib/libarchive.a
     COMMAND ar -x /usr/local/lib/libtidy.a
+    COMMAND ar -x /usr/local/lib/libbrotlicommon.a
+    COMMAND ar -x /usr/local/lib/libbrotlidec.a
     COMMAND ar -x /usr/local/lib/libcurl.a
     COMMAND ar -x /usr/local/lib/libcrypto.a
     COMMAND ar -x /usr/local/lib/libssl.a
@@ -129,7 +135,9 @@ if(KLIB_BUILD_STATIC)
     COMMAND ar -x /usr/local/lib/libfmt.a
     COMMAND ar -x /usr/local/lib/libspdlog.a
     COMMAND ar -x /usr/local/lib/libnghttp2.a
-    COMMAND ar -qcs ${KLIB_BINARY_DIR}/lib${KLIB_LIBRARY}.a *.o
+    COMMAND ar -x /usr/local/lib/libsimdutf.a
+    COMMAND ar -x --output=xxhash /usr/local/lib/libxxhash.a
+    COMMAND ar -qcs ${KLIB_BINARY_DIR}/lib${KLIB_LIBRARY}.a *.o xxhash/*.o
     COMMAND ranlib ${KLIB_BINARY_DIR}/lib${KLIB_LIBRARY}.a
     WORKING_DIRECTORY ${KLIB_BINARY_DIR}/third_party
     COMMENT "Combined static library")
@@ -159,8 +167,11 @@ if(KLIB_BUILD_SHARED)
             PkgConfig::openssl
             PkgConfig::sqlcipher
             PkgConfig::libargon2
+            PkgConfig::libbrotlicommon
             zstd::libzstd_static
             scope_guard::scope_guard
+            simdutf::simdutf
+            xxHash::xxhash
             ${Boost_LIBRARIES})
   target_link_libraries(${KLIB_LIBRARY}-shared PUBLIC fmt::fmt spdlog::spdlog)
 
