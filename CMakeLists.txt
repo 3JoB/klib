@@ -120,25 +120,25 @@ if(KLIB_BUILD_STATIC)
   add_custom_command(
     TARGET ${KLIB_LIBRARY}
     POST_BUILD
-    COMMAND ar -x $<TARGET_FILE:${KLIB_LIBRARY}>
-    COMMAND ar -x /usr/local/lib/libz.a
-    COMMAND ar -x /usr/local/lib/libarchive.a
-    COMMAND ar -x /usr/local/lib/libtidy.a
-    COMMAND ar -x /usr/local/lib/libbrotlicommon-static.a
-    COMMAND ar -x /usr/local/lib/libbrotlidec-static.a
-    COMMAND ar -x /usr/local/lib/libcurl.a
-    COMMAND ar -x /usr/local/lib/libcrypto.a
-    COMMAND ar -x /usr/local/lib/libssl.a
-    COMMAND ar -x /usr/local/lib/libsqlcipher.a
-    COMMAND ar -x /usr/local/lib/libargon2.a
-    COMMAND ar -x /usr/local/lib/libzstd.a
-    COMMAND ar -x /usr/local/lib/libfmt.a
-    COMMAND ar -x /usr/local/lib/libspdlog.a
-    COMMAND ar -x /usr/local/lib/libnghttp2.a
-    COMMAND ar -x /usr/local/lib/libsimdutf.a
-    COMMAND ar -x --output=xxhash /usr/local/lib/libxxhash.a
-    COMMAND ar -qcs ${KLIB_BINARY_DIR}/lib${KLIB_LIBRARY}.a *.o xxhash/*.o
-    COMMAND ranlib ${KLIB_BINARY_DIR}/lib${KLIB_LIBRARY}.a
+    COMMAND gcc-ar -x $<TARGET_FILE:${KLIB_LIBRARY}>
+    COMMAND gcc-ar -x /usr/local/lib/libz.a
+    COMMAND gcc-ar -x /usr/local/lib/libarchive.a
+    COMMAND gcc-ar -x /usr/local/lib/libtidy.a
+    COMMAND gcc-ar -x /usr/local/lib/libbrotlicommon-static.a
+    COMMAND gcc-ar -x /usr/local/lib/libbrotlidec-static.a
+    COMMAND gcc-ar -x /usr/local/lib/libcurl.a
+    COMMAND gcc-ar -x /usr/local/lib/libcrypto.a
+    COMMAND gcc-ar -x /usr/local/lib/libssl.a
+    COMMAND gcc-ar -x /usr/local/lib/libsqlcipher.a
+    COMMAND gcc-ar -x /usr/local/lib/libargon2.a
+    COMMAND gcc-ar -x /usr/local/lib/libzstd.a
+    COMMAND gcc-ar -x /usr/local/lib/libfmt.a
+    COMMAND gcc-ar -x /usr/local/lib/libspdlog.a
+    COMMAND gcc-ar -x /usr/local/lib/libnghttp2.a
+    COMMAND gcc-ar -x /usr/local/lib/libsimdutf.a
+    COMMAND gcc-ar -x --output=xxhash /usr/local/lib/libxxhash.a
+    COMMAND gcc-ar -qcs ${KLIB_BINARY_DIR}/lib${KLIB_LIBRARY}.a *.o xxhash/*.o
+    COMMAND gcc-ranlib ${KLIB_BINARY_DIR}/lib${KLIB_LIBRARY}.a
     WORKING_DIRECTORY ${KLIB_BINARY_DIR}/third_party
     COMMENT "Combined static library")
 endif()
