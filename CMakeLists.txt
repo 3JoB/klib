@@ -124,8 +124,8 @@ if(KLIB_BUILD_STATIC)
     COMMAND ar -x /usr/local/lib/libz.a
     COMMAND ar -x /usr/local/lib/libarchive.a
     COMMAND ar -x /usr/local/lib/libtidy.a
-    COMMAND ar -x /usr/local/lib/libbrotlicommon.a
-    COMMAND ar -x /usr/local/lib/libbrotlidec.a
+    COMMAND ar -x /usr/local/lib/libbrotlicommon-static.a
+    COMMAND ar -x /usr/local/lib/libbrotlidec-static.a
     COMMAND ar -x /usr/local/lib/libcurl.a
     COMMAND ar -x /usr/local/lib/libcrypto.a
     COMMAND ar -x /usr/local/lib/libssl.a
