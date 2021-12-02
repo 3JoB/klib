@@ -41,6 +41,8 @@ using CompatibilityIdeographsSupplement = UnicodeRange<0x2F800, 0x2FA1F>;
  */
 std::u16string utf8_to_utf16(const std::string &str);
 
+std::string utf16_to_utf8(const std::u16string &str);
+
 /**
  * @brief Convert UTF-8 encoded string to UTF-32 encoded string
  * @param str: UTF-8 encoded string

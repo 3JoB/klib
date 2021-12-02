@@ -15,6 +15,22 @@ TEST_CASE("utf8_to_utf16", "[unicode]") {
   REQUIRE(utf16[4] == 0xDF4C);
 }
 
+TEST_CASE("utf16_to_utf8", "[unicode]") {
+  auto utf8 = klib::utf16_to_utf8(u"zß水🍌");
+
+  REQUIRE(std::size(utf8) == 10);
+  REQUIRE(static_cast<std::uint8_t>(utf8[0]) == 0x7A);
+  REQUIRE(static_cast<std::uint8_t>(utf8[1]) == 0xC3);
+  REQUIRE(static_cast<std::uint8_t>(utf8[2]) == 0x9F);
+  REQUIRE(static_cast<std::uint8_t>(utf8[3]) == 0xE6);
+  REQUIRE(static_cast<std::uint8_t>(utf8[4]) == 0xB0);
+  REQUIRE(static_cast<std::uint8_t>(utf8[5]) == 0xB4);
+  REQUIRE(static_cast<std::uint8_t>(utf8[6]) == 0xF0);
+  REQUIRE(static_cast<std::uint8_t>(utf8[7]) == 0x9F);
+  REQUIRE(static_cast<std::uint8_t>(utf8[8]) == 0x8D);
+  REQUIRE(static_cast<std::uint8_t>(utf8[9]) == 0x8C);
+}
+
 TEST_CASE("utf8_to_utf32", "[unicode]") {
   auto utf32 = klib::utf8_to_utf32("zß水🍌");
 

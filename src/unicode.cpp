@@ -1,5 +1,6 @@
 #include "klib/unicode.h"
 
+#include <simdutf.h>
 #include <algorithm>
 #include <cerrno>
 #include <clocale>
@@ -7,6 +8,8 @@
 #include <cuchar>
 #include <limits>
 #include <string_view>
+
+#include <boost/core/ignore_unused.hpp>
 
 #include "klib/exception.h"
 
@@ -22,35 +25,42 @@ void set_locale(std::string_view locale = "en_US.utf8") {
 
 }  // namespace
 
-// https://zh.cppreference.com/w/c/string/multibyte/mbrtoc16
 std::u16string utf8_to_utf16(const std::string &str) {
   if (std::empty(str)) {
     return {};
   }
 
-  set_locale();
+  auto source = std::data(str);
+  auto source_size = std::size(str);
+  if (!simdutf::validate_utf8(source, source_size)) {
+    throw RuntimeError("Invalid UTF-8");
+  }
 
   std::u16string result;
+  result.resize(simdutf::utf16_length_from_utf8(source, source_size));
 
-  char16_t out = 0;
-  auto begin = str.c_str();
-  auto size = std::size(str);
-  mbstate_t state = {};
+  boost::ignore_unused(
+      simdutf::convert_utf8_to_utf16(source, source_size, std::data(result)));
 
-  while (auto rc = std::mbrtoc16(&out, begin, size, &state)) {
-    if (rc == static_cast<std::size_t>(-1)) {
-      throw RuntimeError(std::strerror(errno));
-    }
+  return result;
+}
 
-    if (rc == static_cast<std::size_t>(-3)) {
-      result.push_back(out);
-    } else if (rc <= std::numeric_limits<std::size_t>::max() / 2) {
-      begin += rc;
-      result.push_back(out);
-    } else {
-      break;
-    }
+std::string utf16_to_utf8(const std::u16string &str) {
+  if (std::empty(str)) {
+    return {};
   }
+
+  auto source = std::data(str);
+  auto source_size = std::size(str);
+  if (!simdutf::validate_utf16(source, source_size)) {
+    throw RuntimeError("Invalid UTF-16");
+  }
+
+  std::string result;
+  result.resize(simdutf::utf8_length_from_utf16(source, source_size));
+
+  boost::ignore_unused(
+      simdutf::convert_utf16_to_utf8(source, source_size, std::data(result)));
 
   return result;
 }
