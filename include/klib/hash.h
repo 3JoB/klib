@@ -1,10 +1,11 @@
 /**
  * @file hash.h
- * @brief Contains secure hash module
+ * @brief Contains hash module
  */
 
 #pragma once
 
+#include <cstddef>
 #include <cstdint>
 #include <experimental/propagate_const>
 #include <memory>
@@ -16,7 +17,55 @@ namespace klib {
 /**
  * @brief Contains a series of secure hash algorithms
  */
-class HashLib {
+class FastHash {
+ public:
+  /**
+   * @brief Constructor
+   * @param kind: Specify the algorithm used
+   */
+  explicit FastHash();
+
+  FastHash(const FastHash &) = delete;
+  FastHash(FastHash &&) = delete;
+  FastHash &operator=(const FastHash &) = delete;
+  FastHash &operator=(FastHash &&) = delete;
+
+  /**
+   * @brief Destructor
+   */
+  ~FastHash();
+
+  /**
+   * @brief Update the hash object
+   * @param data: Bytes used to update the hash object
+   * @return Hash object
+   */
+  FastHash &update(const std::string &data);
+
+  /**
+   * @brief Get the hash result
+   * @return Hash result
+   */
+  std::size_t digest();
+
+  /**
+   * @brief Get the hash result
+   * @return Hash result in hexadecimal form
+   */
+  std::string hex_digest();
+
+ private:
+  class FastHashImpl;
+  std::experimental::propagate_const<std::unique_ptr<FastHashImpl>> impl_;
+};
+
+std::size_t fast_hash(const std::string &data);
+std::string fast_hash_hex(const std::string &data);
+
+/**
+ * @brief Contains a series of secure hash algorithms
+ */
+class SecureHash {
  public:
   /**
    * @brief Supported secure hash algorithm
@@ -37,24 +86,24 @@ class HashLib {
    * @brief Constructor
    * @param kind: Specify the algorithm used
    */
-  explicit HashLib(Algorithm kind);
+  explicit SecureHash(Algorithm kind);
 
-  HashLib(const HashLib &) = delete;
-  HashLib(HashLib &&) = delete;
-  HashLib &operator=(const HashLib &) = delete;
-  HashLib &operator=(HashLib &&) = delete;
+  SecureHash(const SecureHash &) = delete;
+  SecureHash(SecureHash &&) = delete;
+  SecureHash &operator=(const SecureHash &) = delete;
+  SecureHash &operator=(SecureHash &&) = delete;
 
   /**
    * @brief Destructor
    */
-  ~HashLib();
+  ~SecureHash();
 
   /**
    * @brief Update the hash object
    * @param data: Bytes used to update the hash object
    * @return Hash object
    */
-  HashLib &update(const std::string &data);
+  SecureHash &update(const std::string &data);
 
   /**
    * @brief Get the hash result
@@ -69,8 +118,8 @@ class HashLib {
   std::string hex_digest();
 
  private:
-  class HashLibImpl;
-  std::experimental::propagate_const<std::unique_ptr<HashLibImpl>> impl_;
+  class SecureHashImpl;
+  std::experimental::propagate_const<std::unique_ptr<SecureHashImpl>> impl_;
 };
 
 /**

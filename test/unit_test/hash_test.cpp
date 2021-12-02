@@ -1,4 +1,5 @@
 #include <filesystem>
+#include <string_view>
 
 #include <dbg.h>
 #include <catch2/catch.hpp>
@@ -6,8 +7,14 @@
 #include "klib/hash.h"
 #include "klib/util.h"
 
+TEST_CASE("fast_hash", "[hash]") {
+  std::string str = "Hello World";
+  REQUIRE(klib::fast_hash(str) == 16376800918595593011UL);
+  REQUIRE(klib::fast_hash_hex(str) == "e34615aade2e6333");
+}
+
 TEST_CASE("md5", "[hash]") {
-  klib::HashLib md5(klib::HashLib::Algorithm::MD5);
+  klib::SecureHash md5(klib::SecureHash::Algorithm::MD5);
 
   REQUIRE(md5.update("MD5 online hash function").hex_digest() ==
           "71f6cb39c6d09c6fae36b69ee0b2b9cd");
