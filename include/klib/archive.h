@@ -15,7 +15,7 @@ namespace klib {
 /**
  * @brief Algorithm used for compression
  */
-enum class Algorithm { Zip, Gzip };
+enum class Algorithm { Zip, Gzip, Zstd };
 
 /**
  * @brief Compress file or folder
@@ -45,8 +45,9 @@ void compress(const std::vector<std::string> &paths, Algorithm algorithm,
  * it is empty, decompress to the current directory)
  * @return Outermost folder name(If there is not only one folder, then empty)
  */
-std::optional<std::string> decompress(
-    const std::string &path, const std::string &decompressed_path = "");
+std::optional<std::string> decompress(const std::string &path,
+                                      const std::string &decompressed_path = "",
+                                      const std::string &password = "");
 
 /**
  * @brief Use Zstandard algorithm to compress data

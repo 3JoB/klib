@@ -112,6 +112,8 @@ std::string compressed_file_name(const std::string &path, Algorithm algorithm) {
     name += ".zip";
   } else if (algorithm == Algorithm::Gzip) {
     name += ".tar.gz";
+  } else if (algorithm == Algorithm::Zstd) {
+    name += ".tar.zst";
   } else {
     throw LogicError("Unknown algorithm");
   }
@@ -187,6 +189,9 @@ void compress(const std::vector<std::string> &paths, Algorithm algorithm,
   } else if (algorithm == Algorithm::Gzip) {
     checked_archive_func(archive_write_set_format_gnutar, archive.get());
     checked_archive_func(archive_write_add_filter_gzip, archive.get());
+  } else if (algorithm == Algorithm::Zstd) {
+    checked_archive_func(archive_write_set_format_gnutar, archive.get());
+    checked_archive_func(archive_write_add_filter_zstd, archive.get());
   } else {
     throw LogicError("Unknown algorithm");
   }
@@ -227,7 +232,8 @@ void compress(const std::vector<std::string> &paths, Algorithm algorithm,
 }
 
 std::optional<std::string> decompress(const std::string &file_name,
-                                      const std::string &path) {
+                                      const std::string &path,
+                                      const std::string &password) {
   check_file_exists(file_name);
 
   std::int32_t flags = (ARCHIVE_EXTRACT_TIME | ARCHIVE_EXTRACT_PERM |
@@ -238,6 +244,10 @@ std::optional<std::string> decompress(const std::string &file_name,
   checked_archive_func(archive_read_support_format_gnutar, archive.get());
   checked_archive_func(archive_read_support_format_zip, archive.get());
   checked_archive_func(archive_read_support_filter_gzip, archive.get());
+  checked_archive_func(archive_read_support_filter_zstd, archive.get());
+  if (!std::empty(password)) {
+    archive_read_add_passphrase(archive.get(), password.c_str());
+  }
 
   auto extract = create_unique_ptr(archive_write_disk_new,
                                    {archive_write_close, archive_write_free});

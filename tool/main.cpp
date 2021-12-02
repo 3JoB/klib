@@ -64,6 +64,8 @@ void check_password(const std::string& password) {
                   [](char c) { return std::isdigit(c); }) &&
       std::size(password) <= 6) {
     klib::error("6-digit pure number password is not secure");
+  } else if (std::size(password) <= 6) {
+    klib::error("Password is too short");
   }
 }
 
