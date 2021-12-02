@@ -257,16 +257,16 @@ std::string compress_str(const std::string &data) {
 }
 
 std::string compress_str(const char *data, std::size_t size) {
-  auto compress_size = ZSTD_compressBound(size);
-  std::string compress_data;
-  compress_data.resize(compress_size);
+  auto compressed_size = ZSTD_compressBound(size);
+  std::string compressed_data;
+  compressed_data.resize(compressed_size);
 
-  compress_size =
-      ZSTD_compress(compress_data.data(), compress_size, data, size, 1);
-  check_zstd(compress_size);
-  compress_data.resize(compress_size);
+  compressed_size = ZSTD_compress(std::data(compressed_data), compressed_size,
+                                  data, size, ZSTD_CLEVEL_DEFAULT);
+  check_zstd(compressed_size);
+  compressed_data.resize(compressed_size);
 
-  return compress_data;
+  return compressed_data;
 }
 
 std::string decompress_str(const std::string &data) {
@@ -274,24 +274,24 @@ std::string decompress_str(const std::string &data) {
 }
 
 std::string decompress_str(const char *data, std::size_t size) {
-  auto decompress_size = ZSTD_getFrameContentSize(data, size);
-  if (decompress_size == ZSTD_CONTENTSIZE_ERROR) {
-    throw RuntimeError("not compressed by zstd");
-  } else if (decompress_size == ZSTD_CONTENTSIZE_UNKNOWN) {
-    throw RuntimeError("original size unknown");
+  auto decompressed_size = ZSTD_getFrameContentSize(data, size);
+  if (decompressed_size == ZSTD_CONTENTSIZE_ERROR) {
+    throw RuntimeError("Not compressed by zstd");
+  } else if (decompressed_size == ZSTD_CONTENTSIZE_UNKNOWN) {
+    throw RuntimeError("Original size unknown");
   }
 
-  std::string decompress_data;
-  decompress_data.resize(decompress_size);
-  auto decompress_size_new =
-      ZSTD_decompress(decompress_data.data(), decompress_size, data, size);
+  std::string decompressed_data;
+  decompressed_data.resize(decompressed_size);
+  auto decompress_size_new = ZSTD_decompress(std::data(decompressed_data),
+                                             decompressed_size, data, size);
   check_zstd(decompress_size_new);
 
-  if (decompress_size != decompress_size_new) {
+  if (decompressed_size != decompress_size_new) {
     throw RuntimeError("Impossible because zstd will check this condition");
   }
 
-  return decompress_data;
+  return decompressed_data;
 }
 
 }  // namespace klib
