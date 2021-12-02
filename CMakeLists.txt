@@ -70,11 +70,10 @@ pkg_check_modules(libcurl REQUIRED IMPORTED_TARGET libcurl)
 pkg_check_modules(openssl REQUIRED IMPORTED_TARGET openssl)
 pkg_check_modules(sqlcipher REQUIRED IMPORTED_TARGET sqlcipher)
 pkg_check_modules(libargon2 REQUIRED IMPORTED_TARGET libargon2)
-pkg_check_modules(libbrotlicommon REQUIRED IMPORTED_TARGET libbrotlicommon)
+pkg_check_modules(libzstd REQUIRED IMPORTED_TARGET libzstd)
 
 add_definitions(-DOPENSSL_NO_DEPRECATED -DCURL_NO_OLDIES -DSQLITE_HAS_CODEC)
 
-find_package(zstd REQUIRED)
 find_package(fmt REQUIRED)
 find_package(spdlog REQUIRED)
 find_package(Boost REQUIRED CONFIG)
@@ -167,8 +166,7 @@ if(KLIB_BUILD_SHARED)
             PkgConfig::openssl
             PkgConfig::sqlcipher
             PkgConfig::libargon2
-            PkgConfig::libbrotlicommon
-            zstd::libzstd_static
+            PkgConfig::libzstd
             scope_guard::scope_guard
             simdutf::simdutf
             xxHash::xxhash
