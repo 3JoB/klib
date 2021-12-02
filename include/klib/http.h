@@ -106,7 +106,7 @@ class Request {
   /**
    * @brief Set Accept-Encoding
    * @param accept_encoding: Accept-Encoding
-   * @example request.set_accept_encoding("gzip, deflate");
+   * @example request.set_accept_encoding("gzip, deflate, br");
    */
   void set_accept_encoding(const std::string &accept_encoding);
 

@@ -61,7 +61,7 @@ TEST_CASE("response headers", "[http]") {
 TEST_CASE("GET", "[http]") {
   klib::Request request;
   request.set_browser_user_agent();
-  request.set_accept_encoding("gzip, deflate");
+  request.set_accept_encoding("gzip, deflate, br");
 
 #ifndef NDEBUG
   request.verbose(true);
