@@ -77,10 +77,6 @@ endif()
 # ---------------------------------------------------------------------------------------
 # Option
 # ---------------------------------------------------------------------------------------
-if(NOT (KLIB_BUILD_STATIC OR KLIB_BUILD_SHARED))
-  message(FATAL_ERROR "You need to build at least one flavor of klib")
-endif()
-
 if((${CMAKE_BUILD_TYPE} STREQUAL "Debug") AND KLIB_BUILD_BENCH)
   message(
     FATAL_ERROR "The CMAKE_BUILD_TYPE cannot be Debug when building benchmark")

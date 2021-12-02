@@ -10,10 +10,3 @@ add_custom_command(
   TARGET with_namespace_target
   POST_BUILD
   COMMAND with_namespace_target)
-
-add_executable(with_namespace_target_shared main.cpp)
-target_link_libraries(with_namespace_target_shared PRIVATE klib::klib-shared)
-add_custom_command(
-  TARGET with_namespace_target_shared
-  POST_BUILD
-  COMMAND with_namespace_target_shared)

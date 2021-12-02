@@ -143,44 +143,6 @@ if(KLIB_BUILD_STATIC)
 endif()
 
 # ---------------------------------------------------------------------------------------
-# Build shared library
-# ---------------------------------------------------------------------------------------
-if(KLIB_BUILD_SHARED)
-  message(STATUS "Build shared library")
-
-  add_library(${KLIB_LIBRARY}-shared SHARED ${KLIB_LIBRARY_SRC})
-  add_library(${KLIB_LIBRARY}::${KLIB_LIBRARY}-shared ALIAS
-              ${KLIB_LIBRARY}-shared)
-
-  target_include_directories(
-    ${KLIB_LIBRARY}-shared
-    PUBLIC "$<BUILD_INTERFACE:${KLIB_SOURCE_DIR}/include>"
-           "$<INSTALL_INTERFACE:${CMAKE_INSTALL_INCLUDEDIR}>")
-  target_compile_features(${KLIB_LIBRARY}-shared INTERFACE cxx_std_20)
-  target_link_libraries(
-    ${KLIB_LIBRARY}-shared
-    PRIVATE PkgConfig::zlib
-            PkgConfig::libarchive
-            PkgConfig::tidy
-            PkgConfig::libcurl
-            PkgConfig::openssl
-            PkgConfig::sqlcipher
-            PkgConfig::libargon2
-            PkgConfig::libzstd
-            scope_guard::scope_guard
-            simdutf::simdutf
-            xxHash::xxhash
-            ${Boost_LIBRARIES})
-  target_link_libraries(${KLIB_LIBRARY}-shared PUBLIC fmt::fmt spdlog::spdlog)
-
-  set_target_properties(
-    ${KLIB_LIBRARY}-shared
-    PROPERTIES OUTPUT_NAME ${KLIB_LIBRARY}
-               VERSION ${KLIB_VERSION}
-               SOVERSION ${KLIB_VERSION_MAJOR})
-endif()
-
-# ---------------------------------------------------------------------------------------
 # Build test
 # ---------------------------------------------------------------------------------------
 if(BUILD_TESTING AND KLIB_BUILD_TEST)
