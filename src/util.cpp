@@ -261,6 +261,7 @@ std::string uuid() {
 void cleanse(std::string &data) {
   cleanse(static_cast<void *>(std::data(data)), std::size(data));
   data.clear();
+  data.shrink_to_fit();
 }
 
 void cleanse(void *data, std::size_t size) { OPENSSL_cleanse(data, size); }

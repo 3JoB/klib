@@ -59,12 +59,16 @@ std::string num_to_str(std::int32_t num) {
   return std::string(8 - std::size(str), '0') + str;
 }
 
+void clean_str(std::string& str) {
+  str.clear();
+  str.shrink_to_fit();
+}
+
 void check_password(const std::string& password) {
   if (std::all_of(std::begin(password), std::end(password),
-                  [](char c) { return std::isdigit(c); }) &&
-      std::size(password) <= 6) {
-    klib::error("6-digit pure number password is not secure");
-  } else if (std::size(password) <= 6) {
+                  [](char c) { return std::isdigit(c); })) {
+    klib::error("Digit pure number password is not secure");
+  } else if (std::size(password) < 6) {
     klib::error("Password is too short");
   }
 }
@@ -85,6 +89,7 @@ void do_encrypt(const std::string& file_path, const std::string& password) {
   spdlog::info("Start encrypting file");
   auto encrypted = klib::aes_256_encrypt(compressed, key);
   klib::cleanse(key);
+  clean_str(compressed);
 
   auto new_file_name = klib::make_file_or_dir_name_legal(
       klib::base64_encode(klib::generate_random_bytes(32)));
@@ -97,6 +102,7 @@ void do_decrypt(const std::string& file_path, const std::string& password) {
   auto file_content = klib::read_file(file_path, true);
   auto salt = file_content.substr(0, 32);
   auto encrypted = file_content.substr(32);
+  clean_str(file_content);
 
   spdlog::info("Run Key derivation function");
   auto key = klib::password_hash_raw(password, salt);
@@ -106,6 +112,7 @@ void do_decrypt(const std::string& file_path, const std::string& password) {
   std::string decrypted;
   try {
     decrypted = klib::aes_256_decrypt(encrypted, key);
+    clean_str(encrypted);
   } catch (const klib::RuntimeError& err) {
     klib::error("Decryption failed, most likely the password is wrong");
   }
@@ -118,6 +125,7 @@ void do_decrypt(const std::string& file_path, const std::string& password) {
   auto file_size = std::stoi(decompressed.substr(0, 8));
   auto file_name = decompressed.substr(8, file_size);
   auto content = decompressed.substr(8 + file_size);
+  clean_str(decompressed);
   klib::write_file(file_name, true, content);
 
   spdlog::info("File '{}' decrypted successfully", file_name);
