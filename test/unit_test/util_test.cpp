@@ -92,7 +92,6 @@ TEST_CASE("cleanse", "[util]") {
   klib::cleanse(password);
 
   REQUIRE(std::empty(password));
-  REQUIRE(password.capacity() == 0);
 }
 
 TEST_CASE("make_file_or_dir_name_legal", "[util]") {
