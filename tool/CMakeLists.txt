@@ -10,7 +10,7 @@ endif()
 file(GLOB_RECURSE KLIB_EXECUTABLE_SRC CONFIGURE_DEPENDS
      "${KLIB_SOURCE_DIR}/tool/*.cpp")
 
-add_executable(${KLIB_EXECUTABLE} ${KLIB_EXECUTABLE_SRC})
+add_executable(${KLIB_EXECUTABLE} ${MIMALLOC_OBJECT} ${KLIB_EXECUTABLE_SRC})
 target_link_libraries(
   ${KLIB_EXECUTABLE} PRIVATE ${KLIB_LIBRARY} gsl::gsl-lite-v1 CLI11::CLI11
                              fmt::fmt spdlog::spdlog)

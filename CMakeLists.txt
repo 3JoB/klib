@@ -58,6 +58,11 @@ include(Doxygen)
 include(Format)
 include(CompilerOptions)
 
+if(NOT KLIB_SANITIZER)
+  message(STATUS "Use mimalloc")
+  set(MIMALLOC_OBJECT "/usr/local/lib/mimalloc.o")
+endif()
+
 # ---------------------------------------------------------------------------------------
 # Find package
 # ---------------------------------------------------------------------------------------

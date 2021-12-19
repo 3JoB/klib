@@ -10,7 +10,7 @@ file(GLOB_RECURSE KLIB_BENCH_SRC CONFIGURE_DEPENDS
 find_package(Catch2 REQUIRED)
 add_definitions(-DCATCH_CONFIG_ENABLE_BENCHMARKING)
 
-add_executable(${KLIB_BENCH_EXECUTABLE} ${KLIB_BENCH_SRC})
+add_executable(${KLIB_BENCH_EXECUTABLE} ${MIMALLOC_OBJECT} ${KLIB_BENCH_SRC})
 target_link_libraries(${KLIB_BENCH_EXECUTABLE} PRIVATE ${KLIB_LIBRARY}
                                                        Catch2::Catch2WithMain)
 

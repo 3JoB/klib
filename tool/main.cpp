@@ -7,6 +7,7 @@
 
 #include <fmt/compile.h>
 #include <fmt/core.h>
+#include <mimalloc.h>
 #include <spdlog/spdlog.h>
 #include <CLI/CLI.hpp>
 #include <gsl/gsl-lite.hpp>
@@ -29,6 +30,9 @@ std::string version_str() {
 
   result += "Libraries: ";
   result += fmt::format(FMT_COMPILE("klib/{} "), KLIB_VERSION_STRING);
+  result +=
+      fmt::format(FMT_COMPILE("mimalloc/{}.{}.{} "), MI_MALLOC_VERSION / 100,
+                  MI_MALLOC_VERSION / 10 % 10, MI_MALLOC_VERSION % 10);
   result += fmt::format(FMT_COMPILE("gsl-lite/{}.{}.{} "), gsl_lite_MAJOR,
                         gsl_lite_MINOR, gsl_lite_PATCH);
   result += fmt::format(FMT_COMPILE("CLI11/{} "), CLI11_VERSION);

@@ -19,7 +19,7 @@ file(GLOB_RECURSE KLIB_TEST_SRC CONFIGURE_DEPENDS
 
 find_package(Catch2 REQUIRED)
 
-add_executable(${KLIB_TEST_EXECUTABLE} ${KLIB_TEST_SRC})
+add_executable(${KLIB_TEST_EXECUTABLE} ${MIMALLOC_OBJECT} ${KLIB_TEST_SRC})
 target_link_libraries(
   ${KLIB_TEST_EXECUTABLE} PRIVATE ${KLIB_LIBRARY} Catch2::Catch2WithMain
                                   ${Boost_LIBRARIES})
