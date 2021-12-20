@@ -85,6 +85,7 @@ find_package(Boost REQUIRED CONFIG)
 find_package(scope_guard REQUIRED)
 find_package(simdutf REQUIRED)
 find_package(xxHash REQUIRED)
+find_package(cmark REQUIRED)
 
 set(THREADS_PREFER_PTHREAD_FLAG TRUE)
 find_package(Threads REQUIRED)
@@ -140,6 +141,7 @@ if(KLIB_BUILD_STATIC)
     COMMAND gcc-ar -x /usr/local/lib/libspdlog.a
     COMMAND gcc-ar -x /usr/local/lib/libnghttp2.a
     COMMAND gcc-ar -x /usr/local/lib/libsimdutf.a
+    COMMAND gcc-ar -x /usr/local/lib/libcmark.a
     COMMAND gcc-ar -x --output=xxhash /usr/local/lib/libxxhash.a
     COMMAND gcc-ar -qcs ${KLIB_BINARY_DIR}/lib${KLIB_LIBRARY}.a *.o xxhash/*.o
     COMMAND gcc-ranlib ${KLIB_BINARY_DIR}/lib${KLIB_LIBRARY}.a
