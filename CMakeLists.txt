@@ -101,8 +101,9 @@ find_package(Threads REQUIRED)
 if(KLIB_BUILD_STATIC)
   message(STATUS "Build static library")
 
-  add_definitions(-DLIBARCHIVE_STATIC -DCURL_STATICLIB -DFMT_LOCALE
-                  -DSPDLOG_COMPILED_LIB -DSPDLOG_FMT_EXTERNAL)
+  add_definitions(
+    -DLIBARCHIVE_STATIC -DCURL_STATICLIB -DFMT_LOCALE -DSPDLOG_COMPILED_LIB
+    -DSPDLOG_FMT_EXTERNAL -Dgsl_CONFIG_DEFAULTS_VERSION=1)
 
   add_library(${KLIB_LIBRARY} STATIC ${KLIB_LIBRARY_SRC})
   add_library(${KLIB_LIBRARY}::${KLIB_LIBRARY} ALIAS ${KLIB_LIBRARY})
@@ -117,7 +118,6 @@ if(KLIB_BUILD_STATIC)
     ${KLIB_LIBRARY} INTERFACE FMT_LOCALE SPDLOG_COMPILED_LIB
                               SPDLOG_FMT_EXTERNAL)
   target_link_libraries(${KLIB_LIBRARY} PUBLIC ${CMAKE_THREAD_LIBS_INIT})
-  target_link_libraries(${KLIB_LIBRARY} PRIVATE gsl::gsl-lite-v1)
 
   set_target_properties(
     ${KLIB_LIBRARY}
