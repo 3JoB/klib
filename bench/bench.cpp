@@ -32,7 +32,7 @@ TEST_CASE("utf") {
 
 TEST_CASE("markdown") {
   BENCHMARK("cmark") {
-    klib::Markdown markdown(klib::read_file("263060.md", false));
+    klib::MarkdownParser markdown(klib::read_file("263060.md", false));
     while (markdown.has_next()) {
       auto item = markdown.next();
       if (item.is_heading()) {

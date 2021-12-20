@@ -25,18 +25,18 @@ struct Image {
   std::string title_;
 };
 
-class Markdown;
+class MarkdownParser;
 
-class Item {
-  friend class Markdown;
+class MarkdownElement {
+  friend class MarkdownParser;
 
  public:
-  Item(const Item &) = delete;
-  Item(Item &&) = delete;
-  Item &operator=(const Item &) = delete;
-  Item &operator=(Item &&) = delete;
+  MarkdownElement(const MarkdownElement &) = delete;
+  MarkdownElement(MarkdownElement &&) = delete;
+  MarkdownElement &operator=(const MarkdownElement &) = delete;
+  MarkdownElement &operator=(MarkdownElement &&) = delete;
 
-  ~Item();
+  ~MarkdownElement();
 
   [[nodiscard]] std::string to_html() const;
 
@@ -49,31 +49,55 @@ class Item {
   [[nodiscard]] Image as_image() const;
 
  private:
-  explicit Item(const Markdown &markdown);
+  explicit MarkdownElement(const MarkdownParser &markdown);
 
-  class ItemImpl;
-  std::experimental::propagate_const<std::unique_ptr<ItemImpl>> impl_;
+  class MarkdownElementImpl;
+  std::experimental::propagate_const<std::unique_ptr<MarkdownElementImpl>>
+      impl_;
 };
 
-class Markdown {
-  friend class Item::ItemImpl;
+class MarkdownParser {
+  friend class MarkdownElement::MarkdownElementImpl;
 
  public:
-  explicit Markdown(const std::string &mark_down);
+  explicit MarkdownParser(const std::string &mark_down);
 
-  Markdown(const Markdown &) = delete;
-  Markdown(Markdown &&) = delete;
-  Markdown &operator=(const Markdown &) = delete;
-  Markdown &operator=(Markdown &&) = delete;
+  MarkdownParser(const MarkdownParser &) = delete;
+  MarkdownParser(MarkdownParser &&) = delete;
+  MarkdownParser &operator=(const MarkdownParser &) = delete;
+  MarkdownParser &operator=(MarkdownParser &&) = delete;
 
-  ~Markdown();
+  ~MarkdownParser();
 
   [[nodiscard]] bool has_next() const;
-  [[nodiscard]] Item next();
+  [[nodiscard]] MarkdownElement next();
 
  private:
-  class MarkdownImpl;
-  std::experimental::propagate_const<std::unique_ptr<MarkdownImpl>> impl_;
+  class MarkdownParserImpl;
+  std::experimental::propagate_const<std::unique_ptr<MarkdownParserImpl>> impl_;
+};
+
+class MarkdownBuilder {
+ public:
+  MarkdownBuilder();
+
+  MarkdownBuilder(const MarkdownBuilder &) = delete;
+  MarkdownBuilder(MarkdownBuilder &&) = delete;
+  MarkdownBuilder &operator=(const MarkdownBuilder &) = delete;
+  MarkdownBuilder &operator=(MarkdownBuilder &&) = delete;
+
+  ~MarkdownBuilder();
+
+  void add_heading(const Heading &heading);
+  void add_paragraph(const Paragraph &paragraph);
+  void add_image(const Image &image);
+
+  [[nodiscard]] std::string to_string() const;
+
+ private:
+  class MarkdownBuilderImpl;
+  std::experimental::propagate_const<std::unique_ptr<MarkdownBuilderImpl>>
+      impl_;
 };
 
 }  // namespace klib

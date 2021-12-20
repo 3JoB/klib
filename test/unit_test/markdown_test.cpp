@@ -23,7 +23,7 @@ TEST_CASE("markdown_to_html", "[markdown]") {
 }
 
 TEST_CASE("markdown", "[markdown]") {
-  klib::Markdown markdown(R"(
+  klib::MarkdownParser markdown(R"(
 ## title
 111
 222
@@ -63,4 +63,23 @@ TEST_CASE("markdown", "[markdown]") {
   REQUIRE(image.title_ == "title");
 
   REQUIRE_FALSE(markdown.has_next());
+}
+
+TEST_CASE("markdown builder", "[markdown]") {
+  klib::MarkdownBuilder markdown_builder;
+
+  markdown_builder.add_heading({"title", 1});
+  markdown_builder.add_paragraph({{"123", "321"}});
+  markdown_builder.add_paragraph({{"333"}});
+  markdown_builder.add_image({"text", "/url", "title"});
+
+  REQUIRE(markdown_builder.to_string() == R"(# title
+
+123
+321
+
+333
+
+![text](/url "title")
+)");
 }
