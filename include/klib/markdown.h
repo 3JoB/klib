@@ -11,7 +11,7 @@ struct Heading {
   std::int32_t level_;
 };
 
-struct paragraph {
+struct Paragraph {
   std::vector<std::string> content_;
 };
 

@@ -122,6 +122,7 @@ if(KLIB_BUILD_STATIC)
   # https://stackoverflow.com/questions/37924383/combining-several-static-libraries-into-one-using-cmake
   file(MAKE_DIRECTORY ${KLIB_BINARY_DIR}/third_party)
   file(MAKE_DIRECTORY ${KLIB_BINARY_DIR}/third_party/xxhash)
+  file(MAKE_DIRECTORY ${KLIB_BINARY_DIR}/third_party/cmark)
   add_custom_command(
     TARGET ${KLIB_LIBRARY}
     POST_BUILD
@@ -141,9 +142,10 @@ if(KLIB_BUILD_STATIC)
     COMMAND gcc-ar -x /usr/local/lib/libspdlog.a
     COMMAND gcc-ar -x /usr/local/lib/libnghttp2.a
     COMMAND gcc-ar -x /usr/local/lib/libsimdutf.a
-    COMMAND gcc-ar -x /usr/local/lib/libcmark.a
     COMMAND gcc-ar -x --output=xxhash /usr/local/lib/libxxhash.a
+    COMMAND gcc-ar -x --output=cmark /usr/local/lib/libcmark.a
     COMMAND gcc-ar -qcs ${KLIB_BINARY_DIR}/lib${KLIB_LIBRARY}.a *.o xxhash/*.o
+            cmark/*.o
     COMMAND gcc-ranlib ${KLIB_BINARY_DIR}/lib${KLIB_LIBRARY}.a
     WORKING_DIRECTORY ${KLIB_BINARY_DIR}/third_party
     COMMENT "Combined static library")
