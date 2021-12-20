@@ -2,11 +2,13 @@
 
 #include <cmark.h>
 
+#include "klib/exception.h"
+
 namespace klib {
 
 class Item::ItemImpl {
  public:
-  explicit ItemImpl(Markdown& markdown);
+  explicit ItemImpl(const Markdown& markdown);
 
   [[nodiscard]] bool is_heading() const;
   [[nodiscard]] bool is_paragraph() const;
@@ -15,7 +17,7 @@ class Item::ItemImpl {
   [[nodiscard]] Paragraph as_paragraph() const;
 
  private:
-  cmark_node* node_ = nullptr;
+  cmark_node* node_;
 };
 
 class Markdown::MarkdownImpl {
@@ -29,13 +31,12 @@ class Markdown::MarkdownImpl {
   [[nodiscard]] Item next(Markdown& markdown);
 
  private:
-  cmark_node* doc_ = nullptr;
+  cmark_node* doc_;
   cmark_node* curr_node_ = nullptr;
 };
 
-Item::ItemImpl::ItemImpl(Markdown& markdown) {
-  node_ = markdown.impl_->curr_node_;
-}
+Item::ItemImpl::ItemImpl(const Markdown& markdown)
+    : node_(markdown.impl_->curr_node_) {}
 
 bool Item::ItemImpl::is_heading() const {
   return cmark_node_get_type(node_) == CMARK_NODE_HEADING;
@@ -71,9 +72,12 @@ Paragraph Item::ItemImpl::as_paragraph() const {
   return {content};
 }
 
-Markdown::MarkdownImpl::MarkdownImpl(const std::string& markdown) {
-  doc_ = cmark_parse_document(markdown.c_str(), std::size(markdown),
-                              CMARK_OPT_DEFAULT);
+Markdown::MarkdownImpl::MarkdownImpl(const std::string& markdown)
+    : doc_(cmark_parse_document(markdown.c_str(), std::size(markdown),
+                                CMARK_OPT_DEFAULT)) {
+  if (!doc_) {
+    throw RuntimeError("cmark_parse_document failed");
+  }
 }
 
 Markdown::MarkdownImpl::~MarkdownImpl() { cmark_node_free(doc_); }
@@ -102,7 +106,8 @@ Heading Item::as_heading() const { return impl_->as_heading(); }
 
 Paragraph Item::as_paragraph() const { return impl_->as_paragraph(); }
 
-Item::Item(Markdown& markdown) : impl_(std::make_unique<ItemImpl>(markdown)) {}
+Item::Item(const Markdown& markdown)
+    : impl_(std::make_unique<ItemImpl>(markdown)) {}
 
 Markdown::Markdown(const std::string& markdown)
     : impl_(std::make_unique<MarkdownImpl>(markdown)) {}

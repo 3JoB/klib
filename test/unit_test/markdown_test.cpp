@@ -11,7 +11,7 @@ TEST_CASE("markdown", "[markdown]") {
 111
 222
 
-333
+你好世界
 )");
 
   auto heading = markdown.next().as_heading();
@@ -22,7 +22,7 @@ TEST_CASE("markdown", "[markdown]") {
   REQUIRE(paragraph.content_ == std::vector<std::string>{"111", "222"});
 
   paragraph = markdown.next().as_paragraph();
-  REQUIRE(paragraph.content_ == std::vector<std::string>{"333"});
+  REQUIRE(paragraph.content_ == std::vector<std::string>{"你好世界"});
 
   REQUIRE_FALSE(markdown.has_next());
 }

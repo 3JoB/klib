@@ -37,7 +37,7 @@ class Item {
   [[nodiscard]] Paragraph as_paragraph() const;
 
  private:
-  explicit Item(Markdown &markdown);
+  explicit Item(const Markdown &markdown);
 
   class ItemImpl;
   std::experimental::propagate_const<std::unique_ptr<ItemImpl>> impl_;
