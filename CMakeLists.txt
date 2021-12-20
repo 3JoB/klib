@@ -116,8 +116,8 @@ if(KLIB_BUILD_STATIC)
   target_compile_definitions(
     ${KLIB_LIBRARY} INTERFACE FMT_LOCALE SPDLOG_COMPILED_LIB
                               SPDLOG_FMT_EXTERNAL)
-  target_link_libraries(${KLIB_LIBRARY} PUBLIC gsl::gsl-lite-v1
-                                               ${CMAKE_THREAD_LIBS_INIT})
+  target_link_libraries(${KLIB_LIBRARY} PUBLIC ${CMAKE_THREAD_LIBS_INIT})
+  target_link_libraries(${KLIB_LIBRARY} PRIVATE gsl::gsl-lite-v1)
 
   set_target_properties(
     ${KLIB_LIBRARY}

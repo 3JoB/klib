@@ -1,10 +1,12 @@
 #include <filesystem>
 #include <string>
 
+#include <boost/core/ignore_unused.hpp>
 #include <catch2/catch.hpp>
 
 #include "klib/archive.h"
 #include "klib/hash.h"
+#include "klib/markdown.h"
 #include "klib/unicode.h"
 #include "klib/util.h"
 
@@ -20,12 +22,25 @@ TEST_CASE("hash") {
 
 TEST_CASE("utf") {
   BENCHMARK("simdutf") {
-    std::string str = klib::read_file("263060.txt", false);
-    return klib::utf8_to_utf16(str);
+    return klib::utf8_to_utf16(klib::read_file("263060.md", false));
   };
 
   BENCHMARK("iconv") {
     klib::exec("iconv -f=UTF-8 -t=UTF-16 -o 263060-UTF-16.txt 263060.txt");
+  };
+}
+
+TEST_CASE("markdown") {
+  BENCHMARK("cmark") {
+    klib::Markdown markdown(klib::read_file("263060.md", false));
+    while (markdown.has_next()) {
+      auto item = markdown.next();
+      if (item.is_heading()) {
+        boost::ignore_unused(item.as_heading());
+      } else if (item.is_paragraph()) {
+        boost::ignore_unused(item.as_paragraph());
+      }
+    }
   };
 }
 
