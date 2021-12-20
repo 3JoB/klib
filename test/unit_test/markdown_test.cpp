@@ -12,6 +12,8 @@ TEST_CASE("markdown", "[markdown]") {
 222
 
 你好世界
+
+![Tux, the Linux mascot](/assets/images/tux.png "title")
 )");
 
   auto heading = markdown.next().as_heading();
@@ -23,6 +25,11 @@ TEST_CASE("markdown", "[markdown]") {
 
   paragraph = markdown.next().as_paragraph();
   REQUIRE(paragraph.content_ == std::vector<std::string>{"你好世界"});
+
+  auto image = markdown.next().as_image();
+  REQUIRE(image.text_ == "Tux, the Linux mascot");
+  REQUIRE(image.url_ == "/assets/images/tux.png");
+  REQUIRE(image.title_ == "title");
 
   REQUIRE_FALSE(markdown.has_next());
 }

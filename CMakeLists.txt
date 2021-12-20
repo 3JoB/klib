@@ -86,6 +86,11 @@ find_package(scope_guard REQUIRED)
 find_package(simdutf REQUIRED)
 find_package(xxHash REQUIRED)
 find_package(cmark REQUIRED)
+find_package(gsl-lite REQUIRED)
+
+if(${CMAKE_BUILD_TYPE} STREQUAL "Debug")
+  add_definitions(-Dgsl_CONFIG_CONTRACT_VIOLATION_THROWS)
+endif()
 
 set(THREADS_PREFER_PTHREAD_FLAG TRUE)
 find_package(Threads REQUIRED)
@@ -111,7 +116,8 @@ if(KLIB_BUILD_STATIC)
   target_compile_definitions(
     ${KLIB_LIBRARY} INTERFACE FMT_LOCALE SPDLOG_COMPILED_LIB
                               SPDLOG_FMT_EXTERNAL)
-  target_link_libraries(${KLIB_LIBRARY} PUBLIC ${CMAKE_THREAD_LIBS_INIT})
+  target_link_libraries(${KLIB_LIBRARY} PUBLIC gsl::gsl-lite-v1
+                                               ${CMAKE_THREAD_LIBS_INIT})
 
   set_target_properties(
     ${KLIB_LIBRARY}

@@ -17,6 +17,12 @@ struct Paragraph {
   std::vector<std::string> content_;
 };
 
+struct Image {
+  std::string text_;
+  std::string url_;
+  std::string title_;
+};
+
 class Markdown;
 
 class Item {
@@ -32,9 +38,11 @@ class Item {
 
   [[nodiscard]] bool is_heading() const;
   [[nodiscard]] bool is_paragraph() const;
+  [[nodiscard]] bool is_image() const;
 
   [[nodiscard]] Heading as_heading() const;
   [[nodiscard]] Paragraph as_paragraph() const;
+  [[nodiscard]] Image as_image() const;
 
  private:
   explicit Item(const Markdown &markdown);

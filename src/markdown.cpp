@@ -1,6 +1,7 @@
 #include "klib/markdown.h"
 
 #include <cmark.h>
+#include <gsl/gsl-lite.hpp>
 
 #include "klib/exception.h"
 
@@ -12,9 +13,11 @@ class Item::ItemImpl {
 
   [[nodiscard]] bool is_heading() const;
   [[nodiscard]] bool is_paragraph() const;
+  [[nodiscard]] bool is_image() const;
 
   [[nodiscard]] Heading as_heading() const;
   [[nodiscard]] Paragraph as_paragraph() const;
+  [[nodiscard]] Image as_image() const;
 
  private:
   cmark_node* node_;
@@ -46,16 +49,25 @@ bool Item::ItemImpl::is_paragraph() const {
   return cmark_node_get_type(node_) == CMARK_NODE_PARAGRAPH;
 }
 
+bool Item::ItemImpl::is_image() const {
+  return cmark_node_get_type(node_) == CMARK_NODE_IMAGE;
+}
+
 Heading Item::ItemImpl::as_heading() const {
+  Expects(is_heading());
+
   auto level = cmark_node_get_heading_level(node_);
 
   auto child = cmark_node_first_child(node_);
+  Ensures(cmark_node_get_type(child) == CMARK_NODE_TEXT);
   auto heading = cmark_node_get_literal(child);
 
   return {heading, level};
 }
 
 Paragraph Item::ItemImpl::as_paragraph() const {
+  Expects(is_paragraph());
+
   std::vector<std::string> content;
 
   auto child = cmark_node_first_child(node_);
@@ -63,6 +75,7 @@ Paragraph Item::ItemImpl::as_paragraph() const {
     if (cmark_node_get_type(child) == CMARK_NODE_SOFTBREAK) {
       // do nothing
     } else {
+      Ensures(cmark_node_get_type(child) == CMARK_NODE_TEXT);
       content.emplace_back(cmark_node_get_literal(child));
     }
 
@@ -70,6 +83,21 @@ Paragraph Item::ItemImpl::as_paragraph() const {
   } while (child);
 
   return {content};
+}
+
+Image Item::ItemImpl::as_image() const {
+  // node_'s type is paragraph
+  Expects(is_paragraph());
+  auto image = cmark_node_first_child(node_);
+  Ensures(cmark_node_get_type(image) == CMARK_NODE_IMAGE);
+  auto url = cmark_node_get_url(image);
+  auto title = cmark_node_get_title(image);
+
+  auto child = cmark_node_first_child(image);
+  Ensures(cmark_node_get_type(child) == CMARK_NODE_TEXT);
+  auto text = cmark_node_get_literal(child);
+
+  return {text, url, title};
 }
 
 Markdown::MarkdownImpl::MarkdownImpl(const std::string& markdown)
@@ -102,9 +130,13 @@ bool Item::is_heading() const { return impl_->is_heading(); }
 
 bool Item::is_paragraph() const { return impl_->is_paragraph(); }
 
+bool Item::is_image() const { return impl_->is_image(); }
+
 Heading Item::as_heading() const { return impl_->as_heading(); }
 
 Paragraph Item::as_paragraph() const { return impl_->as_paragraph(); }
+
+Image Item::as_image() const { return impl_->as_image(); }
 
 Item::Item(const Markdown& markdown)
     : impl_(std::make_unique<ItemImpl>(markdown)) {}
