@@ -1,15 +1,27 @@
 #include "klib/markdown.h"
 
+#include <cstdlib>
+
 #include <cmark.h>
 #include <gsl/gsl-lite.hpp>
+#include <scope_guard.hpp>
 
 #include "klib/exception.h"
 
 namespace klib {
 
+std::string markdown_to_html(const std::string& markdown) {
+  auto ptr = cmark_markdown_to_html(markdown.c_str(), std::size(markdown),
+                                    CMARK_OPT_DEFAULT);
+  SCOPE_EXIT { std::free(ptr); };
+  return ptr;
+}
+
 class Item::ItemImpl {
  public:
   explicit ItemImpl(const Markdown& markdown);
+
+  [[nodiscard]] std::string to_html() const;
 
   [[nodiscard]] bool is_heading() const;
   [[nodiscard]] bool is_paragraph() const;
@@ -41,6 +53,12 @@ class Markdown::MarkdownImpl {
 Item::ItemImpl::ItemImpl(const Markdown& markdown)
     : node_(markdown.impl_->curr_node_) {}
 
+std::string Item::ItemImpl::to_html() const {
+  auto ptr = cmark_render_html(node_, CMARK_OPT_DEFAULT);
+  SCOPE_EXIT { std::free(ptr); };
+  return ptr;
+}
+
 bool Item::ItemImpl::is_heading() const {
   return cmark_node_get_type(node_) == CMARK_NODE_HEADING;
 }
@@ -50,7 +68,8 @@ bool Item::ItemImpl::is_paragraph() const {
 }
 
 bool Item::ItemImpl::is_image() const {
-  return cmark_node_get_type(node_) == CMARK_NODE_IMAGE;
+  return cmark_node_get_type(node_) == CMARK_NODE_PARAGRAPH &&
+         cmark_node_get_type(cmark_node_first_child(node_)) == CMARK_NODE_IMAGE;
 }
 
 Heading Item::ItemImpl::as_heading() const {
@@ -125,6 +144,8 @@ Item Markdown::MarkdownImpl::next(Markdown& markdown) {
 }
 
 Item::~Item() = default;
+
+std::string Item::to_html() const { return impl_->to_html(); }
 
 bool Item::is_heading() const { return impl_->is_heading(); }
 

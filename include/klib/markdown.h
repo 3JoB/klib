@@ -8,6 +8,8 @@
 
 namespace klib {
 
+std::string markdown_to_html(const std::string &markdown);
+
 struct Heading {
   std::string heading_;
   std::int32_t level_;
@@ -35,6 +37,8 @@ class Item {
   Item &operator=(Item &&) = delete;
 
   ~Item();
+
+  [[nodiscard]] std::string to_html() const;
 
   [[nodiscard]] bool is_heading() const;
   [[nodiscard]] bool is_paragraph() const;
