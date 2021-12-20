@@ -16,7 +16,7 @@ TEST_CASE("markdown", "[markdown]") {
 
   auto heading = markdown.next().as_heading();
   REQUIRE(heading.level_ == 2);
-  REQUIRE(heading.title_ == "title");
+  REQUIRE(heading.heading_ == "title");
 
   auto paragraph = markdown.next().as_paragraph();
   REQUIRE(paragraph.content_ == std::vector<std::string>{"111", "222"});

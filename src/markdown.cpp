@@ -15,7 +15,7 @@ class Item::ItemImpl {
   [[nodiscard]] Paragraph as_paragraph() const;
 
  private:
-  cmark_node* node_;
+  cmark_node* node_ = nullptr;
 };
 
 class Markdown::MarkdownImpl {
@@ -23,13 +23,14 @@ class Markdown::MarkdownImpl {
 
  public:
   explicit MarkdownImpl(const std::string& markdown);
+  ~MarkdownImpl();
 
   [[nodiscard]] bool has_next() const;
   [[nodiscard]] Item next(Markdown& markdown);
 
  private:
-  cmark_node* doc_;
-  cmark_node* curr_node_;
+  cmark_node* doc_ = nullptr;
+  cmark_node* curr_node_ = nullptr;
 };
 
 Item::ItemImpl::ItemImpl(Markdown& markdown) {
@@ -73,17 +74,25 @@ Paragraph Item::ItemImpl::as_paragraph() const {
 Markdown::MarkdownImpl::MarkdownImpl(const std::string& markdown) {
   doc_ = cmark_parse_document(markdown.c_str(), std::size(markdown),
                               CMARK_OPT_DEFAULT);
-  curr_node_ = cmark_node_first_child(doc_);
 }
+
+Markdown::MarkdownImpl::~MarkdownImpl() { cmark_node_free(doc_); }
 
 bool Markdown::MarkdownImpl::has_next() const {
   return cmark_node_next(curr_node_) != nullptr;
 }
 
 Item Markdown::MarkdownImpl::next(Markdown& markdown) {
-  curr_node_ = cmark_node_next(curr_node_);
+  if (curr_node_) {
+    curr_node_ = cmark_node_next(curr_node_);
+  } else {
+    curr_node_ = cmark_node_first_child(doc_);
+  }
+
   return Item(markdown);
 }
+
+Item::~Item() = default;
 
 bool Item::is_heading() const { return impl_->is_heading(); }
 
@@ -97,6 +106,8 @@ Item::Item(Markdown& markdown) : impl_(std::make_unique<ItemImpl>(markdown)) {}
 
 Markdown::Markdown(const std::string& markdown)
     : impl_(std::make_unique<MarkdownImpl>(markdown)) {}
+
+Markdown::~Markdown() = default;
 
 bool Markdown::has_next() const { return impl_->has_next(); }
 

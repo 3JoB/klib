@@ -23,6 +23,13 @@ class Item {
   friend class Markdown;
 
  public:
+  Item(const Item &) = delete;
+  Item(Item &&) = delete;
+  Item &operator=(const Item &) = delete;
+  Item &operator=(Item &&) = delete;
+
+  ~Item();
+
   [[nodiscard]] bool is_heading() const;
   [[nodiscard]] bool is_paragraph() const;
 
@@ -41,6 +48,13 @@ class Markdown {
 
  public:
   explicit Markdown(const std::string &mark_down);
+
+  Markdown(const Markdown &) = delete;
+  Markdown(Markdown &&) = delete;
+  Markdown &operator=(const Markdown &) = delete;
+  Markdown &operator=(Markdown &&) = delete;
+
+  ~Markdown();
 
   [[nodiscard]] bool has_next() const;
   [[nodiscard]] Item next();
