@@ -5,7 +5,6 @@
 
 #pragma once
 
-#include <stdexcept>
 #include <string>
 #include <utility>
 
@@ -16,10 +15,27 @@
 
 namespace klib {
 
+class Exception {
+ public:
+  explicit Exception(const std::string &msg) : msg_(msg) {}
+
+  Exception(const Exception &) = default;
+  Exception &operator=(const Exception &) = default;
+  Exception(Exception &&) = default;
+  Exception &operator=(Exception &&) = default;
+
+  virtual ~Exception() = default;
+
+  [[nodiscard]] const std::string &what() const { return msg_; }
+
+ private:
+  std::string msg_;
+};
+
 /**
  * @brief Exception class, which means runtime error
  */
-class RuntimeError : public std::runtime_error {
+class RuntimeError : public Exception {
  public:
   /**
    * @brief Constructor
@@ -29,16 +45,15 @@ class RuntimeError : public std::runtime_error {
   template <typename... Args>
   explicit RuntimeError(detail::format_with_location fmt_with_loc,
                         Args &&...args)
-      : std::runtime_error(std::string(fmt_with_loc.loc_.filename) + ":" +
-                           std::to_string(fmt_with_loc.loc_.line) + ": " +
-                           fmt::format(fmt::runtime(fmt_with_loc.fmt_),
-                                       std::forward<Args>(args)...)) {}
+      : Exception(detail::location_to_string(fmt_with_loc.loc_) +
+                  fmt::format(fmt::runtime(fmt_with_loc.fmt_),
+                              std::forward<Args>(args)...)) {}
 };
 
 /**
  * @brief Exception class, which means logic error
  */
-class LogicError : public std::logic_error {
+class LogicError : public Exception {
  public:
   /**
    * @brief Constructor
@@ -47,16 +62,15 @@ class LogicError : public std::logic_error {
    */
   template <typename... Args>
   explicit LogicError(detail::format_with_location fmt_with_loc, Args &&...args)
-      : std::logic_error(std::string(fmt_with_loc.loc_.filename) + ":" +
-                         std::to_string(fmt_with_loc.loc_.line) + ": " +
-                         fmt::format(fmt::runtime(fmt_with_loc.fmt_),
-                                     std::forward<Args>(args)...)) {}
+      : Exception(detail::location_to_string(fmt_with_loc.loc_) +
+                  fmt::format(fmt::runtime(fmt_with_loc.fmt_),
+                              std::forward<Args>(args)...)) {}
 };
 
 /**
  * @brief Exception class, which means invalid argument
  */
-class InvalidArgument : std::invalid_argument {
+class InvalidArgument : public Exception {
  public:
   /**
    * @brief Constructor
@@ -66,16 +80,15 @@ class InvalidArgument : std::invalid_argument {
   template <typename... Args>
   explicit InvalidArgument(detail::format_with_location fmt_with_loc,
                            Args &&...args)
-      : std::invalid_argument(std::string(fmt_with_loc.loc_.filename) + ":" +
-                              std::to_string(fmt_with_loc.loc_.line) + ": " +
-                              fmt::format(fmt::runtime(fmt_with_loc.fmt_),
-                                          std::forward<Args>(args)...)) {}
+      : Exception(detail::location_to_string(fmt_with_loc.loc_) +
+                  fmt::format(fmt::runtime(fmt_with_loc.fmt_),
+                              std::forward<Args>(args)...)) {}
 };
 
 /**
  * @brief Exception class, which means out of range
  */
-class OutOfRange : std::out_of_range {
+class OutOfRange : public Exception {
  public:
   /**
    * @brief Constructor
@@ -84,10 +97,9 @@ class OutOfRange : std::out_of_range {
    */
   template <typename... Args>
   explicit OutOfRange(detail::format_with_location fmt_with_loc, Args &&...args)
-      : std::out_of_range(std::string(fmt_with_loc.loc_.filename) + ":" +
-                          std::to_string(fmt_with_loc.loc_.line) + ": " +
-                          fmt::format(fmt::runtime(fmt_with_loc.fmt_),
-                                      std::forward<Args>(args)...)) {}
+      : Exception(detail::location_to_string(fmt_with_loc.loc_) +
+                  fmt::format(fmt::runtime(fmt_with_loc.fmt_),
+                              std::forward<Args>(args)...)) {}
 };
 
 }  // namespace klib
