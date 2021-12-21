@@ -1,7 +1,6 @@
 #pragma once
 
 #include <cstdint>
-#include <filesystem>
 #include <string>
 #include <string_view>
 
@@ -25,8 +24,7 @@ namespace klib::detail {
 }
 
 inline std::string location_to_string(const spdlog::source_loc &loc) {
-  return std::filesystem::path(loc.filename).filename().string() + ":" +
-         std::to_string(loc.line) + ": ";
+  return std::string(loc.filename) + ":" + std::to_string(loc.line) + ": ";
 }
 
 struct format_with_location {

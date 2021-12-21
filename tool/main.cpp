@@ -163,6 +163,8 @@ int main(int argc, const char* argv[]) try {
   }
   klib::cleanse(file);
   klib::cleanse(password);
+} catch (const klib::Exception& err) {
+  klib::error(err.what());
 } catch (const std::exception& err) {
   klib::error(err.what());
 } catch (...) {
