@@ -37,6 +37,9 @@ TEST_CASE("split_str", "[util]") {
 
   result = klib::split_str("|||123?123|123!", "|?!");
   REQUIRE(result == std_vec);
+
+  result = klib::split_str("a\nb\n  c\n", "\n", false);
+  REQUIRE(result == std::vector<std::string>{"a", "b", "  c", ""});
 }
 
 TEST_CASE("read_file & write_file", "[util]") {

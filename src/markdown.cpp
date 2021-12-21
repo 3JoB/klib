@@ -17,9 +17,9 @@ std::string markdown_to_html(const std::string& markdown) {
   return ptr;
 }
 
-class MarkdownElement::MarkdownElementImpl {
+class MarkdownNode::MarkdownNodeImpl {
  public:
-  explicit MarkdownElementImpl(const MarkdownParser& markdown);
+  explicit MarkdownNodeImpl(const MarkdownParser& markdown);
 
   [[nodiscard]] std::string to_html() const;
 
@@ -36,14 +36,14 @@ class MarkdownElement::MarkdownElementImpl {
 };
 
 class MarkdownParser::MarkdownParserImpl {
-  friend class MarkdownElement::MarkdownElementImpl;
+  friend class MarkdownNode::MarkdownNodeImpl;
 
  public:
   explicit MarkdownParserImpl(const std::string& markdown);
   ~MarkdownParserImpl();
 
   [[nodiscard]] bool has_next() const;
-  [[nodiscard]] MarkdownElement next(MarkdownParser& markdown);
+  [[nodiscard]] MarkdownNode next(MarkdownParser& markdown);
 
  private:
   cmark_node* doc_;
@@ -65,30 +65,29 @@ class MarkdownBuilder::MarkdownBuilderImpl {
   cmark_node* doc_;
 };
 
-MarkdownElement::MarkdownElementImpl::MarkdownElementImpl(
-    const MarkdownParser& markdown)
+MarkdownNode::MarkdownNodeImpl::MarkdownNodeImpl(const MarkdownParser& markdown)
     : node_(markdown.impl_->curr_node_) {}
 
-std::string MarkdownElement::MarkdownElementImpl::to_html() const {
+std::string MarkdownNode::MarkdownNodeImpl::to_html() const {
   auto ptr = cmark_render_html(node_, CMARK_OPT_DEFAULT);
   SCOPE_EXIT { std::free(ptr); };
   return ptr;
 }
 
-bool MarkdownElement::MarkdownElementImpl::is_heading() const {
+bool MarkdownNode::MarkdownNodeImpl::is_heading() const {
   return cmark_node_get_type(node_) == CMARK_NODE_HEADING;
 }
 
-bool MarkdownElement::MarkdownElementImpl::is_paragraph() const {
+bool MarkdownNode::MarkdownNodeImpl::is_paragraph() const {
   return cmark_node_get_type(node_) == CMARK_NODE_PARAGRAPH;
 }
 
-bool MarkdownElement::MarkdownElementImpl::is_image() const {
+bool MarkdownNode::MarkdownNodeImpl::is_image() const {
   return cmark_node_get_type(node_) == CMARK_NODE_PARAGRAPH &&
          cmark_node_get_type(cmark_node_first_child(node_)) == CMARK_NODE_IMAGE;
 }
 
-Heading MarkdownElement::MarkdownElementImpl::as_heading() const {
+Heading MarkdownNode::MarkdownNodeImpl::as_heading() const {
   Expects(is_heading());
 
   auto level = cmark_node_get_heading_level(node_);
@@ -100,7 +99,7 @@ Heading MarkdownElement::MarkdownElementImpl::as_heading() const {
   return {heading, level};
 }
 
-Paragraph MarkdownElement::MarkdownElementImpl::as_paragraph() const {
+Paragraph MarkdownNode::MarkdownNodeImpl::as_paragraph() const {
   Expects(is_paragraph());
 
   std::vector<std::string> content;
@@ -120,7 +119,7 @@ Paragraph MarkdownElement::MarkdownElementImpl::as_paragraph() const {
   return {content};
 }
 
-Image MarkdownElement::MarkdownElementImpl::as_image() const {
+Image MarkdownNode::MarkdownNodeImpl::as_image() const {
   // node_'s type is paragraph
   Expects(is_paragraph());
   auto image = cmark_node_first_child(node_);
@@ -152,7 +151,7 @@ bool MarkdownParser::MarkdownParserImpl::has_next() const {
   return cmark_node_next(curr_node_) != nullptr;
 }
 
-MarkdownElement MarkdownParser::MarkdownParserImpl::next(
+MarkdownNode MarkdownParser::MarkdownParserImpl::next(
     MarkdownParser& markdown) {
   if (curr_node_) {
     curr_node_ = cmark_node_next(curr_node_);
@@ -160,7 +159,7 @@ MarkdownElement MarkdownParser::MarkdownParserImpl::next(
     curr_node_ = cmark_node_first_child(doc_);
   }
 
-  return MarkdownElement(markdown);
+  return MarkdownNode(markdown);
 }
 
 MarkdownBuilder::MarkdownBuilderImpl::MarkdownBuilderImpl()
@@ -222,26 +221,24 @@ std::string MarkdownBuilder::MarkdownBuilderImpl::to_string() const {
   return ptr;
 }
 
-MarkdownElement::~MarkdownElement() = default;
+MarkdownNode::~MarkdownNode() = default;
 
-std::string MarkdownElement::to_html() const { return impl_->to_html(); }
+std::string MarkdownNode::to_html() const { return impl_->to_html(); }
 
-bool MarkdownElement::is_heading() const { return impl_->is_heading(); }
+bool MarkdownNode::is_heading() const { return impl_->is_heading(); }
 
-bool MarkdownElement::is_paragraph() const { return impl_->is_paragraph(); }
+bool MarkdownNode::is_paragraph() const { return impl_->is_paragraph(); }
 
-bool MarkdownElement::is_image() const { return impl_->is_image(); }
+bool MarkdownNode::is_image() const { return impl_->is_image(); }
 
-Heading MarkdownElement::as_heading() const { return impl_->as_heading(); }
+Heading MarkdownNode::as_heading() const { return impl_->as_heading(); }
 
-Paragraph MarkdownElement::as_paragraph() const {
-  return impl_->as_paragraph();
-}
+Paragraph MarkdownNode::as_paragraph() const { return impl_->as_paragraph(); }
 
-Image MarkdownElement::as_image() const { return impl_->as_image(); }
+Image MarkdownNode::as_image() const { return impl_->as_image(); }
 
-MarkdownElement::MarkdownElement(const MarkdownParser& markdown)
-    : impl_(std::make_unique<MarkdownElementImpl>(markdown)) {}
+MarkdownNode::MarkdownNode(const MarkdownParser& markdown)
+    : impl_(std::make_unique<MarkdownNodeImpl>(markdown)) {}
 
 MarkdownParser::MarkdownParser(const std::string& markdown)
     : impl_(std::make_unique<MarkdownParserImpl>(markdown)) {}
@@ -250,7 +247,7 @@ MarkdownParser::~MarkdownParser() = default;
 
 bool MarkdownParser::has_next() const { return impl_->has_next(); }
 
-MarkdownElement MarkdownParser::next() { return impl_->next(*this); }
+MarkdownNode MarkdownParser::next() { return impl_->next(*this); }
 
 MarkdownBuilder::MarkdownBuilder()
     : impl_(std::make_unique<MarkdownBuilderImpl>()) {}

@@ -74,18 +74,22 @@ ChangeWorkingDir::~ChangeWorkingDir() {
 }
 
 std::vector<std::string> split_str(const std::string &str,
-                                   const std::string &separate) {
+                                   const std::string &separate,
+                                   bool remove_space) {
   std::vector<std::string> result;
   result.reserve(128);
 
   boost::split(result, str, boost::is_any_of(separate),
                boost::token_compress_on);
-  for (auto &line : result) {
-    boost::trim(line);
-  }
 
-  std::erase_if(result,
-                [](const std::string &line) { return std::empty(line); });
+  if (remove_space) {
+    for (auto &line : result) {
+      boost::trim(line);
+    }
+
+    std::erase_if(result,
+                  [](const std::string &line) { return std::empty(line); });
+  }
 
   return result;
 }
@@ -254,7 +258,7 @@ void wait_for_child_process() {
 }
 
 std::string uuid() {
-  auto uuid = boost::uuids::random_generator()();
+  auto uuid = boost::uuids::random_generator{}();
   return boost::uuids::to_string(uuid);
 }
 

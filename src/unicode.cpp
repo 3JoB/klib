@@ -27,10 +27,6 @@ void set_locale(std::string_view locale = "en_US.utf8") {
 }  // namespace
 
 std::u16string utf8_to_utf16(const std::string &str) {
-  if (std::empty(str)) {
-    return {};
-  }
-
   auto source = std::data(str);
   auto source_size = std::size(str);
   if (!simdutf::validate_utf8(source, source_size)) {
@@ -47,10 +43,6 @@ std::u16string utf8_to_utf16(const std::string &str) {
 }
 
 std::string utf16_to_utf8(const std::u16string &str) {
-  if (std::empty(str)) {
-    return {};
-  }
-
   auto source = std::data(str);
   auto source_size = std::size(str);
   if (!simdutf::validate_utf16(source, source_size)) {
@@ -74,10 +66,6 @@ char32_t utf8_to_unicode(const std::string &str) {
 
 // https://zh.cppreference.com/w/c/string/multibyte/mbrtoc32
 std::u32string utf8_to_utf32(const std::string &str) {
-  if (std::empty(str)) {
-    return {};
-  }
-
   set_locale();
 
   std::u32string result;

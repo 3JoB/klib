@@ -90,10 +90,12 @@ constexpr inline InputIt find_last(InputIt first, InputIt last,
  * @brief Split string
  * @param str: String to be split
  * @param separate: Separate characters
+ * @param remove_space: Whether to remove spaces and empty strings
  * @return Result after separation
  */
 std::vector<std::string> split_str(const std::string &str,
-                                   const std::string &separate);
+                                   const std::string &separate,
+                                   bool remove_space = true);
 
 /**
  * @brief Read a file at a time and store it in a string
