@@ -30,7 +30,7 @@
  <tbody>
  <tr style="height: 56px;">
   <td id="projectalign" style="padding-left: 0.5em;">
-   <div id="projectname">klib<span id="projectnumber">&#160;0.10.10</span>
+   <div id="projectname">klib<span id="projectnumber">&#160;0.11.0</span>
    </div>
   </td>
     <td>        <div id="MSearchBox" class="MSearchBoxInactive">
@@ -101,6 +101,7 @@ $(document).ready(function(){initNavTree('archive_8h.html',''); initResizable();
 <p>Contains compression and decompression modules.  
 <a href="#details">More...</a></p>
 <div class="textblock"><code>#include &lt;cstddef&gt;</code><br />
+<code>#include &lt;cstdint&gt;</code><br />
 <code>#include &lt;optional&gt;</code><br />
 <code>#include &lt;string&gt;</code><br />
 <code>#include &lt;vector&gt;</code><br />
@@ -118,21 +119,21 @@ Enumerations</h2></td></tr>
 </table><table class="memberdecls">
 <tr class="heading"><td colspan="2"><h2 class="groupheader"><a id="func-members" name="func-members"></a>
 Functions</h2></td></tr>
-<tr class="memitem:a60d8d0cfa4099f1cf8eb6f37e8e84e05"><td class="memItemLeft" align="right" valign="top">void&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="archive_8h.html#a60d8d0cfa4099f1cf8eb6f37e8e84e05">klib::compress</a> (const std::string &amp;path, Algorithm algorithm, const std::string &amp;file_name=&quot;&quot;, bool flag=true)</td></tr>
-<tr class="memdesc:a60d8d0cfa4099f1cf8eb6f37e8e84e05"><td class="mdescLeft">&#160;</td><td class="mdescRight">Compress file or folder.  <a href="archive_8h.html#a60d8d0cfa4099f1cf8eb6f37e8e84e05">More...</a><br /></td></tr>
-<tr class="separator:a60d8d0cfa4099f1cf8eb6f37e8e84e05"><td class="memSeparator" colspan="2">&#160;</td></tr>
-<tr class="memitem:a0ff19dfa8c910290eff014ba09f6c4bc"><td class="memItemLeft" align="right" valign="top">void&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="archive_8h.html#a0ff19dfa8c910290eff014ba09f6c4bc">klib::compress</a> (const std::vector&lt; std::string &gt; &amp;paths, Algorithm algorithm, const std::string &amp;file_name)</td></tr>
-<tr class="memdesc:a0ff19dfa8c910290eff014ba09f6c4bc"><td class="mdescLeft">&#160;</td><td class="mdescRight">Compress files or folders.  <a href="archive_8h.html#a0ff19dfa8c910290eff014ba09f6c4bc">More...</a><br /></td></tr>
-<tr class="separator:a0ff19dfa8c910290eff014ba09f6c4bc"><td class="memSeparator" colspan="2">&#160;</td></tr>
+<tr class="memitem:af5572d6a5f2122c2b5cec8fcd75e0d4a"><td class="memItemLeft" align="right" valign="top">void&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="archive_8h.html#af5572d6a5f2122c2b5cec8fcd75e0d4a">klib::compress</a> (const std::string &amp;path, Algorithm algorithm, const std::string &amp;file_name=&quot;&quot;, bool flag=true, std::optional&lt; std::int32_t &gt; level={})</td></tr>
+<tr class="memdesc:af5572d6a5f2122c2b5cec8fcd75e0d4a"><td class="mdescLeft">&#160;</td><td class="mdescRight">Compress file or folder.  <a href="archive_8h.html#af5572d6a5f2122c2b5cec8fcd75e0d4a">More...</a><br /></td></tr>
+<tr class="separator:af5572d6a5f2122c2b5cec8fcd75e0d4a"><td class="memSeparator" colspan="2">&#160;</td></tr>
+<tr class="memitem:a7f739fc23254bffcc25e0d5a281c62e0"><td class="memItemLeft" align="right" valign="top">void&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="archive_8h.html#a7f739fc23254bffcc25e0d5a281c62e0">klib::compress</a> (const std::vector&lt; std::string &gt; &amp;paths, Algorithm algorithm, const std::string &amp;file_name, std::optional&lt; std::int32_t &gt; level={})</td></tr>
+<tr class="memdesc:a7f739fc23254bffcc25e0d5a281c62e0"><td class="mdescLeft">&#160;</td><td class="mdescRight">Compress files or folders.  <a href="archive_8h.html#a7f739fc23254bffcc25e0d5a281c62e0">More...</a><br /></td></tr>
+<tr class="separator:a7f739fc23254bffcc25e0d5a281c62e0"><td class="memSeparator" colspan="2">&#160;</td></tr>
 <tr class="memitem:ae7534a03c6a19a5cdaeb6eacebef9c02"><td class="memItemLeft" align="right" valign="top">std::optional&lt; std::string &gt;&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="archive_8h.html#ae7534a03c6a19a5cdaeb6eacebef9c02">klib::decompress</a> (const std::string &amp;path, const std::string &amp;decompressed_path=&quot;&quot;, const std::string &amp;password=&quot;&quot;)</td></tr>
 <tr class="memdesc:ae7534a03c6a19a5cdaeb6eacebef9c02"><td class="mdescLeft">&#160;</td><td class="mdescRight">Decompress file.  <a href="archive_8h.html#ae7534a03c6a19a5cdaeb6eacebef9c02">More...</a><br /></td></tr>
 <tr class="separator:ae7534a03c6a19a5cdaeb6eacebef9c02"><td class="memSeparator" colspan="2">&#160;</td></tr>
-<tr class="memitem:ae8450f2125ec32f20f75144c144a325f"><td class="memItemLeft" align="right" valign="top">std::string&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="archive_8h.html#ae8450f2125ec32f20f75144c144a325f">klib::compress_str</a> (const std::string &amp;data)</td></tr>
-<tr class="memdesc:ae8450f2125ec32f20f75144c144a325f"><td class="mdescLeft">&#160;</td><td class="mdescRight">Compress data.  <a href="archive_8h.html#ae8450f2125ec32f20f75144c144a325f">More...</a><br /></td></tr>
-<tr class="separator:ae8450f2125ec32f20f75144c144a325f"><td class="memSeparator" colspan="2">&#160;</td></tr>
-<tr class="memitem:adcde0e6723d9397db836be762f8f0221"><td class="memItemLeft" align="right" valign="top">std::string&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="archive_8h.html#adcde0e6723d9397db836be762f8f0221">klib::compress_str</a> (const char *data, std::size_t size)</td></tr>
-<tr class="memdesc:adcde0e6723d9397db836be762f8f0221"><td class="mdescLeft">&#160;</td><td class="mdescRight">Compress data.  <a href="archive_8h.html#adcde0e6723d9397db836be762f8f0221">More...</a><br /></td></tr>
-<tr class="separator:adcde0e6723d9397db836be762f8f0221"><td class="memSeparator" colspan="2">&#160;</td></tr>
+<tr class="memitem:a23f46718f8f327143ff7fc55ad8f9ffd"><td class="memItemLeft" align="right" valign="top">std::string&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="archive_8h.html#a23f46718f8f327143ff7fc55ad8f9ffd">klib::compress_str</a> (const std::string &amp;data, std::optional&lt; std::int32_t &gt; level={})</td></tr>
+<tr class="memdesc:a23f46718f8f327143ff7fc55ad8f9ffd"><td class="mdescLeft">&#160;</td><td class="mdescRight">Compress data.  <a href="archive_8h.html#a23f46718f8f327143ff7fc55ad8f9ffd">More...</a><br /></td></tr>
+<tr class="separator:a23f46718f8f327143ff7fc55ad8f9ffd"><td class="memSeparator" colspan="2">&#160;</td></tr>
+<tr class="memitem:aae39eea487c3f9080304393f2ed3a147"><td class="memItemLeft" align="right" valign="top">std::string&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="archive_8h.html#aae39eea487c3f9080304393f2ed3a147">klib::compress_str</a> (const char *data, std::size_t size, std::optional&lt; std::int32_t &gt; level={})</td></tr>
+<tr class="memdesc:aae39eea487c3f9080304393f2ed3a147"><td class="mdescLeft">&#160;</td><td class="mdescRight">Compress data.  <a href="archive_8h.html#aae39eea487c3f9080304393f2ed3a147">More...</a><br /></td></tr>
+<tr class="separator:aae39eea487c3f9080304393f2ed3a147"><td class="memSeparator" colspan="2">&#160;</td></tr>
 <tr class="memitem:ae7c9d47cf816d075f2dc036bb704871d"><td class="memItemLeft" align="right" valign="top">std::string&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="archive_8h.html#ae7c9d47cf816d075f2dc036bb704871d">klib::decompress_str</a> (const std::string &amp;data)</td></tr>
 <tr class="memdesc:ae7c9d47cf816d075f2dc036bb704871d"><td class="mdescLeft">&#160;</td><td class="mdescRight">Decompress data.  <a href="archive_8h.html#ae7c9d47cf816d075f2dc036bb704871d">More...</a><br /></td></tr>
 <tr class="separator:ae7c9d47cf816d075f2dc036bb704871d"><td class="memSeparator" colspan="2">&#160;</td></tr>
@@ -143,8 +144,8 @@ Functions</h2></td></tr>
 <a name="details" id="details"></a><h2 class="groupheader">Detailed Description</h2>
 <div class="textblock"><p >Contains compression and decompression modules. </p>
 </div><h2 class="groupheader">Function Documentation</h2>
-<a id="a60d8d0cfa4099f1cf8eb6f37e8e84e05" name="a60d8d0cfa4099f1cf8eb6f37e8e84e05"></a>
-<h2 class="memtitle"><span class="permalink"><a href="#a60d8d0cfa4099f1cf8eb6f37e8e84e05">&#9670;&nbsp;</a></span>compress() <span class="overload">[1/2]</span></h2>
+<a id="af5572d6a5f2122c2b5cec8fcd75e0d4a" name="af5572d6a5f2122c2b5cec8fcd75e0d4a"></a>
+<h2 class="memtitle"><span class="permalink"><a href="#af5572d6a5f2122c2b5cec8fcd75e0d4a">&#9670;&nbsp;</a></span>compress() <span class="overload">[1/2]</span></h2>
 
 <div class="memitem">
 <div class="memproto">
@@ -171,7 +172,13 @@ Functions</h2></td></tr>
           <td class="paramkey"></td>
           <td></td>
           <td class="paramtype">bool&#160;</td>
-          <td class="paramname"><em>flag</em> = <code>true</code>&#160;</td>
+          <td class="paramname"><em>flag</em> = <code>true</code>, </td>
+        </tr>
+        <tr>
+          <td class="paramkey"></td>
+          <td></td>
+          <td class="paramtype">std::optional&lt; std::int32_t &gt;&#160;</td>
+          <td class="paramname"><em>level</em> = <code>{}</code>&#160;</td>
         </tr>
         <tr>
           <td></td>
@@ -188,14 +195,15 @@ Functions</h2></td></tr>
     <tr><td class="paramname">algorithm</td><td>Compression algorithm used </td></tr>
     <tr><td class="paramname">file_name</td><td>Compressed file name(If it is empty, the default file name is used) </td></tr>
     <tr><td class="paramname">flag</td><td>Whether to include the outermost folder(If path refers to a file, ignore it) </td></tr>
+    <tr><td class="paramname">level</td><td>Compression level </td></tr>
   </table>
   </dd>
 </dl>
 
 </div>
 </div>
-<a id="a0ff19dfa8c910290eff014ba09f6c4bc" name="a0ff19dfa8c910290eff014ba09f6c4bc"></a>
-<h2 class="memtitle"><span class="permalink"><a href="#a0ff19dfa8c910290eff014ba09f6c4bc">&#9670;&nbsp;</a></span>compress() <span class="overload">[2/2]</span></h2>
+<a id="a7f739fc23254bffcc25e0d5a281c62e0" name="a7f739fc23254bffcc25e0d5a281c62e0"></a>
+<h2 class="memtitle"><span class="permalink"><a href="#a7f739fc23254bffcc25e0d5a281c62e0">&#9670;&nbsp;</a></span>compress() <span class="overload">[2/2]</span></h2>
 
 <div class="memitem">
 <div class="memproto">
@@ -216,7 +224,13 @@ Functions</h2></td></tr>
           <td class="paramkey"></td>
           <td></td>
           <td class="paramtype">const std::string &amp;&#160;</td>
-          <td class="paramname"><em>file_name</em>&#160;</td>
+          <td class="paramname"><em>file_name</em>, </td>
+        </tr>
+        <tr>
+          <td class="paramkey"></td>
+          <td></td>
+          <td class="paramtype">std::optional&lt; std::int32_t &gt;&#160;</td>
+          <td class="paramname"><em>level</em> = <code>{}</code>&#160;</td>
         </tr>
         <tr>
           <td></td>
@@ -232,14 +246,15 @@ Functions</h2></td></tr>
     <tr><td class="paramname">paths</td><td>Files or folders path </td></tr>
     <tr><td class="paramname">algorithm</td><td>Compression algorithm used </td></tr>
     <tr><td class="paramname">file_name</td><td>Compressed file name </td></tr>
+    <tr><td class="paramname">level</td><td>Compression level </td></tr>
   </table>
   </dd>
 </dl>
 
 </div>
 </div>
-<a id="adcde0e6723d9397db836be762f8f0221" name="adcde0e6723d9397db836be762f8f0221"></a>
-<h2 class="memtitle"><span class="permalink"><a href="#adcde0e6723d9397db836be762f8f0221">&#9670;&nbsp;</a></span>compress_str() <span class="overload">[1/2]</span></h2>
+<a id="aae39eea487c3f9080304393f2ed3a147" name="aae39eea487c3f9080304393f2ed3a147"></a>
+<h2 class="memtitle"><span class="permalink"><a href="#aae39eea487c3f9080304393f2ed3a147">&#9670;&nbsp;</a></span>compress_str() <span class="overload">[1/2]</span></h2>
 
 <div class="memitem">
 <div class="memproto">
@@ -254,7 +269,13 @@ Functions</h2></td></tr>
           <td class="paramkey"></td>
           <td></td>
           <td class="paramtype">std::size_t&#160;</td>
-          <td class="paramname"><em>size</em>&#160;</td>
+          <td class="paramname"><em>size</em>, </td>
+        </tr>
+        <tr>
+          <td class="paramkey"></td>
+          <td></td>
+          <td class="paramtype">std::optional&lt; std::int32_t &gt;&#160;</td>
+          <td class="paramname"><em>level</em> = <code>{}</code>&#160;</td>
         </tr>
         <tr>
           <td></td>
@@ -269,6 +290,7 @@ Functions</h2></td></tr>
   <table class="params">
     <tr><td class="paramname">data</td><td>Data to be compressed </td></tr>
     <tr><td class="paramname">size</td><td>The size of the data to be compressed </td></tr>
+    <tr><td class="paramname">level</td><td>Compression level </td></tr>
   </table>
   </dd>
 </dl>
@@ -276,8 +298,8 @@ Functions</h2></td></tr>
 
 </div>
 </div>
-<a id="ae8450f2125ec32f20f75144c144a325f" name="ae8450f2125ec32f20f75144c144a325f"></a>
-<h2 class="memtitle"><span class="permalink"><a href="#ae8450f2125ec32f20f75144c144a325f">&#9670;&nbsp;</a></span>compress_str() <span class="overload">[2/2]</span></h2>
+<a id="a23f46718f8f327143ff7fc55ad8f9ffd" name="a23f46718f8f327143ff7fc55ad8f9ffd"></a>
+<h2 class="memtitle"><span class="permalink"><a href="#a23f46718f8f327143ff7fc55ad8f9ffd">&#9670;&nbsp;</a></span>compress_str() <span class="overload">[2/2]</span></h2>
 
 <div class="memitem">
 <div class="memproto">
@@ -286,8 +308,18 @@ Functions</h2></td></tr>
           <td class="memname">std::string klib::compress_str </td>
           <td>(</td>
           <td class="paramtype">const std::string &amp;&#160;</td>
-          <td class="paramname"><em>data</em></td><td>)</td>
+          <td class="paramname"><em>data</em>, </td>
+        </tr>
+        <tr>
+          <td class="paramkey"></td>
           <td></td>
+          <td class="paramtype">std::optional&lt; std::int32_t &gt;&#160;</td>
+          <td class="paramname"><em>level</em> = <code>{}</code>&#160;</td>
+        </tr>
+        <tr>
+          <td></td>
+          <td>)</td>
+          <td></td><td></td>
         </tr>
       </table>
 </div><div class="memdoc">
@@ -296,6 +328,7 @@ Functions</h2></td></tr>
 <dl class="params"><dt>Parameters</dt><dd>
   <table class="params">
     <tr><td class="paramname">data</td><td>Data to be compressed </td></tr>
+    <tr><td class="paramname">level</td><td>Compression level </td></tr>
   </table>
   </dd>
 </dl>

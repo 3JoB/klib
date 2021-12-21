@@ -30,7 +30,7 @@
  <tbody>
  <tr style="height: 56px;">
   <td id="projectalign" style="padding-left: 0.5em;">
-   <div id="projectname">klib<span id="projectnumber">&#160;0.10.10</span>
+   <div id="projectname">klib<span id="projectnumber">&#160;0.11.0</span>
    </div>
   </td>
     <td>        <div id="MSearchBox" class="MSearchBoxInactive">
@@ -111,127 +111,16 @@ Inheritance diagram for klib::InvalidArgument:</div>
 <table class="memberdecls">
 <tr class="heading"><td colspan="2"><h2 class="groupheader"><a id="pub-methods" name="pub-methods"></a>
 Public Member Functions</h2></td></tr>
-<tr class="memitem:a6ca82ba8fa6e51794613842f1cc81af9"><td class="memItemLeft" align="right" valign="top">&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="classklib_1_1InvalidArgument.html#a6ca82ba8fa6e51794613842f1cc81af9">InvalidArgument</a> (const char *msg)</td></tr>
-<tr class="memdesc:a6ca82ba8fa6e51794613842f1cc81af9"><td class="mdescLeft">&#160;</td><td class="mdescRight">Constructor.  <a href="classklib_1_1InvalidArgument.html#a6ca82ba8fa6e51794613842f1cc81af9">More...</a><br /></td></tr>
-<tr class="separator:a6ca82ba8fa6e51794613842f1cc81af9"><td class="memSeparator" colspan="2">&#160;</td></tr>
-<tr class="memitem:aab1930ede9f2502426ce5c7578e61190"><td class="memItemLeft" align="right" valign="top">&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="classklib_1_1InvalidArgument.html#aab1930ede9f2502426ce5c7578e61190">InvalidArgument</a> (const std::string &amp;msg)</td></tr>
-<tr class="memdesc:aab1930ede9f2502426ce5c7578e61190"><td class="mdescLeft">&#160;</td><td class="mdescRight">Constructor.  <a href="classklib_1_1InvalidArgument.html#aab1930ede9f2502426ce5c7578e61190">More...</a><br /></td></tr>
-<tr class="separator:aab1930ede9f2502426ce5c7578e61190"><td class="memSeparator" colspan="2">&#160;</td></tr>
-<tr class="memitem:a4f497ae5599005170c35d62703f0758b"><td class="memItemLeft" align="right" valign="top">&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="classklib_1_1InvalidArgument.html#a4f497ae5599005170c35d62703f0758b">InvalidArgument</a> (std::string_view msg)</td></tr>
-<tr class="memdesc:a4f497ae5599005170c35d62703f0758b"><td class="mdescLeft">&#160;</td><td class="mdescRight">Constructor.  <a href="classklib_1_1InvalidArgument.html#a4f497ae5599005170c35d62703f0758b">More...</a><br /></td></tr>
-<tr class="separator:a4f497ae5599005170c35d62703f0758b"><td class="memSeparator" colspan="2">&#160;</td></tr>
-<tr class="memitem:a3a11d3bbdf4a8b06024f46b54fcd5eff"><td class="memTemplParams" colspan="2">template&lt;typename... Args&gt; </td></tr>
-<tr class="memitem:a3a11d3bbdf4a8b06024f46b54fcd5eff"><td class="memTemplItemLeft" align="right" valign="top">&#160;</td><td class="memTemplItemRight" valign="bottom"><a class="el" href="classklib_1_1InvalidArgument.html#a3a11d3bbdf4a8b06024f46b54fcd5eff">InvalidArgument</a> (std::string_view fmt, Args &amp;&amp;...args)</td></tr>
-<tr class="memdesc:a3a11d3bbdf4a8b06024f46b54fcd5eff"><td class="mdescLeft">&#160;</td><td class="mdescRight">Constructor.  <a href="classklib_1_1InvalidArgument.html#a3a11d3bbdf4a8b06024f46b54fcd5eff">More...</a><br /></td></tr>
-<tr class="separator:a3a11d3bbdf4a8b06024f46b54fcd5eff"><td class="memSeparator" colspan="2">&#160;</td></tr>
+<tr class="memitem:aff293e9d19fdf2cb7990114a2dc49a1f"><td class="memTemplParams" colspan="2">template&lt;typename... Args&gt; </td></tr>
+<tr class="memitem:aff293e9d19fdf2cb7990114a2dc49a1f"><td class="memTemplItemLeft" align="right" valign="top">&#160;</td><td class="memTemplItemRight" valign="bottom"><a class="el" href="classklib_1_1InvalidArgument.html#aff293e9d19fdf2cb7990114a2dc49a1f">InvalidArgument</a> (detail::format_with_location fmt_with_loc, Args &amp;&amp;...args)</td></tr>
+<tr class="memdesc:aff293e9d19fdf2cb7990114a2dc49a1f"><td class="mdescLeft">&#160;</td><td class="mdescRight">Constructor.  <a href="classklib_1_1InvalidArgument.html#aff293e9d19fdf2cb7990114a2dc49a1f">More...</a><br /></td></tr>
+<tr class="separator:aff293e9d19fdf2cb7990114a2dc49a1f"><td class="memSeparator" colspan="2">&#160;</td></tr>
 </table>
 <a name="details" id="details"></a><h2 class="groupheader">Detailed Description</h2>
 <div class="textblock"><p >Exception class, which means invalid argument. </p>
 </div><h2 class="groupheader">Constructor &amp; Destructor Documentation</h2>
-<a id="a6ca82ba8fa6e51794613842f1cc81af9" name="a6ca82ba8fa6e51794613842f1cc81af9"></a>
-<h2 class="memtitle"><span class="permalink"><a href="#a6ca82ba8fa6e51794613842f1cc81af9">&#9670;&nbsp;</a></span>InvalidArgument() <span class="overload">[1/4]</span></h2>
-
-<div class="memitem">
-<div class="memproto">
-<table class="mlabels">
-  <tr>
-  <td class="mlabels-left">
-      <table class="memname">
-        <tr>
-          <td class="memname">klib::InvalidArgument::InvalidArgument </td>
-          <td>(</td>
-          <td class="paramtype">const char *&#160;</td>
-          <td class="paramname"><em>msg</em></td><td>)</td>
-          <td></td>
-        </tr>
-      </table>
-  </td>
-  <td class="mlabels-right">
-<span class="mlabels"><span class="mlabel">inline</span><span class="mlabel">explicit</span></span>  </td>
-  </tr>
-</table>
-</div><div class="memdoc">
-
-<p>Constructor. </p>
-<dl class="params"><dt>Parameters</dt><dd>
-  <table class="params">
-    <tr><td class="paramname">msg</td><td>Exception information </td></tr>
-  </table>
-  </dd>
-</dl>
-
-</div>
-</div>
-<a id="aab1930ede9f2502426ce5c7578e61190" name="aab1930ede9f2502426ce5c7578e61190"></a>
-<h2 class="memtitle"><span class="permalink"><a href="#aab1930ede9f2502426ce5c7578e61190">&#9670;&nbsp;</a></span>InvalidArgument() <span class="overload">[2/4]</span></h2>
-
-<div class="memitem">
-<div class="memproto">
-<table class="mlabels">
-  <tr>
-  <td class="mlabels-left">
-      <table class="memname">
-        <tr>
-          <td class="memname">klib::InvalidArgument::InvalidArgument </td>
-          <td>(</td>
-          <td class="paramtype">const std::string &amp;&#160;</td>
-          <td class="paramname"><em>msg</em></td><td>)</td>
-          <td></td>
-        </tr>
-      </table>
-  </td>
-  <td class="mlabels-right">
-<span class="mlabels"><span class="mlabel">inline</span><span class="mlabel">explicit</span></span>  </td>
-  </tr>
-</table>
-</div><div class="memdoc">
-
-<p>Constructor. </p>
-<dl class="params"><dt>Parameters</dt><dd>
-  <table class="params">
-    <tr><td class="paramname">msg</td><td>Exception information </td></tr>
-  </table>
-  </dd>
-</dl>
-
-</div>
-</div>
-<a id="a4f497ae5599005170c35d62703f0758b" name="a4f497ae5599005170c35d62703f0758b"></a>
-<h2 class="memtitle"><span class="permalink"><a href="#a4f497ae5599005170c35d62703f0758b">&#9670;&nbsp;</a></span>InvalidArgument() <span class="overload">[3/4]</span></h2>
-
-<div class="memitem">
-<div class="memproto">
-<table class="mlabels">
-  <tr>
-  <td class="mlabels-left">
-      <table class="memname">
-        <tr>
-          <td class="memname">klib::InvalidArgument::InvalidArgument </td>
-          <td>(</td>
-          <td class="paramtype">std::string_view&#160;</td>
-          <td class="paramname"><em>msg</em></td><td>)</td>
-          <td></td>
-        </tr>
-      </table>
-  </td>
-  <td class="mlabels-right">
-<span class="mlabels"><span class="mlabel">inline</span><span class="mlabel">explicit</span></span>  </td>
-  </tr>
-</table>
-</div><div class="memdoc">
-
-<p>Constructor. </p>
-<dl class="params"><dt>Parameters</dt><dd>
-  <table class="params">
-    <tr><td class="paramname">msg</td><td>Exception information </td></tr>
-  </table>
-  </dd>
-</dl>
-
-</div>
-</div>
-<a id="a3a11d3bbdf4a8b06024f46b54fcd5eff" name="a3a11d3bbdf4a8b06024f46b54fcd5eff"></a>
-<h2 class="memtitle"><span class="permalink"><a href="#a3a11d3bbdf4a8b06024f46b54fcd5eff">&#9670;&nbsp;</a></span>InvalidArgument() <span class="overload">[4/4]</span></h2>
+<a id="aff293e9d19fdf2cb7990114a2dc49a1f" name="aff293e9d19fdf2cb7990114a2dc49a1f"></a>
+<h2 class="memtitle"><span class="permalink"><a href="#aff293e9d19fdf2cb7990114a2dc49a1f">&#9670;&nbsp;</a></span>InvalidArgument()</h2>
 
 <div class="memitem">
 <div class="memproto">
@@ -244,8 +133,8 @@ template&lt;typename... Args&gt; </div>
         <tr>
           <td class="memname">klib::InvalidArgument::InvalidArgument </td>
           <td>(</td>
-          <td class="paramtype">std::string_view&#160;</td>
-          <td class="paramname"><em>fmt</em>, </td>
+          <td class="paramtype">detail::format_with_location&#160;</td>
+          <td class="paramname"><em>fmt_with_loc</em>, </td>
         </tr>
         <tr>
           <td class="paramkey"></td>

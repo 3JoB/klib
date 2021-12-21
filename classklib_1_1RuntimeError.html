@@ -30,7 +30,7 @@
  <tbody>
  <tr style="height: 56px;">
   <td id="projectalign" style="padding-left: 0.5em;">
-   <div id="projectname">klib<span id="projectnumber">&#160;0.10.10</span>
+   <div id="projectname">klib<span id="projectnumber">&#160;0.11.0</span>
    </div>
   </td>
     <td>        <div id="MSearchBox" class="MSearchBoxInactive">
@@ -111,127 +111,16 @@ Inheritance diagram for klib::RuntimeError:</div>
 <table class="memberdecls">
 <tr class="heading"><td colspan="2"><h2 class="groupheader"><a id="pub-methods" name="pub-methods"></a>
 Public Member Functions</h2></td></tr>
-<tr class="memitem:aff3943e22b8fdc7a1895da4f68235a7c"><td class="memItemLeft" align="right" valign="top">&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="classklib_1_1RuntimeError.html#aff3943e22b8fdc7a1895da4f68235a7c">RuntimeError</a> (const char *msg)</td></tr>
-<tr class="memdesc:aff3943e22b8fdc7a1895da4f68235a7c"><td class="mdescLeft">&#160;</td><td class="mdescRight">Constructor.  <a href="classklib_1_1RuntimeError.html#aff3943e22b8fdc7a1895da4f68235a7c">More...</a><br /></td></tr>
-<tr class="separator:aff3943e22b8fdc7a1895da4f68235a7c"><td class="memSeparator" colspan="2">&#160;</td></tr>
-<tr class="memitem:ad2fd5d0096ab416c1fd8dd0a05d7a11e"><td class="memItemLeft" align="right" valign="top">&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="classklib_1_1RuntimeError.html#ad2fd5d0096ab416c1fd8dd0a05d7a11e">RuntimeError</a> (const std::string &amp;msg)</td></tr>
-<tr class="memdesc:ad2fd5d0096ab416c1fd8dd0a05d7a11e"><td class="mdescLeft">&#160;</td><td class="mdescRight">Constructor.  <a href="classklib_1_1RuntimeError.html#ad2fd5d0096ab416c1fd8dd0a05d7a11e">More...</a><br /></td></tr>
-<tr class="separator:ad2fd5d0096ab416c1fd8dd0a05d7a11e"><td class="memSeparator" colspan="2">&#160;</td></tr>
-<tr class="memitem:aa000c04b65c1a10a7b792e3688ed8587"><td class="memItemLeft" align="right" valign="top">&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="classklib_1_1RuntimeError.html#aa000c04b65c1a10a7b792e3688ed8587">RuntimeError</a> (std::string_view msg)</td></tr>
-<tr class="memdesc:aa000c04b65c1a10a7b792e3688ed8587"><td class="mdescLeft">&#160;</td><td class="mdescRight">Constructor.  <a href="classklib_1_1RuntimeError.html#aa000c04b65c1a10a7b792e3688ed8587">More...</a><br /></td></tr>
-<tr class="separator:aa000c04b65c1a10a7b792e3688ed8587"><td class="memSeparator" colspan="2">&#160;</td></tr>
-<tr class="memitem:a58f0f5ebc345d39344520a1dbc654632"><td class="memTemplParams" colspan="2">template&lt;typename... Args&gt; </td></tr>
-<tr class="memitem:a58f0f5ebc345d39344520a1dbc654632"><td class="memTemplItemLeft" align="right" valign="top">&#160;</td><td class="memTemplItemRight" valign="bottom"><a class="el" href="classklib_1_1RuntimeError.html#a58f0f5ebc345d39344520a1dbc654632">RuntimeError</a> (std::string_view fmt, Args &amp;&amp;...args)</td></tr>
-<tr class="memdesc:a58f0f5ebc345d39344520a1dbc654632"><td class="mdescLeft">&#160;</td><td class="mdescRight">Constructor.  <a href="classklib_1_1RuntimeError.html#a58f0f5ebc345d39344520a1dbc654632">More...</a><br /></td></tr>
-<tr class="separator:a58f0f5ebc345d39344520a1dbc654632"><td class="memSeparator" colspan="2">&#160;</td></tr>
+<tr class="memitem:a30eacbccb5ba6abdba97d895815cda4e"><td class="memTemplParams" colspan="2">template&lt;typename... Args&gt; </td></tr>
+<tr class="memitem:a30eacbccb5ba6abdba97d895815cda4e"><td class="memTemplItemLeft" align="right" valign="top">&#160;</td><td class="memTemplItemRight" valign="bottom"><a class="el" href="classklib_1_1RuntimeError.html#a30eacbccb5ba6abdba97d895815cda4e">RuntimeError</a> (detail::format_with_location fmt_with_loc, Args &amp;&amp;...args)</td></tr>
+<tr class="memdesc:a30eacbccb5ba6abdba97d895815cda4e"><td class="mdescLeft">&#160;</td><td class="mdescRight">Constructor.  <a href="classklib_1_1RuntimeError.html#a30eacbccb5ba6abdba97d895815cda4e">More...</a><br /></td></tr>
+<tr class="separator:a30eacbccb5ba6abdba97d895815cda4e"><td class="memSeparator" colspan="2">&#160;</td></tr>
 </table>
 <a name="details" id="details"></a><h2 class="groupheader">Detailed Description</h2>
 <div class="textblock"><p >Exception class, which means runtime error. </p>
 </div><h2 class="groupheader">Constructor &amp; Destructor Documentation</h2>
-<a id="aff3943e22b8fdc7a1895da4f68235a7c" name="aff3943e22b8fdc7a1895da4f68235a7c"></a>
-<h2 class="memtitle"><span class="permalink"><a href="#aff3943e22b8fdc7a1895da4f68235a7c">&#9670;&nbsp;</a></span>RuntimeError() <span class="overload">[1/4]</span></h2>
-
-<div class="memitem">
-<div class="memproto">
-<table class="mlabels">
-  <tr>
-  <td class="mlabels-left">
-      <table class="memname">
-        <tr>
-          <td class="memname">klib::RuntimeError::RuntimeError </td>
-          <td>(</td>
-          <td class="paramtype">const char *&#160;</td>
-          <td class="paramname"><em>msg</em></td><td>)</td>
-          <td></td>
-        </tr>
-      </table>
-  </td>
-  <td class="mlabels-right">
-<span class="mlabels"><span class="mlabel">inline</span><span class="mlabel">explicit</span></span>  </td>
-  </tr>
-</table>
-</div><div class="memdoc">
-
-<p>Constructor. </p>
-<dl class="params"><dt>Parameters</dt><dd>
-  <table class="params">
-    <tr><td class="paramname">msg</td><td>Exception information </td></tr>
-  </table>
-  </dd>
-</dl>
-
-</div>
-</div>
-<a id="ad2fd5d0096ab416c1fd8dd0a05d7a11e" name="ad2fd5d0096ab416c1fd8dd0a05d7a11e"></a>
-<h2 class="memtitle"><span class="permalink"><a href="#ad2fd5d0096ab416c1fd8dd0a05d7a11e">&#9670;&nbsp;</a></span>RuntimeError() <span class="overload">[2/4]</span></h2>
-
-<div class="memitem">
-<div class="memproto">
-<table class="mlabels">
-  <tr>
-  <td class="mlabels-left">
-      <table class="memname">
-        <tr>
-          <td class="memname">klib::RuntimeError::RuntimeError </td>
-          <td>(</td>
-          <td class="paramtype">const std::string &amp;&#160;</td>
-          <td class="paramname"><em>msg</em></td><td>)</td>
-          <td></td>
-        </tr>
-      </table>
-  </td>
-  <td class="mlabels-right">
-<span class="mlabels"><span class="mlabel">inline</span><span class="mlabel">explicit</span></span>  </td>
-  </tr>
-</table>
-</div><div class="memdoc">
-
-<p>Constructor. </p>
-<dl class="params"><dt>Parameters</dt><dd>
-  <table class="params">
-    <tr><td class="paramname">msg</td><td>Exception information </td></tr>
-  </table>
-  </dd>
-</dl>
-
-</div>
-</div>
-<a id="aa000c04b65c1a10a7b792e3688ed8587" name="aa000c04b65c1a10a7b792e3688ed8587"></a>
-<h2 class="memtitle"><span class="permalink"><a href="#aa000c04b65c1a10a7b792e3688ed8587">&#9670;&nbsp;</a></span>RuntimeError() <span class="overload">[3/4]</span></h2>
-
-<div class="memitem">
-<div class="memproto">
-<table class="mlabels">
-  <tr>
-  <td class="mlabels-left">
-      <table class="memname">
-        <tr>
-          <td class="memname">klib::RuntimeError::RuntimeError </td>
-          <td>(</td>
-          <td class="paramtype">std::string_view&#160;</td>
-          <td class="paramname"><em>msg</em></td><td>)</td>
-          <td></td>
-        </tr>
-      </table>
-  </td>
-  <td class="mlabels-right">
-<span class="mlabels"><span class="mlabel">inline</span><span class="mlabel">explicit</span></span>  </td>
-  </tr>
-</table>
-</div><div class="memdoc">
-
-<p>Constructor. </p>
-<dl class="params"><dt>Parameters</dt><dd>
-  <table class="params">
-    <tr><td class="paramname">msg</td><td>Exception information </td></tr>
-  </table>
-  </dd>
-</dl>
-
-</div>
-</div>
-<a id="a58f0f5ebc345d39344520a1dbc654632" name="a58f0f5ebc345d39344520a1dbc654632"></a>
-<h2 class="memtitle"><span class="permalink"><a href="#a58f0f5ebc345d39344520a1dbc654632">&#9670;&nbsp;</a></span>RuntimeError() <span class="overload">[4/4]</span></h2>
+<a id="a30eacbccb5ba6abdba97d895815cda4e" name="a30eacbccb5ba6abdba97d895815cda4e"></a>
+<h2 class="memtitle"><span class="permalink"><a href="#a30eacbccb5ba6abdba97d895815cda4e">&#9670;&nbsp;</a></span>RuntimeError()</h2>
 
 <div class="memitem">
 <div class="memproto">
@@ -244,8 +133,8 @@ template&lt;typename... Args&gt; </div>
         <tr>
           <td class="memname">klib::RuntimeError::RuntimeError </td>
           <td>(</td>
-          <td class="paramtype">std::string_view&#160;</td>
-          <td class="paramname"><em>fmt</em>, </td>
+          <td class="paramtype">detail::format_with_location&#160;</td>
+          <td class="paramname"><em>fmt_with_loc</em>, </td>
         </tr>
         <tr>
           <td class="paramkey"></td>

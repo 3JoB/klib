@@ -17,7 +17,7 @@ var util_8h =
     [ "read_file", "util_8h.html#aff1e161e1457b1a895244581b50b9abd", null ],
     [ "read_file_line", "util_8h.html#aeb12aa83527e021b6d976c4c6008791a", null ],
     [ "same_folder", "util_8h.html#a634a5cccf588c12cb1d7e1f4253775c6", null ],
-    [ "split_str", "util_8h.html#ab8656c14dc5e6fe66b30a9ea9fde7001", null ],
+    [ "split_str", "util_8h.html#afb31ff4533cd6ea73bb65b1c077dde7f", null ],
     [ "uuid", "util_8h.html#a04c05579273b722fad57a8362193d573", null ],
     [ "wait_for_child_process", "util_8h.html#a068f640d8df09ff35caf8822a9c1e0ac", null ],
     [ "write_file", "util_8h.html#ad20740bb960a952fc137ca4247bbc179", null ]

@@ -5,10 +5,10 @@ var archive_8h =
       [ "Gzip", "archive_8h.html#a00dd09aa9984a80a30a64727d6a7ac99a2548e50da66f41afea53de1cbbf3b30c", null ],
       [ "Zstd", "archive_8h.html#a00dd09aa9984a80a30a64727d6a7ac99a0c8468c9ff2f38e853335e1e40ade4c3", null ]
     ] ],
-    [ "compress", "archive_8h.html#a60d8d0cfa4099f1cf8eb6f37e8e84e05", null ],
-    [ "compress", "archive_8h.html#a0ff19dfa8c910290eff014ba09f6c4bc", null ],
-    [ "compress_str", "archive_8h.html#adcde0e6723d9397db836be762f8f0221", null ],
-    [ "compress_str", "archive_8h.html#ae8450f2125ec32f20f75144c144a325f", null ],
+    [ "compress", "archive_8h.html#af5572d6a5f2122c2b5cec8fcd75e0d4a", null ],
+    [ "compress", "archive_8h.html#a7f739fc23254bffcc25e0d5a281c62e0", null ],
+    [ "compress_str", "archive_8h.html#aae39eea487c3f9080304393f2ed3a147", null ],
+    [ "compress_str", "archive_8h.html#a23f46718f8f327143ff7fc55ad8f9ffd", null ],
     [ "decompress", "archive_8h.html#ae7534a03c6a19a5cdaeb6eacebef9c02", null ],
     [ "decompress_str", "archive_8h.html#a74d11f96078ac9abe7c2155d42275e18", null ],
     [ "decompress_str", "archive_8h.html#ae7c9d47cf816d075f2dc036bb704871d", null ]

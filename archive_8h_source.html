@@ -30,7 +30,7 @@
  <tbody>
  <tr style="height: 56px;">
   <td id="projectalign" style="padding-left: 0.5em;">
-   <div id="projectname">klib<span id="projectnumber">&#160;0.10.10</span>
+   <div id="projectname">klib<span id="projectnumber">&#160;0.11.0</span>
    </div>
   </td>
     <td>        <div id="MSearchBox" class="MSearchBoxInactive">
@@ -98,38 +98,43 @@ $(document).ready(function(){initNavTree('archive_8h_source.html',''); initResiz
 <div class="line"><a id="l00006" name="l00006"></a><span class="lineno">    6</span><span class="preprocessor">#pragma once</span></div>
 <div class="line"><a id="l00007" name="l00007"></a><span class="lineno">    7</span> </div>
 <div class="line"><a id="l00008" name="l00008"></a><span class="lineno">    8</span><span class="preprocessor">#include &lt;cstddef&gt;</span></div>
-<div class="line"><a id="l00009" name="l00009"></a><span class="lineno">    9</span><span class="preprocessor">#include &lt;optional&gt;</span></div>
-<div class="line"><a id="l00010" name="l00010"></a><span class="lineno">   10</span><span class="preprocessor">#include &lt;string&gt;</span></div>
-<div class="line"><a id="l00011" name="l00011"></a><span class="lineno">   11</span><span class="preprocessor">#include &lt;vector&gt;</span></div>
-<div class="line"><a id="l00012" name="l00012"></a><span class="lineno">   12</span> </div>
-<div class="line"><a id="l00013" name="l00013"></a><span class="lineno">   13</span><span class="keyword">namespace </span>klib {</div>
-<div class="line"><a id="l00014" name="l00014"></a><span class="lineno">   14</span> </div>
-<div class="line"><a id="l00018" name="l00018"></a><span class="lineno"><a class="line" href="archive_8h.html#a00dd09aa9984a80a30a64727d6a7ac99">   18</a></span><span class="keyword">enum class</span> <a class="code hl_enumeration" href="archive_8h.html#a00dd09aa9984a80a30a64727d6a7ac99">Algorithm</a> { Zip, Gzip, Zstd };</div>
-<div class="line"><a id="l00019" name="l00019"></a><span class="lineno">   19</span> </div>
-<div class="line"><a id="l00029" name="l00029"></a><span class="lineno"><a class="line" href="archive_8h.html#a60d8d0cfa4099f1cf8eb6f37e8e84e05">   29</a></span><span class="keywordtype">void</span> <a class="code hl_function" href="archive_8h.html#a60d8d0cfa4099f1cf8eb6f37e8e84e05">compress</a>(<span class="keyword">const</span> std::string &amp;path, <a class="code hl_enumeration" href="archive_8h.html#a00dd09aa9984a80a30a64727d6a7ac99">Algorithm</a> algorithm,</div>
-<div class="line"><a id="l00030" name="l00030"></a><span class="lineno">   30</span>              <span class="keyword">const</span> std::string &amp;file_name = <span class="stringliteral">&quot;&quot;</span>, <span class="keywordtype">bool</span> flag = <span class="keyword">true</span>);</div>
-<div class="line"><a id="l00031" name="l00031"></a><span class="lineno">   31</span> </div>
-<div class="line"><a id="l00038" name="l00038"></a><span class="lineno"><a class="line" href="archive_8h.html#a0ff19dfa8c910290eff014ba09f6c4bc">   38</a></span><span class="keywordtype">void</span> <a class="code hl_function" href="archive_8h.html#a60d8d0cfa4099f1cf8eb6f37e8e84e05">compress</a>(<span class="keyword">const</span> std::vector&lt;std::string&gt; &amp;paths, <a class="code hl_enumeration" href="archive_8h.html#a00dd09aa9984a80a30a64727d6a7ac99">Algorithm</a> algorithm,</div>
-<div class="line"><a id="l00039" name="l00039"></a><span class="lineno">   39</span>              <span class="keyword">const</span> std::string &amp;file_name);</div>
-<div class="line"><a id="l00040" name="l00040"></a><span class="lineno">   40</span> </div>
-<div class="line"><a id="l00049" name="l00049"></a><span class="lineno"><a class="line" href="archive_8h.html#ae7534a03c6a19a5cdaeb6eacebef9c02">   49</a></span>std::optional&lt;std::string&gt; <a class="code hl_function" href="archive_8h.html#ae7534a03c6a19a5cdaeb6eacebef9c02">decompress</a>(<span class="keyword">const</span> std::string &amp;path,</div>
-<div class="line"><a id="l00050" name="l00050"></a><span class="lineno">   50</span>                                      <span class="keyword">const</span> std::string &amp;decompressed_path = <span class="stringliteral">&quot;&quot;</span>,</div>
-<div class="line"><a id="l00051" name="l00051"></a><span class="lineno">   51</span>                                      <span class="keyword">const</span> std::string &amp;password = <span class="stringliteral">&quot;&quot;</span>);</div>
-<div class="line"><a id="l00052" name="l00052"></a><span class="lineno">   52</span> </div>
-<div class="line"><a id="l00058" name="l00058"></a><span class="lineno"><a class="line" href="archive_8h.html#ae8450f2125ec32f20f75144c144a325f">   58</a></span>std::string <a class="code hl_function" href="archive_8h.html#ae8450f2125ec32f20f75144c144a325f">compress_str</a>(<span class="keyword">const</span> std::string &amp;data);</div>
-<div class="line"><a id="l00059" name="l00059"></a><span class="lineno">   59</span> </div>
-<div class="line"><a id="l00066" name="l00066"></a><span class="lineno"><a class="line" href="archive_8h.html#adcde0e6723d9397db836be762f8f0221">   66</a></span>std::string <a class="code hl_function" href="archive_8h.html#ae8450f2125ec32f20f75144c144a325f">compress_str</a>(<span class="keyword">const</span> <span class="keywordtype">char</span> *data, std::size_t size);</div>
-<div class="line"><a id="l00067" name="l00067"></a><span class="lineno">   67</span> </div>
-<div class="line"><a id="l00073" name="l00073"></a><span class="lineno"><a class="line" href="archive_8h.html#ae7c9d47cf816d075f2dc036bb704871d">   73</a></span>std::string <a class="code hl_function" href="archive_8h.html#ae7c9d47cf816d075f2dc036bb704871d">decompress_str</a>(<span class="keyword">const</span> std::string &amp;data);</div>
-<div class="line"><a id="l00074" name="l00074"></a><span class="lineno">   74</span> </div>
-<div class="line"><a id="l00081" name="l00081"></a><span class="lineno"><a class="line" href="archive_8h.html#a74d11f96078ac9abe7c2155d42275e18">   81</a></span>std::string <a class="code hl_function" href="archive_8h.html#ae7c9d47cf816d075f2dc036bb704871d">decompress_str</a>(<span class="keyword">const</span> <span class="keywordtype">char</span> *data, std::size_t size);</div>
-<div class="line"><a id="l00082" name="l00082"></a><span class="lineno">   82</span> </div>
-<div class="line"><a id="l00083" name="l00083"></a><span class="lineno">   83</span>}  <span class="comment">// namespace klib</span></div>
-<div class="ttc" id="aarchive_8h_html_a00dd09aa9984a80a30a64727d6a7ac99"><div class="ttname"><a href="archive_8h.html#a00dd09aa9984a80a30a64727d6a7ac99">klib::Algorithm</a></div><div class="ttdeci">Algorithm</div><div class="ttdoc">Algorithm used for compression.</div><div class="ttdef"><b>Definition:</b> archive.h:18</div></div>
-<div class="ttc" id="aarchive_8h_html_a60d8d0cfa4099f1cf8eb6f37e8e84e05"><div class="ttname"><a href="archive_8h.html#a60d8d0cfa4099f1cf8eb6f37e8e84e05">klib::compress</a></div><div class="ttdeci">void compress(const std::string &amp;path, Algorithm algorithm, const std::string &amp;file_name=&quot;&quot;, bool flag=true)</div><div class="ttdoc">Compress file or folder.</div></div>
+<div class="line"><a id="l00009" name="l00009"></a><span class="lineno">    9</span><span class="preprocessor">#include &lt;cstdint&gt;</span></div>
+<div class="line"><a id="l00010" name="l00010"></a><span class="lineno">   10</span><span class="preprocessor">#include &lt;optional&gt;</span></div>
+<div class="line"><a id="l00011" name="l00011"></a><span class="lineno">   11</span><span class="preprocessor">#include &lt;string&gt;</span></div>
+<div class="line"><a id="l00012" name="l00012"></a><span class="lineno">   12</span><span class="preprocessor">#include &lt;vector&gt;</span></div>
+<div class="line"><a id="l00013" name="l00013"></a><span class="lineno">   13</span> </div>
+<div class="line"><a id="l00014" name="l00014"></a><span class="lineno">   14</span><span class="keyword">namespace </span>klib {</div>
+<div class="line"><a id="l00015" name="l00015"></a><span class="lineno">   15</span> </div>
+<div class="line"><a id="l00019" name="l00019"></a><span class="lineno"><a class="line" href="archive_8h.html#a00dd09aa9984a80a30a64727d6a7ac99">   19</a></span><span class="keyword">enum class</span> <a class="code hl_enumeration" href="archive_8h.html#a00dd09aa9984a80a30a64727d6a7ac99">Algorithm</a> { Zip, Gzip, Zstd };</div>
+<div class="line"><a id="l00020" name="l00020"></a><span class="lineno">   20</span> </div>
+<div class="line"><a id="l00031" name="l00031"></a><span class="lineno"><a class="line" href="archive_8h.html#af5572d6a5f2122c2b5cec8fcd75e0d4a">   31</a></span><span class="keywordtype">void</span> <a class="code hl_function" href="archive_8h.html#af5572d6a5f2122c2b5cec8fcd75e0d4a">compress</a>(<span class="keyword">const</span> std::string &amp;path, <a class="code hl_enumeration" href="archive_8h.html#a00dd09aa9984a80a30a64727d6a7ac99">Algorithm</a> algorithm,</div>
+<div class="line"><a id="l00032" name="l00032"></a><span class="lineno">   32</span>              <span class="keyword">const</span> std::string &amp;file_name = <span class="stringliteral">&quot;&quot;</span>, <span class="keywordtype">bool</span> flag = <span class="keyword">true</span>,</div>
+<div class="line"><a id="l00033" name="l00033"></a><span class="lineno">   33</span>              std::optional&lt;std::int32_t&gt; level = {});</div>
+<div class="line"><a id="l00034" name="l00034"></a><span class="lineno">   34</span> </div>
+<div class="line"><a id="l00042" name="l00042"></a><span class="lineno"><a class="line" href="archive_8h.html#a7f739fc23254bffcc25e0d5a281c62e0">   42</a></span><span class="keywordtype">void</span> <a class="code hl_function" href="archive_8h.html#af5572d6a5f2122c2b5cec8fcd75e0d4a">compress</a>(<span class="keyword">const</span> std::vector&lt;std::string&gt; &amp;paths, <a class="code hl_enumeration" href="archive_8h.html#a00dd09aa9984a80a30a64727d6a7ac99">Algorithm</a> algorithm,</div>
+<div class="line"><a id="l00043" name="l00043"></a><span class="lineno">   43</span>              <span class="keyword">const</span> std::string &amp;file_name,</div>
+<div class="line"><a id="l00044" name="l00044"></a><span class="lineno">   44</span>              std::optional&lt;std::int32_t&gt; level = {});</div>
+<div class="line"><a id="l00045" name="l00045"></a><span class="lineno">   45</span> </div>
+<div class="line"><a id="l00054" name="l00054"></a><span class="lineno"><a class="line" href="archive_8h.html#ae7534a03c6a19a5cdaeb6eacebef9c02">   54</a></span>std::optional&lt;std::string&gt; <a class="code hl_function" href="archive_8h.html#ae7534a03c6a19a5cdaeb6eacebef9c02">decompress</a>(<span class="keyword">const</span> std::string &amp;path,</div>
+<div class="line"><a id="l00055" name="l00055"></a><span class="lineno">   55</span>                                      <span class="keyword">const</span> std::string &amp;decompressed_path = <span class="stringliteral">&quot;&quot;</span>,</div>
+<div class="line"><a id="l00056" name="l00056"></a><span class="lineno">   56</span>                                      <span class="keyword">const</span> std::string &amp;password = <span class="stringliteral">&quot;&quot;</span>);</div>
+<div class="line"><a id="l00057" name="l00057"></a><span class="lineno">   57</span> </div>
+<div class="line"><a id="l00064" name="l00064"></a><span class="lineno"><a class="line" href="archive_8h.html#a23f46718f8f327143ff7fc55ad8f9ffd">   64</a></span>std::string <a class="code hl_function" href="archive_8h.html#a23f46718f8f327143ff7fc55ad8f9ffd">compress_str</a>(<span class="keyword">const</span> std::string &amp;data,</div>
+<div class="line"><a id="l00065" name="l00065"></a><span class="lineno">   65</span>                         std::optional&lt;std::int32_t&gt; level = {});</div>
+<div class="line"><a id="l00066" name="l00066"></a><span class="lineno">   66</span> </div>
+<div class="line"><a id="l00074" name="l00074"></a><span class="lineno"><a class="line" href="archive_8h.html#aae39eea487c3f9080304393f2ed3a147">   74</a></span>std::string <a class="code hl_function" href="archive_8h.html#a23f46718f8f327143ff7fc55ad8f9ffd">compress_str</a>(<span class="keyword">const</span> <span class="keywordtype">char</span> *data, std::size_t size,</div>
+<div class="line"><a id="l00075" name="l00075"></a><span class="lineno">   75</span>                         std::optional&lt;std::int32_t&gt; level = {});</div>
+<div class="line"><a id="l00076" name="l00076"></a><span class="lineno">   76</span> </div>
+<div class="line"><a id="l00082" name="l00082"></a><span class="lineno"><a class="line" href="archive_8h.html#ae7c9d47cf816d075f2dc036bb704871d">   82</a></span>std::string <a class="code hl_function" href="archive_8h.html#ae7c9d47cf816d075f2dc036bb704871d">decompress_str</a>(<span class="keyword">const</span> std::string &amp;data);</div>
+<div class="line"><a id="l00083" name="l00083"></a><span class="lineno">   83</span> </div>
+<div class="line"><a id="l00090" name="l00090"></a><span class="lineno"><a class="line" href="archive_8h.html#a74d11f96078ac9abe7c2155d42275e18">   90</a></span>std::string <a class="code hl_function" href="archive_8h.html#ae7c9d47cf816d075f2dc036bb704871d">decompress_str</a>(<span class="keyword">const</span> <span class="keywordtype">char</span> *data, std::size_t size);</div>
+<div class="line"><a id="l00091" name="l00091"></a><span class="lineno">   91</span> </div>
+<div class="line"><a id="l00092" name="l00092"></a><span class="lineno">   92</span>}  <span class="comment">// namespace klib</span></div>
+<div class="ttc" id="aarchive_8h_html_a00dd09aa9984a80a30a64727d6a7ac99"><div class="ttname"><a href="archive_8h.html#a00dd09aa9984a80a30a64727d6a7ac99">klib::Algorithm</a></div><div class="ttdeci">Algorithm</div><div class="ttdoc">Algorithm used for compression.</div><div class="ttdef"><b>Definition:</b> archive.h:19</div></div>
+<div class="ttc" id="aarchive_8h_html_a23f46718f8f327143ff7fc55ad8f9ffd"><div class="ttname"><a href="archive_8h.html#a23f46718f8f327143ff7fc55ad8f9ffd">klib::compress_str</a></div><div class="ttdeci">std::string compress_str(const std::string &amp;data, std::optional&lt; std::int32_t &gt; level={})</div><div class="ttdoc">Compress data.</div></div>
 <div class="ttc" id="aarchive_8h_html_ae7534a03c6a19a5cdaeb6eacebef9c02"><div class="ttname"><a href="archive_8h.html#ae7534a03c6a19a5cdaeb6eacebef9c02">klib::decompress</a></div><div class="ttdeci">std::optional&lt; std::string &gt; decompress(const std::string &amp;path, const std::string &amp;decompressed_path=&quot;&quot;, const std::string &amp;password=&quot;&quot;)</div><div class="ttdoc">Decompress file.</div></div>
 <div class="ttc" id="aarchive_8h_html_ae7c9d47cf816d075f2dc036bb704871d"><div class="ttname"><a href="archive_8h.html#ae7c9d47cf816d075f2dc036bb704871d">klib::decompress_str</a></div><div class="ttdeci">std::string decompress_str(const std::string &amp;data)</div><div class="ttdoc">Decompress data.</div></div>
-<div class="ttc" id="aarchive_8h_html_ae8450f2125ec32f20f75144c144a325f"><div class="ttname"><a href="archive_8h.html#ae8450f2125ec32f20f75144c144a325f">klib::compress_str</a></div><div class="ttdeci">std::string compress_str(const std::string &amp;data)</div><div class="ttdoc">Compress data.</div></div>
+<div class="ttc" id="aarchive_8h_html_af5572d6a5f2122c2b5cec8fcd75e0d4a"><div class="ttname"><a href="archive_8h.html#af5572d6a5f2122c2b5cec8fcd75e0d4a">klib::compress</a></div><div class="ttdeci">void compress(const std::string &amp;path, Algorithm algorithm, const std::string &amp;file_name=&quot;&quot;, bool flag=true, std::optional&lt; std::int32_t &gt; level={})</div><div class="ttdoc">Compress file or folder.</div></div>
 </div><!-- fragment --></div><!-- contents -->
 </div><!-- doc-content -->
 <!-- start footer part -->
