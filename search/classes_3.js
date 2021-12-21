@@ -1,5 +1,5 @@
 var searchData=
 [
-  ['image_0',['Image',['../structklib_1_1Image.html',1,'klib']]],
-  ['invalidargument_1',['InvalidArgument',['../classklib_1_1InvalidArgument.html',1,'klib']]]
+  ['headers_0',['Headers',['../classklib_1_1Headers.html',1,'klib']]],
+  ['heading_1',['Heading',['../structklib_1_1Heading.html',1,'klib']]]
 ];

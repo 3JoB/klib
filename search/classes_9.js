@@ -1,6 +1,6 @@
 var searchData=
 [
-  ['securehash_0',['SecureHash',['../classklib_1_1SecureHash.html',1,'klib']]],
-  ['sqldatabase_1',['SqlDatabase',['../classklib_1_1SqlDatabase.html',1,'klib']]],
-  ['sqlquery_2',['SqlQuery',['../classklib_1_1SqlQuery.html',1,'klib']]]
+  ['request_0',['Request',['../classklib_1_1Request.html',1,'klib']]],
+  ['response_1',['Response',['../classklib_1_1Response.html',1,'klib']]],
+  ['runtimeerror_2',['RuntimeError',['../classklib_1_1RuntimeError.html',1,'klib']]]
 ];

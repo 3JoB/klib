@@ -1,4 +1,4 @@
 var searchData=
 [
-  ['fasthash_0',['FastHash',['../classklib_1_1FastHash.html',1,'klib']]]
+  ['exception_0',['Exception',['../classklib_1_1Exception.html',1,'klib']]]
 ];

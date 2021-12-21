@@ -5,7 +5,7 @@
 <meta http-equiv="X-UA-Compatible" content="IE=11"/>
 <meta name="generator" content="Doxygen 1.9.2"/>
 <meta name="viewport" content="width=device-width, initial-scale=1"/>
-<title>klib: klib::Headers Class Reference</title>
+<title>klib: klib::Exception Class Reference</title>
 <link href="tabs.css" rel="stylesheet" type="text/css"/>
 <script type="text/javascript" src="jquery.js"></script>
 <script type="text/javascript" src="dynsections.js"></script>
@@ -72,7 +72,7 @@ var searchBox = new SearchBox("searchBox", "search",'Search','.html');
 </div>
 <script type="text/javascript">
 /* @license magnet:?xt=urn:btih:d3d9a9a6595521f9666a5e94cc830dab83b65699&amp;dn=expat.txt MIT */
-$(document).ready(function(){initNavTree('classklib_1_1Headers.html',''); initResizable(); });
+$(document).ready(function(){initNavTree('classklib_1_1Exception.html',''); initResizable(); });
 /* @license-end */
 </script>
 <div id="doc-content">
@@ -93,71 +93,53 @@ $(document).ready(function(){initNavTree('classklib_1_1Headers.html',''); initRe
 <div class="header">
   <div class="summary">
 <a href="#pub-methods">Public Member Functions</a> &#124;
-<a href="#friends">Friends</a> &#124;
-<a href="classklib_1_1Headers-members.html">List of all members</a>  </div>
-  <div class="headertitle"><div class="title">klib::Headers Class Reference</div></div>
+<a href="classklib_1_1Exception-members.html">List of all members</a>  </div>
+  <div class="headertitle"><div class="title">klib::Exception Class Reference</div></div>
 </div><!--header-->
 <div class="contents">
-
-<p><a class="el" href="classklib_1_1Response.html" title="Response content.">Response</a> headers.  
- <a href="classklib_1_1Headers.html#details">More...</a></p>
-
-<p><code>#include &lt;<a class="el" href="http_8h_source.html">http.h</a>&gt;</code></p>
+<div class="dynheader">
+Inheritance diagram for klib::Exception:</div>
+<div class="dyncontent">
+ <div class="center">
+  <img src="classklib_1_1Exception.png" usemap="#klib::Exception_map" alt=""/>
+  <map id="klib::Exception_map" name="klib::Exception_map">
+<area href="classklib_1_1InvalidArgument.html" title="Exception class, which means invalid argument." alt="klib::InvalidArgument" shape="rect" coords="0,56,128,80"/>
+<area href="classklib_1_1LogicError.html" title="Exception class, which means logic error." alt="klib::LogicError" shape="rect" coords="138,56,266,80"/>
+<area href="classklib_1_1OutOfRange.html" title="Exception class, which means out of range." alt="klib::OutOfRange" shape="rect" coords="276,56,404,80"/>
+<area href="classklib_1_1RuntimeError.html" title="Exception class, which means runtime error." alt="klib::RuntimeError" shape="rect" coords="414,56,542,80"/>
+  </map>
+</div></div>
 <table class="memberdecls">
 <tr class="heading"><td colspan="2"><h2 class="groupheader"><a id="pub-methods" name="pub-methods"></a>
 Public Member Functions</h2></td></tr>
-<tr class="memitem:a9ea038c02beb15d1beec0d767721379e"><td class="memItemLeft" align="right" valign="top">const std::string &amp;&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="classklib_1_1Headers.html#a9ea038c02beb15d1beec0d767721379e">at</a> (const std::string &amp;key) const</td></tr>
-<tr class="memdesc:a9ea038c02beb15d1beec0d767721379e"><td class="mdescLeft">&#160;</td><td class="mdescRight">Get the value specified by key(not case sensitive)  <a href="classklib_1_1Headers.html#a9ea038c02beb15d1beec0d767721379e">More...</a><br /></td></tr>
-<tr class="separator:a9ea038c02beb15d1beec0d767721379e"><td class="memSeparator" colspan="2">&#160;</td></tr>
-<tr class="memitem:a0b0b5b4a5c712dbcfcf6db2541afba80"><td class="memItemLeft" align="right" valign="top"><a id="a0b0b5b4a5c712dbcfcf6db2541afba80" name="a0b0b5b4a5c712dbcfcf6db2541afba80"></a>
-bool&#160;</td><td class="memItemRight" valign="bottom"><b>empty</b> () const</td></tr>
-<tr class="separator:a0b0b5b4a5c712dbcfcf6db2541afba80"><td class="memSeparator" colspan="2">&#160;</td></tr>
-</table><table class="memberdecls">
-<tr class="heading"><td colspan="2"><h2 class="groupheader"><a id="friends" name="friends"></a>
-Friends</h2></td></tr>
-<tr class="memitem:a0bb0e5a2fcd99881ef189293e209db7f"><td class="memItemLeft" align="right" valign="top"><a id="a0bb0e5a2fcd99881ef189293e209db7f" name="a0bb0e5a2fcd99881ef189293e209db7f"></a>
-class&#160;</td><td class="memItemRight" valign="bottom"><b>Response</b></td></tr>
-<tr class="separator:a0bb0e5a2fcd99881ef189293e209db7f"><td class="memSeparator" colspan="2">&#160;</td></tr>
+<tr class="memitem:aa717e7812a9ae6461832c4a04faa0652"><td class="memItemLeft" align="right" valign="top"><a id="aa717e7812a9ae6461832c4a04faa0652" name="aa717e7812a9ae6461832c4a04faa0652"></a>
+&#160;</td><td class="memItemRight" valign="bottom"><b>Exception</b> (const std::string &amp;msg)</td></tr>
+<tr class="separator:aa717e7812a9ae6461832c4a04faa0652"><td class="memSeparator" colspan="2">&#160;</td></tr>
+<tr class="memitem:a8b4f7e254714ef7acc0666564f7fa365"><td class="memItemLeft" align="right" valign="top"><a id="a8b4f7e254714ef7acc0666564f7fa365" name="a8b4f7e254714ef7acc0666564f7fa365"></a>
+&#160;</td><td class="memItemRight" valign="bottom"><b>Exception</b> (const <a class="el" href="classklib_1_1Exception.html">Exception</a> &amp;)=default</td></tr>
+<tr class="separator:a8b4f7e254714ef7acc0666564f7fa365"><td class="memSeparator" colspan="2">&#160;</td></tr>
+<tr class="memitem:a619f7ad5996073cafa643061df9039e9"><td class="memItemLeft" align="right" valign="top"><a id="a619f7ad5996073cafa643061df9039e9" name="a619f7ad5996073cafa643061df9039e9"></a>
+<a class="el" href="classklib_1_1Exception.html">Exception</a> &amp;&#160;</td><td class="memItemRight" valign="bottom"><b>operator=</b> (const <a class="el" href="classklib_1_1Exception.html">Exception</a> &amp;)=default</td></tr>
+<tr class="separator:a619f7ad5996073cafa643061df9039e9"><td class="memSeparator" colspan="2">&#160;</td></tr>
+<tr class="memitem:a4dcc55ad412f2146e7156d8ca0ce7731"><td class="memItemLeft" align="right" valign="top"><a id="a4dcc55ad412f2146e7156d8ca0ce7731" name="a4dcc55ad412f2146e7156d8ca0ce7731"></a>
+&#160;</td><td class="memItemRight" valign="bottom"><b>Exception</b> (<a class="el" href="classklib_1_1Exception.html">Exception</a> &amp;&amp;)=default</td></tr>
+<tr class="separator:a4dcc55ad412f2146e7156d8ca0ce7731"><td class="memSeparator" colspan="2">&#160;</td></tr>
+<tr class="memitem:a34fccc44ec00741246ca60e29e7fb91a"><td class="memItemLeft" align="right" valign="top"><a id="a34fccc44ec00741246ca60e29e7fb91a" name="a34fccc44ec00741246ca60e29e7fb91a"></a>
+<a class="el" href="classklib_1_1Exception.html">Exception</a> &amp;&#160;</td><td class="memItemRight" valign="bottom"><b>operator=</b> (<a class="el" href="classklib_1_1Exception.html">Exception</a> &amp;&amp;)=default</td></tr>
+<tr class="separator:a34fccc44ec00741246ca60e29e7fb91a"><td class="memSeparator" colspan="2">&#160;</td></tr>
+<tr class="memitem:a59853144403e1ff5544d566133142f3f"><td class="memItemLeft" align="right" valign="top"><a id="a59853144403e1ff5544d566133142f3f" name="a59853144403e1ff5544d566133142f3f"></a>
+const std::string &amp;&#160;</td><td class="memItemRight" valign="bottom"><b>what</b> () const</td></tr>
+<tr class="separator:a59853144403e1ff5544d566133142f3f"><td class="memSeparator" colspan="2">&#160;</td></tr>
 </table>
-<a name="details" id="details"></a><h2 class="groupheader">Detailed Description</h2>
-<div class="textblock"><p ><a class="el" href="classklib_1_1Response.html" title="Response content.">Response</a> headers. </p>
-</div><h2 class="groupheader">Member Function Documentation</h2>
-<a id="a9ea038c02beb15d1beec0d767721379e" name="a9ea038c02beb15d1beec0d767721379e"></a>
-<h2 class="memtitle"><span class="permalink"><a href="#a9ea038c02beb15d1beec0d767721379e">&#9670;&nbsp;</a></span>at()</h2>
-
-<div class="memitem">
-<div class="memproto">
-      <table class="memname">
-        <tr>
-          <td class="memname">const std::string &amp; klib::Headers::at </td>
-          <td>(</td>
-          <td class="paramtype">const std::string &amp;&#160;</td>
-          <td class="paramname"><em>key</em></td><td>)</td>
-          <td> const</td>
-        </tr>
-      </table>
-</div><div class="memdoc">
-
-<p>Get the value specified by key(not case sensitive) </p>
-<dl class="params"><dt>Parameters</dt><dd>
-  <table class="params">
-    <tr><td class="paramname">key</td><td>Key </td></tr>
-  </table>
-  </dd>
-</dl>
-<dl class="section return"><dt>Returns</dt><dd>The value </dd></dl>
-
-</div>
-</div>
 <hr/>The documentation for this class was generated from the following file:<ul>
-<li>/__w/klib/klib/include/klib/<a class="el" href="http_8h_source.html">http.h</a></li>
+<li>/__w/klib/klib/include/klib/<a class="el" href="exception_8h_source.html">exception.h</a></li>
 </ul>
 </div><!-- contents -->
 </div><!-- doc-content -->
 <!-- start footer part -->
 <div id="nav-path" class="navpath"><!-- id is needed for treeview function! -->
   <ul>
-    <li class="navelem"><b>klib</b></li><li class="navelem"><a class="el" href="classklib_1_1Headers.html">Headers</a></li>
+    <li class="navelem"><b>klib</b></li><li class="navelem"><a class="el" href="classklib_1_1Exception.html">Exception</a></li>
     <li class="footer">Generated by <a href="https://www.doxygen.org/index.html"><img class="footer" src="doxygen.svg" width="104" height="31" alt="doxygen"/></a> 1.9.2 </li>
   </ul>
 </div>
