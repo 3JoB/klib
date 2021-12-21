@@ -39,6 +39,9 @@ TEST_CASE("utf8_to_utf32", "[unicode]") {
   REQUIRE(utf32[1] == 0x000000DF);
   REQUIRE(utf32[2] == 0x00006C34);
   REQUIRE(utf32[3] == 0x0001F34C);
+
+  auto unicode = klib::utf8_to_unicode("🍌");
+  REQUIRE(unicode == 0x0001F34C);
 }
 
 TEST_CASE("utf32_to_utf8", "[unicode]") {

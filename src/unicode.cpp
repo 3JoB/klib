@@ -10,6 +10,7 @@
 #include <string_view>
 
 #include <boost/core/ignore_unused.hpp>
+#include <gsl/gsl-lite.hpp>
 
 #include "klib/exception.h"
 
@@ -63,6 +64,12 @@ std::string utf16_to_utf8(const std::u16string &str) {
       simdutf::convert_utf16_to_utf8(source, source_size, std::data(result)));
 
   return result;
+}
+
+char32_t utf8_to_unicode(const std::string &str) {
+  auto result = utf8_to_utf32(str);
+  Ensures(std::size(result) == 1);
+  return result.front();
 }
 
 // https://zh.cppreference.com/w/c/string/multibyte/mbrtoc32
