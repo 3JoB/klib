@@ -2,6 +2,7 @@
 #include <string>
 #include <vector>
 
+#include <dbg.h>
 #include <catch2/catch.hpp>
 
 #include "klib/archive.h"
@@ -12,9 +13,10 @@ TEST_CASE("zip", "[archive]") {
   REQUIRE(std::filesystem::is_directory("madler-zlib-7085a61"));
   REQUIRE(klib::folder_size("madler-zlib-7085a61") == 2984209);
 
-  REQUIRE_NOTHROW(
-      klib::compress("madler-zlib-7085a61", klib::Algorithm::Zip, "zlib.zip"));
+  REQUIRE_NOTHROW(klib::compress("madler-zlib-7085a61", klib::Algorithm::Zip,
+                                 "zlib.zip", true, 9));
   REQUIRE(std::filesystem::is_regular_file("zlib.zip"));
+  dbg(std::filesystem::file_size("zlib.zip"));
 
   REQUIRE(klib::decompress("zlib.zip", "zip") == "madler-zlib-7085a61");
   REQUIRE(std::filesystem::is_directory("zip/madler-zlib-7085a61"));
@@ -65,8 +67,9 @@ TEST_CASE("gzip", "[archive]") {
   REQUIRE(klib::folder_size("madler-zlib-7085a61") == 2984209);
 
   REQUIRE_NOTHROW(klib::compress("madler-zlib-7085a61", klib::Algorithm::Gzip,
-                                 "zlib.tar.gz"));
+                                 "zlib.tar.gz", true, 9));
   REQUIRE(std::filesystem::is_regular_file("zlib.tar.gz"));
+  dbg(std::filesystem::file_size("zlib.tar.gz"));
 
   REQUIRE(klib::decompress("zlib.tar.gz", "gzip") == "madler-zlib-7085a61");
   REQUIRE(std::filesystem::is_directory("gzip/madler-zlib-7085a61"));
@@ -100,8 +103,9 @@ TEST_CASE("gzstd", "[archive]") {
   REQUIRE(klib::folder_size("madler-zlib-7085a61") == 2984209);
 
   REQUIRE_NOTHROW(klib::compress("madler-zlib-7085a61", klib::Algorithm::Zstd,
-                                 "zlib.tar.zst"));
+                                 "zlib.tar.zst", true, 18));
   REQUIRE(std::filesystem::is_regular_file("zlib.tar.zst"));
+  dbg(std::filesystem::file_size("zlib.tar.zst"));
 
   REQUIRE(klib::decompress("zlib.tar.zst", "zstd") == "madler-zlib-7085a61");
   REQUIRE(std::filesystem::is_directory("zstd/madler-zlib-7085a61"));
@@ -126,7 +130,7 @@ TEST_CASE("zstd", "[archive]") {
   std::string data = "test string";
   std::string compressed, decompressed;
 
-  REQUIRE_NOTHROW(compressed = klib::compress_str(data));
+  REQUIRE_NOTHROW(compressed = klib::compress_str(data, 19));
   REQUIRE_NOTHROW(decompressed = klib::decompress_str(compressed));
   REQUIRE(data == decompressed);
 }

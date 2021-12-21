@@ -12,7 +12,7 @@
 #include <fmt/core.h>
 #include <spdlog/spdlog.h>
 
-#include "detail/log_util.h"
+#include "detail/format_with_location.h"
 
 namespace klib {
 

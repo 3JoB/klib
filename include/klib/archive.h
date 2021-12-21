@@ -6,6 +6,7 @@
 #pragma once
 
 #include <cstddef>
+#include <cstdint>
 #include <optional>
 #include <string>
 #include <vector>
@@ -25,18 +26,22 @@ enum class Algorithm { Zip, Gzip, Zstd };
  * is used)
  * @param flag: Whether to include the outermost folder(If path refers to a
  * file, ignore it)
+ * @param level: Compression level
  */
 void compress(const std::string &path, Algorithm algorithm,
-              const std::string &file_name = "", bool flag = true);
+              const std::string &file_name = "", bool flag = true,
+              std::optional<std::int32_t> level = {});
 
 /**
  * @brief Compress files or folders
  * @param paths: Files or folders path
  * @param algorithm: Compression algorithm used
  * @param file_name: Compressed file name
+ * @param level: Compression level
  */
 void compress(const std::vector<std::string> &paths, Algorithm algorithm,
-              const std::string &file_name);
+              const std::string &file_name,
+              std::optional<std::int32_t> level = {});
 
 /**
  * @brief Decompress file
@@ -53,17 +58,21 @@ std::optional<std::string> decompress(const std::string &path,
 /**
  * @brief Compress data
  * @param data: Data to be compressed
+ * @param level: Compression level
  * @return Compressed data
  */
-std::string compress_str(const std::string &data);
+std::string compress_str(const std::string &data,
+                         std::optional<std::int32_t> level = {});
 
 /**
  * @brief Compress data
  * @param data: Data to be compressed
  * @param size: The size of the data to be compressed
+ * @param level: Compression level
  * @return Compressed data
  */
-std::string compress_str(const char *data, std::size_t size);
+std::string compress_str(const char *data, std::size_t size,
+                         std::optional<std::int32_t> level = {});
 
 /**
  * @brief Decompress data

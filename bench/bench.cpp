@@ -26,7 +26,7 @@ TEST_CASE("utf") {
   };
 
   BENCHMARK("iconv") {
-    klib::exec("iconv -f=UTF-8 -t=UTF-16 -o 263060-UTF-16.txt 263060.txt");
+    klib::exec("iconv -f=UTF-8 -t=UTF-16 -o 263060-UTF-16.txt 263060.md");
   };
 }
 
