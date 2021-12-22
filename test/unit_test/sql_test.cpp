@@ -6,7 +6,6 @@
 
 #include <catch2/catch.hpp>
 
-#include "klib/hash.h"
 #include "klib/sql.h"
 #include "klib/util.h"
 
