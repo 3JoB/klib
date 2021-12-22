@@ -3,7 +3,7 @@ var annotated_dup =
     [ "klib", null, [
       [ "ChangeWorkingDir", "classklib_1_1ChangeWorkingDir.html", "classklib_1_1ChangeWorkingDir" ],
       [ "Column", "classklib_1_1Column.html", "classklib_1_1Column" ],
-      [ "Exception", "classklib_1_1Exception.html", null ],
+      [ "Exception", "classklib_1_1Exception.html", "classklib_1_1Exception" ],
       [ "FastHash", "classklib_1_1FastHash.html", "classklib_1_1FastHash" ],
       [ "Headers", "classklib_1_1Headers.html", "classklib_1_1Headers" ],
       [ "Heading", "structklib_1_1Heading.html", null ],
