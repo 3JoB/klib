@@ -21,7 +21,8 @@ A C++ library, which wraps several important C libraries and provides some conve
 ## Dependency
 
 - [tidy-html5](https://github.com/htacg/tidy-html5)
-- [zlib](https://github.com/madler/zlib)
+- [zlib-ng](https://github.com/zlib-ng/zlib-ng)
+- [brotli](https://github.com/google/brotli)
 - [libarchive](https://github.com/libarchive/libarchive)
 - [openssl](https://github.com/openssl/openssl)
 - [nghttp2](https://github.com/nghttp2/nghttp2)
@@ -74,4 +75,5 @@ target_link_libraries(<your-target> PRIVATE klib::klib)
 
 ---
 
-Thanks to [JetBrains](https://www.jetbrains.com/) for donating product licenses to help develop this project <a href="https://www.jetbrains.com/"><img src="logo/jetbrains.svg" width="94" align="center" /></a>
+Thanks to [JetBrains](https://www.jetbrains.com/) for donating product licenses to help develop this
+project <a href="https://www.jetbrains.com/"><img src="logo/jetbrains.svg" width="94" align="center" /></a>
