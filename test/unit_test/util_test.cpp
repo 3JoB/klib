@@ -46,12 +46,12 @@ TEST_CASE("read_file & write_file", "[util]") {
   REQUIRE(std::filesystem::exists("zlib-v1.2.11.tar.gz"));
 
   auto data = klib::read_file("zlib-v1.2.11.tar.gz", true);
-  REQUIRE(std::size(data) == 644596);
+  REQUIRE(std::size(data) == 659779);
 
   REQUIRE_NOTHROW(klib::write_file("write-file.zip", true, data));
 
   REQUIRE(std::filesystem::exists("write-file.zip"));
-  REQUIRE(std::filesystem::file_size("write-file.zip") == 644596);
+  REQUIRE(std::filesystem::file_size("write-file.zip") == 659779);
 
   REQUIRE(std::filesystem::remove("write-file.zip"));
 }
