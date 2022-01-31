@@ -127,31 +127,54 @@ if(KLIB_BUILD_STATIC)
 
   # https://stackoverflow.com/questions/37924383/combining-several-static-libraries-into-one-using-cmake
   file(MAKE_DIRECTORY ${KLIB_BINARY_DIR}/third_party)
+  file(MAKE_DIRECTORY ${KLIB_BINARY_DIR}/third_party/klib)
+  file(MAKE_DIRECTORY ${KLIB_BINARY_DIR}/third_party/zlib)
+  file(MAKE_DIRECTORY ${KLIB_BINARY_DIR}/third_party/libarchive)
+  file(MAKE_DIRECTORY ${KLIB_BINARY_DIR}/third_party/tidy)
+  file(MAKE_DIRECTORY ${KLIB_BINARY_DIR}/third_party/libcurl)
+  file(MAKE_DIRECTORY ${KLIB_BINARY_DIR}/third_party/brotli)
+  file(MAKE_DIRECTORY ${KLIB_BINARY_DIR}/third_party/openssl)
+  file(MAKE_DIRECTORY ${KLIB_BINARY_DIR}/third_party/sqlcipher)
+  file(MAKE_DIRECTORY ${KLIB_BINARY_DIR}/third_party/argon2)
+  file(MAKE_DIRECTORY ${KLIB_BINARY_DIR}/third_party/zstd)
+  file(MAKE_DIRECTORY ${KLIB_BINARY_DIR}/third_party/fmt)
+  file(MAKE_DIRECTORY ${KLIB_BINARY_DIR}/third_party/spdlog)
+  file(MAKE_DIRECTORY ${KLIB_BINARY_DIR}/third_party/nghttp2)
+  file(MAKE_DIRECTORY ${KLIB_BINARY_DIR}/third_party/simdutf)
+  file(MAKE_DIRECTORY ${KLIB_BINARY_DIR}/third_party/libidn2)
+  file(MAKE_DIRECTORY ${KLIB_BINARY_DIR}/third_party/libpsl)
+  file(MAKE_DIRECTORY ${KLIB_BINARY_DIR}/third_party/libunistring)
   file(MAKE_DIRECTORY ${KLIB_BINARY_DIR}/third_party/xxhash)
   file(MAKE_DIRECTORY ${KLIB_BINARY_DIR}/third_party/cmark)
   add_custom_command(
     TARGET ${KLIB_LIBRARY}
     POST_BUILD
-    COMMAND gcc-ar -x $<TARGET_FILE:${KLIB_LIBRARY}>
-    COMMAND gcc-ar -x /usr/local/lib/libz.a
-    COMMAND gcc-ar -x /usr/local/lib/libarchive.a
-    COMMAND gcc-ar -x /usr/local/lib/libtidy.a
-    COMMAND gcc-ar -x /usr/local/lib/libbrotlicommon-static.a
-    COMMAND gcc-ar -x /usr/local/lib/libbrotlidec-static.a
-    COMMAND gcc-ar -x /usr/local/lib/libcurl.a
-    COMMAND gcc-ar -x /usr/local/lib/libcrypto.a
-    COMMAND gcc-ar -x /usr/local/lib/libssl.a
-    COMMAND gcc-ar -x /usr/local/lib/libsqlcipher.a
-    COMMAND gcc-ar -x /usr/local/lib/libargon2.a
-    COMMAND gcc-ar -x /usr/local/lib/libzstd.a
-    COMMAND gcc-ar -x /usr/local/lib/libfmt.a
-    COMMAND gcc-ar -x /usr/local/lib/libspdlog.a
-    COMMAND gcc-ar -x /usr/local/lib/libnghttp2.a
-    COMMAND gcc-ar -x /usr/local/lib/libsimdutf.a
+    COMMAND gcc-ar -x --output=klib $<TARGET_FILE:${KLIB_LIBRARY}>
+    COMMAND gcc-ar -x --output=zlib /usr/local/lib/libz.a
+    COMMAND gcc-ar -x --output=libarchive /usr/local/lib/libarchive.a
+    COMMAND gcc-ar -x --output=tidy /usr/local/lib/libtidy.a
+    COMMAND gcc-ar -x --output=libcurl /usr/local/lib/libcurl.a
+    COMMAND gcc-ar -x --output=brotli /usr/local/lib/libbrotlicommon.a
+    COMMAND gcc-ar -x --output=brotli /usr/local/lib/libbrotlidec.a
+    COMMAND gcc-ar -x --output=openssl /usr/local/lib/libcrypto.a
+    COMMAND gcc-ar -x --output=openssl /usr/local/lib/libssl.a
+    COMMAND gcc-ar -x --output=sqlcipher /usr/local/lib/libsqlcipher.a
+    COMMAND gcc-ar -x --output=argon2 /usr/local/lib/libargon2.a
+    COMMAND gcc-ar -x --output=zstd /usr/local/lib/libzstd.a
+    COMMAND gcc-ar -x --output=fmt /usr/local/lib/libfmt.a
+    COMMAND gcc-ar -x --output=spdlog /usr/local/lib/libspdlog.a
+    COMMAND gcc-ar -x --output=nghttp2 /usr/local/lib/libnghttp2.a
+    COMMAND gcc-ar -x --output=simdutf /usr/local/lib/libsimdutf.a
+    COMMAND gcc-ar -x --output=libidn2 /usr/local/lib/libidn2.a
+    COMMAND gcc-ar -x --output=libpsl /usr/local/lib/libpsl.a
+    COMMAND gcc-ar -x --output=libunistring /usr/local/lib/libunistring.a
     COMMAND gcc-ar -x --output=xxhash /usr/local/lib/libxxhash.a
     COMMAND gcc-ar -x --output=cmark /usr/local/lib/libcmark.a
-    COMMAND gcc-ar -qcs ${KLIB_BINARY_DIR}/lib${KLIB_LIBRARY}.a *.o xxhash/*.o
-            cmark/*.o
+    COMMAND
+      gcc-ar -qcs ${KLIB_BINARY_DIR}/lib${KLIB_LIBRARY}.a klib/*.o zlib/*.o
+      libarchive/*.o tidy/*.o libcurl/*.o brotli/*.o openssl/*.o sqlcipher/*.o
+      argon2/*.o zstd/*.o fmt/*.o spdlog/*.o nghttp2/*.o simdutf/*.o libidn2/*.o
+      libpsl/*.o libunistring/*.o xxhash/*.o cmark/*.o
     COMMAND gcc-ranlib ${KLIB_BINARY_DIR}/lib${KLIB_LIBRARY}.a
     WORKING_DIRECTORY ${KLIB_BINARY_DIR}/third_party
     COMMENT "Combined static library")
