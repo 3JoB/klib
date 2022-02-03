@@ -11,6 +11,13 @@ TEST_CASE("Base64", "[crypto]") {
   std::string encoded;
   std::string decoded;
 
+  SECTION("64 byte") {
+    auto data = klib::generate_random_bytes(64);
+    BENCHMARK("encoded") { encoded = klib::base64_encode(data); };
+    BENCHMARK("decoded") { decoded = klib::base64_decode(encoded); };
+    REQUIRE(data == decoded);
+  }
+
   SECTION("1 kb") {
     auto data = klib::generate_random_bytes(1024);
     BENCHMARK("encoded") { encoded = klib::base64_encode(data); };
@@ -27,6 +34,13 @@ TEST_CASE("Base64", "[crypto]") {
 
   SECTION("100 kb") {
     auto data = klib::generate_random_bytes(102400);
+    BENCHMARK("encoded") { encoded = klib::base64_encode(data); };
+    BENCHMARK("decoded") { decoded = klib::base64_decode(encoded); };
+    REQUIRE(data == decoded);
+  }
+
+  SECTION("10 mb") {
+    auto data = klib::generate_random_bytes(10240000);
     BENCHMARK("encoded") { encoded = klib::base64_encode(data); };
     BENCHMARK("decoded") { decoded = klib::base64_decode(encoded); };
     REQUIRE(data == decoded);
@@ -42,6 +56,13 @@ TEST_CASE("AES", "[crypto]") {
   std::string encrypted;
   std::string decrypted;
 
+  SECTION("64 byte") {
+    auto data = klib::generate_random_bytes(64);
+    BENCHMARK("encrypt") { encrypted = klib::aes_256_encrypt(data, key); };
+    BENCHMARK("decrypt") { decrypted = klib::aes_256_decrypt(encrypted, key); };
+    REQUIRE(data == decrypted);
+  }
+
   SECTION("1 kb") {
     auto data = klib::generate_random_bytes(1024);
     BENCHMARK("encrypt") { encrypted = klib::aes_256_encrypt(data, key); };
@@ -58,6 +79,13 @@ TEST_CASE("AES", "[crypto]") {
 
   SECTION("100 kb") {
     auto data = klib::generate_random_bytes(102400);
+    BENCHMARK("encrypt") { encrypted = klib::aes_256_encrypt(data, key); };
+    BENCHMARK("decrypt") { decrypted = klib::aes_256_decrypt(encrypted, key); };
+    REQUIRE(data == decrypted);
+  }
+
+  SECTION("10 mb") {
+    auto data = klib::generate_random_bytes(10240000);
     BENCHMARK("encrypt") { encrypted = klib::aes_256_encrypt(data, key); };
     BENCHMARK("decrypt") { decrypted = klib::aes_256_decrypt(encrypted, key); };
     REQUIRE(data == decrypted);
