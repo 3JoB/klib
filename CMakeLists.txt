@@ -35,8 +35,8 @@ message(STATUS "Build type: " ${CMAKE_BUILD_TYPE})
 # ---------------------------------------------------------------------------------------
 set(KLIB_LIBRARY ${PROJECT_NAME})
 set(KLIB_EXECUTABLE kencrypt)
-set(KLIB_TEST_EXECUTABLE ${KLIB_LIBRARY}-test)
-set(KLIB_BENCH_EXECUTABLE ${KLIB_LIBRARY}-bench)
+set(KLIB_TEST_EXECUTABLE ktest)
+set(KLIB_BENCH_EXECUTABLE kbench)
 
 set(KLIB_SOURCE_DIR ${CMAKE_CURRENT_SOURCE_DIR})
 set(KLIB_BINARY_DIR ${CMAKE_CURRENT_BINARY_DIR})

@@ -3,40 +3,28 @@
 #include <boost/core/ignore_unused.hpp>
 #include <catch2/catch.hpp>
 
+#include "klib/base64.h"
 #include "klib/crypto.h"
 #include "klib/hash.h"
 
-
-
 // https://tool.lmeee.com/jiami/aes
 TEST_CASE("aes_256_cbc", "[crypto]") {
-  REQUIRE_NOTHROW(klib::aes_256_decrypt_base64(
-      "IT+LcNazRBcK54/"
-      "p1lMtc0ewNTdT1AVsc0v5Lkpy4zrcof0UsF79jMasF+"
-      "DAdQ25w5OK1zXMTP6bRUQ0VKArkTvxhkzLERGM4DCCinEBTd2V+9q8iNFJG2O/"
-      "yeGIyw8A",
-      klib::sha_256("zG2nSeEfSHfvTCHy5LCcqtBbQehKNLXn"), false));
-
-  std::string iv = "1234567890abcdef";
-  REQUIRE(klib::aes_256_encrypt_base64("Advanced Encryption Standard",
-                                       "1234567890abcdef1234567890abcdef",
-                                       iv) ==
-          "x/+2Hp/n7E4BKs4p5YoCwvys4O2Ugt39cJ/rWEwpBjY=");
-
-  REQUIRE(klib::aes_256_decrypt_base64(
-              "x/+2Hp/n7E4BKs4p5YoCwvys4O2Ugt39cJ/rWEwpBjY=",
-              "1234567890abcdef1234567890abcdef",
-              iv) == "Advanced Encryption Standard");
+  REQUIRE_NOTHROW(klib::aes_256_decrypt(
+      klib::secure_base64_decode(
+          "IT+LcNazRBcK54/"
+          "p1lMtc0ewNTdT1AVsc0v5Lkpy4zrcof0UsF79jMasF+"
+          "DAdQ25w5OK1zXMTP6bRUQ0VKArkTvxhkzLERGM4DCCinEBTd2V+9q8iNFJG2O/"
+          "yeGIyw8A"),
+      klib::sha256("zG2nSeEfSHfvTCHy5LCcqtBbQehKNLXn"), false));
 
   std::string password = "test-password";
   auto [hash, salt] = klib::password_hash_raw(password);
   boost::ignore_unused(salt);
-  auto encrypt =
-      klib::aes_256_encrypt_base64("Advanced Encryption Standard", hash);
-  REQUIRE(klib::aes_256_decrypt_base64(encrypt, hash) ==
+  auto encrypt = klib::aes_256_encrypt("Advanced Encryption Standard", hash);
+  REQUIRE(klib::aes_256_decrypt(encrypt, hash) ==
           "Advanced Encryption Standard");
 
-  REQUIRE(klib::aes_256_encrypt_base64(
+  REQUIRE(klib::secure_base64_encode(klib::aes_256_encrypt(
               "{\"code\":\"100000\",\"data\":{\"login_token\":"
               "\"06d3b540ecde7843d79fa0c790b4c968\",\"user_code\":"
               "\"9827638bc3c6ae0a43174f2a2d25d35b\",\"reader_info\":{\"reader_"
@@ -83,7 +71,7 @@ TEST_CASE("aes_256_cbc", "[crypto]") {
               "10000\":\"0\",\"rest_total_100000\":\"0\",\"rest_total_50000\":"
               "\"0\","
               "\"rest_total_160000\":\"0\"},\"is_set_young\":\"0\"}}",
-              klib::sha_256("zG2nSeEfSHfvTCHy5LCcqtBbQehKNLXn"), false) ==
+              klib::sha256("zG2nSeEfSHfvTCHy5LCcqtBbQehKNLXn"), false)) ==
           "IT+LcNazRBcK54/"
           "p1lMtcyRwpZ01VQ4tFr6GBslpnwMezmEBbIYc3GokHiTGB6XV/"
           "I3oWkrqLXB3DTQJUIlvLRRHe2GmNqGS8xHXeyq8BgBLCBxLcIFRtK+V6/"
@@ -121,43 +109,44 @@ TEST_CASE("aes_256_cbc", "[crypto]") {
           "XLOyDgEkWNaX5I4WgTtkOeLyEQVg2yzrAwjgayCXWj71JDe4");
 
   REQUIRE(
-      klib::aes_256_decrypt_base64(
-          "IT+LcNazRBcK54/"
-          "p1lMtcyRwpZ01VQ4tFr6GBslpnwMezmEBbIYc3GokHiTGB6XV/"
-          "I3oWkrqLXB3DTQJUIlvLRRHe2GmNqGS8xHXeyq8BgBLCBxLcIFRtK+V6/"
-          "Y1ovce7ie8h4t59PU0nHYbr8Lh7gq0yZ3DRd5oJ8go4QPgtTTPdfXCWIGMIbW"
-          "ot0HwcYIGiCxE7RcvSEBdti5MBTmVHeF81cQYmB9SOPnxt4KOjH557P2Y6Pya"
-          "nzcVO2BKpGvCgcVSHmkwA4xX1JjH8zjZ7miuFmnNKDrDacmx3AcxxwbtJpog+"
-          "loA/b4hnDny3oCKkriy0eHkc5atGAwg/"
-          "HFkArM2wUXZtUHuRWekImGlapISnp1fVpgvf2WKf5ENt8/"
-          "LJUY8kX56wE8tea6feekOO1U1fiQyGHf4yceoeZTXfKHs/NXb9/"
-          "YbStpsSaMvLujmbR0j2sBpMLyAqUAZF/1tEMlo7od/"
-          "SS+AXj+T7R7daLFAKHLfb+gTqB/"
-          "WffPV0SeG7dcDLKL7dvno0MEBvDP1RKBG9ACxWHAGq94GlBQcimH9xNAmAGeQ"
-          "uyh9R7TmWVtAgSfW1q1tIpU22yytgXW3grdl0e1kqFr61PxXPiKEwFBlSUA/"
-          "OJgFswAOayx6aXVdazd05w7QcXyexzka6DPKjMUi/"
-          "Cw88uk6ovHmSffnx7hzoFz7qcGWO5rHuILxIin1HJjbNOqb/"
-          "7IEnsjIUJxTp4V3ula9DcR3VUbSDFFo0oV98SNTSbSe8MBpTX5AREIN4Yr5SS"
-          "vUji7Mm0EjlwOgIgzgcXZgCEGQty3aI1mj6luaCxWAe4YoJhJrr2ZHZxWPgjC"
-          "we7dOSGWQHGAEEF9RiqX81yAqay13uYThwgMwIAxzA4TrevdoTgDuo/"
-          "L2dvoVQ3UItVrAGFBZhFL6Xhi0izYjpXbpVWg0lo9M/"
-          "rgBdysSYGrDTYXq0wVmEhJaPhCw9bwKqCK/"
-          "uf1Ad+bqktuwCouikVmIfTJxV8qlBeoklFtrUuS93Zmyzq5Cj2CDnEH6+"
-          "8j0ypE/"
-          "wVnq1UuIPEtn9xDfVXSoxm8QcSAJ728jrRLn7g7QWCrB+"
-          "eGvCmVqzo31GaF6I642OhFTyuLUmsLuR8aONaMOueuiFQL/"
-          "dxdeP+KILutwIH0Mtg8jS0bWUlN14+"
-          "LJLzuqlE3j7Cz6HV29CI9ri35WTDvn1TKqF0rama5bRt5Jp+"
-          "WRrXXEELbTIwjkaNfY9bBMM75B8ewIaOpOWXPaAI1vLejz6r5aSAsz26bGMWZ"
-          "J3A8s+OtcaqeIcTTtjB9N/+qVGyViyOJb/"
-          "YHS4cYH+"
-          "pCj2wZR4s1m3TrdLNSw5VGBBPzLUQtBMSungUNS7knFBHbyQMwtoD8tRsHdGC"
-          "DCoiAbWOCwUQFeld9MpcuDGRE93gUo8Wz4GHjsm8V+"
-          "WrsD7sW5bRxngbdrUSiGJhbkHh+I+rMqNDkEGGZ5eGM/"
-          "s3ZbTuChHMCAh75IY1an6E2QJddEOBRfszEtWcGcy+u9ACV/"
-          "hXhhg2mw2KUT2QnyJ9en9jPkjEOd04V8ja3Aoqk3chTTQJksU8D/"
-          "XLOyDgEkWNaX5I4WgTtkOeLyEQVg2yzrAwjgayCXWj71JDe4",
-          klib::sha_256("zG2nSeEfSHfvTCHy5LCcqtBbQehKNLXn"), false) ==
+      klib::aes_256_decrypt(
+          klib::secure_base64_decode(
+              "IT+LcNazRBcK54/"
+              "p1lMtcyRwpZ01VQ4tFr6GBslpnwMezmEBbIYc3GokHiTGB6XV/"
+              "I3oWkrqLXB3DTQJUIlvLRRHe2GmNqGS8xHXeyq8BgBLCBxLcIFRtK+V6/"
+              "Y1ovce7ie8h4t59PU0nHYbr8Lh7gq0yZ3DRd5oJ8go4QPgtTTPdfXCWIGMIbW"
+              "ot0HwcYIGiCxE7RcvSEBdti5MBTmVHeF81cQYmB9SOPnxt4KOjH557P2Y6Pya"
+              "nzcVO2BKpGvCgcVSHmkwA4xX1JjH8zjZ7miuFmnNKDrDacmx3AcxxwbtJpog+"
+              "loA/b4hnDny3oCKkriy0eHkc5atGAwg/"
+              "HFkArM2wUXZtUHuRWekImGlapISnp1fVpgvf2WKf5ENt8/"
+              "LJUY8kX56wE8tea6feekOO1U1fiQyGHf4yceoeZTXfKHs/NXb9/"
+              "YbStpsSaMvLujmbR0j2sBpMLyAqUAZF/1tEMlo7od/"
+              "SS+AXj+T7R7daLFAKHLfb+gTqB/"
+              "WffPV0SeG7dcDLKL7dvno0MEBvDP1RKBG9ACxWHAGq94GlBQcimH9xNAmAGeQ"
+              "uyh9R7TmWVtAgSfW1q1tIpU22yytgXW3grdl0e1kqFr61PxXPiKEwFBlSUA/"
+              "OJgFswAOayx6aXVdazd05w7QcXyexzka6DPKjMUi/"
+              "Cw88uk6ovHmSffnx7hzoFz7qcGWO5rHuILxIin1HJjbNOqb/"
+              "7IEnsjIUJxTp4V3ula9DcR3VUbSDFFo0oV98SNTSbSe8MBpTX5AREIN4Yr5SS"
+              "vUji7Mm0EjlwOgIgzgcXZgCEGQty3aI1mj6luaCxWAe4YoJhJrr2ZHZxWPgjC"
+              "we7dOSGWQHGAEEF9RiqX81yAqay13uYThwgMwIAxzA4TrevdoTgDuo/"
+              "L2dvoVQ3UItVrAGFBZhFL6Xhi0izYjpXbpVWg0lo9M/"
+              "rgBdysSYGrDTYXq0wVmEhJaPhCw9bwKqCK/"
+              "uf1Ad+bqktuwCouikVmIfTJxV8qlBeoklFtrUuS93Zmyzq5Cj2CDnEH6+"
+              "8j0ypE/"
+              "wVnq1UuIPEtn9xDfVXSoxm8QcSAJ728jrRLn7g7QWCrB+"
+              "eGvCmVqzo31GaF6I642OhFTyuLUmsLuR8aONaMOueuiFQL/"
+              "dxdeP+KILutwIH0Mtg8jS0bWUlN14+"
+              "LJLzuqlE3j7Cz6HV29CI9ri35WTDvn1TKqF0rama5bRt5Jp+"
+              "WRrXXEELbTIwjkaNfY9bBMM75B8ewIaOpOWXPaAI1vLejz6r5aSAsz26bGMWZ"
+              "J3A8s+OtcaqeIcTTtjB9N/+qVGyViyOJb/"
+              "YHS4cYH+"
+              "pCj2wZR4s1m3TrdLNSw5VGBBPzLUQtBMSungUNS7knFBHbyQMwtoD8tRsHdGC"
+              "DCoiAbWOCwUQFeld9MpcuDGRE93gUo8Wz4GHjsm8V+"
+              "WrsD7sW5bRxngbdrUSiGJhbkHh+I+rMqNDkEGGZ5eGM/"
+              "s3ZbTuChHMCAh75IY1an6E2QJddEOBRfszEtWcGcy+u9ACV/"
+              "hXhhg2mw2KUT2QnyJ9en9jPkjEOd04V8ja3Aoqk3chTTQJksU8D/"
+              "XLOyDgEkWNaX5I4WgTtkOeLyEQVg2yzrAwjgayCXWj71JDe4"),
+          klib::sha256("zG2nSeEfSHfvTCHy5LCcqtBbQehKNLXn"), false) ==
       "{\"code\":\"100000\",\"data\":{\"login_token\":"
       "\"06d3b540ecde7843d79fa0c790b4c968\",\"user_code\":"
       "\"9827638bc3c6ae0a43174f2a2d25d35b\",\"reader_info\":{\"reader_id\":"
@@ -182,7 +171,7 @@ TEST_CASE("aes_256_cbc", "[crypto]") {
       "10000\":\"0\",\"rest_total_100000\":\"0\",\"rest_total_50000\":\"0\","
       "\"rest_total_160000\":\"0\"},\"is_set_young\":\"0\"}}");
 
-  auto base64 = klib::base64_decode(
+  auto base64 = klib::secure_base64_decode(
       "TC64Ykj+"
       "HY4FfD2Ddh8gBHEcR4IdUjLbfrb44QJPeC43dvPghqXE6gDdJSip1pzHxtfC5cBkR1lu"
       "JvxYnfX8QY4n+Pn9ATexdSyPtJhq90OTs9vYNcsnFIfj4VPfHa0/"
@@ -610,5 +599,5 @@ TEST_CASE("aes_256_cbc", "[crypto]") {
 
   REQUIRE(std::size(base64) == 15856);
   REQUIRE_NOTHROW(klib::aes_256_decrypt(
-      base64, klib::sha_256("913d8e1ebca5ef2193b4fea1fdbe0394"), false));
+      base64, klib::sha256("913d8e1ebca5ef2193b4fea1fdbe0394"), false));
 }

@@ -152,11 +152,11 @@ SecureHash::SecureHashImpl::SecureHashImpl(SecureHash::Algorithm kind)
 // https://www.openssl.org/docs/man3.0/man3/EVP_DigestUpdate.html
 void SecureHash::SecureHashImpl::update(const std::string &data) {
   if (!doing_) {
-    detail::check_openssl_return_1(EVP_DigestInit(ctx_, algorithm_));
+    detail::check_openssl_return(EVP_DigestInit(ctx_, algorithm_));
     doing_ = true;
   }
 
-  detail::check_openssl_return_1(
+  detail::check_openssl_return(
       EVP_DigestUpdate(ctx_, std::data(data), std::size(data)));
 }
 
@@ -169,7 +169,7 @@ std::string SecureHash::SecureHashImpl::digest() {
   digest.resize(EVP_MAX_MD_SIZE);
 
   std::uint32_t size;
-  detail::check_openssl_return_1(EVP_DigestFinal(
+  detail::check_openssl_return(EVP_DigestFinal(
       ctx_, reinterpret_cast<unsigned char *>(std::data(digest)), &size));
   digest.resize(size);
 
@@ -191,16 +191,16 @@ const EVP_MD *SecureHash::SecureHashImpl::get_algorithm(
     case SecureHash::Algorithm::MD5:
       algorithm = EVP_md5();
       break;
-    case SecureHash::Algorithm::SHA_224:
+    case SecureHash::Algorithm::SHA224:
       algorithm = EVP_sha224();
       break;
-    case SecureHash::Algorithm::SHA_256:
+    case SecureHash::Algorithm::SHA256:
       algorithm = EVP_sha256();
       break;
-    case SecureHash::Algorithm::SHA_384:
+    case SecureHash::Algorithm::SHA384:
       algorithm = EVP_sha384();
       break;
-    case SecureHash::Algorithm::SHA_512:
+    case SecureHash::Algorithm::SHA512:
       algorithm = EVP_sha512();
       break;
     default:
@@ -236,50 +236,50 @@ std::string md5_hex(const std::string &data) {
   return secure_hash.hex_digest();
 }
 
-std::string sha_224(const std::string &data) {
-  SecureHash secure_hash(SecureHash::Algorithm::SHA_224);
+std::string sha224(const std::string &data) {
+  SecureHash secure_hash(SecureHash::Algorithm::SHA224);
   secure_hash.update(data);
   return secure_hash.digest();
 }
 
-std::string sha_224_hex(const std::string &data) {
-  SecureHash secure_hash(SecureHash::Algorithm::SHA_224);
+std::string sha224_hex(const std::string &data) {
+  SecureHash secure_hash(SecureHash::Algorithm::SHA224);
   secure_hash.update(data);
   return secure_hash.hex_digest();
 }
 
-std::string sha_256(const std::string &data) {
-  SecureHash secure_hash(SecureHash::Algorithm::SHA_256);
+std::string sha256(const std::string &data) {
+  SecureHash secure_hash(SecureHash::Algorithm::SHA256);
   secure_hash.update(data);
   return secure_hash.digest();
 }
 
-std::string sha_256_hex(const std::string &data) {
-  SecureHash secure_hash(SecureHash::Algorithm::SHA_256);
+std::string sha256_hex(const std::string &data) {
+  SecureHash secure_hash(SecureHash::Algorithm::SHA256);
   secure_hash.update(data);
   return secure_hash.hex_digest();
 }
 
-std::string sha_384(const std::string &data) {
-  SecureHash secure_hash(SecureHash::Algorithm::SHA_384);
+std::string sha384(const std::string &data) {
+  SecureHash secure_hash(SecureHash::Algorithm::SHA384);
   secure_hash.update(data);
   return secure_hash.digest();
 }
 
-std::string sha_384_hex(const std::string &data) {
-  SecureHash secure_hash(SecureHash::Algorithm::SHA_384);
+std::string sha384_hex(const std::string &data) {
+  SecureHash secure_hash(SecureHash::Algorithm::SHA384);
   secure_hash.update(data);
   return secure_hash.hex_digest();
 }
 
-std::string sha_512(const std::string &data) {
-  SecureHash secure_hash(SecureHash::Algorithm::SHA_512);
+std::string sha512(const std::string &data) {
+  SecureHash secure_hash(SecureHash::Algorithm::SHA512);
   secure_hash.update(data);
   return secure_hash.digest();
 }
 
-std::string sha_512_hex(const std::string &data) {
-  SecureHash secure_hash(SecureHash::Algorithm::SHA_512);
+std::string sha512_hex(const std::string &data) {
+  SecureHash secure_hash(SecureHash::Algorithm::SHA512);
   secure_hash.update(data);
   return secure_hash.hex_digest();
 }

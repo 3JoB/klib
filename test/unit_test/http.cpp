@@ -181,6 +181,6 @@ TEST_CASE("download", "[http]") {
   response.save_to_file("zstd-1.5.0.tar.gz", true);
 
   REQUIRE(std::filesystem::is_regular_file("zstd-1.5.0.tar.gz"));
-  REQUIRE(klib::sha_256_hex(klib::read_file("zstd-1.5.0.tar.gz", true)) ==
+  REQUIRE(klib::sha256_hex(klib::read_file("zstd-1.5.0.tar.gz", true)) ==
           "0d9ade222c64e912d6957b11c923e214e2e010a18f39bec102f572e693ba2867");
 }

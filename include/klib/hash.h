@@ -74,7 +74,7 @@ class SecureHash {
   /**
    * @brief Supported secure hash algorithm
    */
-  enum class Algorithm { MD5, SHA_224, SHA_256, SHA_384, SHA_512 };
+  enum class Algorithm { MD5, SHA224, SHA256, SHA384, SHA512 };
 
   /**
    * @brief Constructor
@@ -123,14 +123,14 @@ class SecureHash {
  */
 std::string md5(const std::string &data);
 std::string md5_hex(const std::string &data);
-std::string sha_224(const std::string &data);
-std::string sha_224_hex(const std::string &data);
-std::string sha_256(const std::string &data);
-std::string sha_256_hex(const std::string &data);
-std::string sha_384(const std::string &data);
-std::string sha_384_hex(const std::string &data);
-std::string sha_512(const std::string &data);
-std::string sha_512_hex(const std::string &data);
+std::string sha224(const std::string &data);
+std::string sha224_hex(const std::string &data);
+std::string sha256(const std::string &data);
+std::string sha256_hex(const std::string &data);
+std::string sha384(const std::string &data);
+std::string sha384_hex(const std::string &data);
+std::string sha512(const std::string &data);
+std::string sha512_hex(const std::string &data);
 
 /**
  * @brief Hashes a password

@@ -64,7 +64,7 @@ std::string secure_base64_decode(const std::string &data) {
   auto rc = EVP_DecodeBase64(
       reinterpret_cast<std::uint8_t *>(std::data(result)), &len, max_len,
       reinterpret_cast<const std::uint8_t *>(std::data(data)), data_size);
-  detail::check_openssl_return_1(rc);
+  detail::check_openssl_return(rc);
 
   result.resize(len);
   return result;
