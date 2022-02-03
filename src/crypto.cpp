@@ -32,18 +32,14 @@ const EVP_CIPHER *get_cipher(AesMode aes_mode) {
 std::string do_aes_crypt(std::span<const char> data, const std::string &key,
                          const std::string &iv, AesMode aes_mode,
                          bool encrypt) {
-  bssl::ScopedEVP_CIPHER_CTX ctx;
-
-  auto rc = EVP_CipherInit_ex(ctx.get(), get_cipher(aes_mode), nullptr, nullptr,
-                              nullptr, encrypt);
-  check_openssl_return(rc);
-
-  if (std::size(key) != EVP_CIPHER_CTX_key_length(ctx.get())) {
-    throw LogicError("Wrong key length");
+  if (std::size(key) != 32) {
+    throw LogicError("The key must be 256 bit");
   }
 
-  rc = EVP_CipherInit_ex(
-      ctx.get(), nullptr, nullptr,
+  bssl::ScopedEVP_CIPHER_CTX ctx;
+
+  auto rc = EVP_CipherInit_ex(
+      ctx.get(), get_cipher(aes_mode), nullptr,
       reinterpret_cast<const unsigned char *>(std::data(key)),
       std::empty(iv) ? nullptr
                      : reinterpret_cast<const unsigned char *>(std::data(iv)),
