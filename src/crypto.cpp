@@ -4,10 +4,10 @@
 #include <cstdint>
 
 #include <openssl/aes.h>
-#include <openssl/base64.h>
 #include <openssl/evp.h>
 #include <openssl/span.h>
 
+#include "klib/base64.h"
 #include "klib/detail/openssl_util.h"
 #include "klib/exception.h"
 #include "klib/util.h"
@@ -95,40 +95,6 @@ std::string do_aes_crypt(bssl::Span<const char> data, const std::string &key,
 
 }  // namespace
 
-std::string base64_encode(const std::string &data) {
-  std::size_t max_len;
-  const auto data_size = std::size(data);
-  EVP_EncodedLength(&max_len, data_size);
-
-  std::string result;
-  result.resize(max_len);
-
-  const auto len = EVP_EncodeBlock(
-      reinterpret_cast<std::uint8_t *>(std::data(result)),
-      reinterpret_cast<const std::uint8_t *>(std::data(data)), data_size);
-
-  result.resize(len);
-  return result;
-}
-
-std::string base64_decode(const std::string &data) {
-  std::size_t max_len;
-  const auto data_size = std::size(data);
-  EVP_DecodedLength(&max_len, data_size);
-
-  std::string result;
-  result.resize(max_len);
-
-  std::size_t len;
-  auto rc = EVP_DecodeBase64(
-      reinterpret_cast<std::uint8_t *>(std::data(result)), &len, max_len,
-      reinterpret_cast<const std::uint8_t *>(std::data(data)), data_size);
-  detail::check_openssl_return_1(rc);
-
-  result.resize(len);
-  return result;
-}
-
 std::string aes_256_encrypt(const std::string &data, const std::string &key,
                             bool use_iv, AesMode aes_mode, bool pad) {
   std::string iv;
@@ -147,14 +113,15 @@ std::string aes_256_encrypt(const std::string &data, const std::string &key,
 std::string aes_256_encrypt_base64(const std::string &data,
                                    const std::string &key, bool use_iv,
                                    AesMode aes_mode, bool pad) {
-  return base64_encode(aes_256_encrypt(data, key, use_iv, aes_mode, pad));
+  return secure_base64_encode(
+      aes_256_encrypt(data, key, use_iv, aes_mode, pad));
 }
 
 std::string aes_256_encrypt_base64(const std::string &data,
                                    const std::string &key,
                                    const std::string &iv, AesMode aes_mode,
                                    bool pad) {
-  return base64_encode(aes_256_encrypt(data, key, iv, aes_mode, pad));
+  return secure_base64_encode(aes_256_encrypt(data, key, iv, aes_mode, pad));
 }
 
 std::string aes_256_decrypt(const std::string &data, const std::string &key,
@@ -175,14 +142,15 @@ std::string aes_256_decrypt(const std::string &data, const std::string &key,
 std::string aes_256_decrypt_base64(const std::string &data,
                                    const std::string &key, bool has_iv,
                                    AesMode aes_mode, bool pad) {
-  return aes_256_decrypt(base64_decode(data), key, has_iv, aes_mode, pad);
+  return aes_256_decrypt(secure_base64_decode(data), key, has_iv, aes_mode,
+                         pad);
 }
 
 std::string aes_256_decrypt_base64(const std::string &data,
                                    const std::string &key,
                                    const std::string &iv, AesMode aes_mode,
                                    bool pad) {
-  return aes_256_decrypt(base64_decode(data), key, iv, aes_mode, pad);
+  return aes_256_decrypt(secure_base64_decode(data), key, iv, aes_mode, pad);
 }
 
 }  // namespace klib

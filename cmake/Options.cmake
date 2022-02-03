@@ -6,7 +6,6 @@ if(NOT DEFINED KLIB_MAIN_PROJECT)
   endif()
 endif()
 
-option(KLIB_BUILD_STATIC "Build static library" ON)
 option(KLIB_BUILD_EXECUTABLE "Build executable program" ON)
 
 option(KLIB_BUILD_TEST "Build test" OFF)

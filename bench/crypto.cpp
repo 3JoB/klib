@@ -7,46 +7,6 @@
 #include "klib/hash.h"
 #include "klib/util.h"
 
-TEST_CASE("Base64", "[crypto]") {
-  std::string encoded;
-  std::string decoded;
-
-  SECTION("64 byte") {
-    auto data = klib::generate_random_bytes(64);
-    BENCHMARK("encoded") { encoded = klib::base64_encode(data); };
-    BENCHMARK("decoded") { decoded = klib::base64_decode(encoded); };
-    REQUIRE(data == decoded);
-  }
-
-  SECTION("1 kb") {
-    auto data = klib::generate_random_bytes(1024);
-    BENCHMARK("encoded") { encoded = klib::base64_encode(data); };
-    BENCHMARK("decoded") { decoded = klib::base64_decode(encoded); };
-    REQUIRE(data == decoded);
-  }
-
-  SECTION("10 kb") {
-    auto data = klib::generate_random_bytes(10240);
-    BENCHMARK("encoded") { encoded = klib::base64_encode(data); };
-    BENCHMARK("decoded") { decoded = klib::base64_decode(encoded); };
-    REQUIRE(data == decoded);
-  }
-
-  SECTION("100 kb") {
-    auto data = klib::generate_random_bytes(102400);
-    BENCHMARK("encoded") { encoded = klib::base64_encode(data); };
-    BENCHMARK("decoded") { decoded = klib::base64_decode(encoded); };
-    REQUIRE(data == decoded);
-  }
-
-  SECTION("10 mb") {
-    auto data = klib::generate_random_bytes(10240000);
-    BENCHMARK("encoded") { encoded = klib::base64_encode(data); };
-    BENCHMARK("decoded") { decoded = klib::base64_decode(encoded); };
-    REQUIRE(data == decoded);
-  }
-}
-
 TEST_CASE("AES", "[crypto]") {
   std::string key;
   std::string salt;

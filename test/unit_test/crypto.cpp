@@ -6,24 +6,7 @@
 #include "klib/crypto.h"
 #include "klib/hash.h"
 
-TEST_CASE("base64_encode", "[crypto]") {
-  REQUIRE(klib::base64_encode("hello") == "aGVsbG8=");
-  REQUIRE(klib::base64_encode("Online Tools") == "T25saW5lIFRvb2xz");
-  REQUIRE(
-      klib::base64_encode(
-          "How to resolve the \"EVP_DecryptFInal_ex: bad decrypt\"") ==
-      "SG93IHRvIHJlc29sdmUgdGhlICJFVlBfRGVjcnlwdEZJbmFsX2V4OiBiYWQgZGVjcnlwdC"
-      "I=");
-}
 
-TEST_CASE("base64_decode", "[crypto]") {
-  REQUIRE(klib::base64_decode("aGVsbG8=") == "hello");
-  REQUIRE(klib::base64_decode("T25saW5lIFRvb2xz") == "Online Tools");
-  REQUIRE(
-      klib::base64_decode("SG93IHRvIHJlc29sdmUgdGhlICJFVlBfRGVjcnlwdEZJbmFsX2"
-                          "V4OiBiYWQgZGVjcnlwdCI=") ==
-      "How to resolve the \"EVP_DecryptFInal_ex: bad decrypt\"");
-}
 
 // https://tool.lmeee.com/jiami/aes
 TEST_CASE("aes_256_cbc", "[crypto]") {

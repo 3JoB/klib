@@ -14,7 +14,7 @@ klib_extract_version()
 
 project(
   klib
-  LANGUAGES CXX
+  LANGUAGES C CXX
   VERSION ${KLIB_VERSION}
   HOMEPAGE_URL https://github.com/KaiserLancelot/klib)
 
@@ -95,90 +95,89 @@ endif()
 set(THREADS_PREFER_PTHREAD_FLAG TRUE)
 find_package(Threads REQUIRED)
 
+add_subdirectory(third_party)
+include_directories(third_party/fastbase64/include)
+
 # ---------------------------------------------------------------------------------------
 # Build static library
 # ---------------------------------------------------------------------------------------
-if(KLIB_BUILD_STATIC)
-  message(STATUS "Build static library")
+add_definitions(
+  -DLIBARCHIVE_STATIC -DCURL_STATICLIB -DFMT_LOCALE -DSPDLOG_COMPILED_LIB
+  -DSPDLOG_FMT_EXTERNAL -Dgsl_CONFIG_DEFAULTS_VERSION=1)
 
-  add_definitions(
-    -DLIBARCHIVE_STATIC -DCURL_STATICLIB -DFMT_LOCALE -DSPDLOG_COMPILED_LIB
-    -DSPDLOG_FMT_EXTERNAL -Dgsl_CONFIG_DEFAULTS_VERSION=1)
+add_library(${KLIB_LIBRARY} STATIC ${KLIB_LIBRARY_SRC})
+add_library(${KLIB_LIBRARY}::${KLIB_LIBRARY} ALIAS ${KLIB_LIBRARY})
 
-  add_library(${KLIB_LIBRARY} STATIC ${KLIB_LIBRARY_SRC})
-  add_library(${KLIB_LIBRARY}::${KLIB_LIBRARY} ALIAS ${KLIB_LIBRARY})
+# https://cmake.org/cmake/help/latest/command/target_include_directories.html
+# https://stackoverflow.com/questions/26037954/cmake-target-link-libraries-interface-dependencies
+target_include_directories(
+  ${KLIB_LIBRARY} PUBLIC "$<BUILD_INTERFACE:${KLIB_SOURCE_DIR}/include>"
+                         "$<INSTALL_INTERFACE:${CMAKE_INSTALL_INCLUDEDIR}>")
+target_compile_features(${KLIB_LIBRARY} INTERFACE cxx_std_20)
+target_compile_definitions(
+  ${KLIB_LIBRARY} INTERFACE FMT_LOCALE SPDLOG_COMPILED_LIB SPDLOG_FMT_EXTERNAL)
+target_link_libraries(${KLIB_LIBRARY} PUBLIC ${CMAKE_THREAD_LIBS_INIT})
+target_link_libraries(${KLIB_LIBRARY} PRIVATE fastbase64)
 
-  # https://cmake.org/cmake/help/latest/command/target_include_directories.html
-  # https://stackoverflow.com/questions/26037954/cmake-target-link-libraries-interface-dependencies
-  target_include_directories(
-    ${KLIB_LIBRARY} PUBLIC "$<BUILD_INTERFACE:${KLIB_SOURCE_DIR}/include>"
-                           "$<INSTALL_INTERFACE:${CMAKE_INSTALL_INCLUDEDIR}>")
-  target_compile_features(${KLIB_LIBRARY} INTERFACE cxx_std_20)
-  target_compile_definitions(
-    ${KLIB_LIBRARY} INTERFACE FMT_LOCALE SPDLOG_COMPILED_LIB
-                              SPDLOG_FMT_EXTERNAL)
-  target_link_libraries(${KLIB_LIBRARY} PUBLIC ${CMAKE_THREAD_LIBS_INIT})
+set_target_properties(
+  ${KLIB_LIBRARY}
+  PROPERTIES OUTPUT_NAME ${KLIB_LIBRARY}
+             POSITION_INDEPENDENT_CODE ON
+             INTERPROCEDURAL_OPTIMIZATION FALSE)
 
-  set_target_properties(
-    ${KLIB_LIBRARY}
-    PROPERTIES OUTPUT_NAME ${KLIB_LIBRARY}
-               POSITION_INDEPENDENT_CODE ON
-               INTERPROCEDURAL_OPTIMIZATION FALSE)
-
-  # https://stackoverflow.com/questions/37924383/combining-several-static-libraries-into-one-using-cmake
-  file(MAKE_DIRECTORY ${KLIB_BINARY_DIR}/third_party)
-  file(MAKE_DIRECTORY ${KLIB_BINARY_DIR}/third_party/klib)
-  file(MAKE_DIRECTORY ${KLIB_BINARY_DIR}/third_party/zlib)
-  file(MAKE_DIRECTORY ${KLIB_BINARY_DIR}/third_party/libarchive)
-  file(MAKE_DIRECTORY ${KLIB_BINARY_DIR}/third_party/tidy)
-  file(MAKE_DIRECTORY ${KLIB_BINARY_DIR}/third_party/libcurl)
-  file(MAKE_DIRECTORY ${KLIB_BINARY_DIR}/third_party/brotli)
-  file(MAKE_DIRECTORY ${KLIB_BINARY_DIR}/third_party/openssl)
-  file(MAKE_DIRECTORY ${KLIB_BINARY_DIR}/third_party/sqlcipher)
-  file(MAKE_DIRECTORY ${KLIB_BINARY_DIR}/third_party/argon2)
-  file(MAKE_DIRECTORY ${KLIB_BINARY_DIR}/third_party/zstd)
-  file(MAKE_DIRECTORY ${KLIB_BINARY_DIR}/third_party/fmt)
-  file(MAKE_DIRECTORY ${KLIB_BINARY_DIR}/third_party/spdlog)
-  file(MAKE_DIRECTORY ${KLIB_BINARY_DIR}/third_party/nghttp2)
-  file(MAKE_DIRECTORY ${KLIB_BINARY_DIR}/third_party/simdutf)
-  file(MAKE_DIRECTORY ${KLIB_BINARY_DIR}/third_party/libidn2)
-  file(MAKE_DIRECTORY ${KLIB_BINARY_DIR}/third_party/libpsl)
-  file(MAKE_DIRECTORY ${KLIB_BINARY_DIR}/third_party/libunistring)
-  file(MAKE_DIRECTORY ${KLIB_BINARY_DIR}/third_party/xxhash)
-  file(MAKE_DIRECTORY ${KLIB_BINARY_DIR}/third_party/cmark)
-  add_custom_command(
-    TARGET ${KLIB_LIBRARY}
-    POST_BUILD
-    COMMAND gcc-ar -x --output=klib $<TARGET_FILE:${KLIB_LIBRARY}>
-    COMMAND gcc-ar -x --output=zlib /usr/local/lib/libz.a
-    COMMAND gcc-ar -x --output=libarchive /usr/local/lib/libarchive.a
-    COMMAND gcc-ar -x --output=tidy /usr/local/lib/libtidy.a
-    COMMAND gcc-ar -x --output=libcurl /usr/local/lib/libcurl.a
-    COMMAND gcc-ar -x --output=brotli /usr/local/lib/libbrotlicommon.a
-    COMMAND gcc-ar -x --output=brotli /usr/local/lib/libbrotlidec.a
-    COMMAND gcc-ar -x --output=openssl /usr/local/lib/libcrypto.a
-    COMMAND gcc-ar -x --output=openssl /usr/local/lib/libssl.a
-    COMMAND gcc-ar -x --output=sqlcipher /usr/local/lib/libsqlcipher.a
-    COMMAND gcc-ar -x --output=argon2 /usr/local/lib/libargon2.a
-    COMMAND gcc-ar -x --output=zstd /usr/local/lib/libzstd.a
-    COMMAND gcc-ar -x --output=fmt /usr/local/lib/libfmt.a
-    COMMAND gcc-ar -x --output=spdlog /usr/local/lib/libspdlog.a
-    COMMAND gcc-ar -x --output=nghttp2 /usr/local/lib/libnghttp2.a
-    COMMAND gcc-ar -x --output=simdutf /usr/local/lib/libsimdutf.a
-    COMMAND gcc-ar -x --output=libidn2 /usr/local/lib/libidn2.a
-    COMMAND gcc-ar -x --output=libpsl /usr/local/lib/libpsl.a
-    COMMAND gcc-ar -x --output=libunistring /usr/local/lib/libunistring.a
-    COMMAND gcc-ar -x --output=xxhash /usr/local/lib/libxxhash.a
-    COMMAND gcc-ar -x --output=cmark /usr/local/lib/libcmark.a
-    COMMAND
-      gcc-ar -qcs ${KLIB_BINARY_DIR}/lib${KLIB_LIBRARY}.a klib/*.o zlib/*.o
-      libarchive/*.o tidy/*.o libcurl/*.o brotli/*.o openssl/*.o sqlcipher/*.o
-      argon2/*.o zstd/*.o fmt/*.o spdlog/*.o nghttp2/*.o simdutf/*.o libidn2/*.o
-      libpsl/*.o libunistring/*.o xxhash/*.o cmark/*.o
-    COMMAND gcc-ranlib ${KLIB_BINARY_DIR}/lib${KLIB_LIBRARY}.a
-    WORKING_DIRECTORY ${KLIB_BINARY_DIR}/third_party
-    COMMENT "Combined static library")
-endif()
+# https://stackoverflow.com/questions/37924383/combining-several-static-libraries-into-one-using-cmake
+file(MAKE_DIRECTORY ${KLIB_BINARY_DIR}/third_party)
+file(MAKE_DIRECTORY ${KLIB_BINARY_DIR}/third_party/klib)
+file(MAKE_DIRECTORY ${KLIB_BINARY_DIR}/third_party/zlib)
+file(MAKE_DIRECTORY ${KLIB_BINARY_DIR}/third_party/libarchive)
+file(MAKE_DIRECTORY ${KLIB_BINARY_DIR}/third_party/tidy)
+file(MAKE_DIRECTORY ${KLIB_BINARY_DIR}/third_party/libcurl)
+file(MAKE_DIRECTORY ${KLIB_BINARY_DIR}/third_party/brotli)
+file(MAKE_DIRECTORY ${KLIB_BINARY_DIR}/third_party/openssl)
+file(MAKE_DIRECTORY ${KLIB_BINARY_DIR}/third_party/sqlcipher)
+file(MAKE_DIRECTORY ${KLIB_BINARY_DIR}/third_party/argon2)
+file(MAKE_DIRECTORY ${KLIB_BINARY_DIR}/third_party/zstd)
+file(MAKE_DIRECTORY ${KLIB_BINARY_DIR}/third_party/fmt)
+file(MAKE_DIRECTORY ${KLIB_BINARY_DIR}/third_party/spdlog)
+file(MAKE_DIRECTORY ${KLIB_BINARY_DIR}/third_party/nghttp2)
+file(MAKE_DIRECTORY ${KLIB_BINARY_DIR}/third_party/simdutf)
+file(MAKE_DIRECTORY ${KLIB_BINARY_DIR}/third_party/libidn2)
+file(MAKE_DIRECTORY ${KLIB_BINARY_DIR}/third_party/libpsl)
+file(MAKE_DIRECTORY ${KLIB_BINARY_DIR}/third_party/libunistring)
+file(MAKE_DIRECTORY ${KLIB_BINARY_DIR}/third_party/xxhash)
+file(MAKE_DIRECTORY ${KLIB_BINARY_DIR}/third_party/cmark)
+add_custom_command(
+  TARGET ${KLIB_LIBRARY}
+  POST_BUILD
+  COMMAND gcc-ar -x --output=klib $<TARGET_FILE:${KLIB_LIBRARY}>
+  COMMAND gcc-ar -x --output=zlib /usr/local/lib/libz.a
+  COMMAND gcc-ar -x --output=libarchive /usr/local/lib/libarchive.a
+  COMMAND gcc-ar -x --output=tidy /usr/local/lib/libtidy.a
+  COMMAND gcc-ar -x --output=libcurl /usr/local/lib/libcurl.a
+  COMMAND gcc-ar -x --output=brotli /usr/local/lib/libbrotlicommon.a
+  COMMAND gcc-ar -x --output=brotli /usr/local/lib/libbrotlidec.a
+  COMMAND gcc-ar -x --output=openssl /usr/local/lib/libcrypto.a
+  COMMAND gcc-ar -x --output=openssl /usr/local/lib/libssl.a
+  COMMAND gcc-ar -x --output=sqlcipher /usr/local/lib/libsqlcipher.a
+  COMMAND gcc-ar -x --output=argon2 /usr/local/lib/libargon2.a
+  COMMAND gcc-ar -x --output=zstd /usr/local/lib/libzstd.a
+  COMMAND gcc-ar -x --output=fmt /usr/local/lib/libfmt.a
+  COMMAND gcc-ar -x --output=spdlog /usr/local/lib/libspdlog.a
+  COMMAND gcc-ar -x --output=nghttp2 /usr/local/lib/libnghttp2.a
+  COMMAND gcc-ar -x --output=simdutf /usr/local/lib/libsimdutf.a
+  COMMAND gcc-ar -x --output=libidn2 /usr/local/lib/libidn2.a
+  COMMAND gcc-ar -x --output=libpsl /usr/local/lib/libpsl.a
+  COMMAND gcc-ar -x --output=libunistring /usr/local/lib/libunistring.a
+  COMMAND gcc-ar -x --output=xxhash /usr/local/lib/libxxhash.a
+  COMMAND gcc-ar -x --output=cmark /usr/local/lib/libcmark.a
+  COMMAND
+    gcc-ar -qcs ${KLIB_BINARY_DIR}/lib${KLIB_LIBRARY}.a klib/*.o zlib/*.o
+    libarchive/*.o tidy/*.o libcurl/*.o brotli/*.o openssl/*.o sqlcipher/*.o
+    argon2/*.o zstd/*.o fmt/*.o spdlog/*.o nghttp2/*.o simdutf/*.o libidn2/*.o
+    libpsl/*.o libunistring/*.o xxhash/*.o cmark/*.o
+  COMMAND gcc-ranlib ${KLIB_BINARY_DIR}/lib${KLIB_LIBRARY}.a
+  WORKING_DIRECTORY ${KLIB_BINARY_DIR}/third_party
+  COMMENT "Combined static library")
 
 # ---------------------------------------------------------------------------------------
 # Build test

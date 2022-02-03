@@ -10,20 +10,6 @@
 namespace klib {
 
 /**
- * @brief Encode bytes using Base64 and return the encoded bytes
- * @param data: Bytes to be encoded
- * @return Encoded bytes
- */
-std::string base64_encode(const std::string &data);
-
-/**
- * @brief Decode the Base64 encoded bytes and return the decoded bytes
- * @param data: Bytes to be decoded
- * @return Decoded bytes
- */
-std::string base64_decode(const std::string &data);
-
-/**
  * @brief Block cipher mode of operation
  * @see https://en.wikipedia.org/wiki/Block_cipher_mode_of_operation
  */
