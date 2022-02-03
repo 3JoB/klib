@@ -3,8 +3,9 @@
 #include <argon2.h>
 #include <fmt/compile.h>
 #include <fmt/format.h>
-#include <openssl/evp.h>
+#include <openssl/digest.h>
 #include <xxhash.h>
+#include <scope_guard.hpp>
 
 #include "klib/detail/openssl_util.h"
 #include "klib/exception.h"
@@ -13,6 +14,8 @@
 namespace klib {
 
 namespace {
+
+enum class SHA { MD5, SHA224, SHA256, SHA384, SHA512 };
 
 std::string num_to_hex_string(std::size_t num) {
   std::string str;
@@ -34,254 +37,113 @@ std::string bytes_to_hex_string(const std::string &bytes) {
   return str;
 }
 
-}  // namespace
-
-class FastHash::FastHashImpl {
- public:
-  explicit FastHashImpl();
-
-  FastHashImpl(const FastHashImpl &) = delete;
-  FastHashImpl(FastHashImpl &&) = delete;
-  FastHashImpl &operator=(const FastHashImpl &) = delete;
-  FastHashImpl &operator=(FastHashImpl &&) = delete;
-
-  void update(const std::string &data);
-  std::size_t digest();
-  std::string hex_digest();
-
-  ~FastHashImpl();
-
- private:
-  XXH3_state_t *status_;
-
-  bool doing_ = false;
-};
-
-FastHash::FastHashImpl::FastHashImpl() : status_(XXH3_createState()) {
-  if (!status_) {
-    throw RuntimeError("XXH3_createState failed");
-  }
-}
-
-void FastHash::FastHashImpl::update(const std::string &data) {
-  if (!doing_) {
-    if (XXH3_64bits_reset(status_) == XXH_ERROR) {
-      throw RuntimeError("XXH3_64bits_reset failed");
-    }
-
-    doing_ = true;
-  }
-
-  if (XXH3_64bits_update(status_, std::data(data), std::size(data)) ==
-      XXH_ERROR) {
-    throw RuntimeError("XXH3_64bits_update failed");
-  }
-}
-
-std::size_t FastHash::FastHashImpl::digest() {
-  if (!doing_) {
-    throw LogicError("must call update() first");
-  }
-
-  doing_ = false;
-  return XXH3_64bits_digest(status_);
-}
-
-std::string FastHash::FastHashImpl::hex_digest() {
-  return num_to_hex_string(digest());
-}
-
-FastHash::FastHashImpl::~FastHashImpl() { XXH3_freeState(status_); }
-
-FastHash::FastHash() : impl_(std::make_unique<FastHashImpl>()) {}
-
-FastHash::~FastHash() = default;
-
-FastHash &FastHash::update(const std::string &data) {
-  impl_->update(data);
-  return *this;
-}
-
-std::size_t FastHash::digest() { return impl_->digest(); }
-
-std::string FastHash::hex_digest() { return impl_->hex_digest(); }
-
-std::size_t fast_hash(const std::string &data) {
-  FastHash fast_hash;
-  fast_hash.update(data);
-  return fast_hash.digest();
-}
-
-std::string fast_hash_hex(const std::string &data) {
-  FastHash fast_hash;
-  fast_hash.update(data);
-  return fast_hash.hex_digest();
-}
-
-class SecureHash::SecureHashImpl {
- public:
-  explicit SecureHashImpl(Algorithm kind);
-
-  SecureHashImpl(const SecureHashImpl &) = delete;
-  SecureHashImpl(SecureHashImpl &&) = delete;
-  SecureHashImpl &operator=(const SecureHashImpl &) = delete;
-  SecureHashImpl &operator=(SecureHashImpl &&) = delete;
-
-  void update(const std::string &data);
-  std::string digest();
-  std::string hex_digest();
-
-  ~SecureHashImpl();
-
- private:
-  static const EVP_MD *get_algorithm(SecureHash::Algorithm kind);
-
-  EVP_MD_CTX *ctx_ = EVP_MD_CTX_new();
-  const EVP_MD *algorithm_;
-
-  bool doing_ = false;
-};
-
-SecureHash::SecureHashImpl::SecureHashImpl(SecureHash::Algorithm kind)
-    : algorithm_(SecureHashImpl::get_algorithm(kind)) {
-  if (!ctx_) {
-    throw RuntimeError(detail::openssl_err_msg());
-  }
-}
-
-// https://www.openssl.org/docs/man3.0/man3/EVP_DigestUpdate.html
-void SecureHash::SecureHashImpl::update(const std::string &data) {
-  if (!doing_) {
-    detail::check_openssl_return(EVP_DigestInit(ctx_, algorithm_));
-    doing_ = true;
-  }
-
-  detail::check_openssl_return(
-      EVP_DigestUpdate(ctx_, std::data(data), std::size(data)));
-}
-
-std::string SecureHash::SecureHashImpl::digest() {
-  if (!doing_) {
-    throw LogicError("must call update() first");
-  }
-
-  std::string digest;
-  digest.resize(EVP_MAX_MD_SIZE);
-
-  std::uint32_t size;
-  detail::check_openssl_return(EVP_DigestFinal(
-      ctx_, reinterpret_cast<unsigned char *>(std::data(digest)), &size));
-  digest.resize(size);
-
-  doing_ = false;
-  return digest;
-}
-
-std::string SecureHash::SecureHashImpl::hex_digest() {
-  return bytes_to_hex_string(digest());
-}
-
-SecureHash::SecureHashImpl::~SecureHashImpl() { EVP_MD_CTX_free(ctx_); }
-
-const EVP_MD *SecureHash::SecureHashImpl::get_algorithm(
-    SecureHash::Algorithm kind) {
-  const EVP_MD *algorithm = nullptr;
+const EVP_MD *get_algorithm(SHA kind) {
+  const EVP_MD *algorithm;
 
   switch (kind) {
-    case SecureHash::Algorithm::MD5:
+    case SHA::MD5:
       algorithm = EVP_md5();
       break;
-    case SecureHash::Algorithm::SHA224:
+    case SHA::SHA224:
       algorithm = EVP_sha224();
       break;
-    case SecureHash::Algorithm::SHA256:
+    case SHA::SHA256:
       algorithm = EVP_sha256();
       break;
-    case SecureHash::Algorithm::SHA384:
+    case SHA::SHA384:
       algorithm = EVP_sha384();
       break;
-    case SecureHash::Algorithm::SHA512:
+    case SHA::SHA512:
       algorithm = EVP_sha512();
       break;
-    default:
-      throw LogicError("Unknown hash algorithm");
   }
 
   return algorithm;
 }
 
-SecureHash::SecureHash(SecureHash::Algorithm kind)
-    : impl_(std::make_unique<SecureHashImpl>(kind)) {}
+// https://www.openssl.org/docs/man3.0/man3/EVP_DigestUpdate.html
+std::string do_hash(const std::string &data, SHA kind) {
+  bssl::ScopedEVP_MD_CTX ctx;
 
-SecureHash::~SecureHash() = default;
+  auto rc = EVP_DigestInit_ex(ctx.get(), get_algorithm(kind), nullptr);
+  detail::check_openssl_return(rc);
 
-SecureHash &SecureHash::update(const std::string &data) {
-  impl_->update(data);
-  return *this;
+  rc = EVP_DigestUpdate(ctx.get(), std::data(data), std::size(data));
+  detail::check_openssl_return(rc);
+
+  std::string result;
+  result.resize(EVP_MAX_MD_SIZE);
+
+  std::uint32_t size;
+  rc = EVP_DigestFinal_ex(
+      ctx.get(), reinterpret_cast<unsigned char *>(std::data(result)), &size);
+  detail::check_openssl_return(rc);
+
+  result.resize(size);
+  return result;
 }
 
-std::string SecureHash::digest() { return impl_->digest(); }
+}  // namespace
 
-std::string SecureHash::hex_digest() { return impl_->hex_digest(); }
+std::size_t fast_hash(const std::string &data) {
+  auto status = XXH3_createState();
+  SCOPE_EXIT { XXH3_freeState(status); };
+  if (!status) {
+    throw RuntimeError("XXH3_createState failed");
+  }
 
-std::string md5(const std::string &data) {
-  SecureHash secure_hash(SecureHash::Algorithm::MD5);
-  secure_hash.update(data);
-  return secure_hash.digest();
+  if (XXH3_64bits_reset(status) == XXH_ERROR) {
+    throw RuntimeError("XXH3_64bits_reset failed");
+  }
+
+  if (XXH3_64bits_update(status, std::data(data), std::size(data)) ==
+      XXH_ERROR) {
+    throw RuntimeError("XXH3_64bits_update failed");
+  }
+
+  return XXH3_64bits_digest(status);
 }
+
+std::string fast_hash_hex(const std::string &data) {
+  return num_to_hex_string(fast_hash(data));
+}
+
+std::string md5(const std::string &data) { return do_hash(data, SHA::MD5); }
 
 std::string md5_hex(const std::string &data) {
-  SecureHash secure_hash(SecureHash::Algorithm::MD5);
-  secure_hash.update(data);
-  return secure_hash.hex_digest();
+  return bytes_to_hex_string(md5(data));
 }
 
 std::string sha224(const std::string &data) {
-  SecureHash secure_hash(SecureHash::Algorithm::SHA224);
-  secure_hash.update(data);
-  return secure_hash.digest();
+  return do_hash(data, SHA::SHA224);
 }
 
 std::string sha224_hex(const std::string &data) {
-  SecureHash secure_hash(SecureHash::Algorithm::SHA224);
-  secure_hash.update(data);
-  return secure_hash.hex_digest();
+  return bytes_to_hex_string(sha224(data));
 }
 
 std::string sha256(const std::string &data) {
-  SecureHash secure_hash(SecureHash::Algorithm::SHA256);
-  secure_hash.update(data);
-  return secure_hash.digest();
+  return do_hash(data, SHA::SHA256);
 }
 
 std::string sha256_hex(const std::string &data) {
-  SecureHash secure_hash(SecureHash::Algorithm::SHA256);
-  secure_hash.update(data);
-  return secure_hash.hex_digest();
+  return bytes_to_hex_string(sha256(data));
 }
 
 std::string sha384(const std::string &data) {
-  SecureHash secure_hash(SecureHash::Algorithm::SHA384);
-  secure_hash.update(data);
-  return secure_hash.digest();
+  return do_hash(data, SHA::SHA384);
 }
 
 std::string sha384_hex(const std::string &data) {
-  SecureHash secure_hash(SecureHash::Algorithm::SHA384);
-  secure_hash.update(data);
-  return secure_hash.hex_digest();
+  return bytes_to_hex_string(sha384(data));
 }
 
 std::string sha512(const std::string &data) {
-  SecureHash secure_hash(SecureHash::Algorithm::SHA512);
-  secure_hash.update(data);
-  return secure_hash.digest();
+  return do_hash(data, SHA::SHA512);
 }
 
 std::string sha512_hex(const std::string &data) {
-  SecureHash secure_hash(SecureHash::Algorithm::SHA512);
-  secure_hash.update(data);
-  return secure_hash.hex_digest();
+  return bytes_to_hex_string(sha512(data));
 }
 
 std::pair<std::string, std::string> password_hash_raw(

@@ -7,56 +7,10 @@
 
 #include <cstddef>
 #include <cstdint>
-#include <experimental/propagate_const>
-#include <memory>
 #include <string>
 #include <utility>
 
 namespace klib {
-
-/**
- * @brief Contains fast hashing algorithm
- */
-class FastHash {
- public:
-  /**
-   * @brief Constructor
-   */
-  explicit FastHash();
-
-  FastHash(const FastHash &) = delete;
-  FastHash(FastHash &&) = delete;
-  FastHash &operator=(const FastHash &) = delete;
-  FastHash &operator=(FastHash &&) = delete;
-
-  /**
-   * @brief Destructor
-   */
-  ~FastHash();
-
-  /**
-   * @brief Update the hash object
-   * @param data: Bytes used to update the hash object
-   * @return Hash object
-   */
-  FastHash &update(const std::string &data);
-
-  /**
-   * @brief Get the hash result
-   * @return Hash result
-   */
-  std::size_t digest();
-
-  /**
-   * @brief Get the hash result
-   * @return Hash result in hexadecimal form
-   */
-  std::string hex_digest();
-
- private:
-  class FastHashImpl;
-  std::experimental::propagate_const<std::unique_ptr<FastHashImpl>> impl_;
-};
 
 /**
  * @brief Get the hash object and calculate the hash value
@@ -65,56 +19,6 @@ class FastHash {
  */
 std::size_t fast_hash(const std::string &data);
 std::string fast_hash_hex(const std::string &data);
-
-/**
- * @brief Contains a series of secure hash algorithms
- */
-class SecureHash {
- public:
-  /**
-   * @brief Supported secure hash algorithm
-   */
-  enum class Algorithm { MD5, SHA224, SHA256, SHA384, SHA512 };
-
-  /**
-   * @brief Constructor
-   * @param kind: Specify the algorithm used
-   */
-  explicit SecureHash(Algorithm kind);
-
-  SecureHash(const SecureHash &) = delete;
-  SecureHash(SecureHash &&) = delete;
-  SecureHash &operator=(const SecureHash &) = delete;
-  SecureHash &operator=(SecureHash &&) = delete;
-
-  /**
-   * @brief Destructor
-   */
-  ~SecureHash();
-
-  /**
-   * @brief Update the hash object
-   * @param data: Bytes used to update the hash object
-   * @return Hash object
-   */
-  SecureHash &update(const std::string &data);
-
-  /**
-   * @brief Get the hash result
-   * @return Hash result
-   */
-  std::string digest();
-
-  /**
-   * @brief Get the hash result
-   * @return Hash result in hexadecimal form
-   */
-  std::string hex_digest();
-
- private:
-  class SecureHashImpl;
-  std::experimental::propagate_const<std::unique_ptr<SecureHashImpl>> impl_;
-};
 
 /**
  * @brief Get the hash object and calculate the hash value

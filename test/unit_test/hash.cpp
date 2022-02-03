@@ -14,17 +14,6 @@ TEST_CASE("fast_hash", "[hash]") {
 }
 
 TEST_CASE("md5", "[hash]") {
-  klib::SecureHash md5(klib::SecureHash::Algorithm::MD5);
-
-  REQUIRE(md5.update("MD5 online hash function").hex_digest() ==
-          "71f6cb39c6d09c6fae36b69ee0b2b9cd");
-  REQUIRE(md5.update("MD5 online hash function").hex_digest() ==
-          "71f6cb39c6d09c6fae36b69ee0b2b9cd");
-  REQUIRE(md5.update("MD5 online hash function").hex_digest() ==
-          "71f6cb39c6d09c6fae36b69ee0b2b9cd");
-  REQUIRE(md5.update("MD5 online hash function").hex_digest() ==
-          "71f6cb39c6d09c6fae36b69ee0b2b9cd");
-
   REQUIRE(klib::md5_hex("SG93IHRvIHJlc29sdmUgdGhlICJFVlBfRGVjcnlwdEZJbmFsX2") ==
           "ee60cfe37f9a60b9ceba008be6f1c034");
 }
