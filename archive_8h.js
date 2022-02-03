@@ -9,7 +9,7 @@ var archive_8h =
     [ "compress", "archive_8h.html#a7f739fc23254bffcc25e0d5a281c62e0", null ],
     [ "compress_str", "archive_8h.html#aae39eea487c3f9080304393f2ed3a147", null ],
     [ "compress_str", "archive_8h.html#a23f46718f8f327143ff7fc55ad8f9ffd", null ],
-    [ "decompress", "archive_8h.html#ae7534a03c6a19a5cdaeb6eacebef9c02", null ],
+    [ "decompress", "archive_8h.html#a3a3e6cf0f6338ff9a48cb54ccc029eb7", null ],
     [ "decompress_str", "archive_8h.html#a74d11f96078ac9abe7c2155d42275e18", null ],
     [ "decompress_str", "archive_8h.html#ae7c9d47cf816d075f2dc036bb704871d", null ]
 ];

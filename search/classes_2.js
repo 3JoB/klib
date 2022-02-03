@@ -1,4 +1,5 @@
 var searchData=
 [
-  ['fasthash_0',['FastHash',['../classklib_1_1FastHash.html',1,'klib']]]
+  ['headers_0',['Headers',['../classklib_1_1Headers.html',1,'klib']]],
+  ['heading_1',['Heading',['../structklib_1_1Heading.html',1,'klib']]]
 ];

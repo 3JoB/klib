@@ -1,4 +1,4 @@
 var searchData=
 [
-  ['outofrange_0',['OutOfRange',['../classklib_1_1OutOfRange.html',1,'klib']]]
+  ['paragraph_0',['Paragraph',['../structklib_1_1Paragraph.html',1,'klib']]]
 ];

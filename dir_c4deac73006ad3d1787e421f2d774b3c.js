@@ -1,6 +1,7 @@
 var dir_c4deac73006ad3d1787e421f2d774b3c =
 [
     [ "archive.h", "archive_8h.html", "archive_8h" ],
+    [ "base64.h", "base64_8h.html", "base64_8h" ],
     [ "crypto.h", "crypto_8h.html", "crypto_8h" ],
     [ "exception.h", "exception_8h.html", [
       [ "klib::Exception", "classklib_1_1Exception.html", "classklib_1_1Exception" ],

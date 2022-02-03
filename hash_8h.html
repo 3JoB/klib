@@ -30,7 +30,7 @@
  <tbody>
  <tr id="projectrow">
   <td id="projectalign">
-   <div id="projectname">klib<span id="projectnumber">&#160;0.12.0</span>
+   <div id="projectname">klib<span id="projectnumber">&#160;0.13.0</span>
    </div>
   </td>
     <td>        <div id="MSearchBox" class="MSearchBoxInactive">
@@ -92,7 +92,6 @@ $(document).ready(function(){initNavTree('hash_8h.html',''); initResizable(); })
 
 <div class="header">
   <div class="summary">
-<a href="#nested-classes">Classes</a> &#124;
 <a href="#func-members">Functions</a>  </div>
   <div class="headertitle"><div class="title">hash.h File Reference</div></div>
 </div><!--header-->
@@ -102,22 +101,11 @@ $(document).ready(function(){initNavTree('hash_8h.html',''); initResizable(); })
 <a href="#details">More...</a></p>
 <div class="textblock"><code>#include &lt;cstddef&gt;</code><br />
 <code>#include &lt;cstdint&gt;</code><br />
-<code>#include &lt;experimental/propagate_const&gt;</code><br />
-<code>#include &lt;memory&gt;</code><br />
 <code>#include &lt;string&gt;</code><br />
 <code>#include &lt;utility&gt;</code><br />
 </div>
 <p><a href="hash_8h_source.html">Go to the source code of this file.</a></p>
 <table class="memberdecls">
-<tr class="heading"><td colspan="2"><h2 class="groupheader"><a id="nested-classes" name="nested-classes"></a>
-Classes</h2></td></tr>
-<tr class="memitem:"><td class="memItemLeft" align="right" valign="top">class &#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="classklib_1_1FastHash.html">klib::FastHash</a></td></tr>
-<tr class="memdesc:"><td class="mdescLeft">&#160;</td><td class="mdescRight">Contains fast hashing algorithm.  <a href="classklib_1_1FastHash.html#details">More...</a><br /></td></tr>
-<tr class="separator:"><td class="memSeparator" colspan="2">&#160;</td></tr>
-<tr class="memitem:"><td class="memItemLeft" align="right" valign="top">class &#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="classklib_1_1SecureHash.html">klib::SecureHash</a></td></tr>
-<tr class="memdesc:"><td class="mdescLeft">&#160;</td><td class="mdescRight">Contains a series of secure hash algorithms.  <a href="classklib_1_1SecureHash.html#details">More...</a><br /></td></tr>
-<tr class="separator:"><td class="memSeparator" colspan="2">&#160;</td></tr>
-</table><table class="memberdecls">
 <tr class="heading"><td colspan="2"><h2 class="groupheader"><a id="func-members" name="func-members"></a>
 Functions</h2></td></tr>
 <tr class="memitem:aba64b42882d6e54255da7e44bee74690"><td class="memItemLeft" align="right" valign="top">std::size_t&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="hash_8h.html#aba64b42882d6e54255da7e44bee74690">klib::fast_hash</a> (const std::string &amp;data)</td></tr>
@@ -132,54 +120,30 @@ std::string&#160;</td><td class="memItemRight" valign="bottom"><b>klib::fast_has
 <tr class="memitem:acbb0b708e2f97260c0f73664a9f00c65"><td class="memItemLeft" align="right" valign="top"><a id="acbb0b708e2f97260c0f73664a9f00c65" name="acbb0b708e2f97260c0f73664a9f00c65"></a>
 std::string&#160;</td><td class="memItemRight" valign="bottom"><b>klib::md5_hex</b> (const std::string &amp;data)</td></tr>
 <tr class="separator:acbb0b708e2f97260c0f73664a9f00c65"><td class="memSeparator" colspan="2">&#160;</td></tr>
-<tr class="memitem:a03d2597036bdc9e8b8de1898bcf7ac4e"><td class="memItemLeft" align="right" valign="top"><a id="a03d2597036bdc9e8b8de1898bcf7ac4e" name="a03d2597036bdc9e8b8de1898bcf7ac4e"></a>
-std::string&#160;</td><td class="memItemRight" valign="bottom"><b>klib::sha_224</b> (const std::string &amp;data)</td></tr>
-<tr class="separator:a03d2597036bdc9e8b8de1898bcf7ac4e"><td class="memSeparator" colspan="2">&#160;</td></tr>
-<tr class="memitem:a6855e10db927790f258227c7ef8dd26a"><td class="memItemLeft" align="right" valign="top"><a id="a6855e10db927790f258227c7ef8dd26a" name="a6855e10db927790f258227c7ef8dd26a"></a>
-std::string&#160;</td><td class="memItemRight" valign="bottom"><b>klib::sha_224_hex</b> (const std::string &amp;data)</td></tr>
-<tr class="separator:a6855e10db927790f258227c7ef8dd26a"><td class="memSeparator" colspan="2">&#160;</td></tr>
-<tr class="memitem:a657f0889e1a51db11fca533cba193d1f"><td class="memItemLeft" align="right" valign="top"><a id="a657f0889e1a51db11fca533cba193d1f" name="a657f0889e1a51db11fca533cba193d1f"></a>
-std::string&#160;</td><td class="memItemRight" valign="bottom"><b>klib::sha_256</b> (const std::string &amp;data)</td></tr>
-<tr class="separator:a657f0889e1a51db11fca533cba193d1f"><td class="memSeparator" colspan="2">&#160;</td></tr>
-<tr class="memitem:a2f661b1756af61dacdef542900f6eaea"><td class="memItemLeft" align="right" valign="top"><a id="a2f661b1756af61dacdef542900f6eaea" name="a2f661b1756af61dacdef542900f6eaea"></a>
-std::string&#160;</td><td class="memItemRight" valign="bottom"><b>klib::sha_256_hex</b> (const std::string &amp;data)</td></tr>
-<tr class="separator:a2f661b1756af61dacdef542900f6eaea"><td class="memSeparator" colspan="2">&#160;</td></tr>
-<tr class="memitem:aa28f85989e1f8ba0e46aa63273789ac5"><td class="memItemLeft" align="right" valign="top"><a id="aa28f85989e1f8ba0e46aa63273789ac5" name="aa28f85989e1f8ba0e46aa63273789ac5"></a>
-std::string&#160;</td><td class="memItemRight" valign="bottom"><b>klib::sha_384</b> (const std::string &amp;data)</td></tr>
-<tr class="separator:aa28f85989e1f8ba0e46aa63273789ac5"><td class="memSeparator" colspan="2">&#160;</td></tr>
-<tr class="memitem:a656d02622a7313b850d997c44f2d2e2c"><td class="memItemLeft" align="right" valign="top"><a id="a656d02622a7313b850d997c44f2d2e2c" name="a656d02622a7313b850d997c44f2d2e2c"></a>
-std::string&#160;</td><td class="memItemRight" valign="bottom"><b>klib::sha_384_hex</b> (const std::string &amp;data)</td></tr>
-<tr class="separator:a656d02622a7313b850d997c44f2d2e2c"><td class="memSeparator" colspan="2">&#160;</td></tr>
-<tr class="memitem:a65269ce69408ce066d4f4d1a93040a07"><td class="memItemLeft" align="right" valign="top"><a id="a65269ce69408ce066d4f4d1a93040a07" name="a65269ce69408ce066d4f4d1a93040a07"></a>
-std::string&#160;</td><td class="memItemRight" valign="bottom"><b>klib::sha_512</b> (const std::string &amp;data)</td></tr>
-<tr class="separator:a65269ce69408ce066d4f4d1a93040a07"><td class="memSeparator" colspan="2">&#160;</td></tr>
-<tr class="memitem:ae115c4d8605567366c670a8deb34dbf3"><td class="memItemLeft" align="right" valign="top"><a id="ae115c4d8605567366c670a8deb34dbf3" name="ae115c4d8605567366c670a8deb34dbf3"></a>
-std::string&#160;</td><td class="memItemRight" valign="bottom"><b>klib::sha_512_hex</b> (const std::string &amp;data)</td></tr>
-<tr class="separator:ae115c4d8605567366c670a8deb34dbf3"><td class="memSeparator" colspan="2">&#160;</td></tr>
-<tr class="memitem:af28b8623f7bd499ba929c0e4c863f203"><td class="memItemLeft" align="right" valign="top"><a id="af28b8623f7bd499ba929c0e4c863f203" name="af28b8623f7bd499ba929c0e4c863f203"></a>
-std::string&#160;</td><td class="memItemRight" valign="bottom"><b>klib::sha3_224</b> (const std::string &amp;data)</td></tr>
-<tr class="separator:af28b8623f7bd499ba929c0e4c863f203"><td class="memSeparator" colspan="2">&#160;</td></tr>
-<tr class="memitem:a30a592f12137cb9df59ec41630355832"><td class="memItemLeft" align="right" valign="top"><a id="a30a592f12137cb9df59ec41630355832" name="a30a592f12137cb9df59ec41630355832"></a>
-std::string&#160;</td><td class="memItemRight" valign="bottom"><b>klib::sha3_224_hex</b> (const std::string &amp;data)</td></tr>
-<tr class="separator:a30a592f12137cb9df59ec41630355832"><td class="memSeparator" colspan="2">&#160;</td></tr>
-<tr class="memitem:a93a5fde81cc3c44715e8d0f3d31bf1f9"><td class="memItemLeft" align="right" valign="top"><a id="a93a5fde81cc3c44715e8d0f3d31bf1f9" name="a93a5fde81cc3c44715e8d0f3d31bf1f9"></a>
-std::string&#160;</td><td class="memItemRight" valign="bottom"><b>klib::sha3_256</b> (const std::string &amp;data)</td></tr>
-<tr class="separator:a93a5fde81cc3c44715e8d0f3d31bf1f9"><td class="memSeparator" colspan="2">&#160;</td></tr>
-<tr class="memitem:a756fdb56eb30fbf921f3220b4f19f61a"><td class="memItemLeft" align="right" valign="top"><a id="a756fdb56eb30fbf921f3220b4f19f61a" name="a756fdb56eb30fbf921f3220b4f19f61a"></a>
-std::string&#160;</td><td class="memItemRight" valign="bottom"><b>klib::sha3_256_hex</b> (const std::string &amp;data)</td></tr>
-<tr class="separator:a756fdb56eb30fbf921f3220b4f19f61a"><td class="memSeparator" colspan="2">&#160;</td></tr>
-<tr class="memitem:a97eb3d9ee617bfa7dc8dd03a1b50465c"><td class="memItemLeft" align="right" valign="top"><a id="a97eb3d9ee617bfa7dc8dd03a1b50465c" name="a97eb3d9ee617bfa7dc8dd03a1b50465c"></a>
-std::string&#160;</td><td class="memItemRight" valign="bottom"><b>klib::sha3_384</b> (const std::string &amp;data)</td></tr>
-<tr class="separator:a97eb3d9ee617bfa7dc8dd03a1b50465c"><td class="memSeparator" colspan="2">&#160;</td></tr>
-<tr class="memitem:ad2b9cfdc50994ed828859cd0ea8c0d64"><td class="memItemLeft" align="right" valign="top"><a id="ad2b9cfdc50994ed828859cd0ea8c0d64" name="ad2b9cfdc50994ed828859cd0ea8c0d64"></a>
-std::string&#160;</td><td class="memItemRight" valign="bottom"><b>klib::sha3_384_hex</b> (const std::string &amp;data)</td></tr>
-<tr class="separator:ad2b9cfdc50994ed828859cd0ea8c0d64"><td class="memSeparator" colspan="2">&#160;</td></tr>
-<tr class="memitem:a2c1bc81b808aea1efcec0f9b96ace000"><td class="memItemLeft" align="right" valign="top"><a id="a2c1bc81b808aea1efcec0f9b96ace000" name="a2c1bc81b808aea1efcec0f9b96ace000"></a>
-std::string&#160;</td><td class="memItemRight" valign="bottom"><b>klib::sha3_512</b> (const std::string &amp;data)</td></tr>
-<tr class="separator:a2c1bc81b808aea1efcec0f9b96ace000"><td class="memSeparator" colspan="2">&#160;</td></tr>
-<tr class="memitem:a19d88a2e9d65f2ad393013f147c2b229"><td class="memItemLeft" align="right" valign="top"><a id="a19d88a2e9d65f2ad393013f147c2b229" name="a19d88a2e9d65f2ad393013f147c2b229"></a>
-std::string&#160;</td><td class="memItemRight" valign="bottom"><b>klib::sha3_512_hex</b> (const std::string &amp;data)</td></tr>
-<tr class="separator:a19d88a2e9d65f2ad393013f147c2b229"><td class="memSeparator" colspan="2">&#160;</td></tr>
+<tr class="memitem:a5c3b42bcde335b3f5474bec523968e12"><td class="memItemLeft" align="right" valign="top"><a id="a5c3b42bcde335b3f5474bec523968e12" name="a5c3b42bcde335b3f5474bec523968e12"></a>
+std::string&#160;</td><td class="memItemRight" valign="bottom"><b>klib::sha224</b> (const std::string &amp;data)</td></tr>
+<tr class="separator:a5c3b42bcde335b3f5474bec523968e12"><td class="memSeparator" colspan="2">&#160;</td></tr>
+<tr class="memitem:aa39b9fd5c99e0d5ec92d24dd271e0bd0"><td class="memItemLeft" align="right" valign="top"><a id="aa39b9fd5c99e0d5ec92d24dd271e0bd0" name="aa39b9fd5c99e0d5ec92d24dd271e0bd0"></a>
+std::string&#160;</td><td class="memItemRight" valign="bottom"><b>klib::sha224_hex</b> (const std::string &amp;data)</td></tr>
+<tr class="separator:aa39b9fd5c99e0d5ec92d24dd271e0bd0"><td class="memSeparator" colspan="2">&#160;</td></tr>
+<tr class="memitem:a8a23cf04c49f3c285bcd9ee4ad7df082"><td class="memItemLeft" align="right" valign="top"><a id="a8a23cf04c49f3c285bcd9ee4ad7df082" name="a8a23cf04c49f3c285bcd9ee4ad7df082"></a>
+std::string&#160;</td><td class="memItemRight" valign="bottom"><b>klib::sha256</b> (const std::string &amp;data)</td></tr>
+<tr class="separator:a8a23cf04c49f3c285bcd9ee4ad7df082"><td class="memSeparator" colspan="2">&#160;</td></tr>
+<tr class="memitem:ab6c1740558aef564fa9f6fa8dbc96710"><td class="memItemLeft" align="right" valign="top"><a id="ab6c1740558aef564fa9f6fa8dbc96710" name="ab6c1740558aef564fa9f6fa8dbc96710"></a>
+std::string&#160;</td><td class="memItemRight" valign="bottom"><b>klib::sha256_hex</b> (const std::string &amp;data)</td></tr>
+<tr class="separator:ab6c1740558aef564fa9f6fa8dbc96710"><td class="memSeparator" colspan="2">&#160;</td></tr>
+<tr class="memitem:a909fd468d39ef504eb60f02986f3db16"><td class="memItemLeft" align="right" valign="top"><a id="a909fd468d39ef504eb60f02986f3db16" name="a909fd468d39ef504eb60f02986f3db16"></a>
+std::string&#160;</td><td class="memItemRight" valign="bottom"><b>klib::sha384</b> (const std::string &amp;data)</td></tr>
+<tr class="separator:a909fd468d39ef504eb60f02986f3db16"><td class="memSeparator" colspan="2">&#160;</td></tr>
+<tr class="memitem:adc4b78e2758a50745f12c23e00df1b7c"><td class="memItemLeft" align="right" valign="top"><a id="adc4b78e2758a50745f12c23e00df1b7c" name="adc4b78e2758a50745f12c23e00df1b7c"></a>
+std::string&#160;</td><td class="memItemRight" valign="bottom"><b>klib::sha384_hex</b> (const std::string &amp;data)</td></tr>
+<tr class="separator:adc4b78e2758a50745f12c23e00df1b7c"><td class="memSeparator" colspan="2">&#160;</td></tr>
+<tr class="memitem:a3e4a64c601831edff84697eaf9d27add"><td class="memItemLeft" align="right" valign="top"><a id="a3e4a64c601831edff84697eaf9d27add" name="a3e4a64c601831edff84697eaf9d27add"></a>
+std::string&#160;</td><td class="memItemRight" valign="bottom"><b>klib::sha512</b> (const std::string &amp;data)</td></tr>
+<tr class="separator:a3e4a64c601831edff84697eaf9d27add"><td class="memSeparator" colspan="2">&#160;</td></tr>
+<tr class="memitem:aa1446a8c09611cb2aa0e70cd6829f288"><td class="memItemLeft" align="right" valign="top"><a id="aa1446a8c09611cb2aa0e70cd6829f288" name="aa1446a8c09611cb2aa0e70cd6829f288"></a>
+std::string&#160;</td><td class="memItemRight" valign="bottom"><b>klib::sha512_hex</b> (const std::string &amp;data)</td></tr>
+<tr class="separator:aa1446a8c09611cb2aa0e70cd6829f288"><td class="memSeparator" colspan="2">&#160;</td></tr>
 <tr class="memitem:ad254d8c2ed77209a16c351a65ec6490b"><td class="memItemLeft" align="right" valign="top">std::pair&lt; std::string, std::string &gt;&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="hash_8h.html#ad254d8c2ed77209a16c351a65ec6490b">klib::password_hash_raw</a> (const std::string &amp;password, std::uint32_t time_cost=1, std::uint32_t memory_cost=4 *1024 *1024, std::uint32_t parallelism=16, std::int32_t hash_len=32, std::int32_t salt_len=32)</td></tr>
 <tr class="memdesc:ad254d8c2ed77209a16c351a65ec6490b"><td class="mdescLeft">&#160;</td><td class="mdescRight">Hashes a password.  <a href="hash_8h.html#ad254d8c2ed77209a16c351a65ec6490b">More...</a><br /></td></tr>
 <tr class="separator:ad254d8c2ed77209a16c351a65ec6490b"><td class="memSeparator" colspan="2">&#160;</td></tr>
