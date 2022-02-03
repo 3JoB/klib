@@ -1,7 +1,5 @@
 #pragma once
 
-#include <cstdint>
-
 #include <openssl/err.h>
 
 #include "klib/exception.h"

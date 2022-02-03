@@ -10,7 +10,7 @@
 // https://tool.lmeee.com/jiami/aes
 TEST_CASE("aes_256_cbc", "[crypto]") {
   REQUIRE_NOTHROW(klib::aes_256_decrypt(
-      klib::secure_base64_decode(
+      klib::fast_base64_decode(
           "IT+LcNazRBcK54/"
           "p1lMtc0ewNTdT1AVsc0v5Lkpy4zrcof0UsF79jMasF+"
           "DAdQ25w5OK1zXMTP6bRUQ0VKArkTvxhkzLERGM4DCCinEBTd2V+9q8iNFJG2O/"
@@ -24,7 +24,7 @@ TEST_CASE("aes_256_cbc", "[crypto]") {
   REQUIRE(klib::aes_256_decrypt(encrypt, hash) ==
           "Advanced Encryption Standard");
 
-  REQUIRE(klib::secure_base64_encode(klib::aes_256_encrypt(
+  REQUIRE(klib::fast_base64_encode(klib::aes_256_encrypt(
               "{\"code\":\"100000\",\"data\":{\"login_token\":"
               "\"06d3b540ecde7843d79fa0c790b4c968\",\"user_code\":"
               "\"9827638bc3c6ae0a43174f2a2d25d35b\",\"reader_info\":{\"reader_"
@@ -110,7 +110,7 @@ TEST_CASE("aes_256_cbc", "[crypto]") {
 
   REQUIRE(
       klib::aes_256_decrypt(
-          klib::secure_base64_decode(
+          klib::fast_base64_decode(
               "IT+LcNazRBcK54/"
               "p1lMtcyRwpZ01VQ4tFr6GBslpnwMezmEBbIYc3GokHiTGB6XV/"
               "I3oWkrqLXB3DTQJUIlvLRRHe2GmNqGS8xHXeyq8BgBLCBxLcIFRtK+V6/"
@@ -171,7 +171,7 @@ TEST_CASE("aes_256_cbc", "[crypto]") {
       "10000\":\"0\",\"rest_total_100000\":\"0\",\"rest_total_50000\":\"0\","
       "\"rest_total_160000\":\"0\"},\"is_set_young\":\"0\"}}");
 
-  auto base64 = klib::secure_base64_decode(
+  auto base64 = klib::fast_base64_decode(
       "TC64Ykj+"
       "HY4FfD2Ddh8gBHEcR4IdUjLbfrb44QJPeC43dvPghqXE6gDdJSip1pzHxtfC5cBkR1lu"
       "JvxYnfX8QY4n+Pn9ATexdSyPtJhq90OTs9vYNcsnFIfj4VPfHa0/"
