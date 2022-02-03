@@ -2,12 +2,11 @@
 
 #include <cstddef>
 #include <cstdint>
+#include <span>
 
 #include <openssl/aes.h>
 #include <openssl/cipher.h>
-#include <openssl/span.h>
 
-#include "klib/base64.h"
 #include "klib/detail/openssl_util.h"
 #include "klib/exception.h"
 #include "klib/util.h"
@@ -30,7 +29,7 @@ const EVP_CIPHER *get_cipher(AesMode aes_mode) {
 }
 
 // https://www.openssl.org/docs/man3.0/man3/EVP_EncryptInit_ex.html
-std::string do_aes_crypt(bssl::Span<const char> data, const std::string &key,
+std::string do_aes_crypt(std::span<const char> data, const std::string &key,
                          const std::string &iv, AesMode aes_mode,
                          bool encrypt) {
   bssl::ScopedEVP_CIPHER_CTX ctx;
