@@ -1,22 +1,28 @@
-include(AddCXXFlag)
+include(AddFlag)
+
+# https://cmake.org/cmake/help/latest/prop_tgt/C_STANDARD.html
+set(CMAKE_C_STANDARD 17)
+set(CMAKE_C_EXTENSIONS OFF)
+set(CMAKE_C_STANDARD_REQUIRED ON)
 
 # https://cmake.org/cmake/help/latest/prop_tgt/CXX_STANDARD.html
 set(CMAKE_CXX_STANDARD 20)
 set(CMAKE_CXX_EXTENSIONS OFF)
 set(CMAKE_CXX_STANDARD_REQUIRED ON)
+
 set(CMAKE_EXPORT_COMPILE_COMMANDS ON)
 
 # ---------------------------------------------------------------------------------------
 # Machine
 # ---------------------------------------------------------------------------------------
-add_cxx_compiler_flag("-march=haswell")
-add_cxx_compiler_flag("-mtune=haswell")
+add_compiler_flag("-march=haswell")
+add_compiler_flag("-mtune=haswell")
 
 # ---------------------------------------------------------------------------------------
 # Static link
 # ---------------------------------------------------------------------------------------
-add_cxx_linker_flag("-static-libgcc")
-add_cxx_linker_flag("-static-libstdc++")
+add_linker_flag("-static-libgcc")
+add_linker_flag("-static-libstdc++")
 
 # ---------------------------------------------------------------------------------------
 # lld
@@ -30,7 +36,7 @@ if(CMAKE_COMPILER_IS_GNUCXX)
   list(GET LINKER_VERSION 0 LINKER_VERSION)
   message(STATUS "Linker: ${LINKER_VERSION}")
 
-  add_cxx_linker_flag("-fuse-ld=gold")
+  add_linker_flag("-fuse-ld=gold")
 else()
   execute_process(
     COMMAND ld.lld --version
@@ -38,16 +44,20 @@ else()
     OUTPUT_STRIP_TRAILING_WHITESPACE)
   message(STATUS "Linker: ${LINKER_VERSION}")
 
-  add_cxx_linker_flag("-fuse-ld=lld")
+  add_linker_flag("-fuse-ld=lld")
 endif()
 
 # ---------------------------------------------------------------------------------------
 # Warning
 # ---------------------------------------------------------------------------------------
-add_cxx_compiler_flag("-Wall")
-add_cxx_compiler_flag("-Wextra")
-add_cxx_compiler_flag("-Wpedantic")
-add_cxx_compiler_flag("-Werror")
+if(${CMAKE_CXX_COMPILER_ID} STREQUAL "Clang")
+  add_compiler_flag("-Wno-error=unused-command-line-argument")
+endif()
+
+add_compiler_flag("-Wall")
+add_compiler_flag("-Wextra")
+add_compiler_flag("-Wpedantic")
+add_compiler_flag("-Werror")
 
 # ---------------------------------------------------------------------------------------
 # Link time optimization
@@ -77,11 +87,7 @@ endif()
 if((${CMAKE_BUILD_TYPE} STREQUAL "Release") OR (${CMAKE_BUILD_TYPE} STREQUAL
                                                 "MinSizeRel"))
   message(STATUS "Discard symbols and other data from object files")
-
-  if(${CMAKE_CXX_COMPILER_ID} STREQUAL "Clang")
-    add_cxx_compiler_flag("-Wno-error=unused-command-line-argument")
-  endif()
-  add_cxx_linker_flag("-s")
+  add_linker_flag("-s")
 endif()
 
 # ---------------------------------------------------------------------------------------
@@ -90,21 +96,23 @@ endif()
 if(KLIB_SANITIZER)
   message(STATUS "Build with AddressSanitizer and UndefinedSanitizer")
 
-  add_cxx_compiler_flag("-fsanitize=address")
-  add_cxx_compiler_flag("-fsanitize-address-use-after-scope")
-  add_cxx_compiler_flag("-fno-omit-frame-pointer")
-  add_cxx_compiler_flag("-fno-optimize-sibling-calls")
+  add_compiler_flag("-fsanitize=address")
+  add_compiler_flag("-fsanitize-address-use-after-scope")
+  add_compiler_flag("-fno-omit-frame-pointer")
+  add_compiler_flag("-fno-optimize-sibling-calls")
 
-  add_cxx_compiler_flag("-fsanitize=undefined")
-  add_cxx_compiler_flag("-fno-sanitize-recover=all")
+  add_compiler_flag("-fsanitize=undefined")
+  add_compiler_flag("-fno-sanitize-recover=all")
 
   if(CMAKE_CXX_COMPILER_ID STREQUAL "Clang")
-    add_cxx_compiler_flag("-fsanitize=float-divide-by-zero")
-    add_cxx_compiler_flag("-fsanitize=unsigned-integer-overflow")
-    add_cxx_compiler_flag("-fsanitize=implicit-conversion")
-    add_cxx_compiler_flag("-fsanitize=local-bounds")
-    add_cxx_compiler_flag("-fsanitize=nullability")
-    add_cxx_compiler_flag("-fsanitize-recover=unsigned-integer-overflow")
+    add_compiler_flag("-fsanitize=float-divide-by-zero")
+    add_compiler_flag("-fsanitize=unsigned-integer-overflow")
+    add_compiler_flag("-fsanitize=implicit-conversion")
+    add_compiler_flag("-fsanitize=local-bounds")
+    add_compiler_flag("-fsanitize=nullability")
+    add_compiler_flag("-fsanitize-recover=unsigned-integer-overflow")
+    # FIXME
+    add_compiler_flag("-fsanitize-recover=implicit-conversion")
   endif()
 endif()
 
@@ -113,9 +121,9 @@ endif()
 # ---------------------------------------------------------------------------------------
 if(KLIB_BUILD_COVERAGE)
   if(CMAKE_COMPILER_IS_GNUCXX)
-    add_cxx_compiler_flag("--coverage")
+    add_compiler_flag("--coverage")
   else()
-    add_cxx_compiler_flag("-fprofile-instr-generate")
-    add_cxx_compiler_flag("-fcoverage-mapping")
+    add_compiler_flag("-fprofile-instr-generate")
+    add_compiler_flag("-fcoverage-mapping")
   endif()
 endif()
