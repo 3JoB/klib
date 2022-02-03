@@ -27,13 +27,7 @@ std::string base64_decode(const std::string &data);
  * @brief Block cipher mode of operation
  * @see https://en.wikipedia.org/wiki/Block_cipher_mode_of_operation
  */
-enum class AesMode { CBC, OFB, CFB, CTR, XTS };
-
-/**
- * @brief Padding mode
- * @see https://en.wikipedia.org/wiki/Padding_(cryptography)
- */
-enum class PaddingMode { None, PKCS7, ISO7816_4, ANSI923, ISO10126, ZERO };
+enum class AesMode { CBC, OFB, CTR };
 
 /**
  * @brief Use AES to encrypt bytes, key size: 256 bit
@@ -47,7 +41,7 @@ enum class PaddingMode { None, PKCS7, ISO7816_4, ANSI923, ISO10126, ZERO };
  */
 std::string aes_256_encrypt(const std::string &data, const std::string &key,
                             bool use_iv = true, AesMode aes_mode = AesMode::CBC,
-                            PaddingMode padding_mode = PaddingMode::PKCS7);
+                            bool pad = true);
 
 /**
  * @brief Use AES to encrypt bytes, key size: 256 bit
@@ -60,8 +54,7 @@ std::string aes_256_encrypt(const std::string &data, const std::string &key,
  */
 std::string aes_256_encrypt(const std::string &data, const std::string &key,
                             const std::string &iv,
-                            AesMode aes_mode = AesMode::CBC,
-                            PaddingMode padding_mode = PaddingMode::PKCS7);
+                            AesMode aes_mode = AesMode::CBC, bool pad = true);
 
 /**
  * @brief Use AES to encrypt bytes, key size: 256 bit
@@ -73,10 +66,10 @@ std::string aes_256_encrypt(const std::string &data, const std::string &key,
  * @param padding_mode: Padding mode
  * @return Encrypted data encoded with Base64
  */
-std::string aes_256_encrypt_base64(
-    const std::string &data, const std::string &key, bool use_iv = true,
-    AesMode aes_mode = AesMode::CBC,
-    PaddingMode padding_mode = PaddingMode::PKCS7);
+std::string aes_256_encrypt_base64(const std::string &data,
+                                   const std::string &key, bool use_iv = true,
+                                   AesMode aes_mode = AesMode::CBC,
+                                   bool pad = true);
 
 /**
  * @brief Use AES to encrypt bytes, key size: 256 bit
@@ -87,10 +80,11 @@ std::string aes_256_encrypt_base64(
  * @param padding_mode: Padding mode
  * @return Encrypted bytes encoded with Base64
  */
-std::string aes_256_encrypt_base64(
-    const std::string &data, const std::string &key, const std::string &iv,
-    AesMode aes_mode = AesMode::CBC,
-    PaddingMode padding_mode = PaddingMode::PKCS7);
+std::string aes_256_encrypt_base64(const std::string &data,
+                                   const std::string &key,
+                                   const std::string &iv,
+                                   AesMode aes_mode = AesMode::CBC,
+                                   bool pad = true);
 
 /**
  * @brief Use AES to decrypt bytes, key size: 256 bit
@@ -103,7 +97,7 @@ std::string aes_256_encrypt_base64(
  */
 std::string aes_256_decrypt(const std::string &data, const std::string &key,
                             bool has_iv = true, AesMode aes_mode = AesMode::CBC,
-                            PaddingMode padding_mode = PaddingMode::PKCS7);
+                            bool pad = true);
 
 /**
  * @brief Use AES to decrypt bytes, key size: 256 bit
@@ -116,8 +110,7 @@ std::string aes_256_decrypt(const std::string &data, const std::string &key,
  */
 std::string aes_256_decrypt(const std::string &data, const std::string &key,
                             const std::string &iv,
-                            AesMode aes_mode = AesMode::CBC,
-                            PaddingMode padding_mode = PaddingMode::PKCS7);
+                            AesMode aes_mode = AesMode::CBC, bool pad = true);
 
 /**
  * @brief Use AES to decrypt bytes, key size: 256 bit
@@ -128,10 +121,10 @@ std::string aes_256_decrypt(const std::string &data, const std::string &key,
  * @param padding_mode: Padding mode
  * @return Decrypted bytes
  */
-std::string aes_256_decrypt_base64(
-    const std::string &data, const std::string &key, bool has_iv = true,
-    AesMode aes_mode = AesMode::CBC,
-    PaddingMode padding_mode = PaddingMode::PKCS7);
+std::string aes_256_decrypt_base64(const std::string &data,
+                                   const std::string &key, bool has_iv = true,
+                                   AesMode aes_mode = AesMode::CBC,
+                                   bool pad = true);
 
 /**
  * @brief Use AES to decrypt bytes, key size: 256 bit
@@ -142,9 +135,10 @@ std::string aes_256_decrypt_base64(
  * @param padding_mode: Padding mode
  * @return Decrypted bytes
  */
-std::string aes_256_decrypt_base64(
-    const std::string &data, const std::string &key, const std::string &iv,
-    AesMode aes_mode = AesMode::CBC,
-    PaddingMode padding_mode = PaddingMode::PKCS7);
+std::string aes_256_decrypt_base64(const std::string &data,
+                                   const std::string &key,
+                                   const std::string &iv,
+                                   AesMode aes_mode = AesMode::CBC,
+                                   bool pad = true);
 
 }  // namespace klib

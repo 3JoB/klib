@@ -13,7 +13,7 @@
 /**
  * @brief klib minor version
  */
-#define KLIB_VER_MINOR 12
+#define KLIB_VER_MINOR 13
 
 /**
  * @brief klib patch version

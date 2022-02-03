@@ -216,8 +216,7 @@ void compress(const std::vector<std::string> &paths, Algorithm algorithm,
 }
 
 std::optional<std::string> decompress(const std::string &file_name,
-                                      const std::string &path,
-                                      const std::string &password) {
+                                      const std::string &path) {
   auto archive = archive_read_new();
   SCOPE_EXIT {
     archive_read_close(archive);
@@ -238,11 +237,6 @@ std::optional<std::string> decompress(const std::string &file_name,
 
   rc = archive_read_support_filter_zstd(archive);
   check_archive(rc, archive);
-
-  if (!std::empty(password)) {
-    rc = archive_read_add_passphrase(archive, password.c_str());
-    check_archive(rc, archive);
-  }
 
   auto extract = archive_write_disk_new();
   SCOPE_EXIT {

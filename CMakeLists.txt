@@ -77,7 +77,7 @@ pkg_check_modules(sqlcipher REQUIRED IMPORTED_TARGET sqlcipher)
 pkg_check_modules(libargon2 REQUIRED IMPORTED_TARGET libargon2)
 pkg_check_modules(libzstd REQUIRED IMPORTED_TARGET libzstd)
 
-add_definitions(-DOPENSSL_NO_DEPRECATED -DCURL_NO_OLDIES -DSQLITE_HAS_CODEC)
+add_definitions(-DCURL_NO_OLDIES -DSQLITE_HAS_CODEC)
 
 find_package(fmt REQUIRED)
 find_package(spdlog REQUIRED)

@@ -129,12 +129,3 @@ TEST_CASE("zstd", "[archive]") {
   REQUIRE_NOTHROW(decompressed = klib::decompress_str(compressed));
   REQUIRE(data == decompressed);
 }
-
-TEST_CASE("password", "[archive]") {
-  REQUIRE(std::filesystem::exists("password.zip"));
-  REQUIRE(klib::decompress("password.zip", "password", "123456") ==
-          "madler-zlib-7085a61");
-  REQUIRE(klib::folder_size("password/madler-zlib-7085a61") == 2984209);
-
-  std::filesystem::remove_all("password");
-}

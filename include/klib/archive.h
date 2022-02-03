@@ -48,12 +48,10 @@ void compress(const std::vector<std::string> &paths, Algorithm algorithm,
  * @param path: Compressed file path
  * @param decompressed_path: Specify the location of the decompressed content(If
  * it is empty, decompress to the current directory)
- * @param password: Compressed file password
  * @return Outermost folder name(If there is not only one folder, then empty)
  */
-std::optional<std::string> decompress(const std::string &path,
-                                      const std::string &decompressed_path = "",
-                                      const std::string &password = "");
+std::optional<std::string> decompress(
+    const std::string &path, const std::string &decompressed_path = "");
 
 /**
  * @brief Compress data

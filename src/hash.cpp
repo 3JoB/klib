@@ -203,18 +203,6 @@ const EVP_MD *SecureHash::SecureHashImpl::get_algorithm(
     case SecureHash::Algorithm::SHA_512:
       algorithm = EVP_sha512();
       break;
-    case SecureHash::Algorithm::SHA3_224:
-      algorithm = EVP_sha3_224();
-      break;
-    case SecureHash::Algorithm::SHA3_256:
-      algorithm = EVP_sha3_256();
-      break;
-    case SecureHash::Algorithm::SHA3_384:
-      algorithm = EVP_sha3_384();
-      break;
-    case SecureHash::Algorithm::SHA3_512:
-      algorithm = EVP_sha3_512();
-      break;
     default:
       throw LogicError("Unknown hash algorithm");
   }
@@ -292,54 +280,6 @@ std::string sha_512(const std::string &data) {
 
 std::string sha_512_hex(const std::string &data) {
   SecureHash secure_hash(SecureHash::Algorithm::SHA_512);
-  secure_hash.update(data);
-  return secure_hash.hex_digest();
-}
-
-std::string sha3_224(const std::string &data) {
-  SecureHash secure_hash(SecureHash::Algorithm::SHA3_224);
-  secure_hash.update(data);
-  return secure_hash.digest();
-}
-
-std::string sha3_224_hex(const std::string &data) {
-  SecureHash secure_hash(SecureHash::Algorithm::SHA3_224);
-  secure_hash.update(data);
-  return secure_hash.hex_digest();
-}
-
-std::string sha3_256(const std::string &data) {
-  SecureHash secure_hash(SecureHash::Algorithm::SHA3_256);
-  secure_hash.update(data);
-  return secure_hash.digest();
-}
-
-std::string sha3_256_hex(const std::string &data) {
-  SecureHash secure_hash(SecureHash::Algorithm::SHA3_256);
-  secure_hash.update(data);
-  return secure_hash.hex_digest();
-}
-
-std::string sha3_384(const std::string &data) {
-  SecureHash secure_hash(SecureHash::Algorithm::SHA3_384);
-  secure_hash.update(data);
-  return secure_hash.digest();
-}
-
-std::string sha3_384_hex(const std::string &data) {
-  SecureHash secure_hash(SecureHash::Algorithm::SHA3_384);
-  secure_hash.update(data);
-  return secure_hash.hex_digest();
-}
-
-std::string sha3_512(const std::string &data) {
-  SecureHash secure_hash(SecureHash::Algorithm::SHA3_512);
-  secure_hash.update(data);
-  return secure_hash.digest();
-}
-
-std::string sha3_512_hex(const std::string &data) {
-  SecureHash secure_hash(SecureHash::Algorithm::SHA3_512);
   secure_hash.update(data);
   return secure_hash.hex_digest();
 }
