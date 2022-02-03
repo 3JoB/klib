@@ -1,8 +1,6 @@
 /***************
-* Taken more or less as-is from the chromium project
-****************/
-
-
+ * Taken more or less as-is from the chromium project
+ ****************/
 
 /**
  * \file
@@ -96,7 +94,7 @@ size_t chromium_base64_decode(char* dest, const char* src, size_t len);
  *
  * +1 is for any extra null.
  */
-#define chromium_base64_encode_len(A) ((A+2)/3 * 4 + 1)
+#define chromium_base64_encode_len(A) ((A + 2) / 3 * 4 + 1)
 
 /**
  * Given a base64 string of length len,
@@ -124,7 +122,8 @@ size_t chromium_base64_decode(char* dest, const char* src, size_t len);
  *    return false;
  * } else {
  *    // safe to do;
- *    if (chromium_base64_encode((char*) &foo, b64encoded, len) == MODP_B64_ERROR) {
+ *    if (chromium_base64_encode((char*) &foo, b64encoded, len) ==
+ * MODP_B64_ERROR) {
  *      // bad characters
  *      return false;
  *    }
@@ -132,15 +131,12 @@ size_t chromium_base64_decode(char* dest, const char* src, size_t len);
  * // foo is filled out now
  * \endcode
  */
-#define chromium_base64_encode_strlen(A) ((A + 2)/ 3 * 4)
-
-
+#define chromium_base64_encode_strlen(A) ((A + 2) / 3 * 4)
 
 #ifdef __cplusplus
 }
 
 #include <string>
-
 
 /**
  * base 64 decode a string (self-modifing)
@@ -151,17 +147,17 @@ size_t chromium_base64_decode(char* dest, const char* src, size_t len);
  * \param[in,out] s the string to be decoded
  * \return a reference to the input string
  */
-inline std::string& chromium_base64_encode(std::string& s)
-{
-    std::string x(chromium_base64_encode_len(s.size()), '\0');
-    size_t d = chromium_base64_encode(const_cast<char*>(x.data()), s.data(), (int)s.size());
-    if (d == MODP_B64_ERROR) {
-        x.clear();
-    } else {
-        x.erase(d, std::string::npos);
-    }
-    s.swap(x);
-    return s;
+inline std::string& chromium_base64_encode(std::string& s) {
+  std::string x(chromium_base64_encode_len(s.size()), '\0');
+  size_t d = chromium_base64_encode(const_cast<char*>(x.data()), s.data(),
+                                    (int)s.size());
+  if (d == MODP_B64_ERROR) {
+    x.clear();
+  } else {
+    x.erase(d, std::string::npos);
+  }
+  s.swap(x);
+  return s;
 }
 
 #endif /* __cplusplus */

@@ -43,7 +43,8 @@ set(KLIB_BINARY_DIR ${CMAKE_CURRENT_BINARY_DIR})
 
 # https://cmake.org/cmake/help/latest/command/file.html#glob-recurse
 file(GLOB_RECURSE KLIB_LIBRARY_SRC CONFIGURE_DEPENDS
-     "${KLIB_SOURCE_DIR}/src/*.cpp")
+     "${KLIB_SOURCE_DIR}/src/*.cpp"
+     "${KLIB_SOURCE_DIR}/third_party/fastbase64/*.c")
 
 # ---------------------------------------------------------------------------------------
 # Include CMake module
@@ -95,8 +96,7 @@ endif()
 set(THREADS_PREFER_PTHREAD_FLAG TRUE)
 find_package(Threads REQUIRED)
 
-add_subdirectory(third_party)
-include_directories(third_party/fastbase64/include)
+include_directories(third_party)
 
 # ---------------------------------------------------------------------------------------
 # Build static library
@@ -117,7 +117,6 @@ target_compile_features(${KLIB_LIBRARY} INTERFACE cxx_std_20)
 target_compile_definitions(
   ${KLIB_LIBRARY} INTERFACE FMT_LOCALE SPDLOG_COMPILED_LIB SPDLOG_FMT_EXTERNAL)
 target_link_libraries(${KLIB_LIBRARY} PUBLIC ${CMAKE_THREAD_LIBS_INIT})
-target_link_libraries(${KLIB_LIBRARY} PRIVATE fastbase64)
 
 set_target_properties(
   ${KLIB_LIBRARY}
