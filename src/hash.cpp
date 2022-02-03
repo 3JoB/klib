@@ -3,19 +3,17 @@
 #include <argon2.h>
 #include <fmt/compile.h>
 #include <fmt/format.h>
-#include <openssl/digest.h>
+#include <openssl/md5.h>
+#include <openssl/sha.h>
 #include <xxhash.h>
-#include <scope_guard.hpp>
+#include <memory>
 
-#include "klib/detail/openssl_util.h"
 #include "klib/exception.h"
 #include "klib/util.h"
 
 namespace klib {
 
 namespace {
-
-enum class SHA { MD5, SHA224, SHA256, SHA384, SHA512 };
 
 std::string num_to_hex_string(std::size_t num) {
   std::string str;
@@ -28,7 +26,7 @@ std::string num_to_hex_string(std::size_t num) {
 
 std::string bytes_to_hex_string(const std::string &bytes) {
   std::string str;
-  str.reserve(EVP_MAX_MD_SIZE);
+  str.reserve(SHA512_DIGEST_LENGTH);
 
   for (auto byte : bytes) {
     str += fmt::format(FMT_COMPILE("{:02x}"), static_cast<std::uint8_t>(byte));
@@ -37,85 +35,50 @@ std::string bytes_to_hex_string(const std::string &bytes) {
   return str;
 }
 
-const EVP_MD *get_algorithm(SHA kind) {
-  const EVP_MD *algorithm;
-
-  switch (kind) {
-    case SHA::MD5:
-      algorithm = EVP_md5();
-      break;
-    case SHA::SHA224:
-      algorithm = EVP_sha224();
-      break;
-    case SHA::SHA256:
-      algorithm = EVP_sha256();
-      break;
-    case SHA::SHA384:
-      algorithm = EVP_sha384();
-      break;
-    case SHA::SHA512:
-      algorithm = EVP_sha512();
-      break;
-  }
-
-  return algorithm;
-}
-
-// https://www.openssl.org/docs/man3.0/man3/EVP_DigestUpdate.html
-std::string do_hash(const std::string &data, SHA kind) {
-  bssl::ScopedEVP_MD_CTX ctx;
-
-  auto rc = EVP_DigestInit_ex(ctx.get(), get_algorithm(kind), nullptr);
-  check_openssl_return(rc);
-
-  rc = EVP_DigestUpdate(ctx.get(), std::data(data), std::size(data));
-  check_openssl_return(rc);
-
-  std::string result;
-  result.resize(EVP_MAX_MD_SIZE);
-
-  std::uint32_t size;
-  rc = EVP_DigestFinal_ex(
-      ctx.get(), reinterpret_cast<unsigned char *>(std::data(result)), &size);
-  check_openssl_return(rc);
-
-  result.resize(size);
-  return result;
-}
-
 }  // namespace
 
 std::size_t fast_hash(const std::string &data) {
-  auto status = XXH3_createState();
-  SCOPE_EXIT { XXH3_freeState(status); };
-  if (!status) {
-    throw RuntimeError("XXH3_createState failed");
-  }
+  static std::unique_ptr<XXH3_state_t, decltype(XXH3_freeState) *> status(
+      XXH3_createState(), XXH3_freeState);
 
-  if (XXH3_64bits_reset(status) == XXH_ERROR) {
+  if (XXH3_64bits_reset(status.get()) == XXH_ERROR) {
     throw RuntimeError("XXH3_64bits_reset failed");
   }
 
-  if (XXH3_64bits_update(status, std::data(data), std::size(data)) ==
+  if (XXH3_64bits_update(status.get(), std::data(data), std::size(data)) ==
       XXH_ERROR) {
     throw RuntimeError("XXH3_64bits_update failed");
   }
 
-  return XXH3_64bits_digest(status);
+  return XXH3_64bits_digest(status.get());
 }
 
 std::string fast_hash_hex(const std::string &data) {
   return num_to_hex_string(fast_hash(data));
 }
 
-std::string md5(const std::string &data) { return do_hash(data, SHA::MD5); }
+std::string md5(const std::string &data) {
+  std::string result;
+  result.resize(MD5_DIGEST_LENGTH);
+
+  MD5(reinterpret_cast<const std::uint8_t *>(std::data(data)), std::size(data),
+      reinterpret_cast<std::uint8_t *>(std::data(result)));
+
+  return result;
+}
 
 std::string md5_hex(const std::string &data) {
   return bytes_to_hex_string(md5(data));
 }
 
 std::string sha224(const std::string &data) {
-  return do_hash(data, SHA::SHA224);
+  std::string result;
+  result.resize(SHA224_DIGEST_LENGTH);
+
+  SHA224(reinterpret_cast<const std::uint8_t *>(std::data(data)),
+         std::size(data), reinterpret_cast<std::uint8_t *>(std::data(result)));
+
+  return result;
 }
 
 std::string sha224_hex(const std::string &data) {
@@ -123,7 +86,13 @@ std::string sha224_hex(const std::string &data) {
 }
 
 std::string sha256(const std::string &data) {
-  return do_hash(data, SHA::SHA256);
+  std::string result;
+  result.resize(SHA256_DIGEST_LENGTH);
+
+  SHA256(reinterpret_cast<const std::uint8_t *>(std::data(data)),
+         std::size(data), reinterpret_cast<std::uint8_t *>(std::data(result)));
+
+  return result;
 }
 
 std::string sha256_hex(const std::string &data) {
@@ -131,7 +100,13 @@ std::string sha256_hex(const std::string &data) {
 }
 
 std::string sha384(const std::string &data) {
-  return do_hash(data, SHA::SHA384);
+  std::string result;
+  result.resize(SHA384_DIGEST_LENGTH);
+
+  SHA384(reinterpret_cast<const std::uint8_t *>(std::data(data)),
+         std::size(data), reinterpret_cast<std::uint8_t *>(std::data(result)));
+
+  return result;
 }
 
 std::string sha384_hex(const std::string &data) {
@@ -139,7 +114,13 @@ std::string sha384_hex(const std::string &data) {
 }
 
 std::string sha512(const std::string &data) {
-  return do_hash(data, SHA::SHA512);
+  std::string result;
+  result.resize(SHA512_DIGEST_LENGTH);
+
+  SHA512(reinterpret_cast<const std::uint8_t *>(std::data(data)),
+         std::size(data), reinterpret_cast<std::uint8_t *>(std::data(result)));
+
+  return result;
 }
 
 std::string sha512_hex(const std::string &data) {

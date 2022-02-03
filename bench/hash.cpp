@@ -39,6 +39,12 @@ TEST_CASE("fast hash", "[hash]") {
     BENCHMARK("hash") { return klib::fast_hash(data); };
     BENCHMARK("std hash") { return std::hash<std::string>{}(data); };
   }
+
+  SECTION("1 mb") {
+    auto data = klib::generate_random_bytes(10240000);
+    BENCHMARK("hash") { return klib::fast_hash(data); };
+    BENCHMARK("std hash") { return std::hash<std::string>{}(data); };
+  }
 }
 
 TEST_CASE("secure hash", "[hash]") {

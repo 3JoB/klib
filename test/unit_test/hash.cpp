@@ -10,6 +10,7 @@
 TEST_CASE("fast_hash", "[hash]") {
   std::string str = "Hello World";
   REQUIRE(klib::fast_hash(str) == 16376800918595593011UL);
+  REQUIRE(klib::fast_hash(str) == 16376800918595593011UL);
   REQUIRE(klib::fast_hash_hex(str) == "e34615aade2e6333");
 }
 
