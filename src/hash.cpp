@@ -66,10 +66,10 @@ std::string do_hash(const std::string &data, SHA kind) {
   bssl::ScopedEVP_MD_CTX ctx;
 
   auto rc = EVP_DigestInit_ex(ctx.get(), get_algorithm(kind), nullptr);
-  detail::check_openssl_return(rc);
+  check_openssl_return(rc);
 
   rc = EVP_DigestUpdate(ctx.get(), std::data(data), std::size(data));
-  detail::check_openssl_return(rc);
+  check_openssl_return(rc);
 
   std::string result;
   result.resize(EVP_MAX_MD_SIZE);
@@ -77,7 +77,7 @@ std::string do_hash(const std::string &data, SHA kind) {
   std::uint32_t size;
   rc = EVP_DigestFinal_ex(
       ctx.get(), reinterpret_cast<unsigned char *>(std::data(result)), &size);
-  detail::check_openssl_return(rc);
+  check_openssl_return(rc);
 
   result.resize(size);
   return result;

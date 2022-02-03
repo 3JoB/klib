@@ -1,12 +1,14 @@
 #pragma once
 
 #include <cstdint>
-#include <string>
 
-namespace klib::detail {
+#include <openssl/err.h>
 
-std::string openssl_err_msg();
+#include "klib/exception.h"
 
-void check_openssl_return(std::int32_t rc);
-
-}  // namespace klib::detail
+#define check_openssl_return(rc)                                      \
+  do {                                                                \
+    if (rc != 1) {                                                    \
+      throw RuntimeError(ERR_error_string(ERR_get_error(), nullptr)); \
+    }                                                                 \
+  } while (0)

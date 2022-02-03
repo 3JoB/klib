@@ -11,7 +11,7 @@
 #include <fstream>
 #include <map>
 
-#include <openssl/crypto.h>
+#include <openssl/mem.h>
 #include <openssl/rand.h>
 #include <boost/algorithm/string.hpp>
 #include <boost/uuid/uuid_generators.hpp>
@@ -296,12 +296,12 @@ std::string make_file_or_dir_name_legal(const std::string &file_name) {
 
 std::string generate_random_bytes(std::int32_t num) {
   if (RAND_status() == 0) {
-    detail::check_openssl_return(RAND_poll());
+    check_openssl_return(RAND_poll());
   }
 
   std::string bytes;
   bytes.resize(num);
-  detail::check_openssl_return(RAND_bytes(
+  check_openssl_return(RAND_bytes(
       reinterpret_cast<unsigned char *>(std::data(bytes)), std::size(bytes)));
 
   return bytes;

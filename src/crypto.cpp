@@ -37,7 +37,7 @@ std::string do_aes_crypt(bssl::Span<const char> data, const std::string &key,
 
   auto rc = EVP_CipherInit_ex(ctx.get(), get_cipher(aes_mode), nullptr, nullptr,
                               nullptr, encrypt);
-  detail::check_openssl_return(rc);
+  check_openssl_return(rc);
 
   if (std::size(key) != EVP_CIPHER_CTX_key_length(ctx.get())) {
     throw LogicError("Wrong key length");
@@ -49,7 +49,7 @@ std::string do_aes_crypt(bssl::Span<const char> data, const std::string &key,
       std::empty(iv) ? nullptr
                      : reinterpret_cast<const unsigned char *>(std::data(iv)),
       encrypt);
-  detail::check_openssl_return(rc);
+  check_openssl_return(rc);
 
   std::string result;
   auto data_size = std::size(data);
@@ -63,21 +63,21 @@ std::string do_aes_crypt(bssl::Span<const char> data, const std::string &key,
   std::size_t total = 0;
   std::int32_t len;
   while (!data.empty()) {
-    auto todo = data_size;
+    std::int32_t chunk = std::min(data.size(), 102400UL);
+
     rc = EVP_CipherUpdate(
         ctx.get(), reinterpret_cast<unsigned char *>(std::data(result)) + total,
-        &len, reinterpret_cast<const std::uint8_t *>(data.data()),
-        static_cast<std::int32_t>(todo));
-    detail::check_openssl_return(rc);
+        &len, reinterpret_cast<const std::uint8_t *>(data.data()), chunk);
+    check_openssl_return(rc);
 
-    total += static_cast<std::size_t>(len);
-    data = data.subspan(todo);
+    total += len;
+    data = data.subspan(chunk);
   }
 
   rc = EVP_CipherFinal_ex(
       ctx.get(), reinterpret_cast<unsigned char *>(std::data(result)) + total,
       &len);
-  detail::check_openssl_return(rc);
+  check_openssl_return(rc);
 
   total += len;
   result.resize(total);
