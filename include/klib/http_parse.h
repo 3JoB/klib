@@ -9,6 +9,7 @@
 #include <string>
 #include <string_view>
 #include <unordered_map>
+#include <vector>
 
 namespace klib {
 
@@ -17,6 +18,7 @@ namespace klib {
  */
 class URL {
  public:
+  URL() = default;
   /**
    * @brief Constructor
    * @param url: URL to be parsed
@@ -47,11 +49,43 @@ class URL {
 
   std::string_view schema_;
   std::string_view host_;
-  std::int32_t port_;
+  std::int32_t port_ = 0;
   std::string_view path_;
   std::string_view query_;
   std::string_view fragment_;
   std::string_view user_info_;
+};
+
+/**
+ * @brief HTTP header
+ * @see https://developer.mozilla.org/zh-CN/docs/Glossary/HTTP_header
+ * @see https://developer.mozilla.org/zh-CN/docs/Web/HTTP/Messages
+ */
+class HTTPHeader {
+ public:
+  explicit HTTPHeader(std::string header);
+
+  [[nodiscard]] std::int32_t status_code() const { return status_code_; }
+  [[nodiscard]] std::int32_t method() const { return method_; }
+  [[nodiscard]] std::int32_t http_major() const { return http_major_; }
+  [[nodiscard]] std::int32_t http_minor() const { return http_minor_; }
+  [[nodiscard]] const URL& url() const { return url_; }
+  [[nodiscard]] const std::string& body() const { return body_; }
+
+  [[nodiscard]] const std::string& value(const std::string& field) const;
+
+ private:
+  std::string header_;
+
+  std::int32_t status_code_;
+  std::int32_t method_;
+  std::int32_t http_major_;
+  std::int32_t http_minor_;
+
+  URL url_;
+  std::unordered_map<std::string, std::string> field_value_;
+
+  std::string body_;
 };
 
 }  // namespace klib

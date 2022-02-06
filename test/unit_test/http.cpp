@@ -53,9 +53,6 @@ TEST_CASE("response headers", "[http]") {
   auto response = request.get(httpbin_url + "/cookies/set",
                               {{cookie1, value1}, {cookie2, value2}});
   REQUIRE(response.ok());
-
-  auto map = response.headers_map();
-  REQUIRE(map.at("content-type") == "application/json");
 }
 
 TEST_CASE("GET", "[http]") {

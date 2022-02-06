@@ -537,52 +537,9 @@ Response Request::post_mime(
   return impl_->post_mime(url, data, file, header);
 }
 
-const std::string &Headers::at(const std::string &key) const {
-  auto lower_key = boost::to_lower_copy(key);
-  if (!map_.contains(lower_key)) {
-    throw RuntimeError("no key");
-  }
-
-  return map_.at(lower_key);
-}
-
-void Headers::add(const std::string &key, const std::string &value) {
-  auto lower_key = boost::to_lower_copy(key);
-  auto lower_value = boost::to_lower_copy(value);
-
-  if (map_.contains(lower_key)) {
-    auto old = map_[lower_key];
-    map_[lower_key] = old + ", " + lower_value;
-  } else {
-    map_.emplace(lower_key, lower_value);
-  }
-}
-
 std::int64_t Response::status_code() const { return status_code_; }
 
 bool Response::ok() const { return status_code_ == StatusCode::Ok; }
-
-const Headers &Response::headers_map() {
-  if (!headers_map_.empty()) {
-    return headers_map_;
-  }
-
-  auto lines = split_str(headers_, "\r\n");
-
-  auto iter = find_last(
-      std::begin(lines), std::end(lines),
-      [](const std::string &line) { return line.starts_with("HTTP/"); });
-  std::vector<std::string> last_headers(iter + 1, std::end(lines));
-
-  for (const auto &line : last_headers) {
-    auto index = line.find(':');
-    auto key = line.substr(0, index);
-    auto value = line.substr(index + 2);
-    headers_map_.add(key, value);
-  }
-
-  return headers_map_;
-}
 
 std::string Response::text() const { return text_; }
 

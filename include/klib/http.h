@@ -179,28 +179,6 @@ class Request {
 };
 
 /**
- * @brief Response headers
- */
-class Headers {
-  friend class Response;
-
- public:
-  /**
-   * @brief Get the value specified by key(not case sensitive)
-   * @param key: Key
-   * @return The value
-   */
-  [[nodiscard]] const std::string &at(const std::string &key) const;
-
-  bool empty() const { return std::empty(map_); }
-
- private:
-  void add(const std::string &key, const std::string &value);
-
-  std::unordered_map<std::string, std::string> map_;
-};
-
-/**
  * @brief Response content
  */
 class Response {
@@ -232,16 +210,12 @@ class Response {
   [[nodiscard]] bool ok() const;
 
   /**
-   * @brief Get server response
-   * @return Server response
-   */
-  [[nodiscard]] const Headers &headers_map();
-
-  /**
    * @brief Get response content
    * @return Response content
    */
   [[nodiscard]] std::string text() const;
+
+  [[nodiscard]] const std::string &headers() const { return headers_; }
 
   /**
    * @brief Save response content to file
@@ -254,8 +228,6 @@ class Response {
   std::int64_t status_code_ = StatusCode::None;
   std::string headers_;
   std::string text_;
-
-  Headers headers_map_;
 };
 
 }  // namespace klib

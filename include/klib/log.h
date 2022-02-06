@@ -17,6 +17,16 @@
 namespace klib {
 
 /**
+ * @brief Report information
+ * @param fmt: Format string
+ * @param args: Format string parameters
+ */
+template <typename... Args>
+void info(std::string_view fmt, Args &&...args) {
+  spdlog::info(fmt::runtime(fmt), std::forward<Args>(args)...);
+}
+
+/**
  * @brief Report warning
  * @param fmt: Format string
  * @param args: Format string parameters
