@@ -8,7 +8,7 @@ TEST_CASE("url", "[url]") {
 
   REQUIRE(url.schema() == "https");
   REQUIRE(url.host() == "www.example.com");
-  REQUIRE(url.port() == "80");
+  REQUIRE(url.port() == 80);
   REQUIRE(url.path() == "/path/to/myfile.html");
   REQUIRE(url.query() == "key1=value1&key2=value2");
   REQUIRE(url.fragment() == "SomewhereInTheDocument");

@@ -1,5 +1,6 @@
 #include "klib/url.h"
 
+#include <charconv>
 #include <utility>
 
 #include <boost/algorithm/string.hpp>
@@ -20,8 +21,11 @@ URL::URL(std::string url) : url_(std::move(url)) {
                              field_data[UF_SCHEMA].len);
   host_ =
       std::string_view(str + field_data[UF_HOST].off, field_data[UF_HOST].len);
-  port_ =
-      std::string_view(str + field_data[UF_PORT].off, field_data[UF_PORT].len);
+
+  auto port_begin = str + field_data[UF_PORT].off;
+  auto port_size = field_data[UF_PORT].len;
+  std::from_chars(port_begin, port_begin + port_size, port_);
+
   path_ =
       std::string_view(str + field_data[UF_PATH].off, field_data[UF_PATH].len);
   query_ = std::string_view(str + field_data[UF_QUERY].off,

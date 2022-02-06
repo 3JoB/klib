@@ -5,6 +5,7 @@
 
 #pragma once
 
+#include <cstdint>
 #include <string>
 #include <string_view>
 #include <unordered_map>
@@ -29,7 +30,7 @@ class URL {
    */
   [[nodiscard]] std::string_view schema() const { return schema_; }
   [[nodiscard]] std::string_view host() const { return host_; }
-  [[nodiscard]] std::string_view port() const { return port_; }
+  [[nodiscard]] std::int32_t port() const { return port_; }
   [[nodiscard]] std::string_view path() const { return path_; }
   [[nodiscard]] std::string_view query() const { return query_; }
   [[nodiscard]] std::string_view fragment() const { return fragment_; }
@@ -46,7 +47,7 @@ class URL {
 
   std::string_view schema_;
   std::string_view host_;
-  std::string_view port_;
+  std::int32_t port_;
   std::string_view path_;
   std::string_view query_;
   std::string_view fragment_;
