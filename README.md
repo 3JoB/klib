@@ -15,35 +15,7 @@ A C++ library, which wraps several important C libraries and provides some conve
 
 ## Environment
 
-- Debian 11
-- GCC 11 or Clang 13
-
-## Dependency
-
-- [tidy-html5](https://github.com/htacg/tidy-html5)
-- [zlib-ng](https://github.com/zlib-ng/zlib-ng)
-- [brotli](https://github.com/google/brotli)
-- [libarchive](https://github.com/libarchive/libarchive)
-- [BoringSSL](https://github.com/google/boringssl)
-- [fastbase64](https://github.com/lemire/fastbase64)
-- [nghttp2](https://github.com/nghttp2/nghttp2)
-- [libunistring](https://www.gnu.org/software/libunistring/)
-- [libidn2](https://www.gnu.org/software/libidn/)
-- [libpsl](https://github.com/rockdaboot/libpsl)
-- [curl](https://github.com/curl/curl)
-- [zstd](https://github.com/facebook/zstd)
-- [sqlcipher](https://github.com/sqlcipher/sqlcipher)
-- [argon2](https://github.com/P-H-C/phc-winner-argon2)
-- [xxHash](https://github.com/Cyan4973/xxHash)
-- [simdutf](https://github.com/simdutf/simdutf)
-- [cmark](https://github.com/commonmark/cmark)
-- [mimalloc](https://github.com/microsoft/mimalloc)
-- [Boost](https://www.boost.org/)
-- [fmt](https://github.com/fmtlib/fmt)
-- [spdlog](https://github.com/gabime/spdlog)
-- [scope_guard](https://github.com/Neargye/scope_guard)
-- [gsl-lite](https://github.com/gsl-lite/gsl-lite)
-- [CLI11](https://github.com/CLIUtils/CLI11)
+- [kenv](https://github.com/KaiserLancelot/kenv)
 
 ## Build
 

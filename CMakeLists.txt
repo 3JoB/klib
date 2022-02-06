@@ -90,6 +90,7 @@ find_package(scope_guard REQUIRED)
 find_package(simdutf REQUIRED)
 find_package(xxHash REQUIRED)
 find_package(cmark REQUIRED)
+find_package(llhttp REQUIRED)
 find_package(gsl-lite REQUIRED)
 
 if(${CMAKE_BUILD_TYPE} STREQUAL "Debug")
@@ -148,6 +149,7 @@ file(MAKE_DIRECTORY ${KLIB_BINARY_DIR}/third_party/libpsl)
 file(MAKE_DIRECTORY ${KLIB_BINARY_DIR}/third_party/libunistring)
 file(MAKE_DIRECTORY ${KLIB_BINARY_DIR}/third_party/xxhash)
 file(MAKE_DIRECTORY ${KLIB_BINARY_DIR}/third_party/cmark)
+file(MAKE_DIRECTORY ${KLIB_BINARY_DIR}/third_party/llhttp)
 add_custom_command(
   TARGET ${KLIB_LIBRARY}
   POST_BUILD
@@ -172,11 +174,12 @@ add_custom_command(
   COMMAND gcc-ar -x --output=libunistring /usr/local/lib/libunistring.a
   COMMAND gcc-ar -x --output=xxhash /usr/local/lib/libxxhash.a
   COMMAND gcc-ar -x --output=cmark /usr/local/lib/libcmark.a
+  COMMAND gcc-ar -x --output=llhttp /usr/local/lib/libllhttp.a
   COMMAND
     gcc-ar -qcs ${KLIB_BINARY_DIR}/lib${KLIB_LIBRARY}.a klib/*.o zlib/*.o
     libarchive/*.o tidy/*.o libcurl/*.o brotli/*.o openssl/*.o sqlcipher/*.o
     argon2/*.o zstd/*.o fmt/*.o spdlog/*.o nghttp2/*.o simdutf/*.o libidn2/*.o
-    libpsl/*.o libunistring/*.o xxhash/*.o cmark/*.o
+    libpsl/*.o libunistring/*.o xxhash/*.o cmark/*.o llhttp/*.o
   COMMAND gcc-ranlib ${KLIB_BINARY_DIR}/lib${KLIB_LIBRARY}.a
   WORKING_DIRECTORY ${KLIB_BINARY_DIR}/third_party
   COMMENT "Combined static library")
