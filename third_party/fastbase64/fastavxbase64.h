@@ -7,7 +7,7 @@
 
 #include <stddef.h>
 #include <stdint.h>
-#include "chromiumbase64.h"
+#include "modp_b64.h"
 
 #ifdef __cplusplus
 extern "C" {

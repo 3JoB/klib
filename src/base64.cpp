@@ -14,7 +14,7 @@ std::string fast_base64_encode(const std::string &data) {
   const auto data_size = std::size(data);
 
   std::string result;
-  result.resize(chromium_base64_encode_len(data_size));
+  result.resize(modp_b64_encode_len(data_size));
 
   auto len =
       fast_avx2_base64_encode(std::data(result), std::data(data), data_size);
@@ -27,7 +27,7 @@ std::string fast_base64_decode(const std::string &data) {
   const auto data_size = std::size(data);
 
   std::string result;
-  result.resize(chromium_base64_decode_len(data_size));
+  result.resize(modp_b64_decode_len(data_size));
 
   auto len =
       fast_avx2_base64_decode(std::data(result), std::data(data), data_size);

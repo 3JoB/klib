@@ -42,9 +42,13 @@ set(KLIB_SOURCE_DIR ${CMAKE_CURRENT_SOURCE_DIR})
 set(KLIB_BINARY_DIR ${CMAKE_CURRENT_BINARY_DIR})
 
 # https://cmake.org/cmake/help/latest/command/file.html#glob-recurse
-file(GLOB_RECURSE KLIB_LIBRARY_SRC CONFIGURE_DEPENDS
-     "${KLIB_SOURCE_DIR}/src/*.cpp"
-     "${KLIB_SOURCE_DIR}/third_party/fastbase64/*.c")
+file(
+  GLOB_RECURSE
+  KLIB_LIBRARY_SRC
+  CONFIGURE_DEPENDS
+  "${KLIB_SOURCE_DIR}/src/*.cpp"
+  "${KLIB_SOURCE_DIR}/third_party/fastbase64/*.c"
+  "${KLIB_SOURCE_DIR}/third_party/http-parser/*.c")
 
 # ---------------------------------------------------------------------------------------
 # Include CMake module
@@ -54,7 +58,6 @@ include(GNUInstallDirs)
 
 include(Options)
 include(Check)
-include(ClangTidy)
 include(Doxygen)
 include(Format)
 include(CompilerOptions)

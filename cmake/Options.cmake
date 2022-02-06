@@ -16,7 +16,6 @@ option(KLIB_BUILD_BENCH "Build benchmark" OFF)
 option(KLIB_BUILD_DOC "Build documentation" OFF)
 
 option(KLIB_FORMAT "Format code using clang-format and cmake-format" OFF)
-option(KLIB_CLANG_TIDY "Analyze code with clang-tidy" OFF)
 option(KLIB_SANITIZER "Build with AddressSanitizer and UndefinedSanitizer" OFF)
 
 option(KLIB_INSTALL "Generate the install target" ${KLIB_MAIN_PROJECT})

@@ -108,7 +108,7 @@ __attribute__((target("avx2"))) size_t fast_avx2_base64_encode(char *dest,
       }
     }
   }
-  size_t scalarret = chromium_base64_encode(dest, str, len);
+  size_t scalarret = modp_b64_encode(dest, str, len);
   if (scalarret == MODP_B64_ERROR) return MODP_B64_ERROR;
   return (dest - dest_orig) + scalarret;
 }
@@ -178,7 +178,7 @@ __attribute__((target("avx2"))) size_t fast_avx2_base64_decode(char *out,
     _mm256_storeu_si256((__m256i *)out, str);
     out += 24;
   }
-  size_t scalarret = chromium_base64_decode(out, src, srclen);
+  size_t scalarret = modp_b64_decode(out, src, srclen);
   if (scalarret == MODP_B64_ERROR) return MODP_B64_ERROR;
   return (out - out_orig) + scalarret;
 }

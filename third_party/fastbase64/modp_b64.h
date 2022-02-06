@@ -1,6 +1,5 @@
-/***************
- * Taken more or less as-is from the chromium project
- ****************/
+/* -*- mode: c; c-basic-offset: 4; indent-tabs-mode: nil; tab-width: 4 -*- */
+/* vi: set expandtab shiftwidth=4 tabstop=4: */
 
 /**
  * \file
@@ -26,19 +25,17 @@
 #define MODP_B64
 
 #include <stddef.h>
-#include <stdint.h>
 
 #ifdef __cplusplus
 extern "C" {
 #endif
 
-#define MODP_B64_ERROR ((size_t)-1)
 /**
  * Encode a raw binary string into base 64.
  * src contains the bytes
  * len contains the number of bytes in the src
  * dest should be allocated by the caller to contain
- *   at least chromium_base64_encode_len(len) bytes (see below)
+ *   at least modp_b64_encode_len(len) bytes (see below)
  *   This will contain the null-terminated b64 encoded result
  * returns length of the destination string plus the ending null byte
  *    i.e.  the result will be equal to strlen(dest) + 1
@@ -48,9 +45,9 @@ extern "C" {
  * \code
  * char* src = ...;
  * int srclen = ...; //the length of number of bytes in src
- * char* dest = (char*) malloc(chromium_base64_decode_len(srclen));
- * int len = chromium_base64_encode(dest, src, sourcelen);
- * if (len == MODP_B64_ERROR) {
+ * char* dest = (char*) malloc(modp_b64_encode_len);
+ * int len = modp_b64_encode(dest, src, sourcelen);
+ * if (len == -1) {
  *   printf("Error\n");
  * } else {
  *   printf("b64 = %s\n", dest);
@@ -58,31 +55,30 @@ extern "C" {
  * \endcode
  *
  */
-size_t chromium_base64_encode(char* dest, const char* str, size_t len);
+size_t modp_b64_encode(char* dest, const char* str, size_t len);
 
 /**
  * Decode a base64 encoded string
  *
- *
  * src should contain exactly len bytes of b64 characters.
  *     if src contains -any- non-base characters (such as white
- *     space, MODP_B64_ERROR is returned.
+ *     space, -1 is returned.
  *
  * dest should be allocated by the caller to contain at least
  *    len * 3 / 4 bytes.
  *
- * Returns the length (strlen) of the output, or MODP_B64_ERROR if unable to
+ * Returns the length (strlen) of the output, or -1 if unable to
  * decode
  *
  * \code
  * char* src = ...;
  * int srclen = ...; // or if you don't know use strlen(src)
- * char* dest = (char*) malloc(chromium_base64_encode_len(srclen));
- * int len = chromium_base64_decode(dest, src, sourcelen);
- * if (len == MODP_B64_ERROR) { error }
+ * char* dest = (char*) malloc(modp_b64_decode_len(srclen));
+ * int len = modp_b64_decode(dest, src, sourcelen);
+ * if (len == -1) { error }
  * \endcode
  */
-size_t chromium_base64_decode(char* dest, const char* src, size_t len);
+size_t modp_b64_decode(char* dest, const char* src, size_t len);
 
 /**
  * Given a source string of length len, this returns the amount of
@@ -94,7 +90,7 @@ size_t chromium_base64_decode(char* dest, const char* src, size_t len);
  *
  * +1 is for any extra null.
  */
-#define chromium_base64_encode_len(A) ((A + 2) / 3 * 4 + 1)
+#define modp_b64_encode_len(A) ((A + 2) / 3 * 4 + 1)
 
 /**
  * Given a base64 string of length len,
@@ -105,7 +101,7 @@ size_t chromium_base64_decode(char* dest, const char* src, size_t len);
  * decode  4 chars turn into 3 bytes
  * floor[len * 3/4] + 2
  */
-#define chromium_base64_decode_len(A) (A / 4 * 3 + 2)
+#define modp_b64_decode_len(A) (A / 4 * 3 + 2)
 
 /**
  * Will return the strlen of the output from encoding.
@@ -117,13 +113,12 @@ size_t chromium_base64_decode(char* dest, const char* src, size_t len);
  * int len = strlen(b64encoded);
  *
  * struct datastuff foo;
- * if (chromium_base64_encode_strlen(sizeof(struct datastuff)) != len) {
+ * if (modp_b64_encode_strlen(sizeof(struct datastuff)) != len) {
  *    // wrong size
  *    return false;
  * } else {
  *    // safe to do;
- *    if (chromium_base64_encode((char*) &foo, b64encoded, len) ==
- * MODP_B64_ERROR) {
+ *    if (modp_b64_decode((char*) &foo, b64encoded, len) == -1) {
  *      // bad characters
  *      return false;
  *    }
@@ -131,12 +126,23 @@ size_t chromium_base64_decode(char* dest, const char* src, size_t len);
  * // foo is filled out now
  * \endcode
  */
-#define chromium_base64_encode_strlen(A) ((A + 2) / 3 * 4)
+#define modp_b64_encode_strlen(A) ((A + 2) / 3 * 4)
+
+#define MODP_B64_ERROR ((size_t)-1)
 
 #ifdef __cplusplus
 }
 
 #include <string>
+
+inline std::string& modp_b64_encode(std::string& s) {
+  std::string x(modp_b64_encode_len(s.size()), '\0');
+  size_t d =
+      modp_b64_encode(const_cast<char*>(x.data()), s.data(), (int)s.size());
+  x.erase(d, std::string::npos);
+  s.swap(x);
+  return s;
+}
 
 /**
  * base 64 decode a string (self-modifing)
@@ -147,10 +153,10 @@ size_t chromium_base64_decode(char* dest, const char* src, size_t len);
  * \param[in,out] s the string to be decoded
  * \return a reference to the input string
  */
-inline std::string& chromium_base64_encode(std::string& s) {
-  std::string x(chromium_base64_encode_len(s.size()), '\0');
-  size_t d = chromium_base64_encode(const_cast<char*>(x.data()), s.data(),
-                                    (int)s.size());
+inline std::string& modp_b64_decode(std::string& s) {
+  std::string x(modp_b64_decode_len(s.size()), '\0');
+  size_t d =
+      modp_b64_decode(const_cast<char*>(x.data()), s.data(), (int)s.size());
   if (d == MODP_B64_ERROR) {
     x.clear();
   } else {
@@ -161,4 +167,5 @@ inline std::string& chromium_base64_encode(std::string& s) {
 }
 
 #endif /* __cplusplus */
-#endif
+
+#endif /* MODP_B64 */
