@@ -14,3 +14,8 @@ add_executable(${KLIB_EXECUTABLE} ${MIMALLOC_OBJECT} ${KLIB_EXECUTABLE_SRC})
 target_link_libraries(
   ${KLIB_EXECUTABLE} PRIVATE ${KLIB_LIBRARY} gsl::gsl-lite-v1 CLI11::CLI11
                              fmt::fmt spdlog::spdlog)
+
+if(${CMAKE_BUILD_TYPE} STREQUAL "Debug")
+  find_package(Backward REQUIRED)
+  target_link_libraries(${KLIB_EXECUTABLE} PRIVATE Backward::Backward)
+endif()
