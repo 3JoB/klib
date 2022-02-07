@@ -1,3 +1,12 @@
+/**
+ * @see https://github.com/Cyan4973/xxHash/blob/dev/README.md
+ * @see
+ * https://github.com/chromium/chromium/blob/main/base/hash/md5_boringssl.cc
+ * @see
+ * https://github.com/chromium/chromium/blob/main/base/hash/sha1_boringssl.cc
+ * @see https://github.com/P-H-C/phc-winner-argon2/blob/master/README.md
+ */
+
 #include "klib/hash.h"
 
 #include <argon2.h>
@@ -16,12 +25,7 @@ namespace klib {
 namespace {
 
 std::string num_to_hex_string(std::size_t num) {
-  std::string str;
-  str.reserve(16);
-
-  str += fmt::format(FMT_COMPILE("{:x}"), num);
-
-  return str;
+  return fmt::format(FMT_COMPILE("{:x}"), num);
 }
 
 std::string bytes_to_hex_string(const std::string &bytes) {
@@ -38,19 +42,20 @@ std::string bytes_to_hex_string(const std::string &bytes) {
 }  // namespace
 
 std::size_t fast_hash(const std::string &data) {
-  static std::unique_ptr<XXH3_state_t, decltype(XXH3_freeState) *> status(
+  static std::unique_ptr<XXH3_state_t, decltype(XXH3_freeState) *> status1(
       XXH3_createState(), XXH3_freeState);
+  auto status = status1.get();
 
-  if (XXH3_64bits_reset(status.get()) == XXH_ERROR) {
+  if (XXH3_64bits_reset(status) == XXH_ERROR) {
     throw RuntimeError("XXH3_64bits_reset failed");
   }
 
-  if (XXH3_64bits_update(status.get(), std::data(data), std::size(data)) ==
+  if (XXH3_64bits_update(status, std::data(data), std::size(data)) ==
       XXH_ERROR) {
     throw RuntimeError("XXH3_64bits_update failed");
   }
 
-  return XXH3_64bits_digest(status.get());
+  return XXH3_64bits_digest(status);
 }
 
 std::string fast_hash_hex(const std::string &data) {

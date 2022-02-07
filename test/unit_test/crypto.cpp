@@ -7,7 +7,6 @@
 #include "klib/crypto.h"
 #include "klib/hash.h"
 
-// https://tool.lmeee.com/jiami/aes
 TEST_CASE("AES 256 CBC", "[crypto]") {
   CHECK_NOTHROW(klib::aes_256_decrypt(
       klib::fast_base64_decode(

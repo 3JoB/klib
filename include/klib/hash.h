@@ -1,6 +1,6 @@
 /**
  * @file hash.h
- * @brief Contains hash module
+ * @brief Contains hash functions
  */
 
 #pragma once
@@ -8,12 +8,11 @@
 #include <cstddef>
 #include <cstdint>
 #include <string>
-#include <utility>
 
 namespace klib {
 
 /**
- * @brief Get the hash object and calculate the hash value
+ * @brief Calculate the hash
  * @param data: Data to be hashed
  * @return Hash result
  */
@@ -21,7 +20,7 @@ std::size_t fast_hash(const std::string &data);
 std::string fast_hash_hex(const std::string &data);
 
 /**
- * @brief Get the hash object and calculate the hash value
+ * @brief Calculate the hash
  * @param data: Data to be hashed
  * @return Hash result
  */
