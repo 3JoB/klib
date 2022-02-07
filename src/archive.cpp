@@ -301,16 +301,17 @@ std::string compress_data(const std::string &data) {
 }
 
 std::string compress_data(const char *data, std::size_t size) {
-  auto compressed_size = ZSTD_compressBound(size);
-  std::string compressed_data;
-  compressed_data.resize(compressed_size);
+  std::string result;
 
-  compressed_size = ZSTD_compress(std::data(compressed_data), compressed_size,
-                                  data, size, ZSTD_defaultCLevel());
-  check_zstd(compressed_size);
-  compressed_data.resize(compressed_size);
+  auto max_size = ZSTD_compressBound(size);
+  result.resize(max_size);
 
-  return compressed_data;
+  auto length = ZSTD_compress(std::data(result), max_size, data, size,
+                              ZSTD_defaultCLevel());
+  check_zstd(length);
+  result.resize(length);
+
+  return result;
 }
 
 std::string decompress_data(const std::string &data) {
@@ -318,24 +319,20 @@ std::string decompress_data(const std::string &data) {
 }
 
 std::string decompress_data(const char *data, std::size_t size) {
-  auto decompressed_size = ZSTD_getFrameContentSize(data, size);
-  if (decompressed_size == ZSTD_CONTENTSIZE_ERROR) {
+  std::string result;
+
+  auto length = ZSTD_getFrameContentSize(data, size);
+  if (length == ZSTD_CONTENTSIZE_ERROR) {
     throw RuntimeError("Not compressed by zstd");
-  } else if (decompressed_size == ZSTD_CONTENTSIZE_UNKNOWN) {
+  } else if (length == ZSTD_CONTENTSIZE_UNKNOWN) {
     throw RuntimeError("Original size unknown");
   }
+  result.resize(length);
 
-  std::string decompressed_data;
-  decompressed_data.resize(decompressed_size);
-  auto decompress_size_new = ZSTD_decompress(std::data(decompressed_data),
-                                             decompressed_size, data, size);
-  check_zstd(decompress_size_new);
+  auto rc = ZSTD_decompress(std::data(result), length, data, size);
+  check_zstd(rc);
 
-  if (decompressed_size != decompress_size_new) {
-    throw RuntimeError("Impossible because zstd will check this condition");
-  }
-
-  return decompressed_data;
+  return result;
 }
 
 }  // namespace klib
