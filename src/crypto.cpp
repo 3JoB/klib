@@ -63,7 +63,7 @@ std::string do_aes_crypt(std::span<const char> data, const std::string &key,
   std::size_t total = 0;
   std::int32_t length;
   while (!data.empty()) {
-    std::int32_t todo = std::min(input_size, 16384UL);
+    std::int32_t todo = std::min(data.size(), 102400UL);
 
     rc = EVP_CipherUpdate(
         ctx, reinterpret_cast<unsigned char *>(std::data(result)) + total,
