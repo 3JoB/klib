@@ -19,6 +19,8 @@
 // https://github.com/libarchive/libarchive/blob/master/examples/minitar/minitar.c
 namespace klib {
 
+constexpr std::size_t buff_size = 1 * 1024 * 1024;
+
 namespace {
 
 #define check_libarchive(rc, archive)                    \
@@ -213,7 +215,7 @@ void compress(const std::vector<std::string> &paths,
       auto fd = open(archive_entry_sourcepath(entry), O_RDONLY);
       SCOPE_EXIT { close(fd); };
 
-      static char buff[102400];
+      static char buff[buff_size];
       auto len = read(fd, buff, sizeof(buff));
       while (len > 0) {
         archive_write_data(archive, buff, len);
@@ -232,19 +234,19 @@ void decompress(const std::string &file_name, const std::string &out_dir) {
 
   init_read_format_filter(archive, file_name);
 
+  auto rc = archive_read_open_filename(archive, file_name.c_str(), buff_size);
+  check_libarchive(rc, archive);
+
   auto extract = archive_write_disk_new();
   SCOPE_EXIT {
     archive_write_close(extract);
     archive_write_free(extract);
   };
 
-  auto rc = archive_write_disk_set_options(extract, ARCHIVE_EXTRACT_TIME);
+  rc = archive_write_disk_set_options(extract, ARCHIVE_EXTRACT_TIME);
   check_libarchive(rc, extract);
 
   rc = archive_write_disk_set_standard_lookup(extract);
-  check_libarchive(rc, extract);
-
-  rc = archive_read_open_filename(archive, file_name.c_str(), 102400);
   check_libarchive(rc, extract);
 
   ChangeWorkingDir change_work_dir(out_dir);
@@ -274,7 +276,7 @@ std::optional<std::string> outermost_folder_name(const std::string &file_name) {
 
   init_read_format_filter(archive, file_name);
 
-  auto rc = archive_read_open_filename(archive, file_name.c_str(), 102400);
+  auto rc = archive_read_open_filename(archive, file_name.c_str(), buff_size);
   check_libarchive(rc, archive);
 
   std::unordered_set<std::string> dirs;
