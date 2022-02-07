@@ -85,7 +85,7 @@ void do_encrypt(const std::string& file_path, const std::string& password) {
 
   spdlog::info("Start compressing file");
   auto compressed =
-      klib::compress_str(file_size_str + file_name + file_content);
+      klib::compress_data(file_size_str + file_name + file_content);
   klib::cleanse(file_content);
 
   spdlog::info("Run Key derivation function");
@@ -124,7 +124,7 @@ void do_decrypt(const std::string& file_path, const std::string& password) {
   klib::cleanse(key);
 
   spdlog::info("Start decompressing file");
-  auto decompressed = klib::decompress_str(decrypted);
+  auto decompressed = klib::decompress_data(decrypted);
   klib::cleanse(decrypted);
 
   auto file_size = std::stoi(decompressed.substr(0, 8));

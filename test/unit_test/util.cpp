@@ -43,17 +43,17 @@ TEST_CASE("split_str", "[util]") {
 }
 
 TEST_CASE("read_file & write_file", "[util]") {
-  REQUIRE(std::filesystem::exists("zlib-v1.2.11.tar.gz"));
+  REQUIRE(std::filesystem::exists("zlib-ng-2.0.6.tar.gz"));
 
-  auto data = klib::read_file("zlib-v1.2.11.tar.gz", true);
-  REQUIRE(std::size(data) == 659779);
+  auto data = klib::read_file("zlib-ng-2.0.6.tar.gz", true);
+  REQUIRE(std::size(data) == 817951);
 
-  REQUIRE_NOTHROW(klib::write_file("write-file.zip", true, data));
+  REQUIRE_NOTHROW(klib::write_file("write-file.tar.gz", true, data));
 
-  REQUIRE(std::filesystem::exists("write-file.zip"));
-  REQUIRE(std::filesystem::file_size("write-file.zip") == 659779);
+  REQUIRE(std::filesystem::exists("write-file.tar.gz"));
+  REQUIRE(std::filesystem::file_size("write-file.tar.gz") == 817951);
 
-  REQUIRE(std::filesystem::remove("write-file.zip"));
+  REQUIRE(std::filesystem::remove("write-file.tar.gz"));
 }
 
 TEST_CASE("read_file_line", "[util]") {
@@ -68,18 +68,6 @@ ccc
           std::vector<std::string>{"aaa", "bbb", "ccc", "dd"});
 
   REQUIRE(std::filesystem::remove("write-file.txt"));
-}
-
-TEST_CASE("folder_size", "[util]") {
-  REQUIRE(std::filesystem::exists("folder1"));
-  REQUIRE(klib::folder_size("folder1") == 38);
-}
-
-TEST_CASE("same_folder", "[util]") {
-  REQUIRE(std::filesystem::exists("folder1"));
-  REQUIRE(std::filesystem::exists("folder2"));
-
-  REQUIRE(klib::same_folder("folder1", "folder2"));
 }
 
 TEST_CASE("execute_command", "[util]") {

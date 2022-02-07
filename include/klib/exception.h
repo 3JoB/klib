@@ -18,7 +18,7 @@ namespace klib {
 /**
  * @brief Exception class
  */
-class Exception {
+class Exception : public std::exception {
  public:
   /**
    * @brief Constructor
@@ -26,21 +26,13 @@ class Exception {
    */
   explicit Exception(std::string msg) : msg_(std::move(msg)) {}
 
-  Exception(const Exception &) = default;
-  Exception &operator=(const Exception &) = default;
-  Exception(Exception &&) = default;
-  Exception &operator=(Exception &&) = default;
-
-  /**
-   * @brief Destructor
-   */
-  virtual ~Exception() = default;
-
   /**
    * @brief Get exception message
    * @return Exception message
    */
-  [[nodiscard]] const std::string &what() const { return msg_; }
+  [[nodiscard]] const char *what() const noexcept override {
+    return msg_.c_str();
+  }
 
  private:
   std::string msg_;

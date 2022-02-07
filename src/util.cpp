@@ -25,26 +25,6 @@ namespace klib {
 
 namespace {
 
-std::map<std::string, std::string> read_folder(const std::string &path) {
-  if (!std::filesystem::is_directory(path)) {
-    throw RuntimeError("'{}' is not a directory", path);
-  }
-
-  std::map<std::string, std::string> folder;
-
-  for (const auto &item : std::filesystem::recursive_directory_iterator(path)) {
-    auto relative_path = item.path().string().substr(std::size(path) + 1);
-
-    if (std::filesystem::is_regular_file(item.path())) {
-      folder.emplace(relative_path, read_file(item.path(), true));
-    } else {
-      folder.emplace(relative_path, "");
-    }
-  }
-
-  return folder;
-}
-
 bool wait_error(std::int32_t status) {
   return !WIFEXITED(status) || WEXITSTATUS(status);
 }
@@ -161,26 +141,6 @@ void write_file(const char *path, bool binary_mode, const char *content,
   }
 
   ofs.write(content, length);
-}
-
-std::size_t folder_size(const std::string &path) {
-  if (!std::filesystem::is_directory(path)) {
-    throw RuntimeError("'{}' is not a directory", path);
-  }
-
-  std::size_t size = 0;
-
-  for (const auto &item : std::filesystem::recursive_directory_iterator(path)) {
-    if (std::filesystem::is_regular_file(item)) {
-      size += std::filesystem::file_size(item);
-    }
-  }
-
-  return size;
-}
-
-bool same_folder(const std::string &path1, const std::string &path2) {
-  return read_folder(path1) == read_folder(path2);
 }
 
 void exec(const std::string &cmd) { exec(cmd.c_str()); }

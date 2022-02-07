@@ -87,17 +87,19 @@ TEST_CASE("sql", "[sql]") {
       REQUIRE_NOTHROW(std::cout << query.get_column(1).as_int32() << '\n');
     }
   }
+
+  std::filesystem::remove("test.db");
 }
 
 TEST_CASE("blob", "[sql]") {
-  klib::SqlDatabase db("test2.db", klib::SqlDatabase::ReadWrite, "");
+  klib::SqlDatabase db("test1.db", klib::SqlDatabase::ReadWrite, "");
 
   REQUIRE_NOTHROW(db.transaction());
   REQUIRE_NOTHROW(db.drop_table_if_exists("BlobTest"));
   REQUIRE_NOTHROW(db.exec("CREATE TABLE BlobTest(Data BLOB);"));
 
-  REQUIRE(std::filesystem::exists("zlib-v1.2.11.tar.gz"));
-  std::string blob = klib::read_file("zlib-v1.2.11.tar.gz", true);
+  REQUIRE(std::filesystem::exists("zlib-ng-2.0.6.tar.gz"));
+  auto blob = klib::read_file("zlib-ng-2.0.6.tar.gz", true);
 
   klib::SqlQuery query(db);
   REQUIRE_NOTHROW(query.prepare("INSERT INTO BlobTest(Data) VALUES(?);"));
@@ -112,4 +114,6 @@ TEST_CASE("blob", "[sql]") {
   REQUIRE_NOTHROW(query.finalize());
 
   REQUIRE_NOTHROW(db.vacuum());
+
+  std::filesystem::remove("test1.db");
 }

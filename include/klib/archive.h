@@ -1,12 +1,11 @@
 /**
  * @file archive.h
- * @brief Contains compression and decompression modules
+ * @brief Contains compression and decompression functions
  */
 
 #pragma once
 
 #include <cstddef>
-#include <cstdint>
 #include <optional>
 #include <string>
 #include <vector>
@@ -14,70 +13,73 @@
 namespace klib {
 
 /**
- * @brief Algorithm used for compression
+ * @brief Supported Archive Formats
  */
-enum class Algorithm { Zip, Gzip, Zstd };
+enum class Format { Zip, Tar };
+
+/**
+ * @brief Supported Compression Algorithms
+ */
+enum class Filter { None, Deflate, Gzip, Zstd };
 
 /**
  * @brief Compress file or folder
  * @param path: File or folder path
- * @param algorithm: Compression algorithm used
- * @param file_name: Compressed file name(If it is empty, the default file name
- * is used)
- * @param flag: Whether to include the outermost folder(If path refers to a
- * file, ignore it)
- * @param level: Compression level
+ * @param format: Archive format
+ * @param filter: Compression algorithm
+ * @param out_name: Compressed file name
+ * @param flag: Whether to include the outermost folder
  */
-void compress(const std::string &path, Algorithm algorithm,
-              const std::string &file_name = "", bool flag = true,
-              std::optional<std::int32_t> level = {});
+void compress(const std::string &path, Format format = Format::Tar,
+              Filter filter = Filter::Gzip, const std::string &out_name = "",
+              bool flag = true);
 
 /**
  * @brief Compress files or folders
  * @param paths: Files or folders path
- * @param algorithm: Compression algorithm used
- * @param file_name: Compressed file name
- * @param level: Compression level
+ * @param out_name: Compressed file name
+ * @param format: Archive format
+ * @param filter: Compression algorithm
  */
-void compress(const std::vector<std::string> &paths, Algorithm algorithm,
-              const std::string &file_name,
-              std::optional<std::int32_t> level = {});
+void compress(const std::vector<std::string> &paths,
+              const std::string &out_name, Format format = Format::Tar,
+              Filter filter = Filter::Gzip);
 
 /**
  * @brief Decompress file
- * @param path: Compressed file path
- * @param decompressed_path: Specify the location of the decompressed content(If
- * it is empty, decompress to the current directory)
- * @return Outermost folder name(If there is not only one folder, then empty)
+ * @param file_path: Compressed file name
+ * @param out_dir: Specify the location of the decompressed content
  */
-std::optional<std::string> decompress(
-    const std::string &path, const std::string &decompressed_path = "");
+void decompress(const std::string &file_path, const std::string &out_dir = "");
+
+/**
+ * @brief Get the outermost folder name
+ * @param file_path: Compressed file name
+ * @return The outermost folder name
+ */
+std::optional<std::string> outermost_folder_name(const std::string &file_path);
 
 /**
  * @brief Compress data
  * @param data: Data to be compressed
- * @param level: Compression level
  * @return Compressed data
  */
-std::string compress_str(const std::string &data,
-                         std::optional<std::int32_t> level = {});
+std::string compress_data(const std::string &data);
 
 /**
  * @brief Compress data
  * @param data: Data to be compressed
  * @param size: The size of the data to be compressed
- * @param level: Compression level
  * @return Compressed data
  */
-std::string compress_str(const char *data, std::size_t size,
-                         std::optional<std::int32_t> level = {});
+std::string compress_data(const char *data, std::size_t size);
 
 /**
  * @brief Decompress data
  * @param data: Data to be decompressed
  * @return Decompressed data
  */
-std::string decompress_str(const std::string &data);
+std::string decompress_data(const std::string &data);
 
 /**
  * @brief Decompress data
@@ -85,6 +87,6 @@ std::string decompress_str(const std::string &data);
  * @param size: The size of the data to be decompressed
  * @return Decompressed data
  */
-std::string decompress_str(const char *data, std::size_t size);
+std::string decompress_data(const char *data, std::size_t size);
 
 }  // namespace klib

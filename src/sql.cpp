@@ -165,7 +165,7 @@ std::string Column::ColumnImpl::as_blob() const {
     throw InvalidArgument("Not a blob");
   }
 
-  return decompress_str(
+  return decompress_data(
       reinterpret_cast<const char *>(sqlite3_column_blob(stmt_, index_)),
       sqlite3_column_bytes(stmt_, index_));
 }
@@ -237,7 +237,7 @@ void SqlQuery::SqlQueryImpl::bind(std::int32_t index,
 
 void SqlQuery::SqlQueryImpl::bind(std::int32_t index, const char *value,
                                   std::size_t size) {
-  auto compressed_data = compress_str(value, size);
+  auto compressed_data = compress_data(value, size);
   auto rc = sqlite3_bind_blob(stmt_, index, std::data(compressed_data),
                               std::size(compressed_data), SQLITE_TRANSIENT);
   check_sqlite(rc, db_);

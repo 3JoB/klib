@@ -1,5 +1,7 @@
 #include "klib/archive.h"
 
+#include <fcntl.h>
+
 #include <cstdint>
 #include <filesystem>
 #include <memory>
@@ -7,7 +9,6 @@
 
 #include <archive.h>
 #include <archive_entry.h>
-#include <zlib.h>
 #include <zstd.h>
 #include <boost/core/ignore_unused.hpp>
 #include <scope_guard.hpp>
@@ -15,101 +16,139 @@
 #include "klib/exception.h"
 #include "klib/util.h"
 
-// https://github.com/libarchive/libarchive/wiki/Examples
 // https://github.com/libarchive/libarchive/blob/master/examples/minitar/minitar.c
 namespace klib {
 
 namespace {
+
+#define check_libarchive(rc, archive)                    \
+  do {                                                   \
+    if (rc != ARCHIVE_OK) {                              \
+      throw RuntimeError(archive_error_string(archive)); \
+    }                                                    \
+  } while (0)
+
+#define check_zstd(rc)                           \
+  do {                                           \
+    if (ZSTD_isError(rc)) {                      \
+      throw RuntimeError(ZSTD_getErrorName(rc)); \
+    }                                            \
+  } while (0)
+
+std::string compressed_file_name(const std::string &path, Format format,
+                                 Filter filter) {
+  auto name = std::filesystem::path(path).filename().string();
+
+  if (format == Format::Zip) {
+    return name + ".zip";
+  } else if (format == Format::Tar) {
+    if (filter == Filter::None) {
+      return name + ".tar";
+    } else if (filter == Filter::Deflate || filter == Filter::Gzip) {
+      return name + ".tar.gz";
+    } else if (filter == Filter::Zstd) {
+      return name + ".tar.zst";
+    }
+  }
+
+  throw LogicError("Unknown algorithm");
+}
+
+void init_write_format_filter(archive *archive, Format format, Filter filter) {
+  std::int32_t rc;
+
+  if (format == Format::Zip) {
+    rc = archive_write_set_format_zip(archive);
+    check_libarchive(rc, archive);
+    rc = archive_write_set_options(archive, "zip:zip64");
+    check_libarchive(rc, archive);
+
+    if (filter == Filter::None) {
+      rc = archive_write_zip_set_compression_store(archive);
+      check_libarchive(rc, archive);
+    } else if (filter == Filter::Deflate) {
+      rc = archive_write_zip_set_compression_deflate(archive);
+      check_libarchive(rc, archive);
+    } else {
+      throw LogicError(
+          "Algorithms other than Deflate should not be used in the ZIP archive "
+          "format");
+    }
+  } else if (format == Format::Tar) {
+    rc = archive_write_set_format_gnutar(archive);
+    check_libarchive(rc, archive);
+
+    if (filter == Filter::None) {
+      rc = archive_write_add_filter_none(archive);
+      check_libarchive(rc, archive);
+    } else if (filter == Filter::Deflate || filter == Filter::Gzip) {
+      rc = archive_write_add_filter_gzip(archive);
+      check_libarchive(rc, archive);
+    } else if (filter == Filter::Zstd) {
+      rc = archive_write_add_filter_zstd(archive);
+      check_libarchive(rc, archive);
+    }
+  }
+}
+
+void init_read_format_filter(archive *archive, const std::string &file_name) {
+  std::int32_t rc;
+
+  if (file_name.ends_with(".zip")) {
+    rc = archive_read_support_format_zip(archive);
+    check_libarchive(rc, archive);
+  } else if (file_name.ends_with(".tar")) {
+    rc = archive_read_support_format_gnutar(archive);
+    check_libarchive(rc, archive);
+  } else if (file_name.ends_with(".tar.gz") || file_name.ends_with(".tgz")) {
+    rc = archive_read_support_format_gnutar(archive);
+    check_libarchive(rc, archive);
+    rc = archive_read_support_filter_gzip(archive);
+    check_libarchive(rc, archive);
+  } else if (file_name.ends_with(".tar.zst")) {
+    rc = archive_read_support_format_gnutar(archive);
+    check_libarchive(rc, archive);
+    rc = archive_read_support_filter_zstd(archive);
+    check_libarchive(rc, archive);
+  } else {
+    throw LogicError("Unknown file extension");
+  }
+}
 
 std::string get_top_level_dir(const std::filesystem::path &path) {
   if (path.has_parent_path()) {
     return get_top_level_dir(path.parent_path());
   }
 
-  if (std::filesystem::is_directory(path)) {
-    return path;
-  }
-
-  return {};
-}
-
-void check_archive(std::int32_t rc, archive *archive) {
-  if (rc != ARCHIVE_OK) {
-    throw RuntimeError(archive_error_string(archive));
-  }
-}
-
-void check_compression_level(std::int32_t level, std::int32_t min,
-                             std::int32_t max) {
-  if (level < min) {
-    throw InvalidArgument("The compression level cannot be less than {}: {}",
-                          min, level);
-  } else if (level > max) {
-    throw InvalidArgument("The compression level cannot be greater than {}: {}",
-                          max, level);
-  }
-}
-
-void set_format_compression_level(archive *archive, std::int32_t level) {
-  auto rc = archive_write_set_format_option(
-      archive, nullptr, "compression-level", std::to_string(level).c_str());
-  check_archive(rc, archive);
-}
-
-void set_filter_compression_level(archive *archive, std::int32_t level) {
-  auto rc = archive_write_set_filter_option(
-      archive, nullptr, "compression-level", std::to_string(level).c_str());
-  check_archive(rc, archive);
-}
-
-void check_zstd(std::size_t rc) {
-  if (ZSTD_isError(rc)) {
-    throw RuntimeError(ZSTD_getErrorName(rc));
-  }
-}
-
-std::string compressed_file_name(const std::string &path, Algorithm algorithm) {
-  auto name = std::filesystem::path(path).filename();
-
-  if (algorithm == Algorithm::Zip) {
-    name += ".zip";
-  } else if (algorithm == Algorithm::Gzip) {
-    name += ".tar.gz";
-  } else if (algorithm == Algorithm::Zstd) {
-    name += ".tar.zst";
-  } else {
-    throw LogicError("Unknown algorithm");
-  }
-
-  return name;
+  return path;
 }
 
 void copy_data(archive *archive_read, archive *archive_write) {
-  while (true) {
-    const void *buff;
-    std::size_t size;
-    la_int64_t offset;
+  std::int32_t rc;
+  const void *buff;
+  std::size_t size;
+  la_int64_t offset;
 
-    auto rc = archive_read_data_block(archive_read, &buff, &size, &offset);
+  while (true) {
+    rc = archive_read_data_block(archive_read, &buff, &size, &offset);
     if (rc == ARCHIVE_EOF) {
       return;
     }
-    check_archive(rc, archive_read);
+    check_libarchive(rc, archive_read);
 
     rc = archive_write_data_block(archive_write, buff, size, offset);
-    check_archive(rc, archive_write);
+    check_libarchive(rc, archive_write);
   }
 }
 
 }  // namespace
 
-void compress(const std::string &path, Algorithm algorithm,
-              const std::string &file_name, bool flag,
-              std::optional<std::int32_t> level) {
-  std::string out =
-      (std::empty(file_name) ? compressed_file_name(path, algorithm)
-                             : file_name);
-  out = std::filesystem::current_path() / out;
+void compress(const std::string &path, Format format, Filter filter,
+              const std::string &out_name, bool flag) {
+  std::string name =
+      (std::empty(out_name) ? compressed_file_name(path, format, filter)
+                            : out_name);
+  name = std::filesystem::current_path() / name;
 
   std::vector<std::string> paths;
   std::unique_ptr<ChangeWorkingDir> ptr;
@@ -126,57 +165,23 @@ void compress(const std::string &path, Algorithm algorithm,
     }
   }
 
-  compress(paths, algorithm, out, level);
+  compress(paths, name, format, filter);
 }
 
-void compress(const std::vector<std::string> &paths, Algorithm algorithm,
-              const std::string &file_name, std::optional<std::int32_t> level) {
+void compress(const std::vector<std::string> &paths,
+              const std::string &out_name, Format format, Filter filter) {
   auto archive = archive_write_new();
   SCOPE_EXIT {
     archive_write_close(archive);
     archive_write_free(archive);
   };
 
-  std::int32_t rc;
+  init_write_format_filter(archive, format, filter);
 
-  if (algorithm == Algorithm::Zip) {
-    rc = archive_write_set_format_zip(archive);
-    check_archive(rc, archive);
-    rc = archive_write_add_filter_none(archive);
-    check_archive(rc, archive);
+  auto rc = archive_write_open_filename(archive, out_name.c_str());
+  check_libarchive(rc, archive);
 
-    std::int32_t compression_level = level ? *level : 6;
-    check_compression_level(compression_level, Z_NO_COMPRESSION,
-                            Z_BEST_COMPRESSION);
-    set_format_compression_level(archive, compression_level);
-  } else if (algorithm == Algorithm::Gzip) {
-    rc = archive_write_set_format_gnutar(archive);
-    check_archive(rc, archive);
-    rc = archive_write_add_filter_gzip(archive);
-    check_archive(rc, archive);
-
-    std::int32_t compression_level = level ? *level : 6;
-    check_compression_level(compression_level, Z_NO_COMPRESSION,
-                            Z_BEST_COMPRESSION);
-    set_filter_compression_level(archive, compression_level);
-  } else if (algorithm == Algorithm::Zstd) {
-    rc = archive_write_set_format_gnutar(archive);
-    check_archive(rc, archive);
-    rc = archive_write_add_filter_zstd(archive);
-    check_archive(rc, archive);
-
-    std::int32_t compression_level = level ? *level : ZSTD_defaultCLevel();
-    check_compression_level(compression_level, ZSTD_minCLevel(),
-                            ZSTD_maxCLevel());
-    set_filter_compression_level(archive, compression_level);
-  } else {
-    throw LogicError("Unknown algorithm");
-  }
-
-  rc = archive_write_open_filename(archive, file_name.c_str());
-  check_archive(rc, archive);
-
-  for (const auto &item : paths) {
+  for (const auto &path : paths) {
     auto disk = archive_read_disk_new();
     SCOPE_EXIT {
       archive_read_close(disk);
@@ -184,10 +189,10 @@ void compress(const std::vector<std::string> &paths, Algorithm algorithm,
     };
 
     rc = archive_read_disk_set_standard_lookup(disk);
-    check_archive(rc, disk);
+    check_libarchive(rc, disk);
 
-    rc = archive_read_disk_open(disk, item.c_str());
-    check_archive(rc, disk);
+    rc = archive_read_disk_open(disk, path.c_str());
+    check_libarchive(rc, disk);
 
     while (true) {
       auto entry = archive_entry_new();
@@ -197,46 +202,35 @@ void compress(const std::vector<std::string> &paths, Algorithm algorithm,
       if (rc == ARCHIVE_EOF) {
         break;
       }
-      check_archive(rc, disk);
+      check_libarchive(rc, disk);
 
       rc = archive_read_disk_descend(disk);
-      check_archive(rc, disk);
+      check_libarchive(rc, disk);
 
       rc = archive_write_header(archive, entry);
-      check_archive(rc, archive);
+      check_libarchive(rc, archive);
 
-      std::string data;
-      if (auto source_path = archive_entry_sourcepath(entry);
-          std::filesystem::is_regular_file(source_path)) {
-        data = read_file(source_path, true);
+      auto fd = open(archive_entry_sourcepath(entry), O_RDONLY);
+      SCOPE_EXIT { close(fd); };
+
+      static char buff[102400];
+      auto len = read(fd, buff, sizeof(buff));
+      while (len > 0) {
+        archive_write_data(archive, buff, len);
+        len = read(fd, buff, sizeof(buff));
       }
-      archive_write_data(archive, std::data(data), std::size(data));
     }
   }
 }
 
-std::optional<std::string> decompress(const std::string &file_name,
-                                      const std::string &path) {
+void decompress(const std::string &file_name, const std::string &out_dir) {
   auto archive = archive_read_new();
   SCOPE_EXIT {
     archive_read_close(archive);
     archive_read_free(archive);
   };
 
-  auto rc = archive_read_support_format_zip(archive);
-  check_archive(rc, archive);
-
-  rc = archive_read_support_format_gnutar(archive);
-  check_archive(rc, archive);
-
-  rc = archive_read_support_filter_none(archive);
-  check_archive(rc, archive);
-
-  rc = archive_read_support_filter_gzip(archive);
-  check_archive(rc, archive);
-
-  rc = archive_read_support_filter_zstd(archive);
-  check_archive(rc, archive);
+  init_read_format_filter(archive, file_name);
 
   auto extract = archive_write_disk_new();
   SCOPE_EXIT {
@@ -244,19 +238,44 @@ std::optional<std::string> decompress(const std::string &file_name,
     archive_write_free(extract);
   };
 
-  rc = archive_write_disk_set_options(
-      extract, ARCHIVE_EXTRACT_TIME | ARCHIVE_EXTRACT_PERM |
-                   ARCHIVE_EXTRACT_ACL | ARCHIVE_EXTRACT_FFLAGS);
-  check_archive(rc, extract);
+  auto rc = archive_write_disk_set_options(extract, ARCHIVE_EXTRACT_TIME);
+  check_libarchive(rc, extract);
 
   rc = archive_write_disk_set_standard_lookup(extract);
-  check_archive(rc, extract);
+  check_libarchive(rc, extract);
 
   rc = archive_read_open_filename(archive, file_name.c_str(), 102400);
-  check_archive(rc, extract);
+  check_libarchive(rc, extract);
 
-  ChangeWorkingDir change_work_dir(path);
+  ChangeWorkingDir change_work_dir(out_dir);
   boost::ignore_unused(change_work_dir);
+
+  while (true) {
+    archive_entry *entry;
+    rc = archive_read_next_header(archive, &entry);
+    if (rc == ARCHIVE_EOF) {
+      break;
+    }
+    check_libarchive(rc, archive);
+
+    rc = archive_write_header(extract, entry);
+    check_libarchive(rc, extract);
+
+    copy_data(archive, extract);
+  }
+}
+
+std::optional<std::string> outermost_folder_name(const std::string &file_name) {
+  auto archive = archive_read_new();
+  SCOPE_EXIT {
+    archive_read_close(archive);
+    archive_read_free(archive);
+  };
+
+  init_read_format_filter(archive, file_name);
+
+  auto rc = archive_read_open_filename(archive, file_name.c_str(), 102400);
+  check_libarchive(rc, archive);
 
   std::unordered_set<std::string> dirs;
   while (true) {
@@ -265,60 +284,40 @@ std::optional<std::string> decompress(const std::string &file_name,
     if (rc == ARCHIVE_EOF) {
       break;
     }
-    check_archive(rc, archive);
-
-    rc = archive_write_header(extract, entry);
-    check_archive(rc, extract);
+    check_libarchive(rc, archive);
 
     dirs.insert(get_top_level_dir(archive_entry_pathname(entry)));
-
-    if (archive_entry_size(entry) > 0) {
-      copy_data(archive, extract);
-    }
-
-    rc = archive_write_finish_entry(extract);
-    check_archive(rc, extract);
   }
 
   if (std::size(dirs) == 1) {
-    auto dir = *dirs.begin();
-    if (dir.ends_with("/")) {
-      dir = dir.substr(0, std::size(dir) - 1);
-    }
-    return dir;
+    return *dirs.begin();
   }
 
   return {};
 }
 
-std::string compress_str(const std::string &data,
-                         std::optional<std::int32_t> level) {
-  return compress_str(std::data(data), std::size(data), level);
+std::string compress_data(const std::string &data) {
+  return compress_data(std::data(data), std::size(data));
 }
 
-std::string compress_str(const char *data, std::size_t size,
-                         std::optional<std::int32_t> level) {
-  std::int32_t compression_level = level ? *level : ZSTD_defaultCLevel();
-  check_compression_level(compression_level, ZSTD_minCLevel(),
-                          ZSTD_maxCLevel());
-
+std::string compress_data(const char *data, std::size_t size) {
   auto compressed_size = ZSTD_compressBound(size);
   std::string compressed_data;
   compressed_data.resize(compressed_size);
 
   compressed_size = ZSTD_compress(std::data(compressed_data), compressed_size,
-                                  data, size, compression_level);
+                                  data, size, ZSTD_defaultCLevel());
   check_zstd(compressed_size);
   compressed_data.resize(compressed_size);
 
   return compressed_data;
 }
 
-std::string decompress_str(const std::string &data) {
-  return decompress_str(std::data(data), std::size(data));
+std::string decompress_data(const std::string &data) {
+  return decompress_data(std::data(data), std::size(data));
 }
 
-std::string decompress_str(const char *data, std::size_t size) {
+std::string decompress_data(const char *data, std::size_t size) {
   auto decompressed_size = ZSTD_getFrameContentSize(data, size);
   if (decompressed_size == ZSTD_CONTENTSIZE_ERROR) {
     throw RuntimeError("Not compressed by zstd");

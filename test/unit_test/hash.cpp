@@ -20,10 +20,10 @@ TEST_CASE("md5", "[hash]") {
 }
 
 TEST_CASE("sha256", "[hash]") {
-  REQUIRE(std::filesystem::exists("zlib-v1.2.11.tar.gz"));
+  REQUIRE(std::filesystem::exists("zlib-ng-2.0.6.tar.gz"));
 
-  REQUIRE(klib::sha256_hex(klib::read_file("zlib-v1.2.11.tar.gz", true)) ==
-          "228c0e8a0dd05b4e8661b8bba5d7e0f9b8ff275009f675d5e85dd348ab88089f");
+  REQUIRE(klib::sha256_hex(klib::read_file("zlib-ng-2.0.6.tar.gz", true)) ==
+          "8258b75a72303b661a238047cb348203d88d9dddf85d480ed885f375916fcab6");
 }
 
 TEST_CASE("password_hash_raw", "[hash]") {

@@ -180,4 +180,5 @@ TEST_CASE("download", "[http]") {
   REQUIRE(std::filesystem::is_regular_file("zstd-1.5.0.tar.gz"));
   REQUIRE(klib::sha256_hex(klib::read_file("zstd-1.5.0.tar.gz", true)) ==
           "0d9ade222c64e912d6957b11c923e214e2e010a18f39bec102f572e693ba2867");
+  std::filesystem::remove("zstd-1.5.0.tar.gz");
 }
