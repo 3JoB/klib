@@ -2,40 +2,36 @@
 
 #include "klib/base64.h"
 
-TEST_CASE("fast_base64_encode", "[base64]") {
-  REQUIRE(klib::fast_base64_encode("hello") == "aGVsbG8=");
-  REQUIRE(klib::fast_base64_encode("Online Tools") == "T25saW5lIFRvb2xz");
-  REQUIRE(
-      klib::fast_base64_encode(
-          "How to resolve the \"EVP_DecryptFInal_ex: bad decrypt\"") ==
-      "SG93IHRvIHJlc29sdmUgdGhlICJFVlBfRGVjcnlwdEZJbmFsX2V4OiBiYWQgZGVjcnlwdC"
-      "I=");
+TEST_CASE("fast base64", "[base64]") {
+  CHECK(klib::fast_base64_encode("hello") == "aGVsbG8=");
+  CHECK(klib::fast_base64_decode("aGVsbG8=") == "hello");
+
+  CHECK(klib::fast_base64_encode("Online Tools") == "T25saW5lIFRvb2xz");
+  CHECK(klib::fast_base64_decode("T25saW5lIFRvb2xz") == "Online Tools");
+
+  CHECK(klib::fast_base64_encode(
+            "How to resolve the \"EVP_DecryptFInal_ex: bad decrypt\"") ==
+        "SG93IHRvIHJlc29sdmUgdGhlICJFVlBfRGVjcnlwdEZJbmFsX2V4OiBiYWQgZGVjcnlwdC"
+        "I=");
+  CHECK(klib::fast_base64_decode(
+            "SG93IHRvIHJlc29sdmUgdGhlICJFVlBfRGVjcnlwdEZJbmFsX2"
+            "V4OiBiYWQgZGVjcnlwdCI=") ==
+        "How to resolve the \"EVP_DecryptFInal_ex: bad decrypt\"");
 }
 
-TEST_CASE("fast_base64_decode", "[base64]") {
-  REQUIRE(klib::fast_base64_decode("aGVsbG8=") == "hello");
-  REQUIRE(klib::fast_base64_decode("T25saW5lIFRvb2xz") == "Online Tools");
-  REQUIRE(klib::fast_base64_decode(
-              "SG93IHRvIHJlc29sdmUgdGhlICJFVlBfRGVjcnlwdEZJbmFsX2"
-              "V4OiBiYWQgZGVjcnlwdCI=") ==
-          "How to resolve the \"EVP_DecryptFInal_ex: bad decrypt\"");
-}
+TEST_CASE("secure base64 ", "[base64]") {
+  CHECK(klib::secure_base64_encode("hello") == "aGVsbG8=");
+  CHECK(klib::secure_base64_decode("aGVsbG8=") == "hello");
 
-TEST_CASE("secure_base64_encode", "[base64]") {
-  REQUIRE(klib::secure_base64_encode("hello") == "aGVsbG8=");
-  REQUIRE(klib::secure_base64_encode("Online Tools") == "T25saW5lIFRvb2xz");
-  REQUIRE(
-      klib::secure_base64_encode(
-          "How to resolve the \"EVP_DecryptFInal_ex: bad decrypt\"") ==
-      "SG93IHRvIHJlc29sdmUgdGhlICJFVlBfRGVjcnlwdEZJbmFsX2V4OiBiYWQgZGVjcnlwdC"
-      "I=");
-}
+  CHECK(klib::secure_base64_encode("Online Tools") == "T25saW5lIFRvb2xz");
+  CHECK(klib::secure_base64_decode("T25saW5lIFRvb2xz") == "Online Tools");
 
-TEST_CASE("secure_base64_decode", "[base64]") {
-  REQUIRE(klib::secure_base64_decode("aGVsbG8=") == "hello");
-  REQUIRE(klib::secure_base64_decode("T25saW5lIFRvb2xz") == "Online Tools");
-  REQUIRE(klib::secure_base64_decode(
-              "SG93IHRvIHJlc29sdmUgdGhlICJFVlBfRGVjcnlwdEZJbmFsX2"
-              "V4OiBiYWQgZGVjcnlwdCI=") ==
-          "How to resolve the \"EVP_DecryptFInal_ex: bad decrypt\"");
+  CHECK(klib::secure_base64_encode(
+            "How to resolve the \"EVP_DecryptFInal_ex: bad decrypt\"") ==
+        "SG93IHRvIHJlc29sdmUgdGhlICJFVlBfRGVjcnlwdEZJbmFsX2V4OiBiYWQgZGVjcnlwdC"
+        "I=");
+  CHECK(klib::secure_base64_decode(
+            "SG93IHRvIHJlc29sdmUgdGhlICJFVlBfRGVjcnlwdEZJbmFsX2"
+            "V4OiBiYWQgZGVjcnlwdCI=") ==
+        "How to resolve the \"EVP_DecryptFInal_ex: bad decrypt\"");
 }

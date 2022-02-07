@@ -1,3 +1,8 @@
+/**
+ * @see
+ * https://github.com/google/boringssl/blob/master-with-bazel/src/crypto/cipher_extra/cipher_test.cc
+ */
+
 #include "klib/crypto.h"
 
 #include <cstddef>
@@ -28,7 +33,6 @@ const EVP_CIPHER *get_cipher(AesMode aes_mode) {
   }
 }
 
-// https://www.openssl.org/docs/man3.0/man3/EVP_EncryptInit_ex.html
 std::string do_aes_crypt(std::span<const char> data, const std::string &key,
                          const std::string &iv, AesMode aes_mode,
                          bool encrypt) {
@@ -36,10 +40,11 @@ std::string do_aes_crypt(std::span<const char> data, const std::string &key,
     throw LogicError("The key must be 256 bit");
   }
 
-  bssl::ScopedEVP_CIPHER_CTX ctx;
+  bssl::ScopedEVP_CIPHER_CTX ctx1;
+  auto ctx = ctx1.get();
 
   auto rc = EVP_CipherInit_ex(
-      ctx.get(), get_cipher(aes_mode), nullptr,
+      ctx, get_cipher(aes_mode), nullptr,
       reinterpret_cast<const unsigned char *>(std::data(key)),
       std::empty(iv) ? nullptr
                      : reinterpret_cast<const unsigned char *>(std::data(iv)),
@@ -47,34 +52,34 @@ std::string do_aes_crypt(std::span<const char> data, const std::string &key,
   check_openssl_return(rc);
 
   std::string result;
-  auto data_size = std::size(data);
-  std::size_t max_len = data_size;
+  auto input_size = std::size(data);
+  std::size_t max_len = input_size;
   if (encrypt) {
-    auto block_size = EVP_CIPHER_CTX_block_size(ctx.get());
+    auto block_size = EVP_CIPHER_CTX_block_size(ctx);
     max_len += block_size - (max_len % block_size);
   }
   result.resize(max_len);
 
   std::size_t total = 0;
-  std::int32_t len;
+  std::int32_t length;
   while (!data.empty()) {
-    std::int32_t chunk = std::min(data.size(), 102400UL);
+    std::int32_t todo = std::min(input_size, 16384UL);
 
     rc = EVP_CipherUpdate(
-        ctx.get(), reinterpret_cast<unsigned char *>(std::data(result)) + total,
-        &len, reinterpret_cast<const std::uint8_t *>(data.data()), chunk);
+        ctx, reinterpret_cast<unsigned char *>(std::data(result)) + total,
+        &length, reinterpret_cast<const std::uint8_t *>(std::data(data)), todo);
     check_openssl_return(rc);
 
-    total += len;
-    data = data.subspan(chunk);
+    total += length;
+    data = data.subspan(todo);
   }
 
   rc = EVP_CipherFinal_ex(
-      ctx.get(), reinterpret_cast<unsigned char *>(std::data(result)) + total,
-      &len);
+      ctx, reinterpret_cast<unsigned char *>(std::data(result)) + total,
+      &length);
   check_openssl_return(rc);
 
-  total += len;
+  total += length;
   result.resize(total);
 
   return result;

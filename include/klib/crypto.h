@@ -1,6 +1,6 @@
 /**
  * @file crypto.h
- * @brief Contains encrypt and decrypt modules
+ * @brief Contains encrypt and decrypt functions
  */
 
 #pragma once
