@@ -1,3 +1,11 @@
+/**
+ * @see
+ * https://github.com/libarchive/libarchive/blob/master/examples/minitar/minitar.c
+ * @see https://github.com/facebook/zstd/blob/dev/examples/simple_compression.c
+ * @see
+ * https://github.com/facebook/zstd/blob/dev/examples/simple_decompression.c
+ */
+
 #include "klib/archive.h"
 
 #include <fcntl.h>
@@ -16,7 +24,6 @@
 #include "klib/exception.h"
 #include "klib/util.h"
 
-// https://github.com/libarchive/libarchive/blob/master/examples/minitar/minitar.c
 namespace klib {
 
 namespace {
