@@ -1,6 +1,7 @@
 #include "klib/http.h"
 
 #include <cstddef>
+#include <cstdlib>
 #include <filesystem>
 #include <string_view>
 
@@ -34,31 +35,26 @@ class AddURL {
       CURL *curl, const std::string &url,
       const std::unordered_map<std::string, std::string> &params = {})
       : curl_(curl), url_(curl_url()) {
-    if (!curl_) {
-      throw RuntimeError("curl is null");
+    SCOPE_FAIL { curl_url_cleanup(url_); };
+
+    auto rc = curl_url_set(url_, CURLUPART_URL, url.c_str(), 0);
+    check_curl_correct(rc);
+
+    for (const auto &[key, value] : params) {
+      std::string query = key + "=" + value;
+      rc = curl_url_set(url_, CURLUPART_QUERY, query.c_str(),
+                        CURLU_APPENDQUERY | CURLU_URLENCODE);
+      check_curl_correct(rc);
     }
 
-    check_curl_correct(curl_url_set(url_, CURLUPART_URL, url.c_str(), 0));
-
-    try {
-      for (const auto &[key, value] : params) {
-        std::string query = key + "=" + value;
-        check_curl_correct(curl_url_set(url_, CURLUPART_QUERY, query.c_str(),
-                                        CURLU_APPENDQUERY | CURLU_URLENCODE));
-      }
-
-      check_curl_correct(curl_easy_setopt(curl_, CURLOPT_CURLU, url_));
-    } catch (...) {
-      curl_url_cleanup(url_);
-      throw;
-    }
+    check_curl_correct(curl_easy_setopt(curl_, CURLOPT_CURLU, url_));
   }
 
   ~AddURL() { curl_url_cleanup(url_); }
 
  private:
-  CURL *curl_ = nullptr;
-  CURLU *url_ = nullptr;
+  CURL *curl_;
+  CURLU *url_;
 };
 
 class AddHeader {
@@ -66,30 +62,23 @@ class AddHeader {
   explicit AddHeader(
       CURL *curl, const std::unordered_map<std::string, std::string> &headers)
       : curl_(curl) {
-    if (!curl_) {
-      throw RuntimeError("curl is null");
-    }
-
     if (std::empty(headers)) {
       return;
     }
 
-    try {
-      for (const auto &[key, value] : headers) {
-        if (std::empty(key) || std::empty(value)) {
-          throw RuntimeError("The header key and value can not be empty");
-        }
+    SCOPE_FAIL { curl_slist_free_all(chunk_); };
 
-        std::string str = key;
-        str.append(": ").append(value);
-        chunk_ = curl_slist_append(chunk_, str.c_str());
+    for (const auto &[key, value] : headers) {
+      if (std::empty(key) || std::empty(value)) {
+        throw RuntimeError("The header key and value can not be empty");
       }
 
-      check_curl_correct(curl_easy_setopt(curl_, CURLOPT_HTTPHEADER, chunk_));
-    } catch (...) {
-      curl_slist_free_all(chunk_);
-      throw;
+      std::string str = key;
+      str.append(": ").append(value);
+      chunk_ = curl_slist_append(chunk_, str.c_str());
     }
+
+    check_curl_correct(curl_easy_setopt(curl_, CURLOPT_HTTPHEADER, chunk_));
   }
 
   ~AddHeader() {
@@ -98,12 +87,12 @@ class AddHeader {
     try {
       check_curl_correct(curl_easy_setopt(curl_, CURLOPT_HTTPHEADER, nullptr));
     } catch (...) {
-      error("Error restoring the default header");
+      error("~AddHeader failed");
     }
   }
 
  private:
-  CURL *curl_ = nullptr;
+  CURL *curl_;
   curl_slist *chunk_ = nullptr;
 };
 
@@ -113,46 +102,38 @@ class AddForm {
                    const std::unordered_map<std::string, std::string> &data,
                    const std::unordered_map<std::string, std::string> &file)
       : curl_(curl) {
-    if (!curl_) {
-      throw RuntimeError("curl is null");
-    }
-
-    if (std::empty(data)) {
+    if (std::empty(data) && std::empty(file)) {
       return;
     }
 
-    try {
-      form_ = curl_mime_init(curl_);
+    form_ = curl_mime_init(curl_);
+    SCOPE_FAIL { curl_mime_free(form_); };
 
-      for (const auto &[key, value] : data) {
-        if (std::empty(key) || std::empty(value)) {
-          throw RuntimeError("The post form key and value can not be empty");
-        }
-
-        auto field = curl_mime_addpart(form_);
-        curl_mime_name(field, key.c_str());
-        curl_mime_data(field, value.c_str(), CURL_ZERO_TERMINATED);
+    for (const auto &[key, value] : data) {
+      if (std::empty(key) || std::empty(value)) {
+        throw RuntimeError("The post form key and value can not be empty");
       }
 
-      for (const auto &[file_name, path] : file) {
-        if (std::empty(file_name) || std::empty(path)) {
-          throw RuntimeError("The post file_name and path can not be empty");
-        }
-
-        if (!std::filesystem::is_regular_file(path)) {
-          throw RuntimeError("file: {} not exist", path);
-        }
-
-        auto field = curl_mime_addpart(form_);
-        curl_mime_name(field, file_name.c_str());
-        curl_mime_filedata(field, path.c_str());
-      }
-
-      check_curl_correct(curl_easy_setopt(curl_, CURLOPT_MIMEPOST, form_));
-    } catch (...) {
-      curl_mime_free(form_);
-      throw;
+      auto field = curl_mime_addpart(form_);
+      curl_mime_name(field, key.c_str());
+      curl_mime_data(field, value.c_str(), CURL_ZERO_TERMINATED);
     }
+
+    for (const auto &[file_name, path] : file) {
+      if (std::empty(file_name) || std::empty(path)) {
+        throw RuntimeError("The post file_name and path can not be empty");
+      }
+
+      if (!std::filesystem::is_regular_file(path)) {
+        throw RuntimeError("File '{}' not exist", path);
+      }
+
+      auto field = curl_mime_addpart(form_);
+      curl_mime_name(field, file_name.c_str());
+      curl_mime_filedata(field, path.c_str());
+    }
+
+    check_curl_correct(curl_easy_setopt(curl_, CURLOPT_MIMEPOST, form_));
   }
 
   ~AddForm() {
@@ -161,12 +142,12 @@ class AddForm {
     try {
       check_curl_correct(curl_easy_setopt(curl_, CURLOPT_MIMEPOST, nullptr));
     } catch (...) {
-      error("Error restoring the default header");
+      error("~AddForm failed");
     }
   }
 
  private:
-  CURL *curl_ = nullptr;
+  CURL *curl_;
   curl_mime *form_ = nullptr;
 };
 
@@ -185,6 +166,7 @@ class Request::RequestImpl {
   void verbose(bool flag);
   void allow_redirects(bool flag);
   void set_proxy(const std::string &proxy);
+  void set_proxy_from_env();
   void set_no_proxy();
   void set_doh_url(const std::string &url);
   void set_user_agent(const std::string &user_agent);
@@ -233,25 +215,22 @@ Request::RequestImpl::RequestImpl() {
 
   http_handle_ = curl_easy_init();
   if (!http_handle_) {
-    throw RuntimeError("curl_easy_init() error");
+    throw RuntimeError("curl_easy_init error");
   }
-
-  try {
-    check_curl_correct(
-        curl_easy_setopt(http_handle_, CURLOPT_BUFFERSIZE, 102400L));
-    check_curl_correct(
-        curl_easy_setopt(http_handle_, CURLOPT_FOLLOWLOCATION, 1L));
-    check_curl_correct(curl_easy_setopt(http_handle_, CURLOPT_MAXREDIRS, 50L));
-    check_curl_correct(
-        curl_easy_setopt(http_handle_, CURLOPT_TCP_KEEPALIVE, 1L));
-
-    check_curl_correct(curl_easy_setopt(http_handle_, CURLOPT_WRITEFUNCTION,
-                                        RequestImpl::callback_func_std_string));
-  } catch (...) {
+  SCOPE_FAIL {
     curl_easy_cleanup(http_handle_);
     curl_global_cleanup();
-    throw;
-  }
+  };
+
+  check_curl_correct(
+      curl_easy_setopt(http_handle_, CURLOPT_BUFFERSIZE, 102400L));
+  check_curl_correct(
+      curl_easy_setopt(http_handle_, CURLOPT_FOLLOWLOCATION, 1L));
+  check_curl_correct(curl_easy_setopt(http_handle_, CURLOPT_MAXREDIRS, 50L));
+  check_curl_correct(curl_easy_setopt(http_handle_, CURLOPT_TCP_KEEPALIVE, 1L));
+
+  check_curl_correct(curl_easy_setopt(http_handle_, CURLOPT_WRITEFUNCTION,
+                                      RequestImpl::callback_func_std_string));
 }
 
 Request::RequestImpl::~RequestImpl() {
@@ -273,6 +252,13 @@ void Request::RequestImpl::set_proxy(const std::string &proxy) {
       curl_easy_setopt(http_handle_, CURLOPT_PROXY, proxy.c_str()));
 }
 
+void Request::RequestImpl::set_proxy_from_env() {
+  check_curl_correct(
+      curl_easy_setopt(http_handle_, CURLOPT_PROXY, std::getenv("HTTP_PROXY")));
+  check_curl_correct(
+      curl_easy_setopt(http_handle_, CURLOPT_NOPROXY, std::getenv("NO_PROXY")));
+}
+
 void Request::RequestImpl::set_no_proxy() {
   check_curl_correct(curl_easy_setopt(http_handle_, CURLOPT_NOPROXY, "*"));
 }
@@ -291,7 +277,7 @@ void Request::RequestImpl::set_browser_user_agent() {
   // navigator.userAgent
   set_user_agent(
       "Mozilla/5.0 (X11; Linux x86_64) AppleWebKit/537.36 (KHTML, like Gecko) "
-      "Chrome/97.0.4692.99 Safari/537.36 Edg/97.0.1072.76");
+      "Chrome/98.0.4758.80 Safari/537.36 Edg/98.0.1108.43");
 }
 
 void Request::RequestImpl::set_curl_user_agent() {
@@ -470,6 +456,8 @@ void Request::verbose(bool flag) { impl_->verbose(flag); }
 void Request::allow_redirects(bool flag) { impl_->allow_redirects(flag); }
 
 void Request::set_proxy(const std::string &proxy) { impl_->set_proxy(proxy); }
+
+void Request::set_proxy_from_env() { impl_->set_proxy_from_env(); }
 
 void Request::set_no_proxy() { impl_->set_no_proxy(); }
 

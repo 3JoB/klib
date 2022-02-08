@@ -137,4 +137,9 @@ const std::string& HTTPHeader::value(const std::string& field) const {
   return field_value_.at(lower_field);
 }
 
+bool HTTPHeader::contains(const std::string& field) const {
+  auto lower_field = boost::to_lower_copy(field);
+  return field_value_.contains(lower_field);
+}
+
 }  // namespace klib

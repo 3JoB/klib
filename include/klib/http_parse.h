@@ -1,6 +1,6 @@
 /**
  * @file url.h
- * @brief Contains URL parse module
+ * @brief Contains HTTP parse module
  */
 
 #pragma once
@@ -9,7 +9,6 @@
 #include <string>
 #include <string_view>
 #include <unordered_map>
-#include <vector>
 
 namespace klib {
 
@@ -63,8 +62,16 @@ class URL {
  */
 class HTTPHeader {
  public:
+  /**
+   * @brief Constructor
+   * @param header: HTTP header to be parsed
+   */
   explicit HTTPHeader(std::string header);
 
+  /**
+   * @brief Get parts of the header
+   * @return parts of the header
+   */
   [[nodiscard]] std::int32_t status_code() const { return status_code_; }
   [[nodiscard]] std::int32_t method() const { return method_; }
   [[nodiscard]] std::int32_t http_major() const { return http_major_; }
@@ -72,7 +79,19 @@ class HTTPHeader {
   [[nodiscard]] const URL& url() const { return url_; }
   [[nodiscard]] const std::string& body() const { return body_; }
 
+  /**
+   * @brief Query the value corresponding to the field
+   * @param field: Field name
+   * @return Corresponding value
+   */
   [[nodiscard]] const std::string& value(const std::string& field) const;
+
+  /**
+   * @brief Check if this field is included
+   * @param field: Field name
+   * @return Return true if exists
+   */
+  [[nodiscard]] bool contains(const std::string& field) const;
 
  private:
   std::string header_;
@@ -84,7 +103,6 @@ class HTTPHeader {
 
   URL url_;
   std::unordered_map<std::string, std::string> field_value_;
-
   std::string body_;
 };
 
