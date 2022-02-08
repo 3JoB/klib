@@ -30,6 +30,13 @@ namespace klib {
 
 namespace {
 
+#define check_system_io(rc)                     \
+  do {                                          \
+    if (rc == -1) {                             \
+      throw RuntimeError(std::strerror(errno)); \
+    }                                           \
+  } while (0)
+
 #define check_libarchive(rc, archive)                    \
   do {                                                   \
     if (rc != ARCHIVE_OK) {                              \
@@ -219,17 +226,20 @@ void compress(const std::vector<std::string> &paths,
       rc = archive_write_header(archive, entry);
       check_libarchive(rc, archive);
 
-      auto fd = open(archive_entry_sourcepath(entry), O_RDONLY);
-      SCOPE_EXIT { close(fd); };
-      if (fd == -1) {
-        throw RuntimeError(std::strerror(errno));
-      }
+      auto source_path = archive_entry_sourcepath(entry);
+      if (std::filesystem::is_regular_file(source_path)) {
+        auto fd = open(source_path, O_RDONLY);
+        SCOPE_EXIT { close(fd); };
+        check_system_io(fd);
 
-      char buff[16384];
-      auto length = read(fd, buff, sizeof(buff));
-      while (length > 0) {
-        archive_write_data(archive, buff, length);
-        length = read(fd, buff, sizeof(buff));
+        char buff[16384];
+        auto length = read(fd, buff, sizeof(buff));
+        check_system_io(length);
+        while (length > 0) {
+          archive_write_data(archive, buff, length);
+          length = read(fd, buff, sizeof(buff));
+          check_system_io(length);
+        }
       }
     }
   }

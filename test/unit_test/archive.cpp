@@ -12,10 +12,9 @@ namespace {
 class TestsFixture {
  public:
   TestsFixture() {
-    if (!std::filesystem::exists("zlib-ng-2.0.6")) {
-      REQUIRE(std::filesystem::exists("zlib-ng-2.0.6.tar.gz"));
-      REQUIRE_NOTHROW(klib::exec("tar -zxf zlib-ng-2.0.6.tar.gz"));
-    }
+    REQUIRE(std::filesystem::exists("zlib-ng-2.0.6.tar.gz"));
+    REQUIRE_NOTHROW(klib::exec("tar -zxf zlib-ng-2.0.6.tar.gz"));
+    REQUIRE(std::filesystem::exists("zlib-ng-2.0.6"));
   }
 };
 
