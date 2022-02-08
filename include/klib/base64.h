@@ -1,6 +1,6 @@
 /**
  * @file base64.h
- * @brief Contains Base64 functions
+ * @brief Contains Base64 module
  */
 
 #pragma once

@@ -1,6 +1,6 @@
 /**
  * @file crypto.h
- * @brief Contains encrypt and decrypt functions
+ * @brief Contains encrypt and decrypt module
  */
 
 #pragma once
@@ -16,28 +16,36 @@ namespace klib {
 enum class AesMode { CBC, OFB, CTR };
 
 /**
- * @brief Use AES to encrypt bytes, key size: 256 bit
+ * @brief Use AES to encrypt data, key size: 256 bit
  * @param data: Data to be encrypted
  * @param key: Encryption/decryption key
- * @param use_iv: Whether to use initialization vector, if used, it will be
- * randomly generated and appended to the ciphertext before
  * @param aes_mode: Block cipher mode of operation
- * @return Encrypted bytes
+ * @return Encrypted data
  */
 std::string aes_256_encrypt(const std::string &data, const std::string &key,
-                            bool use_iv = true,
                             AesMode aes_mode = AesMode::CBC);
 
 /**
- * @brief Use AES to decrypt bytes, key size: 256 bit
+ * @brief Use AES to decrypt data, key size: 256 bit
  * @param data: Encrypted bytes
  * @param key: Encryption/decryption key
- * @param has_iv: Whether the ciphertext contains initialization vector
  * @param aes_mode: Block cipher mode of operation
- * @return Decrypted bytes
+ * @return Decrypted data
  */
 std::string aes_256_decrypt(const std::string &data, const std::string &key,
-                            bool has_iv = true,
                             AesMode aes_mode = AesMode::CBC);
+
+/**
+ * @brief Use AES to decrypt data, key size: 256 bit
+ * @param data: Encrypted bytes
+ * @param key: Encryption/decryption key
+ * @param aes_mode: Block cipher mode of operation
+ * @return Decrypted data
+ * @note It is not safe to not use the initial vector, this function is only
+ * used to decrypt the foreign encrypted data
+ */
+std::string aes_256_decrypt_no_iv(const std::string &data,
+                                  const std::string &key,
+                                  AesMode aes_mode = AesMode::CBC);
 
 }  // namespace klib

@@ -247,8 +247,6 @@ Request::RequestImpl::RequestImpl() {
 
     check_curl_correct(curl_easy_setopt(http_handle_, CURLOPT_WRITEFUNCTION,
                                         RequestImpl::callback_func_std_string));
-    check_curl_correct(curl_easy_setopt(http_handle_, CURLOPT_HEADERFUNCTION,
-                                        callback_func_std_string));
   } catch (...) {
     curl_easy_cleanup(http_handle_);
     curl_global_cleanup();
@@ -352,8 +350,6 @@ Response Request::RequestImpl::get(
   Response response;
   check_curl_correct(
       curl_easy_setopt(http_handle_, CURLOPT_WRITEDATA, &response.text_));
-  check_curl_correct(
-      curl_easy_setopt(http_handle_, CURLOPT_HEADERDATA, &response.headers_));
 
   check_curl_correct(curl_easy_perform(http_handle_));
 
@@ -430,8 +426,6 @@ Response Request::RequestImpl::do_post() {
 
   check_curl_correct(
       curl_easy_setopt(http_handle_, CURLOPT_WRITEDATA, &response.text_));
-  check_curl_correct(
-      curl_easy_setopt(http_handle_, CURLOPT_HEADERDATA, &response.headers_));
 
   check_curl_correct(curl_easy_perform(http_handle_));
 
@@ -537,7 +531,7 @@ Response Request::post_mime(
   return impl_->post_mime(url, data, file, header);
 }
 
-std::int64_t Response::status_code() const { return status_code_; }
+Response::StatusCode Response::status_code() const { return status_code_; }
 
 bool Response::ok() const { return status_code_ == StatusCode::Ok; }
 

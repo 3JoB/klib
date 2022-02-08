@@ -1,10 +1,11 @@
 /**
  * @file exception.h
- * @brief Contains exception class
+ * @brief Contains exception module
  */
 
 #pragma once
 
+#include <exception>
 #include <string>
 #include <utility>
 

@@ -1,6 +1,6 @@
 /**
  * @file hash.h
- * @brief Contains hash functions
+ * @brief Contains hash module
  */
 
 #pragma once

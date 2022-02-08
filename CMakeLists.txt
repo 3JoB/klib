@@ -48,7 +48,8 @@ file(
   CONFIGURE_DEPENDS
   "${KLIB_SOURCE_DIR}/src/*.cpp"
   "${KLIB_SOURCE_DIR}/third_party/fastbase64/*.c"
-  "${KLIB_SOURCE_DIR}/third_party/http-parser/*.c")
+  "${KLIB_SOURCE_DIR}/third_party/http-parser/*.c"
+  "${KLIB_SOURCE_DIR}/third_party/zstdmt/*.c")
 
 # ---------------------------------------------------------------------------------------
 # Include CMake module

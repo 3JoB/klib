@@ -1,6 +1,6 @@
 /**
  * @file http.h
- * @brief Contains an HTTP module
+ * @brief Contains HTTP Response/Request module
  */
 
 #pragma once
@@ -57,7 +57,12 @@ class Request {
   void set_proxy(const std::string &proxy);
 
   /**
-   * @brief No proxy
+   * @brief Read proxy from environment variable and set
+   */
+  void set_proxy_from_env();
+
+  /**
+   * @brief Don't use any proxy
    */
   void set_no_proxy();
 
@@ -98,7 +103,7 @@ class Request {
   void set_connect_timeout(std::int64_t seconds);
 
   /**
-   * @brief Use cookies
+   * @brief Use cookies(The default is true)
    * @param flag: True to use cookies
    */
   void use_cookies(bool flag);
@@ -151,7 +156,7 @@ class Request {
   /**
    * @brief Sends a POST request
    * @param url: Requested url
-   * @param data: Data string
+   * @param json: Data in json format
    * @param headers: HTTP headers
    * @return Response content
    */
@@ -189,7 +194,7 @@ class Response {
    * @brief HTTP Status Code
    * @see https://developer.mozilla.org/zh-CN/docs/Web/HTTP/Status
    */
-  enum StatusCode : std::int64_t {
+  enum StatusCode {
     None = 0,
     Ok = 200,
     Unauthorized = 401,
@@ -201,7 +206,7 @@ class Response {
    * @brief Get status code
    * @return Status code
    */
-  [[nodiscard]] std::int64_t status_code() const;
+  [[nodiscard]] StatusCode status_code() const;
 
   /**
    * @brief Determine whether the status code is OK
@@ -215,8 +220,6 @@ class Response {
    */
   [[nodiscard]] std::string text() const;
 
-  [[nodiscard]] const std::string &headers() const { return headers_; }
-
   /**
    * @brief Save response content to file
    * @param binary_mode: Whether to open in binary mode
@@ -225,8 +228,7 @@ class Response {
   void save_to_file(const std::string &path, bool binary_mode) const;
 
  private:
-  std::int64_t status_code_ = StatusCode::None;
-  std::string headers_;
+  StatusCode status_code_ = StatusCode::None;
   std::string text_;
 };
 

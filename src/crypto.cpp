@@ -88,23 +88,20 @@ std::string do_aes_crypt(std::span<const char> data, const std::string &key,
 }  // namespace
 
 std::string aes_256_encrypt(const std::string &data, const std::string &key,
-                            bool use_iv, AesMode aes_mode) {
-  std::string iv;
-  if (use_iv) {
-    iv = generate_random_bytes(EVP_MAX_IV_LENGTH);
-  }
-
+                            AesMode aes_mode) {
+  auto iv = generate_random_bytes(EVP_MAX_IV_LENGTH);
   return iv + do_aes_crypt(data, key, iv, aes_mode, true);
 }
 
 std::string aes_256_decrypt(const std::string &data, const std::string &key,
-                            bool has_iv, AesMode aes_mode) {
-  if (has_iv) {
-    return do_aes_crypt(data.substr(AES_BLOCK_SIZE), key,
-                        data.substr(0, AES_BLOCK_SIZE), aes_mode, false);
-  } else {
-    return do_aes_crypt(data, key, "", aes_mode, false);
-  }
+                            AesMode aes_mode) {
+  return do_aes_crypt(data.substr(AES_BLOCK_SIZE), key,
+                      data.substr(0, AES_BLOCK_SIZE), aes_mode, false);
+}
+
+std::string aes_256_decrypt_no_iv(const std::string &data,
+                                  const std::string &key, AesMode aes_mode) {
+  return do_aes_crypt(data, key, "", aes_mode, false);
 }
 
 }  // namespace klib

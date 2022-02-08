@@ -1,6 +1,6 @@
 /**
  * @file archive.h
- * @brief Contains compression and decompression functions
+ * @brief Contains compression and decompression module
  */
 
 #pragma once
