@@ -187,26 +187,6 @@ std::string exec_with_output(const char *cmd) {
   return result;
 }
 
-void exec_without_output(const std::string &cmd) {
-  exec_with_output(cmd.c_str());
-}
-
-void exec_without_output(const char *cmd) {
-  auto pipe = popen(cmd, "r");
-  if (!pipe) {
-    throw RuntimeError("popen() failed");
-  }
-
-  auto status = pclose(pipe);
-  if (status == -1) {
-    throw RuntimeError("pclose() failed");
-  }
-  if (status != 0) {
-    throw RuntimeError("Failed when running command line '{}', status: {}", cmd,
-                       status);
-  }
-}
-
 void wait_for_child_process() {
   std::int32_t status = 0;
 

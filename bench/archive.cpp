@@ -10,20 +10,10 @@ namespace {
 class TestsFixture {
  public:
   TestsFixture() {
-    REQUIRE(std::filesystem::exists("zlib-ng-2.0.6.tar.gz"));
-    REQUIRE_NOTHROW(klib::exec("tar -zxf zlib-ng-2.0.6.tar.gz"));
-    REQUIRE(std::filesystem::exists("zlib-ng-2.0.6"));
-  }
-
-  ~TestsFixture() {
-    std::filesystem::remove_all("zlib-ng-2.0.6");
-
-    std::filesystem::remove_all("zlib-ng-2.0.6-zip.zip");
-    std::filesystem::remove_all("zlib-ng-2.0.6-libarchive.zip");
-    std::filesystem::remove_all("zlib-ng-2.0.6-tar.tar.gz");
-    std::filesystem::remove_all("zlib-ng-2.0.6-libarchive.tar.gz");
-    std::filesystem::remove_all("zlib-ng-2.0.6-tar.tar.zst");
-    std::filesystem::remove_all("zlib-ng-2.0.6-libarchive.tar.zst");
+    if (!std::filesystem::exists("zlib-ng-2.0.6")) {
+      REQUIRE(std::filesystem::exists("zlib-ng-2.0.6.tar.gz"));
+      REQUIRE_NOTHROW(klib::exec("tar -zxf zlib-ng-2.0.6.tar.gz"));
+    }
   }
 };
 
@@ -61,6 +51,9 @@ TEST_CASE_METHOD(TestsFixture, "zip", "[archive]") {
 
     REQUIRE(std::filesystem::is_directory("zlib-ng-2.0.6"));
   };
+
+  std::filesystem::remove_all("zlib-ng-2.0.6-zip.zip");
+  std::filesystem::remove_all("zlib-ng-2.0.6-libarchive.zip");
 }
 
 TEST_CASE_METHOD(TestsFixture, "gzip", "[archive]") {
@@ -96,6 +89,9 @@ TEST_CASE_METHOD(TestsFixture, "gzip", "[archive]") {
 
     REQUIRE(std::filesystem::is_directory("zlib-ng-2.0.6"));
   };
+
+  std::filesystem::remove_all("zlib-ng-2.0.6-tar.tar.gz");
+  std::filesystem::remove_all("zlib-ng-2.0.6-libarchive.tar.gz");
 }
 
 TEST_CASE_METHOD(TestsFixture, "zstd", "[archive]") {
@@ -133,4 +129,7 @@ TEST_CASE_METHOD(TestsFixture, "zstd", "[archive]") {
 
     REQUIRE(std::filesystem::is_directory("zlib-ng-2.0.6"));
   };
+
+  std::filesystem::remove_all("zlib-ng-2.0.6-tar.tar.zst");
+  std::filesystem::remove_all("zlib-ng-2.0.6-libarchive.tar.zst");
 }

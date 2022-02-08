@@ -20,12 +20,6 @@
  */
 #define KLIB_VER_PATCH 0
 
-/**
- * @brief klib version
- */
-#define KLIB_VERSION \
-  (KLIB_VER_MAJOR * 10000 + KLIB_VER_MINOR * 100 + KLIB_VER_PATCH)
-
 #define KLIB_STRINGIZE2(s) #s
 #define KLIB_STRINGIZE(s) KLIB_STRINGIZE2(s)
 

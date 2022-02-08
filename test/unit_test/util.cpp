@@ -75,7 +75,6 @@ TEST_CASE("execute_command", "[util]") {
   REQUIRE_NOTHROW(klib::exec(""));
 
   REQUIRE_NOTHROW(klib::exec_with_output("clang -v"));
-  REQUIRE_NOTHROW(klib::exec_without_output("gcc -v"));
 }
 
 TEST_CASE("cleanse", "[util]") {

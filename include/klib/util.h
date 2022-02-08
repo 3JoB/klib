@@ -162,18 +162,6 @@ std::string exec_with_output(const std::string &cmd);
 std::string exec_with_output(const char *cmd);
 
 /**
- * @brief Execute the given line as a shell command and does not show its output
- * @param cmd: Command to be execute
- */
-void exec_without_output(const std::string &cmd);
-
-/**
- * @brief Execute the given line as a shell command and does not show its output
- * @param cmd: Command to be execute
- */
-void exec_without_output(const char *cmd);
-
-/**
  * @brief Wait for all child processes to exit
  */
 void wait_for_child_process();
