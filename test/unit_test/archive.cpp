@@ -1,6 +1,7 @@
 #include <filesystem>
 #include <string>
 
+#include <archive.h>
 #include <dbg.h>
 #include <catch2/catch.hpp>
 
@@ -20,6 +21,11 @@ class TestsFixture {
 };
 
 }  // namespace
+
+TEST_CASE("libarchive version", "[archive]") {
+  REQUIRE(archive_zlib_version() == std::string("1.2.11.zlib-ng"));
+  REQUIRE(archive_libzstd_version() == std::string("1.5.2"));
+}
 
 TEST_CASE_METHOD(TestsFixture, "zip none", "[archive]") {
   REQUIRE_NOTHROW(klib::compress("zlib-ng-2.0.6", klib::Format::Zip,
@@ -87,7 +93,9 @@ TEST_CASE("compress data", "[archive]") {
   std::string data = "Hello World!!";
   std::string compressed, decompressed;
 
+  dbg(std::size(data));
   REQUIRE_NOTHROW(compressed = klib::compress_data(data));
+  dbg(std::size(compressed));
   REQUIRE_NOTHROW(decompressed = klib::decompress_data(compressed));
   REQUIRE(data == decompressed);
 }
