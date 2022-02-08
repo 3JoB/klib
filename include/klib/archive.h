@@ -66,6 +66,8 @@ std::optional<std::string> outermost_folder_name(const std::string &file_path);
  */
 std::string compress_data(const std::string &data);
 
+std::string compress_data_mt(const std::string &data);
+
 /**
  * @brief Compress data
  * @param data: Data to be compressed
