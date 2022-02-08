@@ -10,7 +10,9 @@
 
 #include <fcntl.h>
 
+#include <cerrno>
 #include <cstdint>
+#include <cstring>
 #include <filesystem>
 #include <memory>
 #include <unordered_set>
@@ -219,6 +221,9 @@ void compress(const std::vector<std::string> &paths,
 
       auto fd = open(archive_entry_sourcepath(entry), O_RDONLY);
       SCOPE_EXIT { close(fd); };
+      if (fd == -1) {
+        throw RuntimeError(std::strerror(errno));
+      }
 
       char buff[16384];
       auto length = read(fd, buff, sizeof(buff));

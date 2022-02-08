@@ -5,7 +5,6 @@
 
 #pragma once
 
-#include <concepts>
 #include <cstddef>
 #include <cstdint>
 #include <string>
@@ -39,52 +38,6 @@ class ChangeWorkingDir {
  private:
   std::string backup_;
 };
-
-/**
- * @brief Search for an element equal to value
- * @param first: Starting iterator
- * @param last: Post-tail iterator
- * @param value: Value to compare the elements to
- * @return Iterator to the first element satisfying the condition or last if no
- * such element is found
- */
-template <typename InputIt, typename T>
-requires std::same_as<typename InputIt::value_type, T>
-constexpr inline InputIt find_last(InputIt first, InputIt last,
-                                   const T &value) {
-  for (; last != first;) {
-    --last;
-
-    if (*last == value) {
-      return last;
-    }
-  }
-
-  return last;
-}
-
-/**
- * @brief Search for an element for which predicate p returns true
- * @param first: Starting iterator
- * @param last: Post-tail iterator
- * @param p: Unary predicate which returns true for the required element
- * @return Iterator to the first element satisfying the condition or last if no
- * such element is found
- */
-template <class InputIt, class UnaryPredicate>
-requires std::predicate<UnaryPredicate, typename InputIt::value_type>
-constexpr inline InputIt find_last(InputIt first, InputIt last,
-                                   UnaryPredicate p) {
-  for (; last != first;) {
-    --last;
-
-    if (p(*last)) {
-      return last;
-    }
-  }
-
-  return last;
-}
 
 /**
  * @brief Split string
@@ -192,13 +145,13 @@ void cleanse(void *ptr, std::size_t size);
  * @see
  * https://docs.microsoft.com/zh-cn/windows/win32/fileio/naming-a-file#file-and-directory-names
  */
-std::string make_file_or_dir_name_legal(const std::string &file_name);
+std::string make_file_name_legal(const std::string &file_name);
 
 /**
  * @brief Generate random data of specified bytes
- * @param num: The number of bytes to generate
+ * @param bytes: The number of bytes to generate
  * @return Random data generated
  */
-std::string generate_random_bytes(std::int32_t num);
+std::string generate_random_bytes(std::size_t bytes);
 
 }  // namespace klib

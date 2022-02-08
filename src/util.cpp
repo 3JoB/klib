@@ -210,7 +210,7 @@ void cleanse(std::string &data) {
 
 void cleanse(void *data, std::size_t size) { OPENSSL_cleanse(data, size); }
 
-std::string make_file_or_dir_name_legal(const std::string &file_name) {
+std::string make_file_name_legal(const std::string &file_name) {
   auto copy = file_name;
 
   boost::replace_all(copy, "<", " ");
@@ -234,17 +234,21 @@ std::string make_file_or_dir_name_legal(const std::string &file_name) {
   return copy;
 }
 
-std::string generate_random_bytes(std::int32_t num) {
+std::string generate_random_bytes(std::size_t bytes) {
+  std::int32_t rc;
+
   if (RAND_status() == 0) {
-    check_openssl_return(RAND_poll());
+    rc = RAND_poll();
+    check_openssl_return(rc);
   }
 
-  std::string bytes;
-  bytes.resize(num);
-  check_openssl_return(RAND_bytes(
-      reinterpret_cast<unsigned char *>(std::data(bytes)), std::size(bytes)));
+  std::string result;
+  result.resize(bytes);
 
-  return bytes;
+  rc = RAND_bytes(reinterpret_cast<std::uint8_t *>(std::data(result)), bytes);
+  check_openssl_return(rc);
+
+  return result;
 }
 
 }  // namespace klib

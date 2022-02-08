@@ -1,3 +1,7 @@
+/**
+ * @see https://www.html-tidy.org/developer/
+ */
+
 #include "klib/html.h"
 
 #include <tidy.h>
@@ -18,7 +22,6 @@ void check_opt_set(bool ok) {
 
 }  // namespace
 
-// https://www.html-tidy.org/developer/
 std::string html_tidy(const std::string &html, bool ignore_error) {
   TidyDoc doc = tidyCreate();
   SCOPE_EXIT { tidyRelease(doc); };

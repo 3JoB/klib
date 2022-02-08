@@ -96,7 +96,7 @@ void do_encrypt(const std::string& file_path, const std::string& password) {
   klib::cleanse(key);
   klib::cleanse(compressed);
 
-  auto new_file_name = klib::make_file_or_dir_name_legal(
+  auto new_file_name = klib::make_file_name_legal(
       klib::fast_base64_encode(klib::generate_random_bytes(32)));
   klib::write_file(new_file_name, true, salt + encrypted);
 

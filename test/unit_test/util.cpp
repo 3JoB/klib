@@ -19,16 +19,6 @@ TEST_CASE("ChangeWorkingDir", "[util]") {
   REQUIRE(std::filesystem::remove("work-dir"));
 }
 
-TEST_CASE("find_last", "[util]") {
-  std::vector<std::int32_t> v{1, 2, 2, 3, 4, 5, 6, 2, 5, 4};
-  auto iter = klib::find_last(std::begin(v), std::end(v), 2);
-  REQUIRE(iter - std::begin(v) == 7);
-
-  v = {2, 1, 1, 1, 1, 1};
-  iter = klib::find_last(std::begin(v), std::end(v), 2);
-  REQUIRE(iter - std::begin(v) == 0);
-}
-
 TEST_CASE("split_str", "[util]") {
   const std::vector<std::string> std_vec = {"123", "123", "123"};
 
@@ -84,11 +74,10 @@ TEST_CASE("cleanse", "[util]") {
   REQUIRE(std::empty(password));
 }
 
-TEST_CASE("make_file_or_dir_name_legal", "[util]") {
-  REQUIRE(klib::make_file_or_dir_name_legal("你好世界 .") == "你好世界");
-  REQUIRE(klib::make_file_or_dir_name_legal("你好\n世界") == "你好世界");
-  REQUIRE(klib::make_file_or_dir_name_legal("你好世界***") == "你好世界");
-  REQUIRE(klib::make_file_or_dir_name_legal("你好?世界 .") == "你好 世界");
-  REQUIRE(klib::make_file_or_dir_name_legal("    你好|\\/世界 .") ==
-          "你好   世界");
+TEST_CASE("make_file_name_legal", "[util]") {
+  REQUIRE(klib::make_file_name_legal("你好世界 .") == "你好世界");
+  REQUIRE(klib::make_file_name_legal("你好\n世界") == "你好世界");
+  REQUIRE(klib::make_file_name_legal("你好世界***") == "你好世界");
+  REQUIRE(klib::make_file_name_legal("你好?世界 .") == "你好 世界");
+  REQUIRE(klib::make_file_name_legal("    你好|\\/世界 .") == "你好   世界");
 }
