@@ -25,7 +25,6 @@
 
 #include "klib/exception.h"
 #include "klib/util.h"
-#include "zstdmt/zstd-mt.h"
 
 namespace klib {
 
@@ -322,23 +321,6 @@ std::optional<std::string> outermost_folder_name(const std::string &file_name) {
 std::string compress_data(const std::string &data) {
   return compress_data(std::data(data), std::size(data));
 }
-
-// std::string compress_data_mt(const std::string &data) {
-//   ZSTDCB_RdWr_t rdwr;
-//
-//   auto cctx = ZSTDCB_createCCtx(16, ZSTD_defaultCLevel(), 1 * 1024 * 1024);
-//   SCOPE_EXIT { ZSTDCB_freeCCtx(cctx); };
-//   if (!cctx) {
-//     throw RuntimeError("Allocating compression context failed!");
-//   }
-//
-//   auto rc = ZSTDCB_compressCCtx(cctx, &rdwr);
-//   if (ZSTDCB_isError(rc)) {
-//     throw RuntimeError(ZSTDCB_getErrorString(rc));
-//   }
-//
-//   return "";
-// }
 
 std::string compress_data(const char *data, std::size_t size) {
   std::string result;

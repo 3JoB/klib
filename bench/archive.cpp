@@ -12,7 +12,7 @@ class TestsFixture {
   TestsFixture() {
     std::filesystem::remove_all("CMake-3.22.2");
     REQUIRE(std::filesystem::exists("CMake-3.22.2.tar.gz"));
-    REQUIRE_NOTHROW(klib::exec("bsdtar -zxf CMake-3.22.2.tar.gz"));
+    REQUIRE_NOTHROW(klib::exec("tar -zxf CMake-3.22.2.tar.gz"));
     REQUIRE(std::filesystem::exists("CMake-3.22.2"));
   }
 };
@@ -57,10 +57,10 @@ TEST_CASE_METHOD(TestsFixture, "zip", "[archive]") {
 }
 
 TEST_CASE_METHOD(TestsFixture, "gzip", "[archive]") {
-  BENCHMARK_ADVANCED("system bsdtar compress")
+  BENCHMARK_ADVANCED("system tar compress")
   (Catch::Benchmark::Chronometer meter) {
     meter.measure(
-        [] { klib::exec("bsdtar -zcf CMake-3.22.2-tar.tar.gz CMake-3.22.2"); });
+        [] { klib::exec("tar -zcf CMake-3.22.2-tar.tar.gz CMake-3.22.2"); });
 
     REQUIRE(std::filesystem::is_regular_file("CMake-3.22.2-tar.tar.gz"));
   };
@@ -75,9 +75,9 @@ TEST_CASE_METHOD(TestsFixture, "gzip", "[archive]") {
     REQUIRE(std::filesystem::is_regular_file("CMake-3.22.2-libarchive.tar.gz"));
   };
 
-  BENCHMARK_ADVANCED("system bsdtar decompress")
+  BENCHMARK_ADVANCED("system tar decompress")
   (Catch::Benchmark::Chronometer meter) {
-    meter.measure([] { klib::exec("bsdtar -zxf CMake-3.22.2-tar.tar.gz"); });
+    meter.measure([] { klib::exec("tar -zxf CMake-3.22.2-tar.tar.gz"); });
 
     REQUIRE(std::filesystem::is_directory("CMake-3.22.2"));
   };
@@ -94,10 +94,10 @@ TEST_CASE_METHOD(TestsFixture, "gzip", "[archive]") {
 }
 
 TEST_CASE_METHOD(TestsFixture, "zstd", "[archive]") {
-  BENCHMARK_ADVANCED("system bsdtar compress")
+  BENCHMARK_ADVANCED("system tar compress")
   (Catch::Benchmark::Chronometer meter) {
     meter.measure([] {
-      klib::exec("bsdtar --zstd -cf CMake-3.22.2-tar.tar.zst CMake-3.22.2");
+      klib::exec("tar --zstd -cf CMake-3.22.2-tar.tar.zst CMake-3.22.2");
     });
 
     REQUIRE(std::filesystem::is_regular_file("CMake-3.22.2-tar.tar.zst"));
@@ -114,10 +114,10 @@ TEST_CASE_METHOD(TestsFixture, "zstd", "[archive]") {
         std::filesystem::is_regular_file("CMake-3.22.2-libarchive.tar.zst"));
   };
 
-  BENCHMARK_ADVANCED("system bsdtar decompress")
+  BENCHMARK_ADVANCED("system tar decompress")
   (Catch::Benchmark::Chronometer meter) {
     meter.measure(
-        [] { klib::exec("bsdtar --zstd -xf CMake-3.22.2-tar.tar.zst"); });
+        [] { klib::exec("tar --zstd -xf CMake-3.22.2-tar.tar.zst"); });
 
     REQUIRE(std::filesystem::is_directory("CMake-3.22.2"));
   };
