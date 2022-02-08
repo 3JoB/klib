@@ -12,11 +12,11 @@
 const std::string httpbin_url = "https://httpbin.org";
 
 TEST_CASE("curl version", "[http]") {
-  auto data = curl_version_info(CURLVERSION_FIRST);
-  CHECK(data->libz_version == std::string("1.2.11.zlib-ng"));
-  CHECK(data->zstd_version == std::string("1.5.2"));
-  CHECK(data->brotli_version == std::string("1.0.9"));
-  CHECK(data->ssl_version == std::string("BoringSSL"));
+  auto version_info = curl_version_info(CURLVERSION_NOW);
+  CHECK(version_info->libz_version == std::string("1.2.11.zlib-ng"));
+  CHECK(version_info->zstd_version == std::string("1.5.2"));
+  CHECK(version_info->brotli_version == std::string("1.0.9"));
+  CHECK(version_info->ssl_version == std::string("BoringSSL"));
 }
 
 TEST_CASE("request headers", "[http]") {
