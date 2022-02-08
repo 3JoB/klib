@@ -306,10 +306,10 @@ size_t ZSTDCB_compressCCtx(ZSTDCB_CCtx *ctx, ZSTDCB_RdWr_t *rdwr) {
   if (!ctx) return ZSTDCB_ERROR(init_missing);
 
   /* setup reading and writing functions */
-  ctx->fn_read = rdwr->fn_read;
-  ctx->fn_write = rdwr->fn_write;
-  ctx->arg_read = rdwr->arg_read;
-  ctx->arg_write = rdwr->arg_write;
+  ctx->fn_read = rdwr->fn_read_;
+  ctx->fn_write = rdwr->fn_write_;
+  ctx->arg_read = rdwr->arg_read_;
+  ctx->arg_write = rdwr->arg_write_;
 
   /* init counter and error codes */
   ctx->insize = 0;

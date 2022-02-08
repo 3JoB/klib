@@ -18,10 +18,12 @@ pthread_key_t try_key_;
 static pthread_once_t try_once_ = PTHREAD_ONCE_INIT;
 static void try_create_(void) {
   int ret = pthread_key_create(&try_key_, NULL);
+  (void)ret;
   assert(ret == 0 && "try: pthread_key_create() failed");
 }
 void try_setup_(void) {
   int ret = pthread_once(&try_once_, try_create_);
+  (void)ret;
   assert(ret == 0 && "try: pthread_once() failed");
 }
 #else  /* !PTHREAD_ONCE_INIT */

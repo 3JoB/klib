@@ -85,10 +85,10 @@ typedef int(fn_read)(void *args, ZSTDCB_Buffer *in);
 typedef int(fn_write)(void *args, ZSTDCB_Buffer *out);
 
 typedef struct {
-  fn_read *fn_read;
-  void *arg_read;
-  fn_write *fn_write;
-  void *arg_write;
+  fn_read *fn_read_;
+  void *arg_read_;
+  fn_write *fn_write_;
+  void *arg_write_;
 } ZSTDCB_RdWr_t;
 
 /* **************************************

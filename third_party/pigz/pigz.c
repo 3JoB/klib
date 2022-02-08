@@ -1465,6 +1465,7 @@ local void grow_space(struct space *space) {
 // to the pool.
 local void use_space(struct space *space) {
   long use;
+  (void)use;
 
   possess(space->use);
   use = peek_lock(space->use);
@@ -1574,6 +1575,7 @@ local void setup_jobs(void) {
 local void finish_jobs(void) {
   struct job job;
   int caught;
+  (void)caught;
 
   // only do this once
   if (compress_have == NULL) return;
