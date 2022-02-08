@@ -108,8 +108,8 @@ HTTPHeader::HTTPHeader(std::string header) : header_(std::move(header)) {
     throw RuntimeError("llhttp_execute failed");
   }
 
-  status_code_ = parser.status_code;
-  method_ = parser.method;
+  status_ = static_cast<HttpStatus>(parser.status_code);
+  method_ = static_cast<HttpMethod>(parser.method);
   http_major_ = parser.http_major;
   http_minor_ = parser.http_minor;
 

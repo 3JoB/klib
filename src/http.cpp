@@ -339,8 +339,10 @@ Response Request::RequestImpl::get(
 
   check_curl_correct(curl_easy_perform(http_handle_));
 
-  check_curl_correct(curl_easy_getinfo(http_handle_, CURLINFO_RESPONSE_CODE,
-                                       &response.status_code_));
+  std::int32_t status_code;
+  check_curl_correct(
+      curl_easy_getinfo(http_handle_, CURLINFO_RESPONSE_CODE, &status_code));
+  response.status_ = static_cast<HttpStatus>(status_code);
 
   return response;
 }
@@ -415,8 +417,10 @@ Response Request::RequestImpl::do_post() {
 
   check_curl_correct(curl_easy_perform(http_handle_));
 
-  check_curl_correct(curl_easy_getinfo(http_handle_, CURLINFO_RESPONSE_CODE,
-                                       &response.status_code_));
+  std::int32_t status_code;
+  check_curl_correct(
+      curl_easy_getinfo(http_handle_, CURLINFO_RESPONSE_CODE, &status_code));
+  response.status_ = static_cast<HttpStatus>(status_code);
 
   return response;
 }
@@ -519,9 +523,9 @@ Response Request::post_mime(
   return impl_->post_mime(url, data, file, header);
 }
 
-Response::StatusCode Response::status_code() const { return status_code_; }
+HttpStatus Response::status() const { return status_; }
 
-bool Response::ok() const { return status_code_ == StatusCode::Ok; }
+bool Response::ok() const { return status_ == HttpStatus::HTTP_STATUS_OK; }
 
 std::string Response::text() const { return text_; }
 

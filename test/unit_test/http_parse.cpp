@@ -48,6 +48,7 @@ TEST_CASE("header", "[http_parse]") {
 
   CHECK(header.http_major() == 1);
   CHECK(header.http_minor() == 1);
+  CHECK(header.method() == klib::HttpMethod::HTTP_METHOD_POST);
   CHECK(header.body() == "Hello World!!");
 
   CHECK(header.value("host") == "www.example.com");

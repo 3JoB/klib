@@ -11,6 +11,8 @@
 #include <string>
 #include <unordered_map>
 
+#include "klib/http_parse.h"
+
 namespace klib {
 
 class Response;
@@ -191,22 +193,10 @@ class Response {
 
  public:
   /**
-   * @brief HTTP Status Code
-   * @see https://developer.mozilla.org/zh-CN/docs/Web/HTTP/Status
-   */
-  enum StatusCode {
-    None = 0,
-    Ok = 200,
-    Unauthorized = 401,
-    Forbidden = 403,
-    NotFound = 404
-  };
-
-  /**
    * @brief Get status code
    * @return Status code
    */
-  [[nodiscard]] StatusCode status_code() const;
+  [[nodiscard]] HttpStatus status() const;
 
   /**
    * @brief Determine whether the status code is OK
@@ -228,7 +218,7 @@ class Response {
   void save_to_file(const std::string &path, bool binary_mode) const;
 
  private:
-  StatusCode status_code_ = StatusCode::None;
+  HttpStatus status_;
   std::string text_;
 };
 
