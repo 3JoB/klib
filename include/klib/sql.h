@@ -1,6 +1,6 @@
 /**
  * @file sql.h
- * @brief Contains an SQL database module
+ * @brief Contains SQL database module
  */
 
 #pragma once
@@ -203,8 +203,7 @@ class SqlDatabase {
    * @brief Open the database
    * @param db_name: Database name
    * @param open_mode: Database open mode
-   * @param password: Database password(If it is empty, the database is not
-   * encrypted)
+   * @param password: Database password
    */
   SqlDatabase(const std::string &db_name, OpenMode open_mode,
               const std::string &password);

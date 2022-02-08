@@ -3,25 +3,30 @@
 #include <climits>
 
 #include <sqlcipher/sqlite3.h>
+#include <boost/core/ignore_unused.hpp>
+#include <scope_guard.hpp>
 
 #include "klib/archive.h"
 #include "klib/exception.h"
+#include "klib/log.h"
 
 namespace klib {
 
 namespace {
 
-void check_sqlite(std::int32_t rc) {
-  if (rc != SQLITE_OK) {
-    throw RuntimeError(sqlite3_errstr(rc));
-  }
-}
+#define check_sqlite(rc)                      \
+  do {                                        \
+    if (rc != SQLITE_OK) {                    \
+      throw RuntimeError(sqlite3_errstr(rc)); \
+    }                                         \
+  } while (0)
 
-void check_sqlite(std::int32_t rc, sqlite3 *db) {
-  if (rc != SQLITE_OK) {
-    throw RuntimeError(sqlite3_errmsg(db));
-  }
-}
+#define check_sqlite2(rc, db)                 \
+  do {                                        \
+    if (rc != SQLITE_OK) {                    \
+      throw RuntimeError(sqlite3_errmsg(db)); \
+    }                                         \
+  } while (0)
 
 }  // namespace
 
@@ -190,12 +195,13 @@ SqlQuery::SqlQueryImpl::~SqlQueryImpl() {
   try {
     finalize();
   } catch (...) {
+    error("~SqlQueryImpl failed");
   }
 }
 
 void SqlQuery::SqlQueryImpl::finalize() {
   auto rc = sqlite3_finalize(stmt_);
-  check_sqlite(rc, db_);
+  check_sqlite2(rc, db_);
   stmt_ = nullptr;
 }
 
@@ -215,24 +221,24 @@ void SqlQuery::SqlQueryImpl::prepare(std::string_view sql) {
 
 void SqlQuery::SqlQueryImpl::bind(std::int32_t index, std::int32_t value) {
   auto rc = sqlite3_bind_int(stmt_, index, value);
-  check_sqlite(rc, db_);
+  check_sqlite2(rc, db_);
 }
 
 void SqlQuery::SqlQueryImpl::bind(std::int32_t index, std::int64_t value) {
   auto rc = sqlite3_bind_int64(stmt_, index, value);
-  check_sqlite(rc, db_);
+  check_sqlite2(rc, db_);
 }
 
 void SqlQuery::SqlQueryImpl::bind(std::int32_t index, double value) {
   auto rc = sqlite3_bind_double(stmt_, index, value);
-  check_sqlite(rc, db_);
+  check_sqlite2(rc, db_);
 }
 
 void SqlQuery::SqlQueryImpl::bind(std::int32_t index,
                                   const std::string &value) {
   auto rc = sqlite3_bind_text(stmt_, index, value.c_str(), std::size(value),
                               SQLITE_TRANSIENT);
-  check_sqlite(rc, db_);
+  check_sqlite2(rc, db_);
 }
 
 void SqlQuery::SqlQueryImpl::bind(std::int32_t index, const char *value,
@@ -240,7 +246,7 @@ void SqlQuery::SqlQueryImpl::bind(std::int32_t index, const char *value,
   auto compressed_data = compress_data(value, size);
   auto rc = sqlite3_bind_blob(stmt_, index, std::data(compressed_data),
                               std::size(compressed_data), SQLITE_TRANSIENT);
-  check_sqlite(rc, db_);
+  check_sqlite2(rc, db_);
 }
 
 std::int32_t SqlQuery::SqlQueryImpl::exec() {
@@ -251,7 +257,7 @@ std::int32_t SqlQuery::SqlQueryImpl::exec() {
   if (auto rc = sqlite3_step(stmt_); rc != SQLITE_DONE) {
     throw RuntimeError(sqlite3_errmsg(db_));
   }
-  check_sqlite(sqlite3_reset(stmt_), db_);
+  check_sqlite2(sqlite3_reset(stmt_), db_);
 
   return sqlite3_changes(db_);
 }
@@ -262,7 +268,7 @@ bool SqlQuery::SqlQueryImpl::next() {
   }
 
   if (auto rc = sqlite3_step(stmt_); rc != SQLITE_ROW) {
-    check_sqlite(sqlite3_reset(stmt_), db_);
+    check_sqlite2(sqlite3_reset(stmt_), db_);
     return false;
   }
 
@@ -289,6 +295,10 @@ Column SqlQuery::SqlQueryImpl::get_column(SqlQuery &sql_query,
 SqlDatabase::SqlDatabaseImpl::SqlDatabaseImpl(const std::string &db_name,
                                               OpenMode open_mode,
                                               const std::string &password) {
+  if (std::empty(password)) {
+    throw InvalidArgument("The password is empty");
+  }
+
   std::int32_t flag = 0;
   if (open_mode == OpenMode::ReadOnly) {
     flag = SQLITE_OPEN_READONLY;
@@ -302,10 +312,8 @@ SqlDatabase::SqlDatabaseImpl::SqlDatabaseImpl(const std::string &db_name,
     throw RuntimeError(msg);
   }
 
-  if (!std::empty(password)) {
-    auto rc = sqlite3_key(db_, std::data(password), std::size(password));
-    check_sqlite(rc, db_);
-  }
+  auto rc = sqlite3_key(db_, std::data(password), std::size(password));
+  check_sqlite2(rc, db_);
 }
 
 SqlDatabase::SqlDatabaseImpl::~SqlDatabaseImpl() { sqlite3_close_v2(db_); }
@@ -324,7 +332,7 @@ bool SqlDatabase::SqlDatabaseImpl::table_exists(SqlDatabase &db,
   query.prepare(
       "SELECT count(*) FROM sqlite_master WHERE type='table' AND name=?");
   query.bind(1, table_name);
-  (void)query.next();
+  boost::ignore_unused(query.next());
 
   return query.get_column(0).as_int32() == 1;
 }
@@ -344,19 +352,19 @@ std::int64_t SqlDatabase::SqlDatabaseImpl::table_line_count(
     SqlDatabase &db, const std::string &table_name) {
   SqlQuery query(db);
   query.prepare("SELECT count(*) FROM " + table_name);
-  (void)query.next();
+  boost::ignore_unused(query.next());
 
   return query.get_column(0).as_int64();
 }
 
 std::int32_t SqlDatabase::SqlDatabaseImpl::exec(std::string_view sql) {
   char *err_msg = nullptr;
-  if (sqlite3_exec(db_, sql.data(), nullptr, nullptr, &err_msg) != SQLITE_OK) {
-    std::string msg = err_msg;
-    sqlite3_free(err_msg);
-    throw RuntimeError(msg);
+  SCOPE_EXIT { sqlite3_free(err_msg); };
+
+  auto rc = sqlite3_exec(db_, sql.data(), nullptr, nullptr, &err_msg);
+  if (rc != SQLITE_OK) {
+    throw RuntimeError(err_msg);
   }
-  sqlite3_free(err_msg);
 
   return sqlite3_changes(db_);
 }

@@ -92,7 +92,7 @@ TEST_CASE("sql", "[sql]") {
 }
 
 TEST_CASE("blob", "[sql]") {
-  klib::SqlDatabase db("test1.db", klib::SqlDatabase::ReadWrite, "");
+  klib::SqlDatabase db("test1.db", klib::SqlDatabase::ReadWrite, "123");
 
   REQUIRE_NOTHROW(db.transaction());
   REQUIRE_NOTHROW(db.drop_table_if_exists("BlobTest"));
