@@ -9,7 +9,6 @@
 #include <cstdlib>
 #include <filesystem>
 #include <fstream>
-#include <map>
 
 #include <openssl/mem.h>
 #include <openssl/rand.h>
@@ -78,10 +77,6 @@ std::string read_file(const std::string &path, bool binary_mode) {
   return read_file(path.c_str(), binary_mode);
 }
 
-std::string read_file(std::string_view path, bool binary_mode) {
-  return read_file(std::data(path), binary_mode);
-}
-
 std::string read_file(const char *path, bool binary_mode) {
   std::ifstream ifs;
   if (binary_mode) {
@@ -103,32 +98,13 @@ std::string read_file(const char *path, bool binary_mode) {
   return data;
 }
 
-std::vector<std::string> read_file_line(const std::string &path) {
-  return read_file_line(path.c_str());
-}
-
-std::vector<std::string> read_file_line(std::string_view path) {
-  return read_file_line(std::data(path));
-}
-
-std::vector<std::string> read_file_line(const char *path) {
-  auto str = read_file(path, false);
-  return split_str(str, "\n");
-}
-
 void write_file(const std::string &path, bool binary_mode,
-                const std::string &content) {
-  write_file(path.c_str(), binary_mode, content.c_str(), std::size(content));
+                const std::string &str) {
+  write_file(path.c_str(), binary_mode, std::data(str), std::size(str));
 }
 
-void write_file(std::string_view path, bool binary_mode,
-                std::string_view content) {
-  write_file(std::data(path), binary_mode, std::data(content),
-             std::size(content));
-}
-
-void write_file(const char *path, bool binary_mode, const char *content,
-                std::size_t length) {
+void write_file(const char *path, bool binary_mode, const char *str,
+                std::size_t size) {
   std::ofstream ofs;
   if (binary_mode) {
     ofs.open(path, std::ofstream::binary);
@@ -140,7 +116,7 @@ void write_file(const char *path, bool binary_mode, const char *content,
     throw RuntimeError("Can not open file: '{}'", path);
   }
 
-  ofs.write(content, length);
+  ofs.write(str, size);
 }
 
 void exec(const std::string &cmd) { exec(cmd.c_str()); }
@@ -223,7 +199,6 @@ std::string make_file_name_legal(const std::string &file_name) {
   boost::replace_all(copy, "?", " ");
   boost::replace_all(copy, "*", " ");
 
-  // https://zh.cppreference.com/w/c/string/byte/iscntrl
   std::erase_if(copy, [](char c) { return std::iscntrl(c); });
 
   if (copy.ends_with('.')) {

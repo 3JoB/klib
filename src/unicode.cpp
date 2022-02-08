@@ -6,7 +6,6 @@
 #include <clocale>
 #include <cstddef>
 #include <cuchar>
-#include <limits>
 #include <string_view>
 
 #include <boost/core/ignore_unused.hpp>
@@ -26,6 +25,7 @@ void set_locale(std::string_view locale = "en_US.utf8") {
 
 }  // namespace
 
+// https://github.com/simdutf/simdutf#example
 std::u16string utf8_to_utf16(const std::string &str) {
   auto source = std::data(str);
   auto source_size = std::size(str);
@@ -103,8 +103,6 @@ std::string utf32_to_utf8(char32_t c) {
 
   if (rc == static_cast<std::size_t>(-1)) {
     throw RuntimeError(std::strerror(errno));
-  } else if (rc == 0) {
-    throw RuntimeError("utf32_to_utf8 error");
   }
 
   result.resize(rc);
@@ -131,14 +129,6 @@ bool is_ascii(const std::u32string &str) {
                      [](char32_t c) { return is_ascii(c); });
 }
 
-bool is_chinese(const std::string &c) {
-  auto utf32 = utf8_to_utf32(c);
-
-  if (std::size(utf32) != 1) {
-    throw RuntimeError("not a UTF-32 encoded character: '{}'", c);
-  }
-
-  return is_chinese(utf32.front());
-}
+bool is_chinese(const std::string &c) { return is_chinese(utf8_to_unicode(c)); }
 
 }  // namespace klib

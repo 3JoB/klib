@@ -1,6 +1,6 @@
 /**
  * @file unicode.h
- * @brief Contains an Unicode module
+ * @brief Contains Unicode module
  */
 
 #pragma once

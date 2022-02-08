@@ -6,9 +6,7 @@
 #pragma once
 
 #include <cstddef>
-#include <cstdint>
 #include <string>
-#include <string_view>
 #include <vector>
 
 namespace klib {
@@ -58,35 +56,19 @@ std::vector<std::string> split_str(const std::string &str,
  */
 std::string read_file(const std::string &path, bool binary_mode);
 
-std::string read_file(std::string_view path, bool binary_mode);
-
 std::string read_file(const char *path, bool binary_mode);
-
-/**
- * @brief Read a file at a time and store it in a string
- * @param path: File path
- * @return A string that holds the contents of the file
- */
-std::vector<std::string> read_file_line(const std::string &path);
-
-std::vector<std::string> read_file_line(std::string_view path);
-
-std::vector<std::string> read_file_line(const char *path);
 
 /**
  * @brief Write string to file
  * @param path: File path
  * @param binary_mode: Whether to open in binary mode
- * @param content: String to be written
+ * @param str: String to be written
  */
 void write_file(const std::string &path, bool binary_mode,
-                const std::string &content);
+                const std::string &str);
 
-void write_file(std::string_view path, bool binary_mode,
-                std::string_view content);
-
-void write_file(const char *path, bool binary_mode, const char *content,
-                std::size_t length);
+void write_file(const char *path, bool binary_mode, const char *str,
+                std::size_t size);
 
 /**
  * @brief Execute the given line as a shell command
