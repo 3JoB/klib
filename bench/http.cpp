@@ -6,10 +6,9 @@
 TEST_CASE("get", "[http]") {
   klib::Request request;
   request.set_no_proxy();
-  klib::Response response;
 
   BENCHMARK("get") {
-    response = request.get("https://www.baidu.com/");
+    auto response = request.get("https://www.baidu.com/");
     REQUIRE(response.ok());
   };
   BENCHMARK("curl get") {
