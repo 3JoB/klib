@@ -7,7 +7,6 @@
 #include "klib/base64.h"
 
 #include <cstddef>
-#include <cstdint>
 
 #include <openssl/base64.h>
 
