@@ -1,3 +1,7 @@
+/**
+ * @see https://github.com/nodejs/llhttp#usage
+ */
+
 #include "klib/http_parse.h"
 
 #include <charconv>
@@ -11,6 +15,43 @@
 #include "klib/exception.h"
 
 namespace klib {
+
+namespace {
+
+class Header {
+ public:
+  std::string url_;
+  std::vector<std::pair<std::string, std::string>> field_value_;
+  std::string_view body_;
+};
+
+std::int32_t on_url(llhttp_t* parser, const char* at, std::size_t length) {
+  auto data = static_cast<Header*>(parser->data);
+  data->url_ = std::string_view(at, length);
+  return 0;
+}
+
+std::int32_t on_header_field(llhttp_t* parser, const char* at,
+                             std::size_t length) {
+  static_cast<Header*>(parser->data)
+      ->field_value_.emplace_back(std::string_view(at, length), "");
+  return 0;
+}
+
+std::int32_t on_header_value(llhttp_t* parser, const char* at,
+                             std::size_t length) {
+  static_cast<Header*>(parser->data)->field_value_.back().second =
+      std::string_view(at, length);
+  return 0;
+}
+
+std::int32_t on_body(llhttp_t* parser, const char* at, std::size_t length) {
+  auto data = static_cast<Header*>(parser->data);
+  data->body_ = std::string_view(at, length);
+  return 0;
+}
+
+}  // namespace
 
 const char* http_status_str(HttpStatus http_status) {
   switch (http_status) {
@@ -76,43 +117,6 @@ std::unordered_map<std::string, std::string> URL::query_map() const {
   return result;
 }
 
-namespace {
-
-class Header {
- public:
-  std::string url_;
-  std::vector<std::pair<std::string, std::string>> field_value_;
-  std::string body_;
-};
-
-std::int32_t on_url(llhttp_t* parser, const char* at, std::size_t length) {
-  auto data = static_cast<Header*>(parser->data);
-  data->url_.assign(at, length);
-  return 0;
-}
-
-std::int32_t on_header_field(llhttp_t* parser, const char* at,
-                             std::size_t length) {
-  static_cast<Header*>(parser->data)
-      ->field_value_.emplace_back(std::string_view(at, length), "");
-  return 0;
-}
-
-std::int32_t on_header_value(llhttp_t* parser, const char* at,
-                             std::size_t length) {
-  static_cast<Header*>(parser->data)->field_value_.back().second =
-      std::string_view(at, length);
-  return 0;
-}
-
-std::int32_t on_body(llhttp_t* parser, const char* at, std::size_t length) {
-  auto data = static_cast<Header*>(parser->data);
-  data->body_.assign(at, length);
-  return 0;
-}
-
-}  // namespace
-
 HTTPHeader::HTTPHeader(std::string header) : header_(std::move(header)) {
   llhttp_settings_t settings;
   llhttp_settings_init(&settings);
@@ -138,7 +142,7 @@ HTTPHeader::HTTPHeader(std::string header) : header_(std::move(header)) {
   http_minor_ = parser.http_minor;
 
   url_ = URL(std::move(result.url_));
-  body_ = std::move(result.body_);
+  body_ = result.body_;
 
   for (const auto& [field, value] : result.field_value_) {
     if (std::empty(value)) {

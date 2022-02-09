@@ -113,7 +113,7 @@ class HTTPHeader {
   [[nodiscard]] std::int32_t http_major() const { return http_major_; }
   [[nodiscard]] std::int32_t http_minor() const { return http_minor_; }
   [[nodiscard]] const URL& url() const { return url_; }
-  [[nodiscard]] const std::string& body() const { return body_; }
+  [[nodiscard]] std::string_view body() const { return body_; }
 
   /**
    * @brief Query the value corresponding to the field
@@ -139,7 +139,7 @@ class HTTPHeader {
 
   URL url_;
   std::unordered_map<std::string, std::string> field_value_;
-  std::string body_;
+  std::string_view body_;
 };
 
 }  // namespace klib
