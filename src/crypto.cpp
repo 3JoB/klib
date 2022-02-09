@@ -11,6 +11,7 @@
 
 #include <openssl/aes.h>
 #include <openssl/cipher.h>
+#include <scope_guard.hpp>
 
 #include "klib/detail/openssl_util.h"
 #include "klib/exception.h"
@@ -40,8 +41,11 @@ std::string do_aes_crypt(std::span<const char> data, const std::string &key,
     throw LogicError("The key must be 256 bit");
   }
 
-  bssl::ScopedEVP_CIPHER_CTX ctx1;
-  auto ctx = ctx1.get();
+  auto ctx = EVP_CIPHER_CTX_new();
+  SCOPE_EXIT { EVP_CIPHER_CTX_free(ctx); };
+  if (!ctx) {
+    throw RuntimeError(ERR_error_string(ERR_get_error(), nullptr));
+  }
 
   auto rc = EVP_CipherInit_ex(
       ctx, get_cipher(aes_mode), nullptr,
@@ -63,7 +67,7 @@ std::string do_aes_crypt(std::span<const char> data, const std::string &key,
   std::size_t total = 0;
   std::int32_t length;
   while (!data.empty()) {
-    std::int32_t todo = std::min(data.size(), 102400UL);
+    std::int32_t todo = std::min(data.size(), 16384UL);
 
     rc = EVP_CipherUpdate(
         ctx, reinterpret_cast<unsigned char *>(std::data(result)) + total,
@@ -89,7 +93,7 @@ std::string do_aes_crypt(std::span<const char> data, const std::string &key,
 
 std::string aes_256_encrypt(const std::string &data, const std::string &key,
                             AesMode aes_mode) {
-  auto iv = generate_random_bytes(EVP_MAX_IV_LENGTH);
+  const auto iv = generate_random_bytes(EVP_MAX_IV_LENGTH);
   return iv + do_aes_crypt(data, key, iv, aes_mode, true);
 }
 
