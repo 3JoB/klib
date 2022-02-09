@@ -65,8 +65,9 @@ class Request {
 
   /**
    * @brief Don't use any proxy
+   * @param no_proxy: String representing no_proxy
    */
-  void set_no_proxy();
+  void set_no_proxy(const std::string &no_proxy = "*");
 
   /**
    * @brief Set up a URL for the DoH server

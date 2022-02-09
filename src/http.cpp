@@ -1,155 +1,67 @@
 #include "klib/http.h"
 
 #include <cstddef>
-#include <cstdlib>
 #include <filesystem>
 #include <string_view>
 
 #include <curl/curl.h>
-#include <boost/algorithm/string.hpp>
 #include <scope_guard.hpp>
 
 #include "klib/exception.h"
-#include "klib/log.h"
 #include "klib/util.h"
 
 namespace klib {
 
 namespace {
 
-void check_curl_correct(CURLcode code) {
-  if (code != CURLcode::CURLE_OK) {
-    throw RuntimeError(curl_easy_strerror(code));
+#define check_curl(rc)                            \
+  do {                                            \
+    if (rc != CURLcode::CURLE_OK) {               \
+      throw RuntimeError(curl_easy_strerror(rc)); \
+    }                                             \
+  } while (0)
+
+#define check_curl_url(rc)                       \
+  do {                                           \
+    if (rc != CURLUcode::CURLUE_OK) {            \
+      throw RuntimeError(curl_url_strerror(rc)); \
+    }                                            \
+  } while (0)
+
+curl_mime *add_form(CURL *http_handle,
+                    const std::unordered_map<std::string, std::string> &data,
+                    const std::unordered_map<std::string, std::string> &file) {
+  auto form = curl_mime_init(http_handle);
+
+  for (const auto &[key, value] : data) {
+    if (std::empty(key) || std::empty(value)) {
+      throw RuntimeError("The post form key and value can not be empty");
+    }
+
+    auto field = curl_mime_addpart(form);
+    curl_mime_name(field, key.c_str());
+    curl_mime_data(field, value.c_str(), CURL_ZERO_TERMINATED);
   }
+
+  for (const auto &[file_name, path] : file) {
+    if (std::empty(file_name) || std::empty(path)) {
+      throw RuntimeError("The post file_name and path can not be empty");
+    }
+
+    if (!std::filesystem::is_regular_file(path)) {
+      throw RuntimeError("File '{}' not exist", path);
+    }
+
+    auto field = curl_mime_addpart(form);
+    curl_mime_name(field, file_name.c_str());
+    curl_mime_filedata(field, path.c_str());
+  }
+
+  auto rc = curl_easy_setopt(http_handle, CURLOPT_MIMEPOST, form);
+  check_curl(rc);
+
+  return form;
 }
-
-void check_curl_correct(CURLUcode code) {
-  if (code != CURLUcode::CURLUE_OK) {
-    throw RuntimeError(curl_url_strerror(code));
-  }
-}
-
-class AddURL {
- public:
-  explicit AddURL(
-      CURL *curl, const std::string &url,
-      const std::unordered_map<std::string, std::string> &params = {})
-      : curl_(curl), url_(curl_url()) {
-    SCOPE_FAIL { curl_url_cleanup(url_); };
-
-    auto rc = curl_url_set(url_, CURLUPART_URL, url.c_str(), 0);
-    check_curl_correct(rc);
-
-    for (const auto &[key, value] : params) {
-      std::string query = key + "=" + value;
-      rc = curl_url_set(url_, CURLUPART_QUERY, query.c_str(),
-                        CURLU_APPENDQUERY | CURLU_URLENCODE);
-      check_curl_correct(rc);
-    }
-
-    check_curl_correct(curl_easy_setopt(curl_, CURLOPT_CURLU, url_));
-  }
-
-  ~AddURL() { curl_url_cleanup(url_); }
-
- private:
-  CURL *curl_;
-  CURLU *url_;
-};
-
-class AddHeader {
- public:
-  explicit AddHeader(
-      CURL *curl, const std::unordered_map<std::string, std::string> &headers)
-      : curl_(curl) {
-    if (std::empty(headers)) {
-      return;
-    }
-
-    SCOPE_FAIL { curl_slist_free_all(chunk_); };
-
-    for (const auto &[key, value] : headers) {
-      if (std::empty(key) || std::empty(value)) {
-        throw RuntimeError("The header key and value can not be empty");
-      }
-
-      std::string str = key;
-      str.append(": ").append(value);
-      chunk_ = curl_slist_append(chunk_, str.c_str());
-    }
-
-    check_curl_correct(curl_easy_setopt(curl_, CURLOPT_HTTPHEADER, chunk_));
-  }
-
-  ~AddHeader() {
-    curl_slist_free_all(chunk_);
-
-    try {
-      check_curl_correct(curl_easy_setopt(curl_, CURLOPT_HTTPHEADER, nullptr));
-    } catch (...) {
-      error("~AddHeader failed");
-    }
-  }
-
- private:
-  CURL *curl_;
-  curl_slist *chunk_ = nullptr;
-};
-
-class AddForm {
- public:
-  explicit AddForm(CURL *curl,
-                   const std::unordered_map<std::string, std::string> &data,
-                   const std::unordered_map<std::string, std::string> &file)
-      : curl_(curl) {
-    if (std::empty(data) && std::empty(file)) {
-      return;
-    }
-
-    form_ = curl_mime_init(curl_);
-    SCOPE_FAIL { curl_mime_free(form_); };
-
-    for (const auto &[key, value] : data) {
-      if (std::empty(key) || std::empty(value)) {
-        throw RuntimeError("The post form key and value can not be empty");
-      }
-
-      auto field = curl_mime_addpart(form_);
-      curl_mime_name(field, key.c_str());
-      curl_mime_data(field, value.c_str(), CURL_ZERO_TERMINATED);
-    }
-
-    for (const auto &[file_name, path] : file) {
-      if (std::empty(file_name) || std::empty(path)) {
-        throw RuntimeError("The post file_name and path can not be empty");
-      }
-
-      if (!std::filesystem::is_regular_file(path)) {
-        throw RuntimeError("File '{}' not exist", path);
-      }
-
-      auto field = curl_mime_addpart(form_);
-      curl_mime_name(field, file_name.c_str());
-      curl_mime_filedata(field, path.c_str());
-    }
-
-    check_curl_correct(curl_easy_setopt(curl_, CURLOPT_MIMEPOST, form_));
-  }
-
-  ~AddForm() {
-    curl_mime_free(form_);
-
-    try {
-      check_curl_correct(curl_easy_setopt(curl_, CURLOPT_MIMEPOST, nullptr));
-    } catch (...) {
-      error("~AddForm failed");
-    }
-  }
-
- private:
-  CURL *curl_;
-  curl_mime *form_ = nullptr;
-};
 
 }  // namespace
 
@@ -167,7 +79,7 @@ class Request::RequestImpl {
   void allow_redirects(bool flag);
   void set_proxy(const std::string &proxy);
   void set_proxy_from_env();
-  void set_no_proxy();
+  void set_no_proxy(const std::string &no_proxy);
   void set_doh_url(const std::string &url);
   void set_user_agent(const std::string &user_agent);
   void set_browser_user_agent();
@@ -211,7 +123,8 @@ class Request::RequestImpl {
 };
 
 Request::RequestImpl::RequestImpl() {
-  check_curl_correct(curl_global_init(CURL_GLOBAL_DEFAULT));
+  auto rc = curl_global_init(CURL_GLOBAL_DEFAULT);
+  check_curl(rc);
 
   http_handle_ = curl_easy_init();
   if (!http_handle_) {
@@ -222,15 +135,21 @@ Request::RequestImpl::RequestImpl() {
     curl_global_cleanup();
   };
 
-  check_curl_correct(
-      curl_easy_setopt(http_handle_, CURLOPT_BUFFERSIZE, 102400L));
-  check_curl_correct(
-      curl_easy_setopt(http_handle_, CURLOPT_FOLLOWLOCATION, 1L));
-  check_curl_correct(curl_easy_setopt(http_handle_, CURLOPT_MAXREDIRS, 50L));
-  check_curl_correct(curl_easy_setopt(http_handle_, CURLOPT_TCP_KEEPALIVE, 1L));
+  rc = curl_easy_setopt(http_handle_, CURLOPT_BUFFERSIZE, 102400L);
+  check_curl(rc);
 
-  check_curl_correct(curl_easy_setopt(http_handle_, CURLOPT_WRITEFUNCTION,
-                                      RequestImpl::callback_func_std_string));
+  rc = curl_easy_setopt(http_handle_, CURLOPT_FOLLOWLOCATION, 1L);
+  check_curl(rc);
+
+  rc = curl_easy_setopt(http_handle_, CURLOPT_MAXREDIRS, 50L);
+  check_curl(rc);
+
+  rc = curl_easy_setopt(http_handle_, CURLOPT_TCP_KEEPALIVE, 1L);
+  check_curl(rc);
+
+  rc = curl_easy_setopt(http_handle_, CURLOPT_WRITEFUNCTION,
+                        RequestImpl::callback_func_std_string);
+  check_curl(rc);
 }
 
 Request::RequestImpl::~RequestImpl() {
@@ -239,38 +158,39 @@ Request::RequestImpl::~RequestImpl() {
 }
 
 void Request::RequestImpl::verbose(bool flag) {
-  check_curl_correct(curl_easy_setopt(http_handle_, CURLOPT_VERBOSE, flag));
+  auto rc = curl_easy_setopt(http_handle_, CURLOPT_VERBOSE, flag);
+  check_curl(rc);
 }
 
 void Request::RequestImpl::allow_redirects(bool flag) {
-  check_curl_correct(
-      curl_easy_setopt(http_handle_, CURLOPT_FOLLOWLOCATION, flag));
+  auto rc = curl_easy_setopt(http_handle_, CURLOPT_FOLLOWLOCATION, flag);
+  check_curl(rc);
 }
 
 void Request::RequestImpl::set_proxy(const std::string &proxy) {
-  check_curl_correct(
-      curl_easy_setopt(http_handle_, CURLOPT_PROXY, proxy.c_str()));
+  auto rc = curl_easy_setopt(http_handle_, CURLOPT_PROXY, proxy.c_str());
+  check_curl(rc);
 }
 
 void Request::RequestImpl::set_proxy_from_env() {
-  check_curl_correct(
-      curl_easy_setopt(http_handle_, CURLOPT_PROXY, std::getenv("HTTP_PROXY")));
-  check_curl_correct(
-      curl_easy_setopt(http_handle_, CURLOPT_NOPROXY, std::getenv("NO_PROXY")));
+  set_proxy(std::getenv("HTTP_PROXY"));
+  set_no_proxy(std::getenv("NO_PROXY"));
 }
 
-void Request::RequestImpl::set_no_proxy() {
-  check_curl_correct(curl_easy_setopt(http_handle_, CURLOPT_NOPROXY, "*"));
+void Request::RequestImpl::set_no_proxy(const std::string &no_proxy) {
+  auto rc = curl_easy_setopt(http_handle_, CURLOPT_NOPROXY, no_proxy.c_str());
+  check_curl(rc);
 }
 
 void Request::RequestImpl::set_doh_url(const std::string &url) {
-  check_curl_correct(
-      curl_easy_setopt(http_handle_, CURLOPT_DOH_URL, url.c_str()));
+  auto rc = curl_easy_setopt(http_handle_, CURLOPT_DOH_URL, url.c_str());
+  check_curl(rc);
 }
 
 void Request::RequestImpl::set_user_agent(const std::string &user_agent) {
-  check_curl_correct(
-      curl_easy_setopt(http_handle_, CURLOPT_USERAGENT, user_agent.c_str()));
+  auto rc =
+      curl_easy_setopt(http_handle_, CURLOPT_USERAGENT, user_agent.c_str());
+  check_curl(rc);
 }
 
 void Request::RequestImpl::set_browser_user_agent() {
@@ -285,20 +205,22 @@ void Request::RequestImpl::set_curl_user_agent() {
 }
 
 void Request::RequestImpl::set_timeout(std::int64_t seconds) {
-  check_curl_correct(curl_easy_setopt(http_handle_, CURLOPT_TIMEOUT, seconds));
+  auto rc = curl_easy_setopt(http_handle_, CURLOPT_TIMEOUT, seconds);
+  check_curl(rc);
 }
 
 void Request::RequestImpl::set_connect_timeout(std::int64_t seconds) {
-  check_curl_correct(
-      curl_easy_setopt(http_handle_, CURLOPT_CONNECTTIMEOUT, seconds));
+  auto rc = curl_easy_setopt(http_handle_, CURLOPT_CONNECTTIMEOUT, seconds);
+  check_curl(rc);
 }
 
 void Request::RequestImpl::use_cookies(bool flag) { use_cookies_ = flag; }
 
 void Request::RequestImpl::set_accept_encoding(
     const std::string &accept_encoding) {
-  check_curl_correct(curl_easy_setopt(http_handle_, CURLOPT_ACCEPT_ENCODING,
-                                      accept_encoding.c_str()));
+  auto rc = curl_easy_setopt(http_handle_, CURLOPT_ACCEPT_ENCODING,
+                             accept_encoding.c_str());
+  check_curl(rc);
 }
 
 std::string Request::RequestImpl::url_encode(const std::string &str) {
@@ -323,26 +245,91 @@ std::string Request::RequestImpl::url_decode(const std::string &str) {
   return std::string(ptr, length);
 }
 
+CURLU *add_url(
+    CURL *http_handle, const std::string &url,
+    const std::unordered_map<std::string, std::string> &params = {}) {
+  if (std::empty(params)) {
+    auto rc = curl_easy_setopt(http_handle, CURLOPT_URL, url.c_str());
+    check_curl(rc);
+    return nullptr;
+  }
+
+  auto c_url = curl_url();
+
+  auto rc = curl_url_set(c_url, CURLUPART_URL, url.c_str(), 0);
+  check_curl_url(rc);
+
+  for (const auto &[key, value] : params) {
+    std::string query = key + "=" + value;
+    rc = curl_url_set(c_url, CURLUPART_QUERY, query.c_str(),
+                      CURLU_APPENDQUERY | CURLU_URLENCODE);
+    check_curl_url(rc);
+  }
+
+  auto rc2 = curl_easy_setopt(http_handle, CURLOPT_CURLU, c_url);
+  check_curl(rc2);
+
+  return c_url;
+}
+
+curl_slist *add_header(
+    CURL *http_handle,
+    const std::unordered_map<std::string, std::string> &header) {
+  curl_slist *chunk = nullptr;
+
+  for (const auto &[key, value] : header) {
+    if (std::empty(key) || std::empty(value)) {
+      throw RuntimeError("The header key and value can not be empty");
+    }
+
+    std::string str = key;
+    str.append(": ").append(value);
+    chunk = curl_slist_append(chunk, str.c_str());
+  }
+
+  auto rc = curl_easy_setopt(http_handle, CURLOPT_HTTPHEADER, chunk);
+  check_curl(rc);
+
+  return chunk;
+}
+
+HttpStatus get_status(CURL *http_handle) {
+  std::int32_t status_code;
+
+  auto rc =
+      curl_easy_getinfo(http_handle, CURLINFO_RESPONSE_CODE, &status_code);
+  check_curl(rc);
+
+  return static_cast<HttpStatus>(status_code);
+}
+
 Response Request::RequestImpl::get(
     const std::string &url,
     const std::unordered_map<std::string, std::string> &params,
     const std::unordered_map<std::string, std::string> &headers) {
   set_cookies();
-  check_curl_correct(curl_easy_setopt(http_handle_, CURLOPT_HTTPGET, 1L));
 
-  AddHeader add_header(http_handle_, headers);
-  AddURL add_url(http_handle_, url, params);
+  auto rc = curl_easy_setopt(http_handle_, CURLOPT_HTTPGET, 1L);
+  check_curl(rc);
+
+  auto c_url = add_url(http_handle_, url, params);
+  SCOPE_EXIT { curl_url_cleanup(c_url); };
+
+  auto chunk = add_header(http_handle_, headers);
+  SCOPE_EXIT {
+    curl_slist_free_all(chunk);
+    rc = curl_easy_setopt(http_handle_, CURLOPT_HTTPHEADER, nullptr);
+    check_curl(rc);
+  };
 
   Response response;
-  check_curl_correct(
-      curl_easy_setopt(http_handle_, CURLOPT_WRITEDATA, &response.text_));
+  rc = curl_easy_setopt(http_handle_, CURLOPT_WRITEDATA, &response.text_);
+  check_curl(rc);
 
-  check_curl_correct(curl_easy_perform(http_handle_));
+  rc = curl_easy_perform(http_handle_);
+  check_curl(rc);
 
-  std::int32_t status_code;
-  check_curl_correct(
-      curl_easy_getinfo(http_handle_, CURLINFO_RESPONSE_CODE, &status_code));
-  response.status_ = static_cast<HttpStatus>(status_code);
+  response.status_ = get_status(http_handle_);
 
   return response;
 }
@@ -352,14 +339,23 @@ Response Request::RequestImpl::post(
     const std::unordered_map<std::string, std::string> &data,
     const std::unordered_map<std::string, std::string> &headers) {
   set_cookies();
-  check_curl_correct(curl_easy_setopt(http_handle_, CURLOPT_HTTPPOST, 1L));
+
+  auto rc = curl_easy_setopt(http_handle_, CURLOPT_HTTPPOST, 1L);
+  check_curl(rc);
 
   auto post_fields = splicing_post_fields(data);
-  check_curl_correct(
-      curl_easy_setopt(http_handle_, CURLOPT_POSTFIELDS, post_fields.c_str()));
+  rc = curl_easy_setopt(http_handle_, CURLOPT_POSTFIELDS, post_fields.c_str());
+  check_curl(rc);
 
-  AddHeader add_header(http_handle_, headers);
-  AddURL add_url(http_handle_, url);
+  auto c_url = add_url(http_handle_, url);
+  SCOPE_EXIT { curl_url_cleanup(c_url); };
+
+  auto chunk = add_header(http_handle_, headers);
+  SCOPE_EXIT {
+    curl_slist_free_all(chunk);
+    rc = curl_easy_setopt(http_handle_, CURLOPT_HTTPHEADER, nullptr);
+    check_curl(rc);
+  };
 
   return do_post();
 }
@@ -368,16 +364,24 @@ Response Request::RequestImpl::post(
     const std::string &url, const std::string &json,
     const std::unordered_map<std::string, std::string> &headers) {
   set_cookies();
-  check_curl_correct(curl_easy_setopt(http_handle_, CURLOPT_HTTPPOST, 1L));
 
-  check_curl_correct(
-      curl_easy_setopt(http_handle_, CURLOPT_POSTFIELDS, json.c_str()));
+  auto rc = curl_easy_setopt(http_handle_, CURLOPT_HTTPPOST, 1L);
+  check_curl(rc);
+
+  rc = curl_easy_setopt(http_handle_, CURLOPT_POSTFIELDS, json.c_str());
+  check_curl(rc);
+
+  auto c_url = add_url(http_handle_, url);
+  SCOPE_EXIT { curl_url_cleanup(c_url); };
 
   auto headers_copy = headers;
   headers_copy["Content-Type"] = "application/json";
-  AddHeader add_header(http_handle_, headers_copy);
-
-  AddURL add_url(http_handle_, url);
+  auto chunk = add_header(http_handle_, headers_copy);
+  SCOPE_EXIT {
+    curl_slist_free_all(chunk);
+    rc = curl_easy_setopt(http_handle_, CURLOPT_HTTPHEADER, nullptr);
+    check_curl(rc);
+  };
 
   return do_post();
 }
@@ -388,39 +392,58 @@ Response Request::RequestImpl::post_mime(
     const std::unordered_map<std::string, std::string> &file,
     const std::unordered_map<std::string, std::string> &headers) {
   set_cookies();
-  check_curl_correct(curl_easy_setopt(http_handle_, CURLOPT_HTTPPOST, 1L));
 
-  AddForm add_form(http_handle_, data, file);
-  AddHeader add_header(http_handle_, headers);
-  AddURL add_url(http_handle_, url);
+  auto rc = curl_easy_setopt(http_handle_, CURLOPT_HTTPPOST, 1L);
+  check_curl(rc);
+
+  auto c_url = add_url(http_handle_, url);
+  SCOPE_EXIT { curl_url_cleanup(c_url); };
+
+  auto chunk = add_header(http_handle_, headers);
+  SCOPE_EXIT {
+    curl_slist_free_all(chunk);
+    rc = curl_easy_setopt(http_handle_, CURLOPT_HTTPHEADER, nullptr);
+    check_curl(rc);
+  };
+
+  auto form = add_form(http_handle_, data, file);
+  SCOPE_FAIL {
+    curl_mime_free(form);
+    auto rc = curl_easy_setopt(http_handle_, CURLOPT_MIMEPOST, nullptr);
+    check_curl(rc);
+  };
 
   return do_post();
 }
 
 void Request::RequestImpl::set_cookies() {
   if (use_cookies_) {
-    check_curl_correct(curl_easy_setopt(http_handle_, CURLOPT_COOKIEJAR,
-                                        std::data(RequestImpl::cookies_path)));
-    check_curl_correct(curl_easy_setopt(http_handle_, CURLOPT_COOKIEFILE,
-                                        std::data(RequestImpl::cookies_path)));
+    auto rc = curl_easy_setopt(http_handle_, CURLOPT_COOKIEJAR,
+                               std::data(RequestImpl::cookies_path));
+    check_curl(rc);
+
+    rc = curl_easy_setopt(http_handle_, CURLOPT_COOKIEFILE,
+                          std::data(RequestImpl::cookies_path));
+    check_curl(rc);
   } else {
-    check_curl_correct(curl_easy_setopt(http_handle_, CURLOPT_COOKIEJAR, ""));
-    check_curl_correct(curl_easy_setopt(http_handle_, CURLOPT_COOKIEFILE, ""));
+    auto rc = curl_easy_setopt(http_handle_, CURLOPT_COOKIEJAR, "");
+    check_curl(rc);
+
+    rc = curl_easy_setopt(http_handle_, CURLOPT_COOKIEFILE, "");
+    check_curl(rc);
   }
 }
 
 Response Request::RequestImpl::do_post() {
   Response response;
 
-  check_curl_correct(
-      curl_easy_setopt(http_handle_, CURLOPT_WRITEDATA, &response.text_));
+  auto rc = curl_easy_setopt(http_handle_, CURLOPT_WRITEDATA, &response.text_);
+  check_curl(rc);
 
-  check_curl_correct(curl_easy_perform(http_handle_));
+  rc = curl_easy_perform(http_handle_);
+  check_curl(rc);
 
-  std::int32_t status_code;
-  check_curl_correct(
-      curl_easy_getinfo(http_handle_, CURLINFO_RESPONSE_CODE, &status_code));
-  response.status_ = static_cast<HttpStatus>(status_code);
+  response.status_ = get_status(http_handle_);
 
   return response;
 }
@@ -463,7 +486,9 @@ void Request::set_proxy(const std::string &proxy) { impl_->set_proxy(proxy); }
 
 void Request::set_proxy_from_env() { impl_->set_proxy_from_env(); }
 
-void Request::set_no_proxy() { impl_->set_no_proxy(); }
+void Request::set_no_proxy(const std::string &no_proxy) {
+  impl_->set_no_proxy(no_proxy);
+}
 
 void Request::set_doh_url(const std::string &url) { impl_->set_doh_url(url); }
 

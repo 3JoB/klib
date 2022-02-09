@@ -35,7 +35,7 @@
       "generator": "Ninja",
       "binaryDir": "${sourceDir}/build/${presetName}",
       "cacheVariables": {
-        "CMAKE_BUILD_TYPE": "Release",
+        "CMAKE_BUILD_TYPE": "RelWithDebInfo",
         "KLIB_BUILD_TEST": "ON",
         "KLIB_BUILD_EXTRA_TEST": "ON",
         "KLIB_TEST_USE_PROXY": "ON",
@@ -78,7 +78,7 @@
       "generator": "Ninja",
       "binaryDir": "${sourceDir}/build/${presetName}",
       "cacheVariables": {
-        "CMAKE_BUILD_TYPE": "Release",
+        "CMAKE_BUILD_TYPE": "RelWithDebInfo",
         "KLIB_BUILD_TEST": "ON",
         "KLIB_BUILD_EXTRA_TEST": "ON",
         "KLIB_TEST_USE_PROXY": "ON",
