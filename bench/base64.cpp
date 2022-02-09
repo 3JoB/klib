@@ -1,3 +1,4 @@
+#include <filesystem>
 #include <string>
 
 #include <catch2/catch.hpp>
@@ -6,113 +7,26 @@
 #include "klib/util.h"
 
 TEST_CASE("base64", "[base64]") {
-  std::string secure_encoded;
-  std::string secure_decoded;
-  std::string fast_encoded;
-  std::string fast_decoded;
+  const std::string file_name = "zlib-ng-2.0.6.tar.gz";
+  REQUIRE(std::filesystem::exists(file_name));
+  const std::string out_file_name = "encoded.txt";
 
-  SECTION("64 byte") {
-    const auto data = klib::generate_random_bytes(64);
+  std::string encoded;
+  BENCHMARK("std encoded") {
+    klib::exec_with_output("base64 -w0 " + file_name);
+  };
+  BENCHMARK("klib encoded") {
+    encoded = klib::fast_base64_encode(klib::read_file(file_name, true));
+  };
 
-    BENCHMARK("secure encoded") {
-      secure_encoded = klib::secure_base64_encode(data);
-    };
-    BENCHMARK("fast encoded") {
-      fast_encoded = klib::fast_base64_encode(data);
-    };
+  klib::write_file(out_file_name, true, encoded);
 
-    BENCHMARK("secure decoded") {
-      secure_decoded = klib::secure_base64_decode(secure_encoded);
-    };
-    REQUIRE(data == secure_decoded);
+  BENCHMARK("std decoded") {
+    klib::exec_with_output("base64 -d " + out_file_name);
+  };
+  BENCHMARK("klib decoded") {
+    return klib::fast_base64_decode(klib::read_file(out_file_name, true));
+  };
 
-    BENCHMARK("fast decoded") {
-      fast_decoded = klib::fast_base64_decode(fast_encoded);
-    };
-    REQUIRE(data == fast_decoded);
-  }
-
-  SECTION("1 kb") {
-    const auto data = klib::generate_random_bytes(1024);
-
-    BENCHMARK("secure encoded") {
-      secure_encoded = klib::secure_base64_encode(data);
-    };
-    BENCHMARK("fast encoded") {
-      fast_encoded = klib::fast_base64_encode(data);
-    };
-
-    BENCHMARK("secure decoded") {
-      secure_decoded = klib::secure_base64_decode(secure_encoded);
-    };
-    REQUIRE(data == secure_decoded);
-
-    BENCHMARK("fast decoded") {
-      fast_decoded = klib::fast_base64_decode(fast_encoded);
-    };
-    REQUIRE(data == fast_decoded);
-  }
-
-  SECTION("10 kb") {
-    const auto data = klib::generate_random_bytes(10240);
-
-    BENCHMARK("secure encoded") {
-      secure_encoded = klib::secure_base64_encode(data);
-    };
-    BENCHMARK("fast encoded") {
-      fast_encoded = klib::fast_base64_encode(data);
-    };
-
-    BENCHMARK("secure decoded") {
-      secure_decoded = klib::secure_base64_decode(secure_encoded);
-    };
-    REQUIRE(data == secure_decoded);
-
-    BENCHMARK("fast decoded") {
-      fast_decoded = klib::fast_base64_decode(fast_encoded);
-    };
-    REQUIRE(data == fast_decoded);
-  }
-
-  SECTION("100 kb") {
-    const auto data = klib::generate_random_bytes(102400);
-
-    BENCHMARK("secure encoded") {
-      secure_encoded = klib::secure_base64_encode(data);
-    };
-    BENCHMARK("fast encoded") {
-      fast_encoded = klib::fast_base64_encode(data);
-    };
-
-    BENCHMARK("secure decoded") {
-      secure_decoded = klib::secure_base64_decode(secure_encoded);
-    };
-    REQUIRE(data == secure_decoded);
-
-    BENCHMARK("fast decoded") {
-      fast_decoded = klib::fast_base64_decode(fast_encoded);
-    };
-    REQUIRE(data == fast_decoded);
-  }
-
-  SECTION("10 mb") {
-    const auto data = klib::generate_random_bytes(10240000);
-
-    BENCHMARK("secure encoded") {
-      secure_encoded = klib::secure_base64_encode(data);
-    };
-    BENCHMARK("fast encoded") {
-      fast_encoded = klib::fast_base64_encode(data);
-    };
-
-    BENCHMARK("secure decoded") {
-      secure_decoded = klib::secure_base64_decode(secure_encoded);
-    };
-    REQUIRE(data == secure_decoded);
-
-    BENCHMARK("fast decoded") {
-      fast_decoded = klib::fast_base64_decode(fast_encoded);
-    };
-    REQUIRE(data == fast_decoded);
-  }
+  REQUIRE(std::filesystem::remove(out_file_name));
 }
