@@ -9,10 +9,9 @@
 #include "klib/archive.h"
 
 #include <fcntl.h>
+#include <unistd.h>
 
-#include <cerrno>
 #include <cstdint>
-#include <cstring>
 #include <filesystem>
 #include <memory>
 #include <unordered_set>
@@ -29,13 +28,6 @@
 namespace klib {
 
 namespace {
-
-#define check_system_io(rc)                     \
-  do {                                          \
-    if (rc == -1) {                             \
-      throw RuntimeError(std::strerror(errno)); \
-    }                                           \
-  } while (0)
 
 #define check_libarchive(rc, archive)                    \
   do {                                                   \
@@ -67,7 +59,7 @@ std::string compressed_file_name(const std::string &path, Format format,
     }
   }
 
-  throw LogicError("Unknown algorithm");
+  throw InvalidArgument("Unknown format or filter");
 }
 
 void init_write_format_filter(archive *archive, Format format, Filter filter) {
@@ -86,8 +78,8 @@ void init_write_format_filter(archive *archive, Format format, Filter filter) {
       rc = archive_write_zip_set_compression_deflate(archive);
       check_libarchive(rc, archive);
     } else {
-      throw LogicError(
-          "Algorithms other than Deflate should not be used in the ZIP archive "
+      throw InvalidArgument(
+          "Filter other than Deflate should not be used in the ZIP archive "
           "format");
     }
   } else if (format == Format::Tar) {
@@ -127,7 +119,7 @@ void init_read_format_filter(archive *archive, const std::string &file_name) {
     rc = archive_read_support_filter_zstd(archive);
     check_libarchive(rc, archive);
   } else {
-    throw LogicError("Unknown file extension");
+    throw RuntimeError("Unknown file extension");
   }
 }
 
@@ -226,20 +218,14 @@ void compress(const std::vector<std::string> &paths,
       rc = archive_write_header(archive, entry);
       check_libarchive(rc, archive);
 
-      auto source_path = archive_entry_sourcepath(entry);
-      if (std::filesystem::is_regular_file(source_path)) {
-        auto fd = open(source_path, O_RDONLY);
-        SCOPE_EXIT { close(fd); };
-        check_system_io(fd);
+      auto fd = open(archive_entry_sourcepath(entry), O_RDONLY);
+      SCOPE_EXIT { close(fd); };
 
-        char buff[16384];
-        auto length = read(fd, buff, sizeof(buff));
-        check_system_io(length);
-        while (length > 0) {
-          archive_write_data(archive, buff, length);
-          length = read(fd, buff, sizeof(buff));
-          check_system_io(length);
-        }
+      char buff[16384];
+      auto length = read(fd, buff, sizeof(buff));
+      while (length > 0) {
+        archive_write_data(archive, buff, length);
+        length = read(fd, buff, sizeof(buff));
       }
     }
   }
