@@ -14,9 +14,9 @@ var dir_c4deac73006ad3d1787e421f2d774b3c =
     [ "html.h", "html_8h.html", "html_8h" ],
     [ "http.h", "http_8h.html", [
       [ "klib::Request", "classklib_1_1Request.html", "classklib_1_1Request" ],
-      [ "klib::Headers", "classklib_1_1Headers.html", "classklib_1_1Headers" ],
       [ "klib::Response", "classklib_1_1Response.html", "classklib_1_1Response" ]
     ] ],
+    [ "http_parse.h", "http__parse_8h_source.html", null ],
     [ "log.h", "log_8h.html", "log_8h" ],
     [ "markdown.h", "markdown_8h.html", "markdown_8h" ],
     [ "sql.h", "sql_8h.html", [

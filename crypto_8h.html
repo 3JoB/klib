@@ -30,7 +30,7 @@
  <tbody>
  <tr id="projectrow">
   <td id="projectalign">
-   <div id="projectname">klib<span id="projectnumber">&#160;0.13.0</span>
+   <div id="projectname">klib<span id="projectnumber">&#160;0.14.0</span>
    </div>
   </td>
     <td>        <div id="MSearchBox" class="MSearchBoxInactive">
@@ -98,7 +98,7 @@ $(document).ready(function(){initNavTree('crypto_8h.html',''); initResizable(); 
 </div><!--header-->
 <div class="contents">
 
-<p>Contains encrypt and decrypt modules.  
+<p>Contains encrypt and decrypt module.  
 <a href="#details">More...</a></p>
 <div class="textblock"><code>#include &lt;string&gt;</code><br />
 </div>
@@ -115,15 +115,18 @@ Enumerations</h2></td></tr>
 </table><table class="memberdecls">
 <tr class="heading"><td colspan="2"><h2 class="groupheader"><a id="func-members" name="func-members"></a>
 Functions</h2></td></tr>
-<tr class="memitem:a2ed6c7fe8fb0a325016857f94b50bcb6"><td class="memItemLeft" align="right" valign="top">std::string&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="crypto_8h.html#a2ed6c7fe8fb0a325016857f94b50bcb6">klib::aes_256_encrypt</a> (const std::string &amp;data, const std::string &amp;key, bool use_iv=true, AesMode aes_mode=AesMode::CBC)</td></tr>
-<tr class="memdesc:a2ed6c7fe8fb0a325016857f94b50bcb6"><td class="mdescLeft">&#160;</td><td class="mdescRight">Use AES to encrypt bytes, key size: 256 bit.  <a href="crypto_8h.html#a2ed6c7fe8fb0a325016857f94b50bcb6">More...</a><br /></td></tr>
-<tr class="separator:a2ed6c7fe8fb0a325016857f94b50bcb6"><td class="memSeparator" colspan="2">&#160;</td></tr>
-<tr class="memitem:a7c581fcbfb8163029bdc37efe294ff7d"><td class="memItemLeft" align="right" valign="top">std::string&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="crypto_8h.html#a7c581fcbfb8163029bdc37efe294ff7d">klib::aes_256_decrypt</a> (const std::string &amp;data, const std::string &amp;key, bool has_iv=true, AesMode aes_mode=AesMode::CBC)</td></tr>
-<tr class="memdesc:a7c581fcbfb8163029bdc37efe294ff7d"><td class="mdescLeft">&#160;</td><td class="mdescRight">Use AES to decrypt bytes, key size: 256 bit.  <a href="crypto_8h.html#a7c581fcbfb8163029bdc37efe294ff7d">More...</a><br /></td></tr>
-<tr class="separator:a7c581fcbfb8163029bdc37efe294ff7d"><td class="memSeparator" colspan="2">&#160;</td></tr>
+<tr class="memitem:a9e00fd89efcb6e221d68ed81fdb32057"><td class="memItemLeft" align="right" valign="top">std::string&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="crypto_8h.html#a9e00fd89efcb6e221d68ed81fdb32057">klib::aes_256_encrypt</a> (const std::string &amp;data, const std::string &amp;key, AesMode aes_mode=AesMode::CBC)</td></tr>
+<tr class="memdesc:a9e00fd89efcb6e221d68ed81fdb32057"><td class="mdescLeft">&#160;</td><td class="mdescRight">Use AES to encrypt data, key size: 256 bit.  <a href="crypto_8h.html#a9e00fd89efcb6e221d68ed81fdb32057">More...</a><br /></td></tr>
+<tr class="separator:a9e00fd89efcb6e221d68ed81fdb32057"><td class="memSeparator" colspan="2">&#160;</td></tr>
+<tr class="memitem:a296e48576208526bf3baaec8f19ed792"><td class="memItemLeft" align="right" valign="top">std::string&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="crypto_8h.html#a296e48576208526bf3baaec8f19ed792">klib::aes_256_decrypt</a> (const std::string &amp;data, const std::string &amp;key, AesMode aes_mode=AesMode::CBC)</td></tr>
+<tr class="memdesc:a296e48576208526bf3baaec8f19ed792"><td class="mdescLeft">&#160;</td><td class="mdescRight">Use AES to decrypt data, key size: 256 bit.  <a href="crypto_8h.html#a296e48576208526bf3baaec8f19ed792">More...</a><br /></td></tr>
+<tr class="separator:a296e48576208526bf3baaec8f19ed792"><td class="memSeparator" colspan="2">&#160;</td></tr>
+<tr class="memitem:a0cb17e0249ec790e5ba17f487fe5a5b0"><td class="memItemLeft" align="right" valign="top">std::string&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="crypto_8h.html#a0cb17e0249ec790e5ba17f487fe5a5b0">klib::aes_256_decrypt_no_iv</a> (const std::string &amp;data, const std::string &amp;key, AesMode aes_mode=AesMode::CBC)</td></tr>
+<tr class="memdesc:a0cb17e0249ec790e5ba17f487fe5a5b0"><td class="mdescLeft">&#160;</td><td class="mdescRight">Use AES to decrypt data, key size: 256 bit.  <a href="crypto_8h.html#a0cb17e0249ec790e5ba17f487fe5a5b0">More...</a><br /></td></tr>
+<tr class="separator:a0cb17e0249ec790e5ba17f487fe5a5b0"><td class="memSeparator" colspan="2">&#160;</td></tr>
 </table>
 <a name="details" id="details"></a><h2 class="groupheader">Detailed Description</h2>
-<div class="textblock"><p >Contains encrypt and decrypt modules. </p>
+<div class="textblock"><p >Contains encrypt and decrypt module. </p>
 </div><h2 class="groupheader">Enumeration Type Documentation</h2>
 <a id="a5c25463fa7defef16a4f027d0a33134d" name="a5c25463fa7defef16a4f027d0a33134d"></a>
 <h2 class="memtitle"><span class="permalink"><a href="#a5c25463fa7defef16a4f027d0a33134d">&#9670;&nbsp;</a></span>AesMode</h2>
@@ -151,8 +154,8 @@ Functions</h2></td></tr>
 </div>
 </div>
 <h2 class="groupheader">Function Documentation</h2>
-<a id="a7c581fcbfb8163029bdc37efe294ff7d" name="a7c581fcbfb8163029bdc37efe294ff7d"></a>
-<h2 class="memtitle"><span class="permalink"><a href="#a7c581fcbfb8163029bdc37efe294ff7d">&#9670;&nbsp;</a></span>aes_256_decrypt()</h2>
+<a id="a296e48576208526bf3baaec8f19ed792" name="a296e48576208526bf3baaec8f19ed792"></a>
+<h2 class="memtitle"><span class="permalink"><a href="#a296e48576208526bf3baaec8f19ed792">&#9670;&nbsp;</a></span>aes_256_decrypt()</h2>
 
 <div class="memitem">
 <div class="memproto">
@@ -172,8 +175,47 @@ Functions</h2></td></tr>
         <tr>
           <td class="paramkey"></td>
           <td></td>
-          <td class="paramtype">bool&#160;</td>
-          <td class="paramname"><em>has_iv</em> = <code>true</code>, </td>
+          <td class="paramtype"><a class="el" href="crypto_8h.html#a5c25463fa7defef16a4f027d0a33134d">AesMode</a>&#160;</td>
+          <td class="paramname"><em>aes_mode</em> = <code>AesMode::CBC</code>&#160;</td>
+        </tr>
+        <tr>
+          <td></td>
+          <td>)</td>
+          <td></td><td></td>
+        </tr>
+      </table>
+</div><div class="memdoc">
+
+<p>Use AES to decrypt data, key size: 256 bit. </p>
+<dl class="params"><dt>Parameters</dt><dd>
+  <table class="params">
+    <tr><td class="paramname">data</td><td>Encrypted bytes </td></tr>
+    <tr><td class="paramname">key</td><td>Encryption/decryption key </td></tr>
+    <tr><td class="paramname">aes_mode</td><td>Block cipher mode of operation </td></tr>
+  </table>
+  </dd>
+</dl>
+<dl class="section return"><dt>Returns</dt><dd>Decrypted data </dd></dl>
+
+</div>
+</div>
+<a id="a0cb17e0249ec790e5ba17f487fe5a5b0" name="a0cb17e0249ec790e5ba17f487fe5a5b0"></a>
+<h2 class="memtitle"><span class="permalink"><a href="#a0cb17e0249ec790e5ba17f487fe5a5b0">&#9670;&nbsp;</a></span>aes_256_decrypt_no_iv()</h2>
+
+<div class="memitem">
+<div class="memproto">
+      <table class="memname">
+        <tr>
+          <td class="memname">std::string klib::aes_256_decrypt_no_iv </td>
+          <td>(</td>
+          <td class="paramtype">const std::string &amp;&#160;</td>
+          <td class="paramname"><em>data</em>, </td>
+        </tr>
+        <tr>
+          <td class="paramkey"></td>
+          <td></td>
+          <td class="paramtype">const std::string &amp;&#160;</td>
+          <td class="paramname"><em>key</em>, </td>
         </tr>
         <tr>
           <td class="paramkey"></td>
@@ -189,22 +231,22 @@ Functions</h2></td></tr>
       </table>
 </div><div class="memdoc">
 
-<p>Use AES to decrypt bytes, key size: 256 bit. </p>
+<p>Use AES to decrypt data, key size: 256 bit. </p>
 <dl class="params"><dt>Parameters</dt><dd>
   <table class="params">
     <tr><td class="paramname">data</td><td>Encrypted bytes </td></tr>
     <tr><td class="paramname">key</td><td>Encryption/decryption key </td></tr>
-    <tr><td class="paramname">has_iv</td><td>Whether the ciphertext contains initialization vector </td></tr>
     <tr><td class="paramname">aes_mode</td><td>Block cipher mode of operation </td></tr>
   </table>
   </dd>
 </dl>
-<dl class="section return"><dt>Returns</dt><dd>Decrypted bytes </dd></dl>
+<dl class="section return"><dt>Returns</dt><dd>Decrypted data </dd></dl>
+<dl class="section note"><dt>Note</dt><dd>It is not safe to not use the initial vector, this function is only used to decrypt the foreign encrypted data </dd></dl>
 
 </div>
 </div>
-<a id="a2ed6c7fe8fb0a325016857f94b50bcb6" name="a2ed6c7fe8fb0a325016857f94b50bcb6"></a>
-<h2 class="memtitle"><span class="permalink"><a href="#a2ed6c7fe8fb0a325016857f94b50bcb6">&#9670;&nbsp;</a></span>aes_256_encrypt()</h2>
+<a id="a9e00fd89efcb6e221d68ed81fdb32057" name="a9e00fd89efcb6e221d68ed81fdb32057"></a>
+<h2 class="memtitle"><span class="permalink"><a href="#a9e00fd89efcb6e221d68ed81fdb32057">&#9670;&nbsp;</a></span>aes_256_encrypt()</h2>
 
 <div class="memitem">
 <div class="memproto">
@@ -224,12 +266,6 @@ Functions</h2></td></tr>
         <tr>
           <td class="paramkey"></td>
           <td></td>
-          <td class="paramtype">bool&#160;</td>
-          <td class="paramname"><em>use_iv</em> = <code>true</code>, </td>
-        </tr>
-        <tr>
-          <td class="paramkey"></td>
-          <td></td>
           <td class="paramtype"><a class="el" href="crypto_8h.html#a5c25463fa7defef16a4f027d0a33134d">AesMode</a>&#160;</td>
           <td class="paramname"><em>aes_mode</em> = <code>AesMode::CBC</code>&#160;</td>
         </tr>
@@ -241,17 +277,16 @@ Functions</h2></td></tr>
       </table>
 </div><div class="memdoc">
 
-<p>Use AES to encrypt bytes, key size: 256 bit. </p>
+<p>Use AES to encrypt data, key size: 256 bit. </p>
 <dl class="params"><dt>Parameters</dt><dd>
   <table class="params">
     <tr><td class="paramname">data</td><td>Data to be encrypted </td></tr>
     <tr><td class="paramname">key</td><td>Encryption/decryption key </td></tr>
-    <tr><td class="paramname">use_iv</td><td>Whether to use initialization vector, if used, it will be randomly generated and appended to the ciphertext before </td></tr>
     <tr><td class="paramname">aes_mode</td><td>Block cipher mode of operation </td></tr>
   </table>
   </dd>
 </dl>
-<dl class="section return"><dt>Returns</dt><dd>Encrypted bytes </dd></dl>
+<dl class="section return"><dt>Returns</dt><dd>Encrypted data </dd></dl>
 
 </div>
 </div>

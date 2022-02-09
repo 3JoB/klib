@@ -1,4 +1,5 @@
 var searchData=
 [
-  ['openmode_0',['OpenMode',['../classklib_1_1SqlDatabase.html#af28d36a69db3a108f4c393854a852491',1,'klib::SqlDatabase']]]
+  ['filter_0',['Filter',['../archive_8h.html#aa25a2dd2c496b61e2b93bb7e9ca385ab',1,'klib']]],
+  ['format_1',['Format',['../archive_8h.html#a746bca2d6aafe9da24021476bae487e5',1,'klib']]]
 ];

@@ -30,7 +30,7 @@
  <tbody>
  <tr id="projectrow">
   <td id="projectalign">
-   <div id="projectname">klib<span id="projectnumber">&#160;0.13.0</span>
+   <div id="projectname">klib<span id="projectnumber">&#160;0.14.0</span>
    </div>
   </td>
     <td>        <div id="MSearchBox" class="MSearchBoxInactive">
@@ -100,11 +100,8 @@ $(document).ready(function(){initNavTree('util_8h.html',''); initResizable(); })
 
 <p>Contains declarations of some useful functions.  
 <a href="#details">More...</a></p>
-<div class="textblock"><code>#include &lt;concepts&gt;</code><br />
-<code>#include &lt;cstddef&gt;</code><br />
-<code>#include &lt;cstdint&gt;</code><br />
+<div class="textblock"><code>#include &lt;cstddef&gt;</code><br />
 <code>#include &lt;string&gt;</code><br />
-<code>#include &lt;string_view&gt;</code><br />
 <code>#include &lt;vector&gt;</code><br />
 </div>
 <p><a href="util_8h_source.html">Go to the source code of this file.</a></p>
@@ -117,52 +114,21 @@ Classes</h2></td></tr>
 </table><table class="memberdecls">
 <tr class="heading"><td colspan="2"><h2 class="groupheader"><a id="func-members" name="func-members"></a>
 Functions</h2></td></tr>
-<tr class="memitem:a7b9b631266e2587c0aae0fee4842091e"><td class="memTemplParams" colspan="2">template&lt;typename InputIt , typename T &gt; <br />
-requires std::same_as&lt;typename InputIt::value_type, T&gt;</td></tr>
-<tr class="memitem:a7b9b631266e2587c0aae0fee4842091e"><td class="memTemplItemLeft" align="right" valign="top">constexpr InputIt&#160;</td><td class="memTemplItemRight" valign="bottom"><a class="el" href="util_8h.html#a7b9b631266e2587c0aae0fee4842091e">klib::find_last</a> (InputIt first, InputIt last, const T &amp;value)</td></tr>
-<tr class="memdesc:a7b9b631266e2587c0aae0fee4842091e"><td class="mdescLeft">&#160;</td><td class="mdescRight">Search for an element equal to value.  <a href="util_8h.html#a7b9b631266e2587c0aae0fee4842091e">More...</a><br /></td></tr>
-<tr class="separator:a7b9b631266e2587c0aae0fee4842091e"><td class="memSeparator" colspan="2">&#160;</td></tr>
-<tr class="memitem:a5064add32b7fb4bc60e43cd60bab54e8"><td class="memTemplParams" colspan="2">template&lt;class InputIt , class UnaryPredicate &gt; <br />
-requires std::predicate&lt;UnaryPredicate, typename InputIt::value_type&gt;</td></tr>
-<tr class="memitem:a5064add32b7fb4bc60e43cd60bab54e8"><td class="memTemplItemLeft" align="right" valign="top">constexpr InputIt&#160;</td><td class="memTemplItemRight" valign="bottom"><a class="el" href="util_8h.html#a5064add32b7fb4bc60e43cd60bab54e8">klib::find_last</a> (InputIt first, InputIt last, UnaryPredicate p)</td></tr>
-<tr class="memdesc:a5064add32b7fb4bc60e43cd60bab54e8"><td class="mdescLeft">&#160;</td><td class="mdescRight">Search for an element for which predicate p returns true.  <a href="util_8h.html#a5064add32b7fb4bc60e43cd60bab54e8">More...</a><br /></td></tr>
-<tr class="separator:a5064add32b7fb4bc60e43cd60bab54e8"><td class="memSeparator" colspan="2">&#160;</td></tr>
 <tr class="memitem:afb31ff4533cd6ea73bb65b1c077dde7f"><td class="memItemLeft" align="right" valign="top">std::vector&lt; std::string &gt;&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="util_8h.html#afb31ff4533cd6ea73bb65b1c077dde7f">klib::split_str</a> (const std::string &amp;str, const std::string &amp;separate, bool remove_space=true)</td></tr>
 <tr class="memdesc:afb31ff4533cd6ea73bb65b1c077dde7f"><td class="mdescLeft">&#160;</td><td class="mdescRight">Split string.  <a href="util_8h.html#afb31ff4533cd6ea73bb65b1c077dde7f">More...</a><br /></td></tr>
 <tr class="separator:afb31ff4533cd6ea73bb65b1c077dde7f"><td class="memSeparator" colspan="2">&#160;</td></tr>
 <tr class="memitem:aff1e161e1457b1a895244581b50b9abd"><td class="memItemLeft" align="right" valign="top">std::string&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="util_8h.html#aff1e161e1457b1a895244581b50b9abd">klib::read_file</a> (const std::string &amp;path, bool binary_mode)</td></tr>
 <tr class="memdesc:aff1e161e1457b1a895244581b50b9abd"><td class="mdescLeft">&#160;</td><td class="mdescRight">Read a file at a time and store it in a string.  <a href="util_8h.html#aff1e161e1457b1a895244581b50b9abd">More...</a><br /></td></tr>
 <tr class="separator:aff1e161e1457b1a895244581b50b9abd"><td class="memSeparator" colspan="2">&#160;</td></tr>
-<tr class="memitem:adbf302e115dd8795bbb3e2590e0c6917"><td class="memItemLeft" align="right" valign="top"><a id="adbf302e115dd8795bbb3e2590e0c6917" name="adbf302e115dd8795bbb3e2590e0c6917"></a>
-std::string&#160;</td><td class="memItemRight" valign="bottom"><b>klib::read_file</b> (std::string_view path, bool binary_mode)</td></tr>
-<tr class="separator:adbf302e115dd8795bbb3e2590e0c6917"><td class="memSeparator" colspan="2">&#160;</td></tr>
 <tr class="memitem:ac70cb873ea6e639f6309788655c84a5f"><td class="memItemLeft" align="right" valign="top"><a id="ac70cb873ea6e639f6309788655c84a5f" name="ac70cb873ea6e639f6309788655c84a5f"></a>
 std::string&#160;</td><td class="memItemRight" valign="bottom"><b>klib::read_file</b> (const char *path, bool binary_mode)</td></tr>
 <tr class="separator:ac70cb873ea6e639f6309788655c84a5f"><td class="memSeparator" colspan="2">&#160;</td></tr>
-<tr class="memitem:aeb12aa83527e021b6d976c4c6008791a"><td class="memItemLeft" align="right" valign="top">std::vector&lt; std::string &gt;&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="util_8h.html#aeb12aa83527e021b6d976c4c6008791a">klib::read_file_line</a> (const std::string &amp;path)</td></tr>
-<tr class="memdesc:aeb12aa83527e021b6d976c4c6008791a"><td class="mdescLeft">&#160;</td><td class="mdescRight">Read a file at a time and store it in a string.  <a href="util_8h.html#aeb12aa83527e021b6d976c4c6008791a">More...</a><br /></td></tr>
-<tr class="separator:aeb12aa83527e021b6d976c4c6008791a"><td class="memSeparator" colspan="2">&#160;</td></tr>
-<tr class="memitem:afe72449f6a8c2374667082fca19be671"><td class="memItemLeft" align="right" valign="top"><a id="afe72449f6a8c2374667082fca19be671" name="afe72449f6a8c2374667082fca19be671"></a>
-std::vector&lt; std::string &gt;&#160;</td><td class="memItemRight" valign="bottom"><b>klib::read_file_line</b> (std::string_view path)</td></tr>
-<tr class="separator:afe72449f6a8c2374667082fca19be671"><td class="memSeparator" colspan="2">&#160;</td></tr>
-<tr class="memitem:a5da6138d80342629419b44b4950efffc"><td class="memItemLeft" align="right" valign="top"><a id="a5da6138d80342629419b44b4950efffc" name="a5da6138d80342629419b44b4950efffc"></a>
-std::vector&lt; std::string &gt;&#160;</td><td class="memItemRight" valign="bottom"><b>klib::read_file_line</b> (const char *path)</td></tr>
-<tr class="separator:a5da6138d80342629419b44b4950efffc"><td class="memSeparator" colspan="2">&#160;</td></tr>
-<tr class="memitem:ad20740bb960a952fc137ca4247bbc179"><td class="memItemLeft" align="right" valign="top">void&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="util_8h.html#ad20740bb960a952fc137ca4247bbc179">klib::write_file</a> (const std::string &amp;path, bool binary_mode, const std::string &amp;content)</td></tr>
-<tr class="memdesc:ad20740bb960a952fc137ca4247bbc179"><td class="mdescLeft">&#160;</td><td class="mdescRight">Write string to file.  <a href="util_8h.html#ad20740bb960a952fc137ca4247bbc179">More...</a><br /></td></tr>
-<tr class="separator:ad20740bb960a952fc137ca4247bbc179"><td class="memSeparator" colspan="2">&#160;</td></tr>
-<tr class="memitem:ab6ae8639fc6575e2d7e1b45d023d4a94"><td class="memItemLeft" align="right" valign="top"><a id="ab6ae8639fc6575e2d7e1b45d023d4a94" name="ab6ae8639fc6575e2d7e1b45d023d4a94"></a>
-void&#160;</td><td class="memItemRight" valign="bottom"><b>klib::write_file</b> (std::string_view path, bool binary_mode, std::string_view content)</td></tr>
-<tr class="separator:ab6ae8639fc6575e2d7e1b45d023d4a94"><td class="memSeparator" colspan="2">&#160;</td></tr>
-<tr class="memitem:a4a45c84a115636bf9481abc9b73f699e"><td class="memItemLeft" align="right" valign="top"><a id="a4a45c84a115636bf9481abc9b73f699e" name="a4a45c84a115636bf9481abc9b73f699e"></a>
-void&#160;</td><td class="memItemRight" valign="bottom"><b>klib::write_file</b> (const char *path, bool binary_mode, const char *content, std::size_t length)</td></tr>
-<tr class="separator:a4a45c84a115636bf9481abc9b73f699e"><td class="memSeparator" colspan="2">&#160;</td></tr>
-<tr class="memitem:a6e1a6bca253ac0afc74f98f90bb48015"><td class="memItemLeft" align="right" valign="top">std::size_t&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="util_8h.html#a6e1a6bca253ac0afc74f98f90bb48015">klib::folder_size</a> (const std::string &amp;path)</td></tr>
-<tr class="memdesc:a6e1a6bca253ac0afc74f98f90bb48015"><td class="mdescLeft">&#160;</td><td class="mdescRight">Count the sum of the size of all files in the folder.  <a href="util_8h.html#a6e1a6bca253ac0afc74f98f90bb48015">More...</a><br /></td></tr>
-<tr class="separator:a6e1a6bca253ac0afc74f98f90bb48015"><td class="memSeparator" colspan="2">&#160;</td></tr>
-<tr class="memitem:a634a5cccf588c12cb1d7e1f4253775c6"><td class="memItemLeft" align="right" valign="top">bool&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="util_8h.html#a634a5cccf588c12cb1d7e1f4253775c6">klib::same_folder</a> (const std::string &amp;path1, const std::string &amp;path2)</td></tr>
-<tr class="memdesc:a634a5cccf588c12cb1d7e1f4253775c6"><td class="mdescLeft">&#160;</td><td class="mdescRight">Determine whether the two folders are the same.  <a href="util_8h.html#a634a5cccf588c12cb1d7e1f4253775c6">More...</a><br /></td></tr>
-<tr class="separator:a634a5cccf588c12cb1d7e1f4253775c6"><td class="memSeparator" colspan="2">&#160;</td></tr>
+<tr class="memitem:aa77a9545024ab2ddc44c03fafac3df34"><td class="memItemLeft" align="right" valign="top">void&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="util_8h.html#aa77a9545024ab2ddc44c03fafac3df34">klib::write_file</a> (const std::string &amp;path, bool binary_mode, const std::string &amp;str)</td></tr>
+<tr class="memdesc:aa77a9545024ab2ddc44c03fafac3df34"><td class="mdescLeft">&#160;</td><td class="mdescRight">Write string to file.  <a href="util_8h.html#aa77a9545024ab2ddc44c03fafac3df34">More...</a><br /></td></tr>
+<tr class="separator:aa77a9545024ab2ddc44c03fafac3df34"><td class="memSeparator" colspan="2">&#160;</td></tr>
+<tr class="memitem:a49d3e58ed0d07d5a4776f0619cbe6fe2"><td class="memItemLeft" align="right" valign="top"><a id="a49d3e58ed0d07d5a4776f0619cbe6fe2" name="a49d3e58ed0d07d5a4776f0619cbe6fe2"></a>
+void&#160;</td><td class="memItemRight" valign="bottom"><b>klib::write_file</b> (const char *path, bool binary_mode, const char *str, std::size_t size)</td></tr>
+<tr class="separator:a49d3e58ed0d07d5a4776f0619cbe6fe2"><td class="memSeparator" colspan="2">&#160;</td></tr>
 <tr class="memitem:a51f2e4f28098072d9f2f16c63b4b3829"><td class="memItemLeft" align="right" valign="top">void&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="util_8h.html#a51f2e4f28098072d9f2f16c63b4b3829">klib::exec</a> (const std::string &amp;cmd)</td></tr>
 <tr class="memdesc:a51f2e4f28098072d9f2f16c63b4b3829"><td class="mdescLeft">&#160;</td><td class="mdescRight">Execute the given line as a shell command.  <a href="util_8h.html#a51f2e4f28098072d9f2f16c63b4b3829">More...</a><br /></td></tr>
 <tr class="separator:a51f2e4f28098072d9f2f16c63b4b3829"><td class="memSeparator" colspan="2">&#160;</td></tr>
@@ -175,12 +141,6 @@ void&#160;</td><td class="memItemRight" valign="bottom"><b>klib::write_file</b> 
 <tr class="memitem:a01e50e0fc8c242ccdf7bdd10ae55f8e3"><td class="memItemLeft" align="right" valign="top">std::string&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="util_8h.html#a01e50e0fc8c242ccdf7bdd10ae55f8e3">klib::exec_with_output</a> (const char *cmd)</td></tr>
 <tr class="memdesc:a01e50e0fc8c242ccdf7bdd10ae55f8e3"><td class="mdescLeft">&#160;</td><td class="mdescRight">Execute the given line as a shell command and return its output.  <a href="util_8h.html#a01e50e0fc8c242ccdf7bdd10ae55f8e3">More...</a><br /></td></tr>
 <tr class="separator:a01e50e0fc8c242ccdf7bdd10ae55f8e3"><td class="memSeparator" colspan="2">&#160;</td></tr>
-<tr class="memitem:a20375e8cd2d50b89c3a3ff3c415c5969"><td class="memItemLeft" align="right" valign="top">void&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="util_8h.html#a20375e8cd2d50b89c3a3ff3c415c5969">klib::exec_without_output</a> (const std::string &amp;cmd)</td></tr>
-<tr class="memdesc:a20375e8cd2d50b89c3a3ff3c415c5969"><td class="mdescLeft">&#160;</td><td class="mdescRight">Execute the given line as a shell command and does not show its output.  <a href="util_8h.html#a20375e8cd2d50b89c3a3ff3c415c5969">More...</a><br /></td></tr>
-<tr class="separator:a20375e8cd2d50b89c3a3ff3c415c5969"><td class="memSeparator" colspan="2">&#160;</td></tr>
-<tr class="memitem:a91b6c017b644123ba68359bc185c35c0"><td class="memItemLeft" align="right" valign="top">void&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="util_8h.html#a91b6c017b644123ba68359bc185c35c0">klib::exec_without_output</a> (const char *cmd)</td></tr>
-<tr class="memdesc:a91b6c017b644123ba68359bc185c35c0"><td class="mdescLeft">&#160;</td><td class="mdescRight">Execute the given line as a shell command and does not show its output.  <a href="util_8h.html#a91b6c017b644123ba68359bc185c35c0">More...</a><br /></td></tr>
-<tr class="separator:a91b6c017b644123ba68359bc185c35c0"><td class="memSeparator" colspan="2">&#160;</td></tr>
 <tr class="memitem:a068f640d8df09ff35caf8822a9c1e0ac"><td class="memItemLeft" align="right" valign="top"><a id="a068f640d8df09ff35caf8822a9c1e0ac" name="a068f640d8df09ff35caf8822a9c1e0ac"></a>
 void&#160;</td><td class="memItemRight" valign="bottom"><b>klib::wait_for_child_process</b> ()</td></tr>
 <tr class="memdesc:a068f640d8df09ff35caf8822a9c1e0ac"><td class="mdescLeft">&#160;</td><td class="mdescRight">Wait for all child processes to exit. <br /></td></tr>
@@ -195,12 +155,12 @@ std::string&#160;</td><td class="memItemRight" valign="bottom"><b>klib::uuid</b>
 <tr class="memitem:a055c8fc630203151acb0b746065d32c8"><td class="memItemLeft" align="right" valign="top">void&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="util_8h.html#a055c8fc630203151acb0b746065d32c8">klib::cleanse</a> (void *ptr, std::size_t size)</td></tr>
 <tr class="memdesc:a055c8fc630203151acb0b746065d32c8"><td class="mdescLeft">&#160;</td><td class="mdescRight">Clear data.  <a href="util_8h.html#a055c8fc630203151acb0b746065d32c8">More...</a><br /></td></tr>
 <tr class="separator:a055c8fc630203151acb0b746065d32c8"><td class="memSeparator" colspan="2">&#160;</td></tr>
-<tr class="memitem:aa4e57655515047da3c99a9cf3d7b870b"><td class="memItemLeft" align="right" valign="top">std::string&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="util_8h.html#aa4e57655515047da3c99a9cf3d7b870b">klib::make_file_or_dir_name_legal</a> (const std::string &amp;file_name)</td></tr>
-<tr class="memdesc:aa4e57655515047da3c99a9cf3d7b870b"><td class="mdescLeft">&#160;</td><td class="mdescRight">According to the given file or directory name, return a legal file or directory name.  <a href="util_8h.html#aa4e57655515047da3c99a9cf3d7b870b">More...</a><br /></td></tr>
-<tr class="separator:aa4e57655515047da3c99a9cf3d7b870b"><td class="memSeparator" colspan="2">&#160;</td></tr>
-<tr class="memitem:aa2173416ed35c8a0d962f3f8426d81af"><td class="memItemLeft" align="right" valign="top">std::string&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="util_8h.html#aa2173416ed35c8a0d962f3f8426d81af">klib::generate_random_bytes</a> (std::int32_t num)</td></tr>
-<tr class="memdesc:aa2173416ed35c8a0d962f3f8426d81af"><td class="mdescLeft">&#160;</td><td class="mdescRight">Generate random data of specified bytes.  <a href="util_8h.html#aa2173416ed35c8a0d962f3f8426d81af">More...</a><br /></td></tr>
-<tr class="separator:aa2173416ed35c8a0d962f3f8426d81af"><td class="memSeparator" colspan="2">&#160;</td></tr>
+<tr class="memitem:a09e7d1b928997b8684fb499905a2d705"><td class="memItemLeft" align="right" valign="top">std::string&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="util_8h.html#a09e7d1b928997b8684fb499905a2d705">klib::make_file_name_legal</a> (const std::string &amp;file_name)</td></tr>
+<tr class="memdesc:a09e7d1b928997b8684fb499905a2d705"><td class="mdescLeft">&#160;</td><td class="mdescRight">According to the given file or directory name, return a legal file or directory name.  <a href="util_8h.html#a09e7d1b928997b8684fb499905a2d705">More...</a><br /></td></tr>
+<tr class="separator:a09e7d1b928997b8684fb499905a2d705"><td class="memSeparator" colspan="2">&#160;</td></tr>
+<tr class="memitem:a734f4c9c1ea977f1f74ac6f4b6ef817b"><td class="memItemLeft" align="right" valign="top">std::string&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="util_8h.html#a734f4c9c1ea977f1f74ac6f4b6ef817b">klib::generate_random_bytes</a> (std::size_t bytes)</td></tr>
+<tr class="memdesc:a734f4c9c1ea977f1f74ac6f4b6ef817b"><td class="mdescLeft">&#160;</td><td class="mdescRight">Generate random data of specified bytes.  <a href="util_8h.html#a734f4c9c1ea977f1f74ac6f4b6ef817b">More...</a><br /></td></tr>
+<tr class="separator:a734f4c9c1ea977f1f74ac6f4b6ef817b"><td class="memSeparator" colspan="2">&#160;</td></tr>
 </table>
 <a name="details" id="details"></a><h2 class="groupheader">Detailed Description</h2>
 <div class="textblock"><p >Contains declarations of some useful functions. </p>
@@ -374,199 +334,8 @@ std::string&#160;</td><td class="memItemRight" valign="bottom"><b>klib::uuid</b>
 
 </div>
 </div>
-<a id="a91b6c017b644123ba68359bc185c35c0" name="a91b6c017b644123ba68359bc185c35c0"></a>
-<h2 class="memtitle"><span class="permalink"><a href="#a91b6c017b644123ba68359bc185c35c0">&#9670;&nbsp;</a></span>exec_without_output() <span class="overload">[1/2]</span></h2>
-
-<div class="memitem">
-<div class="memproto">
-      <table class="memname">
-        <tr>
-          <td class="memname">void klib::exec_without_output </td>
-          <td>(</td>
-          <td class="paramtype">const char *&#160;</td>
-          <td class="paramname"><em>cmd</em></td><td>)</td>
-          <td></td>
-        </tr>
-      </table>
-</div><div class="memdoc">
-
-<p>Execute the given line as a shell command and does not show its output. </p>
-<dl class="params"><dt>Parameters</dt><dd>
-  <table class="params">
-    <tr><td class="paramname">cmd</td><td>Command to be execute </td></tr>
-  </table>
-  </dd>
-</dl>
-
-</div>
-</div>
-<a id="a20375e8cd2d50b89c3a3ff3c415c5969" name="a20375e8cd2d50b89c3a3ff3c415c5969"></a>
-<h2 class="memtitle"><span class="permalink"><a href="#a20375e8cd2d50b89c3a3ff3c415c5969">&#9670;&nbsp;</a></span>exec_without_output() <span class="overload">[2/2]</span></h2>
-
-<div class="memitem">
-<div class="memproto">
-      <table class="memname">
-        <tr>
-          <td class="memname">void klib::exec_without_output </td>
-          <td>(</td>
-          <td class="paramtype">const std::string &amp;&#160;</td>
-          <td class="paramname"><em>cmd</em></td><td>)</td>
-          <td></td>
-        </tr>
-      </table>
-</div><div class="memdoc">
-
-<p>Execute the given line as a shell command and does not show its output. </p>
-<dl class="params"><dt>Parameters</dt><dd>
-  <table class="params">
-    <tr><td class="paramname">cmd</td><td>Command to be execute </td></tr>
-  </table>
-  </dd>
-</dl>
-
-</div>
-</div>
-<a id="a7b9b631266e2587c0aae0fee4842091e" name="a7b9b631266e2587c0aae0fee4842091e"></a>
-<h2 class="memtitle"><span class="permalink"><a href="#a7b9b631266e2587c0aae0fee4842091e">&#9670;&nbsp;</a></span>find_last() <span class="overload">[1/2]</span></h2>
-
-<div class="memitem">
-<div class="memproto">
-<div class="memtemplate">
-template&lt;typename InputIt , typename T &gt; <br />
-requires std::same_as&lt;typename InputIt::value_type, T&gt;</div>
-<table class="mlabels">
-  <tr>
-  <td class="mlabels-left">
-      <table class="memname">
-        <tr>
-          <td class="memname">constexpr InputIt klib::find_last </td>
-          <td>(</td>
-          <td class="paramtype">InputIt&#160;</td>
-          <td class="paramname"><em>first</em>, </td>
-        </tr>
-        <tr>
-          <td class="paramkey"></td>
-          <td></td>
-          <td class="paramtype">InputIt&#160;</td>
-          <td class="paramname"><em>last</em>, </td>
-        </tr>
-        <tr>
-          <td class="paramkey"></td>
-          <td></td>
-          <td class="paramtype">const T &amp;&#160;</td>
-          <td class="paramname"><em>value</em>&#160;</td>
-        </tr>
-        <tr>
-          <td></td>
-          <td>)</td>
-          <td></td><td></td>
-        </tr>
-      </table>
-  </td>
-  <td class="mlabels-right">
-<span class="mlabels"><span class="mlabel">inline</span><span class="mlabel">constexpr</span></span>  </td>
-  </tr>
-</table>
-</div><div class="memdoc">
-
-<p>Search for an element equal to value. </p>
-<dl class="params"><dt>Parameters</dt><dd>
-  <table class="params">
-    <tr><td class="paramname">first</td><td>Starting iterator </td></tr>
-    <tr><td class="paramname">last</td><td>Post-tail iterator </td></tr>
-    <tr><td class="paramname">value</td><td>Value to compare the elements to </td></tr>
-  </table>
-  </dd>
-</dl>
-<dl class="section return"><dt>Returns</dt><dd>Iterator to the first element satisfying the condition or last if no such element is found </dd></dl>
-
-</div>
-</div>
-<a id="a5064add32b7fb4bc60e43cd60bab54e8" name="a5064add32b7fb4bc60e43cd60bab54e8"></a>
-<h2 class="memtitle"><span class="permalink"><a href="#a5064add32b7fb4bc60e43cd60bab54e8">&#9670;&nbsp;</a></span>find_last() <span class="overload">[2/2]</span></h2>
-
-<div class="memitem">
-<div class="memproto">
-<div class="memtemplate">
-template&lt;class InputIt , class UnaryPredicate &gt; <br />
-requires std::predicate&lt;UnaryPredicate, typename InputIt::value_type&gt;</div>
-<table class="mlabels">
-  <tr>
-  <td class="mlabels-left">
-      <table class="memname">
-        <tr>
-          <td class="memname">constexpr InputIt klib::find_last </td>
-          <td>(</td>
-          <td class="paramtype">InputIt&#160;</td>
-          <td class="paramname"><em>first</em>, </td>
-        </tr>
-        <tr>
-          <td class="paramkey"></td>
-          <td></td>
-          <td class="paramtype">InputIt&#160;</td>
-          <td class="paramname"><em>last</em>, </td>
-        </tr>
-        <tr>
-          <td class="paramkey"></td>
-          <td></td>
-          <td class="paramtype">UnaryPredicate&#160;</td>
-          <td class="paramname"><em>p</em>&#160;</td>
-        </tr>
-        <tr>
-          <td></td>
-          <td>)</td>
-          <td></td><td></td>
-        </tr>
-      </table>
-  </td>
-  <td class="mlabels-right">
-<span class="mlabels"><span class="mlabel">inline</span><span class="mlabel">constexpr</span></span>  </td>
-  </tr>
-</table>
-</div><div class="memdoc">
-
-<p>Search for an element for which predicate p returns true. </p>
-<dl class="params"><dt>Parameters</dt><dd>
-  <table class="params">
-    <tr><td class="paramname">first</td><td>Starting iterator </td></tr>
-    <tr><td class="paramname">last</td><td>Post-tail iterator </td></tr>
-    <tr><td class="paramname">p</td><td>Unary predicate which returns true for the required element </td></tr>
-  </table>
-  </dd>
-</dl>
-<dl class="section return"><dt>Returns</dt><dd>Iterator to the first element satisfying the condition or last if no such element is found </dd></dl>
-
-</div>
-</div>
-<a id="a6e1a6bca253ac0afc74f98f90bb48015" name="a6e1a6bca253ac0afc74f98f90bb48015"></a>
-<h2 class="memtitle"><span class="permalink"><a href="#a6e1a6bca253ac0afc74f98f90bb48015">&#9670;&nbsp;</a></span>folder_size()</h2>
-
-<div class="memitem">
-<div class="memproto">
-      <table class="memname">
-        <tr>
-          <td class="memname">std::size_t klib::folder_size </td>
-          <td>(</td>
-          <td class="paramtype">const std::string &amp;&#160;</td>
-          <td class="paramname"><em>path</em></td><td>)</td>
-          <td></td>
-        </tr>
-      </table>
-</div><div class="memdoc">
-
-<p>Count the sum of the size of all files in the folder. </p>
-<dl class="params"><dt>Parameters</dt><dd>
-  <table class="params">
-    <tr><td class="paramname">path</td><td>The path of the folder to be counted </td></tr>
-  </table>
-  </dd>
-</dl>
-<dl class="section return"><dt>Returns</dt><dd>Folder size </dd></dl>
-
-</div>
-</div>
-<a id="aa2173416ed35c8a0d962f3f8426d81af" name="aa2173416ed35c8a0d962f3f8426d81af"></a>
-<h2 class="memtitle"><span class="permalink"><a href="#aa2173416ed35c8a0d962f3f8426d81af">&#9670;&nbsp;</a></span>generate_random_bytes()</h2>
+<a id="a734f4c9c1ea977f1f74ac6f4b6ef817b" name="a734f4c9c1ea977f1f74ac6f4b6ef817b"></a>
+<h2 class="memtitle"><span class="permalink"><a href="#a734f4c9c1ea977f1f74ac6f4b6ef817b">&#9670;&nbsp;</a></span>generate_random_bytes()</h2>
 
 <div class="memitem">
 <div class="memproto">
@@ -574,8 +343,8 @@ requires std::predicate&lt;UnaryPredicate, typename InputIt::value_type&gt;</div
         <tr>
           <td class="memname">std::string klib::generate_random_bytes </td>
           <td>(</td>
-          <td class="paramtype">std::int32_t&#160;</td>
-          <td class="paramname"><em>num</em></td><td>)</td>
+          <td class="paramtype">std::size_t&#160;</td>
+          <td class="paramname"><em>bytes</em></td><td>)</td>
           <td></td>
         </tr>
       </table>
@@ -584,7 +353,7 @@ requires std::predicate&lt;UnaryPredicate, typename InputIt::value_type&gt;</div
 <p>Generate random data of specified bytes. </p>
 <dl class="params"><dt>Parameters</dt><dd>
   <table class="params">
-    <tr><td class="paramname">num</td><td>The number of bytes to generate </td></tr>
+    <tr><td class="paramname">bytes</td><td>The number of bytes to generate </td></tr>
   </table>
   </dd>
 </dl>
@@ -592,14 +361,14 @@ requires std::predicate&lt;UnaryPredicate, typename InputIt::value_type&gt;</div
 
 </div>
 </div>
-<a id="aa4e57655515047da3c99a9cf3d7b870b" name="aa4e57655515047da3c99a9cf3d7b870b"></a>
-<h2 class="memtitle"><span class="permalink"><a href="#aa4e57655515047da3c99a9cf3d7b870b">&#9670;&nbsp;</a></span>make_file_or_dir_name_legal()</h2>
+<a id="a09e7d1b928997b8684fb499905a2d705" name="a09e7d1b928997b8684fb499905a2d705"></a>
+<h2 class="memtitle"><span class="permalink"><a href="#a09e7d1b928997b8684fb499905a2d705">&#9670;&nbsp;</a></span>make_file_name_legal()</h2>
 
 <div class="memitem">
 <div class="memproto">
       <table class="memname">
         <tr>
-          <td class="memname">std::string klib::make_file_or_dir_name_legal </td>
+          <td class="memname">std::string klib::make_file_name_legal </td>
           <td>(</td>
           <td class="paramtype">const std::string &amp;&#160;</td>
           <td class="paramname"><em>file_name</em></td><td>)</td>
@@ -658,71 +427,6 @@ requires std::predicate&lt;UnaryPredicate, typename InputIt::value_type&gt;</div
 
 </div>
 </div>
-<a id="aeb12aa83527e021b6d976c4c6008791a" name="aeb12aa83527e021b6d976c4c6008791a"></a>
-<h2 class="memtitle"><span class="permalink"><a href="#aeb12aa83527e021b6d976c4c6008791a">&#9670;&nbsp;</a></span>read_file_line()</h2>
-
-<div class="memitem">
-<div class="memproto">
-      <table class="memname">
-        <tr>
-          <td class="memname">std::vector&lt; std::string &gt; klib::read_file_line </td>
-          <td>(</td>
-          <td class="paramtype">const std::string &amp;&#160;</td>
-          <td class="paramname"><em>path</em></td><td>)</td>
-          <td></td>
-        </tr>
-      </table>
-</div><div class="memdoc">
-
-<p>Read a file at a time and store it in a string. </p>
-<dl class="params"><dt>Parameters</dt><dd>
-  <table class="params">
-    <tr><td class="paramname">path</td><td>File path </td></tr>
-  </table>
-  </dd>
-</dl>
-<dl class="section return"><dt>Returns</dt><dd>A string that holds the contents of the file </dd></dl>
-
-</div>
-</div>
-<a id="a634a5cccf588c12cb1d7e1f4253775c6" name="a634a5cccf588c12cb1d7e1f4253775c6"></a>
-<h2 class="memtitle"><span class="permalink"><a href="#a634a5cccf588c12cb1d7e1f4253775c6">&#9670;&nbsp;</a></span>same_folder()</h2>
-
-<div class="memitem">
-<div class="memproto">
-      <table class="memname">
-        <tr>
-          <td class="memname">bool klib::same_folder </td>
-          <td>(</td>
-          <td class="paramtype">const std::string &amp;&#160;</td>
-          <td class="paramname"><em>path1</em>, </td>
-        </tr>
-        <tr>
-          <td class="paramkey"></td>
-          <td></td>
-          <td class="paramtype">const std::string &amp;&#160;</td>
-          <td class="paramname"><em>path2</em>&#160;</td>
-        </tr>
-        <tr>
-          <td></td>
-          <td>)</td>
-          <td></td><td></td>
-        </tr>
-      </table>
-</div><div class="memdoc">
-
-<p>Determine whether the two folders are the same. </p>
-<dl class="params"><dt>Parameters</dt><dd>
-  <table class="params">
-    <tr><td class="paramname">path1</td><td>Folder path </td></tr>
-    <tr><td class="paramname">path2</td><td>Folder path </td></tr>
-  </table>
-  </dd>
-</dl>
-<dl class="section return"><dt>Returns</dt><dd>If the two folders are the same, return true, otherwise return false </dd></dl>
-
-</div>
-</div>
 <a id="afb31ff4533cd6ea73bb65b1c077dde7f" name="afb31ff4533cd6ea73bb65b1c077dde7f"></a>
 <h2 class="memtitle"><span class="permalink"><a href="#afb31ff4533cd6ea73bb65b1c077dde7f">&#9670;&nbsp;</a></span>split_str()</h2>
 
@@ -768,8 +472,8 @@ requires std::predicate&lt;UnaryPredicate, typename InputIt::value_type&gt;</div
 
 </div>
 </div>
-<a id="ad20740bb960a952fc137ca4247bbc179" name="ad20740bb960a952fc137ca4247bbc179"></a>
-<h2 class="memtitle"><span class="permalink"><a href="#ad20740bb960a952fc137ca4247bbc179">&#9670;&nbsp;</a></span>write_file()</h2>
+<a id="aa77a9545024ab2ddc44c03fafac3df34" name="aa77a9545024ab2ddc44c03fafac3df34"></a>
+<h2 class="memtitle"><span class="permalink"><a href="#aa77a9545024ab2ddc44c03fafac3df34">&#9670;&nbsp;</a></span>write_file()</h2>
 
 <div class="memitem">
 <div class="memproto">
@@ -790,7 +494,7 @@ requires std::predicate&lt;UnaryPredicate, typename InputIt::value_type&gt;</div
           <td class="paramkey"></td>
           <td></td>
           <td class="paramtype">const std::string &amp;&#160;</td>
-          <td class="paramname"><em>content</em>&#160;</td>
+          <td class="paramname"><em>str</em>&#160;</td>
         </tr>
         <tr>
           <td></td>
@@ -805,7 +509,7 @@ requires std::predicate&lt;UnaryPredicate, typename InputIt::value_type&gt;</div
   <table class="params">
     <tr><td class="paramname">path</td><td>File path </td></tr>
     <tr><td class="paramname">binary_mode</td><td>Whether to open in binary mode </td></tr>
-    <tr><td class="paramname">content</td><td>String to be written </td></tr>
+    <tr><td class="paramname">str</td><td>String to be written </td></tr>
   </table>
   </dd>
 </dl>

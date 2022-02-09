@@ -1,5 +1,4 @@
 var searchData=
 [
-  ['headers_0',['Headers',['../classklib_1_1Headers.html',1,'klib']]],
-  ['heading_1',['Heading',['../structklib_1_1Heading.html',1,'klib']]]
+  ['httpheader_0',['HTTPHeader',['../classklib_1_1HTTPHeader.html',1,'klib']]]
 ];

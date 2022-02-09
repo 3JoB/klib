@@ -30,7 +30,7 @@
  <tbody>
  <tr id="projectrow">
   <td id="projectalign">
-   <div id="projectname">klib<span id="projectnumber">&#160;0.13.0</span>
+   <div id="projectname">klib<span id="projectnumber">&#160;0.14.0</span>
    </div>
   </td>
     <td>        <div id="MSearchBox" class="MSearchBoxInactive">
@@ -102,20 +102,19 @@ $(document).ready(function(){initNavTree('hash_8h.html',''); initResizable(); })
 <div class="textblock"><code>#include &lt;cstddef&gt;</code><br />
 <code>#include &lt;cstdint&gt;</code><br />
 <code>#include &lt;string&gt;</code><br />
-<code>#include &lt;utility&gt;</code><br />
 </div>
 <p><a href="hash_8h_source.html">Go to the source code of this file.</a></p>
 <table class="memberdecls">
 <tr class="heading"><td colspan="2"><h2 class="groupheader"><a id="func-members" name="func-members"></a>
 Functions</h2></td></tr>
 <tr class="memitem:aba64b42882d6e54255da7e44bee74690"><td class="memItemLeft" align="right" valign="top">std::size_t&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="hash_8h.html#aba64b42882d6e54255da7e44bee74690">klib::fast_hash</a> (const std::string &amp;data)</td></tr>
-<tr class="memdesc:aba64b42882d6e54255da7e44bee74690"><td class="mdescLeft">&#160;</td><td class="mdescRight">Get the hash object and calculate the hash value.  <a href="hash_8h.html#aba64b42882d6e54255da7e44bee74690">More...</a><br /></td></tr>
+<tr class="memdesc:aba64b42882d6e54255da7e44bee74690"><td class="mdescLeft">&#160;</td><td class="mdescRight">Calculate the hash.  <a href="hash_8h.html#aba64b42882d6e54255da7e44bee74690">More...</a><br /></td></tr>
 <tr class="separator:aba64b42882d6e54255da7e44bee74690"><td class="memSeparator" colspan="2">&#160;</td></tr>
 <tr class="memitem:aebe750c2e1719aa849149275b63177ab"><td class="memItemLeft" align="right" valign="top"><a id="aebe750c2e1719aa849149275b63177ab" name="aebe750c2e1719aa849149275b63177ab"></a>
 std::string&#160;</td><td class="memItemRight" valign="bottom"><b>klib::fast_hash_hex</b> (const std::string &amp;data)</td></tr>
 <tr class="separator:aebe750c2e1719aa849149275b63177ab"><td class="memSeparator" colspan="2">&#160;</td></tr>
 <tr class="memitem:ac0e8cb916043fdb8394793429045f100"><td class="memItemLeft" align="right" valign="top">std::string&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="hash_8h.html#ac0e8cb916043fdb8394793429045f100">klib::md5</a> (const std::string &amp;data)</td></tr>
-<tr class="memdesc:ac0e8cb916043fdb8394793429045f100"><td class="mdescLeft">&#160;</td><td class="mdescRight">Get the hash object and calculate the hash value.  <a href="hash_8h.html#ac0e8cb916043fdb8394793429045f100">More...</a><br /></td></tr>
+<tr class="memdesc:ac0e8cb916043fdb8394793429045f100"><td class="mdescLeft">&#160;</td><td class="mdescRight">Calculate the hash.  <a href="hash_8h.html#ac0e8cb916043fdb8394793429045f100">More...</a><br /></td></tr>
 <tr class="separator:ac0e8cb916043fdb8394793429045f100"><td class="memSeparator" colspan="2">&#160;</td></tr>
 <tr class="memitem:acbb0b708e2f97260c0f73664a9f00c65"><td class="memItemLeft" align="right" valign="top"><a id="acbb0b708e2f97260c0f73664a9f00c65" name="acbb0b708e2f97260c0f73664a9f00c65"></a>
 std::string&#160;</td><td class="memItemRight" valign="bottom"><b>klib::md5_hex</b> (const std::string &amp;data)</td></tr>
@@ -179,7 +178,7 @@ std::string&#160;</td><td class="memItemRight" valign="bottom"><b>klib::sha512_h
       </table>
 </div><div class="memdoc">
 
-<p>Get the hash object and calculate the hash value. </p>
+<p>Calculate the hash. </p>
 <dl class="params"><dt>Parameters</dt><dd>
   <table class="params">
     <tr><td class="paramname">data</td><td>Data to be hashed </td></tr>
@@ -206,7 +205,7 @@ std::string&#160;</td><td class="memItemRight" valign="bottom"><b>klib::sha512_h
       </table>
 </div><div class="memdoc">
 
-<p>Get the hash object and calculate the hash value. </p>
+<p>Calculate the hash. </p>
 <dl class="params"><dt>Parameters</dt><dd>
   <table class="params">
     <tr><td class="paramname">data</td><td>Data to be hashed </td></tr>

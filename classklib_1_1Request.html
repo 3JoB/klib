@@ -30,7 +30,7 @@
  <tbody>
  <tr id="projectrow">
   <td id="projectalign">
-   <div id="projectname">klib<span id="projectnumber">&#160;0.13.0</span>
+   <div id="projectname">klib<span id="projectnumber">&#160;0.14.0</span>
    </div>
   </td>
     <td>        <div id="MSearchBox" class="MSearchBoxInactive">
@@ -135,10 +135,13 @@ Public Member Functions</h2></td></tr>
 <tr class="memitem:ac2cf384a73a9a958c5a49979db7a4633"><td class="memItemLeft" align="right" valign="top"><a id="ac2cf384a73a9a958c5a49979db7a4633" name="ac2cf384a73a9a958c5a49979db7a4633"></a>
 void&#160;</td><td class="memItemRight" valign="bottom"><b>set_proxy</b> (const std::string &amp;proxy)</td></tr>
 <tr class="separator:ac2cf384a73a9a958c5a49979db7a4633"><td class="memSeparator" colspan="2">&#160;</td></tr>
-<tr class="memitem:aa6db2a71c4c12c8f054715e3f8fc71ae"><td class="memItemLeft" align="right" valign="top"><a id="aa6db2a71c4c12c8f054715e3f8fc71ae" name="aa6db2a71c4c12c8f054715e3f8fc71ae"></a>
-void&#160;</td><td class="memItemRight" valign="bottom"><b>set_no_proxy</b> ()</td></tr>
-<tr class="memdesc:aa6db2a71c4c12c8f054715e3f8fc71ae"><td class="mdescLeft">&#160;</td><td class="mdescRight">No proxy. <br /></td></tr>
-<tr class="separator:aa6db2a71c4c12c8f054715e3f8fc71ae"><td class="memSeparator" colspan="2">&#160;</td></tr>
+<tr class="memitem:a50925cee2296762c75edf54c2d52cc77"><td class="memItemLeft" align="right" valign="top"><a id="a50925cee2296762c75edf54c2d52cc77" name="a50925cee2296762c75edf54c2d52cc77"></a>
+void&#160;</td><td class="memItemRight" valign="bottom"><b>set_proxy_from_env</b> ()</td></tr>
+<tr class="memdesc:a50925cee2296762c75edf54c2d52cc77"><td class="mdescLeft">&#160;</td><td class="mdescRight">Read proxy from environment variable and set. <br /></td></tr>
+<tr class="separator:a50925cee2296762c75edf54c2d52cc77"><td class="memSeparator" colspan="2">&#160;</td></tr>
+<tr class="memitem:ab6f028872e3e0b66fbfa9d5c22772947"><td class="memItemLeft" align="right" valign="top">void&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="classklib_1_1Request.html#ab6f028872e3e0b66fbfa9d5c22772947">set_no_proxy</a> (const std::string &amp;no_proxy=&quot;*&quot;)</td></tr>
+<tr class="memdesc:ab6f028872e3e0b66fbfa9d5c22772947"><td class="mdescLeft">&#160;</td><td class="mdescRight">Don't use any proxy.  <a href="classklib_1_1Request.html#ab6f028872e3e0b66fbfa9d5c22772947">More...</a><br /></td></tr>
+<tr class="separator:ab6f028872e3e0b66fbfa9d5c22772947"><td class="memSeparator" colspan="2">&#160;</td></tr>
 <tr class="memitem:a162a25604f3336d0f091c21db20e3e28"><td class="memItemLeft" align="right" valign="top"><a id="a162a25604f3336d0f091c21db20e3e28" name="a162a25604f3336d0f091c21db20e3e28"></a>
 void&#160;</td><td class="memItemRight" valign="bottom"><b>set_doh_url</b> (const std::string &amp;url)</td></tr>
 <tr class="separator:a162a25604f3336d0f091c21db20e3e28"><td class="memSeparator" colspan="2">&#160;</td></tr>
@@ -160,16 +163,16 @@ void&#160;</td><td class="memItemRight" valign="bottom"><b>set_curl_user_agent</
 <tr class="memdesc:aa2441e7ed0be65868c280c0d3115e11f"><td class="mdescLeft">&#160;</td><td class="mdescRight">Set up connect timeout.  <a href="classklib_1_1Request.html#aa2441e7ed0be65868c280c0d3115e11f">More...</a><br /></td></tr>
 <tr class="separator:aa2441e7ed0be65868c280c0d3115e11f"><td class="memSeparator" colspan="2">&#160;</td></tr>
 <tr class="memitem:acf7345e979cdd1a277a2ad7ce191ad95"><td class="memItemLeft" align="right" valign="top">void&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="classklib_1_1Request.html#acf7345e979cdd1a277a2ad7ce191ad95">use_cookies</a> (bool flag)</td></tr>
-<tr class="memdesc:acf7345e979cdd1a277a2ad7ce191ad95"><td class="mdescLeft">&#160;</td><td class="mdescRight">Use cookies.  <a href="classklib_1_1Request.html#acf7345e979cdd1a277a2ad7ce191ad95">More...</a><br /></td></tr>
+<tr class="memdesc:acf7345e979cdd1a277a2ad7ce191ad95"><td class="mdescLeft">&#160;</td><td class="mdescRight">Use cookies(The default is true)  <a href="classklib_1_1Request.html#acf7345e979cdd1a277a2ad7ce191ad95">More...</a><br /></td></tr>
 <tr class="separator:acf7345e979cdd1a277a2ad7ce191ad95"><td class="memSeparator" colspan="2">&#160;</td></tr>
 <tr class="memitem:a05c3c6d1aba4192f65342bb0a4b8aa6e"><td class="memItemLeft" align="right" valign="top"><a id="a05c3c6d1aba4192f65342bb0a4b8aa6e" name="a05c3c6d1aba4192f65342bb0a4b8aa6e"></a>
 void&#160;</td><td class="memItemRight" valign="bottom"><b>set_accept_encoding</b> (const std::string &amp;accept_encoding)</td></tr>
 <tr class="separator:a05c3c6d1aba4192f65342bb0a4b8aa6e"><td class="memSeparator" colspan="2">&#160;</td></tr>
 <tr class="memitem:a821a5ecba97e28f1bb8029e2aa11673a"><td class="memItemLeft" align="right" valign="top">std::string&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="classklib_1_1Request.html#a821a5ecba97e28f1bb8029e2aa11673a">url_encode</a> (const std::string &amp;str)</td></tr>
-<tr class="memdesc:a821a5ecba97e28f1bb8029e2aa11673a"><td class="mdescLeft">&#160;</td><td class="mdescRight">Encoding URL string.  <a href="classklib_1_1Request.html#a821a5ecba97e28f1bb8029e2aa11673a">More...</a><br /></td></tr>
+<tr class="memdesc:a821a5ecba97e28f1bb8029e2aa11673a"><td class="mdescLeft">&#160;</td><td class="mdescRight">Encoding <a class="el" href="classklib_1_1URL.html" title="Parse URL.">URL</a> string.  <a href="classklib_1_1Request.html#a821a5ecba97e28f1bb8029e2aa11673a">More...</a><br /></td></tr>
 <tr class="separator:a821a5ecba97e28f1bb8029e2aa11673a"><td class="memSeparator" colspan="2">&#160;</td></tr>
 <tr class="memitem:a0dcd41db916b56c1bb834d1ba836c8e5"><td class="memItemLeft" align="right" valign="top">std::string&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="classklib_1_1Request.html#a0dcd41db916b56c1bb834d1ba836c8e5">url_decode</a> (const std::string &amp;str)</td></tr>
-<tr class="memdesc:a0dcd41db916b56c1bb834d1ba836c8e5"><td class="mdescLeft">&#160;</td><td class="mdescRight">Decoding URL string.  <a href="classklib_1_1Request.html#a0dcd41db916b56c1bb834d1ba836c8e5">More...</a><br /></td></tr>
+<tr class="memdesc:a0dcd41db916b56c1bb834d1ba836c8e5"><td class="mdescLeft">&#160;</td><td class="mdescRight">Decoding <a class="el" href="classklib_1_1URL.html" title="Parse URL.">URL</a> string.  <a href="classklib_1_1Request.html#a0dcd41db916b56c1bb834d1ba836c8e5">More...</a><br /></td></tr>
 <tr class="separator:a0dcd41db916b56c1bb834d1ba836c8e5"><td class="memSeparator" colspan="2">&#160;</td></tr>
 <tr class="memitem:aad26489f1661e13e6ce71f1f40d04bd5"><td class="memItemLeft" align="right" valign="top"><a class="el" href="classklib_1_1Response.html">Response</a>&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="classklib_1_1Request.html#aad26489f1661e13e6ce71f1f40d04bd5">get</a> (const std::string &amp;url, const std::unordered_map&lt; std::string, std::string &gt; &amp;params={}, const std::unordered_map&lt; std::string, std::string &gt; &amp;headers={})</td></tr>
 <tr class="memdesc:aad26489f1661e13e6ce71f1f40d04bd5"><td class="mdescLeft">&#160;</td><td class="mdescRight">Sends a GET request.  <a href="classklib_1_1Request.html#aad26489f1661e13e6ce71f1f40d04bd5">More...</a><br /></td></tr>
@@ -255,7 +258,7 @@ class&#160;</td><td class="memItemRight" valign="bottom"><b>Response</b></td></t
 <dl class="params"><dt>Parameters</dt><dd>
   <table class="params">
     <tr><td class="paramname">url</td><td>Requested url </td></tr>
-    <tr><td class="paramname">params</td><td>URL parameters </td></tr>
+    <tr><td class="paramname">params</td><td><a class="el" href="classklib_1_1URL.html" title="Parse URL.">URL</a> parameters </td></tr>
     <tr><td class="paramname">headers</td><td>HTTP headers </td></tr>
   </table>
   </dd>
@@ -300,7 +303,7 @@ class&#160;</td><td class="memItemRight" valign="bottom"><b>Response</b></td></t
 <dl class="params"><dt>Parameters</dt><dd>
   <table class="params">
     <tr><td class="paramname">url</td><td>Requested url </td></tr>
-    <tr><td class="paramname">data</td><td>Data string </td></tr>
+    <tr><td class="paramname">json</td><td>Data in json format </td></tr>
     <tr><td class="paramname">headers</td><td>HTTP headers </td></tr>
   </table>
   </dd>
@@ -397,7 +400,7 @@ class&#160;</td><td class="memItemRight" valign="bottom"><b>Response</b></td></t
   <table class="params">
     <tr><td class="paramname">url</td><td>Requested url </td></tr>
     <tr><td class="paramname">data</td><td>Data name and value </td></tr>
-    <tr><td class="paramname">file</td><td>File name and content </td></tr>
+    <tr><td class="paramname">file</td><td>File name and path </td></tr>
     <tr><td class="paramname">headers</td><td>HTTP headers </td></tr>
   </table>
   </dd>
@@ -426,6 +429,32 @@ class&#160;</td><td class="memItemRight" valign="bottom"><b>Response</b></td></t
 <dl class="params"><dt>Parameters</dt><dd>
   <table class="params">
     <tr><td class="paramname">seconds</td><td>Time in seconds </td></tr>
+  </table>
+  </dd>
+</dl>
+
+</div>
+</div>
+<a id="ab6f028872e3e0b66fbfa9d5c22772947" name="ab6f028872e3e0b66fbfa9d5c22772947"></a>
+<h2 class="memtitle"><span class="permalink"><a href="#ab6f028872e3e0b66fbfa9d5c22772947">&#9670;&nbsp;</a></span>set_no_proxy()</h2>
+
+<div class="memitem">
+<div class="memproto">
+      <table class="memname">
+        <tr>
+          <td class="memname">void klib::Request::set_no_proxy </td>
+          <td>(</td>
+          <td class="paramtype">const std::string &amp;&#160;</td>
+          <td class="paramname"><em>no_proxy</em> = <code>&quot;*&quot;</code></td><td>)</td>
+          <td></td>
+        </tr>
+      </table>
+</div><div class="memdoc">
+
+<p>Don't use any proxy. </p>
+<dl class="params"><dt>Parameters</dt><dd>
+  <table class="params">
+    <tr><td class="paramname">no_proxy</td><td>String representing no_proxy </td></tr>
   </table>
   </dd>
 </dl>
@@ -500,7 +529,7 @@ class&#160;</td><td class="memItemRight" valign="bottom"><b>Response</b></td></t
       </table>
 </div><div class="memdoc">
 
-<p>Decoding URL string. </p>
+<p>Decoding <a class="el" href="classklib_1_1URL.html" title="Parse URL.">URL</a> string. </p>
 <dl class="params"><dt>Parameters</dt><dd>
   <table class="params">
     <tr><td class="paramname">str</td><td>String to be decoded </td></tr>
@@ -527,7 +556,7 @@ class&#160;</td><td class="memItemRight" valign="bottom"><b>Response</b></td></t
       </table>
 </div><div class="memdoc">
 
-<p>Encoding URL string. </p>
+<p>Encoding <a class="el" href="classklib_1_1URL.html" title="Parse URL.">URL</a> string. </p>
 <dl class="params"><dt>Parameters</dt><dd>
   <table class="params">
     <tr><td class="paramname">str</td><td>String to be encoded </td></tr>
@@ -554,7 +583,7 @@ class&#160;</td><td class="memItemRight" valign="bottom"><b>Response</b></td></t
       </table>
 </div><div class="memdoc">
 
-<p>Use cookies. </p>
+<p>Use cookies(The default is true) </p>
 <dl class="params"><dt>Parameters</dt><dd>
   <table class="params">
     <tr><td class="paramname">flag</td><td>True to use cookies </td></tr>
