@@ -15,7 +15,10 @@ TEST_CASE("base64", "[base64]") {
   BENCHMARK("std encoded") {
     klib::exec_with_output("base64 -w0 " + file_name);
   };
-  BENCHMARK("klib encoded") {
+  BENCHMARK("klib secure encoded") {
+    return klib::secure_base64_encode(klib::read_file(file_name, true));
+  };
+  BENCHMARK("klib fast encoded") {
     encoded = klib::fast_base64_encode(klib::read_file(file_name, true));
   };
 
@@ -24,7 +27,10 @@ TEST_CASE("base64", "[base64]") {
   BENCHMARK("std decoded") {
     klib::exec_with_output("base64 -d " + out_file_name);
   };
-  BENCHMARK("klib decoded") {
+  BENCHMARK("klib secure decoded") {
+    return klib::secure_base64_decode(klib::read_file(out_file_name, true));
+  };
+  BENCHMARK("klib fast decoded") {
     return klib::fast_base64_decode(klib::read_file(out_file_name, true));
   };
 
