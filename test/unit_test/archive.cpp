@@ -23,8 +23,8 @@ class TestsFixture {
 }  // namespace
 
 TEST_CASE("libarchive version", "[archive]") {
-  REQUIRE(archive_zlib_version() == std::string("1.2.11.zlib-ng"));
-  REQUIRE(archive_libzstd_version() == std::string("1.5.2"));
+  CHECK(archive_zlib_version() == std::string("1.2.11.zlib-ng"));
+  CHECK(archive_libzstd_version() == std::string("1.5.2"));
 }
 
 TEST_CASE_METHOD(TestsFixture, "zip none", "[archive]") {
@@ -32,7 +32,7 @@ TEST_CASE_METHOD(TestsFixture, "zip none", "[archive]") {
                                  klib::Filter::None, "zip-none.zip"));
   dbg(std::filesystem::file_size("zip-none.zip"));
   REQUIRE_NOTHROW(klib::decompress("zip-none.zip", "zip-none"));
-  REQUIRE_NOTHROW(klib::exec("diff -r zlib-ng-2.0.6 zip-none/zlib-ng-2.0.6"));
+  CHECK_NOTHROW(klib::exec("diff -r zlib-ng-2.0.6 zip-none/zlib-ng-2.0.6"));
 
   std::remove("zip-none.zip");
   std::filesystem::remove_all("zip-none");
@@ -43,8 +43,7 @@ TEST_CASE_METHOD(TestsFixture, "zip deflate", "[archive]") {
                                  klib::Filter::Deflate, "zip-deflate.zip"));
   dbg(std::filesystem::file_size("zip-deflate.zip"));
   REQUIRE_NOTHROW(klib::decompress("zip-deflate.zip", "zip-deflate"));
-  REQUIRE_NOTHROW(
-      klib::exec("diff -r zlib-ng-2.0.6 zip-deflate/zlib-ng-2.0.6"));
+  CHECK_NOTHROW(klib::exec("diff -r zlib-ng-2.0.6 zip-deflate/zlib-ng-2.0.6"));
 
   std::remove("zip-deflate.zip");
   std::filesystem::remove_all("zip-deflate");
@@ -55,7 +54,7 @@ TEST_CASE_METHOD(TestsFixture, "tar none", "[archive]") {
                                  klib::Filter::None, "tar-none.tar"));
   dbg(std::filesystem::file_size("tar-none.tar"));
   REQUIRE_NOTHROW(klib::decompress("tar-none.tar", "tar-none"));
-  REQUIRE_NOTHROW(klib::exec("diff -r zlib-ng-2.0.6 tar-none/zlib-ng-2.0.6"));
+  CHECK_NOTHROW(klib::exec("diff -r zlib-ng-2.0.6 tar-none/zlib-ng-2.0.6"));
 
   std::remove("tar-none.tar");
   std::filesystem::remove_all("tar-none");
@@ -66,7 +65,7 @@ TEST_CASE_METHOD(TestsFixture, "tar gzip", "[archive]") {
                                  klib::Filter::Gzip, "tar-gzip.tar.gz"));
   dbg(std::filesystem::file_size("tar-gzip.tar.gz"));
   REQUIRE_NOTHROW(klib::decompress("tar-gzip.tar.gz", "tar-gzip"));
-  REQUIRE_NOTHROW(klib::exec("diff -r zlib-ng-2.0.6 tar-gzip/zlib-ng-2.0.6"));
+  CHECK_NOTHROW(klib::exec("diff -r zlib-ng-2.0.6 tar-gzip/zlib-ng-2.0.6"));
 
   std::remove("tar-gzip.tar.gz");
   std::filesystem::remove_all("tar-gzip");
@@ -77,7 +76,7 @@ TEST_CASE_METHOD(TestsFixture, "tar zstd", "[archive]") {
                                  klib::Filter::Zstd, "tar-zstd.tar.zst"));
   dbg(std::filesystem::file_size("tar-zstd.tar.zst"));
   REQUIRE_NOTHROW(klib::decompress("tar-zstd.tar.zst", "tar-zstd"));
-  REQUIRE_NOTHROW(klib::exec("diff -r zlib-ng-2.0.6 tar-zstd/zlib-ng-2.0.6"));
+  CHECK_NOTHROW(klib::exec("diff -r zlib-ng-2.0.6 tar-zstd/zlib-ng-2.0.6"));
 
   std::remove("tar-zstd.tar.zst");
   std::filesystem::remove_all("tar-zstd");
@@ -97,5 +96,5 @@ TEST_CASE("compress data", "[archive]") {
   REQUIRE_NOTHROW(compressed = klib::compress_data(data));
   dbg(std::size(compressed));
   REQUIRE_NOTHROW(decompressed = klib::decompress_data(compressed));
-  REQUIRE(data == decompressed);
+  CHECK(data == decompressed);
 }

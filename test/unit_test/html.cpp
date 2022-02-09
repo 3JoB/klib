@@ -1,11 +1,10 @@
 #include <catch2/catch.hpp>
 
-#include "klib/exception.h"
 #include "klib/html.h"
 
 TEST_CASE("html_tidy", "[html]") {
-  REQUIRE(klib::html_tidy("<title>Foo</title><p>Foo!") ==
-          R"(<!DOCTYPE html>
+  CHECK(klib::html_tidy("<title>Foo</title><p>Foo!") ==
+        R"(<!DOCTYPE html>
 <html xmlns="http://www.w3.org/1999/xhtml">
 <head>
 <title>Foo</title>
@@ -15,7 +14,4 @@ TEST_CASE("html_tidy", "[html]") {
 </body>
 </html>
 )");
-
-  REQUIRE_THROWS_AS(klib::html_tidy("<titleFoo</title><p>Foo!"),
-                    klib::RuntimeError);
 }

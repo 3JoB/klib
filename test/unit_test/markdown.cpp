@@ -3,7 +3,7 @@
 #include "klib/markdown.h"
 
 TEST_CASE("markdown_to_html", "[markdown]") {
-  REQUIRE(klib::markdown_to_html(R"(
+  CHECK(klib::markdown_to_html(R"(
 ## title
 111
 222
