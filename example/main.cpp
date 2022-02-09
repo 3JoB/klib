@@ -10,7 +10,7 @@ int main() try {
   request.set_no_proxy();
 
   auto response = request.get("https://www.baidu.com");
-  assert(response.status_code() == klib::Response::StatusCode::Ok);
+  assert(response.ok());
 
   std::cout << response.text() << '\n';
 

@@ -554,8 +554,8 @@ bool Response::ok() const { return status_ == HttpStatus::HTTP_STATUS_OK; }
 
 std::string Response::text() const { return text_; }
 
-void Response::save_to_file(const std::string &path, bool binary_mode) const {
-  write_file(path, binary_mode, text_);
+void Response::save_to_file(const std::string &path) const {
+  write_file(path, true, text_);
 }
 
 }  // namespace klib

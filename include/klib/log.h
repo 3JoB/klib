@@ -12,12 +12,12 @@
 #include <fmt/core.h>
 #include <spdlog/spdlog.h>
 
-#include "detail/format_with_location.h"
+#include "detail/fmt_with_loc.h"
 
 namespace klib {
 
 /**
- * @brief Report information
+ * @brief Show information
  * @param fmt: Format string
  * @param args: Format string parameters
  */
@@ -42,8 +42,7 @@ void warn(std::string_view fmt, Args &&...args) {
  * @param args: Format string parameters
  */
 template <typename... Args>
-[[noreturn]] void error(detail::format_with_location fmt_with_loc,
-                        Args &&...args) {
+[[noreturn]] void error(detail::FmtWithLoc fmt_with_loc, Args &&...args) {
   spdlog::default_logger_raw()->log(fmt_with_loc.loc_, spdlog::level::err,
                                     fmt::runtime(fmt_with_loc.fmt_),
                                     std::forward<Args>(args)...);

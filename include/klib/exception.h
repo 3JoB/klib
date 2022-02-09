@@ -12,7 +12,7 @@
 #include <fmt/core.h>
 #include <fmt/format.h>
 
-#include "klib/detail/format_with_location.h"
+#include "klib/detail/fmt_with_loc.h"
 
 namespace klib {
 
@@ -50,8 +50,7 @@ class RuntimeError : public Exception {
    * @param args: Format string parameters
    */
   template <typename... Args>
-  explicit RuntimeError(detail::format_with_location fmt_with_loc,
-                        Args &&...args)
+  explicit RuntimeError(detail::FmtWithLoc fmt_with_loc, Args &&...args)
       : Exception(detail::location_to_string(fmt_with_loc.loc_) +
                   fmt::format(fmt::runtime(fmt_with_loc.fmt_),
                               std::forward<Args>(args)...)) {}
@@ -68,7 +67,7 @@ class LogicError : public Exception {
    * @param args: Format string parameters
    */
   template <typename... Args>
-  explicit LogicError(detail::format_with_location fmt_with_loc, Args &&...args)
+  explicit LogicError(detail::FmtWithLoc fmt_with_loc, Args &&...args)
       : Exception(detail::location_to_string(fmt_with_loc.loc_) +
                   fmt::format(fmt::runtime(fmt_with_loc.fmt_),
                               std::forward<Args>(args)...)) {}
@@ -85,8 +84,7 @@ class InvalidArgument : public Exception {
    * @param args: Format string parameters
    */
   template <typename... Args>
-  explicit InvalidArgument(detail::format_with_location fmt_with_loc,
-                           Args &&...args)
+  explicit InvalidArgument(detail::FmtWithLoc fmt_with_loc, Args &&...args)
       : Exception(detail::location_to_string(fmt_with_loc.loc_) +
                   fmt::format(fmt::runtime(fmt_with_loc.fmt_),
                               std::forward<Args>(args)...)) {}
@@ -103,7 +101,7 @@ class OutOfRange : public Exception {
    * @param args: Format string parameters
    */
   template <typename... Args>
-  explicit OutOfRange(detail::format_with_location fmt_with_loc, Args &&...args)
+  explicit OutOfRange(detail::FmtWithLoc fmt_with_loc, Args &&...args)
       : Exception(detail::location_to_string(fmt_with_loc.loc_) +
                   fmt::format(fmt::runtime(fmt_with_loc.fmt_),
                               std::forward<Args>(args)...)) {}

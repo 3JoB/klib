@@ -29,10 +29,10 @@ inline std::string location_to_string(const spdlog::source_loc &loc) {
   return file_name + ":" + std::to_string(loc.line) + ": ";
 }
 
-struct format_with_location {
+struct FmtWithLoc {
   template <typename String>
-  format_with_location(const String &fmt,
-                       const source_location &loc = source_location::current())
+  FmtWithLoc(const String &fmt,
+             const source_location &loc = source_location::current())
       : fmt_(fmt), loc_(get_log_source_location(loc)) {}
 
   std::string_view fmt_;

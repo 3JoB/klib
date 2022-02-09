@@ -184,7 +184,7 @@ TEST_CASE("download", "[http]") {
   auto response = request.get(
       "https://github.com/facebook/zstd/archive/refs/tags/v1.5.0.tar.gz");
   REQUIRE(response.ok());
-  response.save_to_file("zstd-1.5.0.tar.gz", true);
+  response.save_to_file("zstd-1.5.0.tar.gz");
 
   REQUIRE(std::filesystem::is_regular_file("zstd-1.5.0.tar.gz"));
   REQUIRE(klib::sha256_hex(klib::read_file("zstd-1.5.0.tar.gz", true)) ==
