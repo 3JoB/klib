@@ -1,7 +1,5 @@
 #include "klib/sql.h"
 
-#include <climits>
-
 #include <sqlcipher/sqlite3.h>
 #include <boost/core/ignore_unused.hpp>
 #include <scope_guard.hpp>
@@ -11,8 +9,6 @@
 #include "klib/log.h"
 
 namespace klib {
-
-namespace {
 
 #define check_sqlite(rc)                      \
   do {                                        \
@@ -27,8 +23,6 @@ namespace {
       throw RuntimeError(sqlite3_errmsg(db)); \
     }                                         \
   } while (0)
-
-}  // namespace
 
 class Column::ColumnImpl {
  public:

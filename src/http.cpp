@@ -15,10 +15,6 @@
 #include "klib/exception.h"
 #include "klib/util.h"
 
-namespace klib {
-
-namespace {
-
 #define check_curl(rc)                            \
   do {                                            \
     if (rc != CURLcode::CURLE_OK) {               \
@@ -32,6 +28,10 @@ namespace {
       throw RuntimeError(curl_url_strerror(rc)); \
     }                                            \
   } while (0)
+
+namespace klib {
+
+namespace {
 
 HttpStatus get_status(CURL *curl) {
   std::int32_t status_code;

@@ -25,10 +25,6 @@
 #include "klib/exception.h"
 #include "klib/util.h"
 
-namespace klib {
-
-namespace {
-
 #define check_libarchive(rc, archive)                    \
   do {                                                   \
     if (rc != ARCHIVE_OK) {                              \
@@ -42,6 +38,10 @@ namespace {
       throw RuntimeError(ZSTD_getErrorName(rc)); \
     }                                            \
   } while (0)
+
+namespace klib {
+
+namespace {
 
 std::string compressed_file_name(const std::string &path, Format format,
                                  Filter filter) {

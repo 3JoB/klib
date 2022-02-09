@@ -36,7 +36,7 @@ ChangeWorkingDir::ChangeWorkingDir(const std::string &path) {
 
     if (!std::filesystem::is_directory(path)) {
       if (!std::filesystem::create_directory(path)) {
-        throw RuntimeError("can not create directory: '{}'", path);
+        throw RuntimeError("Can not create directory: '{}'", path);
       }
     }
 

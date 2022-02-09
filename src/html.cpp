@@ -10,10 +10,6 @@
 
 #include "klib/exception.h"
 
-namespace klib {
-
-namespace {
-
 #define check_html_tidy(rc)                            \
   do {                                                 \
     if (!rc) {                                         \
@@ -21,7 +17,7 @@ namespace {
     }                                                  \
   } while (0)
 
-}  // namespace
+namespace klib {
 
 std::string html_tidy(const std::string &html, bool ignore_error) {
   TidyDoc doc = tidyCreate();
