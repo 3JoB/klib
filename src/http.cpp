@@ -365,6 +365,9 @@ Response Request::RequestImpl::post(
   rc = curl_easy_setopt(curl_, CURLOPT_POSTFIELDS, post_fields.c_str());
   check_curl(rc);
 
+  rc = curl_easy_setopt(curl_, CURLOPT_POSTFIELDSIZE, std::size(post_fields));
+  check_curl(rc);
+
   auto c_url = add_url(curl_, url);
   SCOPE_EXIT { curl_url_cleanup(c_url); };
 
@@ -387,6 +390,9 @@ Response Request::RequestImpl::post(
   check_curl(rc);
 
   rc = curl_easy_setopt(curl_, CURLOPT_POSTFIELDS, json.c_str());
+  check_curl(rc);
+
+  rc = curl_easy_setopt(curl_, CURLOPT_POSTFIELDSIZE, std::size(json));
   check_curl(rc);
 
   auto c_url = add_url(curl_, url);
