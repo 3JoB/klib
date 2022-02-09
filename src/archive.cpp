@@ -99,28 +99,18 @@ void init_write_format_filter(archive *archive, Format format, Filter filter) {
   }
 }
 
-void init_read_format_filter(archive *archive, const std::string &file_name) {
-  std::int32_t rc;
+void init_read_format_filter(archive *archive) {
+  auto rc = archive_read_support_format_zip(archive);
+  check_libarchive(rc, archive);
 
-  if (file_name.ends_with(".zip")) {
-    rc = archive_read_support_format_zip(archive);
-    check_libarchive(rc, archive);
-  } else if (file_name.ends_with(".tar")) {
-    rc = archive_read_support_format_gnutar(archive);
-    check_libarchive(rc, archive);
-  } else if (file_name.ends_with(".tar.gz") || file_name.ends_with(".tgz")) {
-    rc = archive_read_support_format_gnutar(archive);
-    check_libarchive(rc, archive);
-    rc = archive_read_support_filter_gzip(archive);
-    check_libarchive(rc, archive);
-  } else if (file_name.ends_with(".tar.zst")) {
-    rc = archive_read_support_format_gnutar(archive);
-    check_libarchive(rc, archive);
-    rc = archive_read_support_filter_zstd(archive);
-    check_libarchive(rc, archive);
-  } else {
-    throw RuntimeError("Unknown file extension");
-  }
+  rc = archive_read_support_format_gnutar(archive);
+  check_libarchive(rc, archive);
+
+  rc = archive_read_support_filter_gzip(archive);
+  check_libarchive(rc, archive);
+
+  rc = archive_read_support_filter_zstd(archive);
+  check_libarchive(rc, archive);
 }
 
 std::string get_top_level_dir(const std::filesystem::path &path) {
@@ -238,7 +228,7 @@ void decompress(const std::string &file_name, const std::string &out_dir) {
     archive_read_free(archive);
   };
 
-  init_read_format_filter(archive, file_name);
+  init_read_format_filter(archive);
 
   auto rc = archive_read_open_filename(archive, file_name.c_str(), 10240);
   check_libarchive(rc, archive);
@@ -280,7 +270,7 @@ std::optional<std::string> outermost_folder_name(const std::string &file_name) {
     archive_read_free(archive);
   };
 
-  init_read_format_filter(archive, file_name);
+  init_read_format_filter(archive);
 
   auto rc = archive_read_open_filename(archive, file_name.c_str(), 10240);
   check_libarchive(rc, archive);
