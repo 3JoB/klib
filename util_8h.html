@@ -30,7 +30,7 @@
  <tbody>
  <tr id="projectrow">
   <td id="projectalign">
-   <div id="projectname">klib<span id="projectnumber">&#160;0.14.1</span>
+   <div id="projectname">klib<span id="projectnumber">&#160;0.14.2</span>
    </div>
   </td>
     <td>        <div id="MSearchBox" class="MSearchBoxInactive">
@@ -102,6 +102,7 @@ $(document).ready(function(){initNavTree('util_8h.html',''); initResizable(); })
 <a href="#details">More...</a></p>
 <div class="textblock"><code>#include &lt;cstddef&gt;</code><br />
 <code>#include &lt;string&gt;</code><br />
+<code>#include &lt;string_view&gt;</code><br />
 <code>#include &lt;vector&gt;</code><br />
 </div>
 <p><a href="util_8h_source.html">Go to the source code of this file.</a></p>
@@ -120,12 +121,18 @@ Functions</h2></td></tr>
 <tr class="memitem:aff1e161e1457b1a895244581b50b9abd"><td class="memItemLeft" align="right" valign="top">std::string&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="util_8h.html#aff1e161e1457b1a895244581b50b9abd">klib::read_file</a> (const std::string &amp;path, bool binary_mode)</td></tr>
 <tr class="memdesc:aff1e161e1457b1a895244581b50b9abd"><td class="mdescLeft">&#160;</td><td class="mdescRight">Read a file at a time and store it in a string.  <a href="util_8h.html#aff1e161e1457b1a895244581b50b9abd">More...</a><br /></td></tr>
 <tr class="separator:aff1e161e1457b1a895244581b50b9abd"><td class="memSeparator" colspan="2">&#160;</td></tr>
+<tr class="memitem:adbf302e115dd8795bbb3e2590e0c6917"><td class="memItemLeft" align="right" valign="top"><a id="adbf302e115dd8795bbb3e2590e0c6917" name="adbf302e115dd8795bbb3e2590e0c6917"></a>
+std::string&#160;</td><td class="memItemRight" valign="bottom"><b>klib::read_file</b> (std::string_view path, bool binary_mode)</td></tr>
+<tr class="separator:adbf302e115dd8795bbb3e2590e0c6917"><td class="memSeparator" colspan="2">&#160;</td></tr>
 <tr class="memitem:ac70cb873ea6e639f6309788655c84a5f"><td class="memItemLeft" align="right" valign="top"><a id="ac70cb873ea6e639f6309788655c84a5f" name="ac70cb873ea6e639f6309788655c84a5f"></a>
 std::string&#160;</td><td class="memItemRight" valign="bottom"><b>klib::read_file</b> (const char *path, bool binary_mode)</td></tr>
 <tr class="separator:ac70cb873ea6e639f6309788655c84a5f"><td class="memSeparator" colspan="2">&#160;</td></tr>
 <tr class="memitem:aa77a9545024ab2ddc44c03fafac3df34"><td class="memItemLeft" align="right" valign="top">void&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="util_8h.html#aa77a9545024ab2ddc44c03fafac3df34">klib::write_file</a> (const std::string &amp;path, bool binary_mode, const std::string &amp;str)</td></tr>
 <tr class="memdesc:aa77a9545024ab2ddc44c03fafac3df34"><td class="mdescLeft">&#160;</td><td class="mdescRight">Write string to file.  <a href="util_8h.html#aa77a9545024ab2ddc44c03fafac3df34">More...</a><br /></td></tr>
 <tr class="separator:aa77a9545024ab2ddc44c03fafac3df34"><td class="memSeparator" colspan="2">&#160;</td></tr>
+<tr class="memitem:a9a7379ea62373328b3a35aff358e09b0"><td class="memItemLeft" align="right" valign="top"><a id="a9a7379ea62373328b3a35aff358e09b0" name="a9a7379ea62373328b3a35aff358e09b0"></a>
+void&#160;</td><td class="memItemRight" valign="bottom"><b>klib::write_file</b> (std::string_view path, bool binary_mode, std::string_view str)</td></tr>
+<tr class="separator:a9a7379ea62373328b3a35aff358e09b0"><td class="memSeparator" colspan="2">&#160;</td></tr>
 <tr class="memitem:a49d3e58ed0d07d5a4776f0619cbe6fe2"><td class="memItemLeft" align="right" valign="top"><a id="a49d3e58ed0d07d5a4776f0619cbe6fe2" name="a49d3e58ed0d07d5a4776f0619cbe6fe2"></a>
 void&#160;</td><td class="memItemRight" valign="bottom"><b>klib::write_file</b> (const char *path, bool binary_mode, const char *str, std::size_t size)</td></tr>
 <tr class="separator:a49d3e58ed0d07d5a4776f0619cbe6fe2"><td class="memSeparator" colspan="2">&#160;</td></tr>
