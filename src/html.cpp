@@ -14,11 +14,12 @@ namespace klib {
 
 namespace {
 
-void check_opt_set(bool ok) {
-  if (!ok) {
-    throw RuntimeError("option set fail");
-  }
-}
+#define check_html_tidy(rc)                            \
+  do {                                                 \
+    if (!rc) {                                         \
+      throw RuntimeError("HTML Tidy option set fail"); \
+    }                                                  \
+  } while (0)
 
 }  // namespace
 
@@ -26,11 +27,20 @@ std::string html_tidy(const std::string &html, bool ignore_error) {
   TidyDoc doc = tidyCreate();
   SCOPE_EXIT { tidyRelease(doc); };
 
-  check_opt_set(tidyOptSetBool(doc, TidyXhtmlOut, yes));
-  check_opt_set(tidyOptSetBool(doc, TidyShowWarnings, no));
-  check_opt_set(tidyOptSetInt(doc, TidyWrapLen, 0));
-  check_opt_set(tidyOptSetBool(doc, TidyHideComments, yes));
-  check_opt_set(tidyOptSetBool(doc, TidyMark, no));
+  auto ret = tidyOptSetBool(doc, TidyXhtmlOut, yes);
+  check_html_tidy(ret);
+
+  ret = tidyOptSetBool(doc, TidyShowWarnings, no);
+  check_html_tidy(ret);
+
+  ret = tidyOptSetInt(doc, TidyWrapLen, 0);
+  check_html_tidy(ret);
+
+  ret = tidyOptSetBool(doc, TidyHideComments, yes);
+  check_html_tidy(ret);
+
+  ret = tidyOptSetBool(doc, TidyMark, no);
+  check_html_tidy(ret);
 
   TidyBuffer output_buffer = {};
   SCOPE_EXIT { tidyBufFree(&output_buffer); };
@@ -49,7 +59,8 @@ std::string html_tidy(const std::string &html, bool ignore_error) {
     rc = tidyRunDiagnostics(doc);
   }
   if (rc > 1) {
-    check_opt_set(tidyOptSetBool(doc, TidyForceOutput, yes));
+    ret = tidyOptSetBool(doc, TidyForceOutput, yes);
+    check_html_tidy(ret);
   }
 
   rc = tidySaveBuffer(doc, &output_buffer);
