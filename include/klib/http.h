@@ -194,6 +194,11 @@ class Response {
 
  public:
   /**
+   * @brief Default constructor
+   */
+  Response();
+
+  /**
    * @brief Get status code
    * @return Status code
    */
