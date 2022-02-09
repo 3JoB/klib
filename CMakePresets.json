@@ -1,8 +1,8 @@
 {
-  "version": 2,
+  "version": 3,
   "cmakeMinimumRequired": {
     "major": 3,
-    "minor": 20,
+    "minor": 22,
     "patch": 0
   },
   "configurePresets": [
@@ -35,7 +35,7 @@
       "generator": "Ninja",
       "binaryDir": "${sourceDir}/build/${presetName}",
       "cacheVariables": {
-        "CMAKE_BUILD_TYPE": "RelWithDebInfo",
+        "CMAKE_BUILD_TYPE": "Release",
         "KLIB_BUILD_TEST": "ON",
         "KLIB_BUILD_EXTRA_TEST": "ON",
         "KLIB_TEST_USE_PROXY": "ON",
@@ -78,7 +78,7 @@
       "generator": "Ninja",
       "binaryDir": "${sourceDir}/build/${presetName}",
       "cacheVariables": {
-        "CMAKE_BUILD_TYPE": "RelWithDebInfo",
+        "CMAKE_BUILD_TYPE": "Release",
         "KLIB_BUILD_TEST": "ON",
         "KLIB_BUILD_EXTRA_TEST": "ON",
         "KLIB_TEST_USE_PROXY": "ON",
