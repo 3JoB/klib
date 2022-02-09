@@ -7,6 +7,7 @@
 
 #include <cstddef>
 #include <string>
+#include <string_view>
 #include <vector>
 
 namespace klib {
@@ -56,6 +57,8 @@ std::vector<std::string> split_str(const std::string &str,
  */
 std::string read_file(const std::string &path, bool binary_mode);
 
+std::string read_file(std::string_view path, bool binary_mode);
+
 std::string read_file(const char *path, bool binary_mode);
 
 /**
@@ -66,6 +69,8 @@ std::string read_file(const char *path, bool binary_mode);
  */
 void write_file(const std::string &path, bool binary_mode,
                 const std::string &str);
+
+void write_file(std::string_view path, bool binary_mode, std::string_view str);
 
 void write_file(const char *path, bool binary_mode, const char *str,
                 std::size_t size);

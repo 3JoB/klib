@@ -77,6 +77,10 @@ std::string read_file(const std::string &path, bool binary_mode) {
   return read_file(path.c_str(), binary_mode);
 }
 
+std::string read_file(std::string_view path, bool binary_mode) {
+  return read_file(std::data(path), binary_mode);
+}
+
 std::string read_file(const char *path, bool binary_mode) {
   std::ifstream ifs;
   if (binary_mode) {
@@ -101,6 +105,10 @@ std::string read_file(const char *path, bool binary_mode) {
 void write_file(const std::string &path, bool binary_mode,
                 const std::string &str) {
   write_file(path.c_str(), binary_mode, std::data(str), std::size(str));
+}
+
+void write_file(std::string_view path, bool binary_mode, std::string_view str) {
+  write_file(std::data(path), binary_mode, std::data(str), std::size(str));
 }
 
 void write_file(const char *path, bool binary_mode, const char *str,

@@ -45,12 +45,6 @@ HttpStatus get_status(CURL *curl) {
 CURLU *add_url(
     CURL *curl, const std::string &url,
     const std::unordered_map<std::string, std::string> &params = {}) {
-  if (std::empty(params)) {
-    auto rc = curl_easy_setopt(curl, CURLOPT_URL, url.c_str());
-    check_curl(rc);
-    return nullptr;
-  }
-
   auto c_url = curl_url();
 
   auto rc = curl_url_set(c_url, CURLUPART_URL, url.c_str(), 0);
