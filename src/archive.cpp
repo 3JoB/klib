@@ -37,7 +37,7 @@
 
 #define check_libarchive(rc, archive)                    \
   do {                                                   \
-    if (rc != ARCHIVE_OK) {                              \
+    if (rc < ARCHIVE_OK) {                               \
       throw RuntimeError(archive_error_string(archive)); \
     }                                                    \
   } while (0)
@@ -234,7 +234,9 @@ void compress(const std::vector<std::string> &paths,
         auto length = read(fd, buff, sizeof(buff));
         check_system_io(length);
         while (length > 0) {
-          archive_write_data(archive, buff, length);
+          rc = archive_write_data(archive, buff, length);
+          check_libarchive(rc, archive);
+
           length = read(fd, buff, sizeof(buff));
           check_system_io(length);
         }
