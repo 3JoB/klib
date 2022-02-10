@@ -11,11 +11,6 @@ file(GLOB_RECURSE KLIB_TEST_SRC CONFIGURE_DEPENDS
 find_package(Catch2 REQUIRED)
 find_package(Boost CONFIG REQUIRED COMPONENTS json)
 
-add_definitions(-DDBG_MACRO_NO_WARNING)
-if(NOT (${CMAKE_BUILD_TYPE} STREQUAL "Debug"))
-  add_definitions(-DDBG_MACRO_DISABLE)
-endif()
-
 add_executable(${KLIB_TEST_EXECUTABLE} ${MIMALLOC_OBJECT} ${KLIB_TEST_SRC})
 target_link_libraries(
   ${KLIB_TEST_EXECUTABLE} PRIVATE ${KLIB_LIBRARY} Catch2::Catch2WithMain

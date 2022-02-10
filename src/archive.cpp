@@ -9,6 +9,7 @@
 #include "klib/archive.h"
 
 #include <fcntl.h>
+#include <sys/sysinfo.h>
 #include <unistd.h>
 
 #include <cstdint>
@@ -18,6 +19,7 @@
 
 #include <archive.h>
 #include <archive_entry.h>
+#include <dbg.h>
 #include <zstd.h>
 #include <boost/core/ignore_unused.hpp>
 #include <scope_guard.hpp>
@@ -94,6 +96,12 @@ void init_write_format_filter(archive *archive, Format format, Filter filter) {
       check_libarchive(rc, archive);
     } else if (filter == Filter::Zstd) {
       rc = archive_write_add_filter_zstd(archive);
+      check_libarchive(rc, archive);
+
+      auto number_of_processors = std::to_string(get_nprocs());
+      dbg(number_of_processors);
+      rc = archive_write_set_filter_option(archive, nullptr, "threads",
+                                           number_of_processors.c_str());
       check_libarchive(rc, archive);
     }
   }

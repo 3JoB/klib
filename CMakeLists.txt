@@ -97,6 +97,11 @@ if(${CMAKE_BUILD_TYPE} STREQUAL "Debug")
   add_definitions(-Dgsl_CONFIG_CONTRACT_VIOLATION_THROWS)
 endif()
 
+add_definitions(-DDBG_MACRO_NO_WARNING)
+if(NOT (${CMAKE_BUILD_TYPE} STREQUAL "Debug"))
+  add_definitions(-DDBG_MACRO_DISABLE)
+endif()
+
 set(THREADS_PREFER_PTHREAD_FLAG TRUE)
 find_package(Threads REQUIRED)
 
