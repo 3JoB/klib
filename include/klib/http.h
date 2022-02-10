@@ -46,12 +46,6 @@ class Request {
   void verbose(bool flag);
 
   /**
-   * @brief Whether to follow any location(The default is true)
-   * @param flag: True to follow any location
-   */
-  void allow_redirects(bool flag);
-
-  /**
    * @brief Set up proxy
    * @param proxy: String representing proxy
    * @example request.set_proxy("http://127.0.0.1:1080");
@@ -104,12 +98,6 @@ class Request {
    * @param seconds: Time in seconds
    */
   void set_connect_timeout(std::int64_t seconds);
-
-  /**
-   * @brief Use cookies(The default is true)
-   * @param flag: True to use cookies
-   */
-  void use_cookies(bool flag);
 
   /**
    * @brief Set Accept-Encoding

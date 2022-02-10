@@ -22,9 +22,7 @@ TEST_CASE("curl version", "[http]") {
 
 TEST_CASE("request headers", "[http]") {
   klib::Request request;
-  request.allow_redirects(false);
   request.set_curl_user_agent();
-  request.use_cookies(false);
 
 #ifndef NDEBUG
   request.verbose(true);
@@ -48,7 +46,6 @@ TEST_CASE("request headers", "[http]") {
 
 TEST_CASE("response headers", "[http]") {
   klib::Request request;
-  request.allow_redirects(true);
   request.set_curl_user_agent();
 
 #ifndef NDEBUG
@@ -103,7 +100,7 @@ TEST_CASE("POST", "[http]") {
 
   auto jv = boost::json::parse(response.text());
 
-  const auto& form = jv.at("form");
+  const auto &form = jv.at("form");
   REQUIRE(form.at("user_name").as_string() == user_name);
   REQUIRE(form.at("password").as_string() == password);
 }
@@ -135,11 +132,11 @@ TEST_CASE("POST mime", "[http]") {
 
   auto jv = boost::json::parse(response.text());
 
-  const auto& form = jv.at("form");
+  const auto &form = jv.at("form");
   REQUIRE(form.at("user_name").as_string() == user_name);
   REQUIRE(form.at("password").as_string() == password);
 
-  const auto& files = jv.at("files");
+  const auto &files = jv.at("files");
   REQUIRE(files.at(file_a).as_string() == klib::read_file(file_a, false));
   REQUIRE(files.at(file_b).as_string() == klib::read_file(file_b, false));
 

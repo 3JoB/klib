@@ -6,6 +6,7 @@
 #include "klib/http.h"
 
 #include <cstddef>
+#include <cstdio>
 #include <filesystem>
 #include <string_view>
 
@@ -32,6 +33,12 @@
 namespace klib {
 
 namespace {
+
+std::size_t callback_func_std_string(void *contents, std::size_t size,
+                                     std::size_t nmemb, std::string *s) {
+  s->append(static_cast<const char *>(contents), size * nmemb);
+  return size * nmemb;
+}
 
 HttpStatus get_status(CURL *curl) {
   std::int32_t status_code;
@@ -141,7 +148,6 @@ class Request::RequestImpl {
   ~RequestImpl();
 
   void verbose(bool flag);
-  void allow_redirects(bool flag);
   void set_proxy(const std::string &proxy);
   void set_proxy_from_env();
   void set_no_proxy(const std::string &no_proxy);
@@ -151,7 +157,6 @@ class Request::RequestImpl {
   void set_curl_user_agent();
   void set_timeout(std::int64_t seconds);
   void set_connect_timeout(std::int64_t seconds);
-  void use_cookies(bool flag);
   void set_accept_encoding(const std::string &accept_encoding);
   std::string url_encode(const std::string &str);
   std::string url_decode(const std::string &str);
@@ -171,17 +176,12 @@ class Request::RequestImpl {
       const std::unordered_map<std::string, std::string> &headers);
 
  private:
-  void set_cookies();
-  Response do_post();
+  Response do_easy_perform();
 
-  static std::size_t callback_func_std_string(void *contents, std::size_t size,
-                                              std::size_t nmemb,
-                                              std::string *s);
   std::string splicing_post_fields(
       const std::unordered_map<std::string, std::string> &data);
 
   CURL *curl_;
-  bool use_cookies_ = true;
 
   constexpr static std::string_view cookies_path = "/tmp/cookies.txt";
   constexpr static std::string_view altsvc_path = "/tmp/altsvc.txt";
@@ -192,13 +192,13 @@ Request::RequestImpl::RequestImpl() {
   check_curl(rc);
 
   curl_ = curl_easy_init();
-  if (!curl_) {
-    throw RuntimeError("curl_easy_init failed");
-  }
   SCOPE_FAIL {
     curl_easy_cleanup(curl_);
     curl_global_cleanup();
   };
+  if (!curl_) {
+    throw RuntimeError("curl_easy_init failed");
+  }
 
   rc = curl_easy_setopt(curl_, CURLOPT_BUFFERSIZE, 102400);
   check_curl(rc);
@@ -212,6 +212,14 @@ Request::RequestImpl::RequestImpl() {
   rc = curl_easy_setopt(curl_, CURLOPT_TCP_KEEPALIVE, 1);
   check_curl(rc);
 
+  rc = curl_easy_setopt(curl_, CURLOPT_COOKIEFILE,
+                        std::data(RequestImpl::cookies_path));
+  check_curl(rc);
+
+  rc = curl_easy_setopt(curl_, CURLOPT_COOKIEJAR,
+                        std::data(RequestImpl::cookies_path));
+  check_curl(rc);
+
   rc = curl_easy_setopt(curl_, CURLOPT_ALTSVC, std::data(altsvc_path));
   check_curl(rc);
 
@@ -219,8 +227,7 @@ Request::RequestImpl::RequestImpl() {
                         CURLALTSVC_H1 | CURLALTSVC_H2);
   check_curl(rc);
 
-  rc = curl_easy_setopt(curl_, CURLOPT_WRITEFUNCTION,
-                        RequestImpl::callback_func_std_string);
+  rc = curl_easy_setopt(curl_, CURLOPT_WRITEFUNCTION, callback_func_std_string);
   check_curl(rc);
 }
 
@@ -231,11 +238,6 @@ Request::RequestImpl::~RequestImpl() {
 
 void Request::RequestImpl::verbose(bool flag) {
   auto rc = curl_easy_setopt(curl_, CURLOPT_VERBOSE, flag);
-  check_curl(rc);
-}
-
-void Request::RequestImpl::allow_redirects(bool flag) {
-  auto rc = curl_easy_setopt(curl_, CURLOPT_FOLLOWLOCATION, flag);
   check_curl(rc);
 }
 
@@ -285,8 +287,6 @@ void Request::RequestImpl::set_connect_timeout(std::int64_t seconds) {
   check_curl(rc);
 }
 
-void Request::RequestImpl::use_cookies(bool flag) { use_cookies_ = flag; }
-
 void Request::RequestImpl::set_accept_encoding(
     const std::string &accept_encoding) {
   auto rc =
@@ -319,13 +319,15 @@ Response Request::RequestImpl::get(
     const std::string &url,
     const std::unordered_map<std::string, std::string> &params,
     const std::unordered_map<std::string, std::string> &headers) {
-  set_cookies();
-
-  auto rc = curl_easy_setopt(curl_, CURLOPT_HTTPGET, 1L);
+  auto rc = curl_easy_setopt(curl_, CURLOPT_HTTPGET, 1);
   check_curl(rc);
 
   auto c_url = add_url(curl_, url, params);
-  SCOPE_EXIT { curl_url_cleanup(c_url); };
+  SCOPE_EXIT {
+    curl_url_cleanup(c_url);
+    rc = curl_easy_setopt(curl_, CURLOPT_CURLU, nullptr);
+    check_curl(rc);
+  };
 
   auto chunk = add_header(curl_, headers);
   SCOPE_EXIT {
@@ -334,36 +336,37 @@ Response Request::RequestImpl::get(
     check_curl(rc);
   };
 
-  Response response;
-  rc = curl_easy_setopt(curl_, CURLOPT_WRITEDATA, &response.text_);
-  check_curl(rc);
-
-  rc = curl_easy_perform(curl_);
-  check_curl(rc);
-
-  response.status_ = get_status(curl_);
-
-  return response;
+  return do_easy_perform();
 }
 
 Response Request::RequestImpl::post(
     const std::string &url,
     const std::unordered_map<std::string, std::string> &data,
     const std::unordered_map<std::string, std::string> &headers) {
-  set_cookies();
-
-  auto rc = curl_easy_setopt(curl_, CURLOPT_HTTPPOST, 1L);
+  auto rc = curl_easy_setopt(curl_, CURLOPT_HTTPPOST, 1);
   check_curl(rc);
 
   auto post_fields = splicing_post_fields(data);
   rc = curl_easy_setopt(curl_, CURLOPT_POSTFIELDS, post_fields.c_str());
   check_curl(rc);
+  SCOPE_EXIT {
+    rc = curl_easy_setopt(curl_, CURLOPT_POSTFIELDS, nullptr);
+    check_curl(rc);
+  };
 
   rc = curl_easy_setopt(curl_, CURLOPT_POSTFIELDSIZE, std::size(post_fields));
   check_curl(rc);
+  SCOPE_EXIT {
+    rc = curl_easy_setopt(curl_, CURLOPT_POSTFIELDSIZE, -1);
+    check_curl(rc);
+  };
 
   auto c_url = add_url(curl_, url);
-  SCOPE_EXIT { curl_url_cleanup(c_url); };
+  SCOPE_EXIT {
+    curl_url_cleanup(c_url);
+    rc = curl_easy_setopt(curl_, CURLOPT_CURLU, nullptr);
+    check_curl(rc);
+  };
 
   auto chunk = add_header(curl_, headers);
   SCOPE_EXIT {
@@ -372,25 +375,35 @@ Response Request::RequestImpl::post(
     check_curl(rc);
   };
 
-  return do_post();
+  return do_easy_perform();
 }
 
 Response Request::RequestImpl::post(
     const std::string &url, const std::string &json,
     const std::unordered_map<std::string, std::string> &headers) {
-  set_cookies();
-
-  auto rc = curl_easy_setopt(curl_, CURLOPT_HTTPPOST, 1L);
+  auto rc = curl_easy_setopt(curl_, CURLOPT_HTTPPOST, 1);
   check_curl(rc);
 
   rc = curl_easy_setopt(curl_, CURLOPT_POSTFIELDS, json.c_str());
   check_curl(rc);
+  SCOPE_EXIT {
+    rc = curl_easy_setopt(curl_, CURLOPT_POSTFIELDS, nullptr);
+    check_curl(rc);
+  };
 
   rc = curl_easy_setopt(curl_, CURLOPT_POSTFIELDSIZE, std::size(json));
   check_curl(rc);
+  SCOPE_EXIT {
+    rc = curl_easy_setopt(curl_, CURLOPT_POSTFIELDSIZE, -1);
+    check_curl(rc);
+  };
 
   auto c_url = add_url(curl_, url);
-  SCOPE_EXIT { curl_url_cleanup(c_url); };
+  SCOPE_EXIT {
+    curl_url_cleanup(c_url);
+    rc = curl_easy_setopt(curl_, CURLOPT_CURLU, nullptr);
+    check_curl(rc);
+  };
 
   auto headers_copy = headers;
   headers_copy["Content-Type"] = "application/json";
@@ -401,7 +414,7 @@ Response Request::RequestImpl::post(
     check_curl(rc);
   };
 
-  return do_post();
+  return do_easy_perform();
 }
 
 Response Request::RequestImpl::post_mime(
@@ -409,13 +422,15 @@ Response Request::RequestImpl::post_mime(
     const std::unordered_map<std::string, std::string> &data,
     const std::unordered_map<std::string, std::string> &file,
     const std::unordered_map<std::string, std::string> &headers) {
-  set_cookies();
-
-  auto rc = curl_easy_setopt(curl_, CURLOPT_HTTPPOST, 1L);
+  auto rc = curl_easy_setopt(curl_, CURLOPT_HTTPPOST, 1);
   check_curl(rc);
 
   auto c_url = add_url(curl_, url);
-  SCOPE_EXIT { curl_url_cleanup(c_url); };
+  SCOPE_EXIT {
+    curl_url_cleanup(c_url);
+    rc = curl_easy_setopt(curl_, CURLOPT_CURLU, nullptr);
+    check_curl(rc);
+  };
 
   auto chunk = add_header(curl_, headers);
   SCOPE_EXIT {
@@ -431,32 +446,18 @@ Response Request::RequestImpl::post_mime(
     check_curl(rc);
   };
 
-  return do_post();
+  return do_easy_perform();
 }
 
-void Request::RequestImpl::set_cookies() {
-  if (use_cookies_) {
-    auto rc = curl_easy_setopt(curl_, CURLOPT_COOKIEJAR,
-                               std::data(RequestImpl::cookies_path));
-    check_curl(rc);
-
-    rc = curl_easy_setopt(curl_, CURLOPT_COOKIEFILE,
-                          std::data(RequestImpl::cookies_path));
-    check_curl(rc);
-  } else {
-    auto rc = curl_easy_setopt(curl_, CURLOPT_COOKIEJAR, "");
-    check_curl(rc);
-
-    rc = curl_easy_setopt(curl_, CURLOPT_COOKIEFILE, "");
-    check_curl(rc);
-  }
-}
-
-Response Request::RequestImpl::do_post() {
+Response Request::RequestImpl::do_easy_perform() {
   Response response;
 
   auto rc = curl_easy_setopt(curl_, CURLOPT_WRITEDATA, &response.text_);
   check_curl(rc);
+  SCOPE_EXIT {
+    rc = curl_easy_setopt(curl_, CURLOPT_WRITEDATA, stdout);
+    check_curl(rc);
+  };
 
   rc = curl_easy_perform(curl_);
   check_curl(rc);
@@ -464,14 +465,6 @@ Response Request::RequestImpl::do_post() {
   response.status_ = get_status(curl_);
 
   return response;
-}
-
-std::size_t Request::RequestImpl::callback_func_std_string(void *contents,
-                                                           std::size_t size,
-                                                           std::size_t nmemb,
-                                                           std::string *s) {
-  s->append(static_cast<const char *>(contents), size * nmemb);
-  return size * nmemb;
 }
 
 std::string Request::RequestImpl::splicing_post_fields(
@@ -498,8 +491,6 @@ Request::~Request() = default;
 
 void Request::verbose(bool flag) { impl_->verbose(flag); }
 
-void Request::allow_redirects(bool flag) { impl_->allow_redirects(flag); }
-
 void Request::set_proxy(const std::string &proxy) { impl_->set_proxy(proxy); }
 
 void Request::set_proxy_from_env() { impl_->set_proxy_from_env(); }
@@ -523,8 +514,6 @@ void Request::set_timeout(std::int64_t seconds) { impl_->set_timeout(seconds); }
 void Request::set_connect_timeout(std::int64_t seconds) {
   impl_->set_connect_timeout(seconds);
 }
-
-void Request::use_cookies(bool flag) { impl_->use_cookies(flag); }
 
 void Request::set_accept_encoding(const std::string &accept_encoding) {
   impl_->set_accept_encoding(accept_encoding);
