@@ -16,8 +16,7 @@
  * since it relies on shuffles. Alternatives might be faster.
  */
 
-__attribute__((target("avx2"))) static inline __m256i enc_reshuffle(
-    const __m256i input) {
+static inline __m256i enc_reshuffle(const __m256i input) {
   // translation from SSE into AVX2 of procedure
   // https://github.com/WojciechMula/base64simd/blob/master/encode/unpack_bigendian.cpp
   const __m256i in = _mm256_shuffle_epi8(
@@ -35,8 +34,7 @@ __attribute__((target("avx2"))) static inline __m256i enc_reshuffle(
   return _mm256_or_si256(t1, t3);
 }
 
-__attribute__((target("avx2"))) static inline __m256i enc_translate(
-    const __m256i in) {
+static inline __m256i enc_translate(const __m256i in) {
   const __m256i lut = _mm256_setr_epi8(
       65, 71, -4, -4, -4, -4, -4, -4, -4, -4, -4, -4, -19, -16, 0, 0, 65, 71,
       -4, -4, -4, -4, -4, -4, -4, -4, -4, -4, -19, -16, 0, 0);
@@ -47,8 +45,7 @@ __attribute__((target("avx2"))) static inline __m256i enc_translate(
   return out;
 }
 
-__attribute__((target("avx2"))) static inline __m256i dec_reshuffle(
-    __m256i in) {
+static inline __m256i dec_reshuffle(__m256i in) {
   // inlined procedure pack_madd from
   // https://github.com/WojciechMula/base64simd/blob/master/decode/pack.avx2.cpp
   // The only difference is that elements are reversed,
@@ -72,9 +69,7 @@ __attribute__((target("avx2"))) static inline __m256i dec_reshuffle(
       out, _mm256_setr_epi32(0, 1, 2, 4, 5, 6, -1, -1));
 }
 
-__attribute__((target("avx2"))) size_t fast_avx2_base64_encode(char *dest,
-                                                               const char *str,
-                                                               size_t len) {
+size_t fast_avx2_base64_encode(char *dest, const char *str, size_t len) {
   const char *const dest_orig = dest;
   if (len >= 32 - 4) {
     // first load is masked
@@ -113,9 +108,7 @@ __attribute__((target("avx2"))) size_t fast_avx2_base64_encode(char *dest,
   return (dest - dest_orig) + scalarret;
 }
 
-__attribute__((target("avx2"))) size_t fast_avx2_base64_decode(char *out,
-                                                               const char *src,
-                                                               size_t srclen) {
+size_t fast_avx2_base64_decode(char *out, const char *src, size_t srclen) {
   char *out_orig = out;
   while (srclen >= 45) {
     // The input consists of six character sets in the Base64 alphabet,
