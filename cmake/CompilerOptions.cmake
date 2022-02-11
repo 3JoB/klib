@@ -38,14 +38,12 @@ add_linker_flag("-static-libstdc++")
 # ---------------------------------------------------------------------------------------
 if(CMAKE_COMPILER_IS_GNUCXX)
   execute_process(
-    COMMAND ld.gold --version
+    COMMAND ld --version
     OUTPUT_VARIABLE LINKER_VERSION
     OUTPUT_STRIP_TRAILING_WHITESPACE)
   string(REPLACE "\n" ";" LINKER_VERSION ${LINKER_VERSION})
   list(GET LINKER_VERSION 0 LINKER_VERSION)
   message(STATUS "Linker: ${LINKER_VERSION}")
-
-  add_linker_flag("-fuse-ld=gold")
 else()
   execute_process(
     COMMAND ld.lld --version
