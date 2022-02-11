@@ -63,7 +63,6 @@ add_compiler_flag("-march=haswell")
 add_compiler_flag("-mtune=haswell")
 
 add_compiler_flag("-fno-plt")
-add_compiler_flag("-fvisibility=hidden")
 
 set(CMAKE_POSITION_INDEPENDENT_CODE ON)
 
@@ -79,7 +78,6 @@ if((${CMAKE_BUILD_TYPE} STREQUAL "Release") OR (${CMAKE_BUILD_TYPE} STREQUAL
   if(CMAKE_COMPILER_IS_GNUCXX)
     add_compiler_flag("-fipa-pta")
     add_compiler_flag("-fgraphite-identity")
-    add_compiler_flag("-floop-nest-optimize")
   endif()
 endif()
 
