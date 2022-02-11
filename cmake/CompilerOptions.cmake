@@ -1,5 +1,8 @@
 include(AddFlag)
 
+# ---------------------------------------------------------------------------------------
+# C/C++ standard
+# ---------------------------------------------------------------------------------------
 # https://cmake.org/cmake/help/latest/prop_tgt/C_STANDARD.html
 set(CMAKE_C_STANDARD 17)
 set(CMAKE_C_EXTENSIONS OFF)
@@ -13,19 +16,13 @@ set(CMAKE_CXX_STANDARD_REQUIRED ON)
 set(CMAKE_EXPORT_COMPILE_COMMANDS ON)
 
 # ---------------------------------------------------------------------------------------
-# Machine
-# ---------------------------------------------------------------------------------------
-add_compiler_flag("-march=haswell")
-add_compiler_flag("-mtune=haswell")
-
-# ---------------------------------------------------------------------------------------
 # Static link
 # ---------------------------------------------------------------------------------------
 add_linker_flag("-static-libgcc")
 add_linker_flag("-static-libstdc++")
 
 # ---------------------------------------------------------------------------------------
-# lld
+# Linker
 # ---------------------------------------------------------------------------------------
 if(CMAKE_COMPILER_IS_GNUCXX)
   execute_process(
@@ -60,6 +57,29 @@ add_compiler_flag("-Wpedantic")
 add_compiler_flag("-Werror")
 
 # ---------------------------------------------------------------------------------------
+# Optimization
+# ---------------------------------------------------------------------------------------
+if((${CMAKE_BUILD_TYPE} STREQUAL "Release") OR (${CMAKE_BUILD_TYPE} STREQUAL
+                                                "MinSizeRel"))
+  add_compiler_flag("-fno-math-errno")
+  add_compiler_flag("-fno-trapping-math")
+  add_compiler_flag("-fno-semantic-interposition")
+  add_compiler_flag("-fno-plt")
+
+  if(CMAKE_COMPILER_IS_GNUCXX)
+    add_compiler_flag("-fgraphite-identity")
+    add_compiler_flag("-floop-nest-optimize")
+    add_compiler_flag("-fipa-pta")
+  endif()
+endif()
+
+add_compiler_flag("-march=haswell")
+add_compiler_flag("-mtune=haswell")
+add_compiler_flag("-pipe")
+add_compiler_flag("-fPIE")
+add_compiler_flag("-fvisibility=hidden")
+
+# ---------------------------------------------------------------------------------------
 # Link time optimization
 # ---------------------------------------------------------------------------------------
 # https://github.com/ninja-build/ninja/blob/master/CMakeLists.txt
@@ -82,7 +102,7 @@ else()
 endif()
 
 # ---------------------------------------------------------------------------------------
-# strip
+# Strip
 # ---------------------------------------------------------------------------------------
 if((${CMAKE_BUILD_TYPE} STREQUAL "Release") OR (${CMAKE_BUILD_TYPE} STREQUAL
                                                 "MinSizeRel"))
