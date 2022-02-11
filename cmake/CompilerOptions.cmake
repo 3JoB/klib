@@ -16,6 +16,18 @@ set(CMAKE_CXX_STANDARD_REQUIRED ON)
 set(CMAKE_EXPORT_COMPILE_COMMANDS ON)
 
 # ---------------------------------------------------------------------------------------
+# Warning
+# ---------------------------------------------------------------------------------------
+add_compiler_flag("-Wall")
+add_compiler_flag("-Wextra")
+add_compiler_flag("-Wpedantic")
+add_compiler_flag("-Werror")
+
+if(${CMAKE_CXX_COMPILER_ID} STREQUAL "Clang")
+  add_compiler_flag("-Wno-error=unused-command-line-argument")
+endif()
+
+# ---------------------------------------------------------------------------------------
 # Static link
 # ---------------------------------------------------------------------------------------
 add_linker_flag("-static-libgcc")
@@ -45,16 +57,17 @@ else()
 endif()
 
 # ---------------------------------------------------------------------------------------
-# Warning
+# General options
 # ---------------------------------------------------------------------------------------
-if(${CMAKE_CXX_COMPILER_ID} STREQUAL "Clang")
-  add_compiler_flag("-Wno-error=unused-command-line-argument")
-endif()
+add_compiler_flag("-pipe")
 
-add_compiler_flag("-Wall")
-add_compiler_flag("-Wextra")
-add_compiler_flag("-Wpedantic")
-add_compiler_flag("-Werror")
+add_compiler_flag("-march=haswell")
+add_compiler_flag("-mtune=haswell")
+
+add_compiler_flag("-fno-plt")
+add_compiler_flag("-fvisibility=hidden")
+
+set(CMAKE_POSITION_INDEPENDENT_CODE ON)
 
 # ---------------------------------------------------------------------------------------
 # Optimization
@@ -64,20 +77,13 @@ if((${CMAKE_BUILD_TYPE} STREQUAL "Release") OR (${CMAKE_BUILD_TYPE} STREQUAL
   add_compiler_flag("-fno-math-errno")
   add_compiler_flag("-fno-trapping-math")
   add_compiler_flag("-fno-semantic-interposition")
-  add_compiler_flag("-fno-plt")
 
   if(CMAKE_COMPILER_IS_GNUCXX)
+    add_compiler_flag("-fipa-pta")
     add_compiler_flag("-fgraphite-identity")
     add_compiler_flag("-floop-nest-optimize")
-    add_compiler_flag("-fipa-pta")
   endif()
 endif()
-
-add_compiler_flag("-march=haswell")
-add_compiler_flag("-mtune=haswell")
-add_compiler_flag("-pipe")
-add_compiler_flag("-fPIE")
-add_compiler_flag("-fvisibility=hidden")
 
 # ---------------------------------------------------------------------------------------
 # Link time optimization

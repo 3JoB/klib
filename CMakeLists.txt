@@ -128,10 +128,8 @@ target_compile_definitions(
 target_link_libraries(${KLIB_LIBRARY} PUBLIC ${CMAKE_THREAD_LIBS_INIT})
 
 set_target_properties(
-  ${KLIB_LIBRARY}
-  PROPERTIES OUTPUT_NAME ${KLIB_LIBRARY}
-             POSITION_INDEPENDENT_CODE ON
-             INTERPROCEDURAL_OPTIMIZATION FALSE)
+  ${KLIB_LIBRARY} PROPERTIES OUTPUT_NAME ${KLIB_LIBRARY}
+                             INTERPROCEDURAL_OPTIMIZATION FALSE)
 
 # https://stackoverflow.com/questions/37924383/combining-several-static-libraries-into-one-using-cmake
 file(MAKE_DIRECTORY ${KLIB_BINARY_DIR}/third_party)
