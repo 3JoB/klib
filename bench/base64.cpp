@@ -7,32 +7,17 @@
 #include "klib/util.h"
 
 TEST_CASE("Base64", "[base64]") {
-  const std::string file_name = "zlib-ng-2.0.6.tar.gz";
+  const std::string file_name = "book.tar.gz";
   REQUIRE(std::filesystem::exists(file_name));
-  const std::string out_file_name = "encoded.txt";
 
-  std::string encoded;
-  BENCHMARK("base64 encoded") {
-    klib::exec_with_output("base64 -w0 " + file_name);
-  };
-  BENCHMARK("klib secure encoded") {
-    return klib::secure_base64_encode(klib::read_file(file_name, true));
-  };
-  BENCHMARK("klib fast encoded") {
-    encoded = klib::fast_base64_encode(klib::read_file(file_name, true));
-  };
+  const auto data = klib::read_file(file_name, true);
+  const auto encoded = klib::fast_base64_encode(data);
 
-  klib::write_file(out_file_name, true, encoded);
+  BENCHMARK("klib secure encoded") { return klib::secure_base64_encode(data); };
+  BENCHMARK("klib fast encoded") { return klib::fast_base64_encode(data); };
 
-  BENCHMARK("base64 decoded") {
-    klib::exec_with_output("base64 -d " + out_file_name);
-  };
   BENCHMARK("klib secure decoded") {
-    return klib::secure_base64_decode(klib::read_file(out_file_name, true));
+    return klib::secure_base64_decode(encoded);
   };
-  BENCHMARK("klib fast decoded") {
-    return klib::fast_base64_decode(klib::read_file(out_file_name, true));
-  };
-
-  REQUIRE(std::filesystem::remove(out_file_name));
+  BENCHMARK("klib fast decoded") { return klib::fast_base64_decode(encoded); };
 }

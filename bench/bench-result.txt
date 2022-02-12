@@ -11,19 +11,30 @@ HTTP GET
 
 benchmark name                            samples    iterations          mean
 -------------------------------------------------------------------------------
-curl HTTP GET                                    3             1      147.6 ms 
-klib HTTP GET                                    3             1    27.5051 ms 
+curl HTTP GET                                    3             1    138.452 ms 
+klib HTTP GET                                    3             1    27.5814 ms 
 
 -------------------------------------------------------------------------------
-Hash
+secure hash
 -------------------------------------------------------------------------------
-/home/kaiser/klib/bench/hash.cpp:22
+/home/kaiser/klib/bench/hash.cpp:9
 ...............................................................................
 
 benchmark name                            samples    iterations          mean
 -------------------------------------------------------------------------------
-std hash                                         3             1    648.657 ms 
-klib fast hash                                   3             1     602.98 ms 
+klib md5                                         3             1    5.56028 ms 
+klib sha256                                      3             1    9.76221 ms 
+
+-------------------------------------------------------------------------------
+AES-CBC-256
+-------------------------------------------------------------------------------
+/home/kaiser/klib/bench/crypto.cpp:10
+...............................................................................
+
+benchmark name                            samples    iterations          mean
+-------------------------------------------------------------------------------
+klib encrypt                                     3             1    4.68337 ms 
+klib decrypt                                     3             1    1.63707 ms 
 
 -------------------------------------------------------------------------------
 Base64
@@ -33,12 +44,10 @@ Base64
 
 benchmark name                            samples    iterations          mean
 -------------------------------------------------------------------------------
-base64 encoded                                   3             1    3.19919 ms 
-klib secure encoded                              3             1    3.35685 ms 
-klib fast encoded                                3             1    190.314 us 
-base64 decoded                                   3             1    3.14256 ms 
-klib secure decoded                              3             1    4.37193 ms 
-klib fast decoded                                3             1    221.661 us 
+klib secure encoded                              3             1    20.3692 ms 
+klib fast encoded                                3             1    781.165 us 
+klib secure decoded                              3             1    26.3264 ms 
+klib fast decoded                                3             1    714.057 us 
 
 -------------------------------------------------------------------------------
 ZIP
@@ -48,12 +57,12 @@ ZIP
 
 benchmark name                            samples    iterations          mean
 -------------------------------------------------------------------------------
-zip compress                                     3             1    334.022 ms 
-klib compress                                    3             1    198.032 ms 
-klib compress aes256                             3             1    799.606 ms 
-unzip decompress                                 3             1    106.415 ms 
-klib decompress                                  3             1    59.4094 ms 
-klib decompress aes256                           3             1     661.76 ms 
+zip compress                                     3             1    336.968 ms 
+klib compress                                    3             1    198.275 ms 
+klib compress aes256                             3             1    802.282 ms 
+unzip decompress                                 3             1    107.552 ms 
+klib decompress                                  3             1    60.0376 ms 
+klib decompress aes256                           3             1    668.458 ms 
 
 -------------------------------------------------------------------------------
 7-Zip
@@ -63,8 +72,8 @@ klib decompress aes256                           3             1     661.76 ms
 
 benchmark name                            samples    iterations          mean
 -------------------------------------------------------------------------------
-klib compress                                    3             1     217.22 ms 
-klib decompress                                  3             1    52.8226 ms 
+klib compress                                    3             1    218.097 ms 
+klib decompress                                  3             1    54.1848 ms 
 
 -------------------------------------------------------------------------------
 RAR
@@ -74,7 +83,7 @@ RAR
 
 benchmark name                            samples    iterations          mean
 -------------------------------------------------------------------------------
-klib decompress                                  3             1    146.483 ms 
+klib decompress                                  3             1    142.017 ms 
 
 -------------------------------------------------------------------------------
 Gzip
@@ -84,10 +93,10 @@ Gzip
 
 benchmark name                            samples    iterations          mean
 -------------------------------------------------------------------------------
-tar compress                                     3             1    490.714 ms 
-klib compress                                    3             1    213.099 ms 
-tar decompress                                   3             1    74.9298 ms 
-klib decompress                                  3             1    45.1426 ms 
+tar compress                                     3             1     489.65 ms 
+klib compress                                    3             1    215.763 ms 
+tar decompress                                   3             1    74.3216 ms 
+klib decompress                                  3             1    46.3897 ms 
 
 -------------------------------------------------------------------------------
 Zstandard
@@ -97,11 +106,11 @@ Zstandard
 
 benchmark name                            samples    iterations          mean
 -------------------------------------------------------------------------------
-tar compress                                     3             1    88.8035 ms 
-klib compress                                    3             1    51.9508 ms 
-tar decompress                                   3             1     36.408 ms 
-klib decompress                                  3             1    30.3075 ms 
+tar compress                                     3             1    86.1588 ms 
+klib compress                                    3             1      55.38 ms 
+tar decompress                                   3             1    38.1345 ms 
+klib decompress                                  3             1    31.0118 ms 
 
 ===============================================================================
-All tests passed (113 assertions in 8 test cases)
+All tests passed (113 assertions in 9 test cases)
 
