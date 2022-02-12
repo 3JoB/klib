@@ -15,7 +15,7 @@ namespace klib {
 /**
  * @brief Supported Archive Formats
  */
-enum class Format { Zip, Tar };
+enum class Format { Zip, The7Zip, Tar };
 
 /**
  * @brief Supported Compression Algorithms
@@ -29,10 +29,12 @@ enum class Filter { None, Deflate, Gzip, Zstd };
  * @param filter: Compression algorithm
  * @param out_name: Compressed file name
  * @param flag: Whether to include the outermost folder
+ * @param password: Set password for compressed file(Can only be set for ZIP
+ * format)
  */
 void compress(const std::string &path, Format format = Format::Tar,
               Filter filter = Filter::Gzip, const std::string &out_name = "",
-              bool flag = true);
+              bool flag = true, const std::string &password = "");
 
 /**
  * @brief Compress files or folders
@@ -40,17 +42,21 @@ void compress(const std::string &path, Format format = Format::Tar,
  * @param out_name: Compressed file name
  * @param format: Archive format
  * @param filter: Compression algorithm
+ * @param password: Set password for compressed file(Can only be set for ZIP
+ * format)
  */
 void compress(const std::vector<std::string> &paths,
               const std::string &out_name, Format format = Format::Tar,
-              Filter filter = Filter::Gzip);
+              Filter filter = Filter::Gzip, const std::string &password = "");
 
 /**
  * @brief Decompress file
  * @param file_path: Compressed file name
  * @param out_dir: Specify the location of the decompressed content
+ * @param password: Add decompression password
  */
-void decompress(const std::string &file_path, const std::string &out_dir = "");
+void decompress(const std::string &file_path, const std::string &out_dir = "",
+                const std::string &password = "");
 
 /**
  * @brief Get the outermost folder name

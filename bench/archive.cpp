@@ -14,6 +14,9 @@ const std::string gzip_name = file_prefix + ".tar.gz";
 
 const std::string std_zip_name = file_prefix + ".std.zip";
 const std::string klib_zip_name = file_prefix + ".klib.zip";
+const std::string klib_zip_aes256_name = file_prefix + ".klib.aes256.zip";
+
+const std::string klib_7zip_name = file_prefix + ".klib.7z";
 
 const std::string std_gzip_name = file_prefix + ".std.tar.gz";
 const std::string klib_gzip_name = file_prefix + ".klib.tar.gz";
@@ -52,6 +55,16 @@ TEST_CASE_METHOD(TestsFixture, "zip", "[archive]") {
     REQUIRE(std::filesystem::is_regular_file(klib_zip_name));
   };
 
+  BENCHMARK_ADVANCED("klib compress aes256")
+  (Catch::Benchmark::Chronometer meter) {
+    meter.measure([] {
+      klib::compress(dir_name, klib::Format::Zip, klib::Filter::Deflate,
+                     klib_zip_aes256_name, true, "kaiser123");
+    });
+
+    REQUIRE(std::filesystem::is_regular_file(klib_zip_aes256_name));
+  };
+
   BENCHMARK_ADVANCED("std decompress")
   (Catch::Benchmark::Chronometer meter) {
     std::filesystem::remove_all(dir_name);
@@ -66,8 +79,38 @@ TEST_CASE_METHOD(TestsFixture, "zip", "[archive]") {
     REQUIRE(std::filesystem::is_directory(dir_name));
   };
 
+  BENCHMARK_ADVANCED("klib decompress aes256")
+  (Catch::Benchmark::Chronometer meter) {
+    std::filesystem::remove_all(dir_name);
+    meter.measure(
+        [] { klib::decompress(klib_zip_aes256_name, "", "kaiser123"); });
+    REQUIRE(std::filesystem::is_directory(dir_name));
+  };
+
   REQUIRE(std::filesystem::remove_all(std_zip_name));
   REQUIRE(std::filesystem::remove_all(klib_zip_name));
+  REQUIRE(std::filesystem::remove_all(klib_zip_aes256_name));
+}
+
+TEST_CASE_METHOD(TestsFixture, "7-zip", "[archive]") {
+  BENCHMARK_ADVANCED("klib compress")
+  (Catch::Benchmark::Chronometer meter) {
+    meter.measure([] {
+      klib::compress(dir_name, klib::Format::The7Zip, klib::Filter::Deflate,
+                     klib_7zip_name);
+    });
+
+    REQUIRE(std::filesystem::is_regular_file(klib_7zip_name));
+  };
+
+  BENCHMARK_ADVANCED("klib decompress")
+  (Catch::Benchmark::Chronometer meter) {
+    std::filesystem::remove_all(dir_name);
+    meter.measure([] { klib::decompress(klib_7zip_name); });
+    REQUIRE(std::filesystem::is_directory(dir_name));
+  };
+
+  REQUIRE(std::filesystem::remove_all(klib_7zip_name));
 }
 
 TEST_CASE_METHOD(TestsFixture, "gzip", "[archive]") {

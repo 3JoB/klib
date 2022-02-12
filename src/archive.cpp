@@ -1,6 +1,7 @@
 /**
  * @see
  * https://github.com/libarchive/libarchive/blob/master/examples/minitar/minitar.c
+ * @see https://github.com/libarchive/libarchive/wiki/Examples
  * @see https://github.com/facebook/zstd/blob/dev/examples/simple_compression.c
  * @see
  * https://github.com/facebook/zstd/blob/dev/examples/simple_decompression.c
@@ -59,6 +60,8 @@ std::string compressed_file_name(const std::string &path, Format format,
 
   if (format == Format::Zip) {
     return name + ".zip";
+  } else if (format == Format::The7Zip) {
+    return name + ".7z";
   } else if (format == Format::Tar) {
     if (filter == Filter::None) {
       return name + ".tar";
@@ -78,7 +81,7 @@ void init_write_format_filter(archive *archive, Format format, Filter filter) {
   if (format == Format::Zip) {
     rc = archive_write_set_format_zip(archive);
     check_libarchive(rc, archive);
-    rc = archive_write_set_options(archive, "zip:zip64");
+    rc = archive_write_set_format_option(archive, "zip", "zip64", "1");
     check_libarchive(rc, archive);
 
     if (filter == Filter::None) {
@@ -90,6 +93,23 @@ void init_write_format_filter(archive *archive, Format format, Filter filter) {
     } else {
       throw InvalidArgument(
           "Filter other than Deflate should not be used in the ZIP archive "
+          "format");
+    }
+  } else if (format == Format::The7Zip) {
+    rc = archive_write_set_format_7zip(archive);
+    check_libarchive(rc, archive);
+
+    if (filter == Filter::None) {
+      rc = archive_write_set_format_option(archive, "7zip", "compression",
+                                           "store");
+      check_libarchive(rc, archive);
+    } else if (filter == Filter::Deflate) {
+      rc = archive_write_set_format_option(archive, "7zip", "compression",
+                                           "deflate");
+      check_libarchive(rc, archive);
+    } else {
+      throw InvalidArgument(
+          "Filter other than Deflate should not be used in the 7-Zip archive "
           "format");
     }
   } else if (format == Format::Tar) {
@@ -108,7 +128,7 @@ void init_write_format_filter(archive *archive, Format format, Filter filter) {
 
       auto number_of_processors = std::to_string(get_nprocs());
       dbg(number_of_processors);
-      rc = archive_write_set_filter_option(archive, nullptr, "threads",
+      rc = archive_write_set_filter_option(archive, "zstd", "threads",
                                            number_of_processors.c_str());
       check_libarchive(rc, archive);
     }
@@ -119,7 +139,16 @@ void init_read_format_filter(archive *archive) {
   auto rc = archive_read_support_format_zip(archive);
   check_libarchive(rc, archive);
 
+  rc = archive_read_support_format_7zip(archive);
+  check_libarchive(rc, archive);
+
   rc = archive_read_support_format_gnutar(archive);
+  check_libarchive(rc, archive);
+
+  rc = archive_read_support_format_rar5(archive);
+  check_libarchive(rc, archive);
+
+  rc = archive_read_support_filter_none(archive);
   check_libarchive(rc, archive);
 
   rc = archive_read_support_filter_gzip(archive);
@@ -158,7 +187,12 @@ void copy_data(archive *archive_read, archive *archive_write) {
 }  // namespace
 
 void compress(const std::string &path, Format format, Filter filter,
-              const std::string &out_name, bool flag) {
+              const std::string &out_name, bool flag,
+              const std::string &password) {
+  if (!std::empty(password) && format != Format::Zip) {
+    throw InvalidArgument("This format does not support encryption");
+  }
+
   std::string name =
       (std::empty(out_name) ? compressed_file_name(path, format, filter)
                             : out_name);
@@ -179,11 +213,12 @@ void compress(const std::string &path, Format format, Filter filter,
     }
   }
 
-  compress(paths, name, format, filter);
+  compress(paths, name, format, filter, password);
 }
 
 void compress(const std::vector<std::string> &paths,
-              const std::string &out_name, Format format, Filter filter) {
+              const std::string &out_name, Format format, Filter filter,
+              const std::string &password) {
   auto archive = archive_write_new();
   SCOPE_EXIT {
     archive_write_close(archive);
@@ -191,6 +226,14 @@ void compress(const std::vector<std::string> &paths,
   };
 
   init_write_format_filter(archive, format, filter);
+
+  if (!std::empty(password)) {
+    auto rc =
+        archive_write_set_format_option(archive, "zip", "encryption", "aes256");
+    check_libarchive(rc, archive);
+    rc = archive_write_set_passphrase(archive, password.c_str());
+    check_libarchive(rc, archive);
+  }
 
   auto rc = archive_write_open_filename(archive, out_name.c_str());
   check_libarchive(rc, archive);
@@ -245,7 +288,8 @@ void compress(const std::vector<std::string> &paths,
   }
 }
 
-void decompress(const std::string &file_name, const std::string &out_dir) {
+void decompress(const std::string &file_name, const std::string &out_dir,
+                const std::string &password) {
   auto archive = archive_read_new();
   SCOPE_EXIT {
     archive_read_close(archive);
@@ -253,6 +297,11 @@ void decompress(const std::string &file_name, const std::string &out_dir) {
   };
 
   init_read_format_filter(archive);
+
+  if (!std::empty(password)) {
+    auto rc = archive_read_add_passphrase(archive, password.c_str());
+    check_libarchive(rc, archive);
+  }
 
   auto rc = archive_read_open_filename(archive, file_name.c_str(), 10240);
   check_libarchive(rc, archive);
@@ -263,7 +312,9 @@ void decompress(const std::string &file_name, const std::string &out_dir) {
     archive_write_free(extract);
   };
 
-  rc = archive_write_disk_set_options(extract, ARCHIVE_EXTRACT_TIME);
+  rc = archive_write_disk_set_options(
+      extract, ARCHIVE_EXTRACT_TIME | ARCHIVE_EXTRACT_PERM |
+                   ARCHIVE_EXTRACT_ACL | ARCHIVE_EXTRACT_FFLAGS);
   check_libarchive(rc, extract);
 
   rc = archive_write_disk_set_standard_lookup(extract);
@@ -283,7 +334,12 @@ void decompress(const std::string &file_name, const std::string &out_dir) {
     rc = archive_write_header(extract, entry);
     check_libarchive(rc, extract);
 
-    copy_data(archive, extract);
+    if (archive_entry_size(entry) > 0) {
+      copy_data(archive, extract);
+    }
+
+    rc = archive_write_finish_entry(extract);
+    check_libarchive(rc, extract);
   }
 }
 

@@ -34,7 +34,6 @@ message(STATUS "Build type: " ${CMAKE_BUILD_TYPE})
 # Set variables
 # ---------------------------------------------------------------------------------------
 set(KLIB_LIBRARY ${PROJECT_NAME})
-set(KLIB_EXECUTABLE kencrypt)
 set(KLIB_TEST_EXECUTABLE ktest)
 set(KLIB_BENCH_EXECUTABLE kbench)
 
@@ -201,14 +200,6 @@ endif()
 if(KLIB_BUILD_BENCH)
   message(STATUS "Build benchmark")
   add_subdirectory(bench)
-endif()
-
-# ---------------------------------------------------------------------------------------
-# Build executable
-# ---------------------------------------------------------------------------------------
-if(KLIB_BUILD_EXECUTABLE)
-  message(STATUS "Build executable program")
-  add_subdirectory(tool)
 endif()
 
 # ---------------------------------------------------------------------------------------
