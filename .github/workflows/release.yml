@@ -45,9 +45,6 @@ jobs:
           CC: ${{ matrix.compiler.cc }}
           CXX: ${{ matrix.compiler.cxx }}
 
-      - name: Run executable
-        run: kencrypt -v
-
       # https://github.com/softprops/action-gh-release
       - name: Release
         uses: softprops/action-gh-release@v1
