@@ -30,10 +30,11 @@ std::string num_to_hex_string(std::size_t num) {
 
 std::string bytes_to_hex_string(const std::string &bytes) {
   std::string str;
-  str.reserve(SHA512_DIGEST_LENGTH);
+  str.reserve(SHA256_DIGEST_LENGTH * 2);
 
   for (auto byte : bytes) {
-    str += fmt::format(FMT_COMPILE("{:02x}"), static_cast<std::uint8_t>(byte));
+    str.append(
+        fmt::format(FMT_COMPILE("{:02x}"), static_cast<std::uint8_t>(byte)));
   }
 
   return str;

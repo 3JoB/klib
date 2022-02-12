@@ -13,5 +13,7 @@ TEST_CASE("secure hash", "[hash]") {
   const auto data = klib::read_file(file_name, true);
 
   BENCHMARK("klib md5") { return klib::md5(data); };
+  BENCHMARK("klib md5 hex") { return klib::md5_hex(data); };
   BENCHMARK("klib sha256") { return klib::sha256(data); };
+  BENCHMARK("klib sha256 hex") { return klib::sha256_hex(data); };
 }
