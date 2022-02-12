@@ -3,11 +3,11 @@
 #include "klib/http.h"
 #include "klib/util.h"
 
-TEST_CASE("GET", "[http]") {
+TEST_CASE("HTTP GET", "[http]") {
   klib::Request request;
   request.set_no_proxy();
 
-  BENCHMARK("std HTTP GET") {
+  BENCHMARK("curl HTTP GET") {
     klib::exec(
         "/usr/bin/curl -s -o /dev/null --noproxy '*' https://www.baidu.com/");
   };

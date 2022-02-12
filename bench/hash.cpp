@@ -19,7 +19,7 @@ struct KeyHash {
 
 }  // namespace
 
-TEST_CASE("fast hash", "[hash]") {
+TEST_CASE("Hash", "[hash]") {
   constexpr std::int32_t times = 1000000;
   constexpr std::size_t size = 256;
 
