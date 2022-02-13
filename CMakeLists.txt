@@ -120,7 +120,7 @@ target_compile_features(${KLIB_LIBRARY} INTERFACE cxx_std_20)
 target_compile_definitions(
   ${KLIB_LIBRARY} INTERFACE FMT_LOCALE SPDLOG_COMPILED_LIB SPDLOG_FMT_EXTERNAL)
 target_link_libraries(${KLIB_LIBRARY} PUBLIC ${CMAKE_THREAD_LIBS_INIT})
-target_link_libraries(${KLIB_LIBRARY} PRIVATE Microsoft.GSL::GSL)
+
 set_target_properties(
   ${KLIB_LIBRARY} PROPERTIES OUTPUT_NAME ${KLIB_LIBRARY}
                              INTERPROCEDURAL_OPTIMIZATION FALSE)
