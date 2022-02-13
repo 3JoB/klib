@@ -9,7 +9,7 @@
 #include <string_view>
 
 #include <boost/core/ignore_unused.hpp>
-#include <gsl/gsl-lite.hpp>
+#include <gsl/assert>
 
 #include "klib/exception.h"
 

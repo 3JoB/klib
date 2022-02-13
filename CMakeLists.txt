@@ -90,11 +90,7 @@ find_package(simdutf REQUIRED)
 find_package(xxHash REQUIRED)
 find_package(cmark REQUIRED)
 find_package(llhttp REQUIRED)
-find_package(gsl-lite REQUIRED)
-
-if(${CMAKE_BUILD_TYPE} STREQUAL "Debug")
-  add_definitions(-Dgsl_CONFIG_CONTRACT_VIOLATION_THROWS)
-endif()
+find_package(Microsoft.GSL REQUIRED)
 
 add_definitions(-DDBG_MACRO_NO_WARNING)
 if(NOT (${CMAKE_BUILD_TYPE} STREQUAL "Debug"))
@@ -109,9 +105,8 @@ include_directories(third_party)
 # ---------------------------------------------------------------------------------------
 # Build static library
 # ---------------------------------------------------------------------------------------
-add_definitions(
-  -DLIBARCHIVE_STATIC -DCURL_STATICLIB -DFMT_LOCALE -DSPDLOG_COMPILED_LIB
-  -DSPDLOG_FMT_EXTERNAL -Dgsl_CONFIG_DEFAULTS_VERSION=1)
+add_definitions(-DLIBARCHIVE_STATIC -DCURL_STATICLIB -DFMT_LOCALE
+                -DSPDLOG_COMPILED_LIB -DSPDLOG_FMT_EXTERNAL)
 
 add_library(${KLIB_LIBRARY} STATIC ${KLIB_LIBRARY_SRC})
 add_library(${KLIB_LIBRARY}::${KLIB_LIBRARY} ALIAS ${KLIB_LIBRARY})
@@ -125,7 +120,7 @@ target_compile_features(${KLIB_LIBRARY} INTERFACE cxx_std_20)
 target_compile_definitions(
   ${KLIB_LIBRARY} INTERFACE FMT_LOCALE SPDLOG_COMPILED_LIB SPDLOG_FMT_EXTERNAL)
 target_link_libraries(${KLIB_LIBRARY} PUBLIC ${CMAKE_THREAD_LIBS_INIT})
-
+target_link_libraries(${KLIB_LIBRARY} PRIVATE Microsoft.GSL::GSL)
 set_target_properties(
   ${KLIB_LIBRARY} PROPERTIES OUTPUT_NAME ${KLIB_LIBRARY}
                              INTERPROCEDURAL_OPTIMIZATION FALSE)
