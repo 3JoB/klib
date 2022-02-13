@@ -6,14 +6,13 @@
 #include "klib/hash.h"
 #include "klib/util.h"
 
-TEST_CASE("secure hash", "[hash]") {
+TEST_CASE("Hash", "[hash]") {
   const std::string file_name = "book.tar.gz";
   REQUIRE(std::filesystem::exists(file_name));
 
   const auto data = klib::read_file(file_name, true);
 
+  BENCHMARK("klib fast hash") { return klib::fast_hash(data); };
   BENCHMARK("klib md5") { return klib::md5(data); };
-  BENCHMARK("klib md5 hex") { return klib::md5_hex(data); };
   BENCHMARK("klib sha256") { return klib::sha256(data); };
-  BENCHMARK("klib sha256 hex") { return klib::sha256_hex(data); };
 }
