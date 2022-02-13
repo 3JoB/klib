@@ -102,8 +102,8 @@ TEST_CASE_METHOD(TestsFixture, "7-Zip", "[archive]") {
   BENCHMARK_ADVANCED("7z compress")
   (Catch::Benchmark::Chronometer meter) {
     meter.measure([] {
-      klib::exec("7z a -mm=Deflate -mx=4 -bso0 -bsp0 -aoa " + std_7zip_name +
-                 " " + dir_name);
+      klib::exec("7z a -mm=Deflate -mx=4 -bso0 -bsp0 -aoa -mmt1 " +
+                 std_7zip_name + " " + dir_name);
     });
 
     REQUIRE(std::filesystem::is_regular_file(std_7zip_name));
@@ -122,7 +122,8 @@ TEST_CASE_METHOD(TestsFixture, "7-Zip", "[archive]") {
   BENCHMARK_ADVANCED("7z decompress")
   (Catch::Benchmark::Chronometer meter) {
     std::filesystem::remove_all(dir_name);
-    meter.measure([] { klib::exec("7z x -bso0 -bsp0 -aoa " + std_7zip_name); });
+    meter.measure(
+        [] { klib::exec("7z x -bso0 -bsp0 -aoa -mmt1 " + std_7zip_name); });
     REQUIRE(std::filesystem::is_directory(dir_name));
   };
 
@@ -140,8 +141,9 @@ TEST_CASE_METHOD(TestsFixture, "7-Zip", "[archive]") {
 TEST_CASE_METHOD(TestsFixture, "RAR", "[archive]") {
   BENCHMARK_ADVANCED("rar compress")
   (Catch::Benchmark::Chronometer meter) {
-    meter.measure(
-        [] { klib::exec("rar a -idq -o+ " + std_rar_name + " " + dir_name); });
+    meter.measure([] {
+      klib::exec("rar a -idq -o+ -mt1 " + std_rar_name + " " + dir_name);
+    });
 
     REQUIRE(std::filesystem::is_regular_file(std_rar_name));
   };
