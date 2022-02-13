@@ -17,7 +17,10 @@ const std::string std_zip_name = file_prefix + ".std.zip";
 const std::string klib_zip_name = file_prefix + ".klib.zip";
 const std::string klib_zip_aes256_name = file_prefix + ".klib.aes256.zip";
 
+const std::string std_7zip_name = file_prefix + ".std.7z";
 const std::string klib_7zip_name = file_prefix + ".klib.7z";
+
+const std::string std_rar_name = file_prefix + ".std.rar";
 
 const std::string std_gzip_name = file_prefix + ".std.tar.gz";
 const std::string klib_gzip_name = file_prefix + ".klib.tar.gz";
@@ -90,12 +93,22 @@ TEST_CASE_METHOD(TestsFixture, "ZIP", "[archive]") {
     REQUIRE(std::filesystem::is_directory(dir_name));
   };
 
-  REQUIRE(std::filesystem::remove_all(std_zip_name));
-  REQUIRE(std::filesystem::remove_all(klib_zip_name));
-  REQUIRE(std::filesystem::remove_all(klib_zip_aes256_name));
+  REQUIRE(std::filesystem::remove(std_zip_name));
+  REQUIRE(std::filesystem::remove(klib_zip_name));
+  REQUIRE(std::filesystem::remove(klib_zip_aes256_name));
 }
 
 TEST_CASE_METHOD(TestsFixture, "7-Zip", "[archive]") {
+  BENCHMARK_ADVANCED("7z compress")
+  (Catch::Benchmark::Chronometer meter) {
+    meter.measure([] {
+      klib::exec("7z a -mm=Deflate -mx=4 -bso0 -bsp0 -aoa " + std_7zip_name +
+                 " " + dir_name);
+    });
+
+    REQUIRE(std::filesystem::is_regular_file(std_7zip_name));
+  };
+
   BENCHMARK_ADVANCED("klib compress")
   (Catch::Benchmark::Chronometer meter) {
     meter.measure([] {
@@ -106,6 +119,13 @@ TEST_CASE_METHOD(TestsFixture, "7-Zip", "[archive]") {
     REQUIRE(std::filesystem::is_regular_file(klib_7zip_name));
   };
 
+  BENCHMARK_ADVANCED("7z decompress")
+  (Catch::Benchmark::Chronometer meter) {
+    std::filesystem::remove_all(dir_name);
+    meter.measure([] { klib::exec("7z x -bso0 -bsp0 -aoa " + std_7zip_name); });
+    REQUIRE(std::filesystem::is_directory(dir_name));
+  };
+
   BENCHMARK_ADVANCED("klib decompress")
   (Catch::Benchmark::Chronometer meter) {
     std::filesystem::remove_all(dir_name);
@@ -113,16 +133,34 @@ TEST_CASE_METHOD(TestsFixture, "7-Zip", "[archive]") {
     REQUIRE(std::filesystem::is_directory(dir_name));
   };
 
-  REQUIRE(std::filesystem::remove_all(klib_7zip_name));
+  REQUIRE(std::filesystem::remove(std_7zip_name));
+  REQUIRE(std::filesystem::remove(klib_7zip_name));
 }
 
 TEST_CASE_METHOD(TestsFixture, "RAR", "[archive]") {
+  BENCHMARK_ADVANCED("rar compress")
+  (Catch::Benchmark::Chronometer meter) {
+    meter.measure(
+        [] { klib::exec("rar a -idq -o+ " + std_rar_name + " " + dir_name); });
+
+    REQUIRE(std::filesystem::is_regular_file(std_rar_name));
+  };
+
+  BENCHMARK_ADVANCED("unrar decompress")
+  (Catch::Benchmark::Chronometer meter) {
+    std::filesystem::remove_all(dir_name);
+    meter.measure([] { klib::exec("unrar x -idq -o+ " + rar_name); });
+    REQUIRE(std::filesystem::is_directory(dir_name));
+  };
+
   BENCHMARK_ADVANCED("klib decompress")
   (Catch::Benchmark::Chronometer meter) {
     std::filesystem::remove_all(dir_name);
     meter.measure([] { klib::decompress(rar_name); });
     REQUIRE(std::filesystem::is_directory(dir_name));
   };
+
+  REQUIRE(std::filesystem::remove(std_rar_name));
 }
 
 TEST_CASE_METHOD(TestsFixture, "Gzip", "[archive]") {
@@ -158,8 +196,8 @@ TEST_CASE_METHOD(TestsFixture, "Gzip", "[archive]") {
     REQUIRE(std::filesystem::is_directory(dir_name));
   };
 
-  REQUIRE(std::filesystem::remove_all(std_gzip_name));
-  REQUIRE(std::filesystem::remove_all(klib_gzip_name));
+  REQUIRE(std::filesystem::remove(std_gzip_name));
+  REQUIRE(std::filesystem::remove(klib_gzip_name));
 }
 
 TEST_CASE_METHOD(TestsFixture, "Zstandard", "[archive]") {
@@ -195,6 +233,6 @@ TEST_CASE_METHOD(TestsFixture, "Zstandard", "[archive]") {
     REQUIRE(std::filesystem::is_directory(dir_name));
   };
 
-  REQUIRE(std::filesystem::remove_all(std_zstd_name));
-  REQUIRE(std::filesystem::remove_all(klib_zstd_name));
+  REQUIRE(std::filesystem::remove(std_zstd_name));
+  REQUIRE(std::filesystem::remove(klib_zstd_name));
 }

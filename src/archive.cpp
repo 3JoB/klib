@@ -81,8 +81,6 @@ void init_write_format_filter(archive *archive, Format format, Filter filter) {
   if (format == Format::Zip) {
     rc = archive_write_set_format_zip(archive);
     check_libarchive(rc, archive);
-    rc = archive_write_set_format_option(archive, "zip", "zip64", "1");
-    check_libarchive(rc, archive);
 
     if (filter == Filter::None) {
       rc = archive_write_zip_set_compression_store(archive);
