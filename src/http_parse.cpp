@@ -12,7 +12,6 @@
 #include <boost/algorithm/string.hpp>
 
 #include "http-parser/http_parser.h"
-#include "klib/exception.h"
 
 namespace klib {
 
@@ -52,30 +51,6 @@ std::int32_t on_body(llhttp_t* parser, const char* at, std::size_t length) {
 }
 
 }  // namespace
-
-const char* http_status_str(HttpStatus http_status) {
-  switch (http_status) {
-#define XX(num, name, string)          \
-  case HttpStatus::HTTP_STATUS_##name: \
-    return #string;
-    KLIB_HTTP_STATUS_MAP(XX)
-#undef XX
-    default:
-      throw InvalidArgument("Unknown HTTP status");
-  }
-}
-
-const char* http_method_str(HttpMethod http_method) {
-  switch (http_method) {
-#define XX(num, name, string)          \
-  case HttpMethod::HTTP_METHOD_##name: \
-    return #string;
-    KLIB_HTTP_METHOD_MAP(XX)
-#undef XX
-    default:
-      throw InvalidArgument("Unknown Http method");
-  }
-}
 
 URL::URL(std::string url) : url_(std::move(url)) {
   auto str = url_.c_str();

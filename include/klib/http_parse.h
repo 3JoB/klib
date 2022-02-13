@@ -10,7 +10,8 @@
 #include <string_view>
 #include <unordered_map>
 
-#include "klib/detail/http_parse_inc.h"
+#include "klib/detail/http_parse_inl.h"
+#include "klib/exception.h"
 
 namespace klib {
 
@@ -29,7 +30,19 @@ enum class HttpStatus {
  * @param http_status: HTTP Status
  * @return The description string
  */
-const char* http_status_str(HttpStatus http_status);
+inline std::string http_status_str(HttpStatus http_status) {
+  switch (http_status) {
+#define XX(num, name, string)          \
+  case HttpStatus::HTTP_STATUS_##name: \
+    return #string;
+    KLIB_HTTP_STATUS_MAP(XX)
+#undef XX
+    default:
+      throw InvalidArgument("Unknown HTTP status");
+  }
+}
+
+#undef KLIB_HTTP_STATUS_MAP
 
 /**
  * @brief HTTP request methods
@@ -46,7 +59,19 @@ enum class HttpMethod {
  * @param http_method: HTTP request method
  * @return The description string
  */
-const char* http_method_str(HttpMethod http_method);
+inline std::string http_method_str(HttpMethod http_method) {
+  switch (http_method) {
+#define XX(num, name, string)          \
+  case HttpMethod::HTTP_METHOD_##name: \
+    return #string;
+    KLIB_HTTP_METHOD_MAP(XX)
+#undef XX
+    default:
+      throw InvalidArgument("Unknown Http method");
+  }
+}
+
+#undef KLIB_HTTP_METHOD_MAP
 
 /**
  * @brief Parse URL
