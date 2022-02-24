@@ -5,6 +5,7 @@
 #include <random>
 #include <vector>
 
+#include <oneapi/tbb/parallel_sort.h>
 #include <boost/sort/block_indirect_sort/block_indirect_sort.hpp>
 #include <boost/sort/pdqsort/pdqsort.hpp>
 #include <catch2/catch.hpp>
@@ -32,6 +33,14 @@ TEST_CASE("sort", "[sort]") {
     auto copy = nums;
     meter.measure(
         [&] { boost::sort::pdqsort(std::begin(copy), std::end(copy)); });
+    REQUIRE(std::is_sorted(std::begin(copy), std::end(copy)));
+  };
+
+  BENCHMARK_ADVANCED("tbb sort")
+  (Catch::Benchmark::Chronometer meter) {
+    auto copy = nums;
+    meter.measure(
+        [&] { tbb::parallel_sort(std::begin(copy), std::end(copy)); });
     REQUIRE(std::is_sorted(std::begin(copy), std::end(copy)));
   };
 
