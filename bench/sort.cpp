@@ -8,9 +8,10 @@
 #include <oneapi/tbb/parallel_sort.h>
 #include <boost/sort/block_indirect_sort/block_indirect_sort.hpp>
 #include <boost/sort/pdqsort/pdqsort.hpp>
+#include <boost/sort/spreadsort/spreadsort.hpp>
 #include <catch2/catch.hpp>
 
-TEST_CASE("sort", "[sort]") {
+TEST_CASE("integer", "[sort]") {
   constexpr std::size_t size = 1000'0000;
   std::vector<std::int32_t> nums;
   nums.reserve(size);
@@ -25,6 +26,15 @@ TEST_CASE("sort", "[sort]") {
   (Catch::Benchmark::Chronometer meter) {
     auto copy = nums;
     meter.measure([&] { std::sort(std::begin(copy), std::end(copy)); });
+    REQUIRE(std::is_sorted(std::begin(copy), std::end(copy)));
+  };
+
+  BENCHMARK_ADVANCED("spread sort")
+  (Catch::Benchmark::Chronometer meter) {
+    auto copy = nums;
+    meter.measure([&] {
+      boost::sort::spreadsort::integer_sort(std::begin(copy), std::end(copy));
+    });
     REQUIRE(std::is_sorted(std::begin(copy), std::end(copy)));
   };
 
