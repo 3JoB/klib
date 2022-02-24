@@ -1,37 +1,19 @@
 #include "klib/unicode.h"
 
-#include <simdutf.h>
 #include <algorithm>
-#include <cerrno>
-#include <clocale>
-#include <cstddef>
-#include <cuchar>
-#include <string_view>
 
+#include <simdutf.h>
 #include <boost/core/ignore_unused.hpp>
-#include <gsl/assert>
 
 #include "klib/exception.h"
+#include "utf_utils/utf_utils.h"
 
 namespace klib {
-
-namespace {
-
-void set_locale(std::string_view locale = "en_US.utf8") {
-  if (std::setlocale(LC_ALL, locale.data()) == nullptr) {
-    throw RuntimeError("Does not support '{}'", locale);
-  }
-}
-
-}  // namespace
 
 // https://github.com/simdutf/simdutf#example
 std::u16string utf8_to_utf16(const std::string &str) {
   auto source = std::data(str);
   auto source_size = std::size(str);
-  if (!simdutf::validate_utf8(source, source_size)) {
-    throw RuntimeError("Invalid UTF-8");
-  }
 
   std::u16string result;
   result.resize(simdutf::utf16_length_from_utf8(source, source_size));
@@ -45,9 +27,6 @@ std::u16string utf8_to_utf16(const std::string &str) {
 std::string utf16_to_utf8(const std::u16string &str) {
   auto source = std::data(str);
   auto source_size = std::size(str);
-  if (!simdutf::validate_utf16(source, source_size)) {
-    throw RuntimeError("Invalid UTF-16");
-  }
 
   std::string result;
   result.resize(simdutf::utf8_length_from_utf16(source, source_size));
@@ -59,63 +38,29 @@ std::string utf16_to_utf8(const std::u16string &str) {
 }
 
 char32_t utf8_to_unicode(const std::string &str) {
-  auto result = utf8_to_utf32(str);
-  Ensures(std::size(result) == 1);
-  return result.front();
+  char32_t result;
+  auto input_size = std::size(str);
+  auto ptr = reinterpret_cast<const char8_t *>(std::data(str));
+
+  auto check = uu::UtfUtils::GetCodePoint(ptr, ptr + input_size, result);
+  if (!check) {
+    throw RuntimeError("GetCodePoint failed");
+  }
+
+  return result;
 }
 
-// https://zh.cppreference.com/w/c/string/multibyte/mbrtoc32
 std::u32string utf8_to_utf32(const std::string &str) {
-  set_locale();
+  auto input_size = std::size(str);
 
   std::u32string result;
+  result.resize(input_size);
+  auto ptr = reinterpret_cast<const char8_t *>(std::data(str));
 
-  char32_t out = 0;
-  auto begin = str.c_str();
-  auto size = std::size(str);
-  mbstate_t state = {};
+  auto length = uu::UtfUtils::SseBigTableConvert(ptr, ptr + input_size,
+                                                 std::data(result));
 
-  while (auto rc = std::mbrtoc32(&out, begin, size, &state)) {
-    if (rc == static_cast<std::size_t>(-1)) {
-      throw RuntimeError(std::strerror(errno));
-    }
-
-    if (rc > static_cast<std::size_t>(-1) / 2) {
-      break;
-    }
-
-    begin += rc;
-    result.push_back(out);
-  }
-
-  return result;
-}
-
-// https://zh.cppreference.com/w/c/string/multibyte/c32rtomb
-std::string utf32_to_utf8(char32_t c) {
-  set_locale();
-
-  std::string result;
-  result.resize(MB_CUR_MAX);
-
-  mbstate_t state = {};
-  auto rc = std::c32rtomb(std::data(result), c, &state);
-
-  if (rc == static_cast<std::size_t>(-1)) {
-    throw RuntimeError(std::strerror(errno));
-  }
-
-  result.resize(rc);
-  return result;
-}
-
-std::string utf32_to_utf8(const std::u32string &str) {
-  std::string result;
-
-  for (auto c : str) {
-    result.append(utf32_to_utf8(c));
-  }
-
+  result.resize(length);
   return result;
 }
 

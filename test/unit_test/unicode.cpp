@@ -42,19 +42,6 @@ TEST_CASE("utf8_to_utf32", "[unicode]") {
   CHECK(unicode == 0x0001F34C);
 }
 
-TEST_CASE("utf32_to_utf8", "[unicode]") {
-  auto utf32 = klib::utf8_to_utf32("书客");
-  auto utf8 = klib::utf32_to_utf8(utf32);
-
-  CHECK(std::size(utf8) == 6);
-  CHECK(static_cast<std::uint8_t>(utf8[0]) == 0xE4);
-  CHECK(static_cast<std::uint8_t>(utf8[1]) == 0xB9);
-  CHECK(static_cast<std::uint8_t>(utf8[2]) == 0xA6);
-  CHECK(static_cast<std::uint8_t>(utf8[3]) == 0xE5);
-  CHECK(static_cast<std::uint8_t>(utf8[4]) == 0xAE);
-  CHECK(static_cast<std::uint8_t>(utf8[5]) == 0xA2);
-}
-
 TEST_CASE("is_ascii", "[unicode]") {
   CHECK(klib::is_ascii('A'));
   CHECK_FALSE(klib::is_ascii(static_cast<char>(190)));

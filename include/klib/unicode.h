@@ -41,20 +41,6 @@ char32_t utf8_to_unicode(const std::string &str);
 std::u32string utf8_to_utf32(const std::string &str);
 
 /**
- * @brief Convert UTF-32 encoded string to UTF-8 encoded string
- * @param c: UTF-32 encoded char
- * @return The converted UTF-8 encoded string
- */
-std::string utf32_to_utf8(char32_t c);
-
-/**
- * @brief Convert UTF-32 encoded string to UTF-8 encoded string
- * @param str: UTF-32 encoded string
- * @return The converted UTF-8 encoded string
- */
-std::string utf32_to_utf8(const std::u32string &str);
-
-/**
  * @brief Determine whether it is an ASCII character
  * @param c: A character
  * @return If it is an ASCII character, return true, otherwise return false
