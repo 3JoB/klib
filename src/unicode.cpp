@@ -9,6 +9,14 @@
 
 namespace klib {
 
+bool validate_utf8(const std::string &str) {
+  return simdutf::validate_utf8(str.c_str(), std::size(str));
+}
+
+bool validate_utf16(const std::u16string &str) {
+  return simdutf::validate_utf16(str.c_str(), std::size(str));
+}
+
 // https://github.com/simdutf/simdutf#example
 std::u16string utf8_to_utf16(const std::string &str) {
   auto source = std::data(str);

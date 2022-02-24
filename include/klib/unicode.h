@@ -13,6 +13,20 @@
 namespace klib {
 
 /**
+ * @brief Validate the UTF-8 string
+ * @param str: The UTF-8 string to validate
+ * @return True if and only if the string is valid UTF-8
+ */
+bool validate_utf8(const std::string &str);
+
+/**
+ * @brief Validate the UTF-16 string
+ * @param str: The UTF-16 string to validate
+ * @return True if and only if the string is valid UTF-16
+ */
+bool validate_utf16(const std::u16string &str);
+
+/**
  * @brief Convert UTF-8 encoded string to UTF-16 encoded string
  * @param str: UTF-8 encoded string
  * @return The converted UTF-16 encoded string

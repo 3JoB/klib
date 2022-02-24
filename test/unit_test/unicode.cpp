@@ -1,6 +1,21 @@
+#include <string>
+
 #include <catch2/catch.hpp>
 
 #include "klib/unicode.h"
+
+TEST_CASE("validate_utf8", "[unicode]") {
+  std::string str = "你好世界";
+  CHECK(klib::validate_utf8(str));
+
+  str[1] = 'a';
+  CHECK_FALSE(klib::validate_utf8(str));
+}
+
+TEST_CASE("validate_utf16", "[unicode]") {
+  std::u16string str = u"你好世界";
+  CHECK(klib::validate_utf16(str));
+}
 
 TEST_CASE("utf8_to_utf16", "[unicode]") {
   auto utf16 = klib::utf8_to_utf16("zß水🍌");
@@ -37,7 +52,9 @@ TEST_CASE("utf8_to_utf32", "[unicode]") {
   CHECK(utf32[1] == 0x000000DF);
   CHECK(utf32[2] == 0x00006C34);
   CHECK(utf32[3] == 0x0001F34C);
+}
 
+TEST_CASE("utf8_to_unicode", "[unicode]") {
   auto unicode = klib::utf8_to_unicode("🍌");
   CHECK(unicode == 0x0001F34C);
 }
