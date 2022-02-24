@@ -10,13 +10,13 @@
 #include "klib/archive.h"
 
 #include <fcntl.h>
-#include <sys/sysinfo.h>
 #include <unistd.h>
 
 #include <cerrno>
 #include <cstdint>
 #include <filesystem>
 #include <memory>
+#include <thread>
 #include <unordered_set>
 
 #include <archive.h>
@@ -124,10 +124,11 @@ void init_write_format_filter(archive *archive, Format format, Filter filter) {
       rc = archive_write_add_filter_zstd(archive);
       check_libarchive(rc, archive);
 
-      auto number_of_processors = std::to_string(get_nprocs());
-      dbg(number_of_processors);
+      auto hardware_thread =
+          std::to_string(std::thread::hardware_concurrency());
+      dbg(hardware_thread);
       rc = archive_write_set_filter_option(archive, "zstd", "threads",
-                                           number_of_processors.c_str());
+                                           hardware_thread.c_str());
       check_libarchive(rc, archive);
     }
   }
