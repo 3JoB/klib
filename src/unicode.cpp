@@ -3,7 +3,6 @@
 #include <algorithm>
 
 #include <simdutf.h>
-#include <boost/core/ignore_unused.hpp>
 
 #include "klib/exception.h"
 #include "utf_utils/utf_utils.h"
@@ -18,8 +17,11 @@ std::u16string utf8_to_utf16(const std::string &str) {
   std::u16string result;
   result.resize(simdutf::utf16_length_from_utf8(source, source_size));
 
-  boost::ignore_unused(
-      simdutf::convert_utf8_to_utf16(source, source_size, std::data(result)));
+  auto check =
+      simdutf::convert_utf8_to_utf16(source, source_size, std::data(result));
+  if (check == 0) {
+    throw RuntimeError("convert_utf8_to_utf16 failed");
+  }
 
   return result;
 }
@@ -31,8 +33,11 @@ std::string utf16_to_utf8(const std::u16string &str) {
   std::string result;
   result.resize(simdutf::utf8_length_from_utf16(source, source_size));
 
-  boost::ignore_unused(
-      simdutf::convert_utf16_to_utf8(source, source_size, std::data(result)));
+  auto check =
+      simdutf::convert_utf16_to_utf8(source, source_size, std::data(result));
+  if (check == 0) {
+    throw RuntimeError("convert_utf16_to_utf8 failed");
+  }
 
   return result;
 }
@@ -59,6 +64,9 @@ std::u32string utf8_to_utf32(const std::string &str) {
 
   auto length = uu::UtfUtils::SseBigTableConvert(ptr, ptr + input_size,
                                                  std::data(result));
+  if (length == -1) {
+    throw RuntimeError("SseBigTableConvert failed");
+  }
 
   result.resize(length);
   return result;
