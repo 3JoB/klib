@@ -7,7 +7,7 @@
 
 #include "klib/util.h"
 
-TEST_CASE("json", "[json]") {
+TEST_CASE("Json", "[json]") {
   const std::string file_name = "twitter.json";
   REQUIRE(std::filesystem::exists(file_name));
 

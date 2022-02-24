@@ -15,7 +15,7 @@
 
 #include "klib/util.h"
 
-TEST_CASE("integer", "[sort]") {
+TEST_CASE("Integer sort", "[sort]") {
   constexpr std::size_t size = 1000'0000;
   std::vector<std::int32_t> nums;
   nums.reserve(size);
@@ -77,7 +77,7 @@ TEST_CASE("integer", "[sort]") {
   };
 }
 
-TEST_CASE("double", "[sort]") {
+TEST_CASE("Double sort", "[sort]") {
   constexpr std::size_t size = 1000'0000;
   std::vector<double> nums;
   nums.reserve(size);
@@ -141,7 +141,7 @@ TEST_CASE("double", "[sort]") {
   };
 }
 
-TEST_CASE("string", "[sort]") {
+TEST_CASE("String sort", "[sort]") {
   constexpr std::size_t size = 100'0000;
   std::vector<std::string> strs;
   strs.reserve(size);
