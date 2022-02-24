@@ -6,8 +6,12 @@ file(GLOB_RECURSE KLIB_BENCH_SRC CONFIGURE_DEPENDS
 
 find_package(Catch2 REQUIRED)
 find_package(TBB REQUIRED)
+find_package(simdjson REQUIRED)
+find_package(Boost REQUIRED COMPONENTS json CONFIG)
 add_definitions(-DCATCH_CONFIG_ENABLE_BENCHMARKING)
 
 add_executable(${KLIB_BENCH_EXECUTABLE} ${MIMALLOC_OBJECT} ${KLIB_BENCH_SRC})
-target_link_libraries(${KLIB_BENCH_EXECUTABLE}
-                      PRIVATE ${KLIB_LIBRARY} Catch2::Catch2WithMain TBB::tbb)
+target_link_libraries(
+  ${KLIB_BENCH_EXECUTABLE}
+  PRIVATE ${KLIB_LIBRARY} Catch2::Catch2WithMain TBB::tbb simdjson::simdjson
+          ${Boost_LIBRARIES})
