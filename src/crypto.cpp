@@ -37,13 +37,13 @@ const EVP_CIPHER *get_cipher(AesMode aes_mode) {
 std::string do_aes_crypt(std::span<const char> data, const std::string &key,
                          const std::string &iv, AesMode aes_mode,
                          bool encrypt) {
-  if (std::size(key) != 32) {
+  if (std::size(key) != 32) [[unlikely]] {
     throw LogicError("The key must be 256 bit");
   }
 
   auto ctx = EVP_CIPHER_CTX_new();
   SCOPE_EXIT { EVP_CIPHER_CTX_free(ctx); };
-  if (!ctx) {
+  if (!ctx) [[unlikely]] {
     throw RuntimeError(ERR_error_string(ERR_get_error(), nullptr));
   }
 
@@ -53,7 +53,7 @@ std::string do_aes_crypt(std::span<const char> data, const std::string &key,
       std::empty(iv) ? nullptr
                      : reinterpret_cast<const unsigned char *>(std::data(iv)),
       encrypt);
-  check_openssl_return(rc);
+  CHECK_BORINGSSL(rc);
 
   std::string result;
   auto input_size = std::size(data);
@@ -72,7 +72,7 @@ std::string do_aes_crypt(std::span<const char> data, const std::string &key,
     rc = EVP_CipherUpdate(
         ctx, reinterpret_cast<unsigned char *>(std::data(result)) + total,
         &length, reinterpret_cast<const std::uint8_t *>(std::data(data)), todo);
-    check_openssl_return(rc);
+    CHECK_BORINGSSL(rc);
 
     total += length;
     data = data.subspan(todo);
@@ -81,7 +81,7 @@ std::string do_aes_crypt(std::span<const char> data, const std::string &key,
   rc = EVP_CipherFinal_ex(
       ctx, reinterpret_cast<unsigned char *>(std::data(result)) + total,
       &length);
-  check_openssl_return(rc);
+  CHECK_BORINGSSL(rc);
 
   total += length;
   result.resize(total);

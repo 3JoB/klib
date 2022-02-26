@@ -107,7 +107,7 @@ HTTPHeader::HTTPHeader(std::string header) : header_(std::move(header)) {
   parser.data = &result;
 
   auto err = llhttp_execute(&parser, header_.c_str(), std::size(header_));
-  if (err != HPE_OK) {
+  if (err != HPE_OK) [[unlikely]] {
     throw RuntimeError("llhttp_execute failed");
   }
 

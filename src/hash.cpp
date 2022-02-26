@@ -47,12 +47,12 @@ std::size_t fast_hash(const std::string &data) {
       XXH3_createState(), XXH3_freeState);
   auto status = status1.get();
 
-  if (XXH3_64bits_reset(status) == XXH_ERROR) {
+  if (XXH3_64bits_reset(status) == XXH_ERROR) [[unlikely]] {
     throw RuntimeError("XXH3_64bits_reset failed");
   }
 
-  if (XXH3_64bits_update(status, std::data(data), std::size(data)) ==
-      XXH_ERROR) {
+  if (XXH3_64bits_update(status, std::data(data), std::size(data)) == XXH_ERROR)
+      [[unlikely]] {
     throw RuntimeError("XXH3_64bits_update failed");
   }
 
@@ -146,7 +146,7 @@ std::pair<std::string, std::string> password_hash_raw(
       argon2id_hash_raw(time_cost, memory_cost, parallelism,
                         std::data(password), std::size(password),
                         std::data(salt), salt_len, std::data(hash), hash_len);
-  if (rc != ARGON2_OK) {
+  if (rc != ARGON2_OK) [[unlikely]] {
     throw RuntimeError(argon2_error_message(rc));
   }
 
@@ -165,7 +165,7 @@ std::string password_hash_raw(const std::string &password,
                               std::data(password), std::size(password),
                               std::data(salt), std::size(salt), std::data(hash),
                               hash_len);
-  if (rc != ARGON2_OK) {
+  if (rc != ARGON2_OK) [[unlikely]] {
     throw RuntimeError(argon2_error_message(rc));
   }
 
@@ -190,7 +190,7 @@ std::string password_hash_encoded(const std::string &password,
                                   std::data(password), std::size(password),
                                   std::data(salt), salt_len, hash_len,
                                   std::data(encoded), encode_len);
-  if (rc != ARGON2_OK) {
+  if (rc != ARGON2_OK) [[unlikely]] {
     throw RuntimeError(argon2_error_message(rc));
   }
   // '\0'
@@ -217,7 +217,7 @@ bool password_verify(const std::string &password, const std::string &hash,
                               std::data(password), std::size(password),
                               std::data(salt), salt_len,
                               std::data(password_hash), hash_len);
-  if (rc != ARGON2_OK) {
+  if (rc != ARGON2_OK) [[unlikely]] {
     throw RuntimeError(argon2_error_message(rc));
   }
 

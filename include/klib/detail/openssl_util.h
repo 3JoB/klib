@@ -9,9 +9,9 @@
 #error "OpenSSL is not BoringSSL"
 #endif
 
-#define check_openssl_return(rc)                                      \
+#define CHECK_BORINGSSL(rc)                                           \
   do {                                                                \
-    if (rc != 1) {                                                    \
+    if (rc != 1) [[unlikely]] {                                       \
       throw RuntimeError(ERR_error_string(ERR_get_error(), nullptr)); \
     }                                                                 \
   } while (0)

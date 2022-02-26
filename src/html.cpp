@@ -10,9 +10,9 @@
 
 #include "klib/exception.h"
 
-#define check_html_tidy(rc)                            \
+#define CHECK_HTML_TIDY(rc)                            \
   do {                                                 \
-    if (!rc) {                                         \
+    if (!rc) [[unlikely]] {                            \
       throw RuntimeError("HTML Tidy option set fail"); \
     }                                                  \
   } while (0)
@@ -24,19 +24,19 @@ std::string html_tidy(const std::string &html, bool ignore_error) {
   SCOPE_EXIT { tidyRelease(doc); };
 
   auto ret = tidyOptSetBool(doc, TidyXhtmlOut, yes);
-  check_html_tidy(ret);
+  CHECK_HTML_TIDY(ret);
 
   ret = tidyOptSetBool(doc, TidyShowWarnings, no);
-  check_html_tidy(ret);
+  CHECK_HTML_TIDY(ret);
 
   ret = tidyOptSetInt(doc, TidyWrapLen, 0);
-  check_html_tidy(ret);
+  CHECK_HTML_TIDY(ret);
 
   ret = tidyOptSetBool(doc, TidyHideComments, yes);
-  check_html_tidy(ret);
+  CHECK_HTML_TIDY(ret);
 
   ret = tidyOptSetBool(doc, TidyMark, no);
-  check_html_tidy(ret);
+  CHECK_HTML_TIDY(ret);
 
   TidyBuffer output_buffer = {};
   SCOPE_EXIT { tidyBufFree(&output_buffer); };
@@ -56,19 +56,19 @@ std::string html_tidy(const std::string &html, bool ignore_error) {
   }
   if (rc > 1) {
     ret = tidyOptSetBool(doc, TidyForceOutput, yes);
-    check_html_tidy(ret);
+    CHECK_HTML_TIDY(ret);
   }
 
   rc = tidySaveBuffer(doc, &output_buffer);
 
   std::string xhtml;
   if (rc >= 0) {
-    if (rc > 1 && !ignore_error) {
+    if (rc > 1 && !ignore_error) [[unlikely]] {
       throw RuntimeError("{}", reinterpret_cast<const char *>(error_buffer.bp));
     }
     xhtml.assign(reinterpret_cast<const char *>(output_buffer.bp),
                  output_buffer.size);
-  } else {
+  } else [[unlikely]] {
     throw RuntimeError("html_tidy error: {}", rc);
   }
 

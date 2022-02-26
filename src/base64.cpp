@@ -24,7 +24,7 @@ std::string fast_base64_encode(const std::string &data) {
 
   auto length =
       fast_avx2_base64_encode(std::data(result), std::data(data), input_size);
-  if (length == MODP_B64_ERROR) {
+  if (length == MODP_B64_ERROR) [[unlikely]] {
     throw RuntimeError("fast_avx2_base64_encode failed");
   }
 
@@ -40,7 +40,7 @@ std::string fast_base64_decode(const std::string &data) {
 
   auto length =
       fast_avx2_base64_decode(std::data(result), std::data(data), input_size);
-  if (length == MODP_B64_ERROR) {
+  if (length == MODP_B64_ERROR) [[unlikely]] {
     throw RuntimeError("fast_avx2_base64_decode failed");
   }
 
@@ -76,7 +76,7 @@ std::string secure_base64_decode(const std::string &data) {
   auto rc = EVP_DecodeBase64(
       reinterpret_cast<std::uint8_t *>(std::data(result)), &length, max_len,
       reinterpret_cast<const std::uint8_t *>(std::data(data)), input_size);
-  check_openssl_return(rc);
+  CHECK_BORINGSSL(rc);
 
   result.resize(length);
   return result;

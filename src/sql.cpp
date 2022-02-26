@@ -10,16 +10,16 @@
 
 namespace klib {
 
-#define check_sqlite(rc)                      \
+#define CHECK_SQLITE(rc)                      \
   do {                                        \
-    if (rc != SQLITE_OK) {                    \
+    if (rc != SQLITE_OK) [[unlikely]] {       \
       throw RuntimeError(sqlite3_errstr(rc)); \
     }                                         \
   } while (0)
 
-#define check_sqlite2(rc, db)                 \
+#define CHECK_SQLITE2(rc, db)                 \
   do {                                        \
-    if (rc != SQLITE_OK) {                    \
+    if (rc != SQLITE_OK) [[unlikely]] {       \
       throw RuntimeError(sqlite3_errmsg(db)); \
     }                                         \
   } while (0)
@@ -127,7 +127,7 @@ Column::ColumnImpl::ColumnImpl(SqlQuery &sql_query, std::int32_t index)
 bool Column::ColumnImpl::is_null() const { return get_type() == SQLITE_NULL; }
 
 std::int32_t Column::ColumnImpl::as_int32() const {
-  if (!is_integer()) {
+  if (!is_integer()) [[unlikely]] {
     throw InvalidArgument("Not a integer");
   }
 
@@ -135,7 +135,7 @@ std::int32_t Column::ColumnImpl::as_int32() const {
 }
 
 std::int64_t Column::ColumnImpl::as_int64() const {
-  if (!is_integer()) {
+  if (!is_integer()) [[unlikely]] {
     throw InvalidArgument("Not a integer");
   }
 
@@ -143,7 +143,7 @@ std::int64_t Column::ColumnImpl::as_int64() const {
 }
 
 double Column::ColumnImpl::as_double() const {
-  if (!is_float()) {
+  if (!is_float()) [[unlikely]] {
     throw InvalidArgument("Not a float");
   }
 
@@ -151,7 +151,7 @@ double Column::ColumnImpl::as_double() const {
 }
 
 std::string Column::ColumnImpl::as_text() const {
-  if (!is_text()) {
+  if (!is_text()) [[unlikely]] {
     throw InvalidArgument("Not a text");
   }
 
@@ -160,7 +160,7 @@ std::string Column::ColumnImpl::as_text() const {
 }
 
 std::string Column::ColumnImpl::as_blob() const {
-  if (!is_blob()) {
+  if (!is_blob()) [[unlikely]] {
     throw InvalidArgument("Not a blob");
   }
 
@@ -195,7 +195,7 @@ SqlQuery::SqlQueryImpl::~SqlQueryImpl() {
 
 void SqlQuery::SqlQueryImpl::finalize() {
   auto rc = sqlite3_finalize(stmt_);
-  check_sqlite2(rc, db_);
+  CHECK_SQLITE2(rc, db_);
   stmt_ = nullptr;
 }
 
@@ -205,7 +205,7 @@ void SqlQuery::SqlQueryImpl::prepare(std::string_view sql) {
   auto rc =
       sqlite3_prepare_v2(db_, std::data(sql), std::size(sql), &stmt_, nullptr);
 
-  if (rc != SQLITE_OK) {
+  if (rc != SQLITE_OK) [[unlikely]] {
     finalize();
     throw RuntimeError(sqlite3_errmsg(db_));
   }
@@ -215,24 +215,24 @@ void SqlQuery::SqlQueryImpl::prepare(std::string_view sql) {
 
 void SqlQuery::SqlQueryImpl::bind(std::int32_t index, std::int32_t value) {
   auto rc = sqlite3_bind_int(stmt_, index, value);
-  check_sqlite2(rc, db_);
+  CHECK_SQLITE2(rc, db_);
 }
 
 void SqlQuery::SqlQueryImpl::bind(std::int32_t index, std::int64_t value) {
   auto rc = sqlite3_bind_int64(stmt_, index, value);
-  check_sqlite2(rc, db_);
+  CHECK_SQLITE2(rc, db_);
 }
 
 void SqlQuery::SqlQueryImpl::bind(std::int32_t index, double value) {
   auto rc = sqlite3_bind_double(stmt_, index, value);
-  check_sqlite2(rc, db_);
+  CHECK_SQLITE2(rc, db_);
 }
 
 void SqlQuery::SqlQueryImpl::bind(std::int32_t index,
                                   const std::string &value) {
   auto rc = sqlite3_bind_text(stmt_, index, value.c_str(), std::size(value),
                               SQLITE_TRANSIENT);
-  check_sqlite2(rc, db_);
+  CHECK_SQLITE2(rc, db_);
 }
 
 void SqlQuery::SqlQueryImpl::bind(std::int32_t index, const char *value,
@@ -240,29 +240,29 @@ void SqlQuery::SqlQueryImpl::bind(std::int32_t index, const char *value,
   auto compressed_data = compress_data(value, size);
   auto rc = sqlite3_bind_blob(stmt_, index, std::data(compressed_data),
                               std::size(compressed_data), SQLITE_TRANSIENT);
-  check_sqlite2(rc, db_);
+  CHECK_SQLITE2(rc, db_);
 }
 
 std::int32_t SqlQuery::SqlQueryImpl::exec() {
-  if (!stmt_) {
+  if (!stmt_) [[unlikely]] {
     throw LogicError("Call prepare first");
   }
 
-  if (auto rc = sqlite3_step(stmt_); rc != SQLITE_DONE) {
+  if (auto rc = sqlite3_step(stmt_); rc != SQLITE_DONE) [[unlikely]] {
     throw RuntimeError(sqlite3_errmsg(db_));
   }
-  check_sqlite2(sqlite3_reset(stmt_), db_);
+  CHECK_SQLITE2(sqlite3_reset(stmt_), db_);
 
   return sqlite3_changes(db_);
 }
 
 bool SqlQuery::SqlQueryImpl::next() {
-  if (!stmt_) {
+  if (!stmt_) [[unlikely]] {
     throw LogicError("Call prepare first");
   }
 
   if (auto rc = sqlite3_step(stmt_); rc != SQLITE_ROW) {
-    check_sqlite2(sqlite3_reset(stmt_), db_);
+    CHECK_SQLITE2(sqlite3_reset(stmt_), db_);
     return false;
   }
 
@@ -270,7 +270,7 @@ bool SqlQuery::SqlQueryImpl::next() {
 }
 
 std::string SqlQuery::SqlQueryImpl::get_column_name(std::int32_t index) {
-  if (index >= column_count_) {
+  if (index >= column_count_) [[unlikely]] {
     throw OutOfRange("Column index out of range");
   }
 
@@ -279,7 +279,7 @@ std::string SqlQuery::SqlQueryImpl::get_column_name(std::int32_t index) {
 
 Column SqlQuery::SqlQueryImpl::get_column(SqlQuery &sql_query,
                                           std::int32_t index) const {
-  if (index >= column_count_) {
+  if (index >= column_count_) [[unlikely]] {
     throw OutOfRange("Column index out of range");
   }
 
@@ -289,7 +289,7 @@ Column SqlQuery::SqlQueryImpl::get_column(SqlQuery &sql_query,
 SqlDatabase::SqlDatabaseImpl::SqlDatabaseImpl(const std::string &db_name,
                                               OpenMode open_mode,
                                               const std::string &password) {
-  if (std::empty(password)) {
+  if (std::empty(password)) [[unlikely]] {
     throw InvalidArgument("The password is empty");
   }
 
@@ -300,14 +300,15 @@ SqlDatabase::SqlDatabaseImpl::SqlDatabaseImpl(const std::string &db_name,
     flag = SQLITE_OPEN_READWRITE | SQLITE_OPEN_CREATE;
   }
 
-  if (sqlite3_open_v2(db_name.c_str(), &db_, flag, nullptr) != SQLITE_OK) {
+  if (sqlite3_open_v2(db_name.c_str(), &db_, flag, nullptr) != SQLITE_OK)
+      [[unlikely]] {
     std::string msg = sqlite3_errmsg(db_);
-    check_sqlite(sqlite3_close_v2(db_));
+    CHECK_SQLITE(sqlite3_close_v2(db_));
     throw RuntimeError(msg);
   }
 
   auto rc = sqlite3_key(db_, std::data(password), std::size(password));
-  check_sqlite2(rc, db_);
+  CHECK_SQLITE2(rc, db_);
 }
 
 SqlDatabase::SqlDatabaseImpl::~SqlDatabaseImpl() { sqlite3_close_v2(db_); }
@@ -332,7 +333,7 @@ bool SqlDatabase::SqlDatabaseImpl::table_exists(SqlDatabase &db,
 }
 
 void SqlDatabase::SqlDatabaseImpl::drop_table(const std::string &table_name) {
-  if (exec("DROP TABLE " + table_name) != 1) {
+  if (exec("DROP TABLE " + table_name) != 1) [[unlikely]] {
     throw RuntimeError("Drop table failed");
   }
 }
@@ -356,7 +357,7 @@ std::int32_t SqlDatabase::SqlDatabaseImpl::exec(std::string_view sql) {
   SCOPE_EXIT { sqlite3_free(err_msg); };
 
   auto rc = sqlite3_exec(db_, sql.data(), nullptr, nullptr, &err_msg);
-  if (rc != SQLITE_OK) {
+  if (rc != SQLITE_OK) [[unlikely]] {
     throw RuntimeError(err_msg);
   }
 

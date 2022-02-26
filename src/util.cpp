@@ -35,12 +35,12 @@ ChangeWorkingDir::ChangeWorkingDir(const std::string &path) {
     backup_ = std::filesystem::current_path();
 
     if (!std::filesystem::is_directory(path)) {
-      if (!std::filesystem::create_directory(path)) {
+      if (!std::filesystem::create_directory(path)) [[unlikely]] {
         throw RuntimeError("Can not create directory: '{}'", path);
       }
     }
 
-    if (chdir(path.c_str())) {
+    if (chdir(path.c_str())) [[unlikely]] {
       throw RuntimeError("chdir error");
     }
   }
@@ -89,7 +89,7 @@ std::string read_file(const char *path, bool binary_mode) {
     ifs.open(path);
   }
 
-  if (!ifs) {
+  if (!ifs) [[unlikely]] {
     throw RuntimeError("Can not open file: '{}'", path);
   }
 
@@ -120,7 +120,7 @@ void write_file(const char *path, bool binary_mode, const char *str,
     ofs.open(path);
   }
 
-  if (!ofs) {
+  if (!ofs) [[unlikely]] {
     throw RuntimeError("Can not open file: '{}'", path);
   }
 
@@ -131,12 +131,12 @@ void exec(const std::string &cmd) { exec(cmd.c_str()); }
 
 void exec(const char *cmd) {
   auto status = std::system(cmd);
-  if (status == -1 || wait_error(status)) {
+  if (status == -1 || wait_error(status)) [[unlikely]] {
     throw RuntimeError(
         "When running command line '{}', error '{}' is encountered", cmd,
         std::strerror(errno));
   }
-  if (status != 0) {
+  if (status != 0) [[unlikely]] {
     throw RuntimeError("Failed when running command line '{}', status: {}", cmd,
                        status);
   }
@@ -149,7 +149,7 @@ std::string exec_with_output(const std::string &cmd) {
 // https://stackoverflow.com/questions/478898/how-do-i-execute-a-command-and-get-the-output-of-the-command-within-c-using-po?rq=1
 std::string exec_with_output(const char *cmd) {
   auto pipe = popen(cmd, "r");
-  if (!pipe) {
+  if (!pipe) [[unlikely]] {
     throw RuntimeError("popen() failed");
   }
 
@@ -160,10 +160,10 @@ std::string exec_with_output(const char *cmd) {
   }
 
   auto status = pclose(pipe);
-  if (status == -1) {
+  if (status == -1) [[unlikely]] {
     throw RuntimeError("pclose() failed");
   }
-  if (status != 0) {
+  if (status != 0) [[unlikely]] {
     throw RuntimeError("Failed when running command line '{}', status: {}", cmd,
                        status);
   }
@@ -175,7 +175,7 @@ void wait_for_child_process() {
   std::int32_t status = 0;
 
   while (waitpid(-1, &status, 0) > 0) {
-    if (wait_error(status)) {
+    if (wait_error(status)) [[unlikely]] {
       throw RuntimeError("Waitpid error: {}", std::strerror(errno));
     }
   }
@@ -222,14 +222,14 @@ std::string generate_random_bytes(std::size_t bytes) {
 
   if (RAND_status() == 0) {
     rc = RAND_poll();
-    check_openssl_return(rc);
+    CHECK_BORINGSSL(rc);
   }
 
   std::string result;
   result.resize(bytes);
 
   rc = RAND_bytes(reinterpret_cast<std::uint8_t *>(std::data(result)), bytes);
-  check_openssl_return(rc);
+  CHECK_BORINGSSL(rc);
 
   return result;
 }

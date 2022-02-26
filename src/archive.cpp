@@ -29,23 +29,23 @@
 #include "klib/exception.h"
 #include "klib/util.h"
 
-#define check_system_io(rc)                     \
+#define CHECK_SYSTEM_IO(rc)                     \
   do {                                          \
-    if (rc == -1) {                             \
+    if (rc == -1) [[unlikely]] {                \
       throw RuntimeError(std::strerror(errno)); \
     }                                           \
   } while (0)
 
-#define check_libarchive(rc, archive)                    \
+#define CHECK_LIBARCHIVE(rc, archive)                    \
   do {                                                   \
-    if (rc < ARCHIVE_OK) {                               \
+    if (rc < ARCHIVE_OK) [[unlikely]] {                  \
       throw RuntimeError(archive_error_string(archive)); \
     }                                                    \
   } while (0)
 
-#define check_zstd(rc)                           \
+#define CHECK_ZSTD(rc)                           \
   do {                                           \
-    if (ZSTD_isError(rc)) {                      \
+    if (ZSTD_isError(rc)) [[unlikely]] {         \
       throw RuntimeError(ZSTD_getErrorName(rc)); \
     }                                            \
   } while (0)
@@ -80,81 +80,81 @@ void init_write_format_filter(archive *archive, Format format, Filter filter) {
 
   if (format == Format::Zip) {
     rc = archive_write_set_format_zip(archive);
-    check_libarchive(rc, archive);
+    CHECK_LIBARCHIVE(rc, archive);
 
     if (filter == Filter::None) {
       rc = archive_write_zip_set_compression_store(archive);
-      check_libarchive(rc, archive);
+      CHECK_LIBARCHIVE(rc, archive);
     } else if (filter == Filter::Deflate) {
       rc = archive_write_zip_set_compression_deflate(archive);
-      check_libarchive(rc, archive);
-    } else {
+      CHECK_LIBARCHIVE(rc, archive);
+    } else [[unlikely]] {
       throw InvalidArgument(
           "Filter other than Deflate should not be used in the ZIP archive "
           "format");
     }
   } else if (format == Format::The7Zip) {
     rc = archive_write_set_format_7zip(archive);
-    check_libarchive(rc, archive);
+    CHECK_LIBARCHIVE(rc, archive);
 
     if (filter == Filter::None) {
       rc = archive_write_set_format_option(archive, "7zip", "compression",
                                            "store");
-      check_libarchive(rc, archive);
+      CHECK_LIBARCHIVE(rc, archive);
     } else if (filter == Filter::Deflate) {
       rc = archive_write_set_format_option(archive, "7zip", "compression",
                                            "deflate");
-      check_libarchive(rc, archive);
-    } else {
+      CHECK_LIBARCHIVE(rc, archive);
+    } else [[unlikely]] {
       throw InvalidArgument(
           "Filter other than Deflate should not be used in the 7-Zip archive "
           "format");
     }
   } else if (format == Format::Tar) {
     rc = archive_write_set_format_gnutar(archive);
-    check_libarchive(rc, archive);
+    CHECK_LIBARCHIVE(rc, archive);
 
     if (filter == Filter::None) {
       rc = archive_write_add_filter_none(archive);
-      check_libarchive(rc, archive);
+      CHECK_LIBARCHIVE(rc, archive);
     } else if (filter == Filter::Deflate || filter == Filter::Gzip) {
       rc = archive_write_add_filter_gzip(archive);
-      check_libarchive(rc, archive);
+      CHECK_LIBARCHIVE(rc, archive);
     } else if (filter == Filter::Zstd) {
       rc = archive_write_add_filter_zstd(archive);
-      check_libarchive(rc, archive);
+      CHECK_LIBARCHIVE(rc, archive);
 
       auto hardware_thread =
           std::to_string(std::thread::hardware_concurrency());
       dbg(hardware_thread);
       rc = archive_write_set_filter_option(archive, "zstd", "threads",
                                            hardware_thread.c_str());
-      check_libarchive(rc, archive);
+      CHECK_LIBARCHIVE(rc, archive);
     }
   }
 }
 
 void init_read_format_filter(archive *archive) {
   auto rc = archive_read_support_format_zip(archive);
-  check_libarchive(rc, archive);
+  CHECK_LIBARCHIVE(rc, archive);
 
   rc = archive_read_support_format_7zip(archive);
-  check_libarchive(rc, archive);
+  CHECK_LIBARCHIVE(rc, archive);
 
   rc = archive_read_support_format_gnutar(archive);
-  check_libarchive(rc, archive);
+  CHECK_LIBARCHIVE(rc, archive);
 
   rc = archive_read_support_format_rar5(archive);
-  check_libarchive(rc, archive);
+  CHECK_LIBARCHIVE(rc, archive);
 
   rc = archive_read_support_filter_none(archive);
-  check_libarchive(rc, archive);
+  CHECK_LIBARCHIVE(rc, archive);
 
   rc = archive_read_support_filter_gzip(archive);
-  check_libarchive(rc, archive);
+  CHECK_LIBARCHIVE(rc, archive);
 
   rc = archive_read_support_filter_zstd(archive);
-  check_libarchive(rc, archive);
+  CHECK_LIBARCHIVE(rc, archive);
 }
 
 std::string get_top_level_dir(const std::filesystem::path &path) {
@@ -176,10 +176,10 @@ void copy_data(archive *archive_read, archive *archive_write) {
     if (rc == ARCHIVE_EOF) {
       return;
     }
-    check_libarchive(rc, archive_read);
+    CHECK_LIBARCHIVE(rc, archive_read);
 
     rc = archive_write_data_block(archive_write, buff, size, offset);
-    check_libarchive(rc, archive_write);
+    CHECK_LIBARCHIVE(rc, archive_write);
   }
 }
 
@@ -188,7 +188,7 @@ void copy_data(archive *archive_read, archive *archive_write) {
 void compress(const std::string &path, Format format, Filter filter,
               const std::string &out_name, bool flag,
               const std::string &password) {
-  if (!std::empty(password) && format != Format::Zip) {
+  if (!std::empty(password) && format != Format::Zip) [[unlikely]] {
     throw InvalidArgument("This format does not support encryption");
   }
 
@@ -229,13 +229,13 @@ void compress(const std::vector<std::string> &paths,
   if (!std::empty(password)) {
     auto rc =
         archive_write_set_format_option(archive, "zip", "encryption", "aes256");
-    check_libarchive(rc, archive);
+    CHECK_LIBARCHIVE(rc, archive);
     rc = archive_write_set_passphrase(archive, password.c_str());
-    check_libarchive(rc, archive);
+    CHECK_LIBARCHIVE(rc, archive);
   }
 
   auto rc = archive_write_open_filename(archive, out_name.c_str());
-  check_libarchive(rc, archive);
+  CHECK_LIBARCHIVE(rc, archive);
 
   for (const auto &path : paths) {
     auto disk = archive_read_disk_new();
@@ -245,10 +245,10 @@ void compress(const std::vector<std::string> &paths,
     };
 
     rc = archive_read_disk_set_standard_lookup(disk);
-    check_libarchive(rc, disk);
+    CHECK_LIBARCHIVE(rc, disk);
 
     rc = archive_read_disk_open(disk, path.c_str());
-    check_libarchive(rc, disk);
+    CHECK_LIBARCHIVE(rc, disk);
 
     while (true) {
       auto entry = archive_entry_new();
@@ -258,29 +258,29 @@ void compress(const std::vector<std::string> &paths,
       if (rc == ARCHIVE_EOF) {
         break;
       }
-      check_libarchive(rc, disk);
+      CHECK_LIBARCHIVE(rc, disk);
 
       rc = archive_read_disk_descend(disk);
-      check_libarchive(rc, disk);
+      CHECK_LIBARCHIVE(rc, disk);
 
       rc = archive_write_header(archive, entry);
-      check_libarchive(rc, archive);
+      CHECK_LIBARCHIVE(rc, archive);
 
       auto source_path = archive_entry_sourcepath(entry);
       if (std::filesystem::is_regular_file(source_path)) {
         auto fd = open(source_path, O_RDONLY);
         SCOPE_EXIT { close(fd); };
-        check_system_io(fd);
+        CHECK_SYSTEM_IO(fd);
 
         char buff[16384];
         auto length = read(fd, buff, sizeof(buff));
-        check_system_io(length);
+        CHECK_SYSTEM_IO(length);
         while (length > 0) {
           rc = archive_write_data(archive, buff, length);
-          check_libarchive(rc, archive);
+          CHECK_LIBARCHIVE(rc, archive);
 
           length = read(fd, buff, sizeof(buff));
-          check_system_io(length);
+          CHECK_SYSTEM_IO(length);
         }
       }
     }
@@ -299,11 +299,11 @@ void decompress(const std::string &file_name, const std::string &out_dir,
 
   if (!std::empty(password)) {
     auto rc = archive_read_add_passphrase(archive, password.c_str());
-    check_libarchive(rc, archive);
+    CHECK_LIBARCHIVE(rc, archive);
   }
 
   auto rc = archive_read_open_filename(archive, file_name.c_str(), 10240);
-  check_libarchive(rc, archive);
+  CHECK_LIBARCHIVE(rc, archive);
 
   auto extract = archive_write_disk_new();
   SCOPE_EXIT {
@@ -314,10 +314,10 @@ void decompress(const std::string &file_name, const std::string &out_dir,
   rc = archive_write_disk_set_options(
       extract, ARCHIVE_EXTRACT_TIME | ARCHIVE_EXTRACT_PERM |
                    ARCHIVE_EXTRACT_ACL | ARCHIVE_EXTRACT_FFLAGS);
-  check_libarchive(rc, extract);
+  CHECK_LIBARCHIVE(rc, extract);
 
   rc = archive_write_disk_set_standard_lookup(extract);
-  check_libarchive(rc, extract);
+  CHECK_LIBARCHIVE(rc, extract);
 
   ChangeWorkingDir change_work_dir(out_dir);
   boost::ignore_unused(change_work_dir);
@@ -328,17 +328,17 @@ void decompress(const std::string &file_name, const std::string &out_dir,
     if (rc == ARCHIVE_EOF) {
       break;
     }
-    check_libarchive(rc, archive);
+    CHECK_LIBARCHIVE(rc, archive);
 
     rc = archive_write_header(extract, entry);
-    check_libarchive(rc, extract);
+    CHECK_LIBARCHIVE(rc, extract);
 
     if (archive_entry_size(entry) > 0) {
       copy_data(archive, extract);
     }
 
     rc = archive_write_finish_entry(extract);
-    check_libarchive(rc, extract);
+    CHECK_LIBARCHIVE(rc, extract);
   }
 }
 
@@ -352,7 +352,7 @@ std::optional<std::string> outermost_folder_name(const std::string &file_name) {
   init_read_format_filter(archive);
 
   auto rc = archive_read_open_filename(archive, file_name.c_str(), 10240);
-  check_libarchive(rc, archive);
+  CHECK_LIBARCHIVE(rc, archive);
 
   std::unordered_set<std::string> dirs;
   while (true) {
@@ -361,7 +361,7 @@ std::optional<std::string> outermost_folder_name(const std::string &file_name) {
     if (rc == ARCHIVE_EOF) {
       break;
     }
-    check_libarchive(rc, archive);
+    CHECK_LIBARCHIVE(rc, archive);
 
     dirs.insert(get_top_level_dir(archive_entry_pathname(entry)));
   }
@@ -385,7 +385,7 @@ std::string compress_data(const char *data, std::size_t size) {
 
   auto length = ZSTD_compress(std::data(result), max_size, data, size,
                               ZSTD_defaultCLevel());
-  check_zstd(length);
+  CHECK_ZSTD(length);
   result.resize(length);
 
   return result;
@@ -399,15 +399,15 @@ std::string decompress_data(const char *data, std::size_t size) {
   std::string result;
 
   auto length = ZSTD_getFrameContentSize(data, size);
-  if (length == ZSTD_CONTENTSIZE_ERROR) {
+  if (length == ZSTD_CONTENTSIZE_ERROR) [[unlikely]] {
     throw RuntimeError("Not compressed by zstd");
-  } else if (length == ZSTD_CONTENTSIZE_UNKNOWN) {
+  } else if (length == ZSTD_CONTENTSIZE_UNKNOWN) [[unlikely]] {
     throw RuntimeError("Original size unknown");
   }
   result.resize(length);
 
   auto rc = ZSTD_decompress(std::data(result), length, data, size);
-  check_zstd(rc);
+  CHECK_ZSTD(rc);
 
   return result;
 }

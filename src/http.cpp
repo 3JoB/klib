@@ -16,18 +16,18 @@
 #include "klib/exception.h"
 #include "klib/util.h"
 
-#define check_curl(rc)                            \
+#define CHECK_CURL(rc)                            \
   do {                                            \
-    if (rc != CURLcode::CURLE_OK) {               \
+    if (rc != CURLcode::CURLE_OK) [[unlikely]] {  \
       throw RuntimeError(curl_easy_strerror(rc)); \
     }                                             \
   } while (0)
 
-#define check_curl_url(rc)                       \
-  do {                                           \
-    if (rc != CURLUcode::CURLUE_OK) {            \
-      throw RuntimeError(curl_url_strerror(rc)); \
-    }                                            \
+#define CHECK_CURL_URL(rc)                         \
+  do {                                             \
+    if (rc != CURLUcode::CURLUE_OK) [[unlikely]] { \
+      throw RuntimeError(curl_url_strerror(rc));   \
+    }                                              \
   } while (0)
 
 namespace klib {
@@ -44,7 +44,7 @@ HttpStatus get_status(CURL *curl) {
   std::int32_t status_code;
 
   auto rc = curl_easy_getinfo(curl, CURLINFO_RESPONSE_CODE, &status_code);
-  check_curl(rc);
+  CHECK_CURL(rc);
 
   return static_cast<HttpStatus>(status_code);
 }
@@ -55,7 +55,7 @@ CURLU *add_url(
   auto c_url = curl_url();
 
   auto rc = curl_url_set(c_url, CURLUPART_URL, url.c_str(), 0);
-  check_curl_url(rc);
+  CHECK_CURL_URL(rc);
 
   for (const auto &[key, value] : params) {
     std::string query;
@@ -63,11 +63,11 @@ CURLU *add_url(
 
     rc = curl_url_set(c_url, CURLUPART_QUERY, query.c_str(),
                       CURLU_APPENDQUERY | CURLU_URLENCODE);
-    check_curl_url(rc);
+    CHECK_CURL_URL(rc);
   }
 
   auto rc2 = curl_easy_setopt(curl, CURLOPT_CURLU, c_url);
-  check_curl(rc2);
+  CHECK_CURL(rc2);
 
   return c_url;
 }
@@ -81,7 +81,7 @@ curl_slist *add_header(
   curl_slist *chunk = nullptr;
 
   for (const auto &[key, value] : headers) {
-    if (std::empty(key) || std::empty(value)) {
+    if (std::empty(key) || std::empty(value)) [[unlikely]] {
       throw RuntimeError("The header key and value can not be empty");
     }
 
@@ -91,7 +91,7 @@ curl_slist *add_header(
   }
 
   auto rc = curl_easy_setopt(curl, CURLOPT_HTTPHEADER, chunk);
-  check_curl(rc);
+  CHECK_CURL(rc);
 
   return chunk;
 }
@@ -106,7 +106,7 @@ curl_mime *add_form(CURL *curl,
   auto form = curl_mime_init(curl);
 
   for (const auto &[key, value] : data) {
-    if (std::empty(key) || std::empty(value)) {
+    if (std::empty(key) || std::empty(value)) [[unlikely]] {
       throw RuntimeError("The post form key and value can not be empty");
     }
 
@@ -116,11 +116,11 @@ curl_mime *add_form(CURL *curl,
   }
 
   for (const auto &[file_name, path] : file) {
-    if (std::empty(file_name) || std::empty(path)) {
+    if (std::empty(file_name) || std::empty(path)) [[unlikely]] {
       throw RuntimeError("The post file_name and path can not be empty");
     }
 
-    if (!std::filesystem::is_regular_file(path)) {
+    if (!std::filesystem::is_regular_file(path)) [[unlikely]] {
       throw RuntimeError("File '{}' not exist", path);
     }
 
@@ -130,7 +130,7 @@ curl_mime *add_form(CURL *curl,
   }
 
   auto rc = curl_easy_setopt(curl, CURLOPT_MIMEPOST, form);
-  check_curl(rc);
+  CHECK_CURL(rc);
 
   return form;
 }
@@ -189,46 +189,46 @@ class Request::RequestImpl {
 
 Request::RequestImpl::RequestImpl() {
   auto rc = curl_global_init(CURL_GLOBAL_DEFAULT);
-  check_curl(rc);
+  CHECK_CURL(rc);
 
   curl_ = curl_easy_init();
   SCOPE_FAIL {
     curl_easy_cleanup(curl_);
     curl_global_cleanup();
   };
-  if (!curl_) {
+  if (!curl_) [[unlikely]] {
     throw RuntimeError("curl_easy_init failed");
   }
 
   rc = curl_easy_setopt(curl_, CURLOPT_BUFFERSIZE, 102400);
-  check_curl(rc);
+  CHECK_CURL(rc);
 
   rc = curl_easy_setopt(curl_, CURLOPT_FOLLOWLOCATION, 1);
-  check_curl(rc);
+  CHECK_CURL(rc);
 
   rc = curl_easy_setopt(curl_, CURLOPT_MAXREDIRS, 50);
-  check_curl(rc);
+  CHECK_CURL(rc);
 
   rc = curl_easy_setopt(curl_, CURLOPT_TCP_KEEPALIVE, 1);
-  check_curl(rc);
+  CHECK_CURL(rc);
 
   rc = curl_easy_setopt(curl_, CURLOPT_COOKIEFILE,
                         std::data(RequestImpl::cookies_path));
-  check_curl(rc);
+  CHECK_CURL(rc);
 
   rc = curl_easy_setopt(curl_, CURLOPT_COOKIEJAR,
                         std::data(RequestImpl::cookies_path));
-  check_curl(rc);
+  CHECK_CURL(rc);
 
   rc = curl_easy_setopt(curl_, CURLOPT_ALTSVC, std::data(altsvc_path));
-  check_curl(rc);
+  CHECK_CURL(rc);
 
   rc = curl_easy_setopt(curl_, CURLOPT_ALTSVC_CTRL,
                         CURLALTSVC_H1 | CURLALTSVC_H2);
-  check_curl(rc);
+  CHECK_CURL(rc);
 
   rc = curl_easy_setopt(curl_, CURLOPT_WRITEFUNCTION, callback_func_std_string);
-  check_curl(rc);
+  CHECK_CURL(rc);
 }
 
 Request::RequestImpl::~RequestImpl() {
@@ -238,12 +238,12 @@ Request::RequestImpl::~RequestImpl() {
 
 void Request::RequestImpl::verbose(bool flag) {
   auto rc = curl_easy_setopt(curl_, CURLOPT_VERBOSE, flag);
-  check_curl(rc);
+  CHECK_CURL(rc);
 }
 
 void Request::RequestImpl::set_proxy(const std::string &proxy) {
   auto rc = curl_easy_setopt(curl_, CURLOPT_PROXY, proxy.c_str());
-  check_curl(rc);
+  CHECK_CURL(rc);
 }
 
 void Request::RequestImpl::set_proxy_from_env() {
@@ -253,17 +253,17 @@ void Request::RequestImpl::set_proxy_from_env() {
 
 void Request::RequestImpl::set_no_proxy(const std::string &no_proxy) {
   auto rc = curl_easy_setopt(curl_, CURLOPT_NOPROXY, no_proxy.c_str());
-  check_curl(rc);
+  CHECK_CURL(rc);
 }
 
 void Request::RequestImpl::set_doh_url(const std::string &url) {
   auto rc = curl_easy_setopt(curl_, CURLOPT_DOH_URL, url.c_str());
-  check_curl(rc);
+  CHECK_CURL(rc);
 }
 
 void Request::RequestImpl::set_user_agent(const std::string &user_agent) {
   auto rc = curl_easy_setopt(curl_, CURLOPT_USERAGENT, user_agent.c_str());
-  check_curl(rc);
+  CHECK_CURL(rc);
 }
 
 void Request::RequestImpl::set_browser_user_agent() {
@@ -279,25 +279,25 @@ void Request::RequestImpl::set_curl_user_agent() {
 
 void Request::RequestImpl::set_timeout(std::int64_t seconds) {
   auto rc = curl_easy_setopt(curl_, CURLOPT_TIMEOUT, seconds);
-  check_curl(rc);
+  CHECK_CURL(rc);
 }
 
 void Request::RequestImpl::set_connect_timeout(std::int64_t seconds) {
   auto rc = curl_easy_setopt(curl_, CURLOPT_CONNECTTIMEOUT, seconds);
-  check_curl(rc);
+  CHECK_CURL(rc);
 }
 
 void Request::RequestImpl::set_accept_encoding(
     const std::string &accept_encoding) {
   auto rc =
       curl_easy_setopt(curl_, CURLOPT_ACCEPT_ENCODING, accept_encoding.c_str());
-  check_curl(rc);
+  CHECK_CURL(rc);
 }
 
 std::string Request::RequestImpl::url_encode(const std::string &str) {
   auto ptr = curl_easy_escape(curl_, str.c_str(), std::size(str));
   SCOPE_EXIT { curl_free(ptr); };
-  if (!ptr) {
+  if (!ptr) [[unlikely]] {
     throw RuntimeError("curl_easy_escape failed");
   }
 
@@ -308,7 +308,7 @@ std::string Request::RequestImpl::url_decode(const std::string &str) {
   std::int32_t length;
   auto ptr = curl_easy_unescape(curl_, str.c_str(), std::size(str), &length);
   SCOPE_EXIT { curl_free(ptr); };
-  if (!ptr) {
+  if (!ptr) [[unlikely]] {
     throw RuntimeError("curl_easy_unescape failed");
   }
 
@@ -320,20 +320,20 @@ Response Request::RequestImpl::get(
     const std::unordered_map<std::string, std::string> &params,
     const std::unordered_map<std::string, std::string> &headers) {
   auto rc = curl_easy_setopt(curl_, CURLOPT_HTTPGET, 1);
-  check_curl(rc);
+  CHECK_CURL(rc);
 
   auto c_url = add_url(curl_, url, params);
   SCOPE_EXIT {
     curl_url_cleanup(c_url);
     rc = curl_easy_setopt(curl_, CURLOPT_CURLU, nullptr);
-    check_curl(rc);
+    CHECK_CURL(rc);
   };
 
   auto chunk = add_header(curl_, headers);
   SCOPE_EXIT {
     curl_slist_free_all(chunk);
     rc = curl_easy_setopt(curl_, CURLOPT_HTTPHEADER, nullptr);
-    check_curl(rc);
+    CHECK_CURL(rc);
   };
 
   return do_easy_perform();
@@ -344,35 +344,35 @@ Response Request::RequestImpl::post(
     const std::unordered_map<std::string, std::string> &data,
     const std::unordered_map<std::string, std::string> &headers) {
   auto rc = curl_easy_setopt(curl_, CURLOPT_HTTPPOST, 1);
-  check_curl(rc);
+  CHECK_CURL(rc);
 
   auto post_fields = splicing_post_fields(data);
   rc = curl_easy_setopt(curl_, CURLOPT_POSTFIELDS, post_fields.c_str());
-  check_curl(rc);
+  CHECK_CURL(rc);
   SCOPE_EXIT {
     rc = curl_easy_setopt(curl_, CURLOPT_POSTFIELDS, nullptr);
-    check_curl(rc);
+    CHECK_CURL(rc);
   };
 
   rc = curl_easy_setopt(curl_, CURLOPT_POSTFIELDSIZE, std::size(post_fields));
-  check_curl(rc);
+  CHECK_CURL(rc);
   SCOPE_EXIT {
     rc = curl_easy_setopt(curl_, CURLOPT_POSTFIELDSIZE, -1);
-    check_curl(rc);
+    CHECK_CURL(rc);
   };
 
   auto c_url = add_url(curl_, url);
   SCOPE_EXIT {
     curl_url_cleanup(c_url);
     rc = curl_easy_setopt(curl_, CURLOPT_CURLU, nullptr);
-    check_curl(rc);
+    CHECK_CURL(rc);
   };
 
   auto chunk = add_header(curl_, headers);
   SCOPE_EXIT {
     curl_slist_free_all(chunk);
     rc = curl_easy_setopt(curl_, CURLOPT_HTTPHEADER, nullptr);
-    check_curl(rc);
+    CHECK_CURL(rc);
   };
 
   return do_easy_perform();
@@ -382,27 +382,27 @@ Response Request::RequestImpl::post(
     const std::string &url, const std::string &json,
     const std::unordered_map<std::string, std::string> &headers) {
   auto rc = curl_easy_setopt(curl_, CURLOPT_HTTPPOST, 1);
-  check_curl(rc);
+  CHECK_CURL(rc);
 
   rc = curl_easy_setopt(curl_, CURLOPT_POSTFIELDS, json.c_str());
-  check_curl(rc);
+  CHECK_CURL(rc);
   SCOPE_EXIT {
     rc = curl_easy_setopt(curl_, CURLOPT_POSTFIELDS, nullptr);
-    check_curl(rc);
+    CHECK_CURL(rc);
   };
 
   rc = curl_easy_setopt(curl_, CURLOPT_POSTFIELDSIZE, std::size(json));
-  check_curl(rc);
+  CHECK_CURL(rc);
   SCOPE_EXIT {
     rc = curl_easy_setopt(curl_, CURLOPT_POSTFIELDSIZE, -1);
-    check_curl(rc);
+    CHECK_CURL(rc);
   };
 
   auto c_url = add_url(curl_, url);
   SCOPE_EXIT {
     curl_url_cleanup(c_url);
     rc = curl_easy_setopt(curl_, CURLOPT_CURLU, nullptr);
-    check_curl(rc);
+    CHECK_CURL(rc);
   };
 
   auto headers_copy = headers;
@@ -411,7 +411,7 @@ Response Request::RequestImpl::post(
   SCOPE_EXIT {
     curl_slist_free_all(chunk);
     rc = curl_easy_setopt(curl_, CURLOPT_HTTPHEADER, nullptr);
-    check_curl(rc);
+    CHECK_CURL(rc);
   };
 
   return do_easy_perform();
@@ -423,27 +423,27 @@ Response Request::RequestImpl::post_mime(
     const std::unordered_map<std::string, std::string> &file,
     const std::unordered_map<std::string, std::string> &headers) {
   auto rc = curl_easy_setopt(curl_, CURLOPT_HTTPPOST, 1);
-  check_curl(rc);
+  CHECK_CURL(rc);
 
   auto c_url = add_url(curl_, url);
   SCOPE_EXIT {
     curl_url_cleanup(c_url);
     rc = curl_easy_setopt(curl_, CURLOPT_CURLU, nullptr);
-    check_curl(rc);
+    CHECK_CURL(rc);
   };
 
   auto chunk = add_header(curl_, headers);
   SCOPE_EXIT {
     curl_slist_free_all(chunk);
     rc = curl_easy_setopt(curl_, CURLOPT_HTTPHEADER, nullptr);
-    check_curl(rc);
+    CHECK_CURL(rc);
   };
 
   auto form = add_form(curl_, data, file);
   SCOPE_EXIT {
     curl_mime_free(form);
     auto rc = curl_easy_setopt(curl_, CURLOPT_MIMEPOST, nullptr);
-    check_curl(rc);
+    CHECK_CURL(rc);
   };
 
   return do_easy_perform();
@@ -453,14 +453,14 @@ Response Request::RequestImpl::do_easy_perform() {
   Response response;
 
   auto rc = curl_easy_setopt(curl_, CURLOPT_WRITEDATA, &response.text_);
-  check_curl(rc);
+  CHECK_CURL(rc);
   SCOPE_EXIT {
     rc = curl_easy_setopt(curl_, CURLOPT_WRITEDATA, stdout);
-    check_curl(rc);
+    CHECK_CURL(rc);
   };
 
   rc = curl_easy_perform(curl_);
-  check_curl(rc);
+  CHECK_CURL(rc);
 
   response.status_ = get_status(curl_);
 
