@@ -1,7 +1,9 @@
 var searchData=
 [
   ['vacuum_0',['vacuum',['../classklib_1_1SqlDatabase.html#a75e3817d0143a44bb4a6e7d00ab74740',1,'klib::SqlDatabase']]],
-  ['value_1',['value',['../classklib_1_1HTTPHeader.html#af5d02c963bc59b820e41a99fa397692a',1,'klib::HTTPHeader']]],
-  ['verbose_2',['verbose',['../classklib_1_1Request.html#a049dedc37a3f347c03784b1147455546',1,'klib::Request']]],
-  ['version_2eh_3',['version.h',['../version_8h.html',1,'']]]
+  ['validate_5futf16_1',['validate_utf16',['../unicode_8h.html#a59ccca7bab3669628c5ac6e6abb82a94',1,'klib']]],
+  ['validate_5futf8_2',['validate_utf8',['../unicode_8h.html#a4f15235a6d7bf62418abcd3dbf7c22f4',1,'klib']]],
+  ['value_3',['value',['../classklib_1_1HTTPHeader.html#af5d02c963bc59b820e41a99fa397692a',1,'klib::HTTPHeader']]],
+  ['verbose_4',['verbose',['../classklib_1_1Request.html#a049dedc37a3f347c03784b1147455546',1,'klib::Request']]],
+  ['version_2eh_5',['version.h',['../version_8h.html',1,'']]]
 ];

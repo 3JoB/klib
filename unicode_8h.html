@@ -30,7 +30,7 @@
  <tbody>
  <tr id="projectrow">
   <td id="projectalign">
-   <div id="projectname">klib<span id="projectnumber">&#160;1.0.0</span>
+   <div id="projectname">klib<span id="projectnumber">&#160;1.1.0</span>
    </div>
   </td>
     <td>        <div id="MSearchBox" class="MSearchBoxInactive">
@@ -107,6 +107,12 @@ $(document).ready(function(){initNavTree('unicode_8h.html',''); initResizable();
 <table class="memberdecls">
 <tr class="heading"><td colspan="2"><h2 class="groupheader"><a id="func-members" name="func-members"></a>
 Functions</h2></td></tr>
+<tr class="memitem:a4f15235a6d7bf62418abcd3dbf7c22f4"><td class="memItemLeft" align="right" valign="top">bool&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="unicode_8h.html#a4f15235a6d7bf62418abcd3dbf7c22f4">klib::validate_utf8</a> (const std::string &amp;str)</td></tr>
+<tr class="memdesc:a4f15235a6d7bf62418abcd3dbf7c22f4"><td class="mdescLeft">&#160;</td><td class="mdescRight">Validate the UTF-8 string.  <a href="unicode_8h.html#a4f15235a6d7bf62418abcd3dbf7c22f4">More...</a><br /></td></tr>
+<tr class="separator:a4f15235a6d7bf62418abcd3dbf7c22f4"><td class="memSeparator" colspan="2">&#160;</td></tr>
+<tr class="memitem:a59ccca7bab3669628c5ac6e6abb82a94"><td class="memItemLeft" align="right" valign="top">bool&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="unicode_8h.html#a59ccca7bab3669628c5ac6e6abb82a94">klib::validate_utf16</a> (const std::u16string &amp;str)</td></tr>
+<tr class="memdesc:a59ccca7bab3669628c5ac6e6abb82a94"><td class="mdescLeft">&#160;</td><td class="mdescRight">Validate the UTF-16 string.  <a href="unicode_8h.html#a59ccca7bab3669628c5ac6e6abb82a94">More...</a><br /></td></tr>
+<tr class="separator:a59ccca7bab3669628c5ac6e6abb82a94"><td class="memSeparator" colspan="2">&#160;</td></tr>
 <tr class="memitem:afd9c11f7bcfa0aacc5111a78bfb42bac"><td class="memItemLeft" align="right" valign="top">std::u16string&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="unicode_8h.html#afd9c11f7bcfa0aacc5111a78bfb42bac">klib::utf8_to_utf16</a> (const std::string &amp;str)</td></tr>
 <tr class="memdesc:afd9c11f7bcfa0aacc5111a78bfb42bac"><td class="mdescLeft">&#160;</td><td class="mdescRight">Convert UTF-8 encoded string to UTF-16 encoded string.  <a href="unicode_8h.html#afd9c11f7bcfa0aacc5111a78bfb42bac">More...</a><br /></td></tr>
 <tr class="separator:afd9c11f7bcfa0aacc5111a78bfb42bac"><td class="memSeparator" colspan="2">&#160;</td></tr>
@@ -370,6 +376,60 @@ bool&#160;</td><td class="memItemRight" valign="bottom"><b>klib::is_ascii</b> (c
   </dd>
 </dl>
 <dl class="section return"><dt>Returns</dt><dd>The converted UTF-32 encoded string </dd></dl>
+
+</div>
+</div>
+<a id="a59ccca7bab3669628c5ac6e6abb82a94" name="a59ccca7bab3669628c5ac6e6abb82a94"></a>
+<h2 class="memtitle"><span class="permalink"><a href="#a59ccca7bab3669628c5ac6e6abb82a94">&#9670;&nbsp;</a></span>validate_utf16()</h2>
+
+<div class="memitem">
+<div class="memproto">
+      <table class="memname">
+        <tr>
+          <td class="memname">bool klib::validate_utf16 </td>
+          <td>(</td>
+          <td class="paramtype">const std::u16string &amp;&#160;</td>
+          <td class="paramname"><em>str</em></td><td>)</td>
+          <td></td>
+        </tr>
+      </table>
+</div><div class="memdoc">
+
+<p>Validate the UTF-16 string. </p>
+<dl class="params"><dt>Parameters</dt><dd>
+  <table class="params">
+    <tr><td class="paramname">str</td><td>The UTF-16 string to validate </td></tr>
+  </table>
+  </dd>
+</dl>
+<dl class="section return"><dt>Returns</dt><dd>True if and only if the string is valid UTF-16 </dd></dl>
+
+</div>
+</div>
+<a id="a4f15235a6d7bf62418abcd3dbf7c22f4" name="a4f15235a6d7bf62418abcd3dbf7c22f4"></a>
+<h2 class="memtitle"><span class="permalink"><a href="#a4f15235a6d7bf62418abcd3dbf7c22f4">&#9670;&nbsp;</a></span>validate_utf8()</h2>
+
+<div class="memitem">
+<div class="memproto">
+      <table class="memname">
+        <tr>
+          <td class="memname">bool klib::validate_utf8 </td>
+          <td>(</td>
+          <td class="paramtype">const std::string &amp;&#160;</td>
+          <td class="paramname"><em>str</em></td><td>)</td>
+          <td></td>
+        </tr>
+      </table>
+</div><div class="memdoc">
+
+<p>Validate the UTF-8 string. </p>
+<dl class="params"><dt>Parameters</dt><dd>
+  <table class="params">
+    <tr><td class="paramname">str</td><td>The UTF-8 string to validate </td></tr>
+  </table>
+  </dd>
+</dl>
+<dl class="section return"><dt>Returns</dt><dd>True if and only if the string is valid UTF-8 </dd></dl>
 
 </div>
 </div>

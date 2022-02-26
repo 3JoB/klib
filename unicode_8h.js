@@ -7,5 +7,7 @@ var unicode_8h =
     [ "utf16_to_utf8", "unicode_8h.html#a307c51d968ca389408db8534cf8d3ace", null ],
     [ "utf8_to_unicode", "unicode_8h.html#a9268da9cbdb40da349e301b8704a633b", null ],
     [ "utf8_to_utf16", "unicode_8h.html#afd9c11f7bcfa0aacc5111a78bfb42bac", null ],
-    [ "utf8_to_utf32", "unicode_8h.html#a618c7297574b1f62db6b5e8b19186f3b", null ]
+    [ "utf8_to_utf32", "unicode_8h.html#a618c7297574b1f62db6b5e8b19186f3b", null ],
+    [ "validate_utf16", "unicode_8h.html#a59ccca7bab3669628c5ac6e6abb82a94", null ],
+    [ "validate_utf8", "unicode_8h.html#a4f15235a6d7bf62418abcd3dbf7c22f4", null ]
 ];
