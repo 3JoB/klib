@@ -133,7 +133,7 @@ file(MAKE_DIRECTORY ${KLIB_BINARY_DIR}/third_party/libarchive)
 file(MAKE_DIRECTORY ${KLIB_BINARY_DIR}/third_party/tidy)
 file(MAKE_DIRECTORY ${KLIB_BINARY_DIR}/third_party/libcurl)
 file(MAKE_DIRECTORY ${KLIB_BINARY_DIR}/third_party/brotli)
-file(MAKE_DIRECTORY ${KLIB_BINARY_DIR}/third_party/openssl)
+file(MAKE_DIRECTORY ${KLIB_BINARY_DIR}/third_party/boringssl)
 file(MAKE_DIRECTORY ${KLIB_BINARY_DIR}/third_party/sqlcipher)
 file(MAKE_DIRECTORY ${KLIB_BINARY_DIR}/third_party/argon2)
 file(MAKE_DIRECTORY ${KLIB_BINARY_DIR}/third_party/zstd)
@@ -157,8 +157,8 @@ add_custom_command(
   COMMAND gcc-ar -x --output=libcurl /usr/local/lib/libcurl.a
   COMMAND gcc-ar -x --output=brotli /usr/local/lib/libbrotlicommon.a
   COMMAND gcc-ar -x --output=brotli /usr/local/lib/libbrotlidec.a
-  COMMAND gcc-ar -x --output=openssl /usr/local/lib/libcrypto.a
-  COMMAND gcc-ar -x --output=openssl /usr/local/lib/libssl.a
+  COMMAND gcc-ar -x --output=boringssl /usr/local/lib/libcrypto.a
+  COMMAND gcc-ar -x --output=boringssl /usr/local/lib/libssl.a
   COMMAND gcc-ar -x --output=sqlcipher /usr/local/lib/libsqlcipher.a
   COMMAND gcc-ar -x --output=argon2 /usr/local/lib/libargon2.a
   COMMAND gcc-ar -x --output=zstd /usr/local/lib/libzstd.a
@@ -174,7 +174,7 @@ add_custom_command(
   COMMAND gcc-ar -x --output=llhttp /usr/local/lib/libllhttp.a
   COMMAND
     gcc-ar -qcs ${KLIB_BINARY_DIR}/lib${KLIB_LIBRARY}.a klib/*.o zlib/*.o
-    libarchive/*.o tidy/*.o libcurl/*.o brotli/*.o openssl/*.o sqlcipher/*.o
+    libarchive/*.o tidy/*.o libcurl/*.o brotli/*.o boringssl/*.o sqlcipher/*.o
     argon2/*.o zstd/*.o fmt/*.o spdlog/*.o nghttp2/*.o simdutf/*.o libidn2/*.o
     libpsl/*.o libunistring/*.o xxhash/*.o cmark/*.o llhttp/*.o
   COMMAND gcc-ranlib ${KLIB_BINARY_DIR}/lib${KLIB_LIBRARY}.a
