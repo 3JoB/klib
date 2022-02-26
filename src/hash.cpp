@@ -15,6 +15,7 @@
 #include <openssl/md5.h>
 #include <openssl/sha.h>
 #include <xxhash.h>
+#include <zlib.h>
 #include <memory>
 
 #include "klib/exception.h"
@@ -63,6 +64,28 @@ std::string fast_hash_hex(const std::string &data) {
   return num_to_hex_string(fast_hash(data));
 }
 
+std::uint32_t crc32(const std::string &data) {
+  auto result = crc32_z(0L, nullptr, 0);
+  return crc32_z(result,
+                 reinterpret_cast<const unsigned char *>(std::data(data)),
+                 std::size(data));
+}
+
+std::string crc32_hex(const std::string &data) {
+  return num_to_hex_string(crc32(data));
+}
+
+std::uint32_t adler32(const std::string &data) {
+  auto result = adler32_z(0L, nullptr, 0);
+  return adler32_z(result,
+                   reinterpret_cast<const unsigned char *>(std::data(data)),
+                   std::size(data));
+}
+
+std::string adler32_hex(const std::string &data) {
+  return num_to_hex_string(adler32(data));
+}
+
 std::string md5(const std::string &data) {
   std::string result;
   result.resize(MD5_DIGEST_LENGTH);
@@ -75,6 +98,20 @@ std::string md5(const std::string &data) {
 
 std::string md5_hex(const std::string &data) {
   return bytes_to_hex_string(md5(data));
+}
+
+std::string sha1(const std::string &data) {
+  std::string result;
+  result.resize(SHA_DIGEST_LENGTH);
+
+  SHA1(reinterpret_cast<const std::uint8_t *>(std::data(data)), std::size(data),
+       reinterpret_cast<std::uint8_t *>(std::data(result)));
+
+  return result;
+}
+
+std::string sha1_hex(const std::string &data) {
+  return bytes_to_hex_string(sha1(data));
 }
 
 std::string sha224(const std::string &data) {

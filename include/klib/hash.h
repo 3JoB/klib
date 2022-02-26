@@ -18,14 +18,14 @@ namespace klib {
  */
 std::size_t fast_hash(const std::string &data);
 std::string fast_hash_hex(const std::string &data);
-
-/**
- * @brief Calculate the hash
- * @param data: Data to be hashed
- * @return Hash result
- */
+std::uint32_t crc32(const std::string &data);
+std::string crc32_hex(const std::string &data);
+std::uint32_t adler32(const std::string &data);
+std::string adler32_hex(const std::string &data);
 std::string md5(const std::string &data);
 std::string md5_hex(const std::string &data);
+std::string sha1(const std::string &data);
+std::string sha1_hex(const std::string &data);
 std::string sha224(const std::string &data);
 std::string sha224_hex(const std::string &data);
 std::string sha256(const std::string &data);
