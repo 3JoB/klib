@@ -11,7 +11,7 @@
 #include <openssl/base64.h>
 
 #include "fastbase64/fastavxbase64.h"
-#include "klib/detail/openssl_util.h"
+#include "klib/detail/boringssl_util.h"
 #include "klib/exception.h"
 
 namespace klib {

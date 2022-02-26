@@ -16,7 +16,7 @@
 #include <boost/uuid/uuid_generators.hpp>
 #include <boost/uuid/uuid_io.hpp>
 
-#include "klib/detail/openssl_util.h"
+#include "klib/detail/boringssl_util.h"
 #include "klib/exception.h"
 #include "klib/log.h"
 

@@ -13,7 +13,7 @@
 #include <openssl/cipher.h>
 #include <scope_guard.hpp>
 
-#include "klib/detail/openssl_util.h"
+#include "klib/detail/boringssl_util.h"
 #include "klib/exception.h"
 #include "klib/util.h"
 
