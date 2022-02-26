@@ -10,7 +10,7 @@
 #include <string_view>
 #include <unordered_map>
 
-#include "klib/detail/http_parse_inl.h"
+#include "klib/detail/http_parse-inl.h"
 #include "klib/exception.h"
 
 namespace klib {
