@@ -5,5 +5,6 @@ var searchData=
   ['fast_5fhash_2',['fast_hash',['../hash_8h.html#aba64b42882d6e54255da7e44bee74690',1,'klib']]],
   ['filter_3',['Filter',['../archive_8h.html#aa25a2dd2c496b61e2b93bb7e9ca385ab',1,'klib']]],
   ['finalize_4',['finalize',['../classklib_1_1SqlQuery.html#a792df47adfe18de8f873b8877c312a41',1,'klib::SqlQuery']]],
-  ['format_5',['Format',['../archive_8h.html#a746bca2d6aafe9da24021476bae487e5',1,'klib']]]
+  ['first_5fcode_5fpoint_5',['first_code_point',['../unicode_8h.html#a7e7fdc424fbb97c95ae4ad202ee716a4',1,'klib']]],
+  ['format_6',['Format',['../archive_8h.html#a746bca2d6aafe9da24021476bae487e5',1,'klib']]]
 ];
