@@ -68,6 +68,18 @@ TEST_CASE("utf8_to_utf32", "[unicode]") {
   CHECK(klib::utf32_to_utf8(utf32) == "zß水🍌");
 }
 
+TEST_CASE("utf32_to_utf8_w", "[unicode]") {
+  auto utf32 = klib::utf8_to_utf32_w("zß水🍌");
+
+  CHECK(std::size(utf32) == 4);
+  CHECK(utf32[0] == 0x0000007A);
+  CHECK(utf32[1] == 0x000000DF);
+  CHECK(utf32[2] == 0x00006C34);
+  CHECK(utf32[3] == 0x0001F34C);
+
+  CHECK(klib::utf32_to_utf8_w(utf32) == "zß水🍌");
+}
+
 TEST_CASE("is_ascii", "[unicode]") {
   CHECK(klib::is_ascii('A'));
   CHECK_FALSE(klib::is_ascii(static_cast<char>(190)));

@@ -101,11 +101,25 @@ std::string utf16_to_utf8(const std::u16string &str);
 std::u32string utf8_to_utf32(const std::string &str);
 
 /**
+ * @brief Convert UTF-8 encoded string to UTF-32 encoded string
+ * @param str: UTF-8 encoded string
+ * @return The converted UTF-32 encoded string
+ */
+std::wstring utf8_to_utf32_w(const std::string &str);
+
+/**
  * @brief Convert UTF-32 encoded string to UTF-8 encoded string
  * @param str: UTF-32 encoded string
  * @return The converted UTF-8 encoded string
  */
 std::string utf32_to_utf8(const std::u32string &str);
+
+/**
+ * @brief Convert UTF-32 encoded string to UTF-8 encoded string
+ * @param str: UTF-32 encoded string
+ * @return The converted UTF-8 encoded string
+ */
+std::string utf32_to_utf8_w(const std::wstring &str);
 
 /**
  * @brief Determine whether it is an ASCII character
