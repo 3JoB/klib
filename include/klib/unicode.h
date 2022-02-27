@@ -149,8 +149,8 @@ constexpr bool is_chinese_punctuation(char32_t code_point) {
   return code_point == U'。' || code_point == U'？' || code_point == U'！' ||
          code_point == U'，' || code_point == U'、' || code_point == U'；' ||
          code_point == U'：' || code_point == U'“' || code_point == U'”' ||
-         code_point == U'﹃' || code_point == U'﹄' || code_point == U'‘' ||
-         code_point == U'’' || code_point == U'﹁' || code_point == U'﹂' ||
+         code_point == U'『' || code_point == U'』' || code_point == U'‘' ||
+         code_point == U'’' || code_point == U'「' || code_point == U'」' ||
          code_point == U'（' || code_point == U'）' || code_point == U'［' ||
          code_point == U'］' || code_point == U'〔' || code_point == U'〕' ||
          code_point == U'【' || code_point == U'】' ||
