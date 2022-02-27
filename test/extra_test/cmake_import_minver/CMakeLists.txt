@@ -2,7 +2,7 @@ cmake_minimum_required(VERSION 3.22)
 
 project(dummy_import LANGUAGES CXX)
 
-find_package(klib 0.14.0 REQUIRED)
+find_package(klib 1.2.0 REQUIRED)
 
 add_executable(with_namespace_target main.cpp)
 target_link_libraries(with_namespace_target PRIVATE klib::klib)
