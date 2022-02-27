@@ -30,7 +30,7 @@
  <tbody>
  <tr id="projectrow">
   <td id="projectalign">
-   <div id="projectname">klib<span id="projectnumber">&#160;1.2.1</span>
+   <div id="projectname">klib<span id="projectnumber">&#160;1.3.0</span>
    </div>
   </td>
     <td>        <div id="MSearchBox" class="MSearchBoxInactive">
@@ -146,9 +146,15 @@ Functions</h2></td></tr>
 <tr class="memitem:a618c7297574b1f62db6b5e8b19186f3b"><td class="memItemLeft" align="right" valign="top">std::u32string&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="unicode_8h.html#a618c7297574b1f62db6b5e8b19186f3b">klib::utf8_to_utf32</a> (const std::string &amp;str)</td></tr>
 <tr class="memdesc:a618c7297574b1f62db6b5e8b19186f3b"><td class="mdescLeft">&#160;</td><td class="mdescRight">Convert UTF-8 encoded string to UTF-32 encoded string.  <a href="unicode_8h.html#a618c7297574b1f62db6b5e8b19186f3b">More...</a><br /></td></tr>
 <tr class="separator:a618c7297574b1f62db6b5e8b19186f3b"><td class="memSeparator" colspan="2">&#160;</td></tr>
+<tr class="memitem:a56f0a017694612000be7879cd13b0504"><td class="memItemLeft" align="right" valign="top">std::wstring&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="unicode_8h.html#a56f0a017694612000be7879cd13b0504">klib::utf8_to_utf32_w</a> (const std::string &amp;str)</td></tr>
+<tr class="memdesc:a56f0a017694612000be7879cd13b0504"><td class="mdescLeft">&#160;</td><td class="mdescRight">Convert UTF-8 encoded string to UTF-32 encoded string.  <a href="unicode_8h.html#a56f0a017694612000be7879cd13b0504">More...</a><br /></td></tr>
+<tr class="separator:a56f0a017694612000be7879cd13b0504"><td class="memSeparator" colspan="2">&#160;</td></tr>
 <tr class="memitem:a137702622c0905e43278959649acb981"><td class="memItemLeft" align="right" valign="top">std::string&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="unicode_8h.html#a137702622c0905e43278959649acb981">klib::utf32_to_utf8</a> (const std::u32string &amp;str)</td></tr>
 <tr class="memdesc:a137702622c0905e43278959649acb981"><td class="mdescLeft">&#160;</td><td class="mdescRight">Convert UTF-32 encoded string to UTF-8 encoded string.  <a href="unicode_8h.html#a137702622c0905e43278959649acb981">More...</a><br /></td></tr>
 <tr class="separator:a137702622c0905e43278959649acb981"><td class="memSeparator" colspan="2">&#160;</td></tr>
+<tr class="memitem:ae07e71db9d22ba82c1dcc1956337cda3"><td class="memItemLeft" align="right" valign="top">std::string&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="unicode_8h.html#ae07e71db9d22ba82c1dcc1956337cda3">klib::utf32_to_utf8_w</a> (const std::wstring &amp;str)</td></tr>
+<tr class="memdesc:ae07e71db9d22ba82c1dcc1956337cda3"><td class="mdescLeft">&#160;</td><td class="mdescRight">Convert UTF-32 encoded string to UTF-8 encoded string.  <a href="unicode_8h.html#ae07e71db9d22ba82c1dcc1956337cda3">More...</a><br /></td></tr>
+<tr class="separator:ae07e71db9d22ba82c1dcc1956337cda3"><td class="memSeparator" colspan="2">&#160;</td></tr>
 <tr class="memitem:a8c33a23114652432078cf1c000340ce4"><td class="memItemLeft" align="right" valign="top">constexpr bool&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="unicode_8h.html#a8c33a23114652432078cf1c000340ce4">klib::is_ascii</a> (char32_t code_point)</td></tr>
 <tr class="memdesc:a8c33a23114652432078cf1c000340ce4"><td class="mdescLeft">&#160;</td><td class="mdescRight">Determine whether it is an ASCII character.  <a href="unicode_8h.html#a8c33a23114652432078cf1c000340ce4">More...</a><br /></td></tr>
 <tr class="separator:a8c33a23114652432078cf1c000340ce4"><td class="memSeparator" colspan="2">&#160;</td></tr>
@@ -613,6 +619,33 @@ Functions</h2></td></tr>
 
 </div>
 </div>
+<a id="ae07e71db9d22ba82c1dcc1956337cda3" name="ae07e71db9d22ba82c1dcc1956337cda3"></a>
+<h2 class="memtitle"><span class="permalink"><a href="#ae07e71db9d22ba82c1dcc1956337cda3">&#9670;&nbsp;</a></span>utf32_to_utf8_w()</h2>
+
+<div class="memitem">
+<div class="memproto">
+      <table class="memname">
+        <tr>
+          <td class="memname">std::string klib::utf32_to_utf8_w </td>
+          <td>(</td>
+          <td class="paramtype">const std::wstring &amp;&#160;</td>
+          <td class="paramname"><em>str</em></td><td>)</td>
+          <td></td>
+        </tr>
+      </table>
+</div><div class="memdoc">
+
+<p>Convert UTF-32 encoded string to UTF-8 encoded string. </p>
+<dl class="params"><dt>Parameters</dt><dd>
+  <table class="params">
+    <tr><td class="paramname">str</td><td>UTF-32 encoded string </td></tr>
+  </table>
+  </dd>
+</dl>
+<dl class="section return"><dt>Returns</dt><dd>The converted UTF-8 encoded string </dd></dl>
+
+</div>
+</div>
 <a id="afd9c11f7bcfa0aacc5111a78bfb42bac" name="afd9c11f7bcfa0aacc5111a78bfb42bac"></a>
 <h2 class="memtitle"><span class="permalink"><a href="#afd9c11f7bcfa0aacc5111a78bfb42bac">&#9670;&nbsp;</a></span>utf8_to_utf16()</h2>
 
@@ -648,6 +681,33 @@ Functions</h2></td></tr>
       <table class="memname">
         <tr>
           <td class="memname">std::u32string klib::utf8_to_utf32 </td>
+          <td>(</td>
+          <td class="paramtype">const std::string &amp;&#160;</td>
+          <td class="paramname"><em>str</em></td><td>)</td>
+          <td></td>
+        </tr>
+      </table>
+</div><div class="memdoc">
+
+<p>Convert UTF-8 encoded string to UTF-32 encoded string. </p>
+<dl class="params"><dt>Parameters</dt><dd>
+  <table class="params">
+    <tr><td class="paramname">str</td><td>UTF-8 encoded string </td></tr>
+  </table>
+  </dd>
+</dl>
+<dl class="section return"><dt>Returns</dt><dd>The converted UTF-32 encoded string </dd></dl>
+
+</div>
+</div>
+<a id="a56f0a017694612000be7879cd13b0504" name="a56f0a017694612000be7879cd13b0504"></a>
+<h2 class="memtitle"><span class="permalink"><a href="#a56f0a017694612000be7879cd13b0504">&#9670;&nbsp;</a></span>utf8_to_utf32_w()</h2>
+
+<div class="memitem">
+<div class="memproto">
+      <table class="memname">
+        <tr>
+          <td class="memname">std::wstring klib::utf8_to_utf32_w </td>
           <td>(</td>
           <td class="paramtype">const std::string &amp;&#160;</td>
           <td class="paramname"><em>str</em></td><td>)</td>
