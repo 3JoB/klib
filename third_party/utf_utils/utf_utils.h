@@ -104,9 +104,6 @@ class UtfUtils {
   using ptrdiff_t = std::ptrdiff_t;
 
  public:
-  static bool GetCodePoint(char8_t const* pSrc, char8_t const* pSrcEnd,
-                           char32_t& cdpt) noexcept;
-
   //- Conversion to UTF-32/UTF-16 using pre-computed first code unit lookup
   // table.
   //
@@ -173,36 +170,10 @@ class UtfUtils {
   static int32_t AdvanceWithBigTable(char8_t const*& pSrc,
                                      char8_t const* pSrcEnd,
                                      char32_t& cdpt) noexcept;
-  static int32_t AdvanceWithSmallTable(char8_t const*& pSrc,
-                                       char8_t const* pSrcEnd,
-                                       char32_t& cdpt) noexcept;
   static void ConvertAsciiWithSse(char8_t const*& pSrc,
                                   char32_t*& pDst) noexcept;
   static int32_t GetTrailingZeros(int32_t x) noexcept;
 };
-
-//--------------------------------------------------------------------------------------------------
-/// \brief  Converts a sequence of UTF-8 code units to a UTF-32 code point.
-///
-/// \param pSrc
-///     A non-null pointer defining the beginning of the input range of code
-///     units.
-/// \param pSrcEnd
-///     A non-null past-the-end pointer defining the end of the input range.
-/// \param cdpt
-///     A mutable reference to a char32_t variable which will receive the code
-///     unit.
-///
-/// \returns
-///     Boolean value `true` on success.
-//--------------------------------------------------------------------------------------------------
-//
-KEWB_FORCE_INLINE bool UtfUtils::GetCodePoint(char8_t const* pSrc,
-                                              char8_t const* const pSrcEnd,
-                                              char32_t& cdpt) noexcept {
-  return (pSrc < pSrcEnd) ? (AdvanceWithSmallTable(pSrc, pSrcEnd, cdpt) != ERR)
-                          : false;
-}
 
 //--------------------------------------------------------------------------------------------------
 /// \brief  Converts a sequence of UTF-8 code units to a UTF-32 code point.
@@ -239,58 +210,6 @@ KEWB_FORCE_INLINE int32_t UtfUtils::AdvanceWithBigTable(
                                               // descriptor
   cdpt = info.mFirstOctet;  //- From it, get the initial code point value
   curr = info.mNextState;   //- From it, get the second state
-
-  while (curr > ERR) {
-    if (pSrc < pSrcEnd) {
-      unit = *pSrc++;  //- Cache the current code unit
-      cdpt = (cdpt << 6) |
-             (unit & 0x3F);  //- Adjust code point with continuation bits
-      type = smTables.maOctetCategory[unit];       //- Look up the code unit's
-                                                   // character class
-      curr = smTables.maTransitions[curr + type];  //- Look up the next state
-    } else {
-      return ERR;
-    }
-  }
-  return curr;
-}
-
-//--------------------------------------------------------------------------------------------------
-/// \brief  Converts a sequence of UTF-8 code units to a UTF-32 code point.
-///
-/// \details
-///     This static member function reads input octets and uses them to traverse
-///     a DFA that recognizes valid sequences of UTF-8 code units.  It is the
-///     heart of all non-ASCII conversions in all member functions of this
-///     class.  This function uses the "small" first-unit lookup table and the
-///     state machine table to traverse the DFA.
-///
-/// \param pSrc
-///     A reference to a non-null pointer defining the beginning of the code
-///     unit input range.
-/// \param pSrcEnd
-///     A non-null past-the-end pointer defining the end of the code unit input
-///     range.
-/// \param cdpt
-///     A reference to the output code point.
-///
-/// \returns
-///     An internal flag describing the current DFA state.
-//--------------------------------------------------------------------------------------------------
-//
-KEWB_FORCE_INLINE int32_t UtfUtils::AdvanceWithSmallTable(
-    char8_t const*& pSrc, char8_t const* const pSrcEnd,
-    char32_t& cdpt) noexcept {
-  char32_t unit;  //- The current UTF-8 code unit
-  int32_t type;   //- The current code unit's character class
-  int32_t curr;   //- The current DFA state
-
-  unit = *pSrc++;  //- Cache the first code unit
-  type =
-      smTables
-          .maOctetCategory[unit];  //- Get the first code unit's character class
-  cdpt = smTables.maFirstOctetMask[type] & unit;  //- Apply the first octet mask
-  curr = smTables.maTransitions[type];            //- Look up the second state
 
   while (curr > ERR) {
     if (pSrc < pSrcEnd) {
