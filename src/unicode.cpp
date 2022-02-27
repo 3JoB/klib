@@ -1,13 +1,99 @@
 #include "klib/unicode.h"
 
-#include <algorithm>
-
 #include <simdutf.h>
+#include <utf8cpp/utf8.h>
+#include <boost/algorithm/string.hpp>
+#include <gsl/assert>
 
 #include "klib/exception.h"
 #include "utf_utils/utf_utils.h"
 
 namespace klib {
+
+namespace {
+
+std::int32_t trim_left_erase_num(const std::string &str) {
+  const auto begin = str.c_str();
+  const auto end = begin + std::size(str);
+  auto iter = begin;
+
+  while (iter != end) {
+    auto temp = iter;
+    char32_t code_point = utf8::next(temp, end);
+
+    if (is_whitespace(code_point)) {
+      iter = temp;
+      continue;
+    } else {
+      break;
+    }
+  }
+
+  return iter - begin;
+}
+
+std::int32_t trim_right_erase_num(const std::string &str) {
+  const auto begin = str.c_str();
+  const auto end = begin + std::size(str);
+  auto iter = end;
+
+  while (iter != begin) {
+    auto temp = iter;
+    char32_t code_point = utf8::prior(temp, begin);
+
+    if (is_whitespace(code_point)) {
+      iter = temp;
+      continue;
+    } else {
+      break;
+    }
+  }
+
+  return end - iter;
+}
+
+}  // namespace
+
+void trim_left(std::string &str) {
+  boost::algorithm::erase_head(str, trim_left_erase_num(str));
+}
+
+void trim_right(std::string &str) {
+  boost::algorithm::erase_tail(str, trim_right_erase_num(str));
+}
+
+void trim(std::string &str) {
+  trim_left(str);
+  trim_right(str);
+}
+
+std::string trim_left_copy(const std::string &str) {
+  return boost::algorithm::erase_head_copy(str, trim_left_erase_num(str));
+}
+
+std::string trim_right_copy(const std::string &str) {
+  return boost::algorithm::erase_tail_copy(str, trim_right_erase_num(str));
+}
+
+std::string trim_copy(const std::string &str) {
+  return trim_right_copy(trim_left_copy(str));
+}
+
+char32_t first_code_point(const std::string &str) {
+  Expects(!std::empty(str));
+
+  const auto begin = str.c_str();
+  const auto end = begin + std::size(str);
+  return utf8::peek_next(begin, end);
+}
+
+char32_t last_code_point(const std::string &str) {
+  Expects(!std::empty(str));
+
+  const auto begin = str.c_str();
+  auto end = begin + std::size(str);
+  return utf8::prior(end, begin);
+}
 
 bool validate_utf8(const std::string &str) {
   return simdutf::validate_utf8(str.c_str(), std::size(str));
@@ -50,19 +136,6 @@ std::string utf16_to_utf8(const std::u16string &str) {
   return result;
 }
 
-char32_t utf8_to_unicode(const std::string &str) {
-  char32_t result;
-  auto input_size = std::size(str);
-  auto ptr = reinterpret_cast<const char8_t *>(std::data(str));
-
-  auto check = uu::UtfUtils::GetCodePoint(ptr, ptr + input_size, result);
-  if (!check) [[unlikely]] {
-    throw RuntimeError("GetCodePoint failed");
-  }
-
-  return result;
-}
-
 std::u32string utf8_to_utf32(const std::string &str) {
   auto input_size = std::size(str);
 
@@ -80,16 +153,8 @@ std::u32string utf8_to_utf32(const std::string &str) {
   return result;
 }
 
-bool is_ascii(const std::string &str) {
-  return std::all_of(std::begin(str), std::end(str),
-                     [](char c) { return is_ascii(c); });
+std::string utf32_to_utf8(const std::u32string &str) {
+  return utf8::utf32to8(str);
 }
-
-bool is_ascii(const std::u32string &str) {
-  return std::all_of(std::begin(str), std::end(str),
-                     [](char32_t c) { return is_ascii(c); });
-}
-
-bool is_chinese(const std::string &c) { return is_chinese(utf8_to_unicode(c)); }
 
 }  // namespace klib

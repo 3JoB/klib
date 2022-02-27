@@ -4,6 +4,18 @@
 
 #include "klib/unicode.h"
 
+TEST_CASE("trim", "[unicode]") {
+  std::string str = " 你好世界 ";
+  CHECK(klib::trim_copy(str) == "你好世界");
+}
+
+TEST_CASE("code_point", "[unicode]") {
+  const std::string str = "zß水🍌";
+
+  CHECK(klib::first_code_point(str) == 0x0000007A);
+  CHECK(klib::last_code_point(str) == 0x0001F34C);
+}
+
 TEST_CASE("validate_utf8", "[unicode]") {
   std::string str = "你好世界";
   CHECK(klib::validate_utf8(str));
@@ -52,26 +64,17 @@ TEST_CASE("utf8_to_utf32", "[unicode]") {
   CHECK(utf32[1] == 0x000000DF);
   CHECK(utf32[2] == 0x00006C34);
   CHECK(utf32[3] == 0x0001F34C);
-}
 
-TEST_CASE("utf8_to_unicode", "[unicode]") {
-  auto unicode = klib::utf8_to_unicode("🍌");
-  CHECK(unicode == 0x0001F34C);
+  CHECK(klib::utf32_to_utf8(utf32) == "zß水🍌");
 }
 
 TEST_CASE("is_ascii", "[unicode]") {
   CHECK(klib::is_ascii('A'));
   CHECK_FALSE(klib::is_ascii(static_cast<char>(190)));
-
-  CHECK(klib::is_ascii("AAA"));
-  CHECK_FALSE(klib::is_ascii("你"));
-
-  CHECK(klib::is_ascii(klib::utf8_to_utf32("AAA")));
-  CHECK_FALSE(klib::is_ascii(klib::utf8_to_utf32("你")));
 }
 
 TEST_CASE("is_chinese", "[unicode]") {
-  CHECK(klib::is_chinese("你"));
-  CHECK_FALSE(klib::is_chinese("a"));
-  CHECK_FALSE(klib::is_chinese("🍌"));
+  CHECK(klib::is_chinese(klib::first_code_point("你")));
+  CHECK_FALSE(klib::is_chinese(klib::first_code_point("a")));
+  CHECK_FALSE(klib::is_chinese(klib::first_code_point("🍌")));
 }

@@ -91,6 +91,8 @@ find_package(simdutf REQUIRED)
 find_package(xxHash REQUIRED)
 find_package(cmark REQUIRED)
 find_package(llhttp REQUIRED)
+find_package(utf8cpp REQUIRED)
+find_package(Microsoft.GSL REQUIRED)
 
 add_definitions(-DDBG_MACRO_NO_WARNING)
 if(NOT (${CMAKE_BUILD_TYPE} STREQUAL "Debug"))

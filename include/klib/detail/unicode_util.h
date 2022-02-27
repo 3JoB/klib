@@ -8,8 +8,8 @@ class UnicodeRange {
   static_assert(a <= b, "Proper range");
 
  public:
-  constexpr bool operator()(char32_t x) const noexcept {
-    return x >= a && x <= b;
+  constexpr bool operator()(char32_t code_point) const noexcept {
+    return code_point >= a && code_point <= b;
   }
 };
 
