@@ -137,19 +137,27 @@ constexpr bool is_ascii(char32_t code_point) {
  * @see https://en.wikipedia.org/wiki/Whitespace_character
  */
 constexpr bool is_whitespace(char32_t code_point) {
-  return code_point == U'\u0009' || code_point == U'\u000A' ||
-         code_point == U'\u000B' || code_point == U'\u000C' ||
-         code_point == U'\u000D' || code_point == U'\u0020' ||
-         code_point == U'\u0085' || code_point == U'\u00A0' ||
-         code_point == U'\u1680' || code_point == U'\u2000' ||
-         code_point == U'\u2001' || code_point == U'\u2002' ||
-         code_point == U'\u2003' || code_point == U'\u2004' ||
-         code_point == U'\u2005' || code_point == U'\u2006' ||
-         code_point == U'\u2007' || code_point == U'\u2008' ||
-         code_point == U'\u2009' || code_point == U'\u200A' ||
-         code_point == U'\u2028' || code_point == U'\u2029' ||
-         code_point == U'\u202F' || code_point == U'\u205F' ||
-         code_point == U'\u3000';
+  using namespace detail;
+
+  return code_point == U'\u0009' || range(code_point, U'\u000A', U'\u000D') ||
+         code_point == U'\u0020' || code_point == U'\u0085' ||
+         code_point == U'\u00A0' || code_point == U'\u1680' ||
+         range(code_point, U'\u2000', U'\u200A') ||
+         range(code_point, U'\u2028', U'\u2029') || code_point == U'\u202F' ||
+         code_point == U'\u205F' || code_point == U'\u3000';
+}
+
+/**
+ * @brief Determine whether it is an control character
+ * @param code_point: Code point
+ * @return If it is an control character, return true, otherwise return false
+ * @see https://zh.wikipedia.org/wiki/%E6%8E%A7%E5%88%B6%E5%AD%97%E7%AC%A6
+ */
+constexpr bool is_control(char32_t code_point) {
+  using namespace detail;
+
+  return range(code_point, U'\u0000', U'\u001F') ||
+         range(code_point, U'\u007F', U'\u009F');
 }
 
 /**
@@ -198,18 +206,28 @@ constexpr bool is_english_punctuation(char32_t code_point) {
 }
 
 /**
- * @brief Determine whether it is a Chinese character
+ * @brief Determine whether it is a CJK Unified Ideographs
  * @param code_point: Code point
- * @return If it is a Chinese character, return true, otherwise return false
+ * @return If it is a CJK Unified Ideographs, return true, otherwise return
+ * false
+ * @see
+ * https://zh.wikipedia.org/wiki/%E4%B8%AD%E6%97%A5%E9%9F%93%E7%B5%B1%E4%B8%80%E8%A1%A8%E6%84%8F%E6%96%87%E5%AD%97
  */
-constexpr bool is_chinese(char32_t code_point) {
+constexpr bool is_cjk(char32_t code_point) {
   using namespace detail;
 
-  return UnifiedIdeographs{}(code_point) || UnifiedIdeographsA{}(code_point) ||
-         UnifiedIdeographsB{}(code_point) || UnifiedIdeographsC{}(code_point) ||
-         UnifiedIdeographsD{}(code_point) || UnifiedIdeographsE{}(code_point) ||
-         CompatibilityIdeographs{}(code_point) ||
-         CompatibilityIdeographsSupplement{}(code_point);
+  return code_point == U'\u3007' || range(code_point, U'\u3400', U'\u4DBF') ||
+         range(code_point, U'\u4E00', U'\u9FFF') ||
+         range(code_point, U'\uFA0E', U'\uFA0F') || code_point == U'\uFA11' ||
+         range(code_point, U'\uFA13', U'\uFA14') || code_point == U'\uFA1F' ||
+         code_point == U'\uFA21' || range(code_point, U'\uFA23', U'\uFA24') ||
+         range(code_point, U'\uFA27', U'\uFA29') ||
+         range(code_point, U'\U00020000', U'\U0002A6DF') ||
+         range(code_point, U'\U0002A700', U'\U0002B738') ||
+         range(code_point, U'\U0002B740', U'\U0002B81D') ||
+         range(code_point, U'\U0002B820', U'\U0002CEA1') ||
+         range(code_point, U'\U0002CEB0', U'\U0002EBE0') ||
+         range(code_point, U'\U00030000', U'\U0003134A');
 }
 
 }  // namespace klib

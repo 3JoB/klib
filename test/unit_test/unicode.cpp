@@ -85,8 +85,13 @@ TEST_CASE("is_ascii", "[unicode]") {
   CHECK_FALSE(klib::is_ascii(static_cast<char>(190)));
 }
 
-TEST_CASE("is_chinese", "[unicode]") {
-  CHECK(klib::is_chinese(klib::first_code_point("你")));
-  CHECK_FALSE(klib::is_chinese(klib::first_code_point("a")));
-  CHECK_FALSE(klib::is_chinese(klib::first_code_point("🍌")));
+TEST_CASE("is_cjk", "[unicode]") {
+  CHECK(klib::is_cjk(klib::first_code_point("你")));
+  CHECK_FALSE(klib::is_cjk(klib::first_code_point("a")));
+  CHECK_FALSE(klib::is_cjk(klib::first_code_point("🍌")));
+  CHECK(klib::is_cjk(U'〇'));
+  CHECK(klib::is_cjk(U'䀹'));
+  CHECK(klib::is_cjk(U'鿃'));
+  CHECK(klib::is_cjk(U'\u9FEB'));
+  CHECK(klib::is_cjk(U'﨧'));
 }
