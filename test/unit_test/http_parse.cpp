@@ -33,7 +33,8 @@ TEST_CASE("header", "[http_parse]") {
 
   klib::HTTPHeader header(request_header);
 
-  const auto &url = header.url();
+  const auto uri = header.uri();
+  klib::URL url(uri);
   CHECK(std::empty(url.schema()));
   CHECK(std::empty(url.host()));
   CHECK(url.port() == 0);
@@ -61,4 +62,14 @@ TEST_CASE("header", "[http_parse]") {
 
   CHECK(header.contains("CONTENT-Length"));
   CHECK_FALSE(header.contains("abc"));
+}
+
+TEST_CASE("header2", "[http_parse]") {
+  auto request_header = "GET /index.html HTTP/1.0\r\n\r\n";
+
+  klib::HTTPHeader header(request_header);
+
+  const auto &uri = header.uri();
+  klib::URL url(uri);
+  CHECK(url.path() == "/index.html");
 }

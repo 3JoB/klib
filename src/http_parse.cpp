@@ -19,14 +19,14 @@ namespace {
 
 class Header {
  public:
-  std::string url_;
+  std::string uri_;
   std::vector<std::pair<std::string, std::string>> field_value_;
   std::string_view body_;
 };
 
 std::int32_t on_url(llhttp_t* parser, const char* at, std::size_t length) {
   auto data = static_cast<Header*>(parser->data);
-  data->url_ = std::string_view(at, length);
+  data->uri_ = std::string(at, length);
   return 0;
 }
 
@@ -116,7 +116,7 @@ HTTPHeader::HTTPHeader(std::string header) : header_(std::move(header)) {
   http_major_ = parser.http_major;
   http_minor_ = parser.http_minor;
 
-  url_ = URL(std::move(result.url_));
+  uri_ = std::move(result.uri_);
   body_ = result.body_;
 
   for (const auto& [field, value] : result.field_value_) {
