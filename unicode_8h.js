@@ -2,8 +2,9 @@ var unicode_8h =
 [
     [ "first_code_point", "unicode_8h.html#a7e7fdc424fbb97c95ae4ad202ee716a4", null ],
     [ "is_ascii", "unicode_8h.html#a8c33a23114652432078cf1c000340ce4", null ],
-    [ "is_chinese", "unicode_8h.html#a09a47520448d27678e7bb7c6d8e6b441", null ],
     [ "is_chinese_punctuation", "unicode_8h.html#a1fe967545828645037c16555e827b8ae", null ],
+    [ "is_cjk", "unicode_8h.html#ad114b90edcbc2b42918440c6b3fb016d", null ],
+    [ "is_control", "unicode_8h.html#a968663bb12720c78b35576f376d3e8b6", null ],
     [ "is_english_punctuation", "unicode_8h.html#a871753503470df2a18ddb5e49681b4b5", null ],
     [ "is_whitespace", "unicode_8h.html#a29367e09ea9de32ad298c686335725af", null ],
     [ "last_code_point", "unicode_8h.html#a4be2710ffbc7f6eaeb71ed8491453b1f", null ],

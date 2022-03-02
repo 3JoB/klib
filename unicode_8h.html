@@ -30,7 +30,7 @@
  <tbody>
  <tr id="projectrow">
   <td id="projectalign">
-   <div id="projectname">klib<span id="projectnumber">&#160;1.3.0</span>
+   <div id="projectname">klib<span id="projectnumber">&#160;1.3.1</span>
    </div>
   </td>
     <td>        <div id="MSearchBox" class="MSearchBoxInactive">
@@ -161,15 +161,18 @@ Functions</h2></td></tr>
 <tr class="memitem:a29367e09ea9de32ad298c686335725af"><td class="memItemLeft" align="right" valign="top">constexpr bool&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="unicode_8h.html#a29367e09ea9de32ad298c686335725af">klib::is_whitespace</a> (char32_t code_point)</td></tr>
 <tr class="memdesc:a29367e09ea9de32ad298c686335725af"><td class="mdescLeft">&#160;</td><td class="mdescRight">Determine whether it is an whitespace character.  <a href="unicode_8h.html#a29367e09ea9de32ad298c686335725af">More...</a><br /></td></tr>
 <tr class="separator:a29367e09ea9de32ad298c686335725af"><td class="memSeparator" colspan="2">&#160;</td></tr>
+<tr class="memitem:a968663bb12720c78b35576f376d3e8b6"><td class="memItemLeft" align="right" valign="top">constexpr bool&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="unicode_8h.html#a968663bb12720c78b35576f376d3e8b6">klib::is_control</a> (char32_t code_point)</td></tr>
+<tr class="memdesc:a968663bb12720c78b35576f376d3e8b6"><td class="mdescLeft">&#160;</td><td class="mdescRight">Determine whether it is an control character.  <a href="unicode_8h.html#a968663bb12720c78b35576f376d3e8b6">More...</a><br /></td></tr>
+<tr class="separator:a968663bb12720c78b35576f376d3e8b6"><td class="memSeparator" colspan="2">&#160;</td></tr>
 <tr class="memitem:a1fe967545828645037c16555e827b8ae"><td class="memItemLeft" align="right" valign="top">constexpr bool&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="unicode_8h.html#a1fe967545828645037c16555e827b8ae">klib::is_chinese_punctuation</a> (char32_t code_point)</td></tr>
 <tr class="memdesc:a1fe967545828645037c16555e827b8ae"><td class="mdescLeft">&#160;</td><td class="mdescRight">Determine whether it is an Chinese punctuation character.  <a href="unicode_8h.html#a1fe967545828645037c16555e827b8ae">More...</a><br /></td></tr>
 <tr class="separator:a1fe967545828645037c16555e827b8ae"><td class="memSeparator" colspan="2">&#160;</td></tr>
 <tr class="memitem:a871753503470df2a18ddb5e49681b4b5"><td class="memItemLeft" align="right" valign="top">constexpr bool&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="unicode_8h.html#a871753503470df2a18ddb5e49681b4b5">klib::is_english_punctuation</a> (char32_t code_point)</td></tr>
 <tr class="memdesc:a871753503470df2a18ddb5e49681b4b5"><td class="mdescLeft">&#160;</td><td class="mdescRight">Determine whether it is an English punctuation character.  <a href="unicode_8h.html#a871753503470df2a18ddb5e49681b4b5">More...</a><br /></td></tr>
 <tr class="separator:a871753503470df2a18ddb5e49681b4b5"><td class="memSeparator" colspan="2">&#160;</td></tr>
-<tr class="memitem:a09a47520448d27678e7bb7c6d8e6b441"><td class="memItemLeft" align="right" valign="top">constexpr bool&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="unicode_8h.html#a09a47520448d27678e7bb7c6d8e6b441">klib::is_chinese</a> (char32_t code_point)</td></tr>
-<tr class="memdesc:a09a47520448d27678e7bb7c6d8e6b441"><td class="mdescLeft">&#160;</td><td class="mdescRight">Determine whether it is a Chinese character.  <a href="unicode_8h.html#a09a47520448d27678e7bb7c6d8e6b441">More...</a><br /></td></tr>
-<tr class="separator:a09a47520448d27678e7bb7c6d8e6b441"><td class="memSeparator" colspan="2">&#160;</td></tr>
+<tr class="memitem:ad114b90edcbc2b42918440c6b3fb016d"><td class="memItemLeft" align="right" valign="top">constexpr bool&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="unicode_8h.html#ad114b90edcbc2b42918440c6b3fb016d">klib::is_cjk</a> (char32_t code_point)</td></tr>
+<tr class="memdesc:ad114b90edcbc2b42918440c6b3fb016d"><td class="mdescLeft">&#160;</td><td class="mdescRight">Determine whether it is a CJK Unified Ideographs.  <a href="unicode_8h.html#ad114b90edcbc2b42918440c6b3fb016d">More...</a><br /></td></tr>
+<tr class="separator:ad114b90edcbc2b42918440c6b3fb016d"><td class="memSeparator" colspan="2">&#160;</td></tr>
 </table>
 <a name="details" id="details"></a><h2 class="groupheader">Detailed Description</h2>
 <div class="textblock"><p >Contains Unicode module. </p>
@@ -236,41 +239,6 @@ Functions</h2></td></tr>
 
 </div>
 </div>
-<a id="a09a47520448d27678e7bb7c6d8e6b441" name="a09a47520448d27678e7bb7c6d8e6b441"></a>
-<h2 class="memtitle"><span class="permalink"><a href="#a09a47520448d27678e7bb7c6d8e6b441">&#9670;&nbsp;</a></span>is_chinese()</h2>
-
-<div class="memitem">
-<div class="memproto">
-<table class="mlabels">
-  <tr>
-  <td class="mlabels-left">
-      <table class="memname">
-        <tr>
-          <td class="memname">constexpr bool klib::is_chinese </td>
-          <td>(</td>
-          <td class="paramtype">char32_t&#160;</td>
-          <td class="paramname"><em>code_point</em></td><td>)</td>
-          <td></td>
-        </tr>
-      </table>
-  </td>
-  <td class="mlabels-right">
-<span class="mlabels"><span class="mlabel">constexpr</span></span>  </td>
-  </tr>
-</table>
-</div><div class="memdoc">
-
-<p>Determine whether it is a Chinese character. </p>
-<dl class="params"><dt>Parameters</dt><dd>
-  <table class="params">
-    <tr><td class="paramname">code_point</td><td>Code point </td></tr>
-  </table>
-  </dd>
-</dl>
-<dl class="section return"><dt>Returns</dt><dd>If it is a Chinese character, return true, otherwise return false </dd></dl>
-
-</div>
-</div>
 <a id="a1fe967545828645037c16555e827b8ae" name="a1fe967545828645037c16555e827b8ae"></a>
 <h2 class="memtitle"><span class="permalink"><a href="#a1fe967545828645037c16555e827b8ae">&#9670;&nbsp;</a></span>is_chinese_punctuation()</h2>
 
@@ -304,6 +272,78 @@ Functions</h2></td></tr>
 </dl>
 <dl class="section return"><dt>Returns</dt><dd>If it is an Chinese punctuation character, return true, otherwise return false </dd></dl>
 <dl class="section see"><dt>See also</dt><dd><a href="https://zh.wikipedia.org/wiki/%E6%A0%87%E7%82%B9%E7%AC%A6%E5%8F%B7">https://zh.wikipedia.org/wiki/%E6%A0%87%E7%82%B9%E7%AC%A6%E5%8F%B7</a> </dd></dl>
+
+</div>
+</div>
+<a id="ad114b90edcbc2b42918440c6b3fb016d" name="ad114b90edcbc2b42918440c6b3fb016d"></a>
+<h2 class="memtitle"><span class="permalink"><a href="#ad114b90edcbc2b42918440c6b3fb016d">&#9670;&nbsp;</a></span>is_cjk()</h2>
+
+<div class="memitem">
+<div class="memproto">
+<table class="mlabels">
+  <tr>
+  <td class="mlabels-left">
+      <table class="memname">
+        <tr>
+          <td class="memname">constexpr bool klib::is_cjk </td>
+          <td>(</td>
+          <td class="paramtype">char32_t&#160;</td>
+          <td class="paramname"><em>code_point</em></td><td>)</td>
+          <td></td>
+        </tr>
+      </table>
+  </td>
+  <td class="mlabels-right">
+<span class="mlabels"><span class="mlabel">constexpr</span></span>  </td>
+  </tr>
+</table>
+</div><div class="memdoc">
+
+<p>Determine whether it is a CJK Unified Ideographs. </p>
+<dl class="params"><dt>Parameters</dt><dd>
+  <table class="params">
+    <tr><td class="paramname">code_point</td><td>Code point </td></tr>
+  </table>
+  </dd>
+</dl>
+<dl class="section return"><dt>Returns</dt><dd>If it is a CJK Unified Ideographs, return true, otherwise return false </dd></dl>
+<dl class="section see"><dt>See also</dt><dd><a href="https://zh.wikipedia.org/wiki/%E4%B8%AD%E6%97%A5%E9%9F%93%E7%B5%B1%E4%B8%80%E8%A1%A8%E6%84%8F%E6%96%87%E5%AD%97">https://zh.wikipedia.org/wiki/%E4%B8%AD%E6%97%A5%E9%9F%93%E7%B5%B1%E4%B8%80%E8%A1%A8%E6%84%8F%E6%96%87%E5%AD%97</a> </dd></dl>
+
+</div>
+</div>
+<a id="a968663bb12720c78b35576f376d3e8b6" name="a968663bb12720c78b35576f376d3e8b6"></a>
+<h2 class="memtitle"><span class="permalink"><a href="#a968663bb12720c78b35576f376d3e8b6">&#9670;&nbsp;</a></span>is_control()</h2>
+
+<div class="memitem">
+<div class="memproto">
+<table class="mlabels">
+  <tr>
+  <td class="mlabels-left">
+      <table class="memname">
+        <tr>
+          <td class="memname">constexpr bool klib::is_control </td>
+          <td>(</td>
+          <td class="paramtype">char32_t&#160;</td>
+          <td class="paramname"><em>code_point</em></td><td>)</td>
+          <td></td>
+        </tr>
+      </table>
+  </td>
+  <td class="mlabels-right">
+<span class="mlabels"><span class="mlabel">constexpr</span></span>  </td>
+  </tr>
+</table>
+</div><div class="memdoc">
+
+<p>Determine whether it is an control character. </p>
+<dl class="params"><dt>Parameters</dt><dd>
+  <table class="params">
+    <tr><td class="paramname">code_point</td><td>Code point </td></tr>
+  </table>
+  </dd>
+</dl>
+<dl class="section return"><dt>Returns</dt><dd>If it is an control character, return true, otherwise return false </dd></dl>
+<dl class="section see"><dt>See also</dt><dd><a href="https://zh.wikipedia.org/wiki/%E6%8E%A7%E5%88%B6%E5%AD%97%E7%AC%A6">https://zh.wikipedia.org/wiki/%E6%8E%A7%E5%88%B6%E5%AD%97%E7%AC%A6</a> </dd></dl>
 
 </div>
 </div>
