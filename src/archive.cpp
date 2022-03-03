@@ -9,9 +9,6 @@
 
 #include "klib/archive.h"
 
-#include <fcntl.h>
-#include <unistd.h>
-
 #include <cerrno>
 #include <cstdint>
 #include <filesystem>
@@ -28,13 +25,6 @@
 
 #include "klib/exception.h"
 #include "klib/util.h"
-
-#define CHECK_SYSTEM_IO(rc)                     \
-  do {                                          \
-    if (rc == -1) [[unlikely]] {                \
-      throw RuntimeError(std::strerror(errno)); \
-    }                                           \
-  } while (0)
 
 #define CHECK_LIBARCHIVE(rc, archive)                    \
   do {                                                   \
@@ -268,20 +258,9 @@ void compress(const std::vector<std::string> &paths,
 
       auto source_path = archive_entry_sourcepath(entry);
       if (std::filesystem::is_regular_file(source_path)) {
-        auto fd = open(source_path, O_RDONLY);
-        SCOPE_EXIT { close(fd); };
-        CHECK_SYSTEM_IO(fd);
-
-        char buff[16384];
-        auto length = read(fd, buff, sizeof(buff));
-        CHECK_SYSTEM_IO(length);
-        while (length > 0) {
-          rc = archive_write_data(archive, buff, length);
-          CHECK_LIBARCHIVE(rc, archive);
-
-          length = read(fd, buff, sizeof(buff));
-          CHECK_SYSTEM_IO(length);
-        }
+        auto buff = read_file(source_path, true);
+        rc = archive_write_data(archive, std::data(buff), std::size(buff));
+        CHECK_LIBARCHIVE(rc, archive);
       }
     }
   }
