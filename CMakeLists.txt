@@ -52,9 +52,6 @@ file(
   "${KLIB_SOURCE_DIR}/third_party/subtly/*.cc"
   "${KLIB_SOURCE_DIR}/third_party/utf_utils/*.cpp")
 
-add_definitions(-DSFNTLY_EXPERIMENTAL -DSFNTLY_NO_EXCEPTION)
-include_directories(third_party)
-
 # ---------------------------------------------------------------------------------------
 # Include CMake module
 # ---------------------------------------------------------------------------------------
@@ -92,7 +89,8 @@ pkg_check_modules(libbrotlidec REQUIRED IMPORTED_TARGET libbrotlidec)
 pkg_check_modules(libbrotlienc REQUIRED IMPORTED_TARGET libbrotlienc)
 pkg_check_modules(libbrotlicommon REQUIRED IMPORTED_TARGET libbrotlicommon)
 
-add_definitions(-DCURL_NO_OLDIES -DSQLITE_HAS_CODEC)
+add_definitions(-DCURL_NO_OLDIES -DSQLITE_HAS_CODEC -DSFNTLY_EXPERIMENTAL
+                -DSFNTLY_NO_EXCEPTION)
 
 find_package(fmt REQUIRED)
 find_package(spdlog REQUIRED)
@@ -105,13 +103,15 @@ find_package(llhttp REQUIRED)
 find_package(utf8cpp REQUIRED)
 find_package(Microsoft.GSL REQUIRED)
 
+set(THREADS_PREFER_PTHREAD_FLAG TRUE)
+find_package(Threads REQUIRED)
+
 add_definitions(-DDBG_MACRO_NO_WARNING)
 if(NOT (${CMAKE_BUILD_TYPE} STREQUAL "Debug"))
   add_definitions(-DDBG_MACRO_DISABLE)
 endif()
 
-set(THREADS_PREFER_PTHREAD_FLAG TRUE)
-find_package(Threads REQUIRED)
+include_directories(third_party)
 
 # ---------------------------------------------------------------------------------------
 # Build static library

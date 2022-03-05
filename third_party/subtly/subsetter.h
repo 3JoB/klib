@@ -26,8 +26,6 @@ namespace subtly {
 class Subsetter : public sfntly::RefCounted<Subsetter> {
  public:
   Subsetter(sfntly::Font* font, CharacterPredicate* predicate);
-  Subsetter(const char* font_path, CharacterPredicate* predicate);
-  virtual ~Subsetter() {}
 
   // Performs subsetting returning the subsetted font.
   virtual CALLER_ATTACH sfntly::Font* Subset();

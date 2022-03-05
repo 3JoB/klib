@@ -20,16 +20,6 @@
 namespace subtly {
 using namespace sfntly;
 
-// AcceptRange predicate
-AcceptRange::AcceptRange(int32_t start, int32_t end)
-    : start_(start), end_(end) {}
-
-AcceptRange::~AcceptRange() {}
-
-bool AcceptRange::operator()(int32_t character) const {
-  return start_ <= character && character <= end_;
-}
-
 // AcceptSet predicate
 AcceptSet::AcceptSet(IntegerSet* characters) : characters_(characters) {}
 
@@ -37,11 +27,5 @@ AcceptSet::~AcceptSet() { delete characters_; }
 
 bool AcceptSet::operator()(int32_t character) const {
   return characters_->find(character) != characters_->end();
-}
-
-// AcceptAll predicate
-bool AcceptAll::operator()(int32_t character) const {
-  UNREFERENCED_PARAMETER(character);
-  return true;
 }
 }  // namespace subtly

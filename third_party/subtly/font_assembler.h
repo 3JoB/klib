@@ -47,11 +47,6 @@ class FontAssembler : public sfntly::RefCounted<FontAssembler> {
   // Assemble a new font from the font info object.
   virtual CALLER_ATTACH sfntly::Font* Assemble();
 
-  sfntly::IntegerSet* table_blacklist() const { return table_blacklist_; }
-  void set_table_blacklist(sfntly::IntegerSet* table_blacklist) {
-    table_blacklist_ = table_blacklist;
-  }
-
  protected:
   virtual bool AssembleCMapTable();
   virtual bool AssembleGlyphAndLocaTables();

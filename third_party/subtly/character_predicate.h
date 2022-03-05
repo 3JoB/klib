@@ -28,19 +28,6 @@ class CharacterPredicate : virtual public sfntly::RefCount {
   virtual bool operator()(int32_t character) const = 0;
 };
 
-// All characters except for those between [start, end] are rejected
-class AcceptRange : public CharacterPredicate,
-                    public sfntly::RefCounted<AcceptRange> {
- public:
-  AcceptRange(int32_t start, int32_t end);
-  ~AcceptRange();
-  virtual bool operator()(int32_t character) const;
-
- private:
-  int32_t start_;
-  int32_t end_;
-};
-
 // All characters in IntegerSet
 // The set is OWNED by the predicate! Do not modify it.
 // It will be freed when the predicate is destroyed.
@@ -53,15 +40,6 @@ class AcceptSet : public CharacterPredicate,
 
  private:
   sfntly::IntegerSet* characters_;
-};
-
-// All characters
-class AcceptAll : public CharacterPredicate,
-                  public sfntly::RefCounted<AcceptAll> {
- public:
-  AcceptAll() {}
-  ~AcceptAll() {}
-  virtual bool operator()(int32_t character) const;
 };
 }  // namespace subtly
 

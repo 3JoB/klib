@@ -18,26 +18,15 @@
 #define TYPOGRAPHY_FONT_SFNTLY_SRC_SAMPLE_SUBTLY_UTILS_H_
 
 #include <cstddef>
-#include <string>
 
 #include "sfntly/font.h"
 #include "sfntly/font_factory.h"
 
 namespace subtly {
 CALLER_ATTACH sfntly::Font* LoadFont(const char* font, std::size_t size);
-CALLER_ATTACH sfntly::Font* LoadFont(const char* font_path);
-CALLER_ATTACH sfntly::Font::Builder* LoadFontBuilder(const char* font_path);
 
 void LoadFonts(const char* font, std::size_t size, sfntly::FontFactory* factory,
                sfntly::FontArray* fonts);
-void LoadFonts(const char* font_path, sfntly::FontFactory* factory,
-               sfntly::FontArray* fonts);
-void LoadFontBuilders(const char* font_path, sfntly::FontFactory* factory,
-                      sfntly::FontBuilderArray* builders);
-
-bool SerializeFont(const char* font_path, sfntly::Font* font);
-bool SerializeFont(const char* font_path, sfntly::FontFactory* factory,
-                   sfntly::Font* font);
 }  // namespace subtly
 
 #endif  // TYPOGRAPHY_FONT_SFNTLY_SRC_SAMPLE_SUBTLY_UTILS_H_

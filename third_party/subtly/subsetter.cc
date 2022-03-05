@@ -16,15 +16,12 @@
 
 #include "subtly/subsetter.h"
 
-#include <stdio.h>
-
 #include "sfntly/font.h"
 #include "sfntly/font_factory.h"
 #include "sfntly/tag.h"
 #include "subtly/character_predicate.h"
 #include "subtly/font_assembler.h"
 #include "subtly/font_info.h"
-#include "subtly/utils.h"
 
 namespace subtly {
 using namespace sfntly;
@@ -34,11 +31,6 @@ using namespace sfntly;
  ******************************************************************************/
 Subsetter::Subsetter(Font* font, CharacterPredicate* predicate)
     : font_(font), predicate_(predicate) {}
-
-Subsetter::Subsetter(const char* font_path, CharacterPredicate* predicate)
-    : predicate_(predicate) {
-  font_.Attach(LoadFont(font_path));
-}
 
 CALLER_ATTACH Font* Subsetter::Subset() {
   Ptr<FontSourcedInfoBuilder> info_builder =
