@@ -30,7 +30,7 @@
  <tbody>
  <tr id="projectrow">
   <td id="projectalign">
-   <div id="projectname">klib<span id="projectnumber">&#160;1.4.0</span>
+   <div id="projectname">klib<span id="projectnumber">&#160;1.5.0</span>
    </div>
   </td>
     <td>        <div id="MSearchBox" class="MSearchBoxInactive">
@@ -99,15 +99,23 @@ $(document).ready(function(){initNavTree('font_8h.html',''); initResizable(); })
 
 <p>Contains handling font module.  
 <a href="#details">More...</a></p>
-<div class="textblock"><code>#include &lt;string&gt;</code><br />
+<div class="textblock"><code>#include &lt;cstddef&gt;</code><br />
+<code>#include &lt;string&gt;</code><br />
+<code>#include &lt;string_view&gt;</code><br />
 </div>
 <p><a href="font_8h_source.html">Go to the source code of this file.</a></p>
 <table class="memberdecls">
 <tr class="heading"><td colspan="2"><h2 class="groupheader"><a id="func-members" name="func-members"></a>
 Functions</h2></td></tr>
-<tr class="memitem:a68bd35f8f6f1779b00e8ad0e89b69021"><td class="memItemLeft" align="right" valign="top">std::string&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="font_8h.html#a68bd35f8f6f1779b00e8ad0e89b69021">klib::ttf_subset</a> (const std::string &amp;ttf_font_path, const std::u32string &amp;unicodes)</td></tr>
-<tr class="memdesc:a68bd35f8f6f1779b00e8ad0e89b69021"><td class="mdescLeft">&#160;</td><td class="mdescRight">Take a font subset using the given Unicode.  <a href="font_8h.html#a68bd35f8f6f1779b00e8ad0e89b69021">More...</a><br /></td></tr>
-<tr class="separator:a68bd35f8f6f1779b00e8ad0e89b69021"><td class="memSeparator" colspan="2">&#160;</td></tr>
+<tr class="memitem:aa1fa80e800eeac67cd47f0cbf29c0e69"><td class="memItemLeft" align="right" valign="top">std::string&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="font_8h.html#aa1fa80e800eeac67cd47f0cbf29c0e69">klib::ttf_subset</a> (const std::string &amp;ttf_font, const std::u32string &amp;unicodes)</td></tr>
+<tr class="memdesc:aa1fa80e800eeac67cd47f0cbf29c0e69"><td class="mdescLeft">&#160;</td><td class="mdescRight">Take a font subset using the given Unicode.  <a href="font_8h.html#aa1fa80e800eeac67cd47f0cbf29c0e69">More...</a><br /></td></tr>
+<tr class="separator:aa1fa80e800eeac67cd47f0cbf29c0e69"><td class="memSeparator" colspan="2">&#160;</td></tr>
+<tr class="memitem:a6386b225baf3040aad8dd6d4e81689e6"><td class="memItemLeft" align="right" valign="top"><a id="a6386b225baf3040aad8dd6d4e81689e6" name="a6386b225baf3040aad8dd6d4e81689e6"></a>
+std::string&#160;</td><td class="memItemRight" valign="bottom"><b>klib::ttf_subset</b> (std::string_view ttf_font, const std::u32string &amp;unicodes)</td></tr>
+<tr class="separator:a6386b225baf3040aad8dd6d4e81689e6"><td class="memSeparator" colspan="2">&#160;</td></tr>
+<tr class="memitem:a181e8df04fa5a6d03e662376d106c99c"><td class="memItemLeft" align="right" valign="top"><a id="a181e8df04fa5a6d03e662376d106c99c" name="a181e8df04fa5a6d03e662376d106c99c"></a>
+std::string&#160;</td><td class="memItemRight" valign="bottom"><b>klib::ttf_subset</b> (const char *ttf_font, std::size_t size, const std::u32string &amp;unicodes)</td></tr>
+<tr class="separator:a181e8df04fa5a6d03e662376d106c99c"><td class="memSeparator" colspan="2">&#160;</td></tr>
 <tr class="memitem:ad3f3ce5a838b181385bef437ccd78df8"><td class="memItemLeft" align="right" valign="top">std::string&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="font_8h.html#ad3f3ce5a838b181385bef437ccd78df8">klib::ttf_to_woff2</a> (const std::string &amp;ttf_font)</td></tr>
 <tr class="memdesc:ad3f3ce5a838b181385bef437ccd78df8"><td class="mdescLeft">&#160;</td><td class="mdescRight">Convert TTF font to WOFF2 font.  <a href="font_8h.html#ad3f3ce5a838b181385bef437ccd78df8">More...</a><br /></td></tr>
 <tr class="separator:ad3f3ce5a838b181385bef437ccd78df8"><td class="memSeparator" colspan="2">&#160;</td></tr>
@@ -118,8 +126,8 @@ Functions</h2></td></tr>
 <a name="details" id="details"></a><h2 class="groupheader">Detailed Description</h2>
 <div class="textblock"><p >Contains handling font module. </p>
 </div><h2 class="groupheader">Function Documentation</h2>
-<a id="a68bd35f8f6f1779b00e8ad0e89b69021" name="a68bd35f8f6f1779b00e8ad0e89b69021"></a>
-<h2 class="memtitle"><span class="permalink"><a href="#a68bd35f8f6f1779b00e8ad0e89b69021">&#9670;&nbsp;</a></span>ttf_subset()</h2>
+<a id="aa1fa80e800eeac67cd47f0cbf29c0e69" name="aa1fa80e800eeac67cd47f0cbf29c0e69"></a>
+<h2 class="memtitle"><span class="permalink"><a href="#aa1fa80e800eeac67cd47f0cbf29c0e69">&#9670;&nbsp;</a></span>ttf_subset()</h2>
 
 <div class="memitem">
 <div class="memproto">
@@ -128,7 +136,7 @@ Functions</h2></td></tr>
           <td class="memname">std::string klib::ttf_subset </td>
           <td>(</td>
           <td class="paramtype">const std::string &amp;&#160;</td>
-          <td class="paramname"><em>ttf_font_path</em>, </td>
+          <td class="paramname"><em>ttf_font</em>, </td>
         </tr>
         <tr>
           <td class="paramkey"></td>
@@ -147,7 +155,7 @@ Functions</h2></td></tr>
 <p>Take a font subset using the given Unicode. </p>
 <dl class="params"><dt>Parameters</dt><dd>
   <table class="params">
-    <tr><td class="paramname">ttf_font_path</td><td>TTF font path </td></tr>
+    <tr><td class="paramname">ttf_font</td><td>TTF font </td></tr>
     <tr><td class="paramname">unicodes</td><td>Unicode that needs to be preserved </td></tr>
   </table>
   </dd>
