@@ -13,12 +13,12 @@
 /**
  * @brief klib minor version
  */
-#define KLIB_VER_MINOR 3
+#define KLIB_VER_MINOR 4
 
 /**
  * @brief klib patch version
  */
-#define KLIB_VER_PATCH 1
+#define KLIB_VER_PATCH 0
 
 #define KLIB_STRINGIZE2(s) #s
 #define KLIB_STRINGIZE(s) KLIB_STRINGIZE2(s)
