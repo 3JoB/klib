@@ -6,6 +6,7 @@
 #pragma once
 
 #include <string>
+#include <string_view>
 
 namespace klib {
 
@@ -16,6 +17,12 @@ namespace klib {
  * @return TTF font subset
  */
 std::string ttf_subset(const std::string &ttf_font_path,
+                       const std::u32string &unicodes);
+
+std::string ttf_subset(std::string_view ttf_font_path,
+                       const std::u32string &unicodes);
+
+std::string ttf_subset(const char *ttf_font_path,
                        const std::u32string &unicodes);
 
 /**
