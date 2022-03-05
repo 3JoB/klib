@@ -15,10 +15,7 @@
  */
 
 #include "sfntly/table/core/horizontal_device_metrics_table.h"
-
-#if !defined(SFNTLY_NO_EXCEPTION)
 #include "sfntly/port/exception_type.h"
-#endif
 
 namespace sfntly {
 /******************************************************************************

@@ -15,10 +15,9 @@
  */
 
 #include "sfntly/data/byte_array.h"
+#include "sfntly/port/exception_type.h"
 
 #include <algorithm>
-
-#include "sfntly/port/exception_type.h"
 
 namespace sfntly {
 

@@ -21,10 +21,7 @@
 
 #include "sfntly/data/growable_memory_byte_array.h"
 #include "sfntly/data/memory_byte_array.h"
-
-#if !defined(SFNTLY_NO_EXCEPTION)
 #include "sfntly/port/exception_type.h"
-#endif
 
 namespace sfntly {
 

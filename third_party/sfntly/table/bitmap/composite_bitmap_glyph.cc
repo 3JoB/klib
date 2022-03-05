@@ -15,10 +15,7 @@
  */
 
 #include "sfntly/table/bitmap/composite_bitmap_glyph.h"
-
-#if !defined(SFNTLY_NO_EXCEPTION)
 #include "sfntly/port/exception_type.h"
-#endif
 
 namespace sfntly {
 /******************************************************************************

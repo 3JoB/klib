@@ -15,10 +15,9 @@
  */
 
 #include "sfntly/table/truetype/glyph_table.h"
+#include "sfntly/port/exception_type.h"
 
 #include <stdlib.h>
-
-#include "sfntly/port/exception_type.h"
 
 namespace sfntly {
 /******************************************************************************

@@ -15,12 +15,9 @@
  */
 
 #include "sfntly/table/core/os2_table.h"
+#include "sfntly/port/exception_type.h"
 
 #include <algorithm>
-
-#if !defined(SFNTLY_NO_EXCEPTION)
-#include "sfntly/port/exception_type.h"
-#endif
 
 namespace sfntly {
 /******************************************************************************
