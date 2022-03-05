@@ -52,7 +52,7 @@ file(
   "${KLIB_SOURCE_DIR}/third_party/subtly/*.cc"
   "${KLIB_SOURCE_DIR}/third_party/utf_utils/*.cpp")
 
-add_definitions(-DSFNTLY_EXPERIMENTAL)
+add_definitions(-DSFNTLY_EXPERIMENTAL -DSFNTLY_NO_EXCEPTION)
 include_directories(third_party)
 
 # ---------------------------------------------------------------------------------------

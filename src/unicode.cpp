@@ -17,16 +17,20 @@ std::int32_t trim_left_erase_num(const std::string &str) {
   const auto end = begin + std::size(str);
   auto iter = begin;
 
-  while (iter != end) {
-    auto temp = iter;
-    char32_t code_point = utf8::next(temp, end);
+  try {
+    while (iter != end) {
+      auto temp = iter;
+      char32_t code_point = utf8::next(temp, end);
 
-    if (is_whitespace(code_point)) {
-      iter = temp;
-      continue;
-    } else {
-      break;
+      if (is_whitespace(code_point)) {
+        iter = temp;
+        continue;
+      } else {
+        break;
+      }
     }
+  } catch (const utf8::exception &err) {
+    throw klib::RuntimeError(err.what());
   }
 
   return iter - begin;
@@ -37,16 +41,20 @@ std::int32_t trim_right_erase_num(const std::string &str) {
   const auto end = begin + std::size(str);
   auto iter = end;
 
-  while (iter != begin) {
-    auto temp = iter;
-    char32_t code_point = utf8::prior(temp, begin);
+  try {
+    while (iter != begin) {
+      auto temp = iter;
+      char32_t code_point = utf8::prior(temp, begin);
 
-    if (is_whitespace(code_point)) {
-      iter = temp;
-      continue;
-    } else {
-      break;
+      if (is_whitespace(code_point)) {
+        iter = temp;
+        continue;
+      } else {
+        break;
+      }
     }
+  } catch (const utf8::exception &err) {
+    throw klib::RuntimeError(err.what());
   }
 
   return end - iter;
@@ -84,7 +92,12 @@ char32_t first_code_point(const std::string &str) {
 
   const auto begin = str.c_str();
   const auto end = begin + std::size(str);
-  return utf8::peek_next(begin, end);
+
+  try {
+    return utf8::peek_next(begin, end);
+  } catch (const utf8::exception &err) {
+    throw klib::RuntimeError(err.what());
+  }
 }
 
 char32_t last_code_point(const std::string &str) {
@@ -92,7 +105,12 @@ char32_t last_code_point(const std::string &str) {
 
   const auto begin = str.c_str();
   auto end = begin + std::size(str);
-  return utf8::prior(end, begin);
+
+  try {
+    return utf8::prior(end, begin);
+  } catch (const utf8::exception &err) {
+    throw klib::RuntimeError(err.what());
+  }
 }
 
 bool validate_utf8(const std::string &str) {
@@ -173,7 +191,11 @@ std::wstring utf8_to_utf32_w(const std::string &str) {
 }
 
 std::string utf32_to_utf8(const std::u32string &str) {
-  return utf8::utf32to8(str);
+  try {
+    return utf8::utf32to8(str);
+  } catch (const utf8::exception &err) {
+    throw klib::RuntimeError(err.what());
+  }
 }
 
 std::string utf32_to_utf8_w(const std::wstring &str) {
@@ -183,7 +205,12 @@ std::string utf32_to_utf8_w(const std::wstring &str) {
   result.reserve(std::size(str) * 4);
 
   const auto ptr = std::data(str);
-  utf8::utf32to8(ptr, ptr + std::size(str), std::back_inserter(result));
+
+  try {
+    utf8::utf32to8(ptr, ptr + std::size(str), std::back_inserter(result));
+  } catch (const utf8::exception &err) {
+    throw klib::RuntimeError(err.what());
+  }
 
   return result;
 }
