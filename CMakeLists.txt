@@ -85,11 +85,8 @@ pkg_check_modules(openssl REQUIRED IMPORTED_TARGET openssl)
 pkg_check_modules(sqlcipher REQUIRED IMPORTED_TARGET sqlcipher)
 pkg_check_modules(libargon2 REQUIRED IMPORTED_TARGET libargon2)
 pkg_check_modules(libzstd REQUIRED IMPORTED_TARGET libzstd)
-pkg_check_modules(icu-uc REQUIRED IMPORTED_TARGET icu-uc)
 
-add_definitions(
-  -DCURL_NO_OLDIES -DSQLITE_HAS_CODEC -DU_HIDE_INTERNAL_API -DU_HIDE_DRAFT_API
-  -DU_HIDE_OBSOLETE_API -DU_HIDE_DEPRECATED_API)
+add_definitions(-DCURL_NO_OLDIES -DSQLITE_HAS_CODEC)
 
 find_package(fmt REQUIRED)
 find_package(spdlog REQUIRED)
@@ -155,8 +152,6 @@ file(MAKE_DIRECTORY ${KLIB_BINARY_DIR}/third_party/libunistring)
 file(MAKE_DIRECTORY ${KLIB_BINARY_DIR}/third_party/xxhash)
 file(MAKE_DIRECTORY ${KLIB_BINARY_DIR}/third_party/cmark)
 file(MAKE_DIRECTORY ${KLIB_BINARY_DIR}/third_party/llhttp)
-file(MAKE_DIRECTORY ${KLIB_BINARY_DIR}/third_party/libicuuc)
-file(MAKE_DIRECTORY ${KLIB_BINARY_DIR}/third_party/libicudata)
 add_custom_command(
   TARGET ${KLIB_LIBRARY}
   POST_BUILD
@@ -182,14 +177,11 @@ add_custom_command(
   COMMAND gcc-ar -x --output=xxhash /usr/local/lib/libxxhash.a
   COMMAND gcc-ar -x --output=cmark /usr/local/lib/libcmark.a
   COMMAND gcc-ar -x --output=llhttp /usr/local/lib/libllhttp.a
-  COMMAND gcc-ar -x --output=libicuuc /usr/local/lib/libicuuc.a
-  COMMAND gcc-ar -x --output=libicudata /usr/local/lib/libicudata.a
   COMMAND
     gcc-ar -qcs ${KLIB_BINARY_DIR}/lib${KLIB_LIBRARY}.a klib/*.o zlib/*.o
     libarchive/*.o tidy/*.o libcurl/*.o brotli/*.o boringssl/*.o sqlcipher/*.o
     argon2/*.o zstd/*.o fmt/*.o spdlog/*.o nghttp2/*.o simdutf/*.o libidn2/*.o
-    libpsl/*.o libunistring/*.o xxhash/*.o cmark/*.o llhttp/*.o libicuuc/*.ao
-    libicudata/*.o
+    libpsl/*.o libunistring/*.o xxhash/*.o cmark/*.o llhttp/*.o
   COMMAND gcc-ranlib ${KLIB_BINARY_DIR}/lib${KLIB_LIBRARY}.a
   WORKING_DIRECTORY ${KLIB_BINARY_DIR}/third_party
   COMMENT "Combined static library")

@@ -30,7 +30,6 @@
 #include "sfntly/table/core/horizontal_header_table.h"
 #include "sfntly/table/core/horizontal_metrics_table.h"
 #include "sfntly/table/core/maximum_profile_table.h"
-#include "sfntly/table/core/name_table.h"
 #include "sfntly/table/core/os2_table.h"
 #include "sfntly/table/core/post_script_table.h"
 #include "sfntly/table/generic_table_builder.h"
@@ -92,10 +91,11 @@ Table::Builder* Table::Builder::GetBuilder(Header* header,
   } else if (tag == Tag::maxp) {
     builder_raw = static_cast<Table::Builder*>(
         MaximumProfileTable::Builder::CreateBuilder(header, table_data));
-  } else if (tag == Tag::name) {
+  } /*else if (tag == Tag::name) {
     builder_raw = static_cast<Table::Builder*>(
         NameTable::Builder::CreateBuilder(header, table_data));
-  } else if (tag == Tag::OS_2) {
+  } */
+  else if (tag == Tag::OS_2) {
     builder_raw = static_cast<Table::Builder*>(
         OS2Table::Builder::CreateBuilder(header, table_data));
   } else if (tag == Tag::post) {

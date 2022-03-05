@@ -29,7 +29,6 @@
 #include "sfntly/math/font_math.h"
 #include "sfntly/port/endian.h"
 #include "sfntly/port/exception_type.h"
-#include "sfntly/table/core/name_table.h"
 
 namespace sfntly {
 
