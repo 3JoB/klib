@@ -10,6 +10,7 @@ var dir_c4deac73006ad3d1787e421f2d774b3c =
       [ "klib::InvalidArgument", "classklib_1_1InvalidArgument.html", "classklib_1_1InvalidArgument" ],
       [ "klib::OutOfRange", "classklib_1_1OutOfRange.html", "classklib_1_1OutOfRange" ]
     ] ],
+    [ "font.h", "font_8h.html", "font_8h" ],
     [ "hash.h", "hash_8h.html", "hash_8h" ],
     [ "html.h", "html_8h.html", "html_8h" ],
     [ "http.h", "http_8h.html", [

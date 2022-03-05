@@ -9,5 +9,7 @@ var searchData=
   ['trim_5fleft_6',['trim_left',['../unicode_8h.html#a8a693a0287f2c7a12990aada90a4b439',1,'klib']]],
   ['trim_5fleft_5fcopy_7',['trim_left_copy',['../unicode_8h.html#a08d68ddbecee687722ca07f1ff57945a',1,'klib']]],
   ['trim_5fright_8',['trim_right',['../unicode_8h.html#a0ce2a2a6674cad9772e4677c7b1d9cfa',1,'klib']]],
-  ['trim_5fright_5fcopy_9',['trim_right_copy',['../unicode_8h.html#a1066517b16d05083bd0aa97bc071396a',1,'klib']]]
+  ['trim_5fright_5fcopy_9',['trim_right_copy',['../unicode_8h.html#a1066517b16d05083bd0aa97bc071396a',1,'klib']]],
+  ['ttf_5fsubset_10',['ttf_subset',['../font_8h.html#a68bd35f8f6f1779b00e8ad0e89b69021',1,'klib']]],
+  ['ttf_5fto_5fwoff2_11',['ttf_to_woff2',['../font_8h.html#ad3f3ce5a838b181385bef437ccd78df8',1,'klib']]]
 ];

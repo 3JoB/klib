@@ -5,7 +5,7 @@
 <meta http-equiv="X-UA-Compatible" content="IE=11"/>
 <meta name="generator" content="Doxygen 1.9.3"/>
 <meta name="viewport" content="width=device-width, initial-scale=1"/>
-<title>klib: Member List</title>
+<title>klib: /__w/klib/klib/include/klib/font.h Source File</title>
 <link href="tabs.css" rel="stylesheet" type="text/css"/>
 <script type="text/javascript" src="jquery.js"></script>
 <script type="text/javascript" src="dynsections.js"></script>
@@ -72,7 +72,7 @@ var searchBox = new SearchBox("searchBox", "search",'Search','.html');
 </div>
 <script type="text/javascript">
 /* @license magnet:?xt=urn:btih:d3d9a9a6595521f9666a5e94cc830dab83b65699&amp;dn=expat.txt MIT */
-$(document).ready(function(){initNavTree('classklib_1_1OutOfRange.html',''); initResizable(); });
+$(document).ready(function(){initNavTree('font_8h_source.html',''); initResizable(); });
 /* @license-end */
 </script>
 <div id="doc-content">
@@ -91,20 +91,33 @@ $(document).ready(function(){initNavTree('classklib_1_1OutOfRange.html',''); ini
 </div>
 
 <div class="header">
-  <div class="headertitle"><div class="title">klib::OutOfRange Member List</div></div>
+  <div class="headertitle"><div class="title">font.h</div></div>
 </div><!--header-->
 <div class="contents">
-
-<p>This is the complete list of members for <a class="el" href="classklib_1_1OutOfRange.html">klib::OutOfRange</a>, including all inherited members.</p>
-<table class="directory">
-  <tr class="even"><td class="entry"><a class="el" href="classklib_1_1Exception.html#acbe081defd9fb8c8985b7007ac204bb5">Exception</a>(std::string msg)</td><td class="entry"><a class="el" href="classklib_1_1Exception.html">klib::Exception</a></td><td class="entry"><span class="mlabel">inline</span><span class="mlabel">explicit</span></td></tr>
-  <tr class="odd"><td class="entry"><a class="el" href="classklib_1_1OutOfRange.html#ac2b75bbd2b77458203a43d38752baecf">OutOfRange</a>(detail::FmtWithLoc fmt_with_loc, Args &amp;&amp;...args)</td><td class="entry"><a class="el" href="classklib_1_1OutOfRange.html">klib::OutOfRange</a></td><td class="entry"><span class="mlabel">inline</span><span class="mlabel">explicit</span></td></tr>
-  <tr class="even"><td class="entry"><a class="el" href="classklib_1_1Exception.html#a3dafcfe9791c42a5735ec2a640136657">what</a>() const noexcept override</td><td class="entry"><a class="el" href="classklib_1_1Exception.html">klib::Exception</a></td><td class="entry"><span class="mlabel">inline</span></td></tr>
-</table></div><!-- contents -->
+<a href="font_8h.html">Go to the documentation of this file.</a><div class="fragment"><div class="line"><a id="l00001" name="l00001"></a><span class="lineno">    1</span> </div>
+<div class="line"><a id="l00006" name="l00006"></a><span class="lineno">    6</span><span class="preprocessor">#pragma once</span></div>
+<div class="line"><a id="l00007" name="l00007"></a><span class="lineno">    7</span> </div>
+<div class="line"><a id="l00008" name="l00008"></a><span class="lineno">    8</span><span class="preprocessor">#include &lt;string&gt;</span></div>
+<div class="line"><a id="l00009" name="l00009"></a><span class="lineno">    9</span> </div>
+<div class="line"><a id="l00010" name="l00010"></a><span class="lineno">   10</span><span class="keyword">namespace </span>klib {</div>
+<div class="line"><a id="l00011" name="l00011"></a><span class="lineno">   11</span> </div>
+<div class="line"><a id="l00018" name="l00018"></a><span class="lineno"><a class="line" href="font_8h.html#a68bd35f8f6f1779b00e8ad0e89b69021">   18</a></span>std::string <a class="code hl_function" href="font_8h.html#a68bd35f8f6f1779b00e8ad0e89b69021">ttf_subset</a>(<span class="keyword">const</span> std::string &amp;ttf_font_path,</div>
+<div class="line"><a id="l00019" name="l00019"></a><span class="lineno">   19</span>                       <span class="keyword">const</span> std::u32string &amp;unicodes);</div>
+<div class="line"><a id="l00020" name="l00020"></a><span class="lineno">   20</span> </div>
+<div class="line"><a id="l00026" name="l00026"></a><span class="lineno"><a class="line" href="font_8h.html#ad3f3ce5a838b181385bef437ccd78df8">   26</a></span>std::string <a class="code hl_function" href="font_8h.html#ad3f3ce5a838b181385bef437ccd78df8">ttf_to_woff2</a>(<span class="keyword">const</span> std::string &amp;ttf_font);</div>
+<div class="line"><a id="l00027" name="l00027"></a><span class="lineno">   27</span> </div>
+<div class="line"><a id="l00033" name="l00033"></a><span class="lineno"><a class="line" href="font_8h.html#a0e55e9ed017c24cf081a445cf54611c4">   33</a></span>std::string <a class="code hl_function" href="font_8h.html#a0e55e9ed017c24cf081a445cf54611c4">woff2_to_ttf</a>(<span class="keyword">const</span> std::string &amp;woff2_font);</div>
+<div class="line"><a id="l00034" name="l00034"></a><span class="lineno">   34</span> </div>
+<div class="line"><a id="l00035" name="l00035"></a><span class="lineno">   35</span>}  <span class="comment">// namespace klib</span></div>
+<div class="ttc" id="afont_8h_html_a0e55e9ed017c24cf081a445cf54611c4"><div class="ttname"><a href="font_8h.html#a0e55e9ed017c24cf081a445cf54611c4">klib::woff2_to_ttf</a></div><div class="ttdeci">std::string woff2_to_ttf(const std::string &amp;woff2_font)</div><div class="ttdoc">Convert WOFF2 font to TTF font.</div></div>
+<div class="ttc" id="afont_8h_html_a68bd35f8f6f1779b00e8ad0e89b69021"><div class="ttname"><a href="font_8h.html#a68bd35f8f6f1779b00e8ad0e89b69021">klib::ttf_subset</a></div><div class="ttdeci">std::string ttf_subset(const std::string &amp;ttf_font_path, const std::u32string &amp;unicodes)</div><div class="ttdoc">Take a font subset using the given Unicode.</div></div>
+<div class="ttc" id="afont_8h_html_ad3f3ce5a838b181385bef437ccd78df8"><div class="ttname"><a href="font_8h.html#ad3f3ce5a838b181385bef437ccd78df8">klib::ttf_to_woff2</a></div><div class="ttdeci">std::string ttf_to_woff2(const std::string &amp;ttf_font)</div><div class="ttdoc">Convert TTF font to WOFF2 font.</div></div>
+</div><!-- fragment --></div><!-- contents -->
 </div><!-- doc-content -->
 <!-- start footer part -->
 <div id="nav-path" class="navpath"><!-- id is needed for treeview function! -->
   <ul>
+    <li class="navelem"><a class="el" href="dir_d44c64559bbebec7f509842c48db8b23.html">include</a></li><li class="navelem"><a class="el" href="dir_c4deac73006ad3d1787e421f2d774b3c.html">klib</a></li><li class="navelem"><a class="el" href="font_8h.html">font.h</a></li>
     <li class="footer">Generated by <a href="https://www.doxygen.org/index.html"><img class="footer" src="doxygen.svg" width="104" height="31" alt="doxygen"/></a> 1.9.3 </li>
   </ul>
 </div>
