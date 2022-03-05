@@ -18,8 +18,18 @@ namespace klib {
 
 std::string ttf_subset(const std::string &ttf_font,
                        const std::u32string &unicodes) {
+  return ttf_subset(std::data(ttf_font), std::size(ttf_font), unicodes);
+}
+
+std::string ttf_subset(std::string_view ttf_font,
+                       const std::u32string &unicodes) {
+  return ttf_subset(std::data(ttf_font), std::size(ttf_font), unicodes);
+}
+
+std::string ttf_subset(const char *ttf_font, std::size_t size,
+                       const std::u32string &unicodes) {
   sfntly::FontPtr font;
-  font.Attach(subtly::LoadFont(std::data(ttf_font), std::size(ttf_font)));
+  font.Attach(subtly::LoadFont(ttf_font, size));
   if (font->num_tables() == 0) {
     throw RuntimeError("Could not load font");
   }
