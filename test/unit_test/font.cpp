@@ -15,8 +15,10 @@ TEST_CASE("font_subset", "[font]") {
 
   const std::string out_name = "SourceHanSansSC-Bold.subset.ttf";
   const std::string text = "你好世界";
-  REQUIRE_NOTHROW(
-      klib::font_subset(file_name, out_name, klib::utf8_to_utf32(text)));
+
+  const auto subset_font =
+      klib::font_subset(file_name, klib::utf8_to_utf32(text));
+  klib::write_file(out_name, true, subset_font);
 
   REQUIRE(std::filesystem::exists(out_name));
   REQUIRE(klib::sha256_hex(klib::read_file(out_name, true)) ==
@@ -24,4 +26,15 @@ TEST_CASE("font_subset", "[font]") {
 
   dbg(std::filesystem::file_size(file_name));
   dbg(std::filesystem::file_size(out_name));
+}
+
+TEST_CASE("woff2", "[font]") {
+  const std::string file_name = "SourceHanSansSC-Bold.ttf";
+  REQUIRE(std::filesystem::exists(file_name));
+
+  const std::string ttf_font = klib::read_file(file_name, true);
+
+  const auto woff2_font = klib::ttf_to_woff2(ttf_font);
+  dbg(std::size(woff2_font));
+  const auto new_ttf_font = klib::woff2_to_ttf(woff2_font);
 }

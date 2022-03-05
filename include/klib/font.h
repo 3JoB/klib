@@ -4,7 +4,11 @@
 
 namespace klib {
 
-void font_subset(const std::string &font_path, const std::string &out_name,
-                 const std::u32string &unicodes);
+std::string font_subset(const std::string &font_path,
+                        const std::u32string &unicodes);
 
-}
+std::string ttf_to_woff2(const std::string &ttf_font);
+
+std::string woff2_to_ttf(const std::string &woff2_font);
+
+}  // namespace klib

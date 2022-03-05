@@ -85,6 +85,12 @@ pkg_check_modules(openssl REQUIRED IMPORTED_TARGET openssl)
 pkg_check_modules(sqlcipher REQUIRED IMPORTED_TARGET sqlcipher)
 pkg_check_modules(libargon2 REQUIRED IMPORTED_TARGET libargon2)
 pkg_check_modules(libzstd REQUIRED IMPORTED_TARGET libzstd)
+pkg_check_modules(libwoff2dec REQUIRED IMPORTED_TARGET libwoff2dec)
+pkg_check_modules(libwoff2enc REQUIRED IMPORTED_TARGET libwoff2enc)
+pkg_check_modules(libwoff2common REQUIRED IMPORTED_TARGET libwoff2common)
+pkg_check_modules(libbrotlidec REQUIRED IMPORTED_TARGET libbrotlidec)
+pkg_check_modules(libbrotlienc REQUIRED IMPORTED_TARGET libbrotlienc)
+pkg_check_modules(libbrotlicommon REQUIRED IMPORTED_TARGET libbrotlicommon)
 
 add_definitions(-DCURL_NO_OLDIES -DSQLITE_HAS_CODEC)
 
@@ -152,6 +158,7 @@ file(MAKE_DIRECTORY ${KLIB_BINARY_DIR}/third_party/libunistring)
 file(MAKE_DIRECTORY ${KLIB_BINARY_DIR}/third_party/xxhash)
 file(MAKE_DIRECTORY ${KLIB_BINARY_DIR}/third_party/cmark)
 file(MAKE_DIRECTORY ${KLIB_BINARY_DIR}/third_party/llhttp)
+file(MAKE_DIRECTORY ${KLIB_BINARY_DIR}/third_party/woff2)
 add_custom_command(
   TARGET ${KLIB_LIBRARY}
   POST_BUILD
@@ -162,6 +169,7 @@ add_custom_command(
   COMMAND gcc-ar -x --output=libcurl /usr/local/lib/libcurl.a
   COMMAND gcc-ar -x --output=brotli /usr/local/lib/libbrotlicommon.a
   COMMAND gcc-ar -x --output=brotli /usr/local/lib/libbrotlidec.a
+  COMMAND gcc-ar -x --output=brotli /usr/local/lib/libbrotlienc.a
   COMMAND gcc-ar -x --output=boringssl /usr/local/lib/libcrypto.a
   COMMAND gcc-ar -x --output=boringssl /usr/local/lib/libssl.a
   COMMAND gcc-ar -x --output=sqlcipher /usr/local/lib/libsqlcipher.a
@@ -177,11 +185,14 @@ add_custom_command(
   COMMAND gcc-ar -x --output=xxhash /usr/local/lib/libxxhash.a
   COMMAND gcc-ar -x --output=cmark /usr/local/lib/libcmark.a
   COMMAND gcc-ar -x --output=llhttp /usr/local/lib/libllhttp.a
+  COMMAND gcc-ar -x --output=woff2 /usr/local/lib/libwoff2common.a
+  COMMAND gcc-ar -x --output=woff2 /usr/local/lib/libwoff2dec.a
+  COMMAND gcc-ar -x --output=woff2 /usr/local/lib/libwoff2enc.a
   COMMAND
     gcc-ar -qcs ${KLIB_BINARY_DIR}/lib${KLIB_LIBRARY}.a klib/*.o zlib/*.o
     libarchive/*.o tidy/*.o libcurl/*.o brotli/*.o boringssl/*.o sqlcipher/*.o
     argon2/*.o zstd/*.o fmt/*.o spdlog/*.o nghttp2/*.o simdutf/*.o libidn2/*.o
-    libpsl/*.o libunistring/*.o xxhash/*.o cmark/*.o llhttp/*.o
+    libpsl/*.o libunistring/*.o xxhash/*.o cmark/*.o llhttp/*.o woff2/*.o
   COMMAND gcc-ranlib ${KLIB_BINARY_DIR}/lib${KLIB_LIBRARY}.a
   WORKING_DIRECTORY ${KLIB_BINARY_DIR}/third_party
   COMMENT "Combined static library")
