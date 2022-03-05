@@ -16,8 +16,9 @@ TEST_CASE("ttf_subset", "[font]") {
   const std::string out_name = "SourceHanSansSC-Bold.subset.ttf";
   const std::string text = "你好世界";
 
+  const auto ttf_font = klib::read_file(file_name, true);
   const auto subset_font =
-      klib::ttf_subset(file_name, klib::utf8_to_utf32(text));
+      klib::ttf_subset(ttf_font, klib::utf8_to_utf32(text));
   klib::write_file(out_name, true, subset_font);
 
   REQUIRE(std::filesystem::exists(out_name));

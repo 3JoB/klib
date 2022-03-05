@@ -52,7 +52,8 @@ TEST_CASE("Font", "[font]") {
   BENCHMARK_ADVANCED("klib ttf")
   (Catch::Benchmark::Chronometer meter) {
     meter.measure([&] {
-      auto subset_font = klib::ttf_subset(file_name, klib::utf8_to_utf32(text));
+      const auto ttf_font = klib::read_file(file_name, true);
+      auto subset_font = klib::ttf_subset(ttf_font, klib::utf8_to_utf32(text));
       klib::write_file(klib_ttf_out_name, true, subset_font);
     });
 
@@ -62,7 +63,8 @@ TEST_CASE("Font", "[font]") {
   BENCHMARK_ADVANCED("klib woff2")
   (Catch::Benchmark::Chronometer meter) {
     meter.measure([&] {
-      auto subset_font = klib::ttf_subset(file_name, klib::utf8_to_utf32(text));
+      const auto ttf_font = klib::read_file(file_name, true);
+      auto subset_font = klib::ttf_subset(ttf_font, klib::utf8_to_utf32(text));
       auto woff2_font = klib::ttf_to_woff2(subset_font);
       klib::write_file(klib_woff2_out_name, true, woff2_font);
     });

@@ -6,23 +6,16 @@
 #pragma once
 
 #include <string>
-#include <string_view>
 
 namespace klib {
 
 /**
  * @brief Take a font subset using the given Unicode
- * @param ttf_font_path: TTF font path
+ * @param ttf_font: TTF font
  * @param unicodes: Unicode that needs to be preserved
  * @return TTF font subset
  */
-std::string ttf_subset(const std::string &ttf_font_path,
-                       const std::u32string &unicodes);
-
-std::string ttf_subset(std::string_view ttf_font_path,
-                       const std::u32string &unicodes);
-
-std::string ttf_subset(const char *ttf_font_path,
+std::string ttf_subset(const std::string &ttf_font,
                        const std::u32string &unicodes);
 
 /**

@@ -21,10 +21,19 @@
 #include "sfntly/font.h"
 #include "sfntly/font_factory.h"
 #include "sfntly/port/file_input_stream.h"
+#include "sfntly/port/memory_input_stream.h"
 #include "sfntly/port/memory_output_stream.h"
 
 namespace subtly {
 using namespace sfntly;
+
+CALLER_ATTACH sfntly::Font* LoadFont(const char* font, std::size_t size) {
+  Ptr<FontFactory> font_factory;
+  font_factory.Attach(FontFactory::GetInstance());
+  FontArray fonts;
+  LoadFonts(font, size, font_factory, &fonts);
+  return fonts[0].Detach();
+}
 
 CALLER_ATTACH Font* LoadFont(const char* font_path) {
   Ptr<FontFactory> font_factory;
@@ -40,6 +49,14 @@ CALLER_ATTACH Font::Builder* LoadFontBuilder(const char* font_path) {
   FontBuilderArray builders;
   LoadFontBuilders(font_path, font_factory, &builders);
   return builders[0].Detach();
+}
+
+void LoadFonts(const char* font, std::size_t size, sfntly::FontFactory* factory,
+               sfntly::FontArray* fonts) {
+  MemoryInputStream input_stream;
+  input_stream.Attach(reinterpret_cast<const uint8_t*>(font), size);
+  factory->LoadFonts(&input_stream, fonts);
+  input_stream.Close();
 }
 
 void LoadFonts(const char* font_path, FontFactory* factory, FontArray* fonts) {
