@@ -132,7 +132,7 @@ void LocaTable::Builder::SetNumGlyphs(int32_t num_glyphs) {
   num_glyphs_ = num_glyphs;
 }
 
-int32_t LocaTable::Builder::NumGlyphs() { return LastGlyphIndex() - 1; }
+int32_t LocaTable::Builder::NumGlyphs() { return LastGlyphIndex() + 1; }
 
 void LocaTable::Builder::Revert() {
   loca_.clear();

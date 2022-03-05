@@ -913,7 +913,9 @@ void CMapTable::CMapFormat4::Builder::Initialize(ReadableFontData* data) {
   int32_t glyph_id_array_offset = CMapFormat4::GlyphIdArrayOffset(seg_count);
   int32_t glyph_id_array_length =
       (CMapFormat4::Length(data) - glyph_id_array_offset) / DataSize::kUSHORT;
+#if defined SFNTLY_DEBUG_CMAP
   fprintf(stderr, "id array size %d\n", glyph_id_array_length);
+#endif
   for (int32_t i = 0; i < glyph_id_array_length; i += DataSize::kUSHORT) {
     glyph_id_array_.push_back(data->ReadUShort(glyph_id_array_offset + i));
   }

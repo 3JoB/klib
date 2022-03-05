@@ -55,6 +55,18 @@ CALLER_ATTACH Font* Subsetter::Subset() {
   }
   IntegerSet* table_blacklist = new IntegerSet;
   table_blacklist->insert(Tag::DSIG);
+  table_blacklist->insert(Tag::GDEF);
+  table_blacklist->insert(Tag::GPOS);
+  table_blacklist->insert(Tag::GSUB);
+  table_blacklist->insert(Tag::kern);
+  table_blacklist->insert(Tag::hdmx);
+  table_blacklist->insert(Tag::vmtx);
+  table_blacklist->insert(Tag::VDMX);
+  table_blacklist->insert(Tag::LTSH);
+  table_blacklist->insert(Tag::vhea);
+  table_blacklist->insert(Tag::morx);
+  table_blacklist->insert(GenerateTag('m', 'o', 'r', 't'));
+
   Ptr<FontAssembler> font_assembler =
       new FontAssembler(font_info, table_blacklist);
   Ptr<Font> font_subset;

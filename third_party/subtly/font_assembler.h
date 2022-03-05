@@ -19,6 +19,7 @@
 
 #include <map>
 #include <set>
+#include <unordered_map>
 
 #include "subtly/font_info.h"
 
@@ -53,6 +54,8 @@ class FontAssembler : public sfntly::RefCounted<FontAssembler> {
  protected:
   virtual bool AssembleCMapTable();
   virtual bool AssembleGlyphAndLocaTables();
+  virtual bool AssembleHorizontalMetricsTable();
+  virtual bool AssemblePostScriptTabble();
 
   virtual void Initialize();
 
@@ -61,6 +64,31 @@ class FontAssembler : public sfntly::RefCounted<FontAssembler> {
   sfntly::Ptr<sfntly::FontFactory> font_factory_;
   sfntly::Ptr<sfntly::Font::Builder> font_builder_;
   sfntly::IntegerSet* table_blacklist_;
+
+  std::map<int32_t, int32_t> old_to_new_glyphid_;
+  sfntly::IntegerList new_to_old_glyphid_;
+
+  constexpr static int32_t VERSION_2 = 0x20000;
+  constexpr static int32_t NUM_STANDARD_NAMES = 258;
+  constexpr static int32_t V1_TABLE_SIZE = 32;
+  struct Offset {
+    constexpr static int32_t version = 0;
+    constexpr static int32_t italicAngle = 4;
+    constexpr static int32_t underlinePosition = 8;
+    constexpr static int32_t underlineThickness = 10;
+    constexpr static int32_t isFixedPitch = 12;
+    constexpr static int32_t minMemType42 = 16;
+    constexpr static int32_t maxMemType42 = 20;
+    constexpr static int32_t minMemType1 = 24;
+    constexpr static int32_t maxMemType1 = 28;
+    constexpr static int32_t numberOfGlyphs = 32;
+    constexpr static int32_t glyphNameIndex = 34;
+  };
+
+  static const std::unordered_map<std::string, int32_t>* invertNameMap();
+
+  inline static const std::unordered_map<std::string, int32_t>*
+      INVERTED_STANDARD_NAMES = invertNameMap();
 };
 }  // namespace subtly
 

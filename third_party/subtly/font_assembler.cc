@@ -23,10 +23,14 @@
 
 #include "sfntly/font.h"
 #include "sfntly/font_factory.h"
+#include "sfntly/port/memory_output_stream.h"
 #include "sfntly/port/refcount.h"
 #include "sfntly/port/type.h"
 #include "sfntly/table/core/cmap_table.h"
+#include "sfntly/table/core/horizontal_header_table.h"
+#include "sfntly/table/core/horizontal_metrics_table.h"
 #include "sfntly/table/core/maximum_profile_table.h"
+#include "sfntly/table/core/post_script_table.h"
 #include "sfntly/table/truetype/glyph_table.h"
 #include "sfntly/table/truetype/loca_table.h"
 #include "sfntly/tag.h"
@@ -34,6 +38,14 @@
 
 namespace subtly {
 using namespace sfntly;
+
+const std::unordered_map<std::string, int32_t>* FontAssembler::invertNameMap() {
+  static std::unordered_map<std::string, int32_t> nameMap;
+  for (int32_t i = 0; i < PostScriptTable::NUM_STANDARD_NAMES; ++i) {
+    nameMap[PostScriptTable::STANDARD_NAMES[i]] = i;
+  }
+  return &nameMap;
+}
 
 FontAssembler::FontAssembler(FontInfo* font_info, IntegerSet* table_blacklist)
     : table_blacklist_(table_blacklist) {
@@ -53,7 +65,8 @@ void FontAssembler::Initialize() {
 
 CALLER_ATTACH Font* FontAssembler::Assemble() {
   // Assemble tables we can subset.
-  if (!AssembleCMapTable() || !AssembleGlyphAndLocaTables()) {
+  if (!AssembleGlyphAndLocaTables() || !AssembleCMapTable() ||
+      !AssembleHorizontalMetricsTable() || !AssemblePostScriptTabble()) {
     return NULL;
   }
   // For all other tables, either include them unmodified or don't at all.
@@ -84,7 +97,7 @@ bool FontAssembler::AssembleCMapTable() {
   // Creating the segments and the glyph id array
   CharacterMap* chars_to_glyph_ids = font_info_->chars_to_glyph_ids();
   SegmentList* segment_list = new SegmentList;
-  IntegerList* glyph_id_array = new IntegerList;
+  IntegerList* new_glyph_id_array = new IntegerList;
   int32_t last_chararacter = -2;
   int32_t last_offset = 0;
   Ptr<CMapTable::CMapFormat4::Builder::Segment> current_segment;
@@ -98,7 +111,6 @@ bool FontAssembler::AssembleCMapTable() {
                               e = chars_to_glyph_ids->end();
        it != e; ++it) {
     int32_t character = it->first;
-    int32_t glyph_id = it->second.glyph_id();
     if (character != last_chararacter + 1) {  // new segment
       if (current_segment != NULL) {
         current_segment->set_end_count(last_chararacter);
@@ -111,13 +123,16 @@ bool FontAssembler::AssembleCMapTable() {
       current_segment = new CMapTable::CMapFormat4::Builder::Segment(
           character, -1, 0, last_offset);
     }
-    glyph_id_array->push_back(glyph_id);
+    int32_t old_glyphid = it->second.glyph_id();
+    new_glyph_id_array->push_back(old_to_new_glyphid_[old_glyphid]);
     last_offset += DataSize::kSHORT;
     last_chararacter = character;
   }
   // The last segment is still open.
-  current_segment->set_end_count(last_chararacter);
-  segment_list->push_back(current_segment);
+  if (current_segment != NULL) {
+    current_segment->set_end_count(last_chararacter);
+    segment_list->push_back(current_segment);
+  }
   // Updating the id_range_offset for every segment.
   for (int32_t i = 0, num_segs = segment_list->size(); i < num_segs; ++i) {
     Ptr<CMapTable::CMapFormat4::Builder::Segment> segment = segment_list->at(i);
@@ -127,12 +142,13 @@ bool FontAssembler::AssembleCMapTable() {
   // Adding the final, required segment.
   current_segment =
       new CMapTable::CMapFormat4::Builder::Segment(0xffff, 0xffff, 1, 0);
+  new_glyph_id_array->push_back(0);  //边界处理
   segment_list->push_back(current_segment);
   // Writing the segments and glyph id array to the CMap
   cmap_builder->set_segments(segment_list);
-  cmap_builder->set_glyph_id_array(glyph_id_array);
+  cmap_builder->set_glyph_id_array(new_glyph_id_array);
   delete segment_list;
-  delete glyph_id_array;
+  delete new_glyph_id_array;
   return true;
 }
 
@@ -144,7 +160,6 @@ bool FontAssembler::AssembleGlyphAndLocaTables() {
           font_builder_->NewTableBuilder(Tag::glyf));
 
   GlyphIdSet* resolved_glyph_ids = font_info_->resolved_glyph_ids();
-  IntegerList loca_list;
   // Basic sanity check: all LOCA tables are of the same size
   // This is necessary but not suficient!
   int32_t previous_size = -1;
@@ -159,24 +174,17 @@ bool FontAssembler::AssembleGlyphAndLocaTables() {
     previous_size = current_size;
   }
 
-  // Assuming all fonts referenced by the FontInfo are the subsets of the same
-  // font, their loca tables should all have the same sizes.
-  // We'll just get the size of the first font's LOCA table for simplicty.
-  Ptr<LocaTable> first_loca_table = down_cast<LocaTable*>(
-      font_info_->GetTable(font_info_->fonts()->begin()->first, Tag::loca));
-  int32_t num_loca_glyphs = first_loca_table->num_glyphs();
-  loca_list.resize(num_loca_glyphs);
-  loca_list.push_back(0);
-  int32_t last_glyph_id = 0;
-  int32_t last_offset = 0;
   GlyphTable::GlyphBuilderList* glyph_builders =
       glyph_table_builder->GlyphBuilders();
 
+  int32_t new_glyphid = 0;
   for (GlyphIdSet::iterator it = resolved_glyph_ids->begin(),
                             e = resolved_glyph_ids->end();
        it != e; ++it) {
     // Get the glyph for this resolved_glyph_id.
     int32_t resolved_glyph_id = it->glyph_id();
+    old_to_new_glyphid_[resolved_glyph_id] = new_glyphid++;
+    new_to_old_glyphid_.push_back(resolved_glyph_id);
     int32_t font_id = it->font_id();
     // Get the LOCA table for the current glyph id.
     Ptr<LocaTable> loca_table =
@@ -193,6 +201,7 @@ bool FontAssembler::AssembleGlyphAndLocaTables() {
     // The data reference by the glyph is copied into a new glyph and
     // added to the glyph_builders belonging to the glyph_table_builder.
     // When Build gets called, all the glyphs will be built.
+    // TODO glyphid kComposite
     Ptr<ReadableFontData> data = glyph->ReadFontData();
     Ptr<WritableFontData> copy_data;
     copy_data.Attach(WritableFontData::CreateWritableFontData(data->Length()));
@@ -200,23 +209,138 @@ bool FontAssembler::AssembleGlyphAndLocaTables() {
     GlyphBuilderPtr glyph_builder;
     glyph_builder.Attach(glyph_table_builder->GlyphBuilder(copy_data));
     glyph_builders->push_back(glyph_builder);
-
-    // If there are missing glyphs between the last glyph_id and the
-    // current resolved_glyph_id, since the LOCA table needs to have the same
-    // size, the offset is kept the same.
-    loca_list.resize(
-        std::max(loca_list.size(), static_cast<size_t>(resolved_glyph_id + 2)));
-    for (int32_t i = last_glyph_id + 1; i <= resolved_glyph_id; ++i)
-      loca_list[i] = last_offset;
-    last_offset += length;
-    loca_list[resolved_glyph_id + 1] = last_offset;
-    last_glyph_id = resolved_glyph_id + 1;
   }
-  // If there are missing glyph ids, their loca entries must all point
-  // to the same offset as the last valid glyph id making them all zero length.
-  for (int32_t i = last_glyph_id + 1; i <= num_loca_glyphs; ++i)
-    loca_list[i] = last_offset;
+
+  IntegerList loca_list;
+  glyph_table_builder->GenerateLocaList(&loca_list);
   loca_table_builder->SetLocaList(&loca_list);
+
+  Ptr<ReadableFontData> rFontData =
+      font_info_->GetTable(font_info_->fonts()->begin()->first, Tag::maxp)
+          ->ReadFontData();
+  font_builder_->NewTableBuilder(Tag::maxp, rFontData);
+  MaximumProfileTableBuilderPtr maxpBuilder =
+      down_cast<MaximumProfileTable::Builder*>(
+          font_builder_->GetTableBuilder(Tag::maxp));
+  maxpBuilder->SetNumGlyphs(loca_table_builder->NumGlyphs());
+  return true;
+}
+
+struct LongHorMetric {
+  int32_t advanceWidth;
+  int32_t lsb;
+};
+bool FontAssembler::AssembleHorizontalMetricsTable() {
+  HorizontalMetricsTablePtr origMetrics =
+      down_cast<HorizontalMetricsTable*>(font_info_->GetTable(0, Tag::hmtx));
+  if (origMetrics == NULL) {
+    return false;
+  }
+
+  std::vector<LongHorMetric> metrics;
+  for (size_t i = 0; i < new_to_old_glyphid_.size(); ++i) {
+    int32_t origGlyphId = new_to_old_glyphid_[i];
+    int32_t advanceWidth = origMetrics->AdvanceWidth(origGlyphId);
+    int32_t lsb = origMetrics->LeftSideBearing(origGlyphId);
+    metrics.push_back(LongHorMetric{advanceWidth, lsb});
+  }
+
+  int32_t lastWidth = metrics.back().advanceWidth;
+  int32_t numberOfHMetrics = (int32_t)metrics.size();
+  while (numberOfHMetrics > 1 &&
+         metrics[numberOfHMetrics - 2].advanceWidth == lastWidth) {
+    numberOfHMetrics--;
+  }
+  int32_t size =
+      4 * numberOfHMetrics + 2 * ((int32_t)metrics.size() - numberOfHMetrics);
+  WritableFontDataPtr data;
+  data.Attach(WritableFontData::CreateWritableFontData(size));
+  int32_t index = 0;
+  int32_t advanceWidthMax = 0;
+  for (int32_t i = 0; i < numberOfHMetrics; ++i) {
+    int32_t adw = metrics[i].advanceWidth;
+    advanceWidthMax = std::max(adw, advanceWidthMax);
+    index += data->WriteUShort(index, adw);
+    index += data->WriteShort(index, metrics[i].lsb);
+  }
+  int32_t nMetric = (int32_t)metrics.size();
+  for (int32_t j = numberOfHMetrics; j < nMetric; ++j) {
+    index += data->WriteShort(index, metrics[j].lsb);
+  }
+  font_builder_->NewTableBuilder(Tag::hmtx, data);
+  font_builder_->NewTableBuilder(
+      Tag::hhea, font_info_->GetTable(0, Tag::hhea)->ReadFontData());
+  HorizontalHeaderTableBuilderPtr hheaBuilder =
+      down_cast<HorizontalHeaderTable::Builder*>(
+          font_builder_->GetTableBuilder(Tag::hhea));
+  hheaBuilder->SetNumberOfHMetrics(numberOfHMetrics);
+  hheaBuilder->SetAdvanceWidthMax(advanceWidthMax);
+
+  return true;
+}
+
+bool FontAssembler::AssemblePostScriptTabble() {
+  if (new_to_old_glyphid_.empty()) {
+    return false;
+  }
+  Ptr<PostScriptTable> post =
+      down_cast<PostScriptTable*>(font_info_->GetTable(0, Tag::post));
+  WritableFontDataPtr v1Data;
+  v1Data.Attach(WritableFontData::CreateWritableFontData(V1_TABLE_SIZE));
+  ReadableFontDataPtr tmp = post->ReadFontData();
+  FontDataPtr fontDataPtr;
+  fontDataPtr.Attach(tmp->Slice(0, V1_TABLE_SIZE));
+  ReadableFontDataPtr srcData = down_cast<ReadableFontData*>(fontDataPtr.p_);
+  srcData->CopyTo(v1Data);
+
+  int32_t post_version = post->ReadFontData()->ReadFixed(Offset::version);
+  std::vector<std::string> names;
+  if (post_version == 0x10000 || post_version == 0x20000) {
+    for (size_t i = 0; i < new_to_old_glyphid_.size(); ++i) {
+      names.push_back(post->GlyphName(new_to_old_glyphid_[i]));
+    }
+  }
+
+  if (names.empty()) {
+    font_builder_->NewTableBuilder(Tag::post, v1Data);
+    return true;
+  }
+
+  std::vector<int32_t> glyphNameIndices;
+  MemoryOutputStream nameBos;
+  size_t nGlyphs = names.size();
+  int32_t tableIndex = NUM_STANDARD_NAMES;
+  for (const auto& name : names) {
+    int32_t glyphNameIndex;
+    if (INVERTED_STANDARD_NAMES->find(name) != INVERTED_STANDARD_NAMES->end()) {
+      glyphNameIndex = INVERTED_STANDARD_NAMES->at(name);
+    } else {
+      glyphNameIndex = tableIndex++;
+      auto len = (int32_t)name.size();
+      auto* lenptr = (uint8_t*)&len;
+      nameBos.Write(lenptr, 0, sizeof(int32_t));
+      nameBos.Write((uint8_t*)name.c_str(), 0, (int32_t)name.size());
+    }
+    glyphNameIndices.push_back(glyphNameIndex);
+  }
+  std::vector<uint8_t> nameBytes(nameBos.Size());
+  for (size_t j = 0; j < nameBos.Size(); ++j) {
+    nameBytes.push_back(nameBos.Get()[j]);
+  }
+  int32_t newLength = 34 + 2 * (int32_t)nGlyphs + (int32_t)nameBytes.size();
+  WritableFontDataPtr data;
+  data.Attach(WritableFontData::CreateWritableFontData(newLength));
+  v1Data->CopyTo(data);
+  data->WriteFixed(Offset::numberOfGlyphs, (int32_t)nGlyphs);
+  int32_t index = Offset::glyphNameIndex;
+  for (const auto& glyphNameIndex : glyphNameIndices) {
+    index += data->WriteUShort(index, glyphNameIndex);
+  }
+  if (!nameBytes.empty()) {
+    data->WriteBytes(index, &nameBytes);
+  }
+
+  font_builder_->NewTableBuilder(Tag::post, data);
   return true;
 }
 }  // namespace subtly

@@ -32,6 +32,7 @@
 #include "sfntly/table/core/maximum_profile_table.h"
 #include "sfntly/table/core/name_table.h"
 #include "sfntly/table/core/os2_table.h"
+#include "sfntly/table/core/post_script_table.h"
 #include "sfntly/table/generic_table_builder.h"
 #include "sfntly/table/table_based_table_builder.h"
 #include "sfntly/table/truetype/glyph_table.h"
@@ -97,13 +98,13 @@ Table::Builder* Table::Builder::GetBuilder(Header* header,
   } else if (tag == Tag::OS_2) {
     builder_raw = static_cast<Table::Builder*>(
         OS2Table::Builder::CreateBuilder(header, table_data));
-  } /* else if (tag == Tag::PostScript) {
-     builder_raw = static_cast<Table::Builder*>(
-         PostScriptTable::Builder::CreateBuilder(header, table_data));
-   } else if (tag == Tag::cvt) {
-     builder_raw = static_cast<Table::Builder*>(
-         ControlValueTable::Builder::CreateBuilder(header, table_data));
-   }*/
+  } else if (tag == Tag::post) {
+    builder_raw = static_cast<Table::Builder*>(
+        PostScriptTable::Builder::CreateBuilder(header, table_data));
+  } /*else if (tag == Tag::cvt) {
+    builder_raw = static_cast<Table::Builder*>(
+        ControlValueTable::Builder::CreateBuilder(header, table_data));
+  }*/
   else if (tag == Tag::glyf) {
     builder_raw = static_cast<Table::Builder*>(
         GlyphTable::Builder::CreateBuilder(header, table_data));
