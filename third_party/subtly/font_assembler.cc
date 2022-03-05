@@ -16,8 +16,6 @@
 
 #include "subtly/font_assembler.h"
 
-#include <stdio.h>
-
 #include <map>
 #include <set>
 

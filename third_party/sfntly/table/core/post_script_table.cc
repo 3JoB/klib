@@ -1,17 +1,12 @@
 #include "sfntly/table/core/post_script_table.h"
 
 namespace sfntly {
-
 PostScriptTable::PostScriptTable(sfntly::Header *header,
                                  sfntly::ReadableFontData *data)
     : Table(header, data) {}
 
 int32_t PostScriptTable::Version() {
   return this->data_->ReadFixed(static_cast<int32_t>(Offset::kVersion));
-}
-
-int64_t PostScriptTable::IsFixedPitchRaw() {
-  return this->data_->ReadULong(static_cast<int32_t>(Offset::kIsFixedPitch));
 }
 
 int32_t PostScriptTable::NumberOfGlyphs() {
@@ -104,5 +99,4 @@ FontDataTable *PostScriptTable::Builder::SubBuildTable(ReadableFontData *data) {
   FontDataTablePtr table = new PostScriptTable(header(), data);
   return table.Detach();
 }
-
 }  // namespace sfntly

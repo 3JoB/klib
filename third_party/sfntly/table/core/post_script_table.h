@@ -7,7 +7,6 @@
 #include "sfntly/table/table_based_table_builder.h"
 
 namespace sfntly {
-
 class PostScriptTable : public Table, public RefCounted<PostScriptTable> {
  public:
   constexpr static int32_t VERSION_1 = 0x10000;
@@ -16,14 +15,6 @@ class PostScriptTable : public Table, public RefCounted<PostScriptTable> {
 
   enum class Offset {
     kVersion = 0,
-    kItalicAngle = 4,
-    kUnderlinePosition = 8,
-    kUnderlineThickness = 10,
-    kIsFixedPitch = 12,
-    kMinMemType42 = 16,
-    kMaxMemType42 = 20,
-    kMinMemType1 = 24,
-    kMaxMemType1 = 28,
     kNumberOfGlyphs = 32,
     kGlyphNameIndex = 34,
   };
@@ -289,7 +280,6 @@ class PostScriptTable : public Table, public RefCounted<PostScriptTable> {
 
   PostScriptTable(Header* header, ReadableFontData* data);
   int32_t Version();
-  int64_t IsFixedPitchRaw();
   int32_t NumberOfGlyphs();
 
   std::string GlyphName(int32_t glyphNum);
@@ -312,7 +302,6 @@ class PostScriptTable : public Table, public RefCounted<PostScriptTable> {
                                                 WritableFontData* data);
   };
 };
-
 }  // namespace sfntly
 
 #endif  // FONT_SUBSETTER_POST_SCRIPT_TABLE_H

@@ -38,15 +38,12 @@ typedef std::map<FontId, sfntly::Ptr<sfntly::Font> > FontIdMap;
 class GlyphId {
  public:
   GlyphId(int32_t glyph_id, FontId font_id);
-  ~GlyphId() {}
 
   bool operator==(const GlyphId& other) const;
   bool operator<(const GlyphId& other) const;
 
   int32_t glyph_id() const { return glyph_id_; }
-  void set_glyph_id(const int32_t glyph_id) { glyph_id_ = glyph_id; }
   FontId font_id() const { return font_id_; }
-  void set_font_id(const FontId font_id) { font_id_ = font_id; }
 
  private:
   int32_t glyph_id_;
