@@ -16,12 +16,12 @@
 
 namespace klib {
 
-std::string font_subset(const std::string &font_path,
-                        const std::u32string &unicodes) {
+std::string ttf_subset(const std::string &ttf_font_path,
+                       const std::u32string &unicodes) {
   sfntly::FontPtr font;
-  font.Attach(subtly::LoadFont(font_path.c_str()));
+  font.Attach(subtly::LoadFont(ttf_font_path.c_str()));
   if (font->num_tables() == 0) {
-    throw RuntimeError("Could not load font: {}", font_path);
+    throw RuntimeError("Could not load font: {}", ttf_font_path);
   }
 
   auto characters = new sfntly::IntegerSet;
@@ -36,7 +36,7 @@ std::string font_subset(const std::string &font_path,
   sfntly::Ptr<sfntly::Font> new_font;
   new_font.Attach(subsetter->Subset());
   if (!new_font) {
-    throw RuntimeError("Cannot create subset", font_path);
+    throw RuntimeError("Cannot create subset: {}", ttf_font_path);
   }
 
   sfntly::FontFactoryPtr font_factory;

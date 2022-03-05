@@ -9,7 +9,7 @@
 #include "klib/unicode.h"
 #include "klib/util.h"
 
-TEST_CASE("font_subset", "[font]") {
+TEST_CASE("ttf_subset", "[font]") {
   const std::string file_name = "SourceHanSansSC-Bold.ttf";
   REQUIRE(std::filesystem::exists(file_name));
 
@@ -17,7 +17,7 @@ TEST_CASE("font_subset", "[font]") {
   const std::string text = "你好世界";
 
   const auto subset_font =
-      klib::font_subset(file_name, klib::utf8_to_utf32(text));
+      klib::ttf_subset(file_name, klib::utf8_to_utf32(text));
   klib::write_file(out_name, true, subset_font);
 
   REQUIRE(std::filesystem::exists(out_name));
