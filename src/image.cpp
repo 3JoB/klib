@@ -1,50 +1,14 @@
 #include "klib/image.h"
 
-#include <cstdint>
-
 #include <webp/decode.h>
 #include <webp/encode.h>
 #include <scope_guard.hpp>
 
 #include "imageio/image_dec.h"
-#include "imageio/imageio_util.h"
+#include "imageio/yuvdec.h"
 #include "klib/exception.h"
 
 namespace klib {
-
-namespace {
-
-static int ReadYUV(const std::uint8_t* data, std::size_t data_size,
-                   WebPPicture* const pic) {
-  const std::int32_t use_argb = pic->use_argb;
-  const std::int32_t uv_width = (pic->width + 1) / 2;
-  const std::int32_t uv_height = (pic->height + 1) / 2;
-  const std::int32_t y_plane_size = pic->width * pic->height;
-  const std::int32_t uv_plane_size = uv_width * uv_height;
-  const std::size_t expected_data_size = y_plane_size + 2 * uv_plane_size;
-
-  if (data_size != expected_data_size) {
-    throw klib::RuntimeError(
-        "input data doesn't have the expected size ({} instead of {})",
-        data_size, expected_data_size);
-  }
-
-  pic->use_argb = 0;
-  if (!WebPPictureAlloc(pic)) {
-    return 0;
-  }
-
-  ImgIoUtilCopyPlane(data, pic->width, pic->y, pic->y_stride, pic->width,
-                     pic->height);
-  ImgIoUtilCopyPlane(data + y_plane_size, uv_width, pic->u, pic->uv_stride,
-                     uv_width, uv_height);
-  ImgIoUtilCopyPlane(data + y_plane_size + uv_plane_size, uv_width, pic->v,
-                     pic->uv_stride, uv_width, uv_height);
-
-  return use_argb ? WebPPictureYUVAToARGB(pic) : 1;
-}
-
-}  // namespace
 
 std::string image_to_webp(const std::string& image) {
   return image_to_webp(std::data(image), std::size(image));
