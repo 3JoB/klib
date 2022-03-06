@@ -23,10 +23,7 @@
 #include "./jpegdec.h"
 #include "./metadata.h"
 #include "./pngdec.h"
-#include "./pnmdec.h"
-#include "./tiffdec.h"
 #include "./webpdec.h"
-#include "./wicdec.h"
 
 #ifdef __cplusplus
 extern "C" {
