@@ -29,6 +29,7 @@
 //------------------------------------------------------------------------------
 // WebP decoding
 
+#ifndef NDEBUG
 static const char* const kStatusMessages[VP8_STATUS_NOT_ENOUGH_DATA + 1] = {
     "OK",
     "OUT_OF_MEMORY",
@@ -38,23 +39,30 @@ static const char* const kStatusMessages[VP8_STATUS_NOT_ENOUGH_DATA + 1] = {
     "SUSPENDED",
     "USER_ABORT",
     "NOT_ENOUGH_DATA"};
+#endif
 
 static void PrintAnimationWarning(const WebPDecoderConfig* const config) {
   if (config->input.has_animation) {
+#ifndef NDEBUG
     fprintf(stderr,
             "Error! Decoding of an animated WebP file is not supported.\n"
             "       Use webpmux to extract the individual frames or\n"
             "       vwebp to view this image.\n");
+#endif
   }
 }
 
 void PrintWebPError(const char* const in_file, int status) {
+  (void)in_file;
+  (void)status;
+#ifndef NDEBUG
   WFPRINTF(stderr, "Decoding of %s failed.\n", (const W_CHAR*)in_file);
   fprintf(stderr, "Status: %d", status);
   if (status >= VP8_STATUS_OK && status <= VP8_STATUS_NOT_ENOUGH_DATA) {
     fprintf(stderr, "(%s)", kStatusMessages[status]);
   }
   fprintf(stderr, "\n");
+#endif
 }
 
 int LoadWebP(const char* const in_file, const uint8_t** data, size_t* data_size,
@@ -98,7 +106,9 @@ VP8StatusCode DecodeWebPIncremental(const uint8_t* const data, size_t data_size,
   {
     WebPIDecoder* const idec = WebPIDecode(data, data_size, config);
     if (idec == NULL) {
+#ifndef NDEBUG
       fprintf(stderr, "Failed during WebPIDecode().\n");
+#endif
       return VP8_STATUS_OUT_OF_MEMORY;
     } else {
       status = WebPIUpdate(idec, data, data_size);
@@ -155,7 +165,9 @@ int ReadWebP(const uint8_t* const data, size_t data_size,
   if (data == NULL || data_size == 0 || pic == NULL) return 0;
 
   if (!WebPInitDecoderConfig(&config)) {
+#ifndef NDEBUG
     fprintf(stderr, "Library version mismatch!\n");
+#endif
     return 0;
   }
 

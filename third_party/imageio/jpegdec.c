@@ -82,24 +82,30 @@ static int StoreICCP(j_decompress_ptr dinfo, MetadataPayload* const iccp) {
       ICCPSegment* segment;
 
       if (segment_size == 0 || count == 0 || seq == 0) {
+#ifndef NDEBUG
         fprintf(stderr,
                 "[ICCP] size (%d) / count (%d) / sequence number (%d)"
                 " cannot be 0!\n",
                 (int)segment_size, seq, count);
+#endif
         return 0;
       }
 
       if (expected_count == 0) {
         expected_count = count;
       } else if (expected_count != count) {
+#ifndef NDEBUG
         fprintf(stderr, "[ICCP] Inconsistent segment count (%d / %d)!\n",
                 expected_count, count);
+#endif
         return 0;
       }
 
       segment = iccp_segments + seq - 1;
       if (segment->data_length != 0) {
+#ifndef NDEBUG
         fprintf(stderr, "[ICCP] Duplicate segment number (%d)!\n", seq);
+#endif
         return 0;
       }
 
@@ -114,13 +120,17 @@ static int StoreICCP(j_decompress_ptr dinfo, MetadataPayload* const iccp) {
 
   if (actual_count == 0) return 1;
   if (seq_max != actual_count) {
+#ifndef NDEBUG
     fprintf(stderr, "[ICCP] Discontinuous segments, expected: %d actual: %d!\n",
             actual_count, seq_max);
+#endif
     return 0;
   }
   if (expected_count != actual_count) {
+#ifndef NDEBUG
     fprintf(stderr, "[ICCP] Segment count: %d does not match expected: %d!\n",
             actual_count, expected_count);
+#endif
     return 0;
   }
 
@@ -184,8 +194,10 @@ static int ExtractMetadataFromJPEG(j_decompress_ptr dinfo,
               marker->data_length - kJPEGMetadataMap[i].signature_length;
           if (!MetadataCopy(marker_data, marker_data_length, payload)) return 0;
         } else {
+#ifndef NDEBUG
           fprintf(stderr, "Ignoring additional '%s' marker\n",
                   kJPEGMetadataMap[i].signature);
+#endif
         }
       }
     }
@@ -206,7 +218,9 @@ struct my_error_mgr {
 
 static void my_error_exit(j_common_ptr dinfo) {
   struct my_error_mgr* myerr = (struct my_error_mgr*)dinfo->err;
+#ifndef NDEBUG
   fprintf(stderr, "libjpeg error: ");
+#endif
   dinfo->err->output_message(dinfo);
   longjmp(myerr->setjmp_buffer, 1);
 }
@@ -321,7 +335,9 @@ int ReadJPEG(const uint8_t* const data, size_t data_size,
   if (metadata != NULL) {
     ok = ExtractMetadataFromJPEG((j_decompress_ptr)&dinfo, metadata);
     if (!ok) {
+#ifndef NDEBUG
       fprintf(stderr, "Error extracting JPEG metadata!\n");
+#endif
       goto Error;
     }
   }
@@ -343,7 +359,7 @@ End:
   free(rgb);
   return ok;
 }
-#else   // !WEBP_HAVE_JPEG
+#else  // !WEBP_HAVE_JPEG
 int ReadJPEG(const uint8_t* const data, size_t data_size,
              struct WebPPicture* const pic, int keep_alpha,
              struct Metadata* const metadata) {
@@ -352,9 +368,11 @@ int ReadJPEG(const uint8_t* const data, size_t data_size,
   (void)pic;
   (void)keep_alpha;
   (void)metadata;
+#ifndef NDEBUG
   fprintf(stderr,
           "JPEG support not compiled. Please install the libjpeg "
           "development package before building.\n");
+#endif
   return 0;
 }
 #endif  // WEBP_HAVE_JPEG

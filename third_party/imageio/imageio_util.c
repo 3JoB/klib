@@ -26,7 +26,9 @@
 FILE* ImgIoUtilSetBinaryMode(FILE* file) {
 #if defined(_WIN32)
   if (_setmode(_fileno(file), _O_BINARY) == -1) {
+#ifndef NDEBUG
     fprintf(stderr, "Failed to reopen file in O_BINARY mode.\n");
+#endif
     return NULL;
   }
 #endif
@@ -64,7 +66,9 @@ int ImgIoUtilReadFromStdin(const uint8_t** data, size_t* data_size) {
 
 Error:
   free(input);
+#ifndef NDEBUG
   fprintf(stderr, "Could not read from stdin\n");
+#endif
   return 0;
 }
 
@@ -84,7 +88,9 @@ int ImgIoUtilReadFile(const char* const file_name, const uint8_t** data,
 
   in = WFOPEN(file_name, "rb");
   if (in == NULL) {
+#ifndef NDEBUG
     WFPRINTF(stderr, "cannot open input file '%s'\n", (const W_CHAR*)file_name);
+#endif
     return 0;
   }
   fseek(in, 0, SEEK_END);
@@ -94,16 +100,20 @@ int ImgIoUtilReadFile(const char* const file_name, const uint8_t** data,
   file_data = (uint8_t*)WebPMalloc(file_size + 1);
   if (file_data == NULL) {
     fclose(in);
+#ifndef NDEBUG
     WFPRINTF(stderr, "memory allocation failure when reading file %s\n",
              (const W_CHAR*)file_name);
+#endif
     return 0;
   }
   ok = (fread(file_data, file_size, 1, in) == 1);
   fclose(in);
 
   if (!ok) {
+#ifndef NDEBUG
     WFPRINTF(stderr, "Could not read %d bytes of data from file %s\n",
              (int)file_size, (const W_CHAR*)file_name);
+#endif
     WebPFree(file_data);
     return 0;
   }
@@ -126,8 +136,10 @@ int ImgIoUtilWriteFile(const char* const file_name, const uint8_t* data,
   }
   out = to_stdout ? ImgIoUtilSetBinaryMode(stdout) : WFOPEN(file_name, "wb");
   if (out == NULL) {
+#ifndef NDEBUG
     WFPRINTF(stderr, "Error! Cannot open output file '%s'\n",
              (const W_CHAR*)file_name);
+#endif
     return 0;
   }
   ok = (fwrite(data, data_size, 1, out) == 1);

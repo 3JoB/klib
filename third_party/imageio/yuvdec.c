@@ -14,9 +14,11 @@ int ReadYUV(const uint8_t* const data, size_t data_size,
   const size_t expected_data_size = y_plane_size + 2 * uv_plane_size;
 
   if (data_size != expected_data_size) {
+#ifndef NDEBUG
     fprintf(stderr,
             "input data doesn't have the expected size (%d instead of %d)\n",
             (int)data_size, (int)expected_data_size);
+#endif
     return 0;
   }
 

@@ -68,8 +68,10 @@ static HRESULT CreateOutputStream(const char* out_file_name, int write_to_mem,
                              STGM_WRITE | STGM_CREATE, stream));
   }
   if (FAILED(hr)) {
+#ifdef NDEBUG
     _ftprintf(stderr, _T("Error opening output file %s (%08lx)\n"),
               (const LPTSTR)out_file_name, hr);
+#endif
   }
   return hr;
 }
@@ -92,10 +94,12 @@ static HRESULT WriteUsingWIC(const char* out_file_name, int use_stdout,
       MAKE_REFGUID(CLSID_WICImagingFactory), NULL, CLSCTX_INPROC_SERVER,
       MAKE_REFGUID(IID_IWICImagingFactory), (LPVOID*)&factory));
   if (hr == REGDB_E_CLASSNOTREG) {
+#ifndef NDEBUG
     fprintf(stderr,
             "Couldn't access Windows Imaging Component (are you running "
             "Windows XP SP3 or newer?). PNG support not available. "
             "Use -ppm or -pgm for available PPM and PGM formats.\n");
+#endif
   }
   IFS(CreateOutputStream(out_file_name, use_stdout, &stream));
   IFS(IWICImagingFactory_CreateEncoder(factory, container_guid, NULL,
@@ -204,11 +208,12 @@ int WebPWritePNG(FILE* out_file, const WebPDecBuffer* const buffer) {
 #else                         // !HAVE_WINCODEC_H && !WEBP_HAVE_PNG
 int WebPWritePNG(FILE* fout, const WebPDecBuffer* const buffer) {
   if (fout == NULL || buffer == NULL) return 0;
-
+#ifndef NDEBUG
   fprintf(stderr,
           "PNG support not compiled. Please install the libpng "
           "development package before building.\n");
   fprintf(stderr, "You can run with -ppm flag to decode in PPM format.\n");
+#endif
   return 0;
 }
 #endif
@@ -231,12 +236,16 @@ static int WritePPMPAM(FILE* fout, const WebPDecBuffer* const buffer,
     if (row == NULL) return 0;
 
     if (alpha) {
+#ifndef NDEBUG
       fprintf(fout,
               "P7\nWIDTH %u\nHEIGHT %u\nDEPTH 4\nMAXVAL 255\n"
               "TUPLTYPE RGB_ALPHA\nENDHDR\n",
               width, height);
+#endif
     } else {
+#ifndef NDEBUG
       fprintf(fout, "P6\n%u %u\n255\n", width, height);
+#endif
     }
     for (y = 0; y < height; ++y) {
       if (fwrite(row, width, bytes_per_px, fout) != bytes_per_px) {
@@ -269,8 +278,9 @@ int WebPWrite16bAsPGM(FILE* fout, const WebPDecBuffer* const buffer) {
   uint32_t y;
 
   if (fout == NULL || buffer == NULL || rgba == NULL) return 0;
-
+#ifndef NDEBUG
   fprintf(fout, "P5\n%u %u\n255\n", width * bytes_per_px, height);
+#endif
   for (y = 0; y < height; ++y) {
     if (fwrite(rgba, width, bytes_per_px, fout) != bytes_per_px) {
       return 0;
@@ -460,8 +470,9 @@ int WebPWriteAlphaPlane(FILE* fout, const WebPDecBuffer* const buffer) {
     uint32_t y;
 
     if (a == NULL) return 0;
-
+#ifndef NDEBUG
     fprintf(fout, "P5\n%u %u\n255\n", width, height);
+#endif
     for (y = 0; y < height; ++y) {
       if (fwrite(a, width, 1, fout) != 1) return 0;
       a += a_stride;
@@ -491,9 +502,10 @@ int WebPWritePGM(FILE* fout, const WebPDecBuffer* const buffer) {
     int y;
 
     if (src_y == NULL || src_u == NULL || src_v == NULL) return 0;
-
+#ifndef NDEBUG
     fprintf(fout, "P5\n%d %d\n255\n", (width + 1) & ~1,
             height + uv_height + a_height);
+#endif
     for (y = 0; ok && y < height; ++y) {
       ok &= (fwrite(src_y, width, 1, fout) == 1);
       if (width & 1) fputc(0, fout);  // padding byte
@@ -578,8 +590,10 @@ int WebPSaveImage(const WebPDecBuffer* const buffer,
     fout = use_stdout ? ImgIoUtilSetBinaryMode(stdout)
                       : WFOPEN(out_file_name, "wb");
     if (fout == NULL) {
+#ifndef NDEBUG
       WFPRINTF(stderr, "Error opening output file %s\n",
                (const W_CHAR*)out_file_name);
+#endif
       return 0;
     }
   }

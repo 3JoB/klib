@@ -34,7 +34,11 @@
 #define LOCAL_PNG_PREREQ(maj, min) (LOCAL_PNG_VERSION >= (((maj) << 8) | (min)))
 
 static void PNGAPI error_function(png_structp png, png_const_charp error) {
-  if (error != NULL) fprintf(stderr, "libpng error: %s\n", error);
+  if (error != NULL) {
+#ifndef NDEBUG
+    fprintf(stderr, "libpng error: %s\n", error);
+#endif
+  }
   longjmp(png_jmpbuf(png), 1);
 }
 
@@ -104,8 +108,10 @@ static int ProcessRawProfile(const char* profile, size_t profile_len,
   // ImageMagick formats 'raw profiles' as
   // '\n<name>\n<length>(%8lu)\n<hex payload>\n'.
   if (*src != '\n') {
+#ifndef NDEBUG
     fprintf(stderr, "Malformed raw profile, expected '\\n' got '\\x%.2X'\n",
             *src);
+#endif
     return 0;
   }
   ++src;
@@ -114,8 +120,10 @@ static int ProcessRawProfile(const char* profile, size_t profile_len,
   }
   expected_length = (int)strtol(src, &end, 10);
   if (*end != '\n') {
+#ifndef NDEBUG
     fprintf(stderr, "Malformed raw profile, expected '\\n' got '\\x%.2X'\n",
             *end);
+#endif
     return 0;
   }
   ++end;
@@ -181,10 +189,14 @@ static int ExtractMetadataFromPNG(png_structp png, png_infop const head_info,
               break;
           }
           if (payload->bytes != NULL) {
+#ifndef NDEBUG
             fprintf(stderr, "Ignoring additional '%s'\n", text->key);
+#endif
           } else if (!kPNGMetadataMap[j].process(text->text, text_length,
                                                  payload)) {
+#ifndef NDEBUG
             fprintf(stderr, "Failed to process: '%s'\n", text->key);
+#endif
             return 0;
           }
           break;
@@ -334,7 +346,9 @@ int ReadPNG(const uint8_t* const data, size_t data_size,
 
   if (metadata != NULL &&
       !ExtractMetadataFromPNG(png, info, end_info, metadata)) {
+#ifndef NDEBUG
     fprintf(stderr, "Error extracting PNG metadata!\n");
+#endif
     goto Error;
   }
 
@@ -355,7 +369,7 @@ End:
   free(rgb);
   return ok;
 }
-#else   // !WEBP_HAVE_PNG
+#else  // !WEBP_HAVE_PNG
 int ReadPNG(const uint8_t* const data, size_t data_size,
             struct WebPPicture* const pic, int keep_alpha,
             struct Metadata* const metadata) {
@@ -364,9 +378,11 @@ int ReadPNG(const uint8_t* const data, size_t data_size,
   (void)pic;
   (void)keep_alpha;
   (void)metadata;
+#ifndef NDEBUG
   fprintf(stderr,
           "PNG support not compiled. Please install the libpng "
           "development package before building.\n");
+#endif
   return 0;
 }
 #endif  // WEBP_HAVE_PNG
