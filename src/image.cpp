@@ -43,14 +43,15 @@ std::string image_to_webp(const char* image, std::size_t size, bool lossless) {
 
   WebPMemoryWriterInit(&memory_writer);
   if (!WebPPictureInit(&picture) || !WebPPictureInit(&original_picture) ||
-      !WebPConfigInit(&config)) {
+      !WebPConfigInit(&config)) [[unlikely]] {
     throw RuntimeError("libwebp: Library version mismatch");
   }
 
   config.quality = 80;
   config.lossless = lossless;
 
-  if (!WebPValidateConfig(&config)) {
+  auto rc = WebPValidateConfig(&config);
+  if (!rc) [[unlikely]] {
     throw RuntimeError("libwebp: Invalid configuration");
   }
 
@@ -60,23 +61,23 @@ std::string image_to_webp(const char* image, std::size_t size, bool lossless) {
     picture.use_argb = 0;
   }
 
-  bool ok;
-  if (picture.width == 0 || picture.height == 0) {
+  if (picture.width == 0 || picture.height == 0) [[likely]] {
     WebPImageReader reader = WebPGuessImageReader(
         reinterpret_cast<const std::uint8_t*>(image), size);
-    ok = reader(reinterpret_cast<const std::uint8_t*>(image), size, &picture, 1,
+    rc = reader(reinterpret_cast<const std::uint8_t*>(image), size, &picture, 1,
                 nullptr);
-  } else {
-    ok = ReadYUV(reinterpret_cast<const std::uint8_t*>(image), size, &picture);
+  } else [[unlikely]] {
+    rc = ReadYUV(reinterpret_cast<const std::uint8_t*>(image), size, &picture);
   }
-  if (!ok) {
+  if (!rc) [[unlikely]] {
     throw RuntimeError("libwebp: Could not process");
   }
 
   picture.writer = WebPMemoryWrite;
   picture.custom_ptr = (void*)&memory_writer;
 
-  if (!WebPEncode(&config, &picture)) {
+  rc = WebPEncode(&config, &picture);
+  if (!rc) [[unlikely]] {
     throw RuntimeError("libwebp: Cannot encode picture as WebP");
   }
 
@@ -99,7 +100,8 @@ std::string webp_to_png(const char* image, std::size_t size) {
 
   auto bitstream = &config.input;
 
-  if (!WebPInitDecoderConfig(&config)) {
+  auto rc = WebPInitDecoderConfig(&config);
+  if (!rc) [[unlikely]] {
     throw RuntimeError("libwebp: Library version mismatch");
   }
 
@@ -107,7 +109,7 @@ std::string webp_to_png(const char* image, std::size_t size) {
   WebPBitstreamFeatures local_features;
   status = WebPGetFeatures(reinterpret_cast<const std::uint8_t*>(image), size,
                            bitstream == nullptr ? &local_features : bitstream);
-  if (status != VP8_STATUS_OK) {
+  if (status != VP8_STATUS_OK) [[unlikely]] {
     throw RuntimeError("libwebp: {}", GetWebPError(status));
   }
 
@@ -115,14 +117,14 @@ std::string webp_to_png(const char* image, std::size_t size) {
 
   status =
       DecodeWebP(reinterpret_cast<const std::uint8_t*>(image), size, &config);
-  if (status != VP8_STATUS_OK) {
+  if (status != VP8_STATUS_OK) [[unlikely]] {
     throw RuntimeError("libwebp: {}", GetWebPError(status));
   }
 
   std::string result;
   result.reserve(16384);
-  auto ok = WebPWritePNGMemory(output_buffer, &result);
-  if (!ok) {
+  rc = WebPWritePNGMemory(output_buffer, &result);
+  if (!rc) [[unlikely]] {
     throw RuntimeError("libwebp: WebPSaveImage failed");
   }
 
