@@ -51,12 +51,10 @@ target_link_libraries(<your-target> PRIVATE klib::klib)
 
 ## Roadmap
 
-- Use get headers instead of llhttp
+- Use get headers
   - https://github.com/curl/curl/wiki/get-headers-v2
 - HTTP/3
   - https://github.com/curl/curl/wiki/HTTP3
-- WebP
-  - https://github.com/webmproject/libwebp
 
 ---
 
