@@ -75,3 +75,37 @@ TEST_CASE("jpg to WebP lossless", "[image]") {
   dbg(std::filesystem::file_size(file_name));
   dbg(std::filesystem::file_size(out_name));
 }
+
+TEST_CASE("WebP to png", "[image]") {
+  const std::string file_name = "wallpaper.std.webp";
+  REQUIRE(std::filesystem::exists(file_name));
+  const std::string webp_image = klib::read_file(file_name, true);
+
+  const std::string out_name = "wallpaper.klib.png";
+  const auto png_image = klib::webp_to_png(webp_image);
+  klib::write_file(out_name, true, png_image);
+
+  REQUIRE(std::filesystem::exists(out_name));
+  REQUIRE(klib::sha256_hex(klib::read_file(out_name, true)) ==
+          "f1b901a68bf116e3053bc0f1ec5244e907bcefbed61bba3b124e6d216959deb3");
+
+  dbg(std::filesystem::file_size(file_name));
+  dbg(std::filesystem::file_size(out_name));
+}
+
+TEST_CASE("WebP to png lossless", "[image]") {
+  const std::string file_name = "wallpaper.std.lossless.webp";
+  REQUIRE(std::filesystem::exists(file_name));
+  const std::string webp_image = klib::read_file(file_name, true);
+
+  const std::string out_name = "wallpaper.klib.lossless.png";
+  const auto png_image = klib::webp_to_png(webp_image);
+  klib::write_file(out_name, true, png_image);
+
+  REQUIRE(std::filesystem::exists(out_name));
+  REQUIRE(klib::sha256_hex(klib::read_file(out_name, true)) ==
+          "36f936fade6b3d6e2f1c7e7f798fb95713a3b8e641a3eee964d8aca757954d7d");
+
+  dbg(std::filesystem::file_size(file_name));
+  dbg(std::filesystem::file_size(out_name));
+}

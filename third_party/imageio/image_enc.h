@@ -69,6 +69,8 @@ int WebPWritePNG(const char* out_file_name, int use_stdout,
 int WebPWritePNG(FILE* out_file, const WebPDecBuffer* const buffer);
 #endif
 
+int WebPWritePNGMemory(const WebPDecBuffer* buffer, void* result);
+
 // Save to PPM format (RGB, no alpha)
 int WebPWritePPM(FILE* fout, const struct WebPDecBuffer* const buffer);
 

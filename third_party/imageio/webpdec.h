@@ -24,6 +24,8 @@ struct WebPPicture;
 //------------------------------------------------------------------------------
 // WebP decoding
 
+const char* GetWebPError(int status);
+
 // Prints an informative error message regarding decode failure of 'in_file'.
 // 'status' is treated as a VP8StatusCode and if valid will be printed as a
 // text string.

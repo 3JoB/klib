@@ -52,6 +52,14 @@ static void PrintAnimationWarning(const WebPDecoderConfig* const config) {
   }
 }
 
+const char* GetWebPError(int status) {
+  if (status >= VP8_STATUS_OK && status <= VP8_STATUS_NOT_ENOUGH_DATA) {
+    return kStatusMessages[status];
+  }
+
+  return NULL;
+}
+
 void PrintWebPError(const char* const in_file, int status) {
   (void)in_file;
   (void)status;
