@@ -10,7 +10,6 @@ var hierarchy =
         [ "klib::RuntimeError", "classklib_1_1RuntimeError.html", null ]
       ] ]
     ] ],
-    [ "klib::HTTPHeader", "classklib_1_1HTTPHeader.html", null ],
     [ "klib::Request", "classklib_1_1Request.html", null ],
     [ "klib::Response", "classklib_1_1Response.html", null ],
     [ "klib::SqlDatabase", "classklib_1_1SqlDatabase.html", null ],

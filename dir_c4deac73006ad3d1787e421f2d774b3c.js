@@ -13,11 +13,8 @@ var dir_c4deac73006ad3d1787e421f2d774b3c =
     [ "font.h", "font_8h.html", "font_8h" ],
     [ "hash.h", "hash_8h.html", "hash_8h" ],
     [ "html.h", "html_8h.html", "html_8h" ],
-    [ "http.h", "http_8h.html", [
-      [ "klib::Request", "classklib_1_1Request.html", "classklib_1_1Request" ],
-      [ "klib::Response", "classklib_1_1Response.html", "classklib_1_1Response" ]
-    ] ],
-    [ "http_parse.h", "http__parse_8h_source.html", null ],
+    [ "http.h", "http_8h.html", "http_8h" ],
+    [ "image.h", "image_8h.html", "image_8h" ],
     [ "log.h", "log_8h.html", "log_8h" ],
     [ "markdown.h", "markdown_8h.html", "markdown_8h" ],
     [ "sql.h", "sql_8h.html", [
@@ -26,6 +23,9 @@ var dir_c4deac73006ad3d1787e421f2d774b3c =
       [ "klib::SqlDatabase", "classklib_1_1SqlDatabase.html", "classklib_1_1SqlDatabase" ]
     ] ],
     [ "unicode.h", "unicode_8h.html", "unicode_8h" ],
+    [ "url_parse.h", "url__parse_8h.html", [
+      [ "klib::URL", "classklib_1_1URL.html", "classklib_1_1URL" ]
+    ] ],
     [ "util.h", "util_8h.html", "util_8h" ],
     [ "version.h", "version_8h.html", "version_8h" ]
 ];

@@ -5,7 +5,7 @@
 <meta http-equiv="X-UA-Compatible" content="IE=11"/>
 <meta name="generator" content="Doxygen 1.9.3"/>
 <meta name="viewport" content="width=device-width, initial-scale=1"/>
-<title>klib: Member List</title>
+<title>klib: /__w/klib/klib/include/klib/url_parse.h File Reference</title>
 <link href="tabs.css" rel="stylesheet" type="text/css"/>
 <script type="text/javascript" src="jquery.js"></script>
 <script type="text/javascript" src="dynsections.js"></script>
@@ -30,7 +30,7 @@
  <tbody>
  <tr id="projectrow">
   <td id="projectalign">
-   <div id="projectname">klib<span id="projectnumber">&#160;1.5.1</span>
+   <div id="projectname">klib<span id="projectnumber">&#160;1.6.0</span>
    </div>
   </td>
     <td>        <div id="MSearchBox" class="MSearchBoxInactive">
@@ -72,7 +72,7 @@ var searchBox = new SearchBox("searchBox", "search",'Search','.html');
 </div>
 <script type="text/javascript">
 /* @license magnet:?xt=urn:btih:d3d9a9a6595521f9666a5e94cc830dab83b65699&amp;dn=expat.txt MIT */
-$(document).ready(function(){initNavTree('classklib_1_1HTTPHeader.html',''); initResizable(); });
+$(document).ready(function(){initNavTree('url__parse_8h.html',''); initResizable(); });
 /* @license-end */
 </script>
 <div id="doc-content">
@@ -91,26 +91,35 @@ $(document).ready(function(){initNavTree('classklib_1_1HTTPHeader.html',''); ini
 </div>
 
 <div class="header">
-  <div class="headertitle"><div class="title">klib::HTTPHeader Member List</div></div>
+  <div class="summary">
+<a href="#nested-classes">Classes</a>  </div>
+  <div class="headertitle"><div class="title">url_parse.h File Reference</div></div>
 </div><!--header-->
 <div class="contents">
 
-<p>This is the complete list of members for <a class="el" href="classklib_1_1HTTPHeader.html">klib::HTTPHeader</a>, including all inherited members.</p>
-<table class="directory">
-  <tr bgcolor="#f0f0f0" class="even"><td class="entry"><b>body</b>() const (defined in <a class="el" href="classklib_1_1HTTPHeader.html">klib::HTTPHeader</a>)</td><td class="entry"><a class="el" href="classklib_1_1HTTPHeader.html">klib::HTTPHeader</a></td><td class="entry"><span class="mlabel">inline</span></td></tr>
-  <tr class="odd"><td class="entry"><a class="el" href="classklib_1_1HTTPHeader.html#a19f722ebcb06e815a4c9848f50e4165e">contains</a>(const std::string &amp;field) const</td><td class="entry"><a class="el" href="classklib_1_1HTTPHeader.html">klib::HTTPHeader</a></td><td class="entry"></td></tr>
-  <tr bgcolor="#f0f0f0" class="even"><td class="entry"><b>http_major</b>() const (defined in <a class="el" href="classklib_1_1HTTPHeader.html">klib::HTTPHeader</a>)</td><td class="entry"><a class="el" href="classklib_1_1HTTPHeader.html">klib::HTTPHeader</a></td><td class="entry"><span class="mlabel">inline</span></td></tr>
-  <tr bgcolor="#f0f0f0" class="odd"><td class="entry"><b>http_minor</b>() const (defined in <a class="el" href="classklib_1_1HTTPHeader.html">klib::HTTPHeader</a>)</td><td class="entry"><a class="el" href="classklib_1_1HTTPHeader.html">klib::HTTPHeader</a></td><td class="entry"><span class="mlabel">inline</span></td></tr>
-  <tr class="even"><td class="entry"><a class="el" href="classklib_1_1HTTPHeader.html#ab2e55b6bdacc829dce662472276d1e99">HTTPHeader</a>(std::string header)</td><td class="entry"><a class="el" href="classklib_1_1HTTPHeader.html">klib::HTTPHeader</a></td><td class="entry"><span class="mlabel">explicit</span></td></tr>
-  <tr bgcolor="#f0f0f0" class="odd"><td class="entry"><b>method</b>() const (defined in <a class="el" href="classklib_1_1HTTPHeader.html">klib::HTTPHeader</a>)</td><td class="entry"><a class="el" href="classklib_1_1HTTPHeader.html">klib::HTTPHeader</a></td><td class="entry"><span class="mlabel">inline</span></td></tr>
-  <tr class="even"><td class="entry"><a class="el" href="classklib_1_1HTTPHeader.html#a040d6517721d4a3443413980e53300e2">status</a>() const</td><td class="entry"><a class="el" href="classklib_1_1HTTPHeader.html">klib::HTTPHeader</a></td><td class="entry"><span class="mlabel">inline</span></td></tr>
-  <tr bgcolor="#f0f0f0" class="odd"><td class="entry"><b>uri</b>() const (defined in <a class="el" href="classklib_1_1HTTPHeader.html">klib::HTTPHeader</a>)</td><td class="entry"><a class="el" href="classklib_1_1HTTPHeader.html">klib::HTTPHeader</a></td><td class="entry"><span class="mlabel">inline</span></td></tr>
-  <tr class="even"><td class="entry"><a class="el" href="classklib_1_1HTTPHeader.html#af5d02c963bc59b820e41a99fa397692a">value</a>(const std::string &amp;field) const</td><td class="entry"><a class="el" href="classklib_1_1HTTPHeader.html">klib::HTTPHeader</a></td><td class="entry"></td></tr>
-</table></div><!-- contents -->
+<p>Contains URL parse module.  
+<a href="#details">More...</a></p>
+<div class="textblock"><code>#include &lt;cstdint&gt;</code><br />
+<code>#include &lt;string&gt;</code><br />
+<code>#include &lt;string_view&gt;</code><br />
+<code>#include &lt;unordered_map&gt;</code><br />
+</div>
+<p><a href="url__parse_8h_source.html">Go to the source code of this file.</a></p>
+<table class="memberdecls">
+<tr class="heading"><td colspan="2"><h2 class="groupheader"><a id="nested-classes" name="nested-classes"></a>
+Classes</h2></td></tr>
+<tr class="memitem:"><td class="memItemLeft" align="right" valign="top">class &#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="classklib_1_1URL.html">klib::URL</a></td></tr>
+<tr class="memdesc:"><td class="mdescLeft">&#160;</td><td class="mdescRight">Parse <a class="el" href="classklib_1_1URL.html" title="Parse URL.">URL</a>.  <a href="classklib_1_1URL.html#details">More...</a><br /></td></tr>
+<tr class="separator:"><td class="memSeparator" colspan="2">&#160;</td></tr>
+</table>
+<a name="details" id="details"></a><h2 class="groupheader">Detailed Description</h2>
+<div class="textblock"><p >Contains URL parse module. </p>
+</div></div><!-- contents -->
 </div><!-- doc-content -->
 <!-- start footer part -->
 <div id="nav-path" class="navpath"><!-- id is needed for treeview function! -->
   <ul>
+    <li class="navelem"><a class="el" href="dir_d44c64559bbebec7f509842c48db8b23.html">include</a></li><li class="navelem"><a class="el" href="dir_c4deac73006ad3d1787e421f2d774b3c.html">klib</a></li><li class="navelem"><a class="el" href="url__parse_8h.html">url_parse.h</a></li>
     <li class="footer">Generated by <a href="https://www.doxygen.org/index.html"><img class="footer" src="doxygen.svg" width="104" height="31" alt="doxygen"/></a> 1.9.3 </li>
   </ul>
 </div>

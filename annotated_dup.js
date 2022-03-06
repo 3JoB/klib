@@ -4,7 +4,6 @@ var annotated_dup =
       [ "ChangeWorkingDir", "classklib_1_1ChangeWorkingDir.html", "classklib_1_1ChangeWorkingDir" ],
       [ "Column", "classklib_1_1Column.html", "classklib_1_1Column" ],
       [ "Exception", "classklib_1_1Exception.html", "classklib_1_1Exception" ],
-      [ "HTTPHeader", "classklib_1_1HTTPHeader.html", "classklib_1_1HTTPHeader" ],
       [ "InvalidArgument", "classklib_1_1InvalidArgument.html", "classklib_1_1InvalidArgument" ],
       [ "LogicError", "classklib_1_1LogicError.html", "classklib_1_1LogicError" ],
       [ "OutOfRange", "classklib_1_1OutOfRange.html", "classklib_1_1OutOfRange" ],

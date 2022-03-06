@@ -6,6 +6,5 @@ var searchData=
   ['commit_3',['commit',['../classklib_1_1SqlDatabase.html#a17df51a89cc3c98a71721e4173f1067d',1,'klib::SqlDatabase']]],
   ['compress_4',['compress',['../archive_8h.html#abfa41cf31d1d6dd97ba5d38d4477ab86',1,'klib::compress(const std::string &amp;path, Format format=Format::Tar, Filter filter=Filter::Gzip, const std::string &amp;out_name=&quot;&quot;, bool flag=true, const std::string &amp;password=&quot;&quot;)'],['../archive_8h.html#a51d5ca3e94c724caa69789ca538b76ae',1,'klib::compress(const std::vector&lt; std::string &gt; &amp;paths, const std::string &amp;out_name, Format format=Format::Tar, Filter filter=Filter::Gzip, const std::string &amp;password=&quot;&quot;)']]],
   ['compress_5fdata_5',['compress_data',['../archive_8h.html#a8ab28a7a1abb2786da21e7de15fc7d81',1,'klib::compress_data(const std::string &amp;data)'],['../archive_8h.html#a5f759ec2e531a750ccde5ee11eff1a07',1,'klib::compress_data(const char *data, std::size_t size)']]],
-  ['contains_6',['contains',['../classklib_1_1HTTPHeader.html#a19f722ebcb06e815a4c9848f50e4165e',1,'klib::HTTPHeader']]],
-  ['crypto_2eh_7',['crypto.h',['../crypto_8h.html',1,'']]]
+  ['crypto_2eh_6',['crypto.h',['../crypto_8h.html',1,'']]]
 ];

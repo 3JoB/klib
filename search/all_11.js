@@ -15,5 +15,5 @@ var searchData=
   ['sql_2eh_12',['sql.h',['../sql_8h.html',1,'']]],
   ['sqldatabase_13',['SqlDatabase',['../classklib_1_1SqlDatabase.html',1,'klib::SqlDatabase'],['../classklib_1_1SqlDatabase.html#aa7281a180fce361c924a7e198873303d',1,'klib::SqlDatabase::SqlDatabase()']]],
   ['sqlquery_14',['SqlQuery',['../classklib_1_1SqlQuery.html',1,'klib::SqlQuery'],['../classklib_1_1SqlQuery.html#a0d1d4bb9d49459b482755cb48a1d14b8',1,'klib::SqlQuery::SqlQuery()']]],
-  ['status_15',['status',['../classklib_1_1Response.html#a1e169bb7c73b3c5dda049527cb0f8419',1,'klib::Response::status()'],['../classklib_1_1HTTPHeader.html#a040d6517721d4a3443413980e53300e2',1,'klib::HTTPHeader::status()']]]
+  ['status_15',['status',['../classklib_1_1Response.html#a1e169bb7c73b3c5dda049527cb0f8419',1,'klib::Response']]]
 ];
