@@ -166,6 +166,12 @@ class Request {
   void set_accept_encoding(const std::string &accept_encoding);
 
   /**
+   * @brief Set cookie
+   * @param cookies: Cookies
+   */
+  void set_cookie(const std::unordered_map<std::string, std::string> &cookies);
+
+  /**
    * @brief Encoding URL string
    * @param str: String to be encoded
    * @return Encoded string

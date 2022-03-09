@@ -158,6 +158,7 @@ class Request::RequestImpl {
   void set_timeout(std::int64_t seconds);
   void set_connect_timeout(std::int64_t seconds);
   void set_accept_encoding(const std::string &accept_encoding);
+  void set_cookie(const std::unordered_map<std::string, std::string> &cookies);
   std::string url_encode(const std::string &str);
   std::string url_decode(const std::string &str);
 
@@ -291,6 +292,17 @@ void Request::RequestImpl::set_accept_encoding(
     const std::string &accept_encoding) {
   auto rc =
       curl_easy_setopt(curl_, CURLOPT_ACCEPT_ENCODING, accept_encoding.c_str());
+  CHECK_CURL(rc);
+}
+
+void Request::RequestImpl::set_cookie(
+    const std::unordered_map<std::string, std::string> &cookies) {
+  std::string cookies_str;
+  for (const auto &[key, value] : cookies) {
+    cookies_str.append(key).append("=").append(value).append(";");
+  }
+
+  auto rc = curl_easy_setopt(curl_, CURLOPT_COOKIE, cookies_str.c_str());
   CHECK_CURL(rc);
 }
 
@@ -517,6 +529,11 @@ void Request::set_connect_timeout(std::int64_t seconds) {
 
 void Request::set_accept_encoding(const std::string &accept_encoding) {
   impl_->set_accept_encoding(accept_encoding);
+}
+
+void Request::set_cookie(
+    const std::unordered_map<std::string, std::string> &cookies) {
+  impl_->set_cookie(cookies);
 }
 
 std::string Request::url_encode(const std::string &str) {

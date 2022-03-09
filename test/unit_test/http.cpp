@@ -57,6 +57,8 @@ TEST_CASE("response headers", "[http]") {
   const std::string cookie2 = "b";
   const std::string value2 = "222";
 
+  request.set_cookie({{"c", "333"}});
+
   auto response = request.get(httpbin_url + "/cookies/set",
                               {{cookie1, value1}, {cookie2, value2}});
   REQUIRE(response.ok());
