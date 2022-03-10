@@ -1,5 +1,6 @@
 #include "klib/util.h"
 
+#include <sys/ioctl.h>
 #include <sys/wait.h>
 #include <unistd.h>
 
@@ -232,6 +233,13 @@ std::string generate_random_bytes(std::size_t bytes) {
   CHECK_BORINGSSL(rc);
 
   return result;
+}
+
+// https://stackoverflow.com/questions/1022957/getting-terminal-width-in-c
+std::pair<std::uint32_t, std::uint32_t> terminal_size() {
+  winsize win_size;
+  ioctl(STDOUT_FILENO, TIOCGWINSZ, &win_size);
+  return {win_size.ws_col, win_size.ws_row};
 }
 
 }  // namespace klib

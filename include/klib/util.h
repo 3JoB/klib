@@ -6,6 +6,7 @@
 #pragma once
 
 #include <cstddef>
+#include <cstdint>
 #include <string>
 #include <string_view>
 #include <vector>
@@ -57,8 +58,20 @@ std::vector<std::string> split_str(const std::string &str,
  */
 std::string read_file(const std::string &path, bool binary_mode);
 
+/**
+ * @brief Read a file at a time and store it in a string
+ * @param path: File path
+ * @param binary_mode: Whether to open in binary mode
+ * @return A string that holds the contents of the file
+ */
 std::string read_file(std::string_view path, bool binary_mode);
 
+/**
+ * @brief Read a file at a time and store it in a string
+ * @param path: File path
+ * @param binary_mode: Whether to open in binary mode
+ * @return A string that holds the contents of the file
+ */
 std::string read_file(const char *path, bool binary_mode);
 
 /**
@@ -70,8 +83,21 @@ std::string read_file(const char *path, bool binary_mode);
 void write_file(const std::string &path, bool binary_mode,
                 const std::string &str);
 
+/**
+ * @brief Write string to file
+ * @param path: File path
+ * @param binary_mode: Whether to open in binary mode
+ * @param str: String to be written
+ */
 void write_file(std::string_view path, bool binary_mode, std::string_view str);
 
+/**
+ * @brief Write string to file
+ * @param path: File path
+ * @param binary_mode: Whether to open in binary mode
+ * @param str: String to be written
+ * @param size: String size
+ */
 void write_file(const char *path, bool binary_mode, const char *str,
                 std::size_t size);
 
@@ -140,5 +166,11 @@ std::string make_file_name_legal(const std::string &file_name);
  * @return Random data generated
  */
 std::string generate_random_bytes(std::size_t bytes);
+
+/**
+ * @brief Get terminal size
+ * @return Terminal length and width
+ */
+std::pair<std::uint32_t, std::uint32_t> terminal_size();
 
 }  // namespace klib

@@ -2,6 +2,7 @@
 #include <string>
 #include <vector>
 
+#include <dbg.h>
 #include <catch2/catch.hpp>
 
 #include "klib/util.h"
@@ -64,4 +65,9 @@ TEST_CASE("make_file_name_legal", "[util]") {
   CHECK(klib::make_file_name_legal("你好世界***") == "你好世界");
   CHECK(klib::make_file_name_legal("你好?世界 .") == "你好 世界");
   CHECK(klib::make_file_name_legal("    你好|\\/世界 .") == "你好   世界");
+}
+
+TEST_CASE("terminal_size", "[util]") {
+  auto size = klib::terminal_size();
+  dbg(size);
 }
