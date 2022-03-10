@@ -20,9 +20,22 @@ namespace klib {
 std::string ttf_subset(const std::string &ttf_font,
                        const std::u32string &unicodes);
 
+/**
+ * @brief Take a font subset using the given Unicode
+ * @param ttf_font: TTF font
+ * @param unicodes: Unicode that needs to be preserved
+ * @return TTF font subset
+ */
 std::string ttf_subset(std::string_view ttf_font,
                        const std::u32string &unicodes);
 
+/**
+ * @brief Take a font subset using the given Unicode
+ * @param ttf_font: TTF font
+ * @param size: TTF font size
+ * @param unicodes: Unicode that needs to be preserved
+ * @return TTF font subset
+ */
 std::string ttf_subset(const char *ttf_font, std::size_t size,
                        const std::u32string &unicodes);
 

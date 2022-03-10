@@ -17,22 +17,142 @@ namespace klib {
  * @return Hash result
  */
 std::size_t fast_hash(const std::string &data);
+
+/**
+ * @brief Calculate the hash
+ * @param data: Data to be hashed
+ * @return Hash result in hexadecimal representation
+ */
 std::string fast_hash_hex(const std::string &data);
+
+/**
+ * @brief Calculate CRC-32
+ * @param data: Data to be hashed
+ * @return Hash result
+ * @see
+ * https://zh.wikipedia.org/wiki/%E5%BE%AA%E7%92%B0%E5%86%97%E9%A4%98%E6%A0%A1%E9%A9%97
+ */
 std::uint32_t crc32(const std::string &data);
+
+/**
+ * @brief Calculate CRC-32
+ * @param data: Data to be hashed
+ * @return Hash result in hexadecimal representation
+ * @see
+ * https://zh.wikipedia.org/wiki/%E5%BE%AA%E7%92%B0%E5%86%97%E9%A4%98%E6%A0%A1%E9%A9%97
+ */
 std::string crc32_hex(const std::string &data);
+
+/**
+ * @brief Calculate Adler-32
+ * @param data: Data to be hashed
+ * @return Hash result
+ * @see https://zh.wikipedia.org/wiki/Adler-32
+ */
 std::uint32_t adler32(const std::string &data);
+
+/**
+ * @brief Calculate Adler-32
+ * @param data: Data to be hashed
+ * @return Hash result in hexadecimal representation
+ * @see https://zh.wikipedia.org/wiki/Adler-32
+ */
 std::string adler32_hex(const std::string &data);
+
+/**
+ * @brief Calculate MD5
+ * @param data: Data to be hashed
+ * @return Hash result
+ * @see https://zh.wikipedia.org/wiki/MD5
+ */
 std::string md5(const std::string &data);
+
+/**
+ * @brief Calculate MD5
+ * @param data: Data to be hashed
+ * @return Hash result in hexadecimal representation
+ * @see https://zh.wikipedia.org/wiki/MD5
+ */
 std::string md5_hex(const std::string &data);
+
+/**
+ * @brief Calculate SHA-1
+ * @param data: Data to be hashed
+ * @return Hash result
+ * @see https://zh.wikipedia.org/wiki/SHA-1
+ */
 std::string sha1(const std::string &data);
+
+/**
+ * @brief Calculate SHA-1
+ * @param data: Data to be hashed
+ * @return Hash result in hexadecimal representation
+ * @see https://zh.wikipedia.org/wiki/SHA-1
+ */
 std::string sha1_hex(const std::string &data);
+
+/**
+ * @brief Calculate SHA-224
+ * @param data: Data to be hashed
+ * @return Hash result
+ * @see https://zh.wikipedia.org/wiki/SHA-2
+ */
 std::string sha224(const std::string &data);
+
+/**
+ * @brief Calculate SHA-224
+ * @param data: Data to be hashed
+ * @return Hash result in hexadecimal representation
+ * @see https://zh.wikipedia.org/wiki/SHA-2
+ */
 std::string sha224_hex(const std::string &data);
+
+/**
+ * @brief Calculate SHA-256
+ * @param data: Data to be hashed
+ * @return Hash result
+ * @see https://zh.wikipedia.org/wiki/SHA-2
+ */
 std::string sha256(const std::string &data);
+
+/**
+ * @brief Calculate SHA-256
+ * @param data: Data to be hashed
+ * @return Hash result in hexadecimal representation
+ * @see https://zh.wikipedia.org/wiki/SHA-2
+ */
 std::string sha256_hex(const std::string &data);
+
+/**
+ * @brief Calculate SHA-384
+ * @param data: Data to be hashed
+ * @return Hash result
+ * @see https://zh.wikipedia.org/wiki/SHA-2
+ */
 std::string sha384(const std::string &data);
+
+/**
+ * @brief Calculate SHA-384
+ * @param data: Data to be hashed
+ * @return Hash result in hexadecimal representation
+ * @see https://zh.wikipedia.org/wiki/SHA-2
+ */
 std::string sha384_hex(const std::string &data);
+
+/**
+ * @brief Calculate SHA-512
+ * @param data: Data to be hashed
+ * @return Hash result
+ * @see https://zh.wikipedia.org/wiki/SHA-2
+ */
 std::string sha512(const std::string &data);
+
+/**
+ * @brief Calculate SHA-512
+ * @param data: Data to be hashed
+ * @return Hash result in hexadecimal representation
+ * @see https://zh.wikipedia.org/wiki/SHA-2
+ */
 std::string sha512_hex(const std::string &data);
 
 /**

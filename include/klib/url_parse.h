@@ -25,16 +25,61 @@ class URL {
   explicit URL(std::string url);
 
   /**
-   * @brief Get parts of the URL
-   * @return parts of the URL
+   * @brief Get URL schema
+   * @return URL schema
+   * @example url.schema() == "https"
    * @see https://en.wikipedia.org/wiki/URL
    */
   [[nodiscard]] std::string_view schema() const { return schema_; }
+
+  /**
+   * @brief Get URL host
+   * @return URL host
+   * @example url.host() == "www.example.com"
+   * @see https://en.wikipedia.org/wiki/URL
+   */
   [[nodiscard]] std::string_view host() const { return host_; }
+
+  /**
+   * @brief Get URL port
+   * @return URL port
+   * @example url.port() == 443
+   * @see https://en.wikipedia.org/wiki/URL
+   */
   [[nodiscard]] std::int32_t port() const { return port_; }
+
+  /**
+   * @brief Get URL path
+   * @return URL path
+   * @example url.path() == "/path/to/index.html"
+   * @see https://en.wikipedia.org/wiki/URL
+   */
   [[nodiscard]] std::string_view path() const { return path_; }
+
+  /**
+   * @brief Get URL query
+   * @return URL query
+   * @example url.query() == "key1=value1&key2=value2"
+   * @see https://en.wikipedia.org/wiki/URL
+   */
   [[nodiscard]] std::string_view query() const { return query_; }
+
+  /**
+   * @brief Get URL fragment
+   * @return URL fragment
+   * @example url = "https://www.example.com/index.html#Somewhere"
+   * @example url.fragment() == "Somewhere"
+   * @see https://en.wikipedia.org/wiki/URL
+   */
   [[nodiscard]] std::string_view fragment() const { return fragment_; }
+
+  /**
+   * @brief Get URL user info
+   * @return URL user info
+   * @example url = "https://user:password@example.com"
+   * @example url.user_info() == "user:password"
+   * @see https://en.wikipedia.org/wiki/URL
+   */
   [[nodiscard]] std::string_view user_info() const { return user_info_; }
 
   /**
