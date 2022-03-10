@@ -148,9 +148,9 @@ set_target_properties(
 # https://stackoverflow.com/questions/37924383/combining-several-static-libraries-into-one-using-cmake
 file(MAKE_DIRECTORY ${KLIB_BINARY_DIR}/third_party)
 file(MAKE_DIRECTORY ${KLIB_BINARY_DIR}/third_party/klib)
-file(MAKE_DIRECTORY ${KLIB_BINARY_DIR}/third_party/zlib)
+file(MAKE_DIRECTORY ${KLIB_BINARY_DIR}/third_party/zlib-ng)
 file(MAKE_DIRECTORY ${KLIB_BINARY_DIR}/third_party/libarchive)
-file(MAKE_DIRECTORY ${KLIB_BINARY_DIR}/third_party/tidy)
+file(MAKE_DIRECTORY ${KLIB_BINARY_DIR}/third_party/tidy-html5)
 file(MAKE_DIRECTORY ${KLIB_BINARY_DIR}/third_party/libcurl)
 file(MAKE_DIRECTORY ${KLIB_BINARY_DIR}/third_party/brotli)
 file(MAKE_DIRECTORY ${KLIB_BINARY_DIR}/third_party/boringssl)
@@ -168,15 +168,15 @@ file(MAKE_DIRECTORY ${KLIB_BINARY_DIR}/third_party/xxhash)
 file(MAKE_DIRECTORY ${KLIB_BINARY_DIR}/third_party/cmark)
 file(MAKE_DIRECTORY ${KLIB_BINARY_DIR}/third_party/woff2)
 file(MAKE_DIRECTORY ${KLIB_BINARY_DIR}/third_party/libpng)
-file(MAKE_DIRECTORY ${KLIB_BINARY_DIR}/third_party/libjpeg)
+file(MAKE_DIRECTORY ${KLIB_BINARY_DIR}/third_party/libjpeg-turbo)
 file(MAKE_DIRECTORY ${KLIB_BINARY_DIR}/third_party/libwebp)
 add_custom_command(
   TARGET ${KLIB_LIBRARY}
   POST_BUILD
   COMMAND gcc-ar -x --output=klib $<TARGET_FILE:${KLIB_LIBRARY}>
-  COMMAND gcc-ar -x --output=zlib /usr/local/lib/libz.a
+  COMMAND gcc-ar -x --output=zlib-ng /usr/local/lib/libz.a
   COMMAND gcc-ar -x --output=libarchive /usr/local/lib/libarchive.a
-  COMMAND gcc-ar -x --output=tidy /usr/local/lib/libtidy.a
+  COMMAND gcc-ar -x --output=tidy-html5 /usr/local/lib/libtidy.a
   COMMAND gcc-ar -x --output=libcurl /usr/local/lib/libcurl.a
   COMMAND gcc-ar -x --output=brotli /usr/local/lib/libbrotlicommon.a
   COMMAND gcc-ar -x --output=brotli /usr/local/lib/libbrotlidec.a
@@ -199,16 +199,16 @@ add_custom_command(
   COMMAND gcc-ar -x --output=woff2 /usr/local/lib/libwoff2dec.a
   COMMAND gcc-ar -x --output=woff2 /usr/local/lib/libwoff2enc.a
   COMMAND gcc-ar -x --output=libpng /usr/local/lib/libpng.a
-  COMMAND gcc-ar -x --output=libjpeg /usr/local/lib/libjpeg.a
+  COMMAND gcc-ar -x --output=libjpeg-turbo /usr/local/lib/libjpeg.a
   COMMAND gcc-ar -x --output=libwebp /usr/local/lib/libwebp.a
   COMMAND gcc-ar -x --output=libwebp /usr/local/lib/libwebpdemux.a
   COMMAND gcc-ar -x --output=libwebp /usr/local/lib/libwebpdecoder.a
   COMMAND
-    gcc-ar -qcs ${KLIB_BINARY_DIR}/lib${KLIB_LIBRARY}.a klib/*.o zlib/*.o
-    libarchive/*.o tidy/*.o libcurl/*.o brotli/*.o boringssl/*.o sqlcipher/*.o
-    argon2/*.o zstd/*.o fmt/*.o spdlog/*.o nghttp2/*.o simdutf/*.o libidn2/*.o
-    libpsl/*.o libunistring/*.o xxhash/*.o cmark/*.o woff2/*.o libpng/*.o
-    libjpeg/*.o libwebp/*.o
+    gcc-ar -qcs ${KLIB_BINARY_DIR}/lib${KLIB_LIBRARY}.a klib/*.o zlib-ng/*.o
+    libarchive/*.o tidy-html5/*.o libcurl/*.o brotli/*.o boringssl/*.o
+    sqlcipher/*.o argon2/*.o zstd/*.o fmt/*.o spdlog/*.o nghttp2/*.o simdutf/*.o
+    libidn2/*.o libpsl/*.o libunistring/*.o xxhash/*.o cmark/*.o woff2/*.o
+    libpng/*.o libjpeg-turbo/*.o libwebp/*.o
   COMMAND gcc-ranlib ${KLIB_BINARY_DIR}/lib${KLIB_LIBRARY}.a
   WORKING_DIRECTORY ${KLIB_BINARY_DIR}/third_party
   COMMENT "Combined static library")
