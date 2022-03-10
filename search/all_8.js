@@ -1,7 +1,7 @@
 var searchData=
 [
   ['image_2eh_0',['image.h',['../image_8h.html',1,'']]],
-  ['image_5fto_5fwebp_1',['image_to_webp',['../image_8h.html#aac8698438ab522b16fd9f758fc45c8f0',1,'klib']]],
+  ['image_5fto_5fwebp_1',['image_to_webp',['../image_8h.html#aac8698438ab522b16fd9f758fc45c8f0',1,'klib::image_to_webp(const std::string &amp;image, bool lossless=false)'],['../image_8h.html#ac56683eae6c6f13df470894944b193a4',1,'klib::image_to_webp(std::string_view image, bool lossless=false)'],['../image_8h.html#af69a22f13f22cf29d702bed74953f257',1,'klib::image_to_webp(const char *image, std::size_t size, bool lossless=false)']]],
   ['info_2',['info',['../log_8h.html#abb610194ecc3cefc8bad87940c8f1b22',1,'klib']]],
   ['invalidargument_3',['InvalidArgument',['../classklib_1_1InvalidArgument.html#a6c49552362e13575e897ce4412cc2ca6',1,'klib::InvalidArgument::InvalidArgument()'],['../classklib_1_1InvalidArgument.html',1,'klib::InvalidArgument']]],
   ['is_5fascii_4',['is_ascii',['../unicode_8h.html#a8c33a23114652432078cf1c000340ce4',1,'klib']]],

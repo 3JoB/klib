@@ -8,6 +8,7 @@ var classklib_1_1Request =
     [ "post_mime", "classklib_1_1Request.html#a8a365a00a53c81377f117f674f116cbd", null ],
     [ "set_browser_user_agent", "classklib_1_1Request.html#afa583b9071002118ad316a9690003256", null ],
     [ "set_connect_timeout", "classklib_1_1Request.html#aa2441e7ed0be65868c280c0d3115e11f", null ],
+    [ "set_cookie", "classklib_1_1Request.html#a083a07f6c97ce634314112e4de6ccf4c", null ],
     [ "set_curl_user_agent", "classklib_1_1Request.html#a4aba7a126459a31beb9ba92d436949c8", null ],
     [ "set_no_proxy", "classklib_1_1Request.html#ab6f028872e3e0b66fbfa9d5c22772947", null ],
     [ "set_proxy_from_env", "classklib_1_1Request.html#a50925cee2296762c75edf54c2d52cc77", null ],

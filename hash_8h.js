@@ -1,9 +1,26 @@
 var hash_8h =
 [
+    [ "adler32", "hash_8h.html#a5959425d8c26843619f24b8b3cb3bcac", null ],
+    [ "adler32_hex", "hash_8h.html#a2a3d47b5c95f32f283efb597370b9144", null ],
+    [ "crc32", "hash_8h.html#aa25b061a058f95fc26dab5251501961c", null ],
+    [ "crc32_hex", "hash_8h.html#a1ff36b17a44b2951f692bca8a0a72cf3", null ],
     [ "fast_hash", "hash_8h.html#aba64b42882d6e54255da7e44bee74690", null ],
+    [ "fast_hash_hex", "hash_8h.html#aebe750c2e1719aa849149275b63177ab", null ],
+    [ "md5", "hash_8h.html#ac0e8cb916043fdb8394793429045f100", null ],
+    [ "md5_hex", "hash_8h.html#acbb0b708e2f97260c0f73664a9f00c65", null ],
     [ "password_hash_encoded", "hash_8h.html#afd47172c370d42e3bf072419057776b9", null ],
     [ "password_hash_raw", "hash_8h.html#a15721f1f0d638ed7902054bd6443f757", null ],
     [ "password_hash_raw", "hash_8h.html#ad254d8c2ed77209a16c351a65ec6490b", null ],
     [ "password_verify", "hash_8h.html#aeb6c17112e4c044c0893cb393cf69a35", null ],
-    [ "password_verify", "hash_8h.html#a5f70596a527fbfbb39dfe92d2684ee72", null ]
+    [ "password_verify", "hash_8h.html#a5f70596a527fbfbb39dfe92d2684ee72", null ],
+    [ "sha1", "hash_8h.html#a4cc4e5ba1f43a3927465976370287c9b", null ],
+    [ "sha1_hex", "hash_8h.html#a60fbc0fef49c76c0889dd1a04c267a51", null ],
+    [ "sha224", "hash_8h.html#a5c3b42bcde335b3f5474bec523968e12", null ],
+    [ "sha224_hex", "hash_8h.html#aa39b9fd5c99e0d5ec92d24dd271e0bd0", null ],
+    [ "sha256", "hash_8h.html#a8a23cf04c49f3c285bcd9ee4ad7df082", null ],
+    [ "sha256_hex", "hash_8h.html#ab6c1740558aef564fa9f6fa8dbc96710", null ],
+    [ "sha384", "hash_8h.html#a909fd468d39ef504eb60f02986f3db16", null ],
+    [ "sha384_hex", "hash_8h.html#adc4b78e2758a50745f12c23e00df1b7c", null ],
+    [ "sha512", "hash_8h.html#a3e4a64c601831edff84697eaf9d27add", null ],
+    [ "sha512_hex", "hash_8h.html#aa1446a8c09611cb2aa0e70cd6829f288", null ]
 ];
