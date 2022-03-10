@@ -40,10 +40,6 @@ A C++ library, which wraps several important C libraries and provides some conve
 - sfntly ([Apache License 2.0](https://github.com/rillig/sfntly/blob/master/cpp/COPYING.txt))
 - utf_utils ([License](https://github.com/BobSteagall/utf_utils/blob/master/LICENSE.txt))
 - Catch2 ([Boost License](https://github.com/catchorg/Catch2/blob/devel/LICENSE.txt))
-- Boost ([Boost License](https://www.boost.org/users/license.html))
-- oneTBB ([Apache License 2.0](https://github.com/oneapi-src/oneTBB/blob/master/LICENSE.txt))
-- icu ([License](https://github.com/unicode-org/icu/blob/main/icu4c/LICENSE))
-- simdjson ([Apache License 2.0](https://github.com/simdjson/simdjson/blob/master/LICENSE))
 
 ## Build
 
