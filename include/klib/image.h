@@ -11,14 +11,30 @@
 
 namespace klib {
 
+/**
+ * @brief Convert PNG/JPEG format to JPEG format
+ * @param image: Image to be converted
+ * @return Image in JPEG format
+ */
 std::string image_to_jpeg(const std::string &image);
 
+/**
+ * @brief Convert PNG/JPEG to format JPEG format
+ * @param image: Image to be converted
+ * @return Image in JPEG format
+ */
 std::string image_to_jpeg(std::string_view image);
 
+/**
+ * @brief Convert PNG/JPEG to format JPEG format
+ * @param image: Image to be converted
+ * @param size: Image size
+ * @return Image in JPEG format
+ */
 std::string image_to_jpeg(const char *image, std::size_t size);
 
 /**
- * @brief Convert to WebP format
+ * @brief Convert PNG/JPEG format to WebP format
  * @param image: Image to be converted
  * @param lossless: Whether to do lossless conversion
  * @return Image in WebP format
@@ -26,7 +42,7 @@ std::string image_to_jpeg(const char *image, std::size_t size);
 std::string image_to_webp(const std::string &image, bool lossless = false);
 
 /**
- * @brief Convert to WebP format
+ * @brief Convert PNG/JPEG format to WebP format
  * @param image: Image to be converted
  * @param lossless: Whether to do lossless conversion
  * @return Image in WebP format
@@ -34,7 +50,7 @@ std::string image_to_webp(const std::string &image, bool lossless = false);
 std::string image_to_webp(std::string_view image, bool lossless = false);
 
 /**
- * @brief Convert to WebP format
+ * @brief Convert PNG/JPEG format to WebP format
  * @param image: Image to be converted
  * @param size: Image size
  * @param lossless: Whether to do lossless conversion
