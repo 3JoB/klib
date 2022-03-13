@@ -1,5 +1,9 @@
 #include "klib/image.h"
 
+#include <cstdint>
+#include <cstdlib>
+
+#include <jpeglib.h>
 #include <png.h>
 #include <webp/decode.h>
 #include <webp/encode.h>
@@ -9,6 +13,7 @@
 #include "imageio/image_enc.h"
 #include "imageio/yuvdec.h"
 #include "klib/exception.h"
+#include "mozjpeg/cdjpeg.h"
 
 extern "C" void png_write_callback(png_structp png_ptr, png_bytep data,
                                    png_size_t length) {
@@ -17,6 +22,96 @@ extern "C" void png_write_callback(png_structp png_ptr, png_bytep data,
 }
 
 namespace klib {
+
+namespace {
+
+bool is_png(std::uint8_t c) { return c == 0x89; }
+
+bool is_jpeg(std::uint8_t c) { return c == 0xff; }
+
+cjpeg_source_ptr select_file_type(j_compress_ptr cinfo,
+                                  const unsigned char* data) {
+  const auto c = data[0];
+  if (is_png(c)) {
+    return jinit_read_png(cinfo);
+  } else if (is_jpeg(c)) {
+    return jinit_read_jpeg(cinfo);
+  } else {
+    throw RuntimeError("Unknown format");
+  }
+}
+
+}  // namespace
+
+std::string image_to_jpeg(const std::string& image) {
+  return image_to_jpeg(std::data(image), std::size(image));
+}
+
+std::string image_to_jpeg(std::string_view image) {
+  return image_to_jpeg(std::data(image), std::size(image));
+}
+
+std::string image_to_jpeg(const char* image, std::size_t size) {
+  if (size == 0) [[unlikely]] {
+    throw RuntimeError("The image is empty");
+  }
+
+  jpeg_compress_struct cinfo;
+  jpeg_error_mgr jerr;
+  cinfo.err = jpeg_std_error(&jerr);
+  cinfo.err->trace_level = 0;
+
+  jpeg_create_compress(&cinfo);
+
+  cinfo.in_color_space = JCS_RGB;
+  jpeg_set_defaults(&cinfo);
+
+  auto src_mgr =
+      select_file_type(&cinfo, reinterpret_cast<const unsigned char*>(image));
+  src_mgr->input = reinterpret_cast<const unsigned char*>(image);
+  src_mgr->input_size = size;
+
+  (*src_mgr->start_input)(&cinfo, src_mgr);
+
+  jpeg_default_colorspace(&cinfo);
+
+  unsigned char* buffer = nullptr;
+  SCOPE_EXIT { std::free(buffer); };
+  std::size_t buffer_size = 0;
+  jpeg_mem_dest(&cinfo, &buffer, &buffer_size);
+
+  jpeg_start_compress(&cinfo, true);
+
+  jpeg_saved_marker_ptr marker;
+  for (marker = src_mgr->marker_list; marker != NULL; marker = marker->next) {
+    if (cinfo.write_JFIF_header && marker->marker == JPEG_APP0 &&
+        marker->data_length >= 5 && GETJOCTET(marker->data[0]) == 0x4A &&
+        GETJOCTET(marker->data[1]) == 0x46 &&
+        GETJOCTET(marker->data[2]) == 0x49 &&
+        GETJOCTET(marker->data[3]) == 0x46 && GETJOCTET(marker->data[4]) == 0)
+      continue;
+    if (cinfo.write_Adobe_marker && marker->marker == JPEG_APP0 + 14 &&
+        marker->data_length >= 5 && GETJOCTET(marker->data[0]) == 0x41 &&
+        GETJOCTET(marker->data[1]) == 0x64 &&
+        GETJOCTET(marker->data[2]) == 0x6F &&
+        GETJOCTET(marker->data[3]) == 0x62 &&
+        GETJOCTET(marker->data[4]) == 0x65)
+      continue;
+    jpeg_write_marker(&cinfo, marker->marker, marker->data,
+                      marker->data_length);
+  }
+
+  while (cinfo.next_scanline < cinfo.image_height) {
+    auto num_scanlines = (*src_mgr->get_pixel_rows)(&cinfo, src_mgr);
+    jpeg_write_scanlines(&cinfo, src_mgr->buffer, num_scanlines);
+  }
+
+  (*src_mgr->finish_input)(&cinfo, src_mgr);
+  jpeg_finish_compress(&cinfo);
+  jpeg_destroy_compress(&cinfo);
+
+  return {reinterpret_cast<const char*>(buffer), buffer_size};
+}
 
 std::string image_to_webp(const std::string& image, bool lossless) {
   return image_to_webp(std::data(image), std::size(image), lossless);
@@ -27,6 +122,14 @@ std::string image_to_webp(std::string_view image, bool lossless) {
 }
 
 std::string image_to_webp(const char* image, std::size_t size, bool lossless) {
+  if (size == 0) [[unlikely]] {
+    throw RuntimeError("The image is empty");
+  }
+  const auto c = image[0];
+  if (!is_png(c) && !is_jpeg(c)) [[unlikely]] {
+    throw RuntimeError("Unknown format");
+  }
+
   WebPPicture picture;
   SCOPE_EXIT {
     WebPFree(picture.extra_info);
@@ -47,7 +150,7 @@ std::string image_to_webp(const char* image, std::size_t size, bool lossless) {
     throw RuntimeError("libwebp: Library version mismatch");
   }
 
-  config.quality = 80;
+  config.quality = 75;
   config.lossless = lossless;
 
   auto rc = WebPValidateConfig(&config);

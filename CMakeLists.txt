@@ -49,6 +49,7 @@ file(
   "${KLIB_SOURCE_DIR}/third_party/fastbase64/*.c"
   "${KLIB_SOURCE_DIR}/third_party/http-parser/*.c"
   "${KLIB_SOURCE_DIR}/third_party/imageio/*.c"
+  "${KLIB_SOURCE_DIR}/third_party/mozjpeg/*.c"
   "${KLIB_SOURCE_DIR}/third_party/sfntly/*.cc"
   "${KLIB_SOURCE_DIR}/third_party/subtly/*.cc"
   "${KLIB_SOURCE_DIR}/third_party/utf_utils/*.cpp")
@@ -120,6 +121,7 @@ add_definitions(
   -DHAVE_CONFIG_H
   -DSFNTLY_EXPERIMENTAL
   -DSFNTLY_NO_EXCEPTION
+  -DPNG_SUPPORTED
   -DLIBARCHIVE_STATIC
   -DCURL_STATICLIB
   -DCURL_NO_OLDIES

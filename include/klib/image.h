@@ -11,6 +11,12 @@
 
 namespace klib {
 
+std::string image_to_jpeg(const std::string &image);
+
+std::string image_to_jpeg(std::string_view image);
+
+std::string image_to_jpeg(const char *image, std::size_t size);
+
 /**
  * @brief Convert to WebP format
  * @param image: Image to be converted

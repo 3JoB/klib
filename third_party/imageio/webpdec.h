@@ -49,17 +49,6 @@ VP8StatusCode DecodeWebP(const uint8_t* const data, size_t data_size,
 VP8StatusCode DecodeWebPIncremental(const uint8_t* const data, size_t data_size,
                                     WebPDecoderConfig* const config);
 
-//------------------------------------------------------------------------------
-
-// Decodes a WebP contained in 'data', returning the decoded output in 'pic'.
-// Output is RGBA or YUVA, depending on pic->use_argb value.
-// If 'keep_alpha' is true and the WebP has an alpha channel, the output is RGBA
-// or YUVA. Otherwise, alpha channel is dropped and output is RGB or YUV.
-// Returns true on success.
-int ReadWebP(const uint8_t* const data, size_t data_size,
-             struct WebPPicture* const pic, int keep_alpha,
-             struct Metadata* const metadata);
-
 #ifdef __cplusplus
 }  // extern "C"
 #endif

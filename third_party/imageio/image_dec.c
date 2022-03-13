@@ -55,8 +55,6 @@ WebPImageReader WebPGetImageReader(WebPInputFileFormat format) {
       return ReadPNG;
     case WEBP_JPEG_FORMAT:
       return ReadJPEG;
-    case WEBP_WEBP_FORMAT:
-      return ReadWebP;
     default:
       return FailReader;
   }
