@@ -1,6 +1,5 @@
 #include "klib/image.h"
 
-#include <cstdint>
 #include <cstdlib>
 
 #include <jpeglib.h>
@@ -43,15 +42,16 @@ cjpeg_source_ptr select_file_type(j_compress_ptr cinfo,
 
 }  // namespace
 
-std::string image_to_jpeg(const std::string& image) {
-  return image_to_jpeg(std::data(image), std::size(image));
+std::string image_to_jpeg(const std::string& image, std::int32_t quality) {
+  return image_to_jpeg(std::data(image), std::size(image), quality);
 }
 
-std::string image_to_jpeg(std::string_view image) {
-  return image_to_jpeg(std::data(image), std::size(image));
+std::string image_to_jpeg(std::string_view image, std::int32_t quality) {
+  return image_to_jpeg(std::data(image), std::size(image), quality);
 }
 
-std::string image_to_jpeg(const char* image, std::size_t size) {
+std::string image_to_jpeg(const char* image, std::size_t size,
+                          std::int32_t quality) {
   if (size == 0) [[unlikely]] {
     throw RuntimeError("The image is empty");
   }
@@ -65,6 +65,7 @@ std::string image_to_jpeg(const char* image, std::size_t size) {
 
   cinfo.in_color_space = JCS_RGB;
   jpeg_set_defaults(&cinfo);
+  jpeg_set_quality(&cinfo, quality, true);
 
   auto src_mgr =
       select_file_type(&cinfo, reinterpret_cast<const unsigned char*>(image));
@@ -113,15 +114,18 @@ std::string image_to_jpeg(const char* image, std::size_t size) {
   return {reinterpret_cast<const char*>(buffer), buffer_size};
 }
 
-std::string image_to_webp(const std::string& image, bool lossless) {
-  return image_to_webp(std::data(image), std::size(image), lossless);
+std::string image_to_webp(const std::string& image, std::int32_t quality,
+                          bool lossless) {
+  return image_to_webp(std::data(image), std::size(image), quality, lossless);
 }
 
-std::string image_to_webp(std::string_view image, bool lossless) {
-  return image_to_webp(std::data(image), std::size(image), lossless);
+std::string image_to_webp(std::string_view image, std::int32_t quality,
+                          bool lossless) {
+  return image_to_webp(std::data(image), std::size(image), quality, lossless);
 }
 
-std::string image_to_webp(const char* image, std::size_t size, bool lossless) {
+std::string image_to_webp(const char* image, std::size_t size,
+                          std::int32_t quality, bool lossless) {
   if (size == 0) [[unlikely]] {
     throw RuntimeError("The image is empty");
   }
@@ -150,7 +154,7 @@ std::string image_to_webp(const char* image, std::size_t size, bool lossless) {
     throw RuntimeError("libwebp: Library version mismatch");
   }
 
-  config.quality = 75;
+  config.quality = quality;
   config.lossless = lossless;
 
   auto rc = WebPValidateConfig(&config);
