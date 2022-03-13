@@ -87,6 +87,8 @@ typedef struct {
   png_size_t offset;
 } PNGReadContext;
 
+static PNGReadContext context;
+
 static void ReadFunc(png_structp png_ptr, png_bytep data, png_size_t length) {
   PNGReadContext *const ctx = (PNGReadContext *)png_get_io_ptr(png_ptr);
   if (ctx->data_size - ctx->offset < length) {
@@ -128,7 +130,9 @@ start_input_png(j_compress_ptr cinfo, cjpeg_source_ptr sinfo) {
   png_set_strip_alpha(source->png_ptr);
   png_set_interlace_handling(source->png_ptr);
 
-  PNGReadContext context = {sinfo->input, sinfo->input_size, 0};
+  context.data = sinfo->input;
+  context.data_size = sinfo->input_size;
+  context.offset = 0;
   png_set_read_fn(source->png_ptr, &context, ReadFunc);
   png_read_info(source->png_ptr, source->info_ptr);
 
