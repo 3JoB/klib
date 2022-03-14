@@ -24,6 +24,14 @@ namespace klib {
 
 namespace {
 
+void check_quality(std::int32_t quality) {
+  if (quality < 0 || quality > 100) {
+    throw InvalidArgument(
+        "The quality must be greater than or equal to 0 and less than or equal "
+        "to 100");
+  }
+}
+
 bool is_png(std::uint8_t c) { return c == 0x89; }
 
 bool is_jpeg(std::uint8_t c) { return c == 0xff; }
@@ -59,6 +67,7 @@ std::string image_to_jpeg(const char* image, std::size_t size,
   if (size == 0) [[unlikely]] {
     throw RuntimeError("The image is empty");
   }
+  check_quality(quality);
 
   jpeg_compress_struct cinfo;
   jpeg_error_mgr jerr;
@@ -125,6 +134,7 @@ std::string image_to_webp(const char* image, std::size_t size,
   if (!is_png(c) && !is_jpeg(c)) [[unlikely]] {
     throw RuntimeError("Unknown format");
   }
+  check_quality(quality);
 
   WebPPicture picture;
   SCOPE_EXIT {
