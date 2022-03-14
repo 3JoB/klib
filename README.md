@@ -31,6 +31,8 @@ A C++ library, which wraps several important C libraries and provides some conve
 - xxHash ([BSD License](https://github.com/Cyan4973/xxHash/blob/dev/LICENSE))
 - cmark ([License](https://github.com/commonmark/cmark/blob/master/COPYING))
 - woff2 ([MIT License](https://github.com/google/woff2/blob/master/LICENSE))
+- libpng ([License](https://github.com/glennrp/libpng/blob/libpng16/LICENSE))
+- mozjpeg ([License](https://github.com/mozilla/mozjpeg/blob/master/LICENSE.md))
 - libwebp ([License](https://chromium.googlesource.com/webm/libwebp/+/refs/heads/main/COPYING))
 - Scope Guard ([MIT License](https://github.com/Neargye/scope_guard/blob/master/LICENSE))
 - fmt ([License](https://github.com/fmtlib/fmt/blob/master/LICENSE.rst))
