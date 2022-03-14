@@ -16,27 +16,35 @@ namespace klib {
  * @brief Convert PNG/JPEG format to JPEG format
  * @param image: Image to be converted
  * @param quality: Compression quality
+ * @param max_compress: Increase the compression ratio as much as possible,
+ * at the expense of increased encoding time
  * @return Image in JPEG format
  */
-std::string image_to_jpeg(const std::string &image, std::int32_t quality = 75);
+std::string image_to_jpeg(const std::string &image, std::int32_t quality = 75,
+                          bool max_compress = false);
 
 /**
  * @brief Convert PNG/JPEG to format JPEG format
  * @param image: Image to be converted
  * @param quality: Compression quality
+ * @param max_compress: Increase the compression ratio as much as possible,
+ * at the expense of increased encoding time
  * @return Image in JPEG format
  */
-std::string image_to_jpeg(std::string_view image, std::int32_t quality = 75);
+std::string image_to_jpeg(std::string_view image, std::int32_t quality = 75,
+                          bool max_compress = false);
 
 /**
  * @brief Convert PNG/JPEG to format JPEG format
  * @param image: Image to be converted
  * @param size: Image size
  * @param quality: Compression quality
+ * @param max_compress: Increase the compression ratio as much as possible,
+ * at the expense of increased encoding time
  * @return Image in JPEG format
  */
 std::string image_to_jpeg(const char *image, std::size_t size,
-                          std::int32_t quality = 75);
+                          std::int32_t quality = 75, bool max_compress = false);
 
 /**
  * @brief Convert PNG/JPEG format to WebP format

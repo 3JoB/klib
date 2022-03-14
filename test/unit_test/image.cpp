@@ -19,7 +19,24 @@ TEST_CASE("jpeg to jpeg", "[image]") {
 
   REQUIRE(std::filesystem::exists(out_name));
   CHECK(klib::sha256_hex(klib::read_file(out_name, true)) ==
-        "7b2331838e7a1661a229c98b120f5332fda65b01209dccc9fb4c6a1bece3719a");
+        "34723e33eab435b47f10454f25c56a6894bfccacb0ce55e287004772df2e112f");
+
+  dbg(std::filesystem::file_size(file_name));
+  dbg(std::filesystem::file_size(out_name));
+}
+
+TEST_CASE("jpeg to jpeg max compress", "[image]") {
+  const std::string file_name = "avatar.jpg";
+  REQUIRE(std::filesystem::exists(file_name));
+  const std::string image = klib::read_file(file_name, true);
+
+  const std::string out_name = "avatar.max.compress.jpg";
+  const auto compressed_image = klib::image_to_jpeg(image, 75, true);
+  klib::write_file(out_name, true, compressed_image);
+
+  REQUIRE(std::filesystem::exists(out_name));
+  CHECK(klib::sha256_hex(klib::read_file(out_name, true)) ==
+        "84f83f262ac2343efcba538d12714bc2f18876011111abc65fa7af1a2f8de533");
 
   dbg(std::filesystem::file_size(file_name));
   dbg(std::filesystem::file_size(out_name));
@@ -30,8 +47,25 @@ TEST_CASE("png to jpeg", "[image]") {
   REQUIRE(std::filesystem::exists(file_name));
   const std::string image = klib::read_file(file_name, true);
 
-  const std::string out_name = "wallpaper.jpg";
+  const std::string out_name = "wallpaper.compress.jpg";
   const auto jpg_image = klib::image_to_jpeg(image);
+  klib::write_file(out_name, true, jpg_image);
+
+  REQUIRE(std::filesystem::exists(out_name));
+  CHECK(klib::sha256_hex(klib::read_file(out_name, true)) ==
+        "bd57b1a08d8a84742ff882bd4dd2d0b0ff0581bc8a467ee378b22c7a35dc7f33");
+
+  dbg(std::filesystem::file_size(file_name));
+  dbg(std::filesystem::file_size(out_name));
+}
+
+TEST_CASE("png to jpeg max compress", "[image]") {
+  const std::string file_name = "wallpaper.png";
+  REQUIRE(std::filesystem::exists(file_name));
+  const std::string image = klib::read_file(file_name, true);
+
+  const std::string out_name = "wallpaper.max.compress.jpg";
+  const auto jpg_image = klib::image_to_jpeg(image, 75, true);
   klib::write_file(out_name, true, jpg_image);
 
   REQUIRE(std::filesystem::exists(out_name));

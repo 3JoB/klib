@@ -42,16 +42,20 @@ cjpeg_source_ptr select_file_type(j_compress_ptr cinfo,
 
 }  // namespace
 
-std::string image_to_jpeg(const std::string& image, std::int32_t quality) {
-  return image_to_jpeg(std::data(image), std::size(image), quality);
+std::string image_to_jpeg(const std::string& image, std::int32_t quality,
+                          bool max_compress) {
+  return image_to_jpeg(std::data(image), std::size(image), quality,
+                       max_compress);
 }
 
-std::string image_to_jpeg(std::string_view image, std::int32_t quality) {
-  return image_to_jpeg(std::data(image), std::size(image), quality);
+std::string image_to_jpeg(std::string_view image, std::int32_t quality,
+                          bool max_compress) {
+  return image_to_jpeg(std::data(image), std::size(image), quality,
+                       max_compress);
 }
 
 std::string image_to_jpeg(const char* image, std::size_t size,
-                          std::int32_t quality) {
+                          std::int32_t quality, bool max_compress) {
   if (size == 0) [[unlikely]] {
     throw RuntimeError("The image is empty");
   }
@@ -64,7 +68,14 @@ std::string image_to_jpeg(const char* image, std::size_t size,
   jpeg_create_compress(&cinfo);
 
   cinfo.in_color_space = JCS_RGB;
+
+  if (max_compress) {
+    jpeg_c_set_int_param(&cinfo, JINT_COMPRESS_PROFILE, JCP_MAX_COMPRESSION);
+  } else {
+    jpeg_c_set_int_param(&cinfo, JINT_COMPRESS_PROFILE, JCP_FASTEST);
+  }
   jpeg_set_defaults(&cinfo);
+
   jpeg_set_quality(&cinfo, quality, true);
 
   auto src_mgr =
@@ -82,25 +93,6 @@ std::string image_to_jpeg(const char* image, std::size_t size,
   jpeg_mem_dest(&cinfo, &buffer, &buffer_size);
 
   jpeg_start_compress(&cinfo, true);
-
-  jpeg_saved_marker_ptr marker;
-  for (marker = src_mgr->marker_list; marker != NULL; marker = marker->next) {
-    if (cinfo.write_JFIF_header && marker->marker == JPEG_APP0 &&
-        marker->data_length >= 5 && GETJOCTET(marker->data[0]) == 0x4A &&
-        GETJOCTET(marker->data[1]) == 0x46 &&
-        GETJOCTET(marker->data[2]) == 0x49 &&
-        GETJOCTET(marker->data[3]) == 0x46 && GETJOCTET(marker->data[4]) == 0)
-      continue;
-    if (cinfo.write_Adobe_marker && marker->marker == JPEG_APP0 + 14 &&
-        marker->data_length >= 5 && GETJOCTET(marker->data[0]) == 0x41 &&
-        GETJOCTET(marker->data[1]) == 0x64 &&
-        GETJOCTET(marker->data[2]) == 0x6F &&
-        GETJOCTET(marker->data[3]) == 0x62 &&
-        GETJOCTET(marker->data[4]) == 0x65)
-      continue;
-    jpeg_write_marker(&cinfo, marker->marker, marker->data,
-                      marker->data_length);
-  }
 
   while (cinfo.next_scanline < cinfo.image_height) {
     auto num_scanlines = (*src_mgr->get_pixel_rows)(&cinfo, src_mgr);
