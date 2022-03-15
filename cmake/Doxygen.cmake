@@ -1,7 +1,10 @@
 if(KLIB_BUILD_DOC)
   message(STATUS "Build documentation")
 
-  find_package(Doxygen REQUIRED)
+  find_program(DOXYGEN_EXECUTABLE doxygen)
+  if(NOT DOXYGEN_EXECUTABLE)
+    message(FATAL_ERROR "Can not find doxygen")
+  endif()
 
   set(INPUT_DIR "${KLIB_SOURCE_DIR}/include/klib")
   set(OUTPUT_DIR ${KLIB_BINARY_DIR})
