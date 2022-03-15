@@ -1,4 +1,4 @@
-cmake_minimum_required(VERSION 3.22)
+cmake_minimum_required(VERSION 3.18)
 
 project(dummy_import LANGUAGES CXX)
 
@@ -10,3 +10,10 @@ add_custom_command(
   TARGET with_namespace_target
   POST_BUILD
   COMMAND with_namespace_target)
+
+add_executable(with_namespace_target_shared main.cpp)
+target_link_libraries(with_namespace_target_shared PRIVATE klib::klib-shared)
+add_custom_command(
+  TARGET with_namespace_target_shared
+  POST_BUILD
+  COMMAND with_namespace_target_shared)

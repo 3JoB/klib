@@ -27,6 +27,11 @@ if(${CMAKE_CXX_COMPILER_ID} STREQUAL "Clang")
   add_compiler_flag("-Wno-error=unused-command-line-argument")
 endif()
 
+# FIXME
+if(KLIB_BUILD_SHARED)
+  add_compiler_flag("-Wno-error=odr")
+endif()
+
 # ---------------------------------------------------------------------------------------
 # Static link
 # ---------------------------------------------------------------------------------------
