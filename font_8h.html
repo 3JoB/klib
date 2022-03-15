@@ -30,7 +30,7 @@
  <tbody>
  <tr id="projectrow">
   <td id="projectalign">
-   <div id="projectname">klib<span id="projectnumber">&#160;1.9.0</span>
+   <div id="projectname">klib<span id="projectnumber">&#160;1.9.1</span>
    </div>
   </td>
     <td>        <div id="MSearchBox" class="MSearchBoxInactive">
@@ -102,38 +102,39 @@ $(document).ready(function(){initNavTree('font_8h.html',''); initResizable(); })
 <div class="textblock"><code>#include &lt;cstddef&gt;</code><br />
 <code>#include &lt;string&gt;</code><br />
 <code>#include &lt;string_view&gt;</code><br />
+<code>#include &quot;klib/config.h&quot;</code><br />
 </div>
 <p><a href="font_8h_source.html">Go to the source code of this file.</a></p>
 <table class="memberdecls">
 <tr class="heading"><td colspan="2"><h2 class="groupheader"><a id="func-members" name="func-members"></a>
 Functions</h2></td></tr>
-<tr class="memitem:aa1fa80e800eeac67cd47f0cbf29c0e69"><td class="memItemLeft" align="right" valign="top">std::string&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="font_8h.html#aa1fa80e800eeac67cd47f0cbf29c0e69">klib::ttf_subset</a> (const std::string &amp;ttf_font, const std::u32string &amp;unicodes)</td></tr>
-<tr class="memdesc:aa1fa80e800eeac67cd47f0cbf29c0e69"><td class="mdescLeft">&#160;</td><td class="mdescRight">Take a font subset using the given Unicode.  <a href="font_8h.html#aa1fa80e800eeac67cd47f0cbf29c0e69">More...</a><br /></td></tr>
-<tr class="separator:aa1fa80e800eeac67cd47f0cbf29c0e69"><td class="memSeparator" colspan="2">&#160;</td></tr>
-<tr class="memitem:a6386b225baf3040aad8dd6d4e81689e6"><td class="memItemLeft" align="right" valign="top">std::string&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="font_8h.html#a6386b225baf3040aad8dd6d4e81689e6">klib::ttf_subset</a> (std::string_view ttf_font, const std::u32string &amp;unicodes)</td></tr>
-<tr class="memdesc:a6386b225baf3040aad8dd6d4e81689e6"><td class="mdescLeft">&#160;</td><td class="mdescRight">Take a font subset using the given Unicode.  <a href="font_8h.html#a6386b225baf3040aad8dd6d4e81689e6">More...</a><br /></td></tr>
-<tr class="separator:a6386b225baf3040aad8dd6d4e81689e6"><td class="memSeparator" colspan="2">&#160;</td></tr>
-<tr class="memitem:a181e8df04fa5a6d03e662376d106c99c"><td class="memItemLeft" align="right" valign="top">std::string&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="font_8h.html#a181e8df04fa5a6d03e662376d106c99c">klib::ttf_subset</a> (const char *ttf_font, std::size_t size, const std::u32string &amp;unicodes)</td></tr>
-<tr class="memdesc:a181e8df04fa5a6d03e662376d106c99c"><td class="mdescLeft">&#160;</td><td class="mdescRight">Take a font subset using the given Unicode.  <a href="font_8h.html#a181e8df04fa5a6d03e662376d106c99c">More...</a><br /></td></tr>
-<tr class="separator:a181e8df04fa5a6d03e662376d106c99c"><td class="memSeparator" colspan="2">&#160;</td></tr>
-<tr class="memitem:ad3f3ce5a838b181385bef437ccd78df8"><td class="memItemLeft" align="right" valign="top">std::string&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="font_8h.html#ad3f3ce5a838b181385bef437ccd78df8">klib::ttf_to_woff2</a> (const std::string &amp;ttf_font)</td></tr>
-<tr class="memdesc:ad3f3ce5a838b181385bef437ccd78df8"><td class="mdescLeft">&#160;</td><td class="mdescRight">Convert TTF font to WOFF2 font.  <a href="font_8h.html#ad3f3ce5a838b181385bef437ccd78df8">More...</a><br /></td></tr>
-<tr class="separator:ad3f3ce5a838b181385bef437ccd78df8"><td class="memSeparator" colspan="2">&#160;</td></tr>
-<tr class="memitem:a0e55e9ed017c24cf081a445cf54611c4"><td class="memItemLeft" align="right" valign="top">std::string&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="font_8h.html#a0e55e9ed017c24cf081a445cf54611c4">klib::woff2_to_ttf</a> (const std::string &amp;woff2_font)</td></tr>
-<tr class="memdesc:a0e55e9ed017c24cf081a445cf54611c4"><td class="mdescLeft">&#160;</td><td class="mdescRight">Convert WOFF2 font to TTF font.  <a href="font_8h.html#a0e55e9ed017c24cf081a445cf54611c4">More...</a><br /></td></tr>
-<tr class="separator:a0e55e9ed017c24cf081a445cf54611c4"><td class="memSeparator" colspan="2">&#160;</td></tr>
+<tr class="memitem:a194a1e39dc617131c3185c1eb998f5e2"><td class="memItemLeft" align="right" valign="top">std::string KLIB_PUBLIC&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="font_8h.html#a194a1e39dc617131c3185c1eb998f5e2">klib::ttf_subset</a> (const std::string &amp;ttf_font, const std::u32string &amp;unicodes)</td></tr>
+<tr class="memdesc:a194a1e39dc617131c3185c1eb998f5e2"><td class="mdescLeft">&#160;</td><td class="mdescRight">Take a font subset using the given Unicode.  <a href="font_8h.html#a194a1e39dc617131c3185c1eb998f5e2">More...</a><br /></td></tr>
+<tr class="separator:a194a1e39dc617131c3185c1eb998f5e2"><td class="memSeparator" colspan="2">&#160;</td></tr>
+<tr class="memitem:a533d11ed12bcefb6478a83a44ac81995"><td class="memItemLeft" align="right" valign="top">std::string KLIB_PUBLIC&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="font_8h.html#a533d11ed12bcefb6478a83a44ac81995">klib::ttf_subset</a> (std::string_view ttf_font, const std::u32string &amp;unicodes)</td></tr>
+<tr class="memdesc:a533d11ed12bcefb6478a83a44ac81995"><td class="mdescLeft">&#160;</td><td class="mdescRight">Take a font subset using the given Unicode.  <a href="font_8h.html#a533d11ed12bcefb6478a83a44ac81995">More...</a><br /></td></tr>
+<tr class="separator:a533d11ed12bcefb6478a83a44ac81995"><td class="memSeparator" colspan="2">&#160;</td></tr>
+<tr class="memitem:a5b2f82539dcc8af2564d1a6cb6499f1b"><td class="memItemLeft" align="right" valign="top">std::string KLIB_PUBLIC&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="font_8h.html#a5b2f82539dcc8af2564d1a6cb6499f1b">klib::ttf_subset</a> (const char *ttf_font, std::size_t size, const std::u32string &amp;unicodes)</td></tr>
+<tr class="memdesc:a5b2f82539dcc8af2564d1a6cb6499f1b"><td class="mdescLeft">&#160;</td><td class="mdescRight">Take a font subset using the given Unicode.  <a href="font_8h.html#a5b2f82539dcc8af2564d1a6cb6499f1b">More...</a><br /></td></tr>
+<tr class="separator:a5b2f82539dcc8af2564d1a6cb6499f1b"><td class="memSeparator" colspan="2">&#160;</td></tr>
+<tr class="memitem:ae0804b9aba188c82fa708b5d358debab"><td class="memItemLeft" align="right" valign="top">std::string KLIB_PUBLIC&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="font_8h.html#ae0804b9aba188c82fa708b5d358debab">klib::ttf_to_woff2</a> (const std::string &amp;ttf_font)</td></tr>
+<tr class="memdesc:ae0804b9aba188c82fa708b5d358debab"><td class="mdescLeft">&#160;</td><td class="mdescRight">Convert TTF font to WOFF2 font.  <a href="font_8h.html#ae0804b9aba188c82fa708b5d358debab">More...</a><br /></td></tr>
+<tr class="separator:ae0804b9aba188c82fa708b5d358debab"><td class="memSeparator" colspan="2">&#160;</td></tr>
+<tr class="memitem:a8406003c2bdce2eacacb3ff9fbbae518"><td class="memItemLeft" align="right" valign="top">std::string KLIB_PUBLIC&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="font_8h.html#a8406003c2bdce2eacacb3ff9fbbae518">klib::woff2_to_ttf</a> (const std::string &amp;woff2_font)</td></tr>
+<tr class="memdesc:a8406003c2bdce2eacacb3ff9fbbae518"><td class="mdescLeft">&#160;</td><td class="mdescRight">Convert WOFF2 font to TTF font.  <a href="font_8h.html#a8406003c2bdce2eacacb3ff9fbbae518">More...</a><br /></td></tr>
+<tr class="separator:a8406003c2bdce2eacacb3ff9fbbae518"><td class="memSeparator" colspan="2">&#160;</td></tr>
 </table>
 <a name="details" id="details"></a><h2 class="groupheader">Detailed Description</h2>
 <div class="textblock"><p >Contains handling font module. </p>
 </div><h2 class="groupheader">Function Documentation</h2>
-<a id="a181e8df04fa5a6d03e662376d106c99c" name="a181e8df04fa5a6d03e662376d106c99c"></a>
-<h2 class="memtitle"><span class="permalink"><a href="#a181e8df04fa5a6d03e662376d106c99c">&#9670;&nbsp;</a></span>ttf_subset() <span class="overload">[1/3]</span></h2>
+<a id="a5b2f82539dcc8af2564d1a6cb6499f1b" name="a5b2f82539dcc8af2564d1a6cb6499f1b"></a>
+<h2 class="memtitle"><span class="permalink"><a href="#a5b2f82539dcc8af2564d1a6cb6499f1b">&#9670;&nbsp;</a></span>ttf_subset() <span class="overload">[1/3]</span></h2>
 
 <div class="memitem">
 <div class="memproto">
       <table class="memname">
         <tr>
-          <td class="memname">std::string klib::ttf_subset </td>
+          <td class="memname">std::string KLIB_PUBLIC klib::ttf_subset </td>
           <td>(</td>
           <td class="paramtype">const char *&#160;</td>
           <td class="paramname"><em>ttf_font</em>, </td>
@@ -171,14 +172,14 @@ Functions</h2></td></tr>
 
 </div>
 </div>
-<a id="aa1fa80e800eeac67cd47f0cbf29c0e69" name="aa1fa80e800eeac67cd47f0cbf29c0e69"></a>
-<h2 class="memtitle"><span class="permalink"><a href="#aa1fa80e800eeac67cd47f0cbf29c0e69">&#9670;&nbsp;</a></span>ttf_subset() <span class="overload">[2/3]</span></h2>
+<a id="a194a1e39dc617131c3185c1eb998f5e2" name="a194a1e39dc617131c3185c1eb998f5e2"></a>
+<h2 class="memtitle"><span class="permalink"><a href="#a194a1e39dc617131c3185c1eb998f5e2">&#9670;&nbsp;</a></span>ttf_subset() <span class="overload">[2/3]</span></h2>
 
 <div class="memitem">
 <div class="memproto">
       <table class="memname">
         <tr>
-          <td class="memname">std::string klib::ttf_subset </td>
+          <td class="memname">std::string KLIB_PUBLIC klib::ttf_subset </td>
           <td>(</td>
           <td class="paramtype">const std::string &amp;&#160;</td>
           <td class="paramname"><em>ttf_font</em>, </td>
@@ -209,14 +210,14 @@ Functions</h2></td></tr>
 
 </div>
 </div>
-<a id="a6386b225baf3040aad8dd6d4e81689e6" name="a6386b225baf3040aad8dd6d4e81689e6"></a>
-<h2 class="memtitle"><span class="permalink"><a href="#a6386b225baf3040aad8dd6d4e81689e6">&#9670;&nbsp;</a></span>ttf_subset() <span class="overload">[3/3]</span></h2>
+<a id="a533d11ed12bcefb6478a83a44ac81995" name="a533d11ed12bcefb6478a83a44ac81995"></a>
+<h2 class="memtitle"><span class="permalink"><a href="#a533d11ed12bcefb6478a83a44ac81995">&#9670;&nbsp;</a></span>ttf_subset() <span class="overload">[3/3]</span></h2>
 
 <div class="memitem">
 <div class="memproto">
       <table class="memname">
         <tr>
-          <td class="memname">std::string klib::ttf_subset </td>
+          <td class="memname">std::string KLIB_PUBLIC klib::ttf_subset </td>
           <td>(</td>
           <td class="paramtype">std::string_view&#160;</td>
           <td class="paramname"><em>ttf_font</em>, </td>
@@ -247,14 +248,14 @@ Functions</h2></td></tr>
 
 </div>
 </div>
-<a id="ad3f3ce5a838b181385bef437ccd78df8" name="ad3f3ce5a838b181385bef437ccd78df8"></a>
-<h2 class="memtitle"><span class="permalink"><a href="#ad3f3ce5a838b181385bef437ccd78df8">&#9670;&nbsp;</a></span>ttf_to_woff2()</h2>
+<a id="ae0804b9aba188c82fa708b5d358debab" name="ae0804b9aba188c82fa708b5d358debab"></a>
+<h2 class="memtitle"><span class="permalink"><a href="#ae0804b9aba188c82fa708b5d358debab">&#9670;&nbsp;</a></span>ttf_to_woff2()</h2>
 
 <div class="memitem">
 <div class="memproto">
       <table class="memname">
         <tr>
-          <td class="memname">std::string klib::ttf_to_woff2 </td>
+          <td class="memname">std::string KLIB_PUBLIC klib::ttf_to_woff2 </td>
           <td>(</td>
           <td class="paramtype">const std::string &amp;&#160;</td>
           <td class="paramname"><em>ttf_font</em></td><td>)</td>
@@ -274,14 +275,14 @@ Functions</h2></td></tr>
 
 </div>
 </div>
-<a id="a0e55e9ed017c24cf081a445cf54611c4" name="a0e55e9ed017c24cf081a445cf54611c4"></a>
-<h2 class="memtitle"><span class="permalink"><a href="#a0e55e9ed017c24cf081a445cf54611c4">&#9670;&nbsp;</a></span>woff2_to_ttf()</h2>
+<a id="a8406003c2bdce2eacacb3ff9fbbae518" name="a8406003c2bdce2eacacb3ff9fbbae518"></a>
+<h2 class="memtitle"><span class="permalink"><a href="#a8406003c2bdce2eacacb3ff9fbbae518">&#9670;&nbsp;</a></span>woff2_to_ttf()</h2>
 
 <div class="memitem">
 <div class="memproto">
       <table class="memname">
         <tr>
-          <td class="memname">std::string klib::woff2_to_ttf </td>
+          <td class="memname">std::string KLIB_PUBLIC klib::woff2_to_ttf </td>
           <td>(</td>
           <td class="paramtype">const std::string &amp;&#160;</td>
           <td class="paramname"><em>woff2_font</em></td><td>)</td>

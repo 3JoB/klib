@@ -30,7 +30,7 @@
  <tbody>
  <tr id="projectrow">
   <td id="projectalign">
-   <div id="projectname">klib<span id="projectnumber">&#160;1.9.0</span>
+   <div id="projectname">klib<span id="projectnumber">&#160;1.9.1</span>
    </div>
   </td>
     <td>        <div id="MSearchBox" class="MSearchBoxInactive">
@@ -99,21 +99,23 @@ $(document).ready(function(){initNavTree('base64_8h_source.html',''); initResiza
 <div class="line"><a id="l00007" name="l00007"></a><span class="lineno">    7</span> </div>
 <div class="line"><a id="l00008" name="l00008"></a><span class="lineno">    8</span><span class="preprocessor">#include &lt;string&gt;</span></div>
 <div class="line"><a id="l00009" name="l00009"></a><span class="lineno">    9</span> </div>
-<div class="line"><a id="l00010" name="l00010"></a><span class="lineno">   10</span><span class="keyword">namespace </span>klib {</div>
+<div class="line"><a id="l00010" name="l00010"></a><span class="lineno">   10</span><span class="preprocessor">#include &quot;klib/config.h&quot;</span></div>
 <div class="line"><a id="l00011" name="l00011"></a><span class="lineno">   11</span> </div>
-<div class="line"><a id="l00017" name="l00017"></a><span class="lineno"><a class="line" href="base64_8h.html#aa58c51abf4ed0dc7f53d921f35336cc3">   17</a></span>std::string <a class="code hl_function" href="base64_8h.html#aa58c51abf4ed0dc7f53d921f35336cc3">fast_base64_encode</a>(<span class="keyword">const</span> std::string &amp;data);</div>
-<div class="line"><a id="l00018" name="l00018"></a><span class="lineno">   18</span> </div>
-<div class="line"><a id="l00024" name="l00024"></a><span class="lineno"><a class="line" href="base64_8h.html#afabf76cadb8ba18000f7dd79a26891f1">   24</a></span>std::string <a class="code hl_function" href="base64_8h.html#afabf76cadb8ba18000f7dd79a26891f1">fast_base64_decode</a>(<span class="keyword">const</span> std::string &amp;data);</div>
-<div class="line"><a id="l00025" name="l00025"></a><span class="lineno">   25</span> </div>
-<div class="line"><a id="l00032" name="l00032"></a><span class="lineno"><a class="line" href="base64_8h.html#ac89048e55031174eab828d10cc5379ec">   32</a></span>std::string <a class="code hl_function" href="base64_8h.html#ac89048e55031174eab828d10cc5379ec">secure_base64_encode</a>(<span class="keyword">const</span> std::string &amp;data);</div>
-<div class="line"><a id="l00033" name="l00033"></a><span class="lineno">   33</span> </div>
-<div class="line"><a id="l00040" name="l00040"></a><span class="lineno"><a class="line" href="base64_8h.html#a7efaec0125c9c51cad9573e56d9bc360">   40</a></span>std::string <a class="code hl_function" href="base64_8h.html#a7efaec0125c9c51cad9573e56d9bc360">secure_base64_decode</a>(<span class="keyword">const</span> std::string &amp;data);</div>
-<div class="line"><a id="l00041" name="l00041"></a><span class="lineno">   41</span> </div>
-<div class="line"><a id="l00042" name="l00042"></a><span class="lineno">   42</span>}  <span class="comment">// namespace klib</span></div>
-<div class="ttc" id="abase64_8h_html_a7efaec0125c9c51cad9573e56d9bc360"><div class="ttname"><a href="base64_8h.html#a7efaec0125c9c51cad9573e56d9bc360">klib::secure_base64_decode</a></div><div class="ttdeci">std::string secure_base64_decode(const std::string &amp;data)</div><div class="ttdoc">Decode the Base64 encoded bytes and return the decoded bytes.</div></div>
-<div class="ttc" id="abase64_8h_html_aa58c51abf4ed0dc7f53d921f35336cc3"><div class="ttname"><a href="base64_8h.html#aa58c51abf4ed0dc7f53d921f35336cc3">klib::fast_base64_encode</a></div><div class="ttdeci">std::string fast_base64_encode(const std::string &amp;data)</div><div class="ttdoc">Encode bytes using Base64 and return the encoded bytes.</div></div>
-<div class="ttc" id="abase64_8h_html_ac89048e55031174eab828d10cc5379ec"><div class="ttname"><a href="base64_8h.html#ac89048e55031174eab828d10cc5379ec">klib::secure_base64_encode</a></div><div class="ttdeci">std::string secure_base64_encode(const std::string &amp;data)</div><div class="ttdoc">Encode bytes using Base64 and return the encoded bytes.</div></div>
-<div class="ttc" id="abase64_8h_html_afabf76cadb8ba18000f7dd79a26891f1"><div class="ttname"><a href="base64_8h.html#afabf76cadb8ba18000f7dd79a26891f1">klib::fast_base64_decode</a></div><div class="ttdeci">std::string fast_base64_decode(const std::string &amp;data)</div><div class="ttdoc">Decode the Base64 encoded bytes and return the decoded bytes.</div></div>
+<div class="line"><a id="l00012" name="l00012"></a><span class="lineno">   12</span><span class="keyword">namespace </span>klib {</div>
+<div class="line"><a id="l00013" name="l00013"></a><span class="lineno">   13</span> </div>
+<div class="line"><a id="l00019" name="l00019"></a><span class="lineno"><a class="line" href="base64_8h.html#aa8129a3c86702a8451b035b147fa9881">   19</a></span>std::string KLIB_PUBLIC <a class="code hl_function" href="base64_8h.html#aa8129a3c86702a8451b035b147fa9881">fast_base64_encode</a>(<span class="keyword">const</span> std::string &amp;data);</div>
+<div class="line"><a id="l00020" name="l00020"></a><span class="lineno">   20</span> </div>
+<div class="line"><a id="l00026" name="l00026"></a><span class="lineno"><a class="line" href="base64_8h.html#aa60cba02662685658644cf7f03074fa7">   26</a></span>std::string KLIB_PUBLIC <a class="code hl_function" href="base64_8h.html#aa60cba02662685658644cf7f03074fa7">fast_base64_decode</a>(<span class="keyword">const</span> std::string &amp;data);</div>
+<div class="line"><a id="l00027" name="l00027"></a><span class="lineno">   27</span> </div>
+<div class="line"><a id="l00034" name="l00034"></a><span class="lineno"><a class="line" href="base64_8h.html#a458b9fba01bd6069960dd4144a9e7ddc">   34</a></span>std::string KLIB_PUBLIC <a class="code hl_function" href="base64_8h.html#a458b9fba01bd6069960dd4144a9e7ddc">secure_base64_encode</a>(<span class="keyword">const</span> std::string &amp;data);</div>
+<div class="line"><a id="l00035" name="l00035"></a><span class="lineno">   35</span> </div>
+<div class="line"><a id="l00042" name="l00042"></a><span class="lineno"><a class="line" href="base64_8h.html#a4bfcd33b81338fbd77a1ae9e024c27bd">   42</a></span>std::string KLIB_PUBLIC <a class="code hl_function" href="base64_8h.html#a4bfcd33b81338fbd77a1ae9e024c27bd">secure_base64_decode</a>(<span class="keyword">const</span> std::string &amp;data);</div>
+<div class="line"><a id="l00043" name="l00043"></a><span class="lineno">   43</span> </div>
+<div class="line"><a id="l00044" name="l00044"></a><span class="lineno">   44</span>}  <span class="comment">// namespace klib</span></div>
+<div class="ttc" id="abase64_8h_html_a458b9fba01bd6069960dd4144a9e7ddc"><div class="ttname"><a href="base64_8h.html#a458b9fba01bd6069960dd4144a9e7ddc">klib::secure_base64_encode</a></div><div class="ttdeci">std::string KLIB_PUBLIC secure_base64_encode(const std::string &amp;data)</div><div class="ttdoc">Encode bytes using Base64 and return the encoded bytes.</div></div>
+<div class="ttc" id="abase64_8h_html_a4bfcd33b81338fbd77a1ae9e024c27bd"><div class="ttname"><a href="base64_8h.html#a4bfcd33b81338fbd77a1ae9e024c27bd">klib::secure_base64_decode</a></div><div class="ttdeci">std::string KLIB_PUBLIC secure_base64_decode(const std::string &amp;data)</div><div class="ttdoc">Decode the Base64 encoded bytes and return the decoded bytes.</div></div>
+<div class="ttc" id="abase64_8h_html_aa60cba02662685658644cf7f03074fa7"><div class="ttname"><a href="base64_8h.html#aa60cba02662685658644cf7f03074fa7">klib::fast_base64_decode</a></div><div class="ttdeci">std::string KLIB_PUBLIC fast_base64_decode(const std::string &amp;data)</div><div class="ttdoc">Decode the Base64 encoded bytes and return the decoded bytes.</div></div>
+<div class="ttc" id="abase64_8h_html_aa8129a3c86702a8451b035b147fa9881"><div class="ttname"><a href="base64_8h.html#aa8129a3c86702a8451b035b147fa9881">klib::fast_base64_encode</a></div><div class="ttdeci">std::string KLIB_PUBLIC fast_base64_encode(const std::string &amp;data)</div><div class="ttdoc">Encode bytes using Base64 and return the encoded bytes.</div></div>
 </div><!-- fragment --></div><!-- contents -->
 </div><!-- doc-content -->
 <!-- start footer part -->

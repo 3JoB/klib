@@ -30,7 +30,7 @@
  <tbody>
  <tr id="projectrow">
   <td id="projectalign">
-   <div id="projectname">klib<span id="projectnumber">&#160;1.9.0</span>
+   <div id="projectname">klib<span id="projectnumber">&#160;1.9.1</span>
    </div>
   </td>
     <td>        <div id="MSearchBox" class="MSearchBoxInactive">
@@ -99,12 +99,15 @@ $(document).ready(function(){initNavTree('html_8h_source.html',''); initResizabl
 <div class="line"><a id="l00007" name="l00007"></a><span class="lineno">    7</span> </div>
 <div class="line"><a id="l00008" name="l00008"></a><span class="lineno">    8</span><span class="preprocessor">#include &lt;string&gt;</span></div>
 <div class="line"><a id="l00009" name="l00009"></a><span class="lineno">    9</span> </div>
-<div class="line"><a id="l00010" name="l00010"></a><span class="lineno">   10</span><span class="keyword">namespace </span>klib {</div>
+<div class="line"><a id="l00010" name="l00010"></a><span class="lineno">   10</span><span class="preprocessor">#include &quot;klib/config.h&quot;</span></div>
 <div class="line"><a id="l00011" name="l00011"></a><span class="lineno">   11</span> </div>
-<div class="line"><a id="l00018" name="l00018"></a><span class="lineno"><a class="line" href="html_8h.html#ab3c05c9f165ea9177cbff4b8f7486092">   18</a></span>std::string <a class="code hl_function" href="html_8h.html#ab3c05c9f165ea9177cbff4b8f7486092">html_tidy</a>(<span class="keyword">const</span> std::string &amp;html, <span class="keywordtype">bool</span> ignore_error = <span class="keyword">false</span>);</div>
-<div class="line"><a id="l00019" name="l00019"></a><span class="lineno">   19</span> </div>
-<div class="line"><a id="l00020" name="l00020"></a><span class="lineno">   20</span>}  <span class="comment">// namespace klib</span></div>
-<div class="ttc" id="ahtml_8h_html_ab3c05c9f165ea9177cbff4b8f7486092"><div class="ttname"><a href="html_8h.html#ab3c05c9f165ea9177cbff4b8f7486092">klib::html_tidy</a></div><div class="ttdeci">std::string html_tidy(const std::string &amp;html, bool ignore_error=false)</div><div class="ttdoc">Execute HTML Tidy.</div></div>
+<div class="line"><a id="l00012" name="l00012"></a><span class="lineno">   12</span><span class="keyword">namespace </span>klib {</div>
+<div class="line"><a id="l00013" name="l00013"></a><span class="lineno">   13</span> </div>
+<div class="line"><a id="l00020" name="l00020"></a><span class="lineno"><a class="line" href="html_8h.html#a80e458c1ed10cef41deb22dcb870a1ed">   20</a></span>std::string KLIB_PUBLIC <a class="code hl_function" href="html_8h.html#a80e458c1ed10cef41deb22dcb870a1ed">html_tidy</a>(<span class="keyword">const</span> std::string &amp;html,</div>
+<div class="line"><a id="l00021" name="l00021"></a><span class="lineno">   21</span>                                  <span class="keywordtype">bool</span> ignore_error = <span class="keyword">false</span>);</div>
+<div class="line"><a id="l00022" name="l00022"></a><span class="lineno">   22</span> </div>
+<div class="line"><a id="l00023" name="l00023"></a><span class="lineno">   23</span>}  <span class="comment">// namespace klib</span></div>
+<div class="ttc" id="ahtml_8h_html_a80e458c1ed10cef41deb22dcb870a1ed"><div class="ttname"><a href="html_8h.html#a80e458c1ed10cef41deb22dcb870a1ed">klib::html_tidy</a></div><div class="ttdeci">std::string KLIB_PUBLIC html_tidy(const std::string &amp;html, bool ignore_error=false)</div><div class="ttdoc">Execute HTML Tidy.</div></div>
 </div><!-- fragment --></div><!-- contents -->
 </div><!-- doc-content -->
 <!-- start footer part -->

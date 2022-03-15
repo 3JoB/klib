@@ -30,7 +30,7 @@
  <tbody>
  <tr id="projectrow">
   <td id="projectalign">
-   <div id="projectname">klib<span id="projectnumber">&#160;1.9.0</span>
+   <div id="projectname">klib<span id="projectnumber">&#160;1.9.1</span>
    </div>
   </td>
     <td>        <div id="MSearchBox" class="MSearchBoxInactive">
@@ -105,6 +105,7 @@ $(document).ready(function(){initNavTree('util_8h.html',''); initResizable(); })
 <code>#include &lt;string&gt;</code><br />
 <code>#include &lt;string_view&gt;</code><br />
 <code>#include &lt;vector&gt;</code><br />
+<code>#include &quot;klib/config.h&quot;</code><br />
 </div>
 <p><a href="util_8h_source.html">Go to the source code of this file.</a></p>
 <table class="memberdecls">
@@ -116,74 +117,74 @@ Classes</h2></td></tr>
 </table><table class="memberdecls">
 <tr class="heading"><td colspan="2"><h2 class="groupheader"><a id="func-members" name="func-members"></a>
 Functions</h2></td></tr>
-<tr class="memitem:afb31ff4533cd6ea73bb65b1c077dde7f"><td class="memItemLeft" align="right" valign="top">std::vector&lt; std::string &gt;&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="util_8h.html#afb31ff4533cd6ea73bb65b1c077dde7f">klib::split_str</a> (const std::string &amp;str, const std::string &amp;separate, bool remove_space=true)</td></tr>
-<tr class="memdesc:afb31ff4533cd6ea73bb65b1c077dde7f"><td class="mdescLeft">&#160;</td><td class="mdescRight">Split string.  <a href="util_8h.html#afb31ff4533cd6ea73bb65b1c077dde7f">More...</a><br /></td></tr>
-<tr class="separator:afb31ff4533cd6ea73bb65b1c077dde7f"><td class="memSeparator" colspan="2">&#160;</td></tr>
-<tr class="memitem:aff1e161e1457b1a895244581b50b9abd"><td class="memItemLeft" align="right" valign="top">std::string&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="util_8h.html#aff1e161e1457b1a895244581b50b9abd">klib::read_file</a> (const std::string &amp;path, bool binary_mode)</td></tr>
-<tr class="memdesc:aff1e161e1457b1a895244581b50b9abd"><td class="mdescLeft">&#160;</td><td class="mdescRight">Read a file at a time and store it in a string.  <a href="util_8h.html#aff1e161e1457b1a895244581b50b9abd">More...</a><br /></td></tr>
-<tr class="separator:aff1e161e1457b1a895244581b50b9abd"><td class="memSeparator" colspan="2">&#160;</td></tr>
-<tr class="memitem:adbf302e115dd8795bbb3e2590e0c6917"><td class="memItemLeft" align="right" valign="top">std::string&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="util_8h.html#adbf302e115dd8795bbb3e2590e0c6917">klib::read_file</a> (std::string_view path, bool binary_mode)</td></tr>
-<tr class="memdesc:adbf302e115dd8795bbb3e2590e0c6917"><td class="mdescLeft">&#160;</td><td class="mdescRight">Read a file at a time and store it in a string.  <a href="util_8h.html#adbf302e115dd8795bbb3e2590e0c6917">More...</a><br /></td></tr>
-<tr class="separator:adbf302e115dd8795bbb3e2590e0c6917"><td class="memSeparator" colspan="2">&#160;</td></tr>
-<tr class="memitem:ac70cb873ea6e639f6309788655c84a5f"><td class="memItemLeft" align="right" valign="top">std::string&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="util_8h.html#ac70cb873ea6e639f6309788655c84a5f">klib::read_file</a> (const char *path, bool binary_mode)</td></tr>
-<tr class="memdesc:ac70cb873ea6e639f6309788655c84a5f"><td class="mdescLeft">&#160;</td><td class="mdescRight">Read a file at a time and store it in a string.  <a href="util_8h.html#ac70cb873ea6e639f6309788655c84a5f">More...</a><br /></td></tr>
-<tr class="separator:ac70cb873ea6e639f6309788655c84a5f"><td class="memSeparator" colspan="2">&#160;</td></tr>
-<tr class="memitem:aa77a9545024ab2ddc44c03fafac3df34"><td class="memItemLeft" align="right" valign="top">void&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="util_8h.html#aa77a9545024ab2ddc44c03fafac3df34">klib::write_file</a> (const std::string &amp;path, bool binary_mode, const std::string &amp;str)</td></tr>
-<tr class="memdesc:aa77a9545024ab2ddc44c03fafac3df34"><td class="mdescLeft">&#160;</td><td class="mdescRight">Write string to file.  <a href="util_8h.html#aa77a9545024ab2ddc44c03fafac3df34">More...</a><br /></td></tr>
-<tr class="separator:aa77a9545024ab2ddc44c03fafac3df34"><td class="memSeparator" colspan="2">&#160;</td></tr>
-<tr class="memitem:a9a7379ea62373328b3a35aff358e09b0"><td class="memItemLeft" align="right" valign="top">void&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="util_8h.html#a9a7379ea62373328b3a35aff358e09b0">klib::write_file</a> (std::string_view path, bool binary_mode, std::string_view str)</td></tr>
-<tr class="memdesc:a9a7379ea62373328b3a35aff358e09b0"><td class="mdescLeft">&#160;</td><td class="mdescRight">Write string to file.  <a href="util_8h.html#a9a7379ea62373328b3a35aff358e09b0">More...</a><br /></td></tr>
-<tr class="separator:a9a7379ea62373328b3a35aff358e09b0"><td class="memSeparator" colspan="2">&#160;</td></tr>
-<tr class="memitem:a49d3e58ed0d07d5a4776f0619cbe6fe2"><td class="memItemLeft" align="right" valign="top">void&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="util_8h.html#a49d3e58ed0d07d5a4776f0619cbe6fe2">klib::write_file</a> (const char *path, bool binary_mode, const char *str, std::size_t size)</td></tr>
-<tr class="memdesc:a49d3e58ed0d07d5a4776f0619cbe6fe2"><td class="mdescLeft">&#160;</td><td class="mdescRight">Write string to file.  <a href="util_8h.html#a49d3e58ed0d07d5a4776f0619cbe6fe2">More...</a><br /></td></tr>
-<tr class="separator:a49d3e58ed0d07d5a4776f0619cbe6fe2"><td class="memSeparator" colspan="2">&#160;</td></tr>
-<tr class="memitem:a51f2e4f28098072d9f2f16c63b4b3829"><td class="memItemLeft" align="right" valign="top">void&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="util_8h.html#a51f2e4f28098072d9f2f16c63b4b3829">klib::exec</a> (const std::string &amp;cmd)</td></tr>
-<tr class="memdesc:a51f2e4f28098072d9f2f16c63b4b3829"><td class="mdescLeft">&#160;</td><td class="mdescRight">Execute the given line as a shell command.  <a href="util_8h.html#a51f2e4f28098072d9f2f16c63b4b3829">More...</a><br /></td></tr>
-<tr class="separator:a51f2e4f28098072d9f2f16c63b4b3829"><td class="memSeparator" colspan="2">&#160;</td></tr>
-<tr class="memitem:a1e1698d0a500a8d343d9fee0ac35c331"><td class="memItemLeft" align="right" valign="top">void&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="util_8h.html#a1e1698d0a500a8d343d9fee0ac35c331">klib::exec</a> (const char *cmd)</td></tr>
-<tr class="memdesc:a1e1698d0a500a8d343d9fee0ac35c331"><td class="mdescLeft">&#160;</td><td class="mdescRight">Execute the given line as a shell command.  <a href="util_8h.html#a1e1698d0a500a8d343d9fee0ac35c331">More...</a><br /></td></tr>
-<tr class="separator:a1e1698d0a500a8d343d9fee0ac35c331"><td class="memSeparator" colspan="2">&#160;</td></tr>
-<tr class="memitem:a4e77f7c0321a0ebd9343a7abe22402ac"><td class="memItemLeft" align="right" valign="top">std::string&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="util_8h.html#a4e77f7c0321a0ebd9343a7abe22402ac">klib::exec_with_output</a> (const std::string &amp;cmd)</td></tr>
-<tr class="memdesc:a4e77f7c0321a0ebd9343a7abe22402ac"><td class="mdescLeft">&#160;</td><td class="mdescRight">Execute the given line as a shell command and return its output.  <a href="util_8h.html#a4e77f7c0321a0ebd9343a7abe22402ac">More...</a><br /></td></tr>
-<tr class="separator:a4e77f7c0321a0ebd9343a7abe22402ac"><td class="memSeparator" colspan="2">&#160;</td></tr>
-<tr class="memitem:a01e50e0fc8c242ccdf7bdd10ae55f8e3"><td class="memItemLeft" align="right" valign="top">std::string&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="util_8h.html#a01e50e0fc8c242ccdf7bdd10ae55f8e3">klib::exec_with_output</a> (const char *cmd)</td></tr>
-<tr class="memdesc:a01e50e0fc8c242ccdf7bdd10ae55f8e3"><td class="mdescLeft">&#160;</td><td class="mdescRight">Execute the given line as a shell command and return its output.  <a href="util_8h.html#a01e50e0fc8c242ccdf7bdd10ae55f8e3">More...</a><br /></td></tr>
-<tr class="separator:a01e50e0fc8c242ccdf7bdd10ae55f8e3"><td class="memSeparator" colspan="2">&#160;</td></tr>
-<tr class="memitem:a068f640d8df09ff35caf8822a9c1e0ac"><td class="memItemLeft" align="right" valign="top"><a id="a068f640d8df09ff35caf8822a9c1e0ac" name="a068f640d8df09ff35caf8822a9c1e0ac"></a>
-void&#160;</td><td class="memItemRight" valign="bottom"><b>klib::wait_for_child_process</b> ()</td></tr>
-<tr class="memdesc:a068f640d8df09ff35caf8822a9c1e0ac"><td class="mdescLeft">&#160;</td><td class="mdescRight">Wait for all child processes to exit. <br /></td></tr>
-<tr class="separator:a068f640d8df09ff35caf8822a9c1e0ac"><td class="memSeparator" colspan="2">&#160;</td></tr>
-<tr class="memitem:a04c05579273b722fad57a8362193d573"><td class="memItemLeft" align="right" valign="top"><a id="a04c05579273b722fad57a8362193d573" name="a04c05579273b722fad57a8362193d573"></a>
-std::string&#160;</td><td class="memItemRight" valign="bottom"><b>klib::uuid</b> ()</td></tr>
-<tr class="memdesc:a04c05579273b722fad57a8362193d573"><td class="mdescLeft">&#160;</td><td class="mdescRight">Generate uuid. <br /></td></tr>
-<tr class="separator:a04c05579273b722fad57a8362193d573"><td class="memSeparator" colspan="2">&#160;</td></tr>
-<tr class="memitem:a6c26f8611ddb29717c0c1f563a06b3ab"><td class="memItemLeft" align="right" valign="top">void&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="util_8h.html#a6c26f8611ddb29717c0c1f563a06b3ab">klib::cleanse</a> (std::string &amp;data)</td></tr>
-<tr class="memdesc:a6c26f8611ddb29717c0c1f563a06b3ab"><td class="mdescLeft">&#160;</td><td class="mdescRight">Clear data.  <a href="util_8h.html#a6c26f8611ddb29717c0c1f563a06b3ab">More...</a><br /></td></tr>
-<tr class="separator:a6c26f8611ddb29717c0c1f563a06b3ab"><td class="memSeparator" colspan="2">&#160;</td></tr>
-<tr class="memitem:a055c8fc630203151acb0b746065d32c8"><td class="memItemLeft" align="right" valign="top">void&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="util_8h.html#a055c8fc630203151acb0b746065d32c8">klib::cleanse</a> (void *ptr, std::size_t size)</td></tr>
-<tr class="memdesc:a055c8fc630203151acb0b746065d32c8"><td class="mdescLeft">&#160;</td><td class="mdescRight">Clear data.  <a href="util_8h.html#a055c8fc630203151acb0b746065d32c8">More...</a><br /></td></tr>
-<tr class="separator:a055c8fc630203151acb0b746065d32c8"><td class="memSeparator" colspan="2">&#160;</td></tr>
-<tr class="memitem:a09e7d1b928997b8684fb499905a2d705"><td class="memItemLeft" align="right" valign="top">std::string&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="util_8h.html#a09e7d1b928997b8684fb499905a2d705">klib::make_file_name_legal</a> (const std::string &amp;file_name)</td></tr>
-<tr class="memdesc:a09e7d1b928997b8684fb499905a2d705"><td class="mdescLeft">&#160;</td><td class="mdescRight">According to the given file or directory name, return a legal file or directory name.  <a href="util_8h.html#a09e7d1b928997b8684fb499905a2d705">More...</a><br /></td></tr>
-<tr class="separator:a09e7d1b928997b8684fb499905a2d705"><td class="memSeparator" colspan="2">&#160;</td></tr>
-<tr class="memitem:a734f4c9c1ea977f1f74ac6f4b6ef817b"><td class="memItemLeft" align="right" valign="top">std::string&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="util_8h.html#a734f4c9c1ea977f1f74ac6f4b6ef817b">klib::generate_random_bytes</a> (std::size_t bytes)</td></tr>
-<tr class="memdesc:a734f4c9c1ea977f1f74ac6f4b6ef817b"><td class="mdescLeft">&#160;</td><td class="mdescRight">Generate random data of specified bytes.  <a href="util_8h.html#a734f4c9c1ea977f1f74ac6f4b6ef817b">More...</a><br /></td></tr>
-<tr class="separator:a734f4c9c1ea977f1f74ac6f4b6ef817b"><td class="memSeparator" colspan="2">&#160;</td></tr>
-<tr class="memitem:a7ea25c866f742068de6dbc55663ce1be"><td class="memItemLeft" align="right" valign="top">std::pair&lt; std::uint32_t, std::uint32_t &gt;&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="util_8h.html#a7ea25c866f742068de6dbc55663ce1be">klib::terminal_size</a> ()</td></tr>
-<tr class="memdesc:a7ea25c866f742068de6dbc55663ce1be"><td class="mdescLeft">&#160;</td><td class="mdescRight">Get terminal size.  <a href="util_8h.html#a7ea25c866f742068de6dbc55663ce1be">More...</a><br /></td></tr>
-<tr class="separator:a7ea25c866f742068de6dbc55663ce1be"><td class="memSeparator" colspan="2">&#160;</td></tr>
+<tr class="memitem:ac833fc7bb3dbdec8fea5785118480605"><td class="memItemLeft" align="right" valign="top">std::vector&lt; std::string &gt; KLIB_PUBLIC&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="util_8h.html#ac833fc7bb3dbdec8fea5785118480605">klib::split_str</a> (const std::string &amp;str, const std::string &amp;separate, bool remove_space=true)</td></tr>
+<tr class="memdesc:ac833fc7bb3dbdec8fea5785118480605"><td class="mdescLeft">&#160;</td><td class="mdescRight">Split string.  <a href="util_8h.html#ac833fc7bb3dbdec8fea5785118480605">More...</a><br /></td></tr>
+<tr class="separator:ac833fc7bb3dbdec8fea5785118480605"><td class="memSeparator" colspan="2">&#160;</td></tr>
+<tr class="memitem:ad372fb671586e06ec27976a95ffa6bbf"><td class="memItemLeft" align="right" valign="top">std::string KLIB_PUBLIC&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="util_8h.html#ad372fb671586e06ec27976a95ffa6bbf">klib::read_file</a> (const std::string &amp;path, bool binary_mode)</td></tr>
+<tr class="memdesc:ad372fb671586e06ec27976a95ffa6bbf"><td class="mdescLeft">&#160;</td><td class="mdescRight">Read a file at a time and store it in a string.  <a href="util_8h.html#ad372fb671586e06ec27976a95ffa6bbf">More...</a><br /></td></tr>
+<tr class="separator:ad372fb671586e06ec27976a95ffa6bbf"><td class="memSeparator" colspan="2">&#160;</td></tr>
+<tr class="memitem:a4d8f31126dbae2c4b100b33b7493b03a"><td class="memItemLeft" align="right" valign="top">std::string KLIB_PUBLIC&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="util_8h.html#a4d8f31126dbae2c4b100b33b7493b03a">klib::read_file</a> (std::string_view path, bool binary_mode)</td></tr>
+<tr class="memdesc:a4d8f31126dbae2c4b100b33b7493b03a"><td class="mdescLeft">&#160;</td><td class="mdescRight">Read a file at a time and store it in a string.  <a href="util_8h.html#a4d8f31126dbae2c4b100b33b7493b03a">More...</a><br /></td></tr>
+<tr class="separator:a4d8f31126dbae2c4b100b33b7493b03a"><td class="memSeparator" colspan="2">&#160;</td></tr>
+<tr class="memitem:a1812e641e7490dbf003a920d39c47168"><td class="memItemLeft" align="right" valign="top">std::string KLIB_PUBLIC&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="util_8h.html#a1812e641e7490dbf003a920d39c47168">klib::read_file</a> (const char *path, bool binary_mode)</td></tr>
+<tr class="memdesc:a1812e641e7490dbf003a920d39c47168"><td class="mdescLeft">&#160;</td><td class="mdescRight">Read a file at a time and store it in a string.  <a href="util_8h.html#a1812e641e7490dbf003a920d39c47168">More...</a><br /></td></tr>
+<tr class="separator:a1812e641e7490dbf003a920d39c47168"><td class="memSeparator" colspan="2">&#160;</td></tr>
+<tr class="memitem:a7bd2fd4db189a3ce2511de3c835f49ea"><td class="memItemLeft" align="right" valign="top">void KLIB_PUBLIC&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="util_8h.html#a7bd2fd4db189a3ce2511de3c835f49ea">klib::write_file</a> (const std::string &amp;path, bool binary_mode, const std::string &amp;str)</td></tr>
+<tr class="memdesc:a7bd2fd4db189a3ce2511de3c835f49ea"><td class="mdescLeft">&#160;</td><td class="mdescRight">Write string to file.  <a href="util_8h.html#a7bd2fd4db189a3ce2511de3c835f49ea">More...</a><br /></td></tr>
+<tr class="separator:a7bd2fd4db189a3ce2511de3c835f49ea"><td class="memSeparator" colspan="2">&#160;</td></tr>
+<tr class="memitem:a77820f95f21a6ddbe58dd7d58b6ee4ad"><td class="memItemLeft" align="right" valign="top">void KLIB_PUBLIC&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="util_8h.html#a77820f95f21a6ddbe58dd7d58b6ee4ad">klib::write_file</a> (std::string_view path, bool binary_mode, std::string_view str)</td></tr>
+<tr class="memdesc:a77820f95f21a6ddbe58dd7d58b6ee4ad"><td class="mdescLeft">&#160;</td><td class="mdescRight">Write string to file.  <a href="util_8h.html#a77820f95f21a6ddbe58dd7d58b6ee4ad">More...</a><br /></td></tr>
+<tr class="separator:a77820f95f21a6ddbe58dd7d58b6ee4ad"><td class="memSeparator" colspan="2">&#160;</td></tr>
+<tr class="memitem:a5169ca62f65edca9f93b34f94cd3bf85"><td class="memItemLeft" align="right" valign="top">void KLIB_PUBLIC&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="util_8h.html#a5169ca62f65edca9f93b34f94cd3bf85">klib::write_file</a> (const char *path, bool binary_mode, const char *str, std::size_t size)</td></tr>
+<tr class="memdesc:a5169ca62f65edca9f93b34f94cd3bf85"><td class="mdescLeft">&#160;</td><td class="mdescRight">Write string to file.  <a href="util_8h.html#a5169ca62f65edca9f93b34f94cd3bf85">More...</a><br /></td></tr>
+<tr class="separator:a5169ca62f65edca9f93b34f94cd3bf85"><td class="memSeparator" colspan="2">&#160;</td></tr>
+<tr class="memitem:a88437b3c9f18a9930401afdaee1c036b"><td class="memItemLeft" align="right" valign="top">void KLIB_PUBLIC&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="util_8h.html#a88437b3c9f18a9930401afdaee1c036b">klib::exec</a> (const std::string &amp;cmd)</td></tr>
+<tr class="memdesc:a88437b3c9f18a9930401afdaee1c036b"><td class="mdescLeft">&#160;</td><td class="mdescRight">Execute the given line as a shell command.  <a href="util_8h.html#a88437b3c9f18a9930401afdaee1c036b">More...</a><br /></td></tr>
+<tr class="separator:a88437b3c9f18a9930401afdaee1c036b"><td class="memSeparator" colspan="2">&#160;</td></tr>
+<tr class="memitem:a156b3c2b7b076b007cca16c83b60e4e3"><td class="memItemLeft" align="right" valign="top">void KLIB_PUBLIC&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="util_8h.html#a156b3c2b7b076b007cca16c83b60e4e3">klib::exec</a> (const char *cmd)</td></tr>
+<tr class="memdesc:a156b3c2b7b076b007cca16c83b60e4e3"><td class="mdescLeft">&#160;</td><td class="mdescRight">Execute the given line as a shell command.  <a href="util_8h.html#a156b3c2b7b076b007cca16c83b60e4e3">More...</a><br /></td></tr>
+<tr class="separator:a156b3c2b7b076b007cca16c83b60e4e3"><td class="memSeparator" colspan="2">&#160;</td></tr>
+<tr class="memitem:a4b828459b40d33005957e88bbfdd99bc"><td class="memItemLeft" align="right" valign="top">std::string KLIB_PUBLIC&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="util_8h.html#a4b828459b40d33005957e88bbfdd99bc">klib::exec_with_output</a> (const std::string &amp;cmd)</td></tr>
+<tr class="memdesc:a4b828459b40d33005957e88bbfdd99bc"><td class="mdescLeft">&#160;</td><td class="mdescRight">Execute the given line as a shell command and return its output.  <a href="util_8h.html#a4b828459b40d33005957e88bbfdd99bc">More...</a><br /></td></tr>
+<tr class="separator:a4b828459b40d33005957e88bbfdd99bc"><td class="memSeparator" colspan="2">&#160;</td></tr>
+<tr class="memitem:a802e1bab216c9255ba214ea2fc8ad745"><td class="memItemLeft" align="right" valign="top">std::string KLIB_PUBLIC&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="util_8h.html#a802e1bab216c9255ba214ea2fc8ad745">klib::exec_with_output</a> (const char *cmd)</td></tr>
+<tr class="memdesc:a802e1bab216c9255ba214ea2fc8ad745"><td class="mdescLeft">&#160;</td><td class="mdescRight">Execute the given line as a shell command and return its output.  <a href="util_8h.html#a802e1bab216c9255ba214ea2fc8ad745">More...</a><br /></td></tr>
+<tr class="separator:a802e1bab216c9255ba214ea2fc8ad745"><td class="memSeparator" colspan="2">&#160;</td></tr>
+<tr class="memitem:a04f9c50fe958c965b0e79bd739e450cc"><td class="memItemLeft" align="right" valign="top"><a id="a04f9c50fe958c965b0e79bd739e450cc" name="a04f9c50fe958c965b0e79bd739e450cc"></a>
+void KLIB_PUBLIC&#160;</td><td class="memItemRight" valign="bottom"><b>klib::wait_for_child_process</b> ()</td></tr>
+<tr class="memdesc:a04f9c50fe958c965b0e79bd739e450cc"><td class="mdescLeft">&#160;</td><td class="mdescRight">Wait for all child processes to exit. <br /></td></tr>
+<tr class="separator:a04f9c50fe958c965b0e79bd739e450cc"><td class="memSeparator" colspan="2">&#160;</td></tr>
+<tr class="memitem:a15035db6a6170aadc3b1008e13ad64a5"><td class="memItemLeft" align="right" valign="top"><a id="a15035db6a6170aadc3b1008e13ad64a5" name="a15035db6a6170aadc3b1008e13ad64a5"></a>
+std::string KLIB_PUBLIC&#160;</td><td class="memItemRight" valign="bottom"><b>klib::uuid</b> ()</td></tr>
+<tr class="memdesc:a15035db6a6170aadc3b1008e13ad64a5"><td class="mdescLeft">&#160;</td><td class="mdescRight">Generate uuid. <br /></td></tr>
+<tr class="separator:a15035db6a6170aadc3b1008e13ad64a5"><td class="memSeparator" colspan="2">&#160;</td></tr>
+<tr class="memitem:a91f7d3a43b44c39ddb0b2e191194b615"><td class="memItemLeft" align="right" valign="top">void KLIB_PUBLIC&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="util_8h.html#a91f7d3a43b44c39ddb0b2e191194b615">klib::cleanse</a> (std::string &amp;data)</td></tr>
+<tr class="memdesc:a91f7d3a43b44c39ddb0b2e191194b615"><td class="mdescLeft">&#160;</td><td class="mdescRight">Clear data.  <a href="util_8h.html#a91f7d3a43b44c39ddb0b2e191194b615">More...</a><br /></td></tr>
+<tr class="separator:a91f7d3a43b44c39ddb0b2e191194b615"><td class="memSeparator" colspan="2">&#160;</td></tr>
+<tr class="memitem:a44704e5caec0900eb850ad043a4b76a0"><td class="memItemLeft" align="right" valign="top">void KLIB_PUBLIC&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="util_8h.html#a44704e5caec0900eb850ad043a4b76a0">klib::cleanse</a> (void *ptr, std::size_t size)</td></tr>
+<tr class="memdesc:a44704e5caec0900eb850ad043a4b76a0"><td class="mdescLeft">&#160;</td><td class="mdescRight">Clear data.  <a href="util_8h.html#a44704e5caec0900eb850ad043a4b76a0">More...</a><br /></td></tr>
+<tr class="separator:a44704e5caec0900eb850ad043a4b76a0"><td class="memSeparator" colspan="2">&#160;</td></tr>
+<tr class="memitem:a994d602f8229bbac318c4c80bd3169f8"><td class="memItemLeft" align="right" valign="top">std::string KLIB_PUBLIC&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="util_8h.html#a994d602f8229bbac318c4c80bd3169f8">klib::make_file_name_legal</a> (const std::string &amp;file_name)</td></tr>
+<tr class="memdesc:a994d602f8229bbac318c4c80bd3169f8"><td class="mdescLeft">&#160;</td><td class="mdescRight">According to the given file or directory name, return a legal file or directory name.  <a href="util_8h.html#a994d602f8229bbac318c4c80bd3169f8">More...</a><br /></td></tr>
+<tr class="separator:a994d602f8229bbac318c4c80bd3169f8"><td class="memSeparator" colspan="2">&#160;</td></tr>
+<tr class="memitem:a6a6f80aa951774be0e6967ab7d6bca55"><td class="memItemLeft" align="right" valign="top">std::string KLIB_PUBLIC&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="util_8h.html#a6a6f80aa951774be0e6967ab7d6bca55">klib::generate_random_bytes</a> (std::size_t bytes)</td></tr>
+<tr class="memdesc:a6a6f80aa951774be0e6967ab7d6bca55"><td class="mdescLeft">&#160;</td><td class="mdescRight">Generate random data of specified bytes.  <a href="util_8h.html#a6a6f80aa951774be0e6967ab7d6bca55">More...</a><br /></td></tr>
+<tr class="separator:a6a6f80aa951774be0e6967ab7d6bca55"><td class="memSeparator" colspan="2">&#160;</td></tr>
+<tr class="memitem:a96a4b78c8c2fde21e5d4dccc081c7651"><td class="memItemLeft" align="right" valign="top">std::pair&lt; std::uint32_t, std::uint32_t &gt; KLIB_PUBLIC&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="util_8h.html#a96a4b78c8c2fde21e5d4dccc081c7651">klib::terminal_size</a> ()</td></tr>
+<tr class="memdesc:a96a4b78c8c2fde21e5d4dccc081c7651"><td class="mdescLeft">&#160;</td><td class="mdescRight">Get terminal size.  <a href="util_8h.html#a96a4b78c8c2fde21e5d4dccc081c7651">More...</a><br /></td></tr>
+<tr class="separator:a96a4b78c8c2fde21e5d4dccc081c7651"><td class="memSeparator" colspan="2">&#160;</td></tr>
 </table>
 <a name="details" id="details"></a><h2 class="groupheader">Detailed Description</h2>
 <div class="textblock"><p >Contains declarations of some useful functions. </p>
 </div><h2 class="groupheader">Function Documentation</h2>
-<a id="a6c26f8611ddb29717c0c1f563a06b3ab" name="a6c26f8611ddb29717c0c1f563a06b3ab"></a>
-<h2 class="memtitle"><span class="permalink"><a href="#a6c26f8611ddb29717c0c1f563a06b3ab">&#9670;&nbsp;</a></span>cleanse() <span class="overload">[1/2]</span></h2>
+<a id="a91f7d3a43b44c39ddb0b2e191194b615" name="a91f7d3a43b44c39ddb0b2e191194b615"></a>
+<h2 class="memtitle"><span class="permalink"><a href="#a91f7d3a43b44c39ddb0b2e191194b615">&#9670;&nbsp;</a></span>cleanse() <span class="overload">[1/2]</span></h2>
 
 <div class="memitem">
 <div class="memproto">
       <table class="memname">
         <tr>
-          <td class="memname">void klib::cleanse </td>
+          <td class="memname">void KLIB_PUBLIC klib::cleanse </td>
           <td>(</td>
           <td class="paramtype">std::string &amp;&#160;</td>
           <td class="paramname"><em>data</em></td><td>)</td>
@@ -202,14 +203,14 @@ std::string&#160;</td><td class="memItemRight" valign="bottom"><b>klib::uuid</b>
 
 </div>
 </div>
-<a id="a055c8fc630203151acb0b746065d32c8" name="a055c8fc630203151acb0b746065d32c8"></a>
-<h2 class="memtitle"><span class="permalink"><a href="#a055c8fc630203151acb0b746065d32c8">&#9670;&nbsp;</a></span>cleanse() <span class="overload">[2/2]</span></h2>
+<a id="a44704e5caec0900eb850ad043a4b76a0" name="a44704e5caec0900eb850ad043a4b76a0"></a>
+<h2 class="memtitle"><span class="permalink"><a href="#a44704e5caec0900eb850ad043a4b76a0">&#9670;&nbsp;</a></span>cleanse() <span class="overload">[2/2]</span></h2>
 
 <div class="memitem">
 <div class="memproto">
       <table class="memname">
         <tr>
-          <td class="memname">void klib::cleanse </td>
+          <td class="memname">void KLIB_PUBLIC klib::cleanse </td>
           <td>(</td>
           <td class="paramtype">void *&#160;</td>
           <td class="paramname"><em>ptr</em>, </td>
@@ -239,14 +240,14 @@ std::string&#160;</td><td class="memItemRight" valign="bottom"><b>klib::uuid</b>
 
 </div>
 </div>
-<a id="a1e1698d0a500a8d343d9fee0ac35c331" name="a1e1698d0a500a8d343d9fee0ac35c331"></a>
-<h2 class="memtitle"><span class="permalink"><a href="#a1e1698d0a500a8d343d9fee0ac35c331">&#9670;&nbsp;</a></span>exec() <span class="overload">[1/2]</span></h2>
+<a id="a156b3c2b7b076b007cca16c83b60e4e3" name="a156b3c2b7b076b007cca16c83b60e4e3"></a>
+<h2 class="memtitle"><span class="permalink"><a href="#a156b3c2b7b076b007cca16c83b60e4e3">&#9670;&nbsp;</a></span>exec() <span class="overload">[1/2]</span></h2>
 
 <div class="memitem">
 <div class="memproto">
       <table class="memname">
         <tr>
-          <td class="memname">void klib::exec </td>
+          <td class="memname">void KLIB_PUBLIC klib::exec </td>
           <td>(</td>
           <td class="paramtype">const char *&#160;</td>
           <td class="paramname"><em>cmd</em></td><td>)</td>
@@ -265,14 +266,14 @@ std::string&#160;</td><td class="memItemRight" valign="bottom"><b>klib::uuid</b>
 
 </div>
 </div>
-<a id="a51f2e4f28098072d9f2f16c63b4b3829" name="a51f2e4f28098072d9f2f16c63b4b3829"></a>
-<h2 class="memtitle"><span class="permalink"><a href="#a51f2e4f28098072d9f2f16c63b4b3829">&#9670;&nbsp;</a></span>exec() <span class="overload">[2/2]</span></h2>
+<a id="a88437b3c9f18a9930401afdaee1c036b" name="a88437b3c9f18a9930401afdaee1c036b"></a>
+<h2 class="memtitle"><span class="permalink"><a href="#a88437b3c9f18a9930401afdaee1c036b">&#9670;&nbsp;</a></span>exec() <span class="overload">[2/2]</span></h2>
 
 <div class="memitem">
 <div class="memproto">
       <table class="memname">
         <tr>
-          <td class="memname">void klib::exec </td>
+          <td class="memname">void KLIB_PUBLIC klib::exec </td>
           <td>(</td>
           <td class="paramtype">const std::string &amp;&#160;</td>
           <td class="paramname"><em>cmd</em></td><td>)</td>
@@ -291,14 +292,14 @@ std::string&#160;</td><td class="memItemRight" valign="bottom"><b>klib::uuid</b>
 
 </div>
 </div>
-<a id="a01e50e0fc8c242ccdf7bdd10ae55f8e3" name="a01e50e0fc8c242ccdf7bdd10ae55f8e3"></a>
-<h2 class="memtitle"><span class="permalink"><a href="#a01e50e0fc8c242ccdf7bdd10ae55f8e3">&#9670;&nbsp;</a></span>exec_with_output() <span class="overload">[1/2]</span></h2>
+<a id="a802e1bab216c9255ba214ea2fc8ad745" name="a802e1bab216c9255ba214ea2fc8ad745"></a>
+<h2 class="memtitle"><span class="permalink"><a href="#a802e1bab216c9255ba214ea2fc8ad745">&#9670;&nbsp;</a></span>exec_with_output() <span class="overload">[1/2]</span></h2>
 
 <div class="memitem">
 <div class="memproto">
       <table class="memname">
         <tr>
-          <td class="memname">std::string klib::exec_with_output </td>
+          <td class="memname">std::string KLIB_PUBLIC klib::exec_with_output </td>
           <td>(</td>
           <td class="paramtype">const char *&#160;</td>
           <td class="paramname"><em>cmd</em></td><td>)</td>
@@ -318,14 +319,14 @@ std::string&#160;</td><td class="memItemRight" valign="bottom"><b>klib::uuid</b>
 
 </div>
 </div>
-<a id="a4e77f7c0321a0ebd9343a7abe22402ac" name="a4e77f7c0321a0ebd9343a7abe22402ac"></a>
-<h2 class="memtitle"><span class="permalink"><a href="#a4e77f7c0321a0ebd9343a7abe22402ac">&#9670;&nbsp;</a></span>exec_with_output() <span class="overload">[2/2]</span></h2>
+<a id="a4b828459b40d33005957e88bbfdd99bc" name="a4b828459b40d33005957e88bbfdd99bc"></a>
+<h2 class="memtitle"><span class="permalink"><a href="#a4b828459b40d33005957e88bbfdd99bc">&#9670;&nbsp;</a></span>exec_with_output() <span class="overload">[2/2]</span></h2>
 
 <div class="memitem">
 <div class="memproto">
       <table class="memname">
         <tr>
-          <td class="memname">std::string klib::exec_with_output </td>
+          <td class="memname">std::string KLIB_PUBLIC klib::exec_with_output </td>
           <td>(</td>
           <td class="paramtype">const std::string &amp;&#160;</td>
           <td class="paramname"><em>cmd</em></td><td>)</td>
@@ -345,14 +346,14 @@ std::string&#160;</td><td class="memItemRight" valign="bottom"><b>klib::uuid</b>
 
 </div>
 </div>
-<a id="a734f4c9c1ea977f1f74ac6f4b6ef817b" name="a734f4c9c1ea977f1f74ac6f4b6ef817b"></a>
-<h2 class="memtitle"><span class="permalink"><a href="#a734f4c9c1ea977f1f74ac6f4b6ef817b">&#9670;&nbsp;</a></span>generate_random_bytes()</h2>
+<a id="a6a6f80aa951774be0e6967ab7d6bca55" name="a6a6f80aa951774be0e6967ab7d6bca55"></a>
+<h2 class="memtitle"><span class="permalink"><a href="#a6a6f80aa951774be0e6967ab7d6bca55">&#9670;&nbsp;</a></span>generate_random_bytes()</h2>
 
 <div class="memitem">
 <div class="memproto">
       <table class="memname">
         <tr>
-          <td class="memname">std::string klib::generate_random_bytes </td>
+          <td class="memname">std::string KLIB_PUBLIC klib::generate_random_bytes </td>
           <td>(</td>
           <td class="paramtype">std::size_t&#160;</td>
           <td class="paramname"><em>bytes</em></td><td>)</td>
@@ -372,14 +373,14 @@ std::string&#160;</td><td class="memItemRight" valign="bottom"><b>klib::uuid</b>
 
 </div>
 </div>
-<a id="a09e7d1b928997b8684fb499905a2d705" name="a09e7d1b928997b8684fb499905a2d705"></a>
-<h2 class="memtitle"><span class="permalink"><a href="#a09e7d1b928997b8684fb499905a2d705">&#9670;&nbsp;</a></span>make_file_name_legal()</h2>
+<a id="a994d602f8229bbac318c4c80bd3169f8" name="a994d602f8229bbac318c4c80bd3169f8"></a>
+<h2 class="memtitle"><span class="permalink"><a href="#a994d602f8229bbac318c4c80bd3169f8">&#9670;&nbsp;</a></span>make_file_name_legal()</h2>
 
 <div class="memitem">
 <div class="memproto">
       <table class="memname">
         <tr>
-          <td class="memname">std::string klib::make_file_name_legal </td>
+          <td class="memname">std::string KLIB_PUBLIC klib::make_file_name_legal </td>
           <td>(</td>
           <td class="paramtype">const std::string &amp;&#160;</td>
           <td class="paramname"><em>file_name</em></td><td>)</td>
@@ -400,14 +401,14 @@ std::string&#160;</td><td class="memItemRight" valign="bottom"><b>klib::uuid</b>
 
 </div>
 </div>
-<a id="ac70cb873ea6e639f6309788655c84a5f" name="ac70cb873ea6e639f6309788655c84a5f"></a>
-<h2 class="memtitle"><span class="permalink"><a href="#ac70cb873ea6e639f6309788655c84a5f">&#9670;&nbsp;</a></span>read_file() <span class="overload">[1/3]</span></h2>
+<a id="a1812e641e7490dbf003a920d39c47168" name="a1812e641e7490dbf003a920d39c47168"></a>
+<h2 class="memtitle"><span class="permalink"><a href="#a1812e641e7490dbf003a920d39c47168">&#9670;&nbsp;</a></span>read_file() <span class="overload">[1/3]</span></h2>
 
 <div class="memitem">
 <div class="memproto">
       <table class="memname">
         <tr>
-          <td class="memname">std::string klib::read_file </td>
+          <td class="memname">std::string KLIB_PUBLIC klib::read_file </td>
           <td>(</td>
           <td class="paramtype">const char *&#160;</td>
           <td class="paramname"><em>path</em>, </td>
@@ -438,14 +439,14 @@ std::string&#160;</td><td class="memItemRight" valign="bottom"><b>klib::uuid</b>
 
 </div>
 </div>
-<a id="aff1e161e1457b1a895244581b50b9abd" name="aff1e161e1457b1a895244581b50b9abd"></a>
-<h2 class="memtitle"><span class="permalink"><a href="#aff1e161e1457b1a895244581b50b9abd">&#9670;&nbsp;</a></span>read_file() <span class="overload">[2/3]</span></h2>
+<a id="ad372fb671586e06ec27976a95ffa6bbf" name="ad372fb671586e06ec27976a95ffa6bbf"></a>
+<h2 class="memtitle"><span class="permalink"><a href="#ad372fb671586e06ec27976a95ffa6bbf">&#9670;&nbsp;</a></span>read_file() <span class="overload">[2/3]</span></h2>
 
 <div class="memitem">
 <div class="memproto">
       <table class="memname">
         <tr>
-          <td class="memname">std::string klib::read_file </td>
+          <td class="memname">std::string KLIB_PUBLIC klib::read_file </td>
           <td>(</td>
           <td class="paramtype">const std::string &amp;&#160;</td>
           <td class="paramname"><em>path</em>, </td>
@@ -476,14 +477,14 @@ std::string&#160;</td><td class="memItemRight" valign="bottom"><b>klib::uuid</b>
 
 </div>
 </div>
-<a id="adbf302e115dd8795bbb3e2590e0c6917" name="adbf302e115dd8795bbb3e2590e0c6917"></a>
-<h2 class="memtitle"><span class="permalink"><a href="#adbf302e115dd8795bbb3e2590e0c6917">&#9670;&nbsp;</a></span>read_file() <span class="overload">[3/3]</span></h2>
+<a id="a4d8f31126dbae2c4b100b33b7493b03a" name="a4d8f31126dbae2c4b100b33b7493b03a"></a>
+<h2 class="memtitle"><span class="permalink"><a href="#a4d8f31126dbae2c4b100b33b7493b03a">&#9670;&nbsp;</a></span>read_file() <span class="overload">[3/3]</span></h2>
 
 <div class="memitem">
 <div class="memproto">
       <table class="memname">
         <tr>
-          <td class="memname">std::string klib::read_file </td>
+          <td class="memname">std::string KLIB_PUBLIC klib::read_file </td>
           <td>(</td>
           <td class="paramtype">std::string_view&#160;</td>
           <td class="paramname"><em>path</em>, </td>
@@ -514,14 +515,14 @@ std::string&#160;</td><td class="memItemRight" valign="bottom"><b>klib::uuid</b>
 
 </div>
 </div>
-<a id="afb31ff4533cd6ea73bb65b1c077dde7f" name="afb31ff4533cd6ea73bb65b1c077dde7f"></a>
-<h2 class="memtitle"><span class="permalink"><a href="#afb31ff4533cd6ea73bb65b1c077dde7f">&#9670;&nbsp;</a></span>split_str()</h2>
+<a id="ac833fc7bb3dbdec8fea5785118480605" name="ac833fc7bb3dbdec8fea5785118480605"></a>
+<h2 class="memtitle"><span class="permalink"><a href="#ac833fc7bb3dbdec8fea5785118480605">&#9670;&nbsp;</a></span>split_str()</h2>
 
 <div class="memitem">
 <div class="memproto">
       <table class="memname">
         <tr>
-          <td class="memname">std::vector&lt; std::string &gt; klib::split_str </td>
+          <td class="memname">std::vector&lt; std::string &gt; KLIB_PUBLIC klib::split_str </td>
           <td>(</td>
           <td class="paramtype">const std::string &amp;&#160;</td>
           <td class="paramname"><em>str</em>, </td>
@@ -559,14 +560,14 @@ std::string&#160;</td><td class="memItemRight" valign="bottom"><b>klib::uuid</b>
 
 </div>
 </div>
-<a id="a7ea25c866f742068de6dbc55663ce1be" name="a7ea25c866f742068de6dbc55663ce1be"></a>
-<h2 class="memtitle"><span class="permalink"><a href="#a7ea25c866f742068de6dbc55663ce1be">&#9670;&nbsp;</a></span>terminal_size()</h2>
+<a id="a96a4b78c8c2fde21e5d4dccc081c7651" name="a96a4b78c8c2fde21e5d4dccc081c7651"></a>
+<h2 class="memtitle"><span class="permalink"><a href="#a96a4b78c8c2fde21e5d4dccc081c7651">&#9670;&nbsp;</a></span>terminal_size()</h2>
 
 <div class="memitem">
 <div class="memproto">
       <table class="memname">
         <tr>
-          <td class="memname">std::pair&lt; std::uint32_t, std::uint32_t &gt; klib::terminal_size </td>
+          <td class="memname">std::pair&lt; std::uint32_t, std::uint32_t &gt; KLIB_PUBLIC klib::terminal_size </td>
           <td>(</td>
           <td class="paramname"></td><td>)</td>
           <td></td>
@@ -579,14 +580,14 @@ std::string&#160;</td><td class="memItemRight" valign="bottom"><b>klib::uuid</b>
 
 </div>
 </div>
-<a id="a49d3e58ed0d07d5a4776f0619cbe6fe2" name="a49d3e58ed0d07d5a4776f0619cbe6fe2"></a>
-<h2 class="memtitle"><span class="permalink"><a href="#a49d3e58ed0d07d5a4776f0619cbe6fe2">&#9670;&nbsp;</a></span>write_file() <span class="overload">[1/3]</span></h2>
+<a id="a5169ca62f65edca9f93b34f94cd3bf85" name="a5169ca62f65edca9f93b34f94cd3bf85"></a>
+<h2 class="memtitle"><span class="permalink"><a href="#a5169ca62f65edca9f93b34f94cd3bf85">&#9670;&nbsp;</a></span>write_file() <span class="overload">[1/3]</span></h2>
 
 <div class="memitem">
 <div class="memproto">
       <table class="memname">
         <tr>
-          <td class="memname">void klib::write_file </td>
+          <td class="memname">void KLIB_PUBLIC klib::write_file </td>
           <td>(</td>
           <td class="paramtype">const char *&#160;</td>
           <td class="paramname"><em>path</em>, </td>
@@ -630,14 +631,14 @@ std::string&#160;</td><td class="memItemRight" valign="bottom"><b>klib::uuid</b>
 
 </div>
 </div>
-<a id="aa77a9545024ab2ddc44c03fafac3df34" name="aa77a9545024ab2ddc44c03fafac3df34"></a>
-<h2 class="memtitle"><span class="permalink"><a href="#aa77a9545024ab2ddc44c03fafac3df34">&#9670;&nbsp;</a></span>write_file() <span class="overload">[2/3]</span></h2>
+<a id="a7bd2fd4db189a3ce2511de3c835f49ea" name="a7bd2fd4db189a3ce2511de3c835f49ea"></a>
+<h2 class="memtitle"><span class="permalink"><a href="#a7bd2fd4db189a3ce2511de3c835f49ea">&#9670;&nbsp;</a></span>write_file() <span class="overload">[2/3]</span></h2>
 
 <div class="memitem">
 <div class="memproto">
       <table class="memname">
         <tr>
-          <td class="memname">void klib::write_file </td>
+          <td class="memname">void KLIB_PUBLIC klib::write_file </td>
           <td>(</td>
           <td class="paramtype">const std::string &amp;&#160;</td>
           <td class="paramname"><em>path</em>, </td>
@@ -674,14 +675,14 @@ std::string&#160;</td><td class="memItemRight" valign="bottom"><b>klib::uuid</b>
 
 </div>
 </div>
-<a id="a9a7379ea62373328b3a35aff358e09b0" name="a9a7379ea62373328b3a35aff358e09b0"></a>
-<h2 class="memtitle"><span class="permalink"><a href="#a9a7379ea62373328b3a35aff358e09b0">&#9670;&nbsp;</a></span>write_file() <span class="overload">[3/3]</span></h2>
+<a id="a77820f95f21a6ddbe58dd7d58b6ee4ad" name="a77820f95f21a6ddbe58dd7d58b6ee4ad"></a>
+<h2 class="memtitle"><span class="permalink"><a href="#a77820f95f21a6ddbe58dd7d58b6ee4ad">&#9670;&nbsp;</a></span>write_file() <span class="overload">[3/3]</span></h2>
 
 <div class="memitem">
 <div class="memproto">
       <table class="memname">
         <tr>
-          <td class="memname">void klib::write_file </td>
+          <td class="memname">void KLIB_PUBLIC klib::write_file </td>
           <td>(</td>
           <td class="paramtype">std::string_view&#160;</td>
           <td class="paramname"><em>path</em>, </td>

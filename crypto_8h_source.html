@@ -30,7 +30,7 @@
  <tbody>
  <tr id="projectrow">
   <td id="projectalign">
-   <div id="projectname">klib<span id="projectnumber">&#160;1.9.0</span>
+   <div id="projectname">klib<span id="projectnumber">&#160;1.9.1</span>
    </div>
   </td>
     <td>        <div id="MSearchBox" class="MSearchBoxInactive">
@@ -99,25 +99,28 @@ $(document).ready(function(){initNavTree('crypto_8h_source.html',''); initResiza
 <div class="line"><a id="l00007" name="l00007"></a><span class="lineno">    7</span> </div>
 <div class="line"><a id="l00008" name="l00008"></a><span class="lineno">    8</span><span class="preprocessor">#include &lt;string&gt;</span></div>
 <div class="line"><a id="l00009" name="l00009"></a><span class="lineno">    9</span> </div>
-<div class="line"><a id="l00010" name="l00010"></a><span class="lineno">   10</span><span class="keyword">namespace </span>klib {</div>
+<div class="line"><a id="l00010" name="l00010"></a><span class="lineno">   10</span><span class="preprocessor">#include &quot;klib/config.h&quot;</span></div>
 <div class="line"><a id="l00011" name="l00011"></a><span class="lineno">   11</span> </div>
-<div class="line"><a id="l00016" name="l00016"></a><span class="lineno"><a class="line" href="crypto_8h.html#a5c25463fa7defef16a4f027d0a33134d">   16</a></span><span class="keyword">enum class</span> <a class="code hl_enumeration" href="crypto_8h.html#a5c25463fa7defef16a4f027d0a33134d">AesMode</a> { CBC, OFB, CTR };</div>
-<div class="line"><a id="l00017" name="l00017"></a><span class="lineno">   17</span> </div>
-<div class="line"><a id="l00025" name="l00025"></a><span class="lineno"><a class="line" href="crypto_8h.html#a9e00fd89efcb6e221d68ed81fdb32057">   25</a></span>std::string <a class="code hl_function" href="crypto_8h.html#a9e00fd89efcb6e221d68ed81fdb32057">aes_256_encrypt</a>(<span class="keyword">const</span> std::string &amp;data, <span class="keyword">const</span> std::string &amp;key,</div>
-<div class="line"><a id="l00026" name="l00026"></a><span class="lineno">   26</span>                            <a class="code hl_enumeration" href="crypto_8h.html#a5c25463fa7defef16a4f027d0a33134d">AesMode</a> aes_mode = AesMode::CBC);</div>
-<div class="line"><a id="l00027" name="l00027"></a><span class="lineno">   27</span> </div>
-<div class="line"><a id="l00035" name="l00035"></a><span class="lineno"><a class="line" href="crypto_8h.html#a296e48576208526bf3baaec8f19ed792">   35</a></span>std::string <a class="code hl_function" href="crypto_8h.html#a296e48576208526bf3baaec8f19ed792">aes_256_decrypt</a>(<span class="keyword">const</span> std::string &amp;data, <span class="keyword">const</span> std::string &amp;key,</div>
-<div class="line"><a id="l00036" name="l00036"></a><span class="lineno">   36</span>                            <a class="code hl_enumeration" href="crypto_8h.html#a5c25463fa7defef16a4f027d0a33134d">AesMode</a> aes_mode = AesMode::CBC);</div>
-<div class="line"><a id="l00037" name="l00037"></a><span class="lineno">   37</span> </div>
-<div class="line"><a id="l00047" name="l00047"></a><span class="lineno"><a class="line" href="crypto_8h.html#a0cb17e0249ec790e5ba17f487fe5a5b0">   47</a></span>std::string <a class="code hl_function" href="crypto_8h.html#a0cb17e0249ec790e5ba17f487fe5a5b0">aes_256_decrypt_no_iv</a>(<span class="keyword">const</span> std::string &amp;data,</div>
-<div class="line"><a id="l00048" name="l00048"></a><span class="lineno">   48</span>                                  <span class="keyword">const</span> std::string &amp;key,</div>
-<div class="line"><a id="l00049" name="l00049"></a><span class="lineno">   49</span>                                  <a class="code hl_enumeration" href="crypto_8h.html#a5c25463fa7defef16a4f027d0a33134d">AesMode</a> aes_mode = AesMode::CBC);</div>
-<div class="line"><a id="l00050" name="l00050"></a><span class="lineno">   50</span> </div>
-<div class="line"><a id="l00051" name="l00051"></a><span class="lineno">   51</span>}  <span class="comment">// namespace klib</span></div>
-<div class="ttc" id="acrypto_8h_html_a0cb17e0249ec790e5ba17f487fe5a5b0"><div class="ttname"><a href="crypto_8h.html#a0cb17e0249ec790e5ba17f487fe5a5b0">klib::aes_256_decrypt_no_iv</a></div><div class="ttdeci">std::string aes_256_decrypt_no_iv(const std::string &amp;data, const std::string &amp;key, AesMode aes_mode=AesMode::CBC)</div><div class="ttdoc">Use AES to decrypt data, key size: 256 bit.</div></div>
-<div class="ttc" id="acrypto_8h_html_a296e48576208526bf3baaec8f19ed792"><div class="ttname"><a href="crypto_8h.html#a296e48576208526bf3baaec8f19ed792">klib::aes_256_decrypt</a></div><div class="ttdeci">std::string aes_256_decrypt(const std::string &amp;data, const std::string &amp;key, AesMode aes_mode=AesMode::CBC)</div><div class="ttdoc">Use AES to decrypt data, key size: 256 bit.</div></div>
-<div class="ttc" id="acrypto_8h_html_a5c25463fa7defef16a4f027d0a33134d"><div class="ttname"><a href="crypto_8h.html#a5c25463fa7defef16a4f027d0a33134d">klib::AesMode</a></div><div class="ttdeci">AesMode</div><div class="ttdoc">Block cipher mode of operation.</div><div class="ttdef"><b>Definition:</b> crypto.h:16</div></div>
-<div class="ttc" id="acrypto_8h_html_a9e00fd89efcb6e221d68ed81fdb32057"><div class="ttname"><a href="crypto_8h.html#a9e00fd89efcb6e221d68ed81fdb32057">klib::aes_256_encrypt</a></div><div class="ttdeci">std::string aes_256_encrypt(const std::string &amp;data, const std::string &amp;key, AesMode aes_mode=AesMode::CBC)</div><div class="ttdoc">Use AES to encrypt data, key size: 256 bit.</div></div>
+<div class="line"><a id="l00012" name="l00012"></a><span class="lineno">   12</span><span class="keyword">namespace </span>klib {</div>
+<div class="line"><a id="l00013" name="l00013"></a><span class="lineno">   13</span> </div>
+<div class="line"><a id="l00018" name="l00018"></a><span class="lineno">   18</span><span class="keyword">enum class</span> KLIB_PUBLIC AesMode { CBC, OFB, CTR };</div>
+<div class="line"><a id="l00019" name="l00019"></a><span class="lineno">   19</span> </div>
+<div class="line"><a id="l00027" name="l00027"></a><span class="lineno"><a class="line" href="crypto_8h.html#a138e6382a066a712b2c10c506ffc2061">   27</a></span>std::string KLIB_PUBLIC <a class="code hl_function" href="crypto_8h.html#a138e6382a066a712b2c10c506ffc2061">aes_256_encrypt</a>(<span class="keyword">const</span> std::string &amp;data,</div>
+<div class="line"><a id="l00028" name="l00028"></a><span class="lineno">   28</span>                                        <span class="keyword">const</span> std::string &amp;key,</div>
+<div class="line"><a id="l00029" name="l00029"></a><span class="lineno">   29</span>                                        AesMode aes_mode = AesMode::CBC);</div>
+<div class="line"><a id="l00030" name="l00030"></a><span class="lineno">   30</span> </div>
+<div class="line"><a id="l00038" name="l00038"></a><span class="lineno"><a class="line" href="crypto_8h.html#abfddaa9d1cb894dddb6bb371aa660291">   38</a></span>std::string KLIB_PUBLIC <a class="code hl_function" href="crypto_8h.html#abfddaa9d1cb894dddb6bb371aa660291">aes_256_decrypt</a>(<span class="keyword">const</span> std::string &amp;data,</div>
+<div class="line"><a id="l00039" name="l00039"></a><span class="lineno">   39</span>                                        <span class="keyword">const</span> std::string &amp;key,</div>
+<div class="line"><a id="l00040" name="l00040"></a><span class="lineno">   40</span>                                        AesMode aes_mode = AesMode::CBC);</div>
+<div class="line"><a id="l00041" name="l00041"></a><span class="lineno">   41</span> </div>
+<div class="line"><a id="l00051" name="l00051"></a><span class="lineno"><a class="line" href="crypto_8h.html#a349204eb2461722dad1e9ce4911e1d76">   51</a></span>std::string KLIB_PUBLIC <a class="code hl_function" href="crypto_8h.html#a349204eb2461722dad1e9ce4911e1d76">aes_256_decrypt_no_iv</a>(<span class="keyword">const</span> std::string &amp;data,</div>
+<div class="line"><a id="l00052" name="l00052"></a><span class="lineno">   52</span>                                              <span class="keyword">const</span> std::string &amp;key,</div>
+<div class="line"><a id="l00053" name="l00053"></a><span class="lineno">   53</span>                                              AesMode aes_mode = AesMode::CBC);</div>
+<div class="line"><a id="l00054" name="l00054"></a><span class="lineno">   54</span> </div>
+<div class="line"><a id="l00055" name="l00055"></a><span class="lineno">   55</span>}  <span class="comment">// namespace klib</span></div>
+<div class="ttc" id="acrypto_8h_html_a138e6382a066a712b2c10c506ffc2061"><div class="ttname"><a href="crypto_8h.html#a138e6382a066a712b2c10c506ffc2061">klib::aes_256_encrypt</a></div><div class="ttdeci">std::string KLIB_PUBLIC aes_256_encrypt(const std::string &amp;data, const std::string &amp;key, AesMode aes_mode=AesMode::CBC)</div><div class="ttdoc">Use AES to encrypt data, key size: 256 bit.</div></div>
+<div class="ttc" id="acrypto_8h_html_a349204eb2461722dad1e9ce4911e1d76"><div class="ttname"><a href="crypto_8h.html#a349204eb2461722dad1e9ce4911e1d76">klib::aes_256_decrypt_no_iv</a></div><div class="ttdeci">std::string KLIB_PUBLIC aes_256_decrypt_no_iv(const std::string &amp;data, const std::string &amp;key, AesMode aes_mode=AesMode::CBC)</div><div class="ttdoc">Use AES to decrypt data, key size: 256 bit.</div></div>
+<div class="ttc" id="acrypto_8h_html_abfddaa9d1cb894dddb6bb371aa660291"><div class="ttname"><a href="crypto_8h.html#abfddaa9d1cb894dddb6bb371aa660291">klib::aes_256_decrypt</a></div><div class="ttdeci">std::string KLIB_PUBLIC aes_256_decrypt(const std::string &amp;data, const std::string &amp;key, AesMode aes_mode=AesMode::CBC)</div><div class="ttdoc">Use AES to decrypt data, key size: 256 bit.</div></div>
 </div><!-- fragment --></div><!-- contents -->
 </div><!-- doc-content -->
 <!-- start footer part -->

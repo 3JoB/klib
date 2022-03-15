@@ -30,7 +30,7 @@
  <tbody>
  <tr id="projectrow">
   <td id="projectalign">
-   <div id="projectname">klib<span id="projectnumber">&#160;1.9.0</span>
+   <div id="projectname">klib<span id="projectnumber">&#160;1.9.1</span>
    </div>
   </td>
     <td>        <div id="MSearchBox" class="MSearchBoxInactive">
@@ -94,7 +94,6 @@ $(document).ready(function(){initNavTree('http_8h.html',''); initResizable(); })
   <div class="summary">
 <a href="#nested-classes">Classes</a> &#124;
 <a href="#define-members">Macros</a> &#124;
-<a href="#enum-members">Enumerations</a> &#124;
 <a href="#func-members">Functions</a>  </div>
   <div class="headertitle"><div class="title">http.h File Reference</div></div>
 </div><!--header-->
@@ -107,6 +106,7 @@ $(document).ready(function(){initNavTree('http_8h.html',''); initResizable(); })
 <code>#include &lt;memory&gt;</code><br />
 <code>#include &lt;string&gt;</code><br />
 <code>#include &lt;unordered_map&gt;</code><br />
+<code>#include &quot;klib/config.h&quot;</code><br />
 <code>#include &quot;klib/detail/http-inl.h&quot;</code><br />
 <code>#include &quot;<a class="el" href="exception_8h_source.html">klib/exception.h</a>&quot;</code><br />
 </div>
@@ -134,25 +134,14 @@ Macros</h2></td></tr>
 <tr class="memitem:a001751e2abb71763b08651bec986b6f7"><td class="memItemLeft" align="right" valign="top">#define&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="http_8h.html#a001751e2abb71763b08651bec986b6f7">XX</a>(num,  name,  string)</td></tr>
 <tr class="separator:a001751e2abb71763b08651bec986b6f7"><td class="memSeparator" colspan="2">&#160;</td></tr>
 </table><table class="memberdecls">
-<tr class="heading"><td colspan="2"><h2 class="groupheader"><a id="enum-members" name="enum-members"></a>
-Enumerations</h2></td></tr>
-<tr class="memitem:aea29eb2a91d40898afa2d063e7684572"><td class="memItemLeft" align="right" valign="top">enum class &#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="http_8h.html#aea29eb2a91d40898afa2d063e7684572">klib::HttpStatus</a> { <b>XX</b>
- }</td></tr>
-<tr class="memdesc:aea29eb2a91d40898afa2d063e7684572"><td class="mdescLeft">&#160;</td><td class="mdescRight">HTTP Status.  <a href="http_8h.html#aea29eb2a91d40898afa2d063e7684572">More...</a><br /></td></tr>
-<tr class="separator:aea29eb2a91d40898afa2d063e7684572"><td class="memSeparator" colspan="2">&#160;</td></tr>
-<tr class="memitem:a8bdbca8aaac847d46dea12057740e32f"><td class="memItemLeft" align="right" valign="top">enum class &#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="http_8h.html#a8bdbca8aaac847d46dea12057740e32f">klib::HttpMethod</a> { <b>XX</b>
- }</td></tr>
-<tr class="memdesc:a8bdbca8aaac847d46dea12057740e32f"><td class="mdescLeft">&#160;</td><td class="mdescRight">HTTP request methods.  <a href="http_8h.html#a8bdbca8aaac847d46dea12057740e32f">More...</a><br /></td></tr>
-<tr class="separator:a8bdbca8aaac847d46dea12057740e32f"><td class="memSeparator" colspan="2">&#160;</td></tr>
-</table><table class="memberdecls">
 <tr class="heading"><td colspan="2"><h2 class="groupheader"><a id="func-members" name="func-members"></a>
 Functions</h2></td></tr>
-<tr class="memitem:aa99dc5614122dd3993953f4132610125"><td class="memItemLeft" align="right" valign="top">std::string&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="http_8h.html#aa99dc5614122dd3993953f4132610125">klib::http_status_str</a> (HttpStatus http_status)</td></tr>
-<tr class="memdesc:aa99dc5614122dd3993953f4132610125"><td class="mdescLeft">&#160;</td><td class="mdescRight">Get the description string of HTTP Status.  <a href="http_8h.html#aa99dc5614122dd3993953f4132610125">More...</a><br /></td></tr>
-<tr class="separator:aa99dc5614122dd3993953f4132610125"><td class="memSeparator" colspan="2">&#160;</td></tr>
-<tr class="memitem:a91f9b4a4c893a488d22fc239c08d35d1"><td class="memItemLeft" align="right" valign="top">std::string&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="http_8h.html#a91f9b4a4c893a488d22fc239c08d35d1">klib::http_method_str</a> (HttpMethod http_method)</td></tr>
-<tr class="memdesc:a91f9b4a4c893a488d22fc239c08d35d1"><td class="mdescLeft">&#160;</td><td class="mdescRight">Get the description string of HTTP request method.  <a href="http_8h.html#a91f9b4a4c893a488d22fc239c08d35d1">More...</a><br /></td></tr>
-<tr class="separator:a91f9b4a4c893a488d22fc239c08d35d1"><td class="memSeparator" colspan="2">&#160;</td></tr>
+<tr class="memitem:a0a629bfaeb3c4f8e4bb96ea3f8277986"><td class="memItemLeft" align="right" valign="top">std::string KLIB_PUBLIC&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="http_8h.html#a0a629bfaeb3c4f8e4bb96ea3f8277986">klib::http_status_str</a> (HttpStatus http_status)</td></tr>
+<tr class="memdesc:a0a629bfaeb3c4f8e4bb96ea3f8277986"><td class="mdescLeft">&#160;</td><td class="mdescRight">Get the description string of HTTP Status.  <a href="http_8h.html#a0a629bfaeb3c4f8e4bb96ea3f8277986">More...</a><br /></td></tr>
+<tr class="separator:a0a629bfaeb3c4f8e4bb96ea3f8277986"><td class="memSeparator" colspan="2">&#160;</td></tr>
+<tr class="memitem:aac0b07cee99ba8b3aa67cf1ce0f9ece5"><td class="memItemLeft" align="right" valign="top">std::string KLIB_PUBLIC&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="http_8h.html#aac0b07cee99ba8b3aa67cf1ce0f9ece5">klib::http_method_str</a> (HttpMethod http_method)</td></tr>
+<tr class="memdesc:aac0b07cee99ba8b3aa67cf1ce0f9ece5"><td class="mdescLeft">&#160;</td><td class="mdescRight">Get the description string of HTTP request method.  <a href="http_8h.html#aac0b07cee99ba8b3aa67cf1ce0f9ece5">More...</a><br /></td></tr>
+<tr class="separator:aac0b07cee99ba8b3aa67cf1ce0f9ece5"><td class="memSeparator" colspan="2">&#160;</td></tr>
 </table>
 <a name="details" id="details"></a><h2 class="groupheader">Detailed Description</h2>
 <div class="textblock"><p >Contains HTTP module. </p>
@@ -229,60 +218,9 @@ Functions</h2></td></tr>
 </div><!-- fragment -->
 </div>
 </div>
-<h2 class="groupheader">Enumeration Type Documentation</h2>
-<a id="a8bdbca8aaac847d46dea12057740e32f" name="a8bdbca8aaac847d46dea12057740e32f"></a>
-<h2 class="memtitle"><span class="permalink"><a href="#a8bdbca8aaac847d46dea12057740e32f">&#9670;&nbsp;</a></span>HttpMethod</h2>
-
-<div class="memitem">
-<div class="memproto">
-<table class="mlabels">
-  <tr>
-  <td class="mlabels-left">
-      <table class="memname">
-        <tr>
-          <td class="memname">enum class <a class="el" href="http_8h.html#a8bdbca8aaac847d46dea12057740e32f">klib::HttpMethod</a></td>
-        </tr>
-      </table>
-  </td>
-  <td class="mlabels-right">
-<span class="mlabels"><span class="mlabel">strong</span></span>  </td>
-  </tr>
-</table>
-</div><div class="memdoc">
-
-<p>HTTP request methods. </p>
-<dl class="section see"><dt>See also</dt><dd><a href="https://developer.mozilla.org/zh-CN/docs/Web/HTTP/Methods">https://developer.mozilla.org/zh-CN/docs/Web/HTTP/Methods</a> </dd></dl>
-
-</div>
-</div>
-<a id="aea29eb2a91d40898afa2d063e7684572" name="aea29eb2a91d40898afa2d063e7684572"></a>
-<h2 class="memtitle"><span class="permalink"><a href="#aea29eb2a91d40898afa2d063e7684572">&#9670;&nbsp;</a></span>HttpStatus</h2>
-
-<div class="memitem">
-<div class="memproto">
-<table class="mlabels">
-  <tr>
-  <td class="mlabels-left">
-      <table class="memname">
-        <tr>
-          <td class="memname">enum class <a class="el" href="http_8h.html#aea29eb2a91d40898afa2d063e7684572">klib::HttpStatus</a></td>
-        </tr>
-      </table>
-  </td>
-  <td class="mlabels-right">
-<span class="mlabels"><span class="mlabel">strong</span></span>  </td>
-  </tr>
-</table>
-</div><div class="memdoc">
-
-<p>HTTP Status. </p>
-<dl class="section see"><dt>See also</dt><dd><a href="https://developer.mozilla.org/zh-CN/docs/Web/HTTP/Status">https://developer.mozilla.org/zh-CN/docs/Web/HTTP/Status</a> </dd></dl>
-
-</div>
-</div>
 <h2 class="groupheader">Function Documentation</h2>
-<a id="a91f9b4a4c893a488d22fc239c08d35d1" name="a91f9b4a4c893a488d22fc239c08d35d1"></a>
-<h2 class="memtitle"><span class="permalink"><a href="#a91f9b4a4c893a488d22fc239c08d35d1">&#9670;&nbsp;</a></span>http_method_str()</h2>
+<a id="aac0b07cee99ba8b3aa67cf1ce0f9ece5" name="aac0b07cee99ba8b3aa67cf1ce0f9ece5"></a>
+<h2 class="memtitle"><span class="permalink"><a href="#aac0b07cee99ba8b3aa67cf1ce0f9ece5">&#9670;&nbsp;</a></span>http_method_str()</h2>
 
 <div class="memitem">
 <div class="memproto">
@@ -291,9 +229,9 @@ Functions</h2></td></tr>
   <td class="mlabels-left">
       <table class="memname">
         <tr>
-          <td class="memname">std::string klib::http_method_str </td>
+          <td class="memname">std::string KLIB_PUBLIC klib::http_method_str </td>
           <td>(</td>
-          <td class="paramtype"><a class="el" href="http_8h.html#a8bdbca8aaac847d46dea12057740e32f">HttpMethod</a>&#160;</td>
+          <td class="paramtype">HttpMethod&#160;</td>
           <td class="paramname"><em>http_method</em></td><td>)</td>
           <td></td>
         </tr>
@@ -316,8 +254,8 @@ Functions</h2></td></tr>
 
 </div>
 </div>
-<a id="aa99dc5614122dd3993953f4132610125" name="aa99dc5614122dd3993953f4132610125"></a>
-<h2 class="memtitle"><span class="permalink"><a href="#aa99dc5614122dd3993953f4132610125">&#9670;&nbsp;</a></span>http_status_str()</h2>
+<a id="a0a629bfaeb3c4f8e4bb96ea3f8277986" name="a0a629bfaeb3c4f8e4bb96ea3f8277986"></a>
+<h2 class="memtitle"><span class="permalink"><a href="#a0a629bfaeb3c4f8e4bb96ea3f8277986">&#9670;&nbsp;</a></span>http_status_str()</h2>
 
 <div class="memitem">
 <div class="memproto">
@@ -326,9 +264,9 @@ Functions</h2></td></tr>
   <td class="mlabels-left">
       <table class="memname">
         <tr>
-          <td class="memname">std::string klib::http_status_str </td>
+          <td class="memname">std::string KLIB_PUBLIC klib::http_status_str </td>
           <td>(</td>
-          <td class="paramtype"><a class="el" href="http_8h.html#aea29eb2a91d40898afa2d063e7684572">HttpStatus</a>&#160;</td>
+          <td class="paramtype">HttpStatus&#160;</td>
           <td class="paramname"><em>http_status</em></td><td>)</td>
           <td></td>
         </tr>

@@ -30,7 +30,7 @@
  <tbody>
  <tr id="projectrow">
   <td id="projectalign">
-   <div id="projectname">klib<span id="projectnumber">&#160;1.9.0</span>
+   <div id="projectname">klib<span id="projectnumber">&#160;1.9.1</span>
    </div>
   </td>
     <td>        <div id="MSearchBox" class="MSearchBoxInactive">
@@ -101,90 +101,91 @@ $(document).ready(function(){initNavTree('unicode_8h.html',''); initResizable();
 <a href="#details">More...</a></p>
 <div class="textblock"><code>#include &lt;cstdint&gt;</code><br />
 <code>#include &lt;string&gt;</code><br />
+<code>#include &quot;klib/config.h&quot;</code><br />
 <code>#include &quot;klib/detail/unicode_util.h&quot;</code><br />
 </div>
 <p><a href="unicode_8h_source.html">Go to the source code of this file.</a></p>
 <table class="memberdecls">
 <tr class="heading"><td colspan="2"><h2 class="groupheader"><a id="func-members" name="func-members"></a>
 Functions</h2></td></tr>
-<tr class="memitem:a8a693a0287f2c7a12990aada90a4b439"><td class="memItemLeft" align="right" valign="top">void&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="unicode_8h.html#a8a693a0287f2c7a12990aada90a4b439">klib::trim_left</a> (std::string &amp;str)</td></tr>
-<tr class="memdesc:a8a693a0287f2c7a12990aada90a4b439"><td class="mdescLeft">&#160;</td><td class="mdescRight">Remove all leading spaces from the input.  <a href="unicode_8h.html#a8a693a0287f2c7a12990aada90a4b439">More...</a><br /></td></tr>
-<tr class="separator:a8a693a0287f2c7a12990aada90a4b439"><td class="memSeparator" colspan="2">&#160;</td></tr>
-<tr class="memitem:a08d68ddbecee687722ca07f1ff57945a"><td class="memItemLeft" align="right" valign="top">std::string&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="unicode_8h.html#a08d68ddbecee687722ca07f1ff57945a">klib::trim_left_copy</a> (const std::string &amp;str)</td></tr>
-<tr class="memdesc:a08d68ddbecee687722ca07f1ff57945a"><td class="mdescLeft">&#160;</td><td class="mdescRight">Remove all leading spaces from the input.  <a href="unicode_8h.html#a08d68ddbecee687722ca07f1ff57945a">More...</a><br /></td></tr>
-<tr class="separator:a08d68ddbecee687722ca07f1ff57945a"><td class="memSeparator" colspan="2">&#160;</td></tr>
-<tr class="memitem:a0ce2a2a6674cad9772e4677c7b1d9cfa"><td class="memItemLeft" align="right" valign="top">void&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="unicode_8h.html#a0ce2a2a6674cad9772e4677c7b1d9cfa">klib::trim_right</a> (std::string &amp;str)</td></tr>
-<tr class="memdesc:a0ce2a2a6674cad9772e4677c7b1d9cfa"><td class="mdescLeft">&#160;</td><td class="mdescRight">Remove all trailing spaces from the input.  <a href="unicode_8h.html#a0ce2a2a6674cad9772e4677c7b1d9cfa">More...</a><br /></td></tr>
-<tr class="separator:a0ce2a2a6674cad9772e4677c7b1d9cfa"><td class="memSeparator" colspan="2">&#160;</td></tr>
-<tr class="memitem:a1066517b16d05083bd0aa97bc071396a"><td class="memItemLeft" align="right" valign="top">std::string&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="unicode_8h.html#a1066517b16d05083bd0aa97bc071396a">klib::trim_right_copy</a> (const std::string &amp;str)</td></tr>
-<tr class="memdesc:a1066517b16d05083bd0aa97bc071396a"><td class="mdescLeft">&#160;</td><td class="mdescRight">Remove all trailing spaces from the input.  <a href="unicode_8h.html#a1066517b16d05083bd0aa97bc071396a">More...</a><br /></td></tr>
-<tr class="separator:a1066517b16d05083bd0aa97bc071396a"><td class="memSeparator" colspan="2">&#160;</td></tr>
-<tr class="memitem:a874daae4bec5e1d04083d26278ed44b9"><td class="memItemLeft" align="right" valign="top">void&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="unicode_8h.html#a874daae4bec5e1d04083d26278ed44b9">klib::trim</a> (std::string &amp;str)</td></tr>
-<tr class="memdesc:a874daae4bec5e1d04083d26278ed44b9"><td class="mdescLeft">&#160;</td><td class="mdescRight">Remove all leading and trailing spaces from the input.  <a href="unicode_8h.html#a874daae4bec5e1d04083d26278ed44b9">More...</a><br /></td></tr>
-<tr class="separator:a874daae4bec5e1d04083d26278ed44b9"><td class="memSeparator" colspan="2">&#160;</td></tr>
-<tr class="memitem:afcd54e1c22b6f0926f83dd63f8ea589b"><td class="memItemLeft" align="right" valign="top">std::string&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="unicode_8h.html#afcd54e1c22b6f0926f83dd63f8ea589b">klib::trim_copy</a> (const std::string &amp;str)</td></tr>
-<tr class="memdesc:afcd54e1c22b6f0926f83dd63f8ea589b"><td class="mdescLeft">&#160;</td><td class="mdescRight">Remove all leading and trailing spaces from the input.  <a href="unicode_8h.html#afcd54e1c22b6f0926f83dd63f8ea589b">More...</a><br /></td></tr>
-<tr class="separator:afcd54e1c22b6f0926f83dd63f8ea589b"><td class="memSeparator" colspan="2">&#160;</td></tr>
-<tr class="memitem:a7e7fdc424fbb97c95ae4ad202ee716a4"><td class="memItemLeft" align="right" valign="top">char32_t&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="unicode_8h.html#a7e7fdc424fbb97c95ae4ad202ee716a4">klib::first_code_point</a> (const std::string &amp;str)</td></tr>
-<tr class="memdesc:a7e7fdc424fbb97c95ae4ad202ee716a4"><td class="mdescLeft">&#160;</td><td class="mdescRight">Get first code point.  <a href="unicode_8h.html#a7e7fdc424fbb97c95ae4ad202ee716a4">More...</a><br /></td></tr>
-<tr class="separator:a7e7fdc424fbb97c95ae4ad202ee716a4"><td class="memSeparator" colspan="2">&#160;</td></tr>
-<tr class="memitem:a4be2710ffbc7f6eaeb71ed8491453b1f"><td class="memItemLeft" align="right" valign="top">char32_t&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="unicode_8h.html#a4be2710ffbc7f6eaeb71ed8491453b1f">klib::last_code_point</a> (const std::string &amp;str)</td></tr>
-<tr class="memdesc:a4be2710ffbc7f6eaeb71ed8491453b1f"><td class="mdescLeft">&#160;</td><td class="mdescRight">Get last code point.  <a href="unicode_8h.html#a4be2710ffbc7f6eaeb71ed8491453b1f">More...</a><br /></td></tr>
-<tr class="separator:a4be2710ffbc7f6eaeb71ed8491453b1f"><td class="memSeparator" colspan="2">&#160;</td></tr>
-<tr class="memitem:a4f15235a6d7bf62418abcd3dbf7c22f4"><td class="memItemLeft" align="right" valign="top">bool&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="unicode_8h.html#a4f15235a6d7bf62418abcd3dbf7c22f4">klib::validate_utf8</a> (const std::string &amp;str)</td></tr>
-<tr class="memdesc:a4f15235a6d7bf62418abcd3dbf7c22f4"><td class="mdescLeft">&#160;</td><td class="mdescRight">Validate the UTF-8 string.  <a href="unicode_8h.html#a4f15235a6d7bf62418abcd3dbf7c22f4">More...</a><br /></td></tr>
-<tr class="separator:a4f15235a6d7bf62418abcd3dbf7c22f4"><td class="memSeparator" colspan="2">&#160;</td></tr>
-<tr class="memitem:a59ccca7bab3669628c5ac6e6abb82a94"><td class="memItemLeft" align="right" valign="top">bool&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="unicode_8h.html#a59ccca7bab3669628c5ac6e6abb82a94">klib::validate_utf16</a> (const std::u16string &amp;str)</td></tr>
-<tr class="memdesc:a59ccca7bab3669628c5ac6e6abb82a94"><td class="mdescLeft">&#160;</td><td class="mdescRight">Validate the UTF-16 string.  <a href="unicode_8h.html#a59ccca7bab3669628c5ac6e6abb82a94">More...</a><br /></td></tr>
-<tr class="separator:a59ccca7bab3669628c5ac6e6abb82a94"><td class="memSeparator" colspan="2">&#160;</td></tr>
-<tr class="memitem:afd9c11f7bcfa0aacc5111a78bfb42bac"><td class="memItemLeft" align="right" valign="top">std::u16string&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="unicode_8h.html#afd9c11f7bcfa0aacc5111a78bfb42bac">klib::utf8_to_utf16</a> (const std::string &amp;str)</td></tr>
-<tr class="memdesc:afd9c11f7bcfa0aacc5111a78bfb42bac"><td class="mdescLeft">&#160;</td><td class="mdescRight">Convert UTF-8 encoded string to UTF-16 encoded string.  <a href="unicode_8h.html#afd9c11f7bcfa0aacc5111a78bfb42bac">More...</a><br /></td></tr>
-<tr class="separator:afd9c11f7bcfa0aacc5111a78bfb42bac"><td class="memSeparator" colspan="2">&#160;</td></tr>
-<tr class="memitem:a307c51d968ca389408db8534cf8d3ace"><td class="memItemLeft" align="right" valign="top">std::string&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="unicode_8h.html#a307c51d968ca389408db8534cf8d3ace">klib::utf16_to_utf8</a> (const std::u16string &amp;str)</td></tr>
-<tr class="memdesc:a307c51d968ca389408db8534cf8d3ace"><td class="mdescLeft">&#160;</td><td class="mdescRight">Convert UTF-16 encoded string to UTF-8 encoded string.  <a href="unicode_8h.html#a307c51d968ca389408db8534cf8d3ace">More...</a><br /></td></tr>
-<tr class="separator:a307c51d968ca389408db8534cf8d3ace"><td class="memSeparator" colspan="2">&#160;</td></tr>
-<tr class="memitem:a618c7297574b1f62db6b5e8b19186f3b"><td class="memItemLeft" align="right" valign="top">std::u32string&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="unicode_8h.html#a618c7297574b1f62db6b5e8b19186f3b">klib::utf8_to_utf32</a> (const std::string &amp;str)</td></tr>
-<tr class="memdesc:a618c7297574b1f62db6b5e8b19186f3b"><td class="mdescLeft">&#160;</td><td class="mdescRight">Convert UTF-8 encoded string to UTF-32 encoded string.  <a href="unicode_8h.html#a618c7297574b1f62db6b5e8b19186f3b">More...</a><br /></td></tr>
-<tr class="separator:a618c7297574b1f62db6b5e8b19186f3b"><td class="memSeparator" colspan="2">&#160;</td></tr>
-<tr class="memitem:a56f0a017694612000be7879cd13b0504"><td class="memItemLeft" align="right" valign="top">std::wstring&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="unicode_8h.html#a56f0a017694612000be7879cd13b0504">klib::utf8_to_utf32_w</a> (const std::string &amp;str)</td></tr>
-<tr class="memdesc:a56f0a017694612000be7879cd13b0504"><td class="mdescLeft">&#160;</td><td class="mdescRight">Convert UTF-8 encoded string to UTF-32 encoded string.  <a href="unicode_8h.html#a56f0a017694612000be7879cd13b0504">More...</a><br /></td></tr>
-<tr class="separator:a56f0a017694612000be7879cd13b0504"><td class="memSeparator" colspan="2">&#160;</td></tr>
-<tr class="memitem:a137702622c0905e43278959649acb981"><td class="memItemLeft" align="right" valign="top">std::string&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="unicode_8h.html#a137702622c0905e43278959649acb981">klib::utf32_to_utf8</a> (const std::u32string &amp;str)</td></tr>
-<tr class="memdesc:a137702622c0905e43278959649acb981"><td class="mdescLeft">&#160;</td><td class="mdescRight">Convert UTF-32 encoded string to UTF-8 encoded string.  <a href="unicode_8h.html#a137702622c0905e43278959649acb981">More...</a><br /></td></tr>
-<tr class="separator:a137702622c0905e43278959649acb981"><td class="memSeparator" colspan="2">&#160;</td></tr>
-<tr class="memitem:ae07e71db9d22ba82c1dcc1956337cda3"><td class="memItemLeft" align="right" valign="top">std::string&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="unicode_8h.html#ae07e71db9d22ba82c1dcc1956337cda3">klib::utf32_to_utf8_w</a> (const std::wstring &amp;str)</td></tr>
-<tr class="memdesc:ae07e71db9d22ba82c1dcc1956337cda3"><td class="mdescLeft">&#160;</td><td class="mdescRight">Convert UTF-32 encoded string to UTF-8 encoded string.  <a href="unicode_8h.html#ae07e71db9d22ba82c1dcc1956337cda3">More...</a><br /></td></tr>
-<tr class="separator:ae07e71db9d22ba82c1dcc1956337cda3"><td class="memSeparator" colspan="2">&#160;</td></tr>
-<tr class="memitem:a8c33a23114652432078cf1c000340ce4"><td class="memItemLeft" align="right" valign="top">constexpr bool&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="unicode_8h.html#a8c33a23114652432078cf1c000340ce4">klib::is_ascii</a> (char32_t code_point)</td></tr>
-<tr class="memdesc:a8c33a23114652432078cf1c000340ce4"><td class="mdescLeft">&#160;</td><td class="mdescRight">Determine whether it is an ASCII character.  <a href="unicode_8h.html#a8c33a23114652432078cf1c000340ce4">More...</a><br /></td></tr>
-<tr class="separator:a8c33a23114652432078cf1c000340ce4"><td class="memSeparator" colspan="2">&#160;</td></tr>
-<tr class="memitem:a29367e09ea9de32ad298c686335725af"><td class="memItemLeft" align="right" valign="top">constexpr bool&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="unicode_8h.html#a29367e09ea9de32ad298c686335725af">klib::is_whitespace</a> (char32_t code_point)</td></tr>
-<tr class="memdesc:a29367e09ea9de32ad298c686335725af"><td class="mdescLeft">&#160;</td><td class="mdescRight">Determine whether it is an whitespace character.  <a href="unicode_8h.html#a29367e09ea9de32ad298c686335725af">More...</a><br /></td></tr>
-<tr class="separator:a29367e09ea9de32ad298c686335725af"><td class="memSeparator" colspan="2">&#160;</td></tr>
-<tr class="memitem:a968663bb12720c78b35576f376d3e8b6"><td class="memItemLeft" align="right" valign="top">constexpr bool&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="unicode_8h.html#a968663bb12720c78b35576f376d3e8b6">klib::is_control</a> (char32_t code_point)</td></tr>
-<tr class="memdesc:a968663bb12720c78b35576f376d3e8b6"><td class="mdescLeft">&#160;</td><td class="mdescRight">Determine whether it is an control character.  <a href="unicode_8h.html#a968663bb12720c78b35576f376d3e8b6">More...</a><br /></td></tr>
-<tr class="separator:a968663bb12720c78b35576f376d3e8b6"><td class="memSeparator" colspan="2">&#160;</td></tr>
-<tr class="memitem:a1fe967545828645037c16555e827b8ae"><td class="memItemLeft" align="right" valign="top">constexpr bool&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="unicode_8h.html#a1fe967545828645037c16555e827b8ae">klib::is_chinese_punctuation</a> (char32_t code_point)</td></tr>
-<tr class="memdesc:a1fe967545828645037c16555e827b8ae"><td class="mdescLeft">&#160;</td><td class="mdescRight">Determine whether it is an Chinese punctuation character.  <a href="unicode_8h.html#a1fe967545828645037c16555e827b8ae">More...</a><br /></td></tr>
-<tr class="separator:a1fe967545828645037c16555e827b8ae"><td class="memSeparator" colspan="2">&#160;</td></tr>
-<tr class="memitem:a871753503470df2a18ddb5e49681b4b5"><td class="memItemLeft" align="right" valign="top">constexpr bool&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="unicode_8h.html#a871753503470df2a18ddb5e49681b4b5">klib::is_english_punctuation</a> (char32_t code_point)</td></tr>
-<tr class="memdesc:a871753503470df2a18ddb5e49681b4b5"><td class="mdescLeft">&#160;</td><td class="mdescRight">Determine whether it is an English punctuation character.  <a href="unicode_8h.html#a871753503470df2a18ddb5e49681b4b5">More...</a><br /></td></tr>
-<tr class="separator:a871753503470df2a18ddb5e49681b4b5"><td class="memSeparator" colspan="2">&#160;</td></tr>
-<tr class="memitem:ad114b90edcbc2b42918440c6b3fb016d"><td class="memItemLeft" align="right" valign="top">constexpr bool&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="unicode_8h.html#ad114b90edcbc2b42918440c6b3fb016d">klib::is_cjk</a> (char32_t code_point)</td></tr>
-<tr class="memdesc:ad114b90edcbc2b42918440c6b3fb016d"><td class="mdescLeft">&#160;</td><td class="mdescRight">Determine whether it is a CJK Unified Ideographs.  <a href="unicode_8h.html#ad114b90edcbc2b42918440c6b3fb016d">More...</a><br /></td></tr>
-<tr class="separator:ad114b90edcbc2b42918440c6b3fb016d"><td class="memSeparator" colspan="2">&#160;</td></tr>
+<tr class="memitem:aa51d2ebcac9d554733388d96cc9627e4"><td class="memItemLeft" align="right" valign="top">void KLIB_PUBLIC&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="unicode_8h.html#aa51d2ebcac9d554733388d96cc9627e4">klib::trim_left</a> (std::string &amp;str)</td></tr>
+<tr class="memdesc:aa51d2ebcac9d554733388d96cc9627e4"><td class="mdescLeft">&#160;</td><td class="mdescRight">Remove all leading spaces from the input.  <a href="unicode_8h.html#aa51d2ebcac9d554733388d96cc9627e4">More...</a><br /></td></tr>
+<tr class="separator:aa51d2ebcac9d554733388d96cc9627e4"><td class="memSeparator" colspan="2">&#160;</td></tr>
+<tr class="memitem:a1cfaade3a59966743724afe4df64df70"><td class="memItemLeft" align="right" valign="top">std::string KLIB_PUBLIC&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="unicode_8h.html#a1cfaade3a59966743724afe4df64df70">klib::trim_left_copy</a> (const std::string &amp;str)</td></tr>
+<tr class="memdesc:a1cfaade3a59966743724afe4df64df70"><td class="mdescLeft">&#160;</td><td class="mdescRight">Remove all leading spaces from the input.  <a href="unicode_8h.html#a1cfaade3a59966743724afe4df64df70">More...</a><br /></td></tr>
+<tr class="separator:a1cfaade3a59966743724afe4df64df70"><td class="memSeparator" colspan="2">&#160;</td></tr>
+<tr class="memitem:afe6f6b1d4b81dda86edce755e02cdf3e"><td class="memItemLeft" align="right" valign="top">void KLIB_PUBLIC&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="unicode_8h.html#afe6f6b1d4b81dda86edce755e02cdf3e">klib::trim_right</a> (std::string &amp;str)</td></tr>
+<tr class="memdesc:afe6f6b1d4b81dda86edce755e02cdf3e"><td class="mdescLeft">&#160;</td><td class="mdescRight">Remove all trailing spaces from the input.  <a href="unicode_8h.html#afe6f6b1d4b81dda86edce755e02cdf3e">More...</a><br /></td></tr>
+<tr class="separator:afe6f6b1d4b81dda86edce755e02cdf3e"><td class="memSeparator" colspan="2">&#160;</td></tr>
+<tr class="memitem:a8a953e0f5f1d104779e371395c042f05"><td class="memItemLeft" align="right" valign="top">std::string KLIB_PUBLIC&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="unicode_8h.html#a8a953e0f5f1d104779e371395c042f05">klib::trim_right_copy</a> (const std::string &amp;str)</td></tr>
+<tr class="memdesc:a8a953e0f5f1d104779e371395c042f05"><td class="mdescLeft">&#160;</td><td class="mdescRight">Remove all trailing spaces from the input.  <a href="unicode_8h.html#a8a953e0f5f1d104779e371395c042f05">More...</a><br /></td></tr>
+<tr class="separator:a8a953e0f5f1d104779e371395c042f05"><td class="memSeparator" colspan="2">&#160;</td></tr>
+<tr class="memitem:aa2f6609b612956ff889ecb85a6affc44"><td class="memItemLeft" align="right" valign="top">void KLIB_PUBLIC&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="unicode_8h.html#aa2f6609b612956ff889ecb85a6affc44">klib::trim</a> (std::string &amp;str)</td></tr>
+<tr class="memdesc:aa2f6609b612956ff889ecb85a6affc44"><td class="mdescLeft">&#160;</td><td class="mdescRight">Remove all leading and trailing spaces from the input.  <a href="unicode_8h.html#aa2f6609b612956ff889ecb85a6affc44">More...</a><br /></td></tr>
+<tr class="separator:aa2f6609b612956ff889ecb85a6affc44"><td class="memSeparator" colspan="2">&#160;</td></tr>
+<tr class="memitem:a0940da9072a2a22077e8d12797ebb0a9"><td class="memItemLeft" align="right" valign="top">std::string KLIB_PUBLIC&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="unicode_8h.html#a0940da9072a2a22077e8d12797ebb0a9">klib::trim_copy</a> (const std::string &amp;str)</td></tr>
+<tr class="memdesc:a0940da9072a2a22077e8d12797ebb0a9"><td class="mdescLeft">&#160;</td><td class="mdescRight">Remove all leading and trailing spaces from the input.  <a href="unicode_8h.html#a0940da9072a2a22077e8d12797ebb0a9">More...</a><br /></td></tr>
+<tr class="separator:a0940da9072a2a22077e8d12797ebb0a9"><td class="memSeparator" colspan="2">&#160;</td></tr>
+<tr class="memitem:ae5a7c0b676e39cbb3d8e4c0a01f4811e"><td class="memItemLeft" align="right" valign="top">char32_t KLIB_PUBLIC&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="unicode_8h.html#ae5a7c0b676e39cbb3d8e4c0a01f4811e">klib::first_code_point</a> (const std::string &amp;str)</td></tr>
+<tr class="memdesc:ae5a7c0b676e39cbb3d8e4c0a01f4811e"><td class="mdescLeft">&#160;</td><td class="mdescRight">Get first code point.  <a href="unicode_8h.html#ae5a7c0b676e39cbb3d8e4c0a01f4811e">More...</a><br /></td></tr>
+<tr class="separator:ae5a7c0b676e39cbb3d8e4c0a01f4811e"><td class="memSeparator" colspan="2">&#160;</td></tr>
+<tr class="memitem:ae787f0382f56e4f933fd2506bbbbdd64"><td class="memItemLeft" align="right" valign="top">char32_t KLIB_PUBLIC&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="unicode_8h.html#ae787f0382f56e4f933fd2506bbbbdd64">klib::last_code_point</a> (const std::string &amp;str)</td></tr>
+<tr class="memdesc:ae787f0382f56e4f933fd2506bbbbdd64"><td class="mdescLeft">&#160;</td><td class="mdescRight">Get last code point.  <a href="unicode_8h.html#ae787f0382f56e4f933fd2506bbbbdd64">More...</a><br /></td></tr>
+<tr class="separator:ae787f0382f56e4f933fd2506bbbbdd64"><td class="memSeparator" colspan="2">&#160;</td></tr>
+<tr class="memitem:a84c8011407df4e84c71a892252945bc6"><td class="memItemLeft" align="right" valign="top">bool KLIB_PUBLIC&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="unicode_8h.html#a84c8011407df4e84c71a892252945bc6">klib::validate_utf8</a> (const std::string &amp;str)</td></tr>
+<tr class="memdesc:a84c8011407df4e84c71a892252945bc6"><td class="mdescLeft">&#160;</td><td class="mdescRight">Validate the UTF-8 string.  <a href="unicode_8h.html#a84c8011407df4e84c71a892252945bc6">More...</a><br /></td></tr>
+<tr class="separator:a84c8011407df4e84c71a892252945bc6"><td class="memSeparator" colspan="2">&#160;</td></tr>
+<tr class="memitem:a8745e8c5fc1377910e8f484623ac32a4"><td class="memItemLeft" align="right" valign="top">bool KLIB_PUBLIC&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="unicode_8h.html#a8745e8c5fc1377910e8f484623ac32a4">klib::validate_utf16</a> (const std::u16string &amp;str)</td></tr>
+<tr class="memdesc:a8745e8c5fc1377910e8f484623ac32a4"><td class="mdescLeft">&#160;</td><td class="mdescRight">Validate the UTF-16 string.  <a href="unicode_8h.html#a8745e8c5fc1377910e8f484623ac32a4">More...</a><br /></td></tr>
+<tr class="separator:a8745e8c5fc1377910e8f484623ac32a4"><td class="memSeparator" colspan="2">&#160;</td></tr>
+<tr class="memitem:af1a4ecdf416d281777f91ec9822e6e88"><td class="memItemLeft" align="right" valign="top">std::u16string KLIB_PUBLIC&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="unicode_8h.html#af1a4ecdf416d281777f91ec9822e6e88">klib::utf8_to_utf16</a> (const std::string &amp;str)</td></tr>
+<tr class="memdesc:af1a4ecdf416d281777f91ec9822e6e88"><td class="mdescLeft">&#160;</td><td class="mdescRight">Convert UTF-8 encoded string to UTF-16 encoded string.  <a href="unicode_8h.html#af1a4ecdf416d281777f91ec9822e6e88">More...</a><br /></td></tr>
+<tr class="separator:af1a4ecdf416d281777f91ec9822e6e88"><td class="memSeparator" colspan="2">&#160;</td></tr>
+<tr class="memitem:a2cc848b8e5297127236c33a06d72a3b4"><td class="memItemLeft" align="right" valign="top">std::string KLIB_PUBLIC&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="unicode_8h.html#a2cc848b8e5297127236c33a06d72a3b4">klib::utf16_to_utf8</a> (const std::u16string &amp;str)</td></tr>
+<tr class="memdesc:a2cc848b8e5297127236c33a06d72a3b4"><td class="mdescLeft">&#160;</td><td class="mdescRight">Convert UTF-16 encoded string to UTF-8 encoded string.  <a href="unicode_8h.html#a2cc848b8e5297127236c33a06d72a3b4">More...</a><br /></td></tr>
+<tr class="separator:a2cc848b8e5297127236c33a06d72a3b4"><td class="memSeparator" colspan="2">&#160;</td></tr>
+<tr class="memitem:ac650c6ac3dedf66b9ebfa33292f8f833"><td class="memItemLeft" align="right" valign="top">std::u32string KLIB_PUBLIC&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="unicode_8h.html#ac650c6ac3dedf66b9ebfa33292f8f833">klib::utf8_to_utf32</a> (const std::string &amp;str)</td></tr>
+<tr class="memdesc:ac650c6ac3dedf66b9ebfa33292f8f833"><td class="mdescLeft">&#160;</td><td class="mdescRight">Convert UTF-8 encoded string to UTF-32 encoded string.  <a href="unicode_8h.html#ac650c6ac3dedf66b9ebfa33292f8f833">More...</a><br /></td></tr>
+<tr class="separator:ac650c6ac3dedf66b9ebfa33292f8f833"><td class="memSeparator" colspan="2">&#160;</td></tr>
+<tr class="memitem:a137351eb254906eb47364c076dc7ab19"><td class="memItemLeft" align="right" valign="top">std::wstring KLIB_PUBLIC&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="unicode_8h.html#a137351eb254906eb47364c076dc7ab19">klib::utf8_to_utf32_w</a> (const std::string &amp;str)</td></tr>
+<tr class="memdesc:a137351eb254906eb47364c076dc7ab19"><td class="mdescLeft">&#160;</td><td class="mdescRight">Convert UTF-8 encoded string to UTF-32 encoded string.  <a href="unicode_8h.html#a137351eb254906eb47364c076dc7ab19">More...</a><br /></td></tr>
+<tr class="separator:a137351eb254906eb47364c076dc7ab19"><td class="memSeparator" colspan="2">&#160;</td></tr>
+<tr class="memitem:a14b1a6132fd68b572159e127a5785949"><td class="memItemLeft" align="right" valign="top">std::string KLIB_PUBLIC&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="unicode_8h.html#a14b1a6132fd68b572159e127a5785949">klib::utf32_to_utf8</a> (const std::u32string &amp;str)</td></tr>
+<tr class="memdesc:a14b1a6132fd68b572159e127a5785949"><td class="mdescLeft">&#160;</td><td class="mdescRight">Convert UTF-32 encoded string to UTF-8 encoded string.  <a href="unicode_8h.html#a14b1a6132fd68b572159e127a5785949">More...</a><br /></td></tr>
+<tr class="separator:a14b1a6132fd68b572159e127a5785949"><td class="memSeparator" colspan="2">&#160;</td></tr>
+<tr class="memitem:a7f1f49582a28968691aa35937cbe2098"><td class="memItemLeft" align="right" valign="top">std::string KLIB_PUBLIC&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="unicode_8h.html#a7f1f49582a28968691aa35937cbe2098">klib::utf32_to_utf8_w</a> (const std::wstring &amp;str)</td></tr>
+<tr class="memdesc:a7f1f49582a28968691aa35937cbe2098"><td class="mdescLeft">&#160;</td><td class="mdescRight">Convert UTF-32 encoded string to UTF-8 encoded string.  <a href="unicode_8h.html#a7f1f49582a28968691aa35937cbe2098">More...</a><br /></td></tr>
+<tr class="separator:a7f1f49582a28968691aa35937cbe2098"><td class="memSeparator" colspan="2">&#160;</td></tr>
+<tr class="memitem:a6d13eeac54bbee2fa383d1ec85fbf502"><td class="memItemLeft" align="right" valign="top">constexpr bool KLIB_PUBLIC&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="unicode_8h.html#a6d13eeac54bbee2fa383d1ec85fbf502">klib::is_ascii</a> (char32_t code_point)</td></tr>
+<tr class="memdesc:a6d13eeac54bbee2fa383d1ec85fbf502"><td class="mdescLeft">&#160;</td><td class="mdescRight">Determine whether it is an ASCII character.  <a href="unicode_8h.html#a6d13eeac54bbee2fa383d1ec85fbf502">More...</a><br /></td></tr>
+<tr class="separator:a6d13eeac54bbee2fa383d1ec85fbf502"><td class="memSeparator" colspan="2">&#160;</td></tr>
+<tr class="memitem:abfb80f9941ec0b94975d06b1ed6552b0"><td class="memItemLeft" align="right" valign="top">constexpr bool KLIB_PUBLIC&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="unicode_8h.html#abfb80f9941ec0b94975d06b1ed6552b0">klib::is_whitespace</a> (char32_t code_point)</td></tr>
+<tr class="memdesc:abfb80f9941ec0b94975d06b1ed6552b0"><td class="mdescLeft">&#160;</td><td class="mdescRight">Determine whether it is an whitespace character.  <a href="unicode_8h.html#abfb80f9941ec0b94975d06b1ed6552b0">More...</a><br /></td></tr>
+<tr class="separator:abfb80f9941ec0b94975d06b1ed6552b0"><td class="memSeparator" colspan="2">&#160;</td></tr>
+<tr class="memitem:ac3536b14ee5cdc7260932e15c35c8291"><td class="memItemLeft" align="right" valign="top">constexpr bool KLIB_PUBLIC&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="unicode_8h.html#ac3536b14ee5cdc7260932e15c35c8291">klib::is_control</a> (char32_t code_point)</td></tr>
+<tr class="memdesc:ac3536b14ee5cdc7260932e15c35c8291"><td class="mdescLeft">&#160;</td><td class="mdescRight">Determine whether it is an control character.  <a href="unicode_8h.html#ac3536b14ee5cdc7260932e15c35c8291">More...</a><br /></td></tr>
+<tr class="separator:ac3536b14ee5cdc7260932e15c35c8291"><td class="memSeparator" colspan="2">&#160;</td></tr>
+<tr class="memitem:a4fd0f145ecbfbe7808040235fd228e86"><td class="memItemLeft" align="right" valign="top">constexpr bool KLIB_PUBLIC&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="unicode_8h.html#a4fd0f145ecbfbe7808040235fd228e86">klib::is_chinese_punctuation</a> (char32_t code_point)</td></tr>
+<tr class="memdesc:a4fd0f145ecbfbe7808040235fd228e86"><td class="mdescLeft">&#160;</td><td class="mdescRight">Determine whether it is an Chinese punctuation character.  <a href="unicode_8h.html#a4fd0f145ecbfbe7808040235fd228e86">More...</a><br /></td></tr>
+<tr class="separator:a4fd0f145ecbfbe7808040235fd228e86"><td class="memSeparator" colspan="2">&#160;</td></tr>
+<tr class="memitem:abc3da6ba1598f2979522f3b7a35b1c2e"><td class="memItemLeft" align="right" valign="top">constexpr bool KLIB_PUBLIC&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="unicode_8h.html#abc3da6ba1598f2979522f3b7a35b1c2e">klib::is_english_punctuation</a> (char32_t code_point)</td></tr>
+<tr class="memdesc:abc3da6ba1598f2979522f3b7a35b1c2e"><td class="mdescLeft">&#160;</td><td class="mdescRight">Determine whether it is an English punctuation character.  <a href="unicode_8h.html#abc3da6ba1598f2979522f3b7a35b1c2e">More...</a><br /></td></tr>
+<tr class="separator:abc3da6ba1598f2979522f3b7a35b1c2e"><td class="memSeparator" colspan="2">&#160;</td></tr>
+<tr class="memitem:a3727c82b2fa0e7396af3c798f5e6320d"><td class="memItemLeft" align="right" valign="top">constexpr bool KLIB_PUBLIC&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="unicode_8h.html#a3727c82b2fa0e7396af3c798f5e6320d">klib::is_cjk</a> (char32_t code_point)</td></tr>
+<tr class="memdesc:a3727c82b2fa0e7396af3c798f5e6320d"><td class="mdescLeft">&#160;</td><td class="mdescRight">Determine whether it is a CJK Unified Ideographs.  <a href="unicode_8h.html#a3727c82b2fa0e7396af3c798f5e6320d">More...</a><br /></td></tr>
+<tr class="separator:a3727c82b2fa0e7396af3c798f5e6320d"><td class="memSeparator" colspan="2">&#160;</td></tr>
 </table>
 <a name="details" id="details"></a><h2 class="groupheader">Detailed Description</h2>
 <div class="textblock"><p >Contains Unicode module. </p>
 </div><h2 class="groupheader">Function Documentation</h2>
-<a id="a7e7fdc424fbb97c95ae4ad202ee716a4" name="a7e7fdc424fbb97c95ae4ad202ee716a4"></a>
-<h2 class="memtitle"><span class="permalink"><a href="#a7e7fdc424fbb97c95ae4ad202ee716a4">&#9670;&nbsp;</a></span>first_code_point()</h2>
+<a id="ae5a7c0b676e39cbb3d8e4c0a01f4811e" name="ae5a7c0b676e39cbb3d8e4c0a01f4811e"></a>
+<h2 class="memtitle"><span class="permalink"><a href="#ae5a7c0b676e39cbb3d8e4c0a01f4811e">&#9670;&nbsp;</a></span>first_code_point()</h2>
 
 <div class="memitem">
 <div class="memproto">
       <table class="memname">
         <tr>
-          <td class="memname">char32_t klib::first_code_point </td>
+          <td class="memname">char32_t KLIB_PUBLIC klib::first_code_point </td>
           <td>(</td>
           <td class="paramtype">const std::string &amp;&#160;</td>
           <td class="paramname"><em>str</em></td><td>)</td>
@@ -204,8 +205,8 @@ Functions</h2></td></tr>
 
 </div>
 </div>
-<a id="a8c33a23114652432078cf1c000340ce4" name="a8c33a23114652432078cf1c000340ce4"></a>
-<h2 class="memtitle"><span class="permalink"><a href="#a8c33a23114652432078cf1c000340ce4">&#9670;&nbsp;</a></span>is_ascii()</h2>
+<a id="a6d13eeac54bbee2fa383d1ec85fbf502" name="a6d13eeac54bbee2fa383d1ec85fbf502"></a>
+<h2 class="memtitle"><span class="permalink"><a href="#a6d13eeac54bbee2fa383d1ec85fbf502">&#9670;&nbsp;</a></span>is_ascii()</h2>
 
 <div class="memitem">
 <div class="memproto">
@@ -214,7 +215,7 @@ Functions</h2></td></tr>
   <td class="mlabels-left">
       <table class="memname">
         <tr>
-          <td class="memname">constexpr bool klib::is_ascii </td>
+          <td class="memname">constexpr bool KLIB_PUBLIC klib::is_ascii </td>
           <td>(</td>
           <td class="paramtype">char32_t&#160;</td>
           <td class="paramname"><em>code_point</em></td><td>)</td>
@@ -239,8 +240,8 @@ Functions</h2></td></tr>
 
 </div>
 </div>
-<a id="a1fe967545828645037c16555e827b8ae" name="a1fe967545828645037c16555e827b8ae"></a>
-<h2 class="memtitle"><span class="permalink"><a href="#a1fe967545828645037c16555e827b8ae">&#9670;&nbsp;</a></span>is_chinese_punctuation()</h2>
+<a id="a4fd0f145ecbfbe7808040235fd228e86" name="a4fd0f145ecbfbe7808040235fd228e86"></a>
+<h2 class="memtitle"><span class="permalink"><a href="#a4fd0f145ecbfbe7808040235fd228e86">&#9670;&nbsp;</a></span>is_chinese_punctuation()</h2>
 
 <div class="memitem">
 <div class="memproto">
@@ -249,7 +250,7 @@ Functions</h2></td></tr>
   <td class="mlabels-left">
       <table class="memname">
         <tr>
-          <td class="memname">constexpr bool klib::is_chinese_punctuation </td>
+          <td class="memname">constexpr bool KLIB_PUBLIC klib::is_chinese_punctuation </td>
           <td>(</td>
           <td class="paramtype">char32_t&#160;</td>
           <td class="paramname"><em>code_point</em></td><td>)</td>
@@ -275,8 +276,8 @@ Functions</h2></td></tr>
 
 </div>
 </div>
-<a id="ad114b90edcbc2b42918440c6b3fb016d" name="ad114b90edcbc2b42918440c6b3fb016d"></a>
-<h2 class="memtitle"><span class="permalink"><a href="#ad114b90edcbc2b42918440c6b3fb016d">&#9670;&nbsp;</a></span>is_cjk()</h2>
+<a id="a3727c82b2fa0e7396af3c798f5e6320d" name="a3727c82b2fa0e7396af3c798f5e6320d"></a>
+<h2 class="memtitle"><span class="permalink"><a href="#a3727c82b2fa0e7396af3c798f5e6320d">&#9670;&nbsp;</a></span>is_cjk()</h2>
 
 <div class="memitem">
 <div class="memproto">
@@ -285,7 +286,7 @@ Functions</h2></td></tr>
   <td class="mlabels-left">
       <table class="memname">
         <tr>
-          <td class="memname">constexpr bool klib::is_cjk </td>
+          <td class="memname">constexpr bool KLIB_PUBLIC klib::is_cjk </td>
           <td>(</td>
           <td class="paramtype">char32_t&#160;</td>
           <td class="paramname"><em>code_point</em></td><td>)</td>
@@ -311,8 +312,8 @@ Functions</h2></td></tr>
 
 </div>
 </div>
-<a id="a968663bb12720c78b35576f376d3e8b6" name="a968663bb12720c78b35576f376d3e8b6"></a>
-<h2 class="memtitle"><span class="permalink"><a href="#a968663bb12720c78b35576f376d3e8b6">&#9670;&nbsp;</a></span>is_control()</h2>
+<a id="ac3536b14ee5cdc7260932e15c35c8291" name="ac3536b14ee5cdc7260932e15c35c8291"></a>
+<h2 class="memtitle"><span class="permalink"><a href="#ac3536b14ee5cdc7260932e15c35c8291">&#9670;&nbsp;</a></span>is_control()</h2>
 
 <div class="memitem">
 <div class="memproto">
@@ -321,7 +322,7 @@ Functions</h2></td></tr>
   <td class="mlabels-left">
       <table class="memname">
         <tr>
-          <td class="memname">constexpr bool klib::is_control </td>
+          <td class="memname">constexpr bool KLIB_PUBLIC klib::is_control </td>
           <td>(</td>
           <td class="paramtype">char32_t&#160;</td>
           <td class="paramname"><em>code_point</em></td><td>)</td>
@@ -347,8 +348,8 @@ Functions</h2></td></tr>
 
 </div>
 </div>
-<a id="a871753503470df2a18ddb5e49681b4b5" name="a871753503470df2a18ddb5e49681b4b5"></a>
-<h2 class="memtitle"><span class="permalink"><a href="#a871753503470df2a18ddb5e49681b4b5">&#9670;&nbsp;</a></span>is_english_punctuation()</h2>
+<a id="abc3da6ba1598f2979522f3b7a35b1c2e" name="abc3da6ba1598f2979522f3b7a35b1c2e"></a>
+<h2 class="memtitle"><span class="permalink"><a href="#abc3da6ba1598f2979522f3b7a35b1c2e">&#9670;&nbsp;</a></span>is_english_punctuation()</h2>
 
 <div class="memitem">
 <div class="memproto">
@@ -357,7 +358,7 @@ Functions</h2></td></tr>
   <td class="mlabels-left">
       <table class="memname">
         <tr>
-          <td class="memname">constexpr bool klib::is_english_punctuation </td>
+          <td class="memname">constexpr bool KLIB_PUBLIC klib::is_english_punctuation </td>
           <td>(</td>
           <td class="paramtype">char32_t&#160;</td>
           <td class="paramname"><em>code_point</em></td><td>)</td>
@@ -383,8 +384,8 @@ Functions</h2></td></tr>
 
 </div>
 </div>
-<a id="a29367e09ea9de32ad298c686335725af" name="a29367e09ea9de32ad298c686335725af"></a>
-<h2 class="memtitle"><span class="permalink"><a href="#a29367e09ea9de32ad298c686335725af">&#9670;&nbsp;</a></span>is_whitespace()</h2>
+<a id="abfb80f9941ec0b94975d06b1ed6552b0" name="abfb80f9941ec0b94975d06b1ed6552b0"></a>
+<h2 class="memtitle"><span class="permalink"><a href="#abfb80f9941ec0b94975d06b1ed6552b0">&#9670;&nbsp;</a></span>is_whitespace()</h2>
 
 <div class="memitem">
 <div class="memproto">
@@ -393,7 +394,7 @@ Functions</h2></td></tr>
   <td class="mlabels-left">
       <table class="memname">
         <tr>
-          <td class="memname">constexpr bool klib::is_whitespace </td>
+          <td class="memname">constexpr bool KLIB_PUBLIC klib::is_whitespace </td>
           <td>(</td>
           <td class="paramtype">char32_t&#160;</td>
           <td class="paramname"><em>code_point</em></td><td>)</td>
@@ -419,14 +420,14 @@ Functions</h2></td></tr>
 
 </div>
 </div>
-<a id="a4be2710ffbc7f6eaeb71ed8491453b1f" name="a4be2710ffbc7f6eaeb71ed8491453b1f"></a>
-<h2 class="memtitle"><span class="permalink"><a href="#a4be2710ffbc7f6eaeb71ed8491453b1f">&#9670;&nbsp;</a></span>last_code_point()</h2>
+<a id="ae787f0382f56e4f933fd2506bbbbdd64" name="ae787f0382f56e4f933fd2506bbbbdd64"></a>
+<h2 class="memtitle"><span class="permalink"><a href="#ae787f0382f56e4f933fd2506bbbbdd64">&#9670;&nbsp;</a></span>last_code_point()</h2>
 
 <div class="memitem">
 <div class="memproto">
       <table class="memname">
         <tr>
-          <td class="memname">char32_t klib::last_code_point </td>
+          <td class="memname">char32_t KLIB_PUBLIC klib::last_code_point </td>
           <td>(</td>
           <td class="paramtype">const std::string &amp;&#160;</td>
           <td class="paramname"><em>str</em></td><td>)</td>
@@ -446,14 +447,14 @@ Functions</h2></td></tr>
 
 </div>
 </div>
-<a id="a874daae4bec5e1d04083d26278ed44b9" name="a874daae4bec5e1d04083d26278ed44b9"></a>
-<h2 class="memtitle"><span class="permalink"><a href="#a874daae4bec5e1d04083d26278ed44b9">&#9670;&nbsp;</a></span>trim()</h2>
+<a id="aa2f6609b612956ff889ecb85a6affc44" name="aa2f6609b612956ff889ecb85a6affc44"></a>
+<h2 class="memtitle"><span class="permalink"><a href="#aa2f6609b612956ff889ecb85a6affc44">&#9670;&nbsp;</a></span>trim()</h2>
 
 <div class="memitem">
 <div class="memproto">
       <table class="memname">
         <tr>
-          <td class="memname">void klib::trim </td>
+          <td class="memname">void KLIB_PUBLIC klib::trim </td>
           <td>(</td>
           <td class="paramtype">std::string &amp;&#160;</td>
           <td class="paramname"><em>str</em></td><td>)</td>
@@ -472,14 +473,14 @@ Functions</h2></td></tr>
 
 </div>
 </div>
-<a id="afcd54e1c22b6f0926f83dd63f8ea589b" name="afcd54e1c22b6f0926f83dd63f8ea589b"></a>
-<h2 class="memtitle"><span class="permalink"><a href="#afcd54e1c22b6f0926f83dd63f8ea589b">&#9670;&nbsp;</a></span>trim_copy()</h2>
+<a id="a0940da9072a2a22077e8d12797ebb0a9" name="a0940da9072a2a22077e8d12797ebb0a9"></a>
+<h2 class="memtitle"><span class="permalink"><a href="#a0940da9072a2a22077e8d12797ebb0a9">&#9670;&nbsp;</a></span>trim_copy()</h2>
 
 <div class="memitem">
 <div class="memproto">
       <table class="memname">
         <tr>
-          <td class="memname">std::string klib::trim_copy </td>
+          <td class="memname">std::string KLIB_PUBLIC klib::trim_copy </td>
           <td>(</td>
           <td class="paramtype">const std::string &amp;&#160;</td>
           <td class="paramname"><em>str</em></td><td>)</td>
@@ -499,14 +500,14 @@ Functions</h2></td></tr>
 
 </div>
 </div>
-<a id="a8a693a0287f2c7a12990aada90a4b439" name="a8a693a0287f2c7a12990aada90a4b439"></a>
-<h2 class="memtitle"><span class="permalink"><a href="#a8a693a0287f2c7a12990aada90a4b439">&#9670;&nbsp;</a></span>trim_left()</h2>
+<a id="aa51d2ebcac9d554733388d96cc9627e4" name="aa51d2ebcac9d554733388d96cc9627e4"></a>
+<h2 class="memtitle"><span class="permalink"><a href="#aa51d2ebcac9d554733388d96cc9627e4">&#9670;&nbsp;</a></span>trim_left()</h2>
 
 <div class="memitem">
 <div class="memproto">
       <table class="memname">
         <tr>
-          <td class="memname">void klib::trim_left </td>
+          <td class="memname">void KLIB_PUBLIC klib::trim_left </td>
           <td>(</td>
           <td class="paramtype">std::string &amp;&#160;</td>
           <td class="paramname"><em>str</em></td><td>)</td>
@@ -525,14 +526,14 @@ Functions</h2></td></tr>
 
 </div>
 </div>
-<a id="a08d68ddbecee687722ca07f1ff57945a" name="a08d68ddbecee687722ca07f1ff57945a"></a>
-<h2 class="memtitle"><span class="permalink"><a href="#a08d68ddbecee687722ca07f1ff57945a">&#9670;&nbsp;</a></span>trim_left_copy()</h2>
+<a id="a1cfaade3a59966743724afe4df64df70" name="a1cfaade3a59966743724afe4df64df70"></a>
+<h2 class="memtitle"><span class="permalink"><a href="#a1cfaade3a59966743724afe4df64df70">&#9670;&nbsp;</a></span>trim_left_copy()</h2>
 
 <div class="memitem">
 <div class="memproto">
       <table class="memname">
         <tr>
-          <td class="memname">std::string klib::trim_left_copy </td>
+          <td class="memname">std::string KLIB_PUBLIC klib::trim_left_copy </td>
           <td>(</td>
           <td class="paramtype">const std::string &amp;&#160;</td>
           <td class="paramname"><em>str</em></td><td>)</td>
@@ -552,14 +553,14 @@ Functions</h2></td></tr>
 
 </div>
 </div>
-<a id="a0ce2a2a6674cad9772e4677c7b1d9cfa" name="a0ce2a2a6674cad9772e4677c7b1d9cfa"></a>
-<h2 class="memtitle"><span class="permalink"><a href="#a0ce2a2a6674cad9772e4677c7b1d9cfa">&#9670;&nbsp;</a></span>trim_right()</h2>
+<a id="afe6f6b1d4b81dda86edce755e02cdf3e" name="afe6f6b1d4b81dda86edce755e02cdf3e"></a>
+<h2 class="memtitle"><span class="permalink"><a href="#afe6f6b1d4b81dda86edce755e02cdf3e">&#9670;&nbsp;</a></span>trim_right()</h2>
 
 <div class="memitem">
 <div class="memproto">
       <table class="memname">
         <tr>
-          <td class="memname">void klib::trim_right </td>
+          <td class="memname">void KLIB_PUBLIC klib::trim_right </td>
           <td>(</td>
           <td class="paramtype">std::string &amp;&#160;</td>
           <td class="paramname"><em>str</em></td><td>)</td>
@@ -578,14 +579,14 @@ Functions</h2></td></tr>
 
 </div>
 </div>
-<a id="a1066517b16d05083bd0aa97bc071396a" name="a1066517b16d05083bd0aa97bc071396a"></a>
-<h2 class="memtitle"><span class="permalink"><a href="#a1066517b16d05083bd0aa97bc071396a">&#9670;&nbsp;</a></span>trim_right_copy()</h2>
+<a id="a8a953e0f5f1d104779e371395c042f05" name="a8a953e0f5f1d104779e371395c042f05"></a>
+<h2 class="memtitle"><span class="permalink"><a href="#a8a953e0f5f1d104779e371395c042f05">&#9670;&nbsp;</a></span>trim_right_copy()</h2>
 
 <div class="memitem">
 <div class="memproto">
       <table class="memname">
         <tr>
-          <td class="memname">std::string klib::trim_right_copy </td>
+          <td class="memname">std::string KLIB_PUBLIC klib::trim_right_copy </td>
           <td>(</td>
           <td class="paramtype">const std::string &amp;&#160;</td>
           <td class="paramname"><em>str</em></td><td>)</td>
@@ -605,14 +606,14 @@ Functions</h2></td></tr>
 
 </div>
 </div>
-<a id="a307c51d968ca389408db8534cf8d3ace" name="a307c51d968ca389408db8534cf8d3ace"></a>
-<h2 class="memtitle"><span class="permalink"><a href="#a307c51d968ca389408db8534cf8d3ace">&#9670;&nbsp;</a></span>utf16_to_utf8()</h2>
+<a id="a2cc848b8e5297127236c33a06d72a3b4" name="a2cc848b8e5297127236c33a06d72a3b4"></a>
+<h2 class="memtitle"><span class="permalink"><a href="#a2cc848b8e5297127236c33a06d72a3b4">&#9670;&nbsp;</a></span>utf16_to_utf8()</h2>
 
 <div class="memitem">
 <div class="memproto">
       <table class="memname">
         <tr>
-          <td class="memname">std::string klib::utf16_to_utf8 </td>
+          <td class="memname">std::string KLIB_PUBLIC klib::utf16_to_utf8 </td>
           <td>(</td>
           <td class="paramtype">const std::u16string &amp;&#160;</td>
           <td class="paramname"><em>str</em></td><td>)</td>
@@ -632,14 +633,14 @@ Functions</h2></td></tr>
 
 </div>
 </div>
-<a id="a137702622c0905e43278959649acb981" name="a137702622c0905e43278959649acb981"></a>
-<h2 class="memtitle"><span class="permalink"><a href="#a137702622c0905e43278959649acb981">&#9670;&nbsp;</a></span>utf32_to_utf8()</h2>
+<a id="a14b1a6132fd68b572159e127a5785949" name="a14b1a6132fd68b572159e127a5785949"></a>
+<h2 class="memtitle"><span class="permalink"><a href="#a14b1a6132fd68b572159e127a5785949">&#9670;&nbsp;</a></span>utf32_to_utf8()</h2>
 
 <div class="memitem">
 <div class="memproto">
       <table class="memname">
         <tr>
-          <td class="memname">std::string klib::utf32_to_utf8 </td>
+          <td class="memname">std::string KLIB_PUBLIC klib::utf32_to_utf8 </td>
           <td>(</td>
           <td class="paramtype">const std::u32string &amp;&#160;</td>
           <td class="paramname"><em>str</em></td><td>)</td>
@@ -659,14 +660,14 @@ Functions</h2></td></tr>
 
 </div>
 </div>
-<a id="ae07e71db9d22ba82c1dcc1956337cda3" name="ae07e71db9d22ba82c1dcc1956337cda3"></a>
-<h2 class="memtitle"><span class="permalink"><a href="#ae07e71db9d22ba82c1dcc1956337cda3">&#9670;&nbsp;</a></span>utf32_to_utf8_w()</h2>
+<a id="a7f1f49582a28968691aa35937cbe2098" name="a7f1f49582a28968691aa35937cbe2098"></a>
+<h2 class="memtitle"><span class="permalink"><a href="#a7f1f49582a28968691aa35937cbe2098">&#9670;&nbsp;</a></span>utf32_to_utf8_w()</h2>
 
 <div class="memitem">
 <div class="memproto">
       <table class="memname">
         <tr>
-          <td class="memname">std::string klib::utf32_to_utf8_w </td>
+          <td class="memname">std::string KLIB_PUBLIC klib::utf32_to_utf8_w </td>
           <td>(</td>
           <td class="paramtype">const std::wstring &amp;&#160;</td>
           <td class="paramname"><em>str</em></td><td>)</td>
@@ -686,14 +687,14 @@ Functions</h2></td></tr>
 
 </div>
 </div>
-<a id="afd9c11f7bcfa0aacc5111a78bfb42bac" name="afd9c11f7bcfa0aacc5111a78bfb42bac"></a>
-<h2 class="memtitle"><span class="permalink"><a href="#afd9c11f7bcfa0aacc5111a78bfb42bac">&#9670;&nbsp;</a></span>utf8_to_utf16()</h2>
+<a id="af1a4ecdf416d281777f91ec9822e6e88" name="af1a4ecdf416d281777f91ec9822e6e88"></a>
+<h2 class="memtitle"><span class="permalink"><a href="#af1a4ecdf416d281777f91ec9822e6e88">&#9670;&nbsp;</a></span>utf8_to_utf16()</h2>
 
 <div class="memitem">
 <div class="memproto">
       <table class="memname">
         <tr>
-          <td class="memname">std::u16string klib::utf8_to_utf16 </td>
+          <td class="memname">std::u16string KLIB_PUBLIC klib::utf8_to_utf16 </td>
           <td>(</td>
           <td class="paramtype">const std::string &amp;&#160;</td>
           <td class="paramname"><em>str</em></td><td>)</td>
@@ -713,14 +714,14 @@ Functions</h2></td></tr>
 
 </div>
 </div>
-<a id="a618c7297574b1f62db6b5e8b19186f3b" name="a618c7297574b1f62db6b5e8b19186f3b"></a>
-<h2 class="memtitle"><span class="permalink"><a href="#a618c7297574b1f62db6b5e8b19186f3b">&#9670;&nbsp;</a></span>utf8_to_utf32()</h2>
+<a id="ac650c6ac3dedf66b9ebfa33292f8f833" name="ac650c6ac3dedf66b9ebfa33292f8f833"></a>
+<h2 class="memtitle"><span class="permalink"><a href="#ac650c6ac3dedf66b9ebfa33292f8f833">&#9670;&nbsp;</a></span>utf8_to_utf32()</h2>
 
 <div class="memitem">
 <div class="memproto">
       <table class="memname">
         <tr>
-          <td class="memname">std::u32string klib::utf8_to_utf32 </td>
+          <td class="memname">std::u32string KLIB_PUBLIC klib::utf8_to_utf32 </td>
           <td>(</td>
           <td class="paramtype">const std::string &amp;&#160;</td>
           <td class="paramname"><em>str</em></td><td>)</td>
@@ -740,14 +741,14 @@ Functions</h2></td></tr>
 
 </div>
 </div>
-<a id="a56f0a017694612000be7879cd13b0504" name="a56f0a017694612000be7879cd13b0504"></a>
-<h2 class="memtitle"><span class="permalink"><a href="#a56f0a017694612000be7879cd13b0504">&#9670;&nbsp;</a></span>utf8_to_utf32_w()</h2>
+<a id="a137351eb254906eb47364c076dc7ab19" name="a137351eb254906eb47364c076dc7ab19"></a>
+<h2 class="memtitle"><span class="permalink"><a href="#a137351eb254906eb47364c076dc7ab19">&#9670;&nbsp;</a></span>utf8_to_utf32_w()</h2>
 
 <div class="memitem">
 <div class="memproto">
       <table class="memname">
         <tr>
-          <td class="memname">std::wstring klib::utf8_to_utf32_w </td>
+          <td class="memname">std::wstring KLIB_PUBLIC klib::utf8_to_utf32_w </td>
           <td>(</td>
           <td class="paramtype">const std::string &amp;&#160;</td>
           <td class="paramname"><em>str</em></td><td>)</td>
@@ -767,14 +768,14 @@ Functions</h2></td></tr>
 
 </div>
 </div>
-<a id="a59ccca7bab3669628c5ac6e6abb82a94" name="a59ccca7bab3669628c5ac6e6abb82a94"></a>
-<h2 class="memtitle"><span class="permalink"><a href="#a59ccca7bab3669628c5ac6e6abb82a94">&#9670;&nbsp;</a></span>validate_utf16()</h2>
+<a id="a8745e8c5fc1377910e8f484623ac32a4" name="a8745e8c5fc1377910e8f484623ac32a4"></a>
+<h2 class="memtitle"><span class="permalink"><a href="#a8745e8c5fc1377910e8f484623ac32a4">&#9670;&nbsp;</a></span>validate_utf16()</h2>
 
 <div class="memitem">
 <div class="memproto">
       <table class="memname">
         <tr>
-          <td class="memname">bool klib::validate_utf16 </td>
+          <td class="memname">bool KLIB_PUBLIC klib::validate_utf16 </td>
           <td>(</td>
           <td class="paramtype">const std::u16string &amp;&#160;</td>
           <td class="paramname"><em>str</em></td><td>)</td>
@@ -794,14 +795,14 @@ Functions</h2></td></tr>
 
 </div>
 </div>
-<a id="a4f15235a6d7bf62418abcd3dbf7c22f4" name="a4f15235a6d7bf62418abcd3dbf7c22f4"></a>
-<h2 class="memtitle"><span class="permalink"><a href="#a4f15235a6d7bf62418abcd3dbf7c22f4">&#9670;&nbsp;</a></span>validate_utf8()</h2>
+<a id="a84c8011407df4e84c71a892252945bc6" name="a84c8011407df4e84c71a892252945bc6"></a>
+<h2 class="memtitle"><span class="permalink"><a href="#a84c8011407df4e84c71a892252945bc6">&#9670;&nbsp;</a></span>validate_utf8()</h2>
 
 <div class="memitem">
 <div class="memproto">
       <table class="memname">
         <tr>
-          <td class="memname">bool klib::validate_utf8 </td>
+          <td class="memname">bool KLIB_PUBLIC klib::validate_utf8 </td>
           <td>(</td>
           <td class="paramtype">const std::string &amp;&#160;</td>
           <td class="paramname"><em>str</em></td><td>)</td>

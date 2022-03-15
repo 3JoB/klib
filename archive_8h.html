@@ -30,7 +30,7 @@
  <tbody>
  <tr id="projectrow">
   <td id="projectalign">
-   <div id="projectname">klib<span id="projectnumber">&#160;1.9.0</span>
+   <div id="projectname">klib<span id="projectnumber">&#160;1.9.1</span>
    </div>
   </td>
     <td>        <div id="MSearchBox" class="MSearchBoxInactive">
@@ -92,8 +92,8 @@ $(document).ready(function(){initNavTree('archive_8h.html',''); initResizable();
 
 <div class="header">
   <div class="summary">
-<a href="#enum-members">Enumerations</a> &#124;
-<a href="#func-members">Functions</a>  </div>
+<a href="#func-members">Functions</a> &#124;
+<a href="#var-members">Variables</a>  </div>
   <div class="headertitle"><div class="title">archive.h File Reference</div></div>
 </div><!--header-->
 <div class="contents">
@@ -104,63 +104,66 @@ $(document).ready(function(){initNavTree('archive_8h.html',''); initResizable();
 <code>#include &lt;optional&gt;</code><br />
 <code>#include &lt;string&gt;</code><br />
 <code>#include &lt;vector&gt;</code><br />
+<code>#include &quot;klib/config.h&quot;</code><br />
 </div>
 <p><a href="archive_8h_source.html">Go to the source code of this file.</a></p>
 <table class="memberdecls">
-<tr class="heading"><td colspan="2"><h2 class="groupheader"><a id="enum-members" name="enum-members"></a>
-Enumerations</h2></td></tr>
-<tr class="memitem:a746bca2d6aafe9da24021476bae487e5"><td class="memItemLeft" align="right" valign="top"><a id="a746bca2d6aafe9da24021476bae487e5" name="a746bca2d6aafe9da24021476bae487e5"></a>enum class &#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="archive_8h.html#a746bca2d6aafe9da24021476bae487e5">klib::Format</a> { <b>Zip</b>
-, <b>The7Zip</b>
-, <b>Tar</b>
- }</td></tr>
-<tr class="memdesc:a746bca2d6aafe9da24021476bae487e5"><td class="mdescLeft">&#160;</td><td class="mdescRight">Supported Archive Formats. <br /></td></tr>
-<tr class="separator:a746bca2d6aafe9da24021476bae487e5"><td class="memSeparator" colspan="2">&#160;</td></tr>
-<tr class="memitem:aa25a2dd2c496b61e2b93bb7e9ca385ab"><td class="memItemLeft" align="right" valign="top"><a id="aa25a2dd2c496b61e2b93bb7e9ca385ab" name="aa25a2dd2c496b61e2b93bb7e9ca385ab"></a>enum class &#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="archive_8h.html#aa25a2dd2c496b61e2b93bb7e9ca385ab">klib::Filter</a> { <b>None</b>
-, <b>Deflate</b>
-, <b>Gzip</b>
-, <b>Zstd</b>
- }</td></tr>
-<tr class="memdesc:aa25a2dd2c496b61e2b93bb7e9ca385ab"><td class="mdescLeft">&#160;</td><td class="mdescRight">Supported Compression Algorithms. <br /></td></tr>
-<tr class="separator:aa25a2dd2c496b61e2b93bb7e9ca385ab"><td class="memSeparator" colspan="2">&#160;</td></tr>
-</table><table class="memberdecls">
 <tr class="heading"><td colspan="2"><h2 class="groupheader"><a id="func-members" name="func-members"></a>
 Functions</h2></td></tr>
-<tr class="memitem:abfa41cf31d1d6dd97ba5d38d4477ab86"><td class="memItemLeft" align="right" valign="top">void&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="archive_8h.html#abfa41cf31d1d6dd97ba5d38d4477ab86">klib::compress</a> (const std::string &amp;path, Format format=Format::Tar, Filter filter=Filter::Gzip, const std::string &amp;out_name=&quot;&quot;, bool flag=true, const std::string &amp;password=&quot;&quot;)</td></tr>
-<tr class="memdesc:abfa41cf31d1d6dd97ba5d38d4477ab86"><td class="mdescLeft">&#160;</td><td class="mdescRight">Compress file or folder.  <a href="archive_8h.html#abfa41cf31d1d6dd97ba5d38d4477ab86">More...</a><br /></td></tr>
-<tr class="separator:abfa41cf31d1d6dd97ba5d38d4477ab86"><td class="memSeparator" colspan="2">&#160;</td></tr>
-<tr class="memitem:a51d5ca3e94c724caa69789ca538b76ae"><td class="memItemLeft" align="right" valign="top">void&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="archive_8h.html#a51d5ca3e94c724caa69789ca538b76ae">klib::compress</a> (const std::vector&lt; std::string &gt; &amp;paths, const std::string &amp;out_name, Format format=Format::Tar, Filter filter=Filter::Gzip, const std::string &amp;password=&quot;&quot;)</td></tr>
-<tr class="memdesc:a51d5ca3e94c724caa69789ca538b76ae"><td class="mdescLeft">&#160;</td><td class="mdescRight">Compress files or folders.  <a href="archive_8h.html#a51d5ca3e94c724caa69789ca538b76ae">More...</a><br /></td></tr>
-<tr class="separator:a51d5ca3e94c724caa69789ca538b76ae"><td class="memSeparator" colspan="2">&#160;</td></tr>
-<tr class="memitem:ae501865446ce2bf900e047dac2ff7b15"><td class="memItemLeft" align="right" valign="top">void&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="archive_8h.html#ae501865446ce2bf900e047dac2ff7b15">klib::decompress</a> (const std::string &amp;file_path, const std::string &amp;out_dir=&quot;&quot;, const std::string &amp;password=&quot;&quot;)</td></tr>
-<tr class="memdesc:ae501865446ce2bf900e047dac2ff7b15"><td class="mdescLeft">&#160;</td><td class="mdescRight">Decompress file.  <a href="archive_8h.html#ae501865446ce2bf900e047dac2ff7b15">More...</a><br /></td></tr>
-<tr class="separator:ae501865446ce2bf900e047dac2ff7b15"><td class="memSeparator" colspan="2">&#160;</td></tr>
-<tr class="memitem:a01521849de159640bad3dac439be6731"><td class="memItemLeft" align="right" valign="top">std::optional&lt; std::string &gt;&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="archive_8h.html#a01521849de159640bad3dac439be6731">klib::outermost_folder_name</a> (const std::string &amp;file_path)</td></tr>
-<tr class="memdesc:a01521849de159640bad3dac439be6731"><td class="mdescLeft">&#160;</td><td class="mdescRight">Get the outermost folder name.  <a href="archive_8h.html#a01521849de159640bad3dac439be6731">More...</a><br /></td></tr>
-<tr class="separator:a01521849de159640bad3dac439be6731"><td class="memSeparator" colspan="2">&#160;</td></tr>
-<tr class="memitem:a8ab28a7a1abb2786da21e7de15fc7d81"><td class="memItemLeft" align="right" valign="top">std::string&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="archive_8h.html#a8ab28a7a1abb2786da21e7de15fc7d81">klib::compress_data</a> (const std::string &amp;data)</td></tr>
-<tr class="memdesc:a8ab28a7a1abb2786da21e7de15fc7d81"><td class="mdescLeft">&#160;</td><td class="mdescRight">Compress data.  <a href="archive_8h.html#a8ab28a7a1abb2786da21e7de15fc7d81">More...</a><br /></td></tr>
-<tr class="separator:a8ab28a7a1abb2786da21e7de15fc7d81"><td class="memSeparator" colspan="2">&#160;</td></tr>
-<tr class="memitem:a5f759ec2e531a750ccde5ee11eff1a07"><td class="memItemLeft" align="right" valign="top">std::string&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="archive_8h.html#a5f759ec2e531a750ccde5ee11eff1a07">klib::compress_data</a> (const char *data, std::size_t size)</td></tr>
-<tr class="memdesc:a5f759ec2e531a750ccde5ee11eff1a07"><td class="mdescLeft">&#160;</td><td class="mdescRight">Compress data.  <a href="archive_8h.html#a5f759ec2e531a750ccde5ee11eff1a07">More...</a><br /></td></tr>
-<tr class="separator:a5f759ec2e531a750ccde5ee11eff1a07"><td class="memSeparator" colspan="2">&#160;</td></tr>
-<tr class="memitem:a24ceda1bfc50a8ca742e340ad2c60f9d"><td class="memItemLeft" align="right" valign="top">std::string&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="archive_8h.html#a24ceda1bfc50a8ca742e340ad2c60f9d">klib::decompress_data</a> (const std::string &amp;data)</td></tr>
-<tr class="memdesc:a24ceda1bfc50a8ca742e340ad2c60f9d"><td class="mdescLeft">&#160;</td><td class="mdescRight">Decompress data.  <a href="archive_8h.html#a24ceda1bfc50a8ca742e340ad2c60f9d">More...</a><br /></td></tr>
-<tr class="separator:a24ceda1bfc50a8ca742e340ad2c60f9d"><td class="memSeparator" colspan="2">&#160;</td></tr>
-<tr class="memitem:a9e4af7ad5ab82c51de143c17ee5da3fb"><td class="memItemLeft" align="right" valign="top">std::string&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="archive_8h.html#a9e4af7ad5ab82c51de143c17ee5da3fb">klib::decompress_data</a> (const char *data, std::size_t size)</td></tr>
-<tr class="memdesc:a9e4af7ad5ab82c51de143c17ee5da3fb"><td class="mdescLeft">&#160;</td><td class="mdescRight">Decompress data.  <a href="archive_8h.html#a9e4af7ad5ab82c51de143c17ee5da3fb">More...</a><br /></td></tr>
-<tr class="separator:a9e4af7ad5ab82c51de143c17ee5da3fb"><td class="memSeparator" colspan="2">&#160;</td></tr>
+<tr class="memitem:a11727c7325b7c91fa9fb9334dc2d02fe"><td class="memItemLeft" align="right" valign="top">void KLIB_PUBLIC&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="archive_8h.html#a11727c7325b7c91fa9fb9334dc2d02fe">klib::compress</a> (const std::string &amp;path, Format format=Format::Tar, Filter filter=Filter::Gzip, const std::string &amp;out_name=&quot;&quot;, bool flag=true, const std::string &amp;password=&quot;&quot;)</td></tr>
+<tr class="memdesc:a11727c7325b7c91fa9fb9334dc2d02fe"><td class="mdescLeft">&#160;</td><td class="mdescRight">Compress file or folder.  <a href="archive_8h.html#a11727c7325b7c91fa9fb9334dc2d02fe">More...</a><br /></td></tr>
+<tr class="separator:a11727c7325b7c91fa9fb9334dc2d02fe"><td class="memSeparator" colspan="2">&#160;</td></tr>
+<tr class="memitem:a7b377174bf46df9ea1c3aec7aa76dc9f"><td class="memItemLeft" align="right" valign="top">void KLIB_PUBLIC&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="archive_8h.html#a7b377174bf46df9ea1c3aec7aa76dc9f">klib::compress</a> (const std::vector&lt; std::string &gt; &amp;paths, const std::string &amp;out_name, Format format=Format::Tar, Filter filter=Filter::Gzip, const std::string &amp;password=&quot;&quot;)</td></tr>
+<tr class="memdesc:a7b377174bf46df9ea1c3aec7aa76dc9f"><td class="mdescLeft">&#160;</td><td class="mdescRight">Compress files or folders.  <a href="archive_8h.html#a7b377174bf46df9ea1c3aec7aa76dc9f">More...</a><br /></td></tr>
+<tr class="separator:a7b377174bf46df9ea1c3aec7aa76dc9f"><td class="memSeparator" colspan="2">&#160;</td></tr>
+<tr class="memitem:a02d359665dd067a3116af1e032538946"><td class="memItemLeft" align="right" valign="top">void KLIB_PUBLIC&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="archive_8h.html#a02d359665dd067a3116af1e032538946">klib::decompress</a> (const std::string &amp;file_path, const std::string &amp;out_dir=&quot;&quot;, const std::string &amp;password=&quot;&quot;)</td></tr>
+<tr class="memdesc:a02d359665dd067a3116af1e032538946"><td class="mdescLeft">&#160;</td><td class="mdescRight">Decompress file.  <a href="archive_8h.html#a02d359665dd067a3116af1e032538946">More...</a><br /></td></tr>
+<tr class="separator:a02d359665dd067a3116af1e032538946"><td class="memSeparator" colspan="2">&#160;</td></tr>
+<tr class="memitem:a6256c5f966f309b5b29db7a07e6297e8"><td class="memItemLeft" align="right" valign="top">std::optional&lt; std::string &gt; KLIB_PUBLIC&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="archive_8h.html#a6256c5f966f309b5b29db7a07e6297e8">klib::outermost_folder_name</a> (const std::string &amp;file_path)</td></tr>
+<tr class="memdesc:a6256c5f966f309b5b29db7a07e6297e8"><td class="mdescLeft">&#160;</td><td class="mdescRight">Get the outermost folder name.  <a href="archive_8h.html#a6256c5f966f309b5b29db7a07e6297e8">More...</a><br /></td></tr>
+<tr class="separator:a6256c5f966f309b5b29db7a07e6297e8"><td class="memSeparator" colspan="2">&#160;</td></tr>
+<tr class="memitem:a7e4391c03ddd7a12984ef6d58565140d"><td class="memItemLeft" align="right" valign="top">std::string KLIB_PUBLIC&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="archive_8h.html#a7e4391c03ddd7a12984ef6d58565140d">klib::compress_data</a> (const std::string &amp;data)</td></tr>
+<tr class="memdesc:a7e4391c03ddd7a12984ef6d58565140d"><td class="mdescLeft">&#160;</td><td class="mdescRight">Compress data.  <a href="archive_8h.html#a7e4391c03ddd7a12984ef6d58565140d">More...</a><br /></td></tr>
+<tr class="separator:a7e4391c03ddd7a12984ef6d58565140d"><td class="memSeparator" colspan="2">&#160;</td></tr>
+<tr class="memitem:a11ec1a493140ce5251d8a5e618861dde"><td class="memItemLeft" align="right" valign="top">std::string KLIB_PUBLIC&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="archive_8h.html#a11ec1a493140ce5251d8a5e618861dde">klib::compress_data</a> (const char *data, std::size_t size)</td></tr>
+<tr class="memdesc:a11ec1a493140ce5251d8a5e618861dde"><td class="mdescLeft">&#160;</td><td class="mdescRight">Compress data.  <a href="archive_8h.html#a11ec1a493140ce5251d8a5e618861dde">More...</a><br /></td></tr>
+<tr class="separator:a11ec1a493140ce5251d8a5e618861dde"><td class="memSeparator" colspan="2">&#160;</td></tr>
+<tr class="memitem:ab69b83d7714af753a8f86ca1fcc98ab7"><td class="memItemLeft" align="right" valign="top">std::string KLIB_PUBLIC&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="archive_8h.html#ab69b83d7714af753a8f86ca1fcc98ab7">klib::decompress_data</a> (const std::string &amp;data)</td></tr>
+<tr class="memdesc:ab69b83d7714af753a8f86ca1fcc98ab7"><td class="mdescLeft">&#160;</td><td class="mdescRight">Decompress data.  <a href="archive_8h.html#ab69b83d7714af753a8f86ca1fcc98ab7">More...</a><br /></td></tr>
+<tr class="separator:ab69b83d7714af753a8f86ca1fcc98ab7"><td class="memSeparator" colspan="2">&#160;</td></tr>
+<tr class="memitem:a16404f1cea8e12f7c8887c88e0a5ad06"><td class="memItemLeft" align="right" valign="top">std::string KLIB_PUBLIC&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="archive_8h.html#a16404f1cea8e12f7c8887c88e0a5ad06">klib::decompress_data</a> (const char *data, std::size_t size)</td></tr>
+<tr class="memdesc:a16404f1cea8e12f7c8887c88e0a5ad06"><td class="mdescLeft">&#160;</td><td class="mdescRight">Decompress data.  <a href="archive_8h.html#a16404f1cea8e12f7c8887c88e0a5ad06">More...</a><br /></td></tr>
+<tr class="separator:a16404f1cea8e12f7c8887c88e0a5ad06"><td class="memSeparator" colspan="2">&#160;</td></tr>
+</table><table class="memberdecls">
+<tr class="heading"><td colspan="2"><h2 class="groupheader"><a id="var-members" name="var-members"></a>
+Variables</h2></td></tr>
+<tr class="memitem:a68d7cbe5e28c8e71f0bedd168bc008f6"><td class="memItemLeft" align="right" valign="top"><a id="a68d7cbe5e28c8e71f0bedd168bc008f6" name="a68d7cbe5e28c8e71f0bedd168bc008f6"></a>
+&#160;</td><td class="memItemRight" valign="bottom"><b>Zip</b></td></tr>
+<tr class="separator:a68d7cbe5e28c8e71f0bedd168bc008f6"><td class="memSeparator" colspan="2">&#160;</td></tr>
+<tr class="memitem:a701a831a95e92acaf27489054cabc8f3"><td class="memItemLeft" align="right" valign="top"><a id="a701a831a95e92acaf27489054cabc8f3" name="a701a831a95e92acaf27489054cabc8f3"></a>
+&#160;</td><td class="memItemRight" valign="bottom"><b>The7Zip</b></td></tr>
+<tr class="separator:a701a831a95e92acaf27489054cabc8f3"><td class="memSeparator" colspan="2">&#160;</td></tr>
+<tr class="memitem:ac7485dcc8d256a6f197ed7802687f252"><td class="memItemLeft" align="right" valign="top"><a id="ac7485dcc8d256a6f197ed7802687f252" name="ac7485dcc8d256a6f197ed7802687f252"></a>
+&#160;</td><td class="memItemRight" valign="bottom"><b>None</b></td></tr>
+<tr class="separator:ac7485dcc8d256a6f197ed7802687f252"><td class="memSeparator" colspan="2">&#160;</td></tr>
+<tr class="memitem:a193f07a37436edf7ad5c4405994ad462"><td class="memItemLeft" align="right" valign="top"><a id="a193f07a37436edf7ad5c4405994ad462" name="a193f07a37436edf7ad5c4405994ad462"></a>
+&#160;</td><td class="memItemRight" valign="bottom"><b>Deflate</b></td></tr>
+<tr class="separator:a193f07a37436edf7ad5c4405994ad462"><td class="memSeparator" colspan="2">&#160;</td></tr>
+<tr class="memitem:acea75db24d5fe8c62e13286edfca528e"><td class="memItemLeft" align="right" valign="top"><a id="acea75db24d5fe8c62e13286edfca528e" name="acea75db24d5fe8c62e13286edfca528e"></a>
+&#160;</td><td class="memItemRight" valign="bottom"><b>Gzip</b></td></tr>
+<tr class="separator:acea75db24d5fe8c62e13286edfca528e"><td class="memSeparator" colspan="2">&#160;</td></tr>
 </table>
 <a name="details" id="details"></a><h2 class="groupheader">Detailed Description</h2>
 <div class="textblock"><p >Contains compression and decompression module. </p>
 </div><h2 class="groupheader">Function Documentation</h2>
-<a id="abfa41cf31d1d6dd97ba5d38d4477ab86" name="abfa41cf31d1d6dd97ba5d38d4477ab86"></a>
-<h2 class="memtitle"><span class="permalink"><a href="#abfa41cf31d1d6dd97ba5d38d4477ab86">&#9670;&nbsp;</a></span>compress() <span class="overload">[1/2]</span></h2>
+<a id="a11727c7325b7c91fa9fb9334dc2d02fe" name="a11727c7325b7c91fa9fb9334dc2d02fe"></a>
+<h2 class="memtitle"><span class="permalink"><a href="#a11727c7325b7c91fa9fb9334dc2d02fe">&#9670;&nbsp;</a></span>compress() <span class="overload">[1/2]</span></h2>
 
 <div class="memitem">
 <div class="memproto">
       <table class="memname">
         <tr>
-          <td class="memname">void klib::compress </td>
+          <td class="memname">void KLIB_PUBLIC klib::compress </td>
           <td>(</td>
           <td class="paramtype">const std::string &amp;&#160;</td>
           <td class="paramname"><em>path</em>, </td>
@@ -168,13 +171,13 @@ Functions</h2></td></tr>
         <tr>
           <td class="paramkey"></td>
           <td></td>
-          <td class="paramtype"><a class="el" href="archive_8h.html#a746bca2d6aafe9da24021476bae487e5">Format</a>&#160;</td>
+          <td class="paramtype">Format&#160;</td>
           <td class="paramname"><em>format</em> = <code>Format::Tar</code>, </td>
         </tr>
         <tr>
           <td class="paramkey"></td>
           <td></td>
-          <td class="paramtype"><a class="el" href="archive_8h.html#aa25a2dd2c496b61e2b93bb7e9ca385ab">Filter</a>&#160;</td>
+          <td class="paramtype">Filter&#160;</td>
           <td class="paramname"><em>filter</em> = <code>Filter::Gzip</code>, </td>
         </tr>
         <tr>
@@ -219,14 +222,14 @@ format) </td></tr>
 
 </div>
 </div>
-<a id="a51d5ca3e94c724caa69789ca538b76ae" name="a51d5ca3e94c724caa69789ca538b76ae"></a>
-<h2 class="memtitle"><span class="permalink"><a href="#a51d5ca3e94c724caa69789ca538b76ae">&#9670;&nbsp;</a></span>compress() <span class="overload">[2/2]</span></h2>
+<a id="a7b377174bf46df9ea1c3aec7aa76dc9f" name="a7b377174bf46df9ea1c3aec7aa76dc9f"></a>
+<h2 class="memtitle"><span class="permalink"><a href="#a7b377174bf46df9ea1c3aec7aa76dc9f">&#9670;&nbsp;</a></span>compress() <span class="overload">[2/2]</span></h2>
 
 <div class="memitem">
 <div class="memproto">
       <table class="memname">
         <tr>
-          <td class="memname">void klib::compress </td>
+          <td class="memname">void KLIB_PUBLIC klib::compress </td>
           <td>(</td>
           <td class="paramtype">const std::vector&lt; std::string &gt; &amp;&#160;</td>
           <td class="paramname"><em>paths</em>, </td>
@@ -240,13 +243,13 @@ format) </td></tr>
         <tr>
           <td class="paramkey"></td>
           <td></td>
-          <td class="paramtype"><a class="el" href="archive_8h.html#a746bca2d6aafe9da24021476bae487e5">Format</a>&#160;</td>
+          <td class="paramtype">Format&#160;</td>
           <td class="paramname"><em>format</em> = <code>Format::Tar</code>, </td>
         </tr>
         <tr>
           <td class="paramkey"></td>
           <td></td>
-          <td class="paramtype"><a class="el" href="archive_8h.html#aa25a2dd2c496b61e2b93bb7e9ca385ab">Filter</a>&#160;</td>
+          <td class="paramtype">Filter&#160;</td>
           <td class="paramname"><em>filter</em> = <code>Filter::Gzip</code>, </td>
         </tr>
         <tr>
@@ -278,14 +281,14 @@ format) </td></tr>
 
 </div>
 </div>
-<a id="a5f759ec2e531a750ccde5ee11eff1a07" name="a5f759ec2e531a750ccde5ee11eff1a07"></a>
-<h2 class="memtitle"><span class="permalink"><a href="#a5f759ec2e531a750ccde5ee11eff1a07">&#9670;&nbsp;</a></span>compress_data() <span class="overload">[1/2]</span></h2>
+<a id="a11ec1a493140ce5251d8a5e618861dde" name="a11ec1a493140ce5251d8a5e618861dde"></a>
+<h2 class="memtitle"><span class="permalink"><a href="#a11ec1a493140ce5251d8a5e618861dde">&#9670;&nbsp;</a></span>compress_data() <span class="overload">[1/2]</span></h2>
 
 <div class="memitem">
 <div class="memproto">
       <table class="memname">
         <tr>
-          <td class="memname">std::string klib::compress_data </td>
+          <td class="memname">std::string KLIB_PUBLIC klib::compress_data </td>
           <td>(</td>
           <td class="paramtype">const char *&#160;</td>
           <td class="paramname"><em>data</em>, </td>
@@ -316,14 +319,14 @@ format) </td></tr>
 
 </div>
 </div>
-<a id="a8ab28a7a1abb2786da21e7de15fc7d81" name="a8ab28a7a1abb2786da21e7de15fc7d81"></a>
-<h2 class="memtitle"><span class="permalink"><a href="#a8ab28a7a1abb2786da21e7de15fc7d81">&#9670;&nbsp;</a></span>compress_data() <span class="overload">[2/2]</span></h2>
+<a id="a7e4391c03ddd7a12984ef6d58565140d" name="a7e4391c03ddd7a12984ef6d58565140d"></a>
+<h2 class="memtitle"><span class="permalink"><a href="#a7e4391c03ddd7a12984ef6d58565140d">&#9670;&nbsp;</a></span>compress_data() <span class="overload">[2/2]</span></h2>
 
 <div class="memitem">
 <div class="memproto">
       <table class="memname">
         <tr>
-          <td class="memname">std::string klib::compress_data </td>
+          <td class="memname">std::string KLIB_PUBLIC klib::compress_data </td>
           <td>(</td>
           <td class="paramtype">const std::string &amp;&#160;</td>
           <td class="paramname"><em>data</em></td><td>)</td>
@@ -343,14 +346,14 @@ format) </td></tr>
 
 </div>
 </div>
-<a id="ae501865446ce2bf900e047dac2ff7b15" name="ae501865446ce2bf900e047dac2ff7b15"></a>
-<h2 class="memtitle"><span class="permalink"><a href="#ae501865446ce2bf900e047dac2ff7b15">&#9670;&nbsp;</a></span>decompress()</h2>
+<a id="a02d359665dd067a3116af1e032538946" name="a02d359665dd067a3116af1e032538946"></a>
+<h2 class="memtitle"><span class="permalink"><a href="#a02d359665dd067a3116af1e032538946">&#9670;&nbsp;</a></span>decompress()</h2>
 
 <div class="memitem">
 <div class="memproto">
       <table class="memname">
         <tr>
-          <td class="memname">void klib::decompress </td>
+          <td class="memname">void KLIB_PUBLIC klib::decompress </td>
           <td>(</td>
           <td class="paramtype">const std::string &amp;&#160;</td>
           <td class="paramname"><em>file_path</em>, </td>
@@ -387,14 +390,14 @@ format) </td></tr>
 
 </div>
 </div>
-<a id="a9e4af7ad5ab82c51de143c17ee5da3fb" name="a9e4af7ad5ab82c51de143c17ee5da3fb"></a>
-<h2 class="memtitle"><span class="permalink"><a href="#a9e4af7ad5ab82c51de143c17ee5da3fb">&#9670;&nbsp;</a></span>decompress_data() <span class="overload">[1/2]</span></h2>
+<a id="a16404f1cea8e12f7c8887c88e0a5ad06" name="a16404f1cea8e12f7c8887c88e0a5ad06"></a>
+<h2 class="memtitle"><span class="permalink"><a href="#a16404f1cea8e12f7c8887c88e0a5ad06">&#9670;&nbsp;</a></span>decompress_data() <span class="overload">[1/2]</span></h2>
 
 <div class="memitem">
 <div class="memproto">
       <table class="memname">
         <tr>
-          <td class="memname">std::string klib::decompress_data </td>
+          <td class="memname">std::string KLIB_PUBLIC klib::decompress_data </td>
           <td>(</td>
           <td class="paramtype">const char *&#160;</td>
           <td class="paramname"><em>data</em>, </td>
@@ -425,14 +428,14 @@ format) </td></tr>
 
 </div>
 </div>
-<a id="a24ceda1bfc50a8ca742e340ad2c60f9d" name="a24ceda1bfc50a8ca742e340ad2c60f9d"></a>
-<h2 class="memtitle"><span class="permalink"><a href="#a24ceda1bfc50a8ca742e340ad2c60f9d">&#9670;&nbsp;</a></span>decompress_data() <span class="overload">[2/2]</span></h2>
+<a id="ab69b83d7714af753a8f86ca1fcc98ab7" name="ab69b83d7714af753a8f86ca1fcc98ab7"></a>
+<h2 class="memtitle"><span class="permalink"><a href="#ab69b83d7714af753a8f86ca1fcc98ab7">&#9670;&nbsp;</a></span>decompress_data() <span class="overload">[2/2]</span></h2>
 
 <div class="memitem">
 <div class="memproto">
       <table class="memname">
         <tr>
-          <td class="memname">std::string klib::decompress_data </td>
+          <td class="memname">std::string KLIB_PUBLIC klib::decompress_data </td>
           <td>(</td>
           <td class="paramtype">const std::string &amp;&#160;</td>
           <td class="paramname"><em>data</em></td><td>)</td>
@@ -452,14 +455,14 @@ format) </td></tr>
 
 </div>
 </div>
-<a id="a01521849de159640bad3dac439be6731" name="a01521849de159640bad3dac439be6731"></a>
-<h2 class="memtitle"><span class="permalink"><a href="#a01521849de159640bad3dac439be6731">&#9670;&nbsp;</a></span>outermost_folder_name()</h2>
+<a id="a6256c5f966f309b5b29db7a07e6297e8" name="a6256c5f966f309b5b29db7a07e6297e8"></a>
+<h2 class="memtitle"><span class="permalink"><a href="#a6256c5f966f309b5b29db7a07e6297e8">&#9670;&nbsp;</a></span>outermost_folder_name()</h2>
 
 <div class="memitem">
 <div class="memproto">
       <table class="memname">
         <tr>
-          <td class="memname">std::optional&lt; std::string &gt; klib::outermost_folder_name </td>
+          <td class="memname">std::optional&lt; std::string &gt; KLIB_PUBLIC klib::outermost_folder_name </td>
           <td>(</td>
           <td class="paramtype">const std::string &amp;&#160;</td>
           <td class="paramname"><em>file_path</em></td><td>)</td>

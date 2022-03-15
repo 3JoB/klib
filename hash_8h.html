@@ -30,7 +30,7 @@
  <tbody>
  <tr id="projectrow">
   <td id="projectalign">
-   <div id="projectname">klib<span id="projectnumber">&#160;1.9.0</span>
+   <div id="projectname">klib<span id="projectnumber">&#160;1.9.1</span>
    </div>
   </td>
     <td>        <div id="MSearchBox" class="MSearchBoxInactive">
@@ -102,92 +102,93 @@ $(document).ready(function(){initNavTree('hash_8h.html',''); initResizable(); })
 <div class="textblock"><code>#include &lt;cstddef&gt;</code><br />
 <code>#include &lt;cstdint&gt;</code><br />
 <code>#include &lt;string&gt;</code><br />
+<code>#include &quot;klib/config.h&quot;</code><br />
 </div>
 <p><a href="hash_8h_source.html">Go to the source code of this file.</a></p>
 <table class="memberdecls">
 <tr class="heading"><td colspan="2"><h2 class="groupheader"><a id="func-members" name="func-members"></a>
 Functions</h2></td></tr>
-<tr class="memitem:aba64b42882d6e54255da7e44bee74690"><td class="memItemLeft" align="right" valign="top">std::size_t&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="hash_8h.html#aba64b42882d6e54255da7e44bee74690">klib::fast_hash</a> (const std::string &amp;data)</td></tr>
-<tr class="memdesc:aba64b42882d6e54255da7e44bee74690"><td class="mdescLeft">&#160;</td><td class="mdescRight">Calculate the hash.  <a href="hash_8h.html#aba64b42882d6e54255da7e44bee74690">More...</a><br /></td></tr>
-<tr class="separator:aba64b42882d6e54255da7e44bee74690"><td class="memSeparator" colspan="2">&#160;</td></tr>
-<tr class="memitem:aebe750c2e1719aa849149275b63177ab"><td class="memItemLeft" align="right" valign="top">std::string&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="hash_8h.html#aebe750c2e1719aa849149275b63177ab">klib::fast_hash_hex</a> (const std::string &amp;data)</td></tr>
-<tr class="memdesc:aebe750c2e1719aa849149275b63177ab"><td class="mdescLeft">&#160;</td><td class="mdescRight">Calculate the hash.  <a href="hash_8h.html#aebe750c2e1719aa849149275b63177ab">More...</a><br /></td></tr>
-<tr class="separator:aebe750c2e1719aa849149275b63177ab"><td class="memSeparator" colspan="2">&#160;</td></tr>
-<tr class="memitem:aa25b061a058f95fc26dab5251501961c"><td class="memItemLeft" align="right" valign="top">std::uint32_t&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="hash_8h.html#aa25b061a058f95fc26dab5251501961c">klib::crc32</a> (const std::string &amp;data)</td></tr>
-<tr class="memdesc:aa25b061a058f95fc26dab5251501961c"><td class="mdescLeft">&#160;</td><td class="mdescRight">Calculate CRC-32.  <a href="hash_8h.html#aa25b061a058f95fc26dab5251501961c">More...</a><br /></td></tr>
-<tr class="separator:aa25b061a058f95fc26dab5251501961c"><td class="memSeparator" colspan="2">&#160;</td></tr>
-<tr class="memitem:a1ff36b17a44b2951f692bca8a0a72cf3"><td class="memItemLeft" align="right" valign="top">std::string&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="hash_8h.html#a1ff36b17a44b2951f692bca8a0a72cf3">klib::crc32_hex</a> (const std::string &amp;data)</td></tr>
-<tr class="memdesc:a1ff36b17a44b2951f692bca8a0a72cf3"><td class="mdescLeft">&#160;</td><td class="mdescRight">Calculate CRC-32.  <a href="hash_8h.html#a1ff36b17a44b2951f692bca8a0a72cf3">More...</a><br /></td></tr>
-<tr class="separator:a1ff36b17a44b2951f692bca8a0a72cf3"><td class="memSeparator" colspan="2">&#160;</td></tr>
-<tr class="memitem:a5959425d8c26843619f24b8b3cb3bcac"><td class="memItemLeft" align="right" valign="top">std::uint32_t&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="hash_8h.html#a5959425d8c26843619f24b8b3cb3bcac">klib::adler32</a> (const std::string &amp;data)</td></tr>
-<tr class="memdesc:a5959425d8c26843619f24b8b3cb3bcac"><td class="mdescLeft">&#160;</td><td class="mdescRight">Calculate Adler-32.  <a href="hash_8h.html#a5959425d8c26843619f24b8b3cb3bcac">More...</a><br /></td></tr>
-<tr class="separator:a5959425d8c26843619f24b8b3cb3bcac"><td class="memSeparator" colspan="2">&#160;</td></tr>
-<tr class="memitem:a2a3d47b5c95f32f283efb597370b9144"><td class="memItemLeft" align="right" valign="top">std::string&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="hash_8h.html#a2a3d47b5c95f32f283efb597370b9144">klib::adler32_hex</a> (const std::string &amp;data)</td></tr>
-<tr class="memdesc:a2a3d47b5c95f32f283efb597370b9144"><td class="mdescLeft">&#160;</td><td class="mdescRight">Calculate Adler-32.  <a href="hash_8h.html#a2a3d47b5c95f32f283efb597370b9144">More...</a><br /></td></tr>
-<tr class="separator:a2a3d47b5c95f32f283efb597370b9144"><td class="memSeparator" colspan="2">&#160;</td></tr>
-<tr class="memitem:ac0e8cb916043fdb8394793429045f100"><td class="memItemLeft" align="right" valign="top">std::string&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="hash_8h.html#ac0e8cb916043fdb8394793429045f100">klib::md5</a> (const std::string &amp;data)</td></tr>
-<tr class="memdesc:ac0e8cb916043fdb8394793429045f100"><td class="mdescLeft">&#160;</td><td class="mdescRight">Calculate MD5.  <a href="hash_8h.html#ac0e8cb916043fdb8394793429045f100">More...</a><br /></td></tr>
-<tr class="separator:ac0e8cb916043fdb8394793429045f100"><td class="memSeparator" colspan="2">&#160;</td></tr>
-<tr class="memitem:acbb0b708e2f97260c0f73664a9f00c65"><td class="memItemLeft" align="right" valign="top">std::string&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="hash_8h.html#acbb0b708e2f97260c0f73664a9f00c65">klib::md5_hex</a> (const std::string &amp;data)</td></tr>
-<tr class="memdesc:acbb0b708e2f97260c0f73664a9f00c65"><td class="mdescLeft">&#160;</td><td class="mdescRight">Calculate MD5.  <a href="hash_8h.html#acbb0b708e2f97260c0f73664a9f00c65">More...</a><br /></td></tr>
-<tr class="separator:acbb0b708e2f97260c0f73664a9f00c65"><td class="memSeparator" colspan="2">&#160;</td></tr>
-<tr class="memitem:a4cc4e5ba1f43a3927465976370287c9b"><td class="memItemLeft" align="right" valign="top">std::string&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="hash_8h.html#a4cc4e5ba1f43a3927465976370287c9b">klib::sha1</a> (const std::string &amp;data)</td></tr>
-<tr class="memdesc:a4cc4e5ba1f43a3927465976370287c9b"><td class="mdescLeft">&#160;</td><td class="mdescRight">Calculate SHA-1.  <a href="hash_8h.html#a4cc4e5ba1f43a3927465976370287c9b">More...</a><br /></td></tr>
-<tr class="separator:a4cc4e5ba1f43a3927465976370287c9b"><td class="memSeparator" colspan="2">&#160;</td></tr>
-<tr class="memitem:a60fbc0fef49c76c0889dd1a04c267a51"><td class="memItemLeft" align="right" valign="top">std::string&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="hash_8h.html#a60fbc0fef49c76c0889dd1a04c267a51">klib::sha1_hex</a> (const std::string &amp;data)</td></tr>
-<tr class="memdesc:a60fbc0fef49c76c0889dd1a04c267a51"><td class="mdescLeft">&#160;</td><td class="mdescRight">Calculate SHA-1.  <a href="hash_8h.html#a60fbc0fef49c76c0889dd1a04c267a51">More...</a><br /></td></tr>
-<tr class="separator:a60fbc0fef49c76c0889dd1a04c267a51"><td class="memSeparator" colspan="2">&#160;</td></tr>
-<tr class="memitem:a5c3b42bcde335b3f5474bec523968e12"><td class="memItemLeft" align="right" valign="top">std::string&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="hash_8h.html#a5c3b42bcde335b3f5474bec523968e12">klib::sha224</a> (const std::string &amp;data)</td></tr>
-<tr class="memdesc:a5c3b42bcde335b3f5474bec523968e12"><td class="mdescLeft">&#160;</td><td class="mdescRight">Calculate SHA-224.  <a href="hash_8h.html#a5c3b42bcde335b3f5474bec523968e12">More...</a><br /></td></tr>
-<tr class="separator:a5c3b42bcde335b3f5474bec523968e12"><td class="memSeparator" colspan="2">&#160;</td></tr>
-<tr class="memitem:aa39b9fd5c99e0d5ec92d24dd271e0bd0"><td class="memItemLeft" align="right" valign="top">std::string&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="hash_8h.html#aa39b9fd5c99e0d5ec92d24dd271e0bd0">klib::sha224_hex</a> (const std::string &amp;data)</td></tr>
-<tr class="memdesc:aa39b9fd5c99e0d5ec92d24dd271e0bd0"><td class="mdescLeft">&#160;</td><td class="mdescRight">Calculate SHA-224.  <a href="hash_8h.html#aa39b9fd5c99e0d5ec92d24dd271e0bd0">More...</a><br /></td></tr>
-<tr class="separator:aa39b9fd5c99e0d5ec92d24dd271e0bd0"><td class="memSeparator" colspan="2">&#160;</td></tr>
-<tr class="memitem:a8a23cf04c49f3c285bcd9ee4ad7df082"><td class="memItemLeft" align="right" valign="top">std::string&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="hash_8h.html#a8a23cf04c49f3c285bcd9ee4ad7df082">klib::sha256</a> (const std::string &amp;data)</td></tr>
-<tr class="memdesc:a8a23cf04c49f3c285bcd9ee4ad7df082"><td class="mdescLeft">&#160;</td><td class="mdescRight">Calculate SHA-256.  <a href="hash_8h.html#a8a23cf04c49f3c285bcd9ee4ad7df082">More...</a><br /></td></tr>
-<tr class="separator:a8a23cf04c49f3c285bcd9ee4ad7df082"><td class="memSeparator" colspan="2">&#160;</td></tr>
-<tr class="memitem:ab6c1740558aef564fa9f6fa8dbc96710"><td class="memItemLeft" align="right" valign="top">std::string&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="hash_8h.html#ab6c1740558aef564fa9f6fa8dbc96710">klib::sha256_hex</a> (const std::string &amp;data)</td></tr>
-<tr class="memdesc:ab6c1740558aef564fa9f6fa8dbc96710"><td class="mdescLeft">&#160;</td><td class="mdescRight">Calculate SHA-256.  <a href="hash_8h.html#ab6c1740558aef564fa9f6fa8dbc96710">More...</a><br /></td></tr>
-<tr class="separator:ab6c1740558aef564fa9f6fa8dbc96710"><td class="memSeparator" colspan="2">&#160;</td></tr>
-<tr class="memitem:a909fd468d39ef504eb60f02986f3db16"><td class="memItemLeft" align="right" valign="top">std::string&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="hash_8h.html#a909fd468d39ef504eb60f02986f3db16">klib::sha384</a> (const std::string &amp;data)</td></tr>
-<tr class="memdesc:a909fd468d39ef504eb60f02986f3db16"><td class="mdescLeft">&#160;</td><td class="mdescRight">Calculate SHA-384.  <a href="hash_8h.html#a909fd468d39ef504eb60f02986f3db16">More...</a><br /></td></tr>
-<tr class="separator:a909fd468d39ef504eb60f02986f3db16"><td class="memSeparator" colspan="2">&#160;</td></tr>
-<tr class="memitem:adc4b78e2758a50745f12c23e00df1b7c"><td class="memItemLeft" align="right" valign="top">std::string&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="hash_8h.html#adc4b78e2758a50745f12c23e00df1b7c">klib::sha384_hex</a> (const std::string &amp;data)</td></tr>
-<tr class="memdesc:adc4b78e2758a50745f12c23e00df1b7c"><td class="mdescLeft">&#160;</td><td class="mdescRight">Calculate SHA-384.  <a href="hash_8h.html#adc4b78e2758a50745f12c23e00df1b7c">More...</a><br /></td></tr>
-<tr class="separator:adc4b78e2758a50745f12c23e00df1b7c"><td class="memSeparator" colspan="2">&#160;</td></tr>
-<tr class="memitem:a3e4a64c601831edff84697eaf9d27add"><td class="memItemLeft" align="right" valign="top">std::string&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="hash_8h.html#a3e4a64c601831edff84697eaf9d27add">klib::sha512</a> (const std::string &amp;data)</td></tr>
-<tr class="memdesc:a3e4a64c601831edff84697eaf9d27add"><td class="mdescLeft">&#160;</td><td class="mdescRight">Calculate SHA-512.  <a href="hash_8h.html#a3e4a64c601831edff84697eaf9d27add">More...</a><br /></td></tr>
-<tr class="separator:a3e4a64c601831edff84697eaf9d27add"><td class="memSeparator" colspan="2">&#160;</td></tr>
-<tr class="memitem:aa1446a8c09611cb2aa0e70cd6829f288"><td class="memItemLeft" align="right" valign="top">std::string&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="hash_8h.html#aa1446a8c09611cb2aa0e70cd6829f288">klib::sha512_hex</a> (const std::string &amp;data)</td></tr>
-<tr class="memdesc:aa1446a8c09611cb2aa0e70cd6829f288"><td class="mdescLeft">&#160;</td><td class="mdescRight">Calculate SHA-512.  <a href="hash_8h.html#aa1446a8c09611cb2aa0e70cd6829f288">More...</a><br /></td></tr>
-<tr class="separator:aa1446a8c09611cb2aa0e70cd6829f288"><td class="memSeparator" colspan="2">&#160;</td></tr>
-<tr class="memitem:ad254d8c2ed77209a16c351a65ec6490b"><td class="memItemLeft" align="right" valign="top">std::pair&lt; std::string, std::string &gt;&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="hash_8h.html#ad254d8c2ed77209a16c351a65ec6490b">klib::password_hash_raw</a> (const std::string &amp;password, std::uint32_t time_cost=1, std::uint32_t memory_cost=4 *1024 *1024, std::uint32_t parallelism=16, std::int32_t hash_len=32, std::int32_t salt_len=32)</td></tr>
-<tr class="memdesc:ad254d8c2ed77209a16c351a65ec6490b"><td class="mdescLeft">&#160;</td><td class="mdescRight">Hashes a password.  <a href="hash_8h.html#ad254d8c2ed77209a16c351a65ec6490b">More...</a><br /></td></tr>
-<tr class="separator:ad254d8c2ed77209a16c351a65ec6490b"><td class="memSeparator" colspan="2">&#160;</td></tr>
-<tr class="memitem:a15721f1f0d638ed7902054bd6443f757"><td class="memItemLeft" align="right" valign="top">std::string&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="hash_8h.html#a15721f1f0d638ed7902054bd6443f757">klib::password_hash_raw</a> (const std::string &amp;password, const std::string &amp;salt, std::uint32_t time_cost=1, std::uint32_t memory_cost=4 *1024 *1024, std::uint32_t parallelism=16, std::int32_t hash_len=32)</td></tr>
-<tr class="memdesc:a15721f1f0d638ed7902054bd6443f757"><td class="mdescLeft">&#160;</td><td class="mdescRight">Hashes a password.  <a href="hash_8h.html#a15721f1f0d638ed7902054bd6443f757">More...</a><br /></td></tr>
-<tr class="separator:a15721f1f0d638ed7902054bd6443f757"><td class="memSeparator" colspan="2">&#160;</td></tr>
-<tr class="memitem:afd47172c370d42e3bf072419057776b9"><td class="memItemLeft" align="right" valign="top">std::string&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="hash_8h.html#afd47172c370d42e3bf072419057776b9">klib::password_hash_encoded</a> (const std::string &amp;password, std::uint32_t time_cost=1, std::uint32_t memory_cost=4 *1024 *1024, std::uint32_t parallelism=16, std::int32_t hash_len=32, std::int32_t salt_len=32)</td></tr>
-<tr class="memdesc:afd47172c370d42e3bf072419057776b9"><td class="mdescLeft">&#160;</td><td class="mdescRight">Hashes a password, producing an encoded hash.  <a href="hash_8h.html#afd47172c370d42e3bf072419057776b9">More...</a><br /></td></tr>
-<tr class="separator:afd47172c370d42e3bf072419057776b9"><td class="memSeparator" colspan="2">&#160;</td></tr>
-<tr class="memitem:aeb6c17112e4c044c0893cb393cf69a35"><td class="memItemLeft" align="right" valign="top">bool&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="hash_8h.html#aeb6c17112e4c044c0893cb393cf69a35">klib::password_verify</a> (const std::string &amp;password, const std::string &amp;encoded)</td></tr>
-<tr class="memdesc:aeb6c17112e4c044c0893cb393cf69a35"><td class="mdescLeft">&#160;</td><td class="mdescRight">Verifies a password against an encoded string.  <a href="hash_8h.html#aeb6c17112e4c044c0893cb393cf69a35">More...</a><br /></td></tr>
-<tr class="separator:aeb6c17112e4c044c0893cb393cf69a35"><td class="memSeparator" colspan="2">&#160;</td></tr>
-<tr class="memitem:a5f70596a527fbfbb39dfe92d2684ee72"><td class="memItemLeft" align="right" valign="top">bool&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="hash_8h.html#a5f70596a527fbfbb39dfe92d2684ee72">klib::password_verify</a> (const std::string &amp;password, const std::string &amp;hash, const std::string &amp;salt, std::uint32_t time_cost=1, std::uint32_t memory_cost=4 *1024 *1024, std::uint32_t parallelism=16)</td></tr>
-<tr class="memdesc:a5f70596a527fbfbb39dfe92d2684ee72"><td class="mdescLeft">&#160;</td><td class="mdescRight">Verifies a password against raw hash and salt.  <a href="hash_8h.html#a5f70596a527fbfbb39dfe92d2684ee72">More...</a><br /></td></tr>
-<tr class="separator:a5f70596a527fbfbb39dfe92d2684ee72"><td class="memSeparator" colspan="2">&#160;</td></tr>
+<tr class="memitem:a43037b5973e1e45dc40fa4ed13db512d"><td class="memItemLeft" align="right" valign="top">std::size_t KLIB_PUBLIC&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="hash_8h.html#a43037b5973e1e45dc40fa4ed13db512d">klib::fast_hash</a> (const std::string &amp;data)</td></tr>
+<tr class="memdesc:a43037b5973e1e45dc40fa4ed13db512d"><td class="mdescLeft">&#160;</td><td class="mdescRight">Calculate the hash.  <a href="hash_8h.html#a43037b5973e1e45dc40fa4ed13db512d">More...</a><br /></td></tr>
+<tr class="separator:a43037b5973e1e45dc40fa4ed13db512d"><td class="memSeparator" colspan="2">&#160;</td></tr>
+<tr class="memitem:a2e859822fee9d503bd50cdeb5e38c32d"><td class="memItemLeft" align="right" valign="top">std::string KLIB_PUBLIC&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="hash_8h.html#a2e859822fee9d503bd50cdeb5e38c32d">klib::fast_hash_hex</a> (const std::string &amp;data)</td></tr>
+<tr class="memdesc:a2e859822fee9d503bd50cdeb5e38c32d"><td class="mdescLeft">&#160;</td><td class="mdescRight">Calculate the hash.  <a href="hash_8h.html#a2e859822fee9d503bd50cdeb5e38c32d">More...</a><br /></td></tr>
+<tr class="separator:a2e859822fee9d503bd50cdeb5e38c32d"><td class="memSeparator" colspan="2">&#160;</td></tr>
+<tr class="memitem:a9d610d44b58fb03cc998c87677598d23"><td class="memItemLeft" align="right" valign="top">std::uint32_t KLIB_PUBLIC&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="hash_8h.html#a9d610d44b58fb03cc998c87677598d23">klib::crc32</a> (const std::string &amp;data)</td></tr>
+<tr class="memdesc:a9d610d44b58fb03cc998c87677598d23"><td class="mdescLeft">&#160;</td><td class="mdescRight">Calculate CRC-32.  <a href="hash_8h.html#a9d610d44b58fb03cc998c87677598d23">More...</a><br /></td></tr>
+<tr class="separator:a9d610d44b58fb03cc998c87677598d23"><td class="memSeparator" colspan="2">&#160;</td></tr>
+<tr class="memitem:af10c3c00c6b954c12691cc4f38c42ffa"><td class="memItemLeft" align="right" valign="top">std::string KLIB_PUBLIC&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="hash_8h.html#af10c3c00c6b954c12691cc4f38c42ffa">klib::crc32_hex</a> (const std::string &amp;data)</td></tr>
+<tr class="memdesc:af10c3c00c6b954c12691cc4f38c42ffa"><td class="mdescLeft">&#160;</td><td class="mdescRight">Calculate CRC-32.  <a href="hash_8h.html#af10c3c00c6b954c12691cc4f38c42ffa">More...</a><br /></td></tr>
+<tr class="separator:af10c3c00c6b954c12691cc4f38c42ffa"><td class="memSeparator" colspan="2">&#160;</td></tr>
+<tr class="memitem:a0999aa9cae7b559567b69cd90d08b1b6"><td class="memItemLeft" align="right" valign="top">std::uint32_t KLIB_PUBLIC&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="hash_8h.html#a0999aa9cae7b559567b69cd90d08b1b6">klib::adler32</a> (const std::string &amp;data)</td></tr>
+<tr class="memdesc:a0999aa9cae7b559567b69cd90d08b1b6"><td class="mdescLeft">&#160;</td><td class="mdescRight">Calculate Adler-32.  <a href="hash_8h.html#a0999aa9cae7b559567b69cd90d08b1b6">More...</a><br /></td></tr>
+<tr class="separator:a0999aa9cae7b559567b69cd90d08b1b6"><td class="memSeparator" colspan="2">&#160;</td></tr>
+<tr class="memitem:a122d0aced8bcc92cfeb8864d739f006e"><td class="memItemLeft" align="right" valign="top">std::string KLIB_PUBLIC&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="hash_8h.html#a122d0aced8bcc92cfeb8864d739f006e">klib::adler32_hex</a> (const std::string &amp;data)</td></tr>
+<tr class="memdesc:a122d0aced8bcc92cfeb8864d739f006e"><td class="mdescLeft">&#160;</td><td class="mdescRight">Calculate Adler-32.  <a href="hash_8h.html#a122d0aced8bcc92cfeb8864d739f006e">More...</a><br /></td></tr>
+<tr class="separator:a122d0aced8bcc92cfeb8864d739f006e"><td class="memSeparator" colspan="2">&#160;</td></tr>
+<tr class="memitem:a028d79af8f0973e43abe51b1a5a8ef71"><td class="memItemLeft" align="right" valign="top">std::string KLIB_PUBLIC&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="hash_8h.html#a028d79af8f0973e43abe51b1a5a8ef71">klib::md5</a> (const std::string &amp;data)</td></tr>
+<tr class="memdesc:a028d79af8f0973e43abe51b1a5a8ef71"><td class="mdescLeft">&#160;</td><td class="mdescRight">Calculate MD5.  <a href="hash_8h.html#a028d79af8f0973e43abe51b1a5a8ef71">More...</a><br /></td></tr>
+<tr class="separator:a028d79af8f0973e43abe51b1a5a8ef71"><td class="memSeparator" colspan="2">&#160;</td></tr>
+<tr class="memitem:a6f60e91acc91b247b97bb00a5717ea22"><td class="memItemLeft" align="right" valign="top">std::string KLIB_PUBLIC&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="hash_8h.html#a6f60e91acc91b247b97bb00a5717ea22">klib::md5_hex</a> (const std::string &amp;data)</td></tr>
+<tr class="memdesc:a6f60e91acc91b247b97bb00a5717ea22"><td class="mdescLeft">&#160;</td><td class="mdescRight">Calculate MD5.  <a href="hash_8h.html#a6f60e91acc91b247b97bb00a5717ea22">More...</a><br /></td></tr>
+<tr class="separator:a6f60e91acc91b247b97bb00a5717ea22"><td class="memSeparator" colspan="2">&#160;</td></tr>
+<tr class="memitem:a3076fa5e8bf9c2b08e3686f58d822321"><td class="memItemLeft" align="right" valign="top">std::string KLIB_PUBLIC&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="hash_8h.html#a3076fa5e8bf9c2b08e3686f58d822321">klib::sha1</a> (const std::string &amp;data)</td></tr>
+<tr class="memdesc:a3076fa5e8bf9c2b08e3686f58d822321"><td class="mdescLeft">&#160;</td><td class="mdescRight">Calculate SHA-1.  <a href="hash_8h.html#a3076fa5e8bf9c2b08e3686f58d822321">More...</a><br /></td></tr>
+<tr class="separator:a3076fa5e8bf9c2b08e3686f58d822321"><td class="memSeparator" colspan="2">&#160;</td></tr>
+<tr class="memitem:a19c4a9e393106a7a7f8dd0fbab9fce5e"><td class="memItemLeft" align="right" valign="top">std::string KLIB_PUBLIC&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="hash_8h.html#a19c4a9e393106a7a7f8dd0fbab9fce5e">klib::sha1_hex</a> (const std::string &amp;data)</td></tr>
+<tr class="memdesc:a19c4a9e393106a7a7f8dd0fbab9fce5e"><td class="mdescLeft">&#160;</td><td class="mdescRight">Calculate SHA-1.  <a href="hash_8h.html#a19c4a9e393106a7a7f8dd0fbab9fce5e">More...</a><br /></td></tr>
+<tr class="separator:a19c4a9e393106a7a7f8dd0fbab9fce5e"><td class="memSeparator" colspan="2">&#160;</td></tr>
+<tr class="memitem:a442ef698b76979a012c81681de7ff0d9"><td class="memItemLeft" align="right" valign="top">std::string KLIB_PUBLIC&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="hash_8h.html#a442ef698b76979a012c81681de7ff0d9">klib::sha224</a> (const std::string &amp;data)</td></tr>
+<tr class="memdesc:a442ef698b76979a012c81681de7ff0d9"><td class="mdescLeft">&#160;</td><td class="mdescRight">Calculate SHA-224.  <a href="hash_8h.html#a442ef698b76979a012c81681de7ff0d9">More...</a><br /></td></tr>
+<tr class="separator:a442ef698b76979a012c81681de7ff0d9"><td class="memSeparator" colspan="2">&#160;</td></tr>
+<tr class="memitem:a0a1d835a9e1d1ff1ed5f1b9fdea237ed"><td class="memItemLeft" align="right" valign="top">std::string KLIB_PUBLIC&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="hash_8h.html#a0a1d835a9e1d1ff1ed5f1b9fdea237ed">klib::sha224_hex</a> (const std::string &amp;data)</td></tr>
+<tr class="memdesc:a0a1d835a9e1d1ff1ed5f1b9fdea237ed"><td class="mdescLeft">&#160;</td><td class="mdescRight">Calculate SHA-224.  <a href="hash_8h.html#a0a1d835a9e1d1ff1ed5f1b9fdea237ed">More...</a><br /></td></tr>
+<tr class="separator:a0a1d835a9e1d1ff1ed5f1b9fdea237ed"><td class="memSeparator" colspan="2">&#160;</td></tr>
+<tr class="memitem:a2439efe1549d3bf37d51a19a3e959f63"><td class="memItemLeft" align="right" valign="top">std::string KLIB_PUBLIC&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="hash_8h.html#a2439efe1549d3bf37d51a19a3e959f63">klib::sha256</a> (const std::string &amp;data)</td></tr>
+<tr class="memdesc:a2439efe1549d3bf37d51a19a3e959f63"><td class="mdescLeft">&#160;</td><td class="mdescRight">Calculate SHA-256.  <a href="hash_8h.html#a2439efe1549d3bf37d51a19a3e959f63">More...</a><br /></td></tr>
+<tr class="separator:a2439efe1549d3bf37d51a19a3e959f63"><td class="memSeparator" colspan="2">&#160;</td></tr>
+<tr class="memitem:aa422cc5b227a9aef75751c8b56ae7d70"><td class="memItemLeft" align="right" valign="top">std::string KLIB_PUBLIC&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="hash_8h.html#aa422cc5b227a9aef75751c8b56ae7d70">klib::sha256_hex</a> (const std::string &amp;data)</td></tr>
+<tr class="memdesc:aa422cc5b227a9aef75751c8b56ae7d70"><td class="mdescLeft">&#160;</td><td class="mdescRight">Calculate SHA-256.  <a href="hash_8h.html#aa422cc5b227a9aef75751c8b56ae7d70">More...</a><br /></td></tr>
+<tr class="separator:aa422cc5b227a9aef75751c8b56ae7d70"><td class="memSeparator" colspan="2">&#160;</td></tr>
+<tr class="memitem:a9ee2ee06eca3a13919e43fc1e3ffabfb"><td class="memItemLeft" align="right" valign="top">std::string KLIB_PUBLIC&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="hash_8h.html#a9ee2ee06eca3a13919e43fc1e3ffabfb">klib::sha384</a> (const std::string &amp;data)</td></tr>
+<tr class="memdesc:a9ee2ee06eca3a13919e43fc1e3ffabfb"><td class="mdescLeft">&#160;</td><td class="mdescRight">Calculate SHA-384.  <a href="hash_8h.html#a9ee2ee06eca3a13919e43fc1e3ffabfb">More...</a><br /></td></tr>
+<tr class="separator:a9ee2ee06eca3a13919e43fc1e3ffabfb"><td class="memSeparator" colspan="2">&#160;</td></tr>
+<tr class="memitem:a18f7f0a0cd8790441122cacde0a037b7"><td class="memItemLeft" align="right" valign="top">std::string KLIB_PUBLIC&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="hash_8h.html#a18f7f0a0cd8790441122cacde0a037b7">klib::sha384_hex</a> (const std::string &amp;data)</td></tr>
+<tr class="memdesc:a18f7f0a0cd8790441122cacde0a037b7"><td class="mdescLeft">&#160;</td><td class="mdescRight">Calculate SHA-384.  <a href="hash_8h.html#a18f7f0a0cd8790441122cacde0a037b7">More...</a><br /></td></tr>
+<tr class="separator:a18f7f0a0cd8790441122cacde0a037b7"><td class="memSeparator" colspan="2">&#160;</td></tr>
+<tr class="memitem:a4eb60b9db1c580c293c51d77f5e3c73b"><td class="memItemLeft" align="right" valign="top">std::string KLIB_PUBLIC&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="hash_8h.html#a4eb60b9db1c580c293c51d77f5e3c73b">klib::sha512</a> (const std::string &amp;data)</td></tr>
+<tr class="memdesc:a4eb60b9db1c580c293c51d77f5e3c73b"><td class="mdescLeft">&#160;</td><td class="mdescRight">Calculate SHA-512.  <a href="hash_8h.html#a4eb60b9db1c580c293c51d77f5e3c73b">More...</a><br /></td></tr>
+<tr class="separator:a4eb60b9db1c580c293c51d77f5e3c73b"><td class="memSeparator" colspan="2">&#160;</td></tr>
+<tr class="memitem:a9e084c0e0b9a7fe015b8c95ca987f03f"><td class="memItemLeft" align="right" valign="top">std::string KLIB_PUBLIC&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="hash_8h.html#a9e084c0e0b9a7fe015b8c95ca987f03f">klib::sha512_hex</a> (const std::string &amp;data)</td></tr>
+<tr class="memdesc:a9e084c0e0b9a7fe015b8c95ca987f03f"><td class="mdescLeft">&#160;</td><td class="mdescRight">Calculate SHA-512.  <a href="hash_8h.html#a9e084c0e0b9a7fe015b8c95ca987f03f">More...</a><br /></td></tr>
+<tr class="separator:a9e084c0e0b9a7fe015b8c95ca987f03f"><td class="memSeparator" colspan="2">&#160;</td></tr>
+<tr class="memitem:a3f98feba8f8953d5564320511ede1b86"><td class="memItemLeft" align="right" valign="top">std::pair&lt; std::string, std::string &gt; KLIB_PUBLIC&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="hash_8h.html#a3f98feba8f8953d5564320511ede1b86">klib::password_hash_raw</a> (const std::string &amp;password, std::uint32_t time_cost=1, std::uint32_t memory_cost=4 *1024 *1024, std::uint32_t parallelism=16, std::int32_t hash_len=32, std::int32_t salt_len=32)</td></tr>
+<tr class="memdesc:a3f98feba8f8953d5564320511ede1b86"><td class="mdescLeft">&#160;</td><td class="mdescRight">Hashes a password.  <a href="hash_8h.html#a3f98feba8f8953d5564320511ede1b86">More...</a><br /></td></tr>
+<tr class="separator:a3f98feba8f8953d5564320511ede1b86"><td class="memSeparator" colspan="2">&#160;</td></tr>
+<tr class="memitem:ac7ad1f472c47aad32a0ed149708cabd0"><td class="memItemLeft" align="right" valign="top">std::string KLIB_PUBLIC&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="hash_8h.html#ac7ad1f472c47aad32a0ed149708cabd0">klib::password_hash_raw</a> (const std::string &amp;password, const std::string &amp;salt, std::uint32_t time_cost=1, std::uint32_t memory_cost=4 *1024 *1024, std::uint32_t parallelism=16, std::int32_t hash_len=32)</td></tr>
+<tr class="memdesc:ac7ad1f472c47aad32a0ed149708cabd0"><td class="mdescLeft">&#160;</td><td class="mdescRight">Hashes a password.  <a href="hash_8h.html#ac7ad1f472c47aad32a0ed149708cabd0">More...</a><br /></td></tr>
+<tr class="separator:ac7ad1f472c47aad32a0ed149708cabd0"><td class="memSeparator" colspan="2">&#160;</td></tr>
+<tr class="memitem:abe2f466b9077fd15cdf009b086c0966a"><td class="memItemLeft" align="right" valign="top">std::string KLIB_PUBLIC&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="hash_8h.html#abe2f466b9077fd15cdf009b086c0966a">klib::password_hash_encoded</a> (const std::string &amp;password, std::uint32_t time_cost=1, std::uint32_t memory_cost=4 *1024 *1024, std::uint32_t parallelism=16, std::int32_t hash_len=32, std::int32_t salt_len=32)</td></tr>
+<tr class="memdesc:abe2f466b9077fd15cdf009b086c0966a"><td class="mdescLeft">&#160;</td><td class="mdescRight">Hashes a password, producing an encoded hash.  <a href="hash_8h.html#abe2f466b9077fd15cdf009b086c0966a">More...</a><br /></td></tr>
+<tr class="separator:abe2f466b9077fd15cdf009b086c0966a"><td class="memSeparator" colspan="2">&#160;</td></tr>
+<tr class="memitem:a2fddd43619f2711cefbd6babcbdebd8e"><td class="memItemLeft" align="right" valign="top">bool KLIB_PUBLIC&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="hash_8h.html#a2fddd43619f2711cefbd6babcbdebd8e">klib::password_verify</a> (const std::string &amp;password, const std::string &amp;encoded)</td></tr>
+<tr class="memdesc:a2fddd43619f2711cefbd6babcbdebd8e"><td class="mdescLeft">&#160;</td><td class="mdescRight">Verifies a password against an encoded string.  <a href="hash_8h.html#a2fddd43619f2711cefbd6babcbdebd8e">More...</a><br /></td></tr>
+<tr class="separator:a2fddd43619f2711cefbd6babcbdebd8e"><td class="memSeparator" colspan="2">&#160;</td></tr>
+<tr class="memitem:ac1722c3666941a85c6035d72b254ea20"><td class="memItemLeft" align="right" valign="top">bool KLIB_PUBLIC&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="hash_8h.html#ac1722c3666941a85c6035d72b254ea20">klib::password_verify</a> (const std::string &amp;password, const std::string &amp;hash, const std::string &amp;salt, std::uint32_t time_cost=1, std::uint32_t memory_cost=4 *1024 *1024, std::uint32_t parallelism=16)</td></tr>
+<tr class="memdesc:ac1722c3666941a85c6035d72b254ea20"><td class="mdescLeft">&#160;</td><td class="mdescRight">Verifies a password against raw hash and salt.  <a href="hash_8h.html#ac1722c3666941a85c6035d72b254ea20">More...</a><br /></td></tr>
+<tr class="separator:ac1722c3666941a85c6035d72b254ea20"><td class="memSeparator" colspan="2">&#160;</td></tr>
 </table>
 <a name="details" id="details"></a><h2 class="groupheader">Detailed Description</h2>
 <div class="textblock"><p >Contains hash module. </p>
 </div><h2 class="groupheader">Function Documentation</h2>
-<a id="a5959425d8c26843619f24b8b3cb3bcac" name="a5959425d8c26843619f24b8b3cb3bcac"></a>
-<h2 class="memtitle"><span class="permalink"><a href="#a5959425d8c26843619f24b8b3cb3bcac">&#9670;&nbsp;</a></span>adler32()</h2>
+<a id="a0999aa9cae7b559567b69cd90d08b1b6" name="a0999aa9cae7b559567b69cd90d08b1b6"></a>
+<h2 class="memtitle"><span class="permalink"><a href="#a0999aa9cae7b559567b69cd90d08b1b6">&#9670;&nbsp;</a></span>adler32()</h2>
 
 <div class="memitem">
 <div class="memproto">
       <table class="memname">
         <tr>
-          <td class="memname">std::uint32_t klib::adler32 </td>
+          <td class="memname">std::uint32_t KLIB_PUBLIC klib::adler32 </td>
           <td>(</td>
           <td class="paramtype">const std::string &amp;&#160;</td>
           <td class="paramname"><em>data</em></td><td>)</td>
@@ -208,14 +209,14 @@ Functions</h2></td></tr>
 
 </div>
 </div>
-<a id="a2a3d47b5c95f32f283efb597370b9144" name="a2a3d47b5c95f32f283efb597370b9144"></a>
-<h2 class="memtitle"><span class="permalink"><a href="#a2a3d47b5c95f32f283efb597370b9144">&#9670;&nbsp;</a></span>adler32_hex()</h2>
+<a id="a122d0aced8bcc92cfeb8864d739f006e" name="a122d0aced8bcc92cfeb8864d739f006e"></a>
+<h2 class="memtitle"><span class="permalink"><a href="#a122d0aced8bcc92cfeb8864d739f006e">&#9670;&nbsp;</a></span>adler32_hex()</h2>
 
 <div class="memitem">
 <div class="memproto">
       <table class="memname">
         <tr>
-          <td class="memname">std::string klib::adler32_hex </td>
+          <td class="memname">std::string KLIB_PUBLIC klib::adler32_hex </td>
           <td>(</td>
           <td class="paramtype">const std::string &amp;&#160;</td>
           <td class="paramname"><em>data</em></td><td>)</td>
@@ -236,14 +237,14 @@ Functions</h2></td></tr>
 
 </div>
 </div>
-<a id="aa25b061a058f95fc26dab5251501961c" name="aa25b061a058f95fc26dab5251501961c"></a>
-<h2 class="memtitle"><span class="permalink"><a href="#aa25b061a058f95fc26dab5251501961c">&#9670;&nbsp;</a></span>crc32()</h2>
+<a id="a9d610d44b58fb03cc998c87677598d23" name="a9d610d44b58fb03cc998c87677598d23"></a>
+<h2 class="memtitle"><span class="permalink"><a href="#a9d610d44b58fb03cc998c87677598d23">&#9670;&nbsp;</a></span>crc32()</h2>
 
 <div class="memitem">
 <div class="memproto">
       <table class="memname">
         <tr>
-          <td class="memname">std::uint32_t klib::crc32 </td>
+          <td class="memname">std::uint32_t KLIB_PUBLIC klib::crc32 </td>
           <td>(</td>
           <td class="paramtype">const std::string &amp;&#160;</td>
           <td class="paramname"><em>data</em></td><td>)</td>
@@ -264,14 +265,14 @@ Functions</h2></td></tr>
 
 </div>
 </div>
-<a id="a1ff36b17a44b2951f692bca8a0a72cf3" name="a1ff36b17a44b2951f692bca8a0a72cf3"></a>
-<h2 class="memtitle"><span class="permalink"><a href="#a1ff36b17a44b2951f692bca8a0a72cf3">&#9670;&nbsp;</a></span>crc32_hex()</h2>
+<a id="af10c3c00c6b954c12691cc4f38c42ffa" name="af10c3c00c6b954c12691cc4f38c42ffa"></a>
+<h2 class="memtitle"><span class="permalink"><a href="#af10c3c00c6b954c12691cc4f38c42ffa">&#9670;&nbsp;</a></span>crc32_hex()</h2>
 
 <div class="memitem">
 <div class="memproto">
       <table class="memname">
         <tr>
-          <td class="memname">std::string klib::crc32_hex </td>
+          <td class="memname">std::string KLIB_PUBLIC klib::crc32_hex </td>
           <td>(</td>
           <td class="paramtype">const std::string &amp;&#160;</td>
           <td class="paramname"><em>data</em></td><td>)</td>
@@ -292,14 +293,14 @@ Functions</h2></td></tr>
 
 </div>
 </div>
-<a id="aba64b42882d6e54255da7e44bee74690" name="aba64b42882d6e54255da7e44bee74690"></a>
-<h2 class="memtitle"><span class="permalink"><a href="#aba64b42882d6e54255da7e44bee74690">&#9670;&nbsp;</a></span>fast_hash()</h2>
+<a id="a43037b5973e1e45dc40fa4ed13db512d" name="a43037b5973e1e45dc40fa4ed13db512d"></a>
+<h2 class="memtitle"><span class="permalink"><a href="#a43037b5973e1e45dc40fa4ed13db512d">&#9670;&nbsp;</a></span>fast_hash()</h2>
 
 <div class="memitem">
 <div class="memproto">
       <table class="memname">
         <tr>
-          <td class="memname">std::size_t klib::fast_hash </td>
+          <td class="memname">std::size_t KLIB_PUBLIC klib::fast_hash </td>
           <td>(</td>
           <td class="paramtype">const std::string &amp;&#160;</td>
           <td class="paramname"><em>data</em></td><td>)</td>
@@ -319,14 +320,14 @@ Functions</h2></td></tr>
 
 </div>
 </div>
-<a id="aebe750c2e1719aa849149275b63177ab" name="aebe750c2e1719aa849149275b63177ab"></a>
-<h2 class="memtitle"><span class="permalink"><a href="#aebe750c2e1719aa849149275b63177ab">&#9670;&nbsp;</a></span>fast_hash_hex()</h2>
+<a id="a2e859822fee9d503bd50cdeb5e38c32d" name="a2e859822fee9d503bd50cdeb5e38c32d"></a>
+<h2 class="memtitle"><span class="permalink"><a href="#a2e859822fee9d503bd50cdeb5e38c32d">&#9670;&nbsp;</a></span>fast_hash_hex()</h2>
 
 <div class="memitem">
 <div class="memproto">
       <table class="memname">
         <tr>
-          <td class="memname">std::string klib::fast_hash_hex </td>
+          <td class="memname">std::string KLIB_PUBLIC klib::fast_hash_hex </td>
           <td>(</td>
           <td class="paramtype">const std::string &amp;&#160;</td>
           <td class="paramname"><em>data</em></td><td>)</td>
@@ -346,14 +347,14 @@ Functions</h2></td></tr>
 
 </div>
 </div>
-<a id="ac0e8cb916043fdb8394793429045f100" name="ac0e8cb916043fdb8394793429045f100"></a>
-<h2 class="memtitle"><span class="permalink"><a href="#ac0e8cb916043fdb8394793429045f100">&#9670;&nbsp;</a></span>md5()</h2>
+<a id="a028d79af8f0973e43abe51b1a5a8ef71" name="a028d79af8f0973e43abe51b1a5a8ef71"></a>
+<h2 class="memtitle"><span class="permalink"><a href="#a028d79af8f0973e43abe51b1a5a8ef71">&#9670;&nbsp;</a></span>md5()</h2>
 
 <div class="memitem">
 <div class="memproto">
       <table class="memname">
         <tr>
-          <td class="memname">std::string klib::md5 </td>
+          <td class="memname">std::string KLIB_PUBLIC klib::md5 </td>
           <td>(</td>
           <td class="paramtype">const std::string &amp;&#160;</td>
           <td class="paramname"><em>data</em></td><td>)</td>
@@ -374,14 +375,14 @@ Functions</h2></td></tr>
 
 </div>
 </div>
-<a id="acbb0b708e2f97260c0f73664a9f00c65" name="acbb0b708e2f97260c0f73664a9f00c65"></a>
-<h2 class="memtitle"><span class="permalink"><a href="#acbb0b708e2f97260c0f73664a9f00c65">&#9670;&nbsp;</a></span>md5_hex()</h2>
+<a id="a6f60e91acc91b247b97bb00a5717ea22" name="a6f60e91acc91b247b97bb00a5717ea22"></a>
+<h2 class="memtitle"><span class="permalink"><a href="#a6f60e91acc91b247b97bb00a5717ea22">&#9670;&nbsp;</a></span>md5_hex()</h2>
 
 <div class="memitem">
 <div class="memproto">
       <table class="memname">
         <tr>
-          <td class="memname">std::string klib::md5_hex </td>
+          <td class="memname">std::string KLIB_PUBLIC klib::md5_hex </td>
           <td>(</td>
           <td class="paramtype">const std::string &amp;&#160;</td>
           <td class="paramname"><em>data</em></td><td>)</td>
@@ -402,14 +403,14 @@ Functions</h2></td></tr>
 
 </div>
 </div>
-<a id="afd47172c370d42e3bf072419057776b9" name="afd47172c370d42e3bf072419057776b9"></a>
-<h2 class="memtitle"><span class="permalink"><a href="#afd47172c370d42e3bf072419057776b9">&#9670;&nbsp;</a></span>password_hash_encoded()</h2>
+<a id="abe2f466b9077fd15cdf009b086c0966a" name="abe2f466b9077fd15cdf009b086c0966a"></a>
+<h2 class="memtitle"><span class="permalink"><a href="#abe2f466b9077fd15cdf009b086c0966a">&#9670;&nbsp;</a></span>password_hash_encoded()</h2>
 
 <div class="memitem">
 <div class="memproto">
       <table class="memname">
         <tr>
-          <td class="memname">std::string klib::password_hash_encoded </td>
+          <td class="memname">std::string KLIB_PUBLIC klib::password_hash_encoded </td>
           <td>(</td>
           <td class="paramtype">const std::string &amp;&#160;</td>
           <td class="paramname"><em>password</em>, </td>
@@ -471,14 +472,14 @@ Functions</h2></td></tr>
 
 </div>
 </div>
-<a id="a15721f1f0d638ed7902054bd6443f757" name="a15721f1f0d638ed7902054bd6443f757"></a>
-<h2 class="memtitle"><span class="permalink"><a href="#a15721f1f0d638ed7902054bd6443f757">&#9670;&nbsp;</a></span>password_hash_raw() <span class="overload">[1/2]</span></h2>
+<a id="ac7ad1f472c47aad32a0ed149708cabd0" name="ac7ad1f472c47aad32a0ed149708cabd0"></a>
+<h2 class="memtitle"><span class="permalink"><a href="#ac7ad1f472c47aad32a0ed149708cabd0">&#9670;&nbsp;</a></span>password_hash_raw() <span class="overload">[1/2]</span></h2>
 
 <div class="memitem">
 <div class="memproto">
       <table class="memname">
         <tr>
-          <td class="memname">std::string klib::password_hash_raw </td>
+          <td class="memname">std::string KLIB_PUBLIC klib::password_hash_raw </td>
           <td>(</td>
           <td class="paramtype">const std::string &amp;&#160;</td>
           <td class="paramname"><em>password</em>, </td>
@@ -540,14 +541,14 @@ Functions</h2></td></tr>
 
 </div>
 </div>
-<a id="ad254d8c2ed77209a16c351a65ec6490b" name="ad254d8c2ed77209a16c351a65ec6490b"></a>
-<h2 class="memtitle"><span class="permalink"><a href="#ad254d8c2ed77209a16c351a65ec6490b">&#9670;&nbsp;</a></span>password_hash_raw() <span class="overload">[2/2]</span></h2>
+<a id="a3f98feba8f8953d5564320511ede1b86" name="a3f98feba8f8953d5564320511ede1b86"></a>
+<h2 class="memtitle"><span class="permalink"><a href="#a3f98feba8f8953d5564320511ede1b86">&#9670;&nbsp;</a></span>password_hash_raw() <span class="overload">[2/2]</span></h2>
 
 <div class="memitem">
 <div class="memproto">
       <table class="memname">
         <tr>
-          <td class="memname">std::pair&lt; std::string, std::string &gt; klib::password_hash_raw </td>
+          <td class="memname">std::pair&lt; std::string, std::string &gt; KLIB_PUBLIC klib::password_hash_raw </td>
           <td>(</td>
           <td class="paramtype">const std::string &amp;&#160;</td>
           <td class="paramname"><em>password</em>, </td>
@@ -609,14 +610,14 @@ Functions</h2></td></tr>
 
 </div>
 </div>
-<a id="aeb6c17112e4c044c0893cb393cf69a35" name="aeb6c17112e4c044c0893cb393cf69a35"></a>
-<h2 class="memtitle"><span class="permalink"><a href="#aeb6c17112e4c044c0893cb393cf69a35">&#9670;&nbsp;</a></span>password_verify() <span class="overload">[1/2]</span></h2>
+<a id="a2fddd43619f2711cefbd6babcbdebd8e" name="a2fddd43619f2711cefbd6babcbdebd8e"></a>
+<h2 class="memtitle"><span class="permalink"><a href="#a2fddd43619f2711cefbd6babcbdebd8e">&#9670;&nbsp;</a></span>password_verify() <span class="overload">[1/2]</span></h2>
 
 <div class="memitem">
 <div class="memproto">
       <table class="memname">
         <tr>
-          <td class="memname">bool klib::password_verify </td>
+          <td class="memname">bool KLIB_PUBLIC klib::password_verify </td>
           <td>(</td>
           <td class="paramtype">const std::string &amp;&#160;</td>
           <td class="paramname"><em>password</em>, </td>
@@ -647,14 +648,14 @@ Functions</h2></td></tr>
 
 </div>
 </div>
-<a id="a5f70596a527fbfbb39dfe92d2684ee72" name="a5f70596a527fbfbb39dfe92d2684ee72"></a>
-<h2 class="memtitle"><span class="permalink"><a href="#a5f70596a527fbfbb39dfe92d2684ee72">&#9670;&nbsp;</a></span>password_verify() <span class="overload">[2/2]</span></h2>
+<a id="ac1722c3666941a85c6035d72b254ea20" name="ac1722c3666941a85c6035d72b254ea20"></a>
+<h2 class="memtitle"><span class="permalink"><a href="#ac1722c3666941a85c6035d72b254ea20">&#9670;&nbsp;</a></span>password_verify() <span class="overload">[2/2]</span></h2>
 
 <div class="memitem">
 <div class="memproto">
       <table class="memname">
         <tr>
-          <td class="memname">bool klib::password_verify </td>
+          <td class="memname">bool KLIB_PUBLIC klib::password_verify </td>
           <td>(</td>
           <td class="paramtype">const std::string &amp;&#160;</td>
           <td class="paramname"><em>password</em>, </td>
@@ -713,14 +714,14 @@ Functions</h2></td></tr>
 
 </div>
 </div>
-<a id="a4cc4e5ba1f43a3927465976370287c9b" name="a4cc4e5ba1f43a3927465976370287c9b"></a>
-<h2 class="memtitle"><span class="permalink"><a href="#a4cc4e5ba1f43a3927465976370287c9b">&#9670;&nbsp;</a></span>sha1()</h2>
+<a id="a3076fa5e8bf9c2b08e3686f58d822321" name="a3076fa5e8bf9c2b08e3686f58d822321"></a>
+<h2 class="memtitle"><span class="permalink"><a href="#a3076fa5e8bf9c2b08e3686f58d822321">&#9670;&nbsp;</a></span>sha1()</h2>
 
 <div class="memitem">
 <div class="memproto">
       <table class="memname">
         <tr>
-          <td class="memname">std::string klib::sha1 </td>
+          <td class="memname">std::string KLIB_PUBLIC klib::sha1 </td>
           <td>(</td>
           <td class="paramtype">const std::string &amp;&#160;</td>
           <td class="paramname"><em>data</em></td><td>)</td>
@@ -741,14 +742,14 @@ Functions</h2></td></tr>
 
 </div>
 </div>
-<a id="a60fbc0fef49c76c0889dd1a04c267a51" name="a60fbc0fef49c76c0889dd1a04c267a51"></a>
-<h2 class="memtitle"><span class="permalink"><a href="#a60fbc0fef49c76c0889dd1a04c267a51">&#9670;&nbsp;</a></span>sha1_hex()</h2>
+<a id="a19c4a9e393106a7a7f8dd0fbab9fce5e" name="a19c4a9e393106a7a7f8dd0fbab9fce5e"></a>
+<h2 class="memtitle"><span class="permalink"><a href="#a19c4a9e393106a7a7f8dd0fbab9fce5e">&#9670;&nbsp;</a></span>sha1_hex()</h2>
 
 <div class="memitem">
 <div class="memproto">
       <table class="memname">
         <tr>
-          <td class="memname">std::string klib::sha1_hex </td>
+          <td class="memname">std::string KLIB_PUBLIC klib::sha1_hex </td>
           <td>(</td>
           <td class="paramtype">const std::string &amp;&#160;</td>
           <td class="paramname"><em>data</em></td><td>)</td>
@@ -769,14 +770,14 @@ Functions</h2></td></tr>
 
 </div>
 </div>
-<a id="a5c3b42bcde335b3f5474bec523968e12" name="a5c3b42bcde335b3f5474bec523968e12"></a>
-<h2 class="memtitle"><span class="permalink"><a href="#a5c3b42bcde335b3f5474bec523968e12">&#9670;&nbsp;</a></span>sha224()</h2>
+<a id="a442ef698b76979a012c81681de7ff0d9" name="a442ef698b76979a012c81681de7ff0d9"></a>
+<h2 class="memtitle"><span class="permalink"><a href="#a442ef698b76979a012c81681de7ff0d9">&#9670;&nbsp;</a></span>sha224()</h2>
 
 <div class="memitem">
 <div class="memproto">
       <table class="memname">
         <tr>
-          <td class="memname">std::string klib::sha224 </td>
+          <td class="memname">std::string KLIB_PUBLIC klib::sha224 </td>
           <td>(</td>
           <td class="paramtype">const std::string &amp;&#160;</td>
           <td class="paramname"><em>data</em></td><td>)</td>
@@ -797,14 +798,14 @@ Functions</h2></td></tr>
 
 </div>
 </div>
-<a id="aa39b9fd5c99e0d5ec92d24dd271e0bd0" name="aa39b9fd5c99e0d5ec92d24dd271e0bd0"></a>
-<h2 class="memtitle"><span class="permalink"><a href="#aa39b9fd5c99e0d5ec92d24dd271e0bd0">&#9670;&nbsp;</a></span>sha224_hex()</h2>
+<a id="a0a1d835a9e1d1ff1ed5f1b9fdea237ed" name="a0a1d835a9e1d1ff1ed5f1b9fdea237ed"></a>
+<h2 class="memtitle"><span class="permalink"><a href="#a0a1d835a9e1d1ff1ed5f1b9fdea237ed">&#9670;&nbsp;</a></span>sha224_hex()</h2>
 
 <div class="memitem">
 <div class="memproto">
       <table class="memname">
         <tr>
-          <td class="memname">std::string klib::sha224_hex </td>
+          <td class="memname">std::string KLIB_PUBLIC klib::sha224_hex </td>
           <td>(</td>
           <td class="paramtype">const std::string &amp;&#160;</td>
           <td class="paramname"><em>data</em></td><td>)</td>
@@ -825,14 +826,14 @@ Functions</h2></td></tr>
 
 </div>
 </div>
-<a id="a8a23cf04c49f3c285bcd9ee4ad7df082" name="a8a23cf04c49f3c285bcd9ee4ad7df082"></a>
-<h2 class="memtitle"><span class="permalink"><a href="#a8a23cf04c49f3c285bcd9ee4ad7df082">&#9670;&nbsp;</a></span>sha256()</h2>
+<a id="a2439efe1549d3bf37d51a19a3e959f63" name="a2439efe1549d3bf37d51a19a3e959f63"></a>
+<h2 class="memtitle"><span class="permalink"><a href="#a2439efe1549d3bf37d51a19a3e959f63">&#9670;&nbsp;</a></span>sha256()</h2>
 
 <div class="memitem">
 <div class="memproto">
       <table class="memname">
         <tr>
-          <td class="memname">std::string klib::sha256 </td>
+          <td class="memname">std::string KLIB_PUBLIC klib::sha256 </td>
           <td>(</td>
           <td class="paramtype">const std::string &amp;&#160;</td>
           <td class="paramname"><em>data</em></td><td>)</td>
@@ -853,14 +854,14 @@ Functions</h2></td></tr>
 
 </div>
 </div>
-<a id="ab6c1740558aef564fa9f6fa8dbc96710" name="ab6c1740558aef564fa9f6fa8dbc96710"></a>
-<h2 class="memtitle"><span class="permalink"><a href="#ab6c1740558aef564fa9f6fa8dbc96710">&#9670;&nbsp;</a></span>sha256_hex()</h2>
+<a id="aa422cc5b227a9aef75751c8b56ae7d70" name="aa422cc5b227a9aef75751c8b56ae7d70"></a>
+<h2 class="memtitle"><span class="permalink"><a href="#aa422cc5b227a9aef75751c8b56ae7d70">&#9670;&nbsp;</a></span>sha256_hex()</h2>
 
 <div class="memitem">
 <div class="memproto">
       <table class="memname">
         <tr>
-          <td class="memname">std::string klib::sha256_hex </td>
+          <td class="memname">std::string KLIB_PUBLIC klib::sha256_hex </td>
           <td>(</td>
           <td class="paramtype">const std::string &amp;&#160;</td>
           <td class="paramname"><em>data</em></td><td>)</td>
@@ -881,14 +882,14 @@ Functions</h2></td></tr>
 
 </div>
 </div>
-<a id="a909fd468d39ef504eb60f02986f3db16" name="a909fd468d39ef504eb60f02986f3db16"></a>
-<h2 class="memtitle"><span class="permalink"><a href="#a909fd468d39ef504eb60f02986f3db16">&#9670;&nbsp;</a></span>sha384()</h2>
+<a id="a9ee2ee06eca3a13919e43fc1e3ffabfb" name="a9ee2ee06eca3a13919e43fc1e3ffabfb"></a>
+<h2 class="memtitle"><span class="permalink"><a href="#a9ee2ee06eca3a13919e43fc1e3ffabfb">&#9670;&nbsp;</a></span>sha384()</h2>
 
 <div class="memitem">
 <div class="memproto">
       <table class="memname">
         <tr>
-          <td class="memname">std::string klib::sha384 </td>
+          <td class="memname">std::string KLIB_PUBLIC klib::sha384 </td>
           <td>(</td>
           <td class="paramtype">const std::string &amp;&#160;</td>
           <td class="paramname"><em>data</em></td><td>)</td>
@@ -909,14 +910,14 @@ Functions</h2></td></tr>
 
 </div>
 </div>
-<a id="adc4b78e2758a50745f12c23e00df1b7c" name="adc4b78e2758a50745f12c23e00df1b7c"></a>
-<h2 class="memtitle"><span class="permalink"><a href="#adc4b78e2758a50745f12c23e00df1b7c">&#9670;&nbsp;</a></span>sha384_hex()</h2>
+<a id="a18f7f0a0cd8790441122cacde0a037b7" name="a18f7f0a0cd8790441122cacde0a037b7"></a>
+<h2 class="memtitle"><span class="permalink"><a href="#a18f7f0a0cd8790441122cacde0a037b7">&#9670;&nbsp;</a></span>sha384_hex()</h2>
 
 <div class="memitem">
 <div class="memproto">
       <table class="memname">
         <tr>
-          <td class="memname">std::string klib::sha384_hex </td>
+          <td class="memname">std::string KLIB_PUBLIC klib::sha384_hex </td>
           <td>(</td>
           <td class="paramtype">const std::string &amp;&#160;</td>
           <td class="paramname"><em>data</em></td><td>)</td>
@@ -937,14 +938,14 @@ Functions</h2></td></tr>
 
 </div>
 </div>
-<a id="a3e4a64c601831edff84697eaf9d27add" name="a3e4a64c601831edff84697eaf9d27add"></a>
-<h2 class="memtitle"><span class="permalink"><a href="#a3e4a64c601831edff84697eaf9d27add">&#9670;&nbsp;</a></span>sha512()</h2>
+<a id="a4eb60b9db1c580c293c51d77f5e3c73b" name="a4eb60b9db1c580c293c51d77f5e3c73b"></a>
+<h2 class="memtitle"><span class="permalink"><a href="#a4eb60b9db1c580c293c51d77f5e3c73b">&#9670;&nbsp;</a></span>sha512()</h2>
 
 <div class="memitem">
 <div class="memproto">
       <table class="memname">
         <tr>
-          <td class="memname">std::string klib::sha512 </td>
+          <td class="memname">std::string KLIB_PUBLIC klib::sha512 </td>
           <td>(</td>
           <td class="paramtype">const std::string &amp;&#160;</td>
           <td class="paramname"><em>data</em></td><td>)</td>
@@ -965,14 +966,14 @@ Functions</h2></td></tr>
 
 </div>
 </div>
-<a id="aa1446a8c09611cb2aa0e70cd6829f288" name="aa1446a8c09611cb2aa0e70cd6829f288"></a>
-<h2 class="memtitle"><span class="permalink"><a href="#aa1446a8c09611cb2aa0e70cd6829f288">&#9670;&nbsp;</a></span>sha512_hex()</h2>
+<a id="a9e084c0e0b9a7fe015b8c95ca987f03f" name="a9e084c0e0b9a7fe015b8c95ca987f03f"></a>
+<h2 class="memtitle"><span class="permalink"><a href="#a9e084c0e0b9a7fe015b8c95ca987f03f">&#9670;&nbsp;</a></span>sha512_hex()</h2>
 
 <div class="memitem">
 <div class="memproto">
       <table class="memname">
         <tr>
-          <td class="memname">std::string klib::sha512_hex </td>
+          <td class="memname">std::string KLIB_PUBLIC klib::sha512_hex </td>
           <td>(</td>
           <td class="paramtype">const std::string &amp;&#160;</td>
           <td class="paramname"><em>data</em></td><td>)</td>

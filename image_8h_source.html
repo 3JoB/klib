@@ -30,7 +30,7 @@
  <tbody>
  <tr id="projectrow">
   <td id="projectalign">
-   <div id="projectname">klib<span id="projectnumber">&#160;1.9.0</span>
+   <div id="projectname">klib<span id="projectnumber">&#160;1.9.1</span>
    </div>
   </td>
     <td>        <div id="MSearchBox" class="MSearchBoxInactive">
@@ -102,36 +102,44 @@ $(document).ready(function(){initNavTree('image_8h_source.html',''); initResizab
 <div class="line"><a id="l00010" name="l00010"></a><span class="lineno">   10</span><span class="preprocessor">#include &lt;string&gt;</span></div>
 <div class="line"><a id="l00011" name="l00011"></a><span class="lineno">   11</span><span class="preprocessor">#include &lt;string_view&gt;</span></div>
 <div class="line"><a id="l00012" name="l00012"></a><span class="lineno">   12</span> </div>
-<div class="line"><a id="l00013" name="l00013"></a><span class="lineno">   13</span><span class="keyword">namespace </span>klib {</div>
+<div class="line"><a id="l00013" name="l00013"></a><span class="lineno">   13</span><span class="preprocessor">#include &quot;klib/config.h&quot;</span></div>
 <div class="line"><a id="l00014" name="l00014"></a><span class="lineno">   14</span> </div>
-<div class="line"><a id="l00023" name="l00023"></a><span class="lineno"><a class="line" href="image_8h.html#ab1db035c478f37dd7f7c13e448bde6de">   23</a></span>std::string <a class="code hl_function" href="image_8h.html#ab1db035c478f37dd7f7c13e448bde6de">image_to_jpeg</a>(<span class="keyword">const</span> std::string &amp;image, std::int32_t quality = 75,</div>
-<div class="line"><a id="l00024" name="l00024"></a><span class="lineno">   24</span>                          <span class="keywordtype">bool</span> max_compress = <span class="keyword">false</span>);</div>
-<div class="line"><a id="l00025" name="l00025"></a><span class="lineno">   25</span> </div>
-<div class="line"><a id="l00034" name="l00034"></a><span class="lineno"><a class="line" href="image_8h.html#a6ebd182de982975e329dd632ab10978d">   34</a></span>std::string <a class="code hl_function" href="image_8h.html#ab1db035c478f37dd7f7c13e448bde6de">image_to_jpeg</a>(std::string_view image, std::int32_t quality = 75,</div>
-<div class="line"><a id="l00035" name="l00035"></a><span class="lineno">   35</span>                          <span class="keywordtype">bool</span> max_compress = <span class="keyword">false</span>);</div>
-<div class="line"><a id="l00036" name="l00036"></a><span class="lineno">   36</span> </div>
-<div class="line"><a id="l00046" name="l00046"></a><span class="lineno"><a class="line" href="image_8h.html#a62e33c7473cad5674cf598f261421a0a">   46</a></span>std::string <a class="code hl_function" href="image_8h.html#ab1db035c478f37dd7f7c13e448bde6de">image_to_jpeg</a>(<span class="keyword">const</span> <span class="keywordtype">char</span> *image, std::size_t size,</div>
-<div class="line"><a id="l00047" name="l00047"></a><span class="lineno">   47</span>                          std::int32_t quality = 75, <span class="keywordtype">bool</span> max_compress = <span class="keyword">false</span>);</div>
-<div class="line"><a id="l00048" name="l00048"></a><span class="lineno">   48</span> </div>
-<div class="line"><a id="l00056" name="l00056"></a><span class="lineno"><a class="line" href="image_8h.html#a74d81a6313b4f95dbe26abe62e3d332b">   56</a></span>std::string <a class="code hl_function" href="image_8h.html#a74d81a6313b4f95dbe26abe62e3d332b">image_to_webp</a>(<span class="keyword">const</span> std::string &amp;image, std::int32_t quality = 75,</div>
-<div class="line"><a id="l00057" name="l00057"></a><span class="lineno">   57</span>                          <span class="keywordtype">bool</span> lossless = <span class="keyword">false</span>);</div>
-<div class="line"><a id="l00058" name="l00058"></a><span class="lineno">   58</span> </div>
-<div class="line"><a id="l00066" name="l00066"></a><span class="lineno"><a class="line" href="image_8h.html#a387497c87f77b2276fd4a21500e9fd45">   66</a></span>std::string <a class="code hl_function" href="image_8h.html#a74d81a6313b4f95dbe26abe62e3d332b">image_to_webp</a>(std::string_view image, std::int32_t quality = 75,</div>
-<div class="line"><a id="l00067" name="l00067"></a><span class="lineno">   67</span>                          <span class="keywordtype">bool</span> lossless = <span class="keyword">false</span>);</div>
-<div class="line"><a id="l00068" name="l00068"></a><span class="lineno">   68</span> </div>
-<div class="line"><a id="l00077" name="l00077"></a><span class="lineno"><a class="line" href="image_8h.html#af0801b12082972b3754ccf82f4dc5674">   77</a></span>std::string <a class="code hl_function" href="image_8h.html#a74d81a6313b4f95dbe26abe62e3d332b">image_to_webp</a>(<span class="keyword">const</span> <span class="keywordtype">char</span> *image, std::size_t size,</div>
-<div class="line"><a id="l00078" name="l00078"></a><span class="lineno">   78</span>                          std::int32_t quality = 75, <span class="keywordtype">bool</span> lossless = <span class="keyword">false</span>);</div>
-<div class="line"><a id="l00079" name="l00079"></a><span class="lineno">   79</span> </div>
-<div class="line"><a id="l00085" name="l00085"></a><span class="lineno"><a class="line" href="image_8h.html#a2095ab97c9091dd9efa5ed1335f7317f">   85</a></span>std::string <a class="code hl_function" href="image_8h.html#a2095ab97c9091dd9efa5ed1335f7317f">webp_to_png</a>(<span class="keyword">const</span> std::string &amp;image);</div>
-<div class="line"><a id="l00086" name="l00086"></a><span class="lineno">   86</span> </div>
-<div class="line"><a id="l00092" name="l00092"></a><span class="lineno"><a class="line" href="image_8h.html#a48b833a8bcfe27c11e8f94535d00aedb">   92</a></span>std::string <a class="code hl_function" href="image_8h.html#a2095ab97c9091dd9efa5ed1335f7317f">webp_to_png</a>(std::string_view image);</div>
-<div class="line"><a id="l00093" name="l00093"></a><span class="lineno">   93</span> </div>
-<div class="line"><a id="l00100" name="l00100"></a><span class="lineno"><a class="line" href="image_8h.html#a0961bb2fa21f1051828647d20761f2d4">  100</a></span>std::string <a class="code hl_function" href="image_8h.html#a2095ab97c9091dd9efa5ed1335f7317f">webp_to_png</a>(<span class="keyword">const</span> <span class="keywordtype">char</span> *image, std::size_t size);</div>
+<div class="line"><a id="l00015" name="l00015"></a><span class="lineno">   15</span><span class="keyword">namespace </span>klib {</div>
+<div class="line"><a id="l00016" name="l00016"></a><span class="lineno">   16</span> </div>
+<div class="line"><a id="l00025" name="l00025"></a><span class="lineno"><a class="line" href="image_8h.html#ad70e0e3f92c84e33c058ef4393a49d59">   25</a></span>std::string KLIB_PUBLIC <a class="code hl_function" href="image_8h.html#ad70e0e3f92c84e33c058ef4393a49d59">image_to_jpeg</a>(<span class="keyword">const</span> std::string &amp;image,</div>
+<div class="line"><a id="l00026" name="l00026"></a><span class="lineno">   26</span>                                      std::int32_t quality = 75,</div>
+<div class="line"><a id="l00027" name="l00027"></a><span class="lineno">   27</span>                                      <span class="keywordtype">bool</span> max_compress = <span class="keyword">false</span>);</div>
+<div class="line"><a id="l00028" name="l00028"></a><span class="lineno">   28</span> </div>
+<div class="line"><a id="l00037" name="l00037"></a><span class="lineno"><a class="line" href="image_8h.html#aa3c64f235a407485d9b089b363920bc3">   37</a></span>std::string KLIB_PUBLIC <a class="code hl_function" href="image_8h.html#ad70e0e3f92c84e33c058ef4393a49d59">image_to_jpeg</a>(std::string_view image,</div>
+<div class="line"><a id="l00038" name="l00038"></a><span class="lineno">   38</span>                                      std::int32_t quality = 75,</div>
+<div class="line"><a id="l00039" name="l00039"></a><span class="lineno">   39</span>                                      <span class="keywordtype">bool</span> max_compress = <span class="keyword">false</span>);</div>
+<div class="line"><a id="l00040" name="l00040"></a><span class="lineno">   40</span> </div>
+<div class="line"><a id="l00050" name="l00050"></a><span class="lineno"><a class="line" href="image_8h.html#a671240eb79e120878e575e4bea237a2e">   50</a></span>std::string KLIB_PUBLIC <a class="code hl_function" href="image_8h.html#ad70e0e3f92c84e33c058ef4393a49d59">image_to_jpeg</a>(<span class="keyword">const</span> <span class="keywordtype">char</span> *image, std::size_t size,</div>
+<div class="line"><a id="l00051" name="l00051"></a><span class="lineno">   51</span>                                      std::int32_t quality = 75,</div>
+<div class="line"><a id="l00052" name="l00052"></a><span class="lineno">   52</span>                                      <span class="keywordtype">bool</span> max_compress = <span class="keyword">false</span>);</div>
+<div class="line"><a id="l00053" name="l00053"></a><span class="lineno">   53</span> </div>
+<div class="line"><a id="l00061" name="l00061"></a><span class="lineno"><a class="line" href="image_8h.html#ade209e97947108e0b0d646090090f9db">   61</a></span>std::string KLIB_PUBLIC <a class="code hl_function" href="image_8h.html#ade209e97947108e0b0d646090090f9db">image_to_webp</a>(<span class="keyword">const</span> std::string &amp;image,</div>
+<div class="line"><a id="l00062" name="l00062"></a><span class="lineno">   62</span>                                      std::int32_t quality = 75,</div>
+<div class="line"><a id="l00063" name="l00063"></a><span class="lineno">   63</span>                                      <span class="keywordtype">bool</span> lossless = <span class="keyword">false</span>);</div>
+<div class="line"><a id="l00064" name="l00064"></a><span class="lineno">   64</span> </div>
+<div class="line"><a id="l00072" name="l00072"></a><span class="lineno"><a class="line" href="image_8h.html#a8e52832b23eee5e62f84fe90f3a41048">   72</a></span>std::string KLIB_PUBLIC <a class="code hl_function" href="image_8h.html#ade209e97947108e0b0d646090090f9db">image_to_webp</a>(std::string_view image,</div>
+<div class="line"><a id="l00073" name="l00073"></a><span class="lineno">   73</span>                                      std::int32_t quality = 75,</div>
+<div class="line"><a id="l00074" name="l00074"></a><span class="lineno">   74</span>                                      <span class="keywordtype">bool</span> lossless = <span class="keyword">false</span>);</div>
+<div class="line"><a id="l00075" name="l00075"></a><span class="lineno">   75</span> </div>
+<div class="line"><a id="l00084" name="l00084"></a><span class="lineno"><a class="line" href="image_8h.html#a77162cf957c1446f583214ef39b9005b">   84</a></span>std::string KLIB_PUBLIC <a class="code hl_function" href="image_8h.html#ade209e97947108e0b0d646090090f9db">image_to_webp</a>(<span class="keyword">const</span> <span class="keywordtype">char</span> *image, std::size_t size,</div>
+<div class="line"><a id="l00085" name="l00085"></a><span class="lineno">   85</span>                                      std::int32_t quality = 75,</div>
+<div class="line"><a id="l00086" name="l00086"></a><span class="lineno">   86</span>                                      <span class="keywordtype">bool</span> lossless = <span class="keyword">false</span>);</div>
+<div class="line"><a id="l00087" name="l00087"></a><span class="lineno">   87</span> </div>
+<div class="line"><a id="l00093" name="l00093"></a><span class="lineno"><a class="line" href="image_8h.html#affb56aa3a0a5de8314aa244bc6a3a463">   93</a></span>std::string KLIB_PUBLIC <a class="code hl_function" href="image_8h.html#affb56aa3a0a5de8314aa244bc6a3a463">webp_to_png</a>(<span class="keyword">const</span> std::string &amp;image);</div>
+<div class="line"><a id="l00094" name="l00094"></a><span class="lineno">   94</span> </div>
+<div class="line"><a id="l00100" name="l00100"></a><span class="lineno"><a class="line" href="image_8h.html#aae5f017ee5b8087f5d513d70829e1f3a">  100</a></span>std::string KLIB_PUBLIC <a class="code hl_function" href="image_8h.html#affb56aa3a0a5de8314aa244bc6a3a463">webp_to_png</a>(std::string_view image);</div>
 <div class="line"><a id="l00101" name="l00101"></a><span class="lineno">  101</span> </div>
-<div class="line"><a id="l00102" name="l00102"></a><span class="lineno">  102</span>}  <span class="comment">// namespace klib</span></div>
-<div class="ttc" id="aimage_8h_html_a2095ab97c9091dd9efa5ed1335f7317f"><div class="ttname"><a href="image_8h.html#a2095ab97c9091dd9efa5ed1335f7317f">klib::webp_to_png</a></div><div class="ttdeci">std::string webp_to_png(const std::string &amp;image)</div><div class="ttdoc">Convert from WebP format to PNG format.</div></div>
-<div class="ttc" id="aimage_8h_html_a74d81a6313b4f95dbe26abe62e3d332b"><div class="ttname"><a href="image_8h.html#a74d81a6313b4f95dbe26abe62e3d332b">klib::image_to_webp</a></div><div class="ttdeci">std::string image_to_webp(const std::string &amp;image, std::int32_t quality=75, bool lossless=false)</div><div class="ttdoc">Convert PNG/JPEG format to WebP format.</div></div>
-<div class="ttc" id="aimage_8h_html_ab1db035c478f37dd7f7c13e448bde6de"><div class="ttname"><a href="image_8h.html#ab1db035c478f37dd7f7c13e448bde6de">klib::image_to_jpeg</a></div><div class="ttdeci">std::string image_to_jpeg(const std::string &amp;image, std::int32_t quality=75, bool max_compress=false)</div><div class="ttdoc">Convert PNG/JPEG format to JPEG format.</div></div>
+<div class="line"><a id="l00108" name="l00108"></a><span class="lineno"><a class="line" href="image_8h.html#a8842f3f12a75754115c4b290e2622a50">  108</a></span>std::string KLIB_PUBLIC <a class="code hl_function" href="image_8h.html#affb56aa3a0a5de8314aa244bc6a3a463">webp_to_png</a>(<span class="keyword">const</span> <span class="keywordtype">char</span> *image, std::size_t size);</div>
+<div class="line"><a id="l00109" name="l00109"></a><span class="lineno">  109</span> </div>
+<div class="line"><a id="l00110" name="l00110"></a><span class="lineno">  110</span>}  <span class="comment">// namespace klib</span></div>
+<div class="ttc" id="aimage_8h_html_ad70e0e3f92c84e33c058ef4393a49d59"><div class="ttname"><a href="image_8h.html#ad70e0e3f92c84e33c058ef4393a49d59">klib::image_to_jpeg</a></div><div class="ttdeci">std::string KLIB_PUBLIC image_to_jpeg(const std::string &amp;image, std::int32_t quality=75, bool max_compress=false)</div><div class="ttdoc">Convert PNG/JPEG format to JPEG format.</div></div>
+<div class="ttc" id="aimage_8h_html_ade209e97947108e0b0d646090090f9db"><div class="ttname"><a href="image_8h.html#ade209e97947108e0b0d646090090f9db">klib::image_to_webp</a></div><div class="ttdeci">std::string KLIB_PUBLIC image_to_webp(const std::string &amp;image, std::int32_t quality=75, bool lossless=false)</div><div class="ttdoc">Convert PNG/JPEG format to WebP format.</div></div>
+<div class="ttc" id="aimage_8h_html_affb56aa3a0a5de8314aa244bc6a3a463"><div class="ttname"><a href="image_8h.html#affb56aa3a0a5de8314aa244bc6a3a463">klib::webp_to_png</a></div><div class="ttdeci">std::string KLIB_PUBLIC webp_to_png(const std::string &amp;image)</div><div class="ttdoc">Convert from WebP format to PNG format.</div></div>
 </div><!-- fragment --></div><!-- contents -->
 </div><!-- doc-content -->
 <!-- start footer part -->

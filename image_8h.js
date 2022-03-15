@@ -1,12 +1,12 @@
 var image_8h =
 [
-    [ "image_to_jpeg", "image_8h.html#a62e33c7473cad5674cf598f261421a0a", null ],
-    [ "image_to_jpeg", "image_8h.html#ab1db035c478f37dd7f7c13e448bde6de", null ],
-    [ "image_to_jpeg", "image_8h.html#a6ebd182de982975e329dd632ab10978d", null ],
-    [ "image_to_webp", "image_8h.html#af0801b12082972b3754ccf82f4dc5674", null ],
-    [ "image_to_webp", "image_8h.html#a74d81a6313b4f95dbe26abe62e3d332b", null ],
-    [ "image_to_webp", "image_8h.html#a387497c87f77b2276fd4a21500e9fd45", null ],
-    [ "webp_to_png", "image_8h.html#a0961bb2fa21f1051828647d20761f2d4", null ],
-    [ "webp_to_png", "image_8h.html#a2095ab97c9091dd9efa5ed1335f7317f", null ],
-    [ "webp_to_png", "image_8h.html#a48b833a8bcfe27c11e8f94535d00aedb", null ]
+    [ "image_to_jpeg", "image_8h.html#a671240eb79e120878e575e4bea237a2e", null ],
+    [ "image_to_jpeg", "image_8h.html#ad70e0e3f92c84e33c058ef4393a49d59", null ],
+    [ "image_to_jpeg", "image_8h.html#aa3c64f235a407485d9b089b363920bc3", null ],
+    [ "image_to_webp", "image_8h.html#a77162cf957c1446f583214ef39b9005b", null ],
+    [ "image_to_webp", "image_8h.html#ade209e97947108e0b0d646090090f9db", null ],
+    [ "image_to_webp", "image_8h.html#a8e52832b23eee5e62f84fe90f3a41048", null ],
+    [ "webp_to_png", "image_8h.html#a8842f3f12a75754115c4b290e2622a50", null ],
+    [ "webp_to_png", "image_8h.html#affb56aa3a0a5de8314aa244bc6a3a463", null ],
+    [ "webp_to_png", "image_8h.html#aae5f017ee5b8087f5d513d70829e1f3a", null ]
 ];
