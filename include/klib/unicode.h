@@ -8,6 +8,7 @@
 #include <cstdint>
 #include <string>
 
+#include "klib/config.h"
 #include "klib/detail/unicode_util.h"
 
 namespace klib {
@@ -16,117 +17,117 @@ namespace klib {
  * @brief Remove all leading spaces from the input
  * @param str: Input string
  */
-void trim_left(std::string &str);
+void KLIB_PUBLIC trim_left(std::string &str);
 
 /**
  * @brief Remove all leading spaces from the input
  * @param str: Input string
  * @return A trimmed copy of the input
  */
-std::string trim_left_copy(const std::string &str);
+std::string KLIB_PUBLIC trim_left_copy(const std::string &str);
 
 /**
  * @brief Remove all trailing spaces from the input
  * @param str: Input string
  */
-void trim_right(std::string &str);
+void KLIB_PUBLIC trim_right(std::string &str);
 
 /**
  * @brief Remove all trailing spaces from the input
  * @param str: Input string
  * @return A trimmed copy of the input
  */
-std::string trim_right_copy(const std::string &str);
+std::string KLIB_PUBLIC trim_right_copy(const std::string &str);
 
 /**
  * @brief Remove all leading and trailing spaces from the input
  * @param str: Input string
  */
-void trim(std::string &str);
+void KLIB_PUBLIC trim(std::string &str);
 
 /**
  * @brief Remove all leading and trailing spaces from the input
  * @param str: Input string
  * @return A trimmed copy of the input
  */
-std::string trim_copy(const std::string &str);
+std::string KLIB_PUBLIC trim_copy(const std::string &str);
 
 /**
  * @brief Get first code point
  * @param str: Input string
  * @return The first code point
  */
-char32_t first_code_point(const std::string &str);
+char32_t KLIB_PUBLIC first_code_point(const std::string &str);
 
 /**
  * @brief Get last code point
  * @param str: Input string
  * @return The last code point
  */
-char32_t last_code_point(const std::string &str);
+char32_t KLIB_PUBLIC last_code_point(const std::string &str);
 
 /**
  * @brief Validate the UTF-8 string
  * @param str: The UTF-8 string to validate
  * @return True if and only if the string is valid UTF-8
  */
-bool validate_utf8(const std::string &str);
+bool KLIB_PUBLIC validate_utf8(const std::string &str);
 
 /**
  * @brief Validate the UTF-16 string
  * @param str: The UTF-16 string to validate
  * @return True if and only if the string is valid UTF-16
  */
-bool validate_utf16(const std::u16string &str);
+bool KLIB_PUBLIC validate_utf16(const std::u16string &str);
 
 /**
  * @brief Convert UTF-8 encoded string to UTF-16 encoded string
  * @param str: UTF-8 encoded string
  * @return The converted UTF-16 encoded string
  */
-std::u16string utf8_to_utf16(const std::string &str);
+std::u16string KLIB_PUBLIC utf8_to_utf16(const std::string &str);
 
 /**
  * @brief Convert UTF-16 encoded string to UTF-8 encoded string
  * @param str: UTF-16 encoded string
  * @return The converted UTF-8 encoded string
  */
-std::string utf16_to_utf8(const std::u16string &str);
+std::string KLIB_PUBLIC utf16_to_utf8(const std::u16string &str);
 
 /**
  * @brief Convert UTF-8 encoded string to UTF-32 encoded string
  * @param str: UTF-8 encoded string
  * @return The converted UTF-32 encoded string
  */
-std::u32string utf8_to_utf32(const std::string &str);
+std::u32string KLIB_PUBLIC utf8_to_utf32(const std::string &str);
 
 /**
  * @brief Convert UTF-8 encoded string to UTF-32 encoded string
  * @param str: UTF-8 encoded string
  * @return The converted UTF-32 encoded string
  */
-std::wstring utf8_to_utf32_w(const std::string &str);
+std::wstring KLIB_PUBLIC utf8_to_utf32_w(const std::string &str);
 
 /**
  * @brief Convert UTF-32 encoded string to UTF-8 encoded string
  * @param str: UTF-32 encoded string
  * @return The converted UTF-8 encoded string
  */
-std::string utf32_to_utf8(const std::u32string &str);
+std::string KLIB_PUBLIC utf32_to_utf8(const std::u32string &str);
 
 /**
  * @brief Convert UTF-32 encoded string to UTF-8 encoded string
  * @param str: UTF-32 encoded string
  * @return The converted UTF-8 encoded string
  */
-std::string utf32_to_utf8_w(const std::wstring &str);
+std::string KLIB_PUBLIC utf32_to_utf8_w(const std::wstring &str);
 
 /**
  * @brief Determine whether it is an ASCII character
  * @param code_point: Code point
  * @return If it is an ASCII character, return true, otherwise return false
  */
-constexpr bool is_ascii(char32_t code_point) {
+constexpr bool KLIB_PUBLIC is_ascii(char32_t code_point) {
   return static_cast<std::uint32_t>(code_point) <= 0x7F;
 }
 
@@ -136,7 +137,7 @@ constexpr bool is_ascii(char32_t code_point) {
  * @return If it is an whitespace character, return true, otherwise return false
  * @see https://en.wikipedia.org/wiki/Whitespace_character
  */
-constexpr bool is_whitespace(char32_t code_point) {
+constexpr bool KLIB_PUBLIC is_whitespace(char32_t code_point) {
   using namespace detail;
 
   return code_point == U'\u0009' || range(code_point, U'\u000A', U'\u000D') ||
@@ -153,7 +154,7 @@ constexpr bool is_whitespace(char32_t code_point) {
  * @return If it is an control character, return true, otherwise return false
  * @see https://zh.wikipedia.org/wiki/%E6%8E%A7%E5%88%B6%E5%AD%97%E7%AC%A6
  */
-constexpr bool is_control(char32_t code_point) {
+constexpr bool KLIB_PUBLIC is_control(char32_t code_point) {
   using namespace detail;
 
   return range(code_point, U'\u0000', U'\u001F') ||
@@ -167,7 +168,7 @@ constexpr bool is_control(char32_t code_point) {
  * return false
  * @see https://zh.wikipedia.org/wiki/%E6%A0%87%E7%82%B9%E7%AC%A6%E5%8F%B7
  */
-constexpr bool is_chinese_punctuation(char32_t code_point) {
+constexpr bool KLIB_PUBLIC is_chinese_punctuation(char32_t code_point) {
   return code_point == U'。' || code_point == U'？' || code_point == U'！' ||
          code_point == U'，' || code_point == U'、' || code_point == U'；' ||
          code_point == U'：' || code_point == U'“' || code_point == U'”' ||
@@ -195,7 +196,7 @@ constexpr bool is_chinese_punctuation(char32_t code_point) {
  * return false
  * @see https://zh.wikipedia.org/wiki/%E6%A0%87%E7%82%B9%E7%AC%A6%E5%8F%B7
  */
-constexpr bool is_english_punctuation(char32_t code_point) {
+constexpr bool KLIB_PUBLIC is_english_punctuation(char32_t code_point) {
   return code_point == U'.' || code_point == U'?' || code_point == U'!' ||
          code_point == U',' || code_point == U':' || code_point == U'…' ||
          code_point == U';' || code_point == U'-' || code_point == U'–' ||
@@ -213,7 +214,7 @@ constexpr bool is_english_punctuation(char32_t code_point) {
  * @see
  * https://zh.wikipedia.org/wiki/%E4%B8%AD%E6%97%A5%E9%9F%93%E7%B5%B1%E4%B8%80%E8%A1%A8%E6%84%8F%E6%96%87%E5%AD%97
  */
-constexpr bool is_cjk(char32_t code_point) {
+constexpr bool KLIB_PUBLIC is_cjk(char32_t code_point) {
   using namespace detail;
 
   return code_point == U'\u3007' || range(code_point, U'\u3400', U'\u4DBF') ||

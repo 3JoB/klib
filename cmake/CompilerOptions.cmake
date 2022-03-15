@@ -73,6 +73,8 @@ add_compiler_flag("-fno-plt")
 
 set(CMAKE_POSITION_INDEPENDENT_CODE ON)
 
+add_compiler_flag("-fvisibility=hidden")
+
 # ---------------------------------------------------------------------------------------
 # Optimization
 # ---------------------------------------------------------------------------------------

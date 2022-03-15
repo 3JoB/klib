@@ -10,6 +10,8 @@
 #include <string>
 #include <string_view>
 
+#include "klib/config.h"
+
 namespace klib {
 
 /**
@@ -20,8 +22,9 @@ namespace klib {
  * at the expense of increased encoding time
  * @return Image in JPEG format
  */
-std::string image_to_jpeg(const std::string &image, std::int32_t quality = 75,
-                          bool max_compress = false);
+std::string KLIB_PUBLIC image_to_jpeg(const std::string &image,
+                                      std::int32_t quality = 75,
+                                      bool max_compress = false);
 
 /**
  * @brief Convert PNG/JPEG to format JPEG format
@@ -31,8 +34,9 @@ std::string image_to_jpeg(const std::string &image, std::int32_t quality = 75,
  * at the expense of increased encoding time
  * @return Image in JPEG format
  */
-std::string image_to_jpeg(std::string_view image, std::int32_t quality = 75,
-                          bool max_compress = false);
+std::string KLIB_PUBLIC image_to_jpeg(std::string_view image,
+                                      std::int32_t quality = 75,
+                                      bool max_compress = false);
 
 /**
  * @brief Convert PNG/JPEG to format JPEG format
@@ -43,8 +47,9 @@ std::string image_to_jpeg(std::string_view image, std::int32_t quality = 75,
  * at the expense of increased encoding time
  * @return Image in JPEG format
  */
-std::string image_to_jpeg(const char *image, std::size_t size,
-                          std::int32_t quality = 75, bool max_compress = false);
+std::string KLIB_PUBLIC image_to_jpeg(const char *image, std::size_t size,
+                                      std::int32_t quality = 75,
+                                      bool max_compress = false);
 
 /**
  * @brief Convert PNG/JPEG format to WebP format
@@ -53,8 +58,9 @@ std::string image_to_jpeg(const char *image, std::size_t size,
  * @param lossless: Whether to do lossless conversion
  * @return Image in WebP format
  */
-std::string image_to_webp(const std::string &image, std::int32_t quality = 75,
-                          bool lossless = false);
+std::string KLIB_PUBLIC image_to_webp(const std::string &image,
+                                      std::int32_t quality = 75,
+                                      bool lossless = false);
 
 /**
  * @brief Convert PNG/JPEG format to WebP format
@@ -63,8 +69,9 @@ std::string image_to_webp(const std::string &image, std::int32_t quality = 75,
  * @param lossless: Whether to do lossless conversion
  * @return Image in WebP format
  */
-std::string image_to_webp(std::string_view image, std::int32_t quality = 75,
-                          bool lossless = false);
+std::string KLIB_PUBLIC image_to_webp(std::string_view image,
+                                      std::int32_t quality = 75,
+                                      bool lossless = false);
 
 /**
  * @brief Convert PNG/JPEG format to WebP format
@@ -74,22 +81,23 @@ std::string image_to_webp(std::string_view image, std::int32_t quality = 75,
  * @param lossless: Whether to do lossless conversion
  * @return Image in WebP format
  */
-std::string image_to_webp(const char *image, std::size_t size,
-                          std::int32_t quality = 75, bool lossless = false);
+std::string KLIB_PUBLIC image_to_webp(const char *image, std::size_t size,
+                                      std::int32_t quality = 75,
+                                      bool lossless = false);
 
 /**
  * @brief Convert from WebP format to PNG format
  * @param image: Image to be converted
  * @return Image in PNG format
  */
-std::string webp_to_png(const std::string &image);
+std::string KLIB_PUBLIC webp_to_png(const std::string &image);
 
 /**
  * @brief Convert from WebP format to PNG format
  * @param image: Image to be converted
  * @return Image in PNG format
  */
-std::string webp_to_png(std::string_view image);
+std::string KLIB_PUBLIC webp_to_png(std::string_view image);
 
 /**
  * @brief Convert from WebP format to PNG format
@@ -97,6 +105,6 @@ std::string webp_to_png(std::string_view image);
  * @param size: Image size
  * @return Image in PNG format
  */
-std::string webp_to_png(const char *image, std::size_t size);
+std::string KLIB_PUBLIC webp_to_png(const char *image, std::size_t size);
 
 }  // namespace klib

@@ -12,6 +12,8 @@
 #include <string>
 #include <string_view>
 
+#include "klib/config.h"
+
 namespace klib {
 
 class SqlQuery;
@@ -19,7 +21,7 @@ class SqlQuery;
 /**
  * @brief Represents a column of data in a row
  */
-class Column {
+class KLIB_PUBLIC Column {
   friend class SqlQuery;
 
  public:
@@ -82,7 +84,7 @@ class SqlDatabase;
 /**
  * @brief Represents a SQL statement
  */
-class SqlQuery {
+class KLIB_PUBLIC SqlQuery {
   friend class SqlDatabase;
   friend class Column::ColumnImpl;
 
@@ -188,7 +190,7 @@ class SqlQuery {
   std::experimental::propagate_const<std::unique_ptr<SqlQueryImpl>> impl_;
 };
 
-class SqlDatabase {
+class KLIB_PUBLIC SqlDatabase {
   friend SqlQuery::SqlQueryImpl;
 
  public:

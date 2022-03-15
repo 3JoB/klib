@@ -10,12 +10,14 @@
 #include <string_view>
 #include <unordered_map>
 
+#include "klib/config.h"
+
 namespace klib {
 
 /**
  * @brief Parse URL
  */
-class URL {
+class KLIB_PUBLIC URL {
  public:
   URL() = default;
   /**

@@ -7,6 +7,8 @@
 
 #include <string>
 
+#include "klib/config.h"
+
 namespace klib {
 
 /**
@@ -15,6 +17,7 @@ namespace klib {
  * @param ignore_error: Ignore error
  * @return Tidy HTML document
  */
-std::string html_tidy(const std::string &html, bool ignore_error = false);
+std::string KLIB_PUBLIC html_tidy(const std::string &html,
+                                  bool ignore_error = false);
 
 }  // namespace klib
