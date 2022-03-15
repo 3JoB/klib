@@ -18,7 +18,7 @@
 /**
  * @brief klib patch version
  */
-#define KLIB_VER_PATCH 1
+#define KLIB_VER_PATCH 2
 
 #define KLIB_STRINGIZE2(s) #s
 #define KLIB_STRINGIZE(s) KLIB_STRINGIZE2(s)
