@@ -235,14 +235,10 @@ if(KLIB_BUILD_SHARED)
     ${KLIB_LIBRARY}-shared
     PRIVATE HAVE_CONFIG_H SFNTLY_EXPERIMENTAL SFNTLY_NO_EXCEPTION PNG_SUPPORTED
             CURL_NO_OLDIES SQLITE_HAS_CODEC)
-  target_compile_definitions(
-    ${KLIB_LIBRARY}-shared INTERFACE FMT_LOCALE SPDLOG_COMPILED_LIB
-                                     SPDLOG_FMT_EXTERNAL)
+  target_link_libraries(${KLIB_LIBRARY}-shared PUBLIC fmt::fmt spdlog::spdlog)
   target_link_libraries(
     ${KLIB_LIBRARY}-shared
-    PRIVATE fmt::fmt
-            spdlog::spdlog
-            PkgConfig::zlib
+    PRIVATE PkgConfig::zlib
             PkgConfig::libarchive
             PkgConfig::tidy
             PkgConfig::libcurl
