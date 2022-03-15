@@ -13,10 +13,6 @@
 
 A C++ library, which wraps several important C libraries and provides some convenient functions
 
-## Environment
-
-- [kenv](https://github.com/KaiserLancelot/kenv)
-
 ## Third party
 
 - zlib-ng ([zlib License](https://github.com/zlib-ng/zlib-ng/blob/develop/LICENSE.md))
@@ -43,32 +39,11 @@ A C++ library, which wraps several important C libraries and provides some conve
 - utf_utils ([License](https://github.com/BobSteagall/utf_utils/blob/master/LICENSE.txt))
 - Catch2 ([Boost License](https://github.com/catchorg/Catch2/blob/devel/LICENSE.txt))
 
-## Build
+## Build environment
 
-```bash
-cmake -S . -B build
-cmake --build build --config Release -j"$(nproc)"
-```
-
-## Install
-
-```bash
-sudo cmake --build build --config Release --target install
-```
-
-## Uninstall
-
-```bash
-sudo cmake --build build --config Release --target uninstall
-```
+- [kenv](https://github.com/KaiserLancelot/kenv)
 
 ## Usage with CMake
-
-```cmake
-add_subdirectory(klib)
-```
-
-or
 
 ```cmake
 find_package(klib)
