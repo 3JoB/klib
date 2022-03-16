@@ -1,6 +1,6 @@
 var util_8h =
 [
-    [ "klib::ChangeWorkingDir", "classklib_1_1ChangeWorkingDir.html", "classklib_1_1ChangeWorkingDir" ],
+    [ "ChangeWorkingDir", "classklib_1_1ChangeWorkingDir.html", "classklib_1_1ChangeWorkingDir" ],
     [ "cleanse", "util_8h.html#a91f7d3a43b44c39ddb0b2e191194b615", null ],
     [ "cleanse", "util_8h.html#a44704e5caec0900eb850ad043a4b76a0", null ],
     [ "exec", "util_8h.html#a156b3c2b7b076b007cca16c83b60e4e3", null ],
@@ -12,8 +12,8 @@ var util_8h =
     [ "read_file", "util_8h.html#a1812e641e7490dbf003a920d39c47168", null ],
     [ "read_file", "util_8h.html#ad372fb671586e06ec27976a95ffa6bbf", null ],
     [ "read_file", "util_8h.html#a4d8f31126dbae2c4b100b33b7493b03a", null ],
-    [ "split_str", "util_8h.html#ac833fc7bb3dbdec8fea5785118480605", null ],
-    [ "terminal_size", "util_8h.html#a96a4b78c8c2fde21e5d4dccc081c7651", null ],
+    [ "split_str", "util_8h.html#a5eadfbf82e3009c59e0960e0225d2cd5", null ],
+    [ "terminal_size", "util_8h.html#a9bd4012e2e6ab02d41aee79ce6a7d9bc", null ],
     [ "uuid", "util_8h.html#a15035db6a6170aadc3b1008e13ad64a5", null ],
     [ "wait_for_child_process", "util_8h.html#a04f9c50fe958c965b0e79bd739e450cc", null ],
     [ "write_file", "util_8h.html#a5169ca62f65edca9f93b34f94cd3bf85", null ],

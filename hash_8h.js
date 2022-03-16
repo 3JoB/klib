@@ -10,7 +10,7 @@ var hash_8h =
     [ "md5_hex", "hash_8h.html#a6f60e91acc91b247b97bb00a5717ea22", null ],
     [ "password_hash_encoded", "hash_8h.html#abe2f466b9077fd15cdf009b086c0966a", null ],
     [ "password_hash_raw", "hash_8h.html#ac7ad1f472c47aad32a0ed149708cabd0", null ],
-    [ "password_hash_raw", "hash_8h.html#a3f98feba8f8953d5564320511ede1b86", null ],
+    [ "password_hash_raw", "hash_8h.html#a11b196a4ba840feeb5a7186a3151599a", null ],
     [ "password_verify", "hash_8h.html#a2fddd43619f2711cefbd6babcbdebd8e", null ],
     [ "password_verify", "hash_8h.html#ac1722c3666941a85c6035d72b254ea20", null ],
     [ "sha1", "hash_8h.html#a3076fa5e8bf9c2b08e3686f58d822321", null ],
