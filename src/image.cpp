@@ -174,7 +174,7 @@ std::string image_to_webp(const char* image, std::size_t size,
     picture.use_argb = 0;
   }
 
-  WebPImageReader reader =
+  auto reader =
       WebPGuessImageReader(reinterpret_cast<const std::uint8_t*>(image), size);
   rc = reader(reinterpret_cast<const std::uint8_t*>(image), size, &picture, 1,
               nullptr);
@@ -214,10 +214,10 @@ std::string webp_to_png(const char* image, std::size_t size) {
     throw RuntimeError("libwebp: Library version mismatch");
   }
 
-  VP8StatusCode status;
   WebPBitstreamFeatures local_features;
-  status = WebPGetFeatures(reinterpret_cast<const std::uint8_t*>(image), size,
-                           bitstream == nullptr ? &local_features : bitstream);
+  auto status =
+      WebPGetFeatures(reinterpret_cast<const std::uint8_t*>(image), size,
+                      bitstream == nullptr ? &local_features : bitstream);
   if (status != VP8_STATUS_OK) [[unlikely]] {
     throw RuntimeError("libwebp: {}", GetWebPError(status));
   }
