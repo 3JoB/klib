@@ -55,22 +55,26 @@ std::string KLIB_PUBLIC image_to_jpeg(const char *image, std::size_t size,
  * @brief Convert PNG/JPEG format to WebP format
  * @param image: Image to be converted
  * @param quality: Compression quality
+ * @param method: Compression method (0=fast, 6=slowest)
  * @param lossless: Whether to do lossless conversion
  * @return Image in WebP format
  */
 std::string KLIB_PUBLIC image_to_webp(const std::string &image,
                                       std::int32_t quality = 75,
+                                      std::int32_t method = 0,
                                       bool lossless = false);
 
 /**
  * @brief Convert PNG/JPEG format to WebP format
  * @param image: Image to be converted
  * @param quality: Compression quality
+ * @param method: Compression method (0=fast, 6=slowest)
  * @param lossless: Whether to do lossless conversion
  * @return Image in WebP format
  */
 std::string KLIB_PUBLIC image_to_webp(std::string_view image,
                                       std::int32_t quality = 75,
+                                      std::int32_t method = 0,
                                       bool lossless = false);
 
 /**
@@ -78,11 +82,13 @@ std::string KLIB_PUBLIC image_to_webp(std::string_view image,
  * @param image: Image to be converted
  * @param size: Image size
  * @param quality: Compression quality
+ * @param method: Compression method (0=fast, 6=slowest)
  * @param lossless: Whether to do lossless conversion
  * @return Image in WebP format
  */
 std::string KLIB_PUBLIC image_to_webp(const char *image, std::size_t size,
                                       std::int32_t quality = 75,
+                                      std::int32_t method = 0,
                                       bool lossless = false);
 
 /**

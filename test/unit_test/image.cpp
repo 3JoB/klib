@@ -87,7 +87,7 @@ TEST_CASE("png to WebP", "[image]") {
 
   REQUIRE(std::filesystem::exists(out_name));
   CHECK(klib::sha256_hex(klib::read_file(out_name, true)) ==
-        "3ca6832ee006ee30e75dcd4604443e126ae408bf9309b6f1a5162c1463022b57");
+        "6947601e6faa622c72c1ebb3a538ef3db545b539315c97980dbd29d4bfc21133");
 
   dbg(std::filesystem::file_size(file_name));
   dbg(std::filesystem::file_size(out_name));
@@ -99,12 +99,12 @@ TEST_CASE("png to WebP lossless", "[image]") {
   const std::string image = klib::read_file(file_name, true);
 
   const std::string out_name = "wallpaper.lossless.webp";
-  const auto webp_image = klib::image_to_webp(image, 75, true);
+  const auto webp_image = klib::image_to_webp(image, 75, 0, true);
   klib::write_file(out_name, true, webp_image);
 
   REQUIRE(std::filesystem::exists(out_name));
   CHECK(klib::sha256_hex(klib::read_file(out_name, true)) ==
-        "76d7ee7c75a0f29aca00182623da63c2ee955dbe298b893b18dbf352f739bef8");
+        "43d1c51edff557a1144d5ad82b23379b87b63aef40ecb229d1eba474f6b11ae5");
 
   dbg(std::filesystem::file_size(file_name));
   dbg(std::filesystem::file_size(out_name));
@@ -121,7 +121,7 @@ TEST_CASE("jpg to WebP", "[image]") {
 
   REQUIRE(std::filesystem::exists(out_name));
   CHECK(klib::sha256_hex(klib::read_file(out_name, true)) ==
-        "1b6f6e1b3f661c9a4c67f13c64abd667d382e843f150781d62562c878442e6c7");
+        "5d323891d34749811f35d5bcd9bc55c07ffb0dccd2b8b160281a4e55904ad257");
 
   dbg(std::filesystem::file_size(file_name));
   dbg(std::filesystem::file_size(out_name));
@@ -133,12 +133,12 @@ TEST_CASE("jpg to WebP lossless", "[image]") {
   const std::string image = klib::read_file(file_name, true);
 
   const std::string out_name = "avatar.lossless.webp";
-  const auto webp_image = klib::image_to_webp(image, 75, true);
+  const auto webp_image = klib::image_to_webp(image, 75, 0, true);
   klib::write_file(out_name, true, webp_image);
 
   REQUIRE(std::filesystem::exists(out_name));
   CHECK(klib::sha256_hex(klib::read_file(out_name, true)) ==
-        "f2120c9500e91392a9e5bb37093db030e51208a5eef74574b75158c53b64708b");
+        "94975542b14cae76fd2dd7bfa68a71678f7eecd55292cdb249181d52b46b715a");
 
   dbg(std::filesystem::file_size(file_name));
   dbg(std::filesystem::file_size(out_name));

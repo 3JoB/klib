@@ -10,7 +10,6 @@
 
 #include "imageio/image_dec.h"
 #include "imageio/image_enc.h"
-#include "imageio/yuvdec.h"
 #include "klib/exception.h"
 #include "mozjpeg/cdjpeg.h"
 
@@ -116,17 +115,20 @@ std::string image_to_jpeg(const char* image, std::size_t size,
 }
 
 std::string image_to_webp(const std::string& image, std::int32_t quality,
-                          bool lossless) {
-  return image_to_webp(std::data(image), std::size(image), quality, lossless);
+                          std::int32_t method, bool lossless) {
+  return image_to_webp(std::data(image), std::size(image), quality, method,
+                       lossless);
 }
 
 std::string image_to_webp(std::string_view image, std::int32_t quality,
-                          bool lossless) {
-  return image_to_webp(std::data(image), std::size(image), quality, lossless);
+                          std::int32_t method, bool lossless) {
+  return image_to_webp(std::data(image), std::size(image), quality, method,
+                       lossless);
 }
 
 std::string image_to_webp(const char* image, std::size_t size,
-                          std::int32_t quality, bool lossless) {
+                          std::int32_t quality, std::int32_t method,
+                          bool lossless) {
   if (size == 0) [[unlikely]] {
     throw RuntimeError("The image is empty");
   }
@@ -158,6 +160,8 @@ std::string image_to_webp(const char* image, std::size_t size,
 
   config.quality = quality;
   config.lossless = lossless;
+  config.method = method;
+  ++config.thread_level;
 
   auto rc = WebPValidateConfig(&config);
   if (!rc) [[unlikely]] {
@@ -170,14 +174,10 @@ std::string image_to_webp(const char* image, std::size_t size,
     picture.use_argb = 0;
   }
 
-  if (picture.width == 0 || picture.height == 0) [[likely]] {
-    WebPImageReader reader = WebPGuessImageReader(
-        reinterpret_cast<const std::uint8_t*>(image), size);
-    rc = reader(reinterpret_cast<const std::uint8_t*>(image), size, &picture, 1,
-                nullptr);
-  } else [[unlikely]] {
-    rc = ReadYUV(reinterpret_cast<const std::uint8_t*>(image), size, &picture);
-  }
+  WebPImageReader reader =
+      WebPGuessImageReader(reinterpret_cast<const std::uint8_t*>(image), size);
+  rc = reader(reinterpret_cast<const std::uint8_t*>(image), size, &picture, 1,
+              nullptr);
   if (!rc) [[unlikely]] {
     throw RuntimeError("libwebp: Could not process");
   }
