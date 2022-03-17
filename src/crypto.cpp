@@ -84,8 +84,6 @@ std::pair<std::string, std::string> aes_256_crypt(
       -1);
   CHECK_BORINGSSL(rc);
 
-  EVP_CIPHER_CTX_set_padding(ctx, 1);
-
   if (is_aead && !std::empty(aad)) {
     std::int32_t unused;
     rc = EVP_CipherUpdate(
@@ -145,8 +143,8 @@ std::string aes_256_encrypt(const std::string &data, const std::string &key,
     return iv + std::move(result.first) + std::move(result.second);
   } else {
     const auto iv = generate_random_bytes(iv_size);
-    auto result = aes_256_crypt(data, key, iv, empty, empty, aes_mode, true);
-    return iv + std::move(result.first);
+    return iv +
+           aes_256_crypt(data, key, iv, empty, empty, aes_mode, true).first;
   }
 }
 

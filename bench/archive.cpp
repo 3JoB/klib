@@ -65,7 +65,7 @@ TEST_CASE_METHOD(TestsFixture, "ZIP", "[archive]") {
   (Catch::Benchmark::Chronometer meter) {
     meter.measure([] {
       klib::compress(dir_name, klib::Format::Zip, klib::Filter::Deflate,
-                     klib_zip_aes256_name, true, "kaiser123");
+                     klib_zip_aes256_name, true, 6, "kaiser123");
     });
 
     REQUIRE(std::filesystem::is_regular_file(klib_zip_aes256_name));
