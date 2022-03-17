@@ -33,16 +33,14 @@ const EVP_CIPHER *get_cipher(AesMode aes_mode) {
     case AesMode::CBC:
       return EVP_aes_256_cbc();
     default:
-      throw LogicError("Unknown AES mode");
+      throw InvalidArgument("Unknown AES mode");
   }
 }
 
-std::pair<std::string, std::string> aes_256_crypt(std::span<const char> data,
-                                                  std::span<const char> key,
-                                                  std::span<const char> iv,
-                                                  std::span<const char> tag,
-                                                  AesMode aes_mode,
-                                                  bool encrypt) {
+std::pair<std::string, std::string> aes_256_crypt(
+    std::span<const char> data, std::span<const char> key,
+    std::span<const char> iv, std::span<const char> aad,
+    std::span<const char> tag, AesMode aes_mode, bool encrypt) {
   auto ctx = EVP_CIPHER_CTX_new();
   SCOPE_EXIT { EVP_CIPHER_CTX_free(ctx); };
   if (!ctx) [[unlikely]] {
@@ -60,8 +58,10 @@ std::pair<std::string, std::string> aes_256_crypt(std::span<const char> data,
     CHECK_BORINGSSL(rc);
   } else {
     auto size = std::size(iv);
-    if (EVP_CIPHER_CTX_iv_length(ctx) != size && size != 0) {
-      throw RuntimeError("Wrong initial vector length: {}", size);
+    if (auto iv_length = EVP_CIPHER_CTX_iv_length(ctx);
+        iv_length != size && size != 0) {
+      throw RuntimeError("Wrong initial vector length: {} (should be {})", size,
+                         iv_length);
     }
   }
 
@@ -83,6 +83,16 @@ std::pair<std::string, std::string> aes_256_crypt(std::span<const char> data,
                      : reinterpret_cast<const std::uint8_t *>(std::data(iv)),
       -1);
   CHECK_BORINGSSL(rc);
+
+  EVP_CIPHER_CTX_set_padding(ctx, 1);
+
+  if (is_aead && !std::empty(aad)) {
+    std::int32_t unused;
+    rc = EVP_CipherUpdate(
+        ctx, nullptr, &unused,
+        reinterpret_cast<const std::uint8_t *>(std::data(aad)), std::size(aad));
+    CHECK_BORINGSSL(rc);
+  }
 
   std::string result;
   auto input_size = std::size(data);
@@ -128,20 +138,20 @@ std::pair<std::string, std::string> aes_256_crypt(std::span<const char> data,
 }  // namespace
 
 std::string aes_256_encrypt(const std::string &data, const std::string &key,
-                            AesMode aes_mode) {
-  std::string iv;
+                            AesMode aes_mode, const std::string &aad) {
   if (aes_mode == AesMode::GCM) {
-    iv = generate_random_bytes(gcm_iv_size);
+    const auto iv = generate_random_bytes(gcm_iv_size);
+    auto result = aes_256_crypt(data, key, iv, aad, empty, aes_mode, true);
+    return iv + std::move(result.first) + std::move(result.second);
   } else {
-    iv = generate_random_bytes(iv_size);
+    const auto iv = generate_random_bytes(iv_size);
+    auto result = aes_256_crypt(data, key, iv, empty, empty, aes_mode, true);
+    return iv + std::move(result.first);
   }
-
-  auto result = aes_256_crypt(data, key, iv, empty, aes_mode, true);
-  return iv + result.first + result.second;
 }
 
 std::string aes_256_decrypt(const std::string &data, const std::string &key,
-                            AesMode aes_mode) {
+                            AesMode aes_mode, const std::string &aad) {
   auto data_ptr = std::data(data);
 
   if (aes_mode == AesMode::GCM) {
@@ -149,7 +159,7 @@ std::string aes_256_decrypt(const std::string &data, const std::string &key,
 
     return aes_256_crypt(
                std::span<const char>(data_ptr + gcm_iv_size, data_size), key,
-               std::span<const char>(data_ptr, gcm_iv_size),
+               std::span<const char>(data_ptr, gcm_iv_size), aad,
                std::span<const char>(data_ptr + gcm_iv_size + data_size,
                                      gcm_tag_size),
                aes_mode, false)
@@ -159,14 +169,15 @@ std::string aes_256_decrypt(const std::string &data, const std::string &key,
 
     return aes_256_crypt(std::span<const char>(data_ptr + iv_size, data_size),
                          key, std::span<const char>(data_ptr, iv_size), empty,
-                         aes_mode, false)
+                         empty, aes_mode, false)
         .first;
   }
 }
 
 std::string aes_256_cbc_decrypt_no_iv(const std::string &data,
                                       const std::string &key) {
-  return aes_256_crypt(data, key, empty, empty, AesMode::CBC, false).first;
+  return aes_256_crypt(data, key, empty, empty, empty, AesMode::CBC, false)
+      .first;
 }
 
 }  // namespace klib

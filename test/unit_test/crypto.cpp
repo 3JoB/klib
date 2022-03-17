@@ -1,11 +1,13 @@
 #include <string>
 
+#include <dbg.h>
 #include <boost/core/ignore_unused.hpp>
 #include <catch2/catch.hpp>
 
 #include "klib/base64.h"
 #include "klib/crypto.h"
 #include "klib/hash.h"
+#include "klib/util.h"
 
 TEST_CASE("AES 256 GCM", "[crypto]") {
   const std::string password = "test-password";
@@ -13,6 +15,19 @@ TEST_CASE("AES 256 GCM", "[crypto]") {
 
   auto encrypt = klib::aes_256_encrypt("Advanced Encryption Standard", key);
   CHECK(klib::aes_256_decrypt(encrypt, key) == "Advanced Encryption Standard");
+}
+
+TEST_CASE("AES 256 GCM aad", "[crypto]") {
+  const std::string password = "test-password";
+  const auto key = klib::sha256(password);
+  const auto uuid = klib::uuid();
+
+  dbg(uuid);
+
+  auto encrypt = klib::aes_256_encrypt("Advanced Encryption Standard", key,
+                                       klib::AesMode::GCM, uuid);
+  CHECK(klib::aes_256_decrypt(encrypt, key, klib::AesMode::GCM, uuid) ==
+        "Advanced Encryption Standard");
 }
 
 TEST_CASE("AES 256 CBC", "[crypto]") {

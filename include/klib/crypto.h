@@ -22,28 +22,31 @@ enum class KLIB_EXPORT AesMode { GCM, CBC };
  * @param data: Data to be encrypted
  * @param key: Encryption/decryption key
  * @param aes_mode: Block cipher mode of operation
+ * @param aad: Additional authenticated data
  * @return Encrypted data
  */
 std::string KLIB_EXPORT aes_256_encrypt(const std::string &data,
                                         const std::string &key,
-                                        AesMode aes_mode = AesMode::GCM);
+                                        AesMode aes_mode = AesMode::GCM,
+                                        const std::string &aad = "");
 
 /**
  * @brief Use AES to decrypt data, key size: 256 bit
  * @param data: Encrypted bytes
  * @param key: Encryption/decryption key
  * @param aes_mode: Block cipher mode of operation
+ * @param aad: Additional authenticated data
  * @return Decrypted data
  */
 std::string KLIB_EXPORT aes_256_decrypt(const std::string &data,
                                         const std::string &key,
-                                        AesMode aes_mode = AesMode::GCM);
+                                        AesMode aes_mode = AesMode::GCM,
+                                        const std::string &aad = "");
 
 /**
  * @brief Use AES to decrypt data, key size: 256 bit
  * @param data: Encrypted bytes
  * @param key: Encryption/decryption key
- * @param aes_mode: Block cipher mode of operation
  * @return Decrypted data
  * @note It is not safe to not use the initial vector, this function is only
  * used to decrypt the foreign encrypted data
