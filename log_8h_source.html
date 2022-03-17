@@ -31,7 +31,7 @@
  <tr style="height: 56px;">
   <td id="projectalign" style="padding-left: 0.5em;">
    <div id="projectname">klib
-   &#160;<span id="projectnumber">1.10.0</span>
+   &#160;<span id="projectnumber">1.11.0</span>
    </div>
   </td>
    <td>        <div id="MSearchBox" class="MSearchBoxInactive">
@@ -112,17 +112,17 @@ $(document).ready(function(){initNavTree('log_8h_source.html',''); initResizable
 <div class="line"><a name="l00018"></a><span class="lineno">   18</span>&#160;<span class="keyword">namespace </span>klib {</div>
 <div class="line"><a name="l00019"></a><span class="lineno">   19</span>&#160; </div>
 <div class="line"><a name="l00025"></a><span class="lineno">   25</span>&#160;<span class="keyword">template</span> &lt;<span class="keyword">typename</span>... Args&gt;</div>
-<div class="line"><a name="l00026"></a><span class="lineno"><a class="line" href="log_8h.html#a21d373d71d39085a18f1cf1f0fc82462">   26</a></span>&#160;<span class="keywordtype">void</span> KLIB_PUBLIC <a class="code" href="log_8h.html#a21d373d71d39085a18f1cf1f0fc82462">info</a>(std::string_view fmt, Args &amp;&amp;...args) {</div>
+<div class="line"><a name="l00026"></a><span class="lineno"><a class="line" href="log_8h.html#a36ace5d496f9b19128d93abe71b7f150">   26</a></span>&#160;<span class="keywordtype">void</span> KLIB_EXPORT <a class="code" href="log_8h.html#a36ace5d496f9b19128d93abe71b7f150">info</a>(std::string_view fmt, Args &amp;&amp;...args) {</div>
 <div class="line"><a name="l00027"></a><span class="lineno">   27</span>&#160;  spdlog::info(fmt::runtime(fmt), std::forward&lt;Args&gt;(args)...);</div>
 <div class="line"><a name="l00028"></a><span class="lineno">   28</span>&#160;}</div>
 <div class="line"><a name="l00029"></a><span class="lineno">   29</span>&#160; </div>
 <div class="line"><a name="l00035"></a><span class="lineno">   35</span>&#160;<span class="keyword">template</span> &lt;<span class="keyword">typename</span>... Args&gt;</div>
-<div class="line"><a name="l00036"></a><span class="lineno"><a class="line" href="log_8h.html#acbf2546cb107327661cceb3f0efbfe33">   36</a></span>&#160;<span class="keywordtype">void</span> KLIB_PUBLIC <a class="code" href="log_8h.html#acbf2546cb107327661cceb3f0efbfe33">warn</a>(std::string_view fmt, Args &amp;&amp;...args) {</div>
+<div class="line"><a name="l00036"></a><span class="lineno"><a class="line" href="log_8h.html#ac5aecb5933a310393258a5103c17276a">   36</a></span>&#160;<span class="keywordtype">void</span> KLIB_EXPORT <a class="code" href="log_8h.html#ac5aecb5933a310393258a5103c17276a">warn</a>(std::string_view fmt, Args &amp;&amp;...args) {</div>
 <div class="line"><a name="l00037"></a><span class="lineno">   37</span>&#160;  spdlog::warn(fmt::runtime(fmt), std::forward&lt;Args&gt;(args)...);</div>
 <div class="line"><a name="l00038"></a><span class="lineno">   38</span>&#160;}</div>
 <div class="line"><a name="l00039"></a><span class="lineno">   39</span>&#160; </div>
 <div class="line"><a name="l00045"></a><span class="lineno">   45</span>&#160;<span class="keyword">template</span> &lt;<span class="keyword">typename</span>... Args&gt;</div>
-<div class="line"><a name="l00046"></a><span class="lineno"><a class="line" href="log_8h.html#ad03820eaf8ed9a4b2545e9d050c5d93d">   46</a></span>&#160;[[noreturn]] <span class="keywordtype">void</span> KLIB_PUBLIC <a class="code" href="log_8h.html#ad03820eaf8ed9a4b2545e9d050c5d93d">error</a>(detail::FmtWithLoc fmt_with_loc,</div>
+<div class="line"><a name="l00046"></a><span class="lineno"><a class="line" href="log_8h.html#af520691b431a793055546f8980eb79c7">   46</a></span>&#160;[[noreturn]] <span class="keywordtype">void</span> KLIB_EXPORT <a class="code" href="log_8h.html#af520691b431a793055546f8980eb79c7">error</a>(detail::FmtWithLoc fmt_with_loc,</div>
 <div class="line"><a name="l00047"></a><span class="lineno">   47</span>&#160;                                    Args &amp;&amp;...args) {</div>
 <div class="line"><a name="l00048"></a><span class="lineno">   48</span>&#160;  spdlog::default_logger_raw()-&gt;log(fmt_with_loc.loc_, spdlog::level::err,</div>
 <div class="line"><a name="l00049"></a><span class="lineno">   49</span>&#160;                                    fmt::runtime(fmt_with_loc.fmt_),</div>
@@ -131,9 +131,9 @@ $(document).ready(function(){initNavTree('log_8h_source.html',''); initResizable
 <div class="line"><a name="l00052"></a><span class="lineno">   52</span>&#160;}</div>
 <div class="line"><a name="l00053"></a><span class="lineno">   53</span>&#160; </div>
 <div class="line"><a name="l00054"></a><span class="lineno">   54</span>&#160;}  <span class="comment">// namespace klib</span></div>
-<div class="ttc" id="alog_8h_html_a21d373d71d39085a18f1cf1f0fc82462"><div class="ttname"><a href="log_8h.html#a21d373d71d39085a18f1cf1f0fc82462">klib::info</a></div><div class="ttdeci">void KLIB_PUBLIC info(std::string_view fmt, Args &amp;&amp;...args)</div><div class="ttdoc">Show information.</div><div class="ttdef"><b>Definition:</b> log.h:26</div></div>
-<div class="ttc" id="alog_8h_html_acbf2546cb107327661cceb3f0efbfe33"><div class="ttname"><a href="log_8h.html#acbf2546cb107327661cceb3f0efbfe33">klib::warn</a></div><div class="ttdeci">void KLIB_PUBLIC warn(std::string_view fmt, Args &amp;&amp;...args)</div><div class="ttdoc">Report warning.</div><div class="ttdef"><b>Definition:</b> log.h:36</div></div>
-<div class="ttc" id="alog_8h_html_ad03820eaf8ed9a4b2545e9d050c5d93d"><div class="ttname"><a href="log_8h.html#ad03820eaf8ed9a4b2545e9d050c5d93d">klib::error</a></div><div class="ttdeci">void KLIB_PUBLIC error(detail::FmtWithLoc fmt_with_loc, Args &amp;&amp;...args)</div><div class="ttdoc">Report error and exit.</div><div class="ttdef"><b>Definition:</b> log.h:46</div></div>
+<div class="ttc" id="alog_8h_html_a36ace5d496f9b19128d93abe71b7f150"><div class="ttname"><a href="log_8h.html#a36ace5d496f9b19128d93abe71b7f150">klib::info</a></div><div class="ttdeci">void KLIB_EXPORT info(std::string_view fmt, Args &amp;&amp;...args)</div><div class="ttdoc">Show information.</div><div class="ttdef"><b>Definition:</b> log.h:26</div></div>
+<div class="ttc" id="alog_8h_html_ac5aecb5933a310393258a5103c17276a"><div class="ttname"><a href="log_8h.html#ac5aecb5933a310393258a5103c17276a">klib::warn</a></div><div class="ttdeci">void KLIB_EXPORT warn(std::string_view fmt, Args &amp;&amp;...args)</div><div class="ttdoc">Report warning.</div><div class="ttdef"><b>Definition:</b> log.h:36</div></div>
+<div class="ttc" id="alog_8h_html_af520691b431a793055546f8980eb79c7"><div class="ttname"><a href="log_8h.html#af520691b431a793055546f8980eb79c7">klib::error</a></div><div class="ttdeci">void KLIB_EXPORT error(detail::FmtWithLoc fmt_with_loc, Args &amp;&amp;...args)</div><div class="ttdoc">Report error and exit.</div><div class="ttdef"><b>Definition:</b> log.h:46</div></div>
 </div><!-- fragment --></div><!-- contents -->
 </div><!-- doc-content -->
 <!-- start footer part -->

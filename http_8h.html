@@ -31,7 +31,7 @@
  <tr style="height: 56px;">
   <td id="projectalign" style="padding-left: 0.5em;">
    <div id="projectname">klib
-   &#160;<span id="projectnumber">1.10.0</span>
+   &#160;<span id="projectnumber">1.11.0</span>
    </div>
   </td>
    <td>        <div id="MSearchBox" class="MSearchBoxInactive">
@@ -103,11 +103,11 @@ $(document).ready(function(){initNavTree('http_8h.html',''); initResizable(); })
 
 <p>Contains HTTP module.  
 <a href="#details">More...</a></p>
-<div class="textblock"><code>#include &lt;cstdint&gt;</code><br />
+<div class="textblock"><code>#include &lt;parallel_hashmap/phmap.h&gt;</code><br />
+<code>#include &lt;cstdint&gt;</code><br />
 <code>#include &lt;experimental/propagate_const&gt;</code><br />
 <code>#include &lt;memory&gt;</code><br />
 <code>#include &lt;string&gt;</code><br />
-<code>#include &lt;unordered_map&gt;</code><br />
 <code>#include &quot;klib/config.h&quot;</code><br />
 <code>#include &quot;klib/detail/http-inl.h&quot;</code><br />
 <code>#include &quot;<a class="el" href="exception_8h_source.html">klib/exception.h</a>&quot;</code><br />
@@ -138,12 +138,12 @@ Macros</h2></td></tr>
 </table><table class="memberdecls">
 <tr class="heading"><td colspan="2"><h2 class="groupheader"><a name="func-members"></a>
 Functions</h2></td></tr>
-<tr class="memitem:a0a629bfaeb3c4f8e4bb96ea3f8277986"><td class="memItemLeft" align="right" valign="top">std::string KLIB_PUBLIC&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="http_8h.html#a0a629bfaeb3c4f8e4bb96ea3f8277986">klib::http_status_str</a> (HttpStatus http_status)</td></tr>
-<tr class="memdesc:a0a629bfaeb3c4f8e4bb96ea3f8277986"><td class="mdescLeft">&#160;</td><td class="mdescRight">Get the description string of HTTP Status.  <a href="http_8h.html#a0a629bfaeb3c4f8e4bb96ea3f8277986">More...</a><br /></td></tr>
-<tr class="separator:a0a629bfaeb3c4f8e4bb96ea3f8277986"><td class="memSeparator" colspan="2">&#160;</td></tr>
-<tr class="memitem:aac0b07cee99ba8b3aa67cf1ce0f9ece5"><td class="memItemLeft" align="right" valign="top">std::string KLIB_PUBLIC&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="http_8h.html#aac0b07cee99ba8b3aa67cf1ce0f9ece5">klib::http_method_str</a> (HttpMethod http_method)</td></tr>
-<tr class="memdesc:aac0b07cee99ba8b3aa67cf1ce0f9ece5"><td class="mdescLeft">&#160;</td><td class="mdescRight">Get the description string of HTTP request method.  <a href="http_8h.html#aac0b07cee99ba8b3aa67cf1ce0f9ece5">More...</a><br /></td></tr>
-<tr class="separator:aac0b07cee99ba8b3aa67cf1ce0f9ece5"><td class="memSeparator" colspan="2">&#160;</td></tr>
+<tr class="memitem:a79fbff285d9332385475847779003a45"><td class="memItemLeft" align="right" valign="top">std::string KLIB_EXPORT&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="http_8h.html#a79fbff285d9332385475847779003a45">klib::http_status_str</a> (HttpStatus http_status)</td></tr>
+<tr class="memdesc:a79fbff285d9332385475847779003a45"><td class="mdescLeft">&#160;</td><td class="mdescRight">Get the description string of HTTP Status.  <a href="http_8h.html#a79fbff285d9332385475847779003a45">More...</a><br /></td></tr>
+<tr class="separator:a79fbff285d9332385475847779003a45"><td class="memSeparator" colspan="2">&#160;</td></tr>
+<tr class="memitem:a6e3a5315c93768a27f16af56b733a2d1"><td class="memItemLeft" align="right" valign="top">std::string KLIB_EXPORT&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="http_8h.html#a6e3a5315c93768a27f16af56b733a2d1">klib::http_method_str</a> (HttpMethod http_method)</td></tr>
+<tr class="memdesc:a6e3a5315c93768a27f16af56b733a2d1"><td class="mdescLeft">&#160;</td><td class="mdescRight">Get the description string of HTTP request method.  <a href="http_8h.html#a6e3a5315c93768a27f16af56b733a2d1">More...</a><br /></td></tr>
+<tr class="separator:a6e3a5315c93768a27f16af56b733a2d1"><td class="memSeparator" colspan="2">&#160;</td></tr>
 </table>
 <a name="details" id="details"></a><h2 class="groupheader">Detailed Description</h2>
 <div class="textblock"><p>Contains HTTP module. </p>
@@ -221,8 +221,8 @@ Functions</h2></td></tr>
 </div>
 </div>
 <h2 class="groupheader">Function Documentation</h2>
-<a id="aac0b07cee99ba8b3aa67cf1ce0f9ece5"></a>
-<h2 class="memtitle"><span class="permalink"><a href="#aac0b07cee99ba8b3aa67cf1ce0f9ece5">&#9670;&nbsp;</a></span>http_method_str()</h2>
+<a id="a6e3a5315c93768a27f16af56b733a2d1"></a>
+<h2 class="memtitle"><span class="permalink"><a href="#a6e3a5315c93768a27f16af56b733a2d1">&#9670;&nbsp;</a></span>http_method_str()</h2>
 
 <div class="memitem">
 <div class="memproto">
@@ -231,7 +231,7 @@ Functions</h2></td></tr>
   <td class="mlabels-left">
       <table class="memname">
         <tr>
-          <td class="memname">std::string KLIB_PUBLIC klib::http_method_str </td>
+          <td class="memname">std::string KLIB_EXPORT klib::http_method_str </td>
           <td>(</td>
           <td class="paramtype">HttpMethod&#160;</td>
           <td class="paramname"><em>http_method</em></td><td>)</td>
@@ -256,8 +256,8 @@ Functions</h2></td></tr>
 
 </div>
 </div>
-<a id="a0a629bfaeb3c4f8e4bb96ea3f8277986"></a>
-<h2 class="memtitle"><span class="permalink"><a href="#a0a629bfaeb3c4f8e4bb96ea3f8277986">&#9670;&nbsp;</a></span>http_status_str()</h2>
+<a id="a79fbff285d9332385475847779003a45"></a>
+<h2 class="memtitle"><span class="permalink"><a href="#a79fbff285d9332385475847779003a45">&#9670;&nbsp;</a></span>http_status_str()</h2>
 
 <div class="memitem">
 <div class="memproto">
@@ -266,7 +266,7 @@ Functions</h2></td></tr>
   <td class="mlabels-left">
       <table class="memname">
         <tr>
-          <td class="memname">std::string KLIB_PUBLIC klib::http_status_str </td>
+          <td class="memname">std::string KLIB_EXPORT klib::http_status_str </td>
           <td>(</td>
           <td class="paramtype">HttpStatus&#160;</td>
           <td class="paramname"><em>http_status</em></td><td>)</td>

@@ -1,9 +1,9 @@
 var searchData=
 [
-  ['wait_5ffor_5fchild_5fprocess_309',['wait_for_child_process',['../util_8h.html#a04f9c50fe958c965b0e79bd739e450cc',1,'klib']]],
-  ['warn_310',['warn',['../log_8h.html#acbf2546cb107327661cceb3f0efbfe33',1,'klib']]],
-  ['webp_5fto_5fpng_311',['webp_to_png',['../image_8h.html#affb56aa3a0a5de8314aa244bc6a3a463',1,'klib::webp_to_png(const std::string &amp;image)'],['../image_8h.html#aae5f017ee5b8087f5d513d70829e1f3a',1,'klib::webp_to_png(std::string_view image)'],['../image_8h.html#a8842f3f12a75754115c4b290e2622a50',1,'klib::webp_to_png(const char *image, std::size_t size)']]],
-  ['what_312',['what',['../classklib_1_1Exception.html#ab00f3fe05efe458c2deeec2ae6fde373',1,'klib::Exception']]],
-  ['woff2_5fto_5fttf_313',['woff2_to_ttf',['../font_8h.html#a8406003c2bdce2eacacb3ff9fbbae518',1,'klib']]],
-  ['write_5ffile_314',['write_file',['../util_8h.html#a7bd2fd4db189a3ce2511de3c835f49ea',1,'klib::write_file(const std::string &amp;path, bool binary_mode, const std::string &amp;str)'],['../util_8h.html#a77820f95f21a6ddbe58dd7d58b6ee4ad',1,'klib::write_file(std::string_view path, bool binary_mode, std::string_view str)'],['../util_8h.html#a5169ca62f65edca9f93b34f94cd3bf85',1,'klib::write_file(const char *path, bool binary_mode, const char *str, std::size_t size)']]]
+  ['wait_5ffor_5fchild_5fprocess_311',['wait_for_child_process',['../util_8h.html#a1b4159dcddf920bf5ee1ec78744e581f',1,'klib']]],
+  ['warn_312',['warn',['../log_8h.html#ac5aecb5933a310393258a5103c17276a',1,'klib']]],
+  ['webp_5fto_5fpng_313',['webp_to_png',['../image_8h.html#af131d38b67d8fe81f2a91cc43f66660c',1,'klib::webp_to_png(const std::string &amp;image)'],['../image_8h.html#aca05f2d7213eba1f2166c708306bcd71',1,'klib::webp_to_png(std::string_view image)'],['../image_8h.html#a78a6321d6607fe88cc99d052574b27f6',1,'klib::webp_to_png(const char *image, std::size_t size)']]],
+  ['what_314',['what',['../classklib_1_1Exception.html#ab00f3fe05efe458c2deeec2ae6fde373',1,'klib::Exception']]],
+  ['woff2_5fto_5fttf_315',['woff2_to_ttf',['../font_8h.html#a3a8110e93f70dd1016b8dbf030e07cda',1,'klib']]],
+  ['write_5ffile_316',['write_file',['../util_8h.html#a68427b6368c3a384b94cd5d2cd646e95',1,'klib::write_file(const std::string &amp;path, bool binary_mode, const std::string &amp;str)'],['../util_8h.html#af5a2b030c406427e718002dfd3f82c65',1,'klib::write_file(std::string_view path, bool binary_mode, std::string_view str)'],['../util_8h.html#acdda733ded7c981be0dc3b4bc56275f6',1,'klib::write_file(const char *path, bool binary_mode, const char *str, std::size_t size)']]]
 ];

@@ -49,7 +49,7 @@ var NAVTREE =
 var NAVTREEINDEX =
 [
 "annotated.html",
-"url-example.html"
+"url_8fragment-example.html"
 ];
 
 var SYNCONMSG = 'click to disable panel synchronisation';

@@ -1,7 +1,7 @@
 var base64_8h =
 [
-    [ "fast_base64_decode", "base64_8h.html#aa60cba02662685658644cf7f03074fa7", null ],
-    [ "fast_base64_encode", "base64_8h.html#aa8129a3c86702a8451b035b147fa9881", null ],
-    [ "secure_base64_decode", "base64_8h.html#a4bfcd33b81338fbd77a1ae9e024c27bd", null ],
-    [ "secure_base64_encode", "base64_8h.html#a458b9fba01bd6069960dd4144a9e7ddc", null ]
+    [ "fast_base64_decode", "base64_8h.html#ab18d81ba2f1abc914be7e4f663831550", null ],
+    [ "fast_base64_encode", "base64_8h.html#a4ea0bfd645ca2be96115a8805434e48b", null ],
+    [ "secure_base64_decode", "base64_8h.html#adab0aa763af25da19768159ec4a61c98", null ],
+    [ "secure_base64_encode", "base64_8h.html#a51c1dad076f0c7f1e2fc1e96884e989c", null ]
 ];

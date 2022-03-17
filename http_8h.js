@@ -6,6 +6,6 @@ var http_8h =
     [ "XX", "http_8h.html#a001751e2abb71763b08651bec986b6f7", null ],
     [ "XX", "http_8h.html#a001751e2abb71763b08651bec986b6f7", null ],
     [ "XX", "http_8h.html#a001751e2abb71763b08651bec986b6f7", null ],
-    [ "http_method_str", "http_8h.html#aac0b07cee99ba8b3aa67cf1ce0f9ece5", null ],
-    [ "http_status_str", "http_8h.html#a0a629bfaeb3c4f8e4bb96ea3f8277986", null ]
+    [ "http_method_str", "http_8h.html#a6e3a5315c93768a27f16af56b733a2d1", null ],
+    [ "http_status_str", "http_8h.html#a79fbff285d9332385475847779003a45", null ]
 ];
