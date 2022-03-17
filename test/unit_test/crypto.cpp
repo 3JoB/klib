@@ -7,15 +7,25 @@
 #include "klib/crypto.h"
 #include "klib/hash.h"
 
-TEST_CASE("AES 256 CBC", "[crypto]") {
-  std::string password = "test-password";
-  auto [key, salt] = klib::password_hash_raw(password);
-  boost::ignore_unused(salt);
+TEST_CASE("AES 256 GCM", "[crypto]") {
+  const std::string password = "test-password";
+  const auto key = klib::sha256(password);
+
   auto encrypt = klib::aes_256_encrypt("Advanced Encryption Standard", key);
   CHECK(klib::aes_256_decrypt(encrypt, key) == "Advanced Encryption Standard");
+}
+
+TEST_CASE("AES 256 CBC", "[crypto]") {
+  const std::string password = "test-password";
+  const auto key = klib::sha256(password);
+
+  auto encrypt = klib::aes_256_encrypt("Advanced Encryption Standard", key,
+                                       klib::AesMode::CBC);
+  CHECK(klib::aes_256_decrypt(encrypt, key, klib::AesMode::CBC) ==
+        "Advanced Encryption Standard");
 
   CHECK(
-      klib::aes_256_decrypt_no_iv(
+      klib::aes_256_cbc_decrypt_no_iv(
           klib::fast_base64_decode(
               "IT+LcNazRBcK54/"
               "p1lMtcyRwpZ01VQ4tFr6GBslpnwMezmEBbIYc3GokHiTGB6XV/"
@@ -77,7 +87,7 @@ TEST_CASE("AES 256 CBC", "[crypto]") {
       "10000\":\"0\",\"rest_total_100000\":\"0\",\"rest_total_50000\":\"0\","
       "\"rest_total_160000\":\"0\"},\"is_set_young\":\"0\"}}");
 
-  CHECK_NOTHROW(klib::aes_256_decrypt_no_iv(
+  CHECK_NOTHROW(klib::aes_256_cbc_decrypt_no_iv(
       klib::fast_base64_decode(
           "TC64Ykj+"
           "HY4FfD2Ddh8gBHEcR4IdUjLbfrb44QJPeC43dvPghqXE6gDdJSip1pzHxtfC5cBkR1lu"

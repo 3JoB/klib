@@ -176,4 +176,11 @@ std::string KLIB_EXPORT generate_random_bytes(std::size_t bytes);
  */
 std::pair<std::uint32_t, std::uint32_t> KLIB_EXPORT terminal_size();
 
+/**
+ * @brief Convert to 2 hex digits per byte
+ * @param bytes: Bytes to convert
+ * @return String of hexadecimal digits
+ */
+std::string KLIB_EXPORT bytes_to_hex_string(const std::string &bytes);
+
 }  // namespace klib

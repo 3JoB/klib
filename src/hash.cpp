@@ -29,18 +29,6 @@ std::string num_to_hex_string(std::size_t num) {
   return fmt::format(FMT_COMPILE("{:x}"), num);
 }
 
-std::string bytes_to_hex_string(const std::string &bytes) {
-  std::string str;
-  str.reserve(SHA256_DIGEST_LENGTH * 2);
-
-  for (auto byte : bytes) {
-    str.append(
-        fmt::format(FMT_COMPILE("{:02x}"), static_cast<std::uint8_t>(byte)));
-  }
-
-  return str;
-}
-
 }  // namespace
 
 std::size_t fast_hash(const std::string &data) {

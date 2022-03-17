@@ -11,8 +11,11 @@
 #include <filesystem>
 #include <fstream>
 
+#include <fmt/compile.h>
+#include <fmt/format.h>
 #include <openssl/mem.h>
 #include <openssl/rand.h>
+#include <openssl/sha.h>
 #include <boost/algorithm/string.hpp>
 #include <boost/uuid/uuid_generators.hpp>
 #include <boost/uuid/uuid_io.hpp>
@@ -240,6 +243,18 @@ std::pair<std::uint32_t, std::uint32_t> terminal_size() {
   winsize win_size;
   ioctl(STDOUT_FILENO, TIOCGWINSZ, &win_size);
   return {win_size.ws_col, win_size.ws_row};
+}
+
+std::string KLIB_EXPORT bytes_to_hex_string(const std::string &bytes) {
+  std::string str;
+  str.reserve(SHA256_DIGEST_LENGTH * 2);
+
+  for (auto byte : bytes) {
+    str.append(
+        fmt::format(FMT_COMPILE("{:02x}"), static_cast<std::uint8_t>(byte)));
+  }
+
+  return str;
 }
 
 }  // namespace klib
