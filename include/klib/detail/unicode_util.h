@@ -3,7 +3,7 @@
 namespace klib::detail {
 
 constexpr auto range =
-    [](char32_t code_point, char32_t min, char32_t max) constexpr {
+    [](char32_t code_point, char32_t min, char32_t max) constexpr noexcept {
   return code_point >= min && code_point <= max;
 };
 

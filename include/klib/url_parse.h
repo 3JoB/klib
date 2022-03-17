@@ -5,10 +5,10 @@
 
 #pragma once
 
+#include <parallel_hashmap/phmap.h>
 #include <cstdint>
 #include <string>
 #include <string_view>
-#include <unordered_map>
 
 #include "klib/config.h"
 
@@ -32,7 +32,7 @@ class KLIB_EXPORT URL {
    * @example url.schema() == "https"
    * @see https://en.wikipedia.org/wiki/URL
    */
-  [[nodiscard]] std::string_view schema() const { return schema_; }
+  [[nodiscard]] std::string_view schema() const noexcept { return schema_; }
 
   /**
    * @brief Get URL host
@@ -40,7 +40,7 @@ class KLIB_EXPORT URL {
    * @example url.host() == "www.example.com"
    * @see https://en.wikipedia.org/wiki/URL
    */
-  [[nodiscard]] std::string_view host() const { return host_; }
+  [[nodiscard]] std::string_view host() const noexcept { return host_; }
 
   /**
    * @brief Get URL port
@@ -48,7 +48,7 @@ class KLIB_EXPORT URL {
    * @example url.port() == 443
    * @see https://en.wikipedia.org/wiki/URL
    */
-  [[nodiscard]] std::int32_t port() const { return port_; }
+  [[nodiscard]] std::int32_t port() const noexcept { return port_; }
 
   /**
    * @brief Get URL path
@@ -56,7 +56,7 @@ class KLIB_EXPORT URL {
    * @example url.path() == "/path/to/index.html"
    * @see https://en.wikipedia.org/wiki/URL
    */
-  [[nodiscard]] std::string_view path() const { return path_; }
+  [[nodiscard]] std::string_view path() const noexcept { return path_; }
 
   /**
    * @brief Get URL query
@@ -64,7 +64,7 @@ class KLIB_EXPORT URL {
    * @example url.query() == "key1=value1&key2=value2"
    * @see https://en.wikipedia.org/wiki/URL
    */
-  [[nodiscard]] std::string_view query() const { return query_; }
+  [[nodiscard]] std::string_view query() const noexcept { return query_; }
 
   /**
    * @brief Get URL fragment
@@ -73,7 +73,7 @@ class KLIB_EXPORT URL {
    * @example url.fragment() == "Somewhere"
    * @see https://en.wikipedia.org/wiki/URL
    */
-  [[nodiscard]] std::string_view fragment() const { return fragment_; }
+  [[nodiscard]] std::string_view fragment() const noexcept { return fragment_; }
 
   /**
    * @brief Get URL user info
@@ -82,13 +82,16 @@ class KLIB_EXPORT URL {
    * @example url.user_info() == "user:password"
    * @see https://en.wikipedia.org/wiki/URL
    */
-  [[nodiscard]] std::string_view user_info() const { return user_info_; }
+  [[nodiscard]] std::string_view user_info() const noexcept {
+    return user_info_;
+  }
 
   /**
    * @brief Parse query parameters
    * @return Query key-value pairs
    */
-  [[nodiscard]] std::unordered_map<std::string, std::string> query_map() const;
+  [[nodiscard]] phmap::flat_hash_map<std::string, std::string> query_map()
+      const;
 
  private:
   std::string url_;

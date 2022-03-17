@@ -5,11 +5,11 @@
 
 #pragma once
 
+#include <parallel_hashmap/phmap.h>
 #include <cstdint>
 #include <experimental/propagate_const>
 #include <memory>
 #include <string>
-#include <unordered_map>
 
 #include "klib/config.h"
 #include "klib/detail/http-inl.h"
@@ -170,7 +170,8 @@ class KLIB_EXPORT Request {
    * @brief Set cookie
    * @param cookies: Cookies
    */
-  void set_cookie(const std::unordered_map<std::string, std::string> &cookies);
+  void set_cookie(
+      const phmap::flat_hash_map<std::string, std::string> &cookies);
 
   /**
    * @brief Encoding URL string
@@ -195,8 +196,8 @@ class KLIB_EXPORT Request {
    */
   Response get(
       const std::string &url,
-      const std::unordered_map<std::string, std::string> &params = {},
-      const std::unordered_map<std::string, std::string> &headers = {});
+      const phmap::flat_hash_map<std::string, std::string> &params = {},
+      const phmap::flat_hash_map<std::string, std::string> &headers = {});
 
   /**
    * @brief Sends a POST request
@@ -207,8 +208,8 @@ class KLIB_EXPORT Request {
    */
   Response post(
       const std::string &url,
-      const std::unordered_map<std::string, std::string> &data,
-      const std::unordered_map<std::string, std::string> &headers = {});
+      const phmap::flat_hash_map<std::string, std::string> &data,
+      const phmap::flat_hash_map<std::string, std::string> &headers = {});
 
   /**
    * @brief Sends a POST request
@@ -219,7 +220,7 @@ class KLIB_EXPORT Request {
    */
   Response post(
       const std::string &url, const std::string &json,
-      const std::unordered_map<std::string, std::string> &headers = {});
+      const phmap::flat_hash_map<std::string, std::string> &headers = {});
 
   /**
    * @brief Sends a POST request
@@ -231,9 +232,9 @@ class KLIB_EXPORT Request {
    */
   Response post_mime(
       const std::string &url,
-      const std::unordered_map<std::string, std::string> &data,
-      const std::unordered_map<std::string, std::string> &file,
-      const std::unordered_map<std::string, std::string> &headers = {});
+      const phmap::flat_hash_map<std::string, std::string> &data,
+      const phmap::flat_hash_map<std::string, std::string> &file,
+      const phmap::flat_hash_map<std::string, std::string> &headers = {});
 
  private:
   class RequestImpl;

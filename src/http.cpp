@@ -51,7 +51,7 @@ HttpStatus get_status(CURL *curl) {
 
 CURLU *add_url(
     CURL *curl, const std::string &url,
-    const std::unordered_map<std::string, std::string> &params = {}) {
+    const phmap::flat_hash_map<std::string, std::string> &params = {}) {
   auto c_url = curl_url();
 
   auto rc = curl_url_set(c_url, CURLUPART_URL, url.c_str(), 0);
@@ -73,7 +73,7 @@ CURLU *add_url(
 }
 
 curl_slist *add_header(
-    CURL *curl, const std::unordered_map<std::string, std::string> &headers) {
+    CURL *curl, const phmap::flat_hash_map<std::string, std::string> &headers) {
   if (std::empty(headers)) {
     return nullptr;
   }
@@ -96,9 +96,9 @@ curl_slist *add_header(
   return chunk;
 }
 
-curl_mime *add_form(CURL *curl,
-                    const std::unordered_map<std::string, std::string> &data,
-                    const std::unordered_map<std::string, std::string> &file) {
+curl_mime *add_form(
+    CURL *curl, const phmap::flat_hash_map<std::string, std::string> &data,
+    const phmap::flat_hash_map<std::string, std::string> &file) {
   if (std::empty(data) && std::empty(file)) {
     return nullptr;
   }
@@ -158,29 +158,30 @@ class Request::RequestImpl {
   void set_timeout(std::int64_t seconds);
   void set_connect_timeout(std::int64_t seconds);
   void set_accept_encoding(const std::string &accept_encoding);
-  void set_cookie(const std::unordered_map<std::string, std::string> &cookies);
+  void set_cookie(
+      const phmap::flat_hash_map<std::string, std::string> &cookies);
   std::string url_encode(const std::string &str);
   std::string url_decode(const std::string &str);
 
   Response get(const std::string &url,
-               const std::unordered_map<std::string, std::string> &params,
-               const std::unordered_map<std::string, std::string> &headers);
+               const phmap::flat_hash_map<std::string, std::string> &params,
+               const phmap::flat_hash_map<std::string, std::string> &headers);
   Response post(const std::string &url,
-                const std::unordered_map<std::string, std::string> &data,
-                const std::unordered_map<std::string, std::string> &headers);
+                const phmap::flat_hash_map<std::string, std::string> &data,
+                const phmap::flat_hash_map<std::string, std::string> &headers);
   Response post(const std::string &url, const std::string &json,
-                const std::unordered_map<std::string, std::string> &headers);
+                const phmap::flat_hash_map<std::string, std::string> &headers);
   Response post_mime(
       const std::string &url,
-      const std::unordered_map<std::string, std::string> &data,
-      const std::unordered_map<std::string, std::string> &file,
-      const std::unordered_map<std::string, std::string> &headers);
+      const phmap::flat_hash_map<std::string, std::string> &data,
+      const phmap::flat_hash_map<std::string, std::string> &file,
+      const phmap::flat_hash_map<std::string, std::string> &headers);
 
  private:
   Response do_easy_perform();
 
   std::string splicing_post_fields(
-      const std::unordered_map<std::string, std::string> &data);
+      const phmap::flat_hash_map<std::string, std::string> &data);
 
   CURL *curl_;
 
@@ -271,7 +272,7 @@ void Request::RequestImpl::set_browser_user_agent() {
   // navigator.userAgent
   set_user_agent(
       "Mozilla/5.0 (X11; Linux x86_64) AppleWebKit/537.36 (KHTML, like Gecko) "
-      "Chrome/99.0.4844.51 Safari/537.36");
+      "Chrome/99.0.4844.51 Safari/537.36 Edg/99.0.1150.38");
 }
 
 void Request::RequestImpl::set_curl_user_agent() {
@@ -296,7 +297,7 @@ void Request::RequestImpl::set_accept_encoding(
 }
 
 void Request::RequestImpl::set_cookie(
-    const std::unordered_map<std::string, std::string> &cookies) {
+    const phmap::flat_hash_map<std::string, std::string> &cookies) {
   std::string cookies_str;
   for (const auto &[key, value] : cookies) {
     cookies_str.append(key).append("=").append(value).append(";");
@@ -329,8 +330,8 @@ std::string Request::RequestImpl::url_decode(const std::string &str) {
 
 Response Request::RequestImpl::get(
     const std::string &url,
-    const std::unordered_map<std::string, std::string> &params,
-    const std::unordered_map<std::string, std::string> &headers) {
+    const phmap::flat_hash_map<std::string, std::string> &params,
+    const phmap::flat_hash_map<std::string, std::string> &headers) {
   auto rc = curl_easy_setopt(curl_, CURLOPT_HTTPGET, 1);
   CHECK_CURL(rc);
 
@@ -353,8 +354,8 @@ Response Request::RequestImpl::get(
 
 Response Request::RequestImpl::post(
     const std::string &url,
-    const std::unordered_map<std::string, std::string> &data,
-    const std::unordered_map<std::string, std::string> &headers) {
+    const phmap::flat_hash_map<std::string, std::string> &data,
+    const phmap::flat_hash_map<std::string, std::string> &headers) {
   auto rc = curl_easy_setopt(curl_, CURLOPT_HTTPPOST, 1);
   CHECK_CURL(rc);
 
@@ -392,7 +393,7 @@ Response Request::RequestImpl::post(
 
 Response Request::RequestImpl::post(
     const std::string &url, const std::string &json,
-    const std::unordered_map<std::string, std::string> &headers) {
+    const phmap::flat_hash_map<std::string, std::string> &headers) {
   auto rc = curl_easy_setopt(curl_, CURLOPT_HTTPPOST, 1);
   CHECK_CURL(rc);
 
@@ -431,9 +432,9 @@ Response Request::RequestImpl::post(
 
 Response Request::RequestImpl::post_mime(
     const std::string &url,
-    const std::unordered_map<std::string, std::string> &data,
-    const std::unordered_map<std::string, std::string> &file,
-    const std::unordered_map<std::string, std::string> &headers) {
+    const phmap::flat_hash_map<std::string, std::string> &data,
+    const phmap::flat_hash_map<std::string, std::string> &file,
+    const phmap::flat_hash_map<std::string, std::string> &headers) {
   auto rc = curl_easy_setopt(curl_, CURLOPT_HTTPPOST, 1);
   CHECK_CURL(rc);
 
@@ -480,7 +481,7 @@ Response Request::RequestImpl::do_easy_perform() {
 }
 
 std::string Request::RequestImpl::splicing_post_fields(
-    const std::unordered_map<std::string, std::string> &data) {
+    const phmap::flat_hash_map<std::string, std::string> &data) {
   std::string result;
 
   for (const auto &[key, value] : data) {
@@ -532,7 +533,7 @@ void Request::set_accept_encoding(const std::string &accept_encoding) {
 }
 
 void Request::set_cookie(
-    const std::unordered_map<std::string, std::string> &cookies) {
+    const phmap::flat_hash_map<std::string, std::string> &cookies) {
   impl_->set_cookie(cookies);
 }
 
@@ -546,29 +547,29 @@ std::string Request::url_decode(const std::string &str) {
 
 Response Request::get(
     const std::string &url,
-    const std::unordered_map<std::string, std::string> &params,
-    const std::unordered_map<std::string, std::string> &header) {
+    const phmap::flat_hash_map<std::string, std::string> &params,
+    const phmap::flat_hash_map<std::string, std::string> &header) {
   return impl_->get(url, params, header);
 }
 
 Response Request::post(
     const std::string &url,
-    const std::unordered_map<std::string, std::string> &data,
-    const std::unordered_map<std::string, std::string> &header) {
+    const phmap::flat_hash_map<std::string, std::string> &data,
+    const phmap::flat_hash_map<std::string, std::string> &header) {
   return impl_->post(url, data, header);
 }
 
 Response Request::post(
     const std::string &url, const std::string &json,
-    const std::unordered_map<std::string, std::string> &header) {
+    const phmap::flat_hash_map<std::string, std::string> &header) {
   return impl_->post(url, json, header);
 }
 
 Response Request::post_mime(
     const std::string &url,
-    const std::unordered_map<std::string, std::string> &data,
-    const std::unordered_map<std::string, std::string> &file,
-    const std::unordered_map<std::string, std::string> &header) {
+    const phmap::flat_hash_map<std::string, std::string> &data,
+    const phmap::flat_hash_map<std::string, std::string> &file,
+    const phmap::flat_hash_map<std::string, std::string> &header) {
   return impl_->post_mime(url, data, file, header);
 }
 

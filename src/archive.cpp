@@ -14,11 +14,11 @@
 #include <filesystem>
 #include <memory>
 #include <thread>
-#include <unordered_set>
 
 #include <archive.h>
 #include <archive_entry.h>
 #include <dbg.h>
+#include <parallel_hashmap/phmap.h>
 #include <zstd.h>
 #include <boost/core/ignore_unused.hpp>
 #include <scope_guard.hpp>
@@ -351,7 +351,7 @@ std::optional<std::string> outermost_folder_name(const std::string &file_name) {
   auto rc = archive_read_open_filename(archive, file_name.c_str(), 10240);
   CHECK_LIBARCHIVE(rc, archive);
 
-  std::unordered_set<std::string> dirs;
+  phmap::flat_hash_set<std::string> dirs;
   while (true) {
     archive_entry *entry;
     rc = archive_read_next_header(archive, &entry);

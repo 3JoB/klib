@@ -36,8 +36,8 @@ URL::URL(std::string url) : url_(std::move(url)) {
                                 field_data[UF_USERINFO].len);
 }
 
-std::unordered_map<std::string, std::string> URL::query_map() const {
-  std::unordered_map<std::string, std::string> result;
+phmap::flat_hash_map<std::string, std::string> URL::query_map() const {
+  phmap::flat_hash_map<std::string, std::string> result;
 
   std::vector<std::string> query;
   for (const auto& item : boost::split(query, query_, boost::is_any_of("&"),

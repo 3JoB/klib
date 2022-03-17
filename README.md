@@ -33,6 +33,7 @@ A C++ library, which wraps several important C libraries and provides some conve
 - Scope Guard ([MIT License](https://github.com/Neargye/scope_guard/blob/master/LICENSE))
 - fmt ([License](https://github.com/fmtlib/fmt/blob/master/LICENSE.rst))
 - spdlog ([MIT License](https://github.com/gabime/spdlog/blob/v1.x/LICENSE))
+- parallel-hashmap ([Apache License 2.0](https://github.com/greg7mdp/parallel-hashmap/blob/master/LICENSE))
 - fastbase64 ([License](https://github.com/lemire/fastbase64/blob/master/LICENSE))
 - http-parser ([MIT License](https://github.com/nodejs/http-parser/blob/main/LICENSE-MIT))
 - sfntly ([Apache License 2.0](https://github.com/rillig/sfntly/blob/master/cpp/COPYING.txt))

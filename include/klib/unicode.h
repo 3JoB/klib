@@ -127,7 +127,7 @@ std::string KLIB_EXPORT utf32_to_utf8_w(const std::wstring &str);
  * @param code_point: Code point
  * @return If it is an ASCII character, return true, otherwise return false
  */
-constexpr bool KLIB_EXPORT is_ascii(char32_t code_point) {
+constexpr bool KLIB_EXPORT is_ascii(char32_t code_point) noexcept {
   return static_cast<std::uint32_t>(code_point) <= 0x7F;
 }
 
@@ -137,7 +137,7 @@ constexpr bool KLIB_EXPORT is_ascii(char32_t code_point) {
  * @return If it is an whitespace character, return true, otherwise return false
  * @see https://en.wikipedia.org/wiki/Whitespace_character
  */
-constexpr bool KLIB_EXPORT is_whitespace(char32_t code_point) {
+constexpr bool KLIB_EXPORT is_whitespace(char32_t code_point) noexcept {
   using namespace detail;
 
   return code_point == U'\u0009' || range(code_point, U'\u000A', U'\u000D') ||
@@ -154,7 +154,7 @@ constexpr bool KLIB_EXPORT is_whitespace(char32_t code_point) {
  * @return If it is an control character, return true, otherwise return false
  * @see https://zh.wikipedia.org/wiki/%E6%8E%A7%E5%88%B6%E5%AD%97%E7%AC%A6
  */
-constexpr bool KLIB_EXPORT is_control(char32_t code_point) {
+constexpr bool KLIB_EXPORT is_control(char32_t code_point) noexcept {
   using namespace detail;
 
   return range(code_point, U'\u0000', U'\u001F') ||
@@ -168,7 +168,8 @@ constexpr bool KLIB_EXPORT is_control(char32_t code_point) {
  * return false
  * @see https://zh.wikipedia.org/wiki/%E6%A0%87%E7%82%B9%E7%AC%A6%E5%8F%B7
  */
-constexpr bool KLIB_EXPORT is_chinese_punctuation(char32_t code_point) {
+constexpr bool KLIB_EXPORT
+is_chinese_punctuation(char32_t code_point) noexcept {
   return code_point == U'。' || code_point == U'？' || code_point == U'！' ||
          code_point == U'，' || code_point == U'、' || code_point == U'；' ||
          code_point == U'：' || code_point == U'“' || code_point == U'”' ||
@@ -196,7 +197,8 @@ constexpr bool KLIB_EXPORT is_chinese_punctuation(char32_t code_point) {
  * return false
  * @see https://zh.wikipedia.org/wiki/%E6%A0%87%E7%82%B9%E7%AC%A6%E5%8F%B7
  */
-constexpr bool KLIB_EXPORT is_english_punctuation(char32_t code_point) {
+constexpr bool KLIB_EXPORT
+is_english_punctuation(char32_t code_point) noexcept {
   return code_point == U'.' || code_point == U'?' || code_point == U'!' ||
          code_point == U',' || code_point == U':' || code_point == U'…' ||
          code_point == U';' || code_point == U'-' || code_point == U'–' ||
@@ -214,7 +216,7 @@ constexpr bool KLIB_EXPORT is_english_punctuation(char32_t code_point) {
  * @see
  * https://zh.wikipedia.org/wiki/%E4%B8%AD%E6%97%A5%E9%9F%93%E7%B5%B1%E4%B8%80%E8%A1%A8%E6%84%8F%E6%96%87%E5%AD%97
  */
-constexpr bool KLIB_EXPORT is_cjk(char32_t code_point) {
+constexpr bool KLIB_EXPORT is_cjk(char32_t code_point) noexcept {
   using namespace detail;
 
   return code_point == U'\u3007' || range(code_point, U'\u3400', U'\u4DBF') ||
