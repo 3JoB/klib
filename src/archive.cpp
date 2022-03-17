@@ -65,7 +65,20 @@ std::string compressed_file_name(const std::string &path, Format format,
   throw InvalidArgument("Unknown format or filter");
 }
 
-void init_write_format_filter(archive *archive, Format format, Filter filter) {
+void set_format_compression_level(archive *archive, std::int32_t level) {
+  auto rc = archive_write_set_format_option(
+      archive, nullptr, "compression-level", std::to_string(level).c_str());
+  CHECK_LIBARCHIVE(rc, archive);
+}
+
+void set_filter_compression_level(archive *archive, std::int32_t level) {
+  auto rc = archive_write_set_filter_option(
+      archive, nullptr, "compression-level", std::to_string(level).c_str());
+  CHECK_LIBARCHIVE(rc, archive);
+}
+
+void init_write_format_filter(archive *archive, Format format, Filter filter,
+                              std::optional<std::int32_t> level) {
   std::int32_t rc;
 
   if (format == Format::Zip) {
@@ -78,6 +91,7 @@ void init_write_format_filter(archive *archive, Format format, Filter filter) {
     } else if (filter == Filter::Deflate) {
       rc = archive_write_zip_set_compression_deflate(archive);
       CHECK_LIBARCHIVE(rc, archive);
+      set_format_compression_level(archive, level ? *level : 6);
     } else [[unlikely]] {
       throw InvalidArgument(
           "Filter other than Deflate should not be used in the ZIP archive "
@@ -95,6 +109,7 @@ void init_write_format_filter(archive *archive, Format format, Filter filter) {
       rc = archive_write_set_format_option(archive, "7zip", "compression",
                                            "deflate");
       CHECK_LIBARCHIVE(rc, archive);
+      set_format_compression_level(archive, level ? *level : 6);
     } else [[unlikely]] {
       throw InvalidArgument(
           "Filter other than Deflate should not be used in the 7-Zip archive "
@@ -110,9 +125,12 @@ void init_write_format_filter(archive *archive, Format format, Filter filter) {
     } else if (filter == Filter::Deflate || filter == Filter::Gzip) {
       rc = archive_write_add_filter_gzip(archive);
       CHECK_LIBARCHIVE(rc, archive);
+      set_filter_compression_level(archive, level ? *level : 6);
     } else if (filter == Filter::Zstd) {
       rc = archive_write_add_filter_zstd(archive);
       CHECK_LIBARCHIVE(rc, archive);
+      set_filter_compression_level(archive,
+                                   level ? *level : ZSTD_defaultCLevel());
 
       auto hardware_thread =
           std::to_string(std::thread::hardware_concurrency());
@@ -177,7 +195,7 @@ void copy_data(archive *archive_read, archive *archive_write) {
 
 void compress(const std::string &path, Format format, Filter filter,
               const std::string &out_name, bool flag,
-              const std::string &password) {
+              std::optional<std::int32_t> level, const std::string &password) {
   if (!std::empty(password) && format != Format::Zip) [[unlikely]] {
     throw InvalidArgument("This format does not support encryption");
   }
@@ -202,19 +220,19 @@ void compress(const std::string &path, Format format, Filter filter,
     }
   }
 
-  compress(paths, name, format, filter, password);
+  compress(paths, name, format, filter, level, password);
 }
 
 void compress(const std::vector<std::string> &paths,
               const std::string &out_name, Format format, Filter filter,
-              const std::string &password) {
+              std::optional<std::int32_t> level, const std::string &password) {
   auto archive = archive_write_new();
   SCOPE_EXIT {
     archive_write_close(archive);
     archive_write_free(archive);
   };
 
-  init_write_format_filter(archive, format, filter);
+  init_write_format_filter(archive, format, filter, level);
 
   if (!std::empty(password)) {
     auto rc =
@@ -352,18 +370,20 @@ std::optional<std::string> outermost_folder_name(const std::string &file_name) {
   return {};
 }
 
-std::string compress_data(const std::string &data) {
-  return compress_data(std::data(data), std::size(data));
+std::string compress_data(const std::string &data,
+                          std::optional<std::int32_t> level) {
+  return compress_data(std::data(data), std::size(data), level);
 }
 
-std::string compress_data(const char *data, std::size_t size) {
+std::string compress_data(const char *data, std::size_t size,
+                          std::optional<std::int32_t> level) {
   std::string result;
 
   auto max_size = ZSTD_compressBound(size);
   result.resize(max_size);
 
   auto length = ZSTD_compress(std::data(result), max_size, data, size,
-                              ZSTD_defaultCLevel());
+                              level ? *level : ZSTD_defaultCLevel());
   CHECK_ZSTD(length);
   result.resize(length);
 

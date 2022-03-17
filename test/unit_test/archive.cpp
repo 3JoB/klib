@@ -54,7 +54,7 @@ TEST_CASE_METHOD(TestsFixture, "zip deflate", "[archive]") {
 TEST_CASE_METHOD(TestsFixture, "zip password", "[archive]") {
   REQUIRE_NOTHROW(klib::compress("zlib-ng-2.0.6", klib::Format::Zip,
                                  klib::Filter::Deflate, "zip-password.zip",
-                                 true, "kaiser123"));
+                                 true, 9, "kaiser123"));
   dbg(std::filesystem::file_size("zip-password.zip"));
   REQUIRE_NOTHROW(
       klib::decompress("zip-password.zip", "zip-password", "kaiser123"));

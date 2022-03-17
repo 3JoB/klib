@@ -31,12 +31,14 @@ enum class KLIB_EXPORT Filter { None, Deflate, Gzip, Zstd };
  * @param filter: Compression algorithm
  * @param out_name: Compressed file name
  * @param flag: Whether to include the outermost folder
+ * @param level: Compression level
  * @param password: Set password for compressed file(Can only be set for ZIP
  * format)
  */
 void KLIB_EXPORT compress(const std::string &path, Format format = Format::Tar,
                           Filter filter = Filter::Gzip,
                           const std::string &out_name = "", bool flag = true,
+                          std::optional<std::int32_t> level = {},
                           const std::string &password = "");
 
 /**
@@ -45,6 +47,7 @@ void KLIB_EXPORT compress(const std::string &path, Format format = Format::Tar,
  * @param out_name: Compressed file name
  * @param format: Archive format
  * @param filter: Compression algorithm
+ * @param level: Compression level
  * @param password: Set password for compressed file(Can only be set for ZIP
  * format)
  */
@@ -52,6 +55,7 @@ void KLIB_EXPORT compress(const std::vector<std::string> &paths,
                           const std::string &out_name,
                           Format format = Format::Tar,
                           Filter filter = Filter::Gzip,
+                          std::optional<std::int32_t> level = {},
                           const std::string &password = "");
 
 /**
@@ -75,17 +79,21 @@ outermost_folder_name(const std::string &file_path);
 /**
  * @brief Compress data
  * @param data: Data to be compressed
+ * @param level: Compression level
  * @return Compressed data
  */
-std::string KLIB_EXPORT compress_data(const std::string &data);
+std::string KLIB_EXPORT compress_data(const std::string &data,
+                                      std::optional<std::int32_t> level = {});
 
 /**
  * @brief Compress data
  * @param data: Data to be compressed
  * @param size: The size of the data to be compressed
+ * @param level: Compression level
  * @return Compressed data
  */
-std::string KLIB_EXPORT compress_data(const char *data, std::size_t size);
+std::string KLIB_EXPORT compress_data(const char *data, std::size_t size,
+                                      std::optional<std::int32_t> level = {});
 
 /**
  * @brief Decompress data
