@@ -1,4 +1,5 @@
 #include <cstdint>
+#include <random>
 #include <set>
 #include <unordered_set>
 #include <vector>
@@ -7,21 +8,21 @@
 #include <parallel_hashmap/phmap.h>
 #include <catch2/catch.hpp>
 
-TEST_CASE("Hashmap", "[hashmap]") {
+TEST_CASE("Set", "[set]") {
   constexpr std::int32_t times = 100'0000;
 
   std::random_device rd;
   std::default_random_engine gen(rd());
-  std::vector<std::int32_t> v;
+  std::vector<std::uint64_t> v;
   v.reserve(times);
   for (std::int32_t i = 0; i < times; ++i) {
     v.push_back(gen());
   }
 
-  std::set<std::int32_t> std_set;
-  phmap::btree_set<std::int32_t> ph_set;
-  std::unordered_set<std::int32_t> std_hashset;
-  phmap::flat_hash_set<std::int32_t> ph_hashset;
+  std::set<std::uint64_t> std_set;
+  phmap::btree_set<std::uint64_t> ph_set;
+  std::unordered_set<std::uint64_t> std_hashset;
+  phmap::flat_hash_set<std::uint64_t> ph_hashset;
 
   BENCHMARK("std::set insert") {
     for (auto i : v) {
@@ -44,7 +45,7 @@ TEST_CASE("Hashmap", "[hashmap]") {
     }
   };
 
-  std::vector<std::int32_t> keys;
+  std::vector<std::uint64_t> keys;
   keys.reserve(times);
   for (std::int32_t i = 0; i < times / 2; ++i) {
     keys.push_back(v[gen() % times]);

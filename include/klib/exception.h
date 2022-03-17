@@ -20,7 +20,7 @@ namespace klib {
 /**
  * @brief Exception class
  */
-class KLIB_PUBLIC Exception : public std::exception {
+class KLIB_EXPORT Exception : public std::exception {
  public:
   /**
    * @brief Constructor
@@ -43,7 +43,7 @@ class KLIB_PUBLIC Exception : public std::exception {
 /**
  * @brief Exception class, which means runtime error
  */
-class KLIB_PUBLIC RuntimeError : public Exception {
+class KLIB_EXPORT RuntimeError : public Exception {
  public:
   /**
    * @brief Constructor
@@ -60,7 +60,7 @@ class KLIB_PUBLIC RuntimeError : public Exception {
 /**
  * @brief Exception class, which means logic error
  */
-class KLIB_PUBLIC LogicError : public Exception {
+class KLIB_EXPORT LogicError : public Exception {
  public:
   /**
    * @brief Constructor
@@ -77,7 +77,7 @@ class KLIB_PUBLIC LogicError : public Exception {
 /**
  * @brief Exception class, which means invalid argument
  */
-class KLIB_PUBLIC InvalidArgument : public Exception {
+class KLIB_EXPORT InvalidArgument : public Exception {
  public:
   /**
    * @brief Constructor
@@ -94,7 +94,7 @@ class KLIB_PUBLIC InvalidArgument : public Exception {
 /**
  * @brief Exception class, which means out of range
  */
-class KLIB_PUBLIC OutOfRange : public Exception {
+class KLIB_EXPORT OutOfRange : public Exception {
  public:
   /**
    * @brief Constructor

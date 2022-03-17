@@ -16,6 +16,6 @@ namespace klib {
  * @param markdown: CommonMark Markdown to be converted
  * @return Converted HTML
  */
-std::string KLIB_PUBLIC markdown_to_html(const std::string &markdown);
+std::string KLIB_EXPORT markdown_to_html(const std::string &markdown);
 
 }  // namespace klib

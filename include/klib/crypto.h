@@ -15,7 +15,7 @@ namespace klib {
  * @brief Block cipher mode of operation
  * @see https://en.wikipedia.org/wiki/Block_cipher_mode_of_operation
  */
-enum class KLIB_PUBLIC AesMode { CBC, OFB, CTR };
+enum class KLIB_EXPORT AesMode { CBC, OFB, CTR };
 
 /**
  * @brief Use AES to encrypt data, key size: 256 bit
@@ -24,7 +24,7 @@ enum class KLIB_PUBLIC AesMode { CBC, OFB, CTR };
  * @param aes_mode: Block cipher mode of operation
  * @return Encrypted data
  */
-std::string KLIB_PUBLIC aes_256_encrypt(const std::string &data,
+std::string KLIB_EXPORT aes_256_encrypt(const std::string &data,
                                         const std::string &key,
                                         AesMode aes_mode = AesMode::CBC);
 
@@ -35,7 +35,7 @@ std::string KLIB_PUBLIC aes_256_encrypt(const std::string &data,
  * @param aes_mode: Block cipher mode of operation
  * @return Decrypted data
  */
-std::string KLIB_PUBLIC aes_256_decrypt(const std::string &data,
+std::string KLIB_EXPORT aes_256_decrypt(const std::string &data,
                                         const std::string &key,
                                         AesMode aes_mode = AesMode::CBC);
 
@@ -48,7 +48,7 @@ std::string KLIB_PUBLIC aes_256_decrypt(const std::string &data,
  * @note It is not safe to not use the initial vector, this function is only
  * used to decrypt the foreign encrypted data
  */
-std::string KLIB_PUBLIC aes_256_decrypt_no_iv(const std::string &data,
+std::string KLIB_EXPORT aes_256_decrypt_no_iv(const std::string &data,
                                               const std::string &key,
                                               AesMode aes_mode = AesMode::CBC);
 

@@ -21,7 +21,7 @@ class SqlQuery;
 /**
  * @brief Represents a column of data in a row
  */
-class KLIB_PUBLIC Column {
+class KLIB_EXPORT Column {
   friend class SqlQuery;
 
  public:
@@ -84,7 +84,7 @@ class SqlDatabase;
 /**
  * @brief Represents a SQL statement
  */
-class KLIB_PUBLIC SqlQuery {
+class KLIB_EXPORT SqlQuery {
   friend class SqlDatabase;
   friend class Column::ColumnImpl;
 
@@ -190,7 +190,7 @@ class KLIB_PUBLIC SqlQuery {
   std::experimental::propagate_const<std::unique_ptr<SqlQueryImpl>> impl_;
 };
 
-class KLIB_PUBLIC SqlDatabase {
+class KLIB_EXPORT SqlDatabase {
   friend SqlQuery::SqlQueryImpl;
 
  public:

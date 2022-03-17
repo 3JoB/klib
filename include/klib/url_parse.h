@@ -17,7 +17,7 @@ namespace klib {
 /**
  * @brief Parse URL
  */
-class KLIB_PUBLIC URL {
+class KLIB_EXPORT URL {
  public:
   URL() = default;
   /**

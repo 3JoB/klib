@@ -17,7 +17,7 @@ namespace klib {
  * @param ignore_error: Ignore error
  * @return Tidy HTML document
  */
-std::string KLIB_PUBLIC html_tidy(const std::string &html,
+std::string KLIB_EXPORT html_tidy(const std::string &html,
                                   bool ignore_error = false);
 
 }  // namespace klib

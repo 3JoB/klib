@@ -21,7 +21,7 @@ namespace klib {
  * @brief HTTP Status
  * @see https://developer.mozilla.org/zh-CN/docs/Web/HTTP/Status
  */
-enum class KLIB_PUBLIC HttpStatus {
+enum class KLIB_EXPORT HttpStatus {
 #define XX(num, name, string) HTTP_STATUS_##name = num,
   KLIB_HTTP_STATUS_MAP(XX)
 #undef XX
@@ -32,7 +32,7 @@ enum class KLIB_PUBLIC HttpStatus {
  * @param http_status: HTTP Status
  * @return The description string
  */
-inline std::string KLIB_PUBLIC http_status_str(HttpStatus http_status) {
+inline std::string KLIB_EXPORT http_status_str(HttpStatus http_status) {
   switch (http_status) {
 #define XX(num, name, string)          \
   case HttpStatus::HTTP_STATUS_##name: \
@@ -50,7 +50,7 @@ inline std::string KLIB_PUBLIC http_status_str(HttpStatus http_status) {
  * @brief HTTP request methods
  * @see https://developer.mozilla.org/zh-CN/docs/Web/HTTP/Methods
  */
-enum class KLIB_PUBLIC HttpMethod {
+enum class KLIB_EXPORT HttpMethod {
 #define XX(num, name, string) HTTP_METHOD_##name = num,
   KLIB_HTTP_METHOD_MAP(XX)
 #undef XX
@@ -61,7 +61,7 @@ enum class KLIB_PUBLIC HttpMethod {
  * @param http_method: HTTP request method
  * @return The description string
  */
-inline std::string KLIB_PUBLIC http_method_str(HttpMethod http_method) {
+inline std::string KLIB_EXPORT http_method_str(HttpMethod http_method) {
   switch (http_method) {
 #define XX(num, name, string)          \
   case HttpMethod::HTTP_METHOD_##name: \
@@ -80,7 +80,7 @@ class Response;
 /**
  * @brief Constructs and sends a Request
  */
-class KLIB_PUBLIC Request {
+class KLIB_EXPORT Request {
   friend class Response;
 
  public:
@@ -243,7 +243,7 @@ class KLIB_PUBLIC Request {
 /**
  * @brief Response content
  */
-class KLIB_PUBLIC Response {
+class KLIB_EXPORT Response {
   friend class Request::RequestImpl;
 
  public:

@@ -1,3 +1,3 @@
 #pragma once
 
-#define KLIB_PUBLIC __attribute__((visibility("default")))
+#define KLIB_EXPORT __attribute__((visibility("default")))
