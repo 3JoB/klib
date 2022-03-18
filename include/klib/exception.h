@@ -12,7 +12,7 @@
 #include <fmt/core.h>
 #include <fmt/format.h>
 
-#include "klib/config.h"
+#include "klib/detail/config.h"
 #include "klib/detail/fmt_with_loc.h"
 
 namespace klib {

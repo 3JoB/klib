@@ -8,7 +8,7 @@
 #include <cstdint>
 #include <string>
 
-#include "klib/config.h"
+#include "klib/detail/config.h"
 #include "klib/detail/unicode_util.h"
 
 namespace klib {

@@ -9,7 +9,7 @@
 #include <cstdint>
 #include <string>
 
-#include "klib/config.h"
+#include "klib/detail/config.h"
 
 namespace klib {
 

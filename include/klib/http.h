@@ -5,13 +5,14 @@
 
 #pragma once
 
-#include <parallel_hashmap/phmap.h>
 #include <cstdint>
 #include <experimental/propagate_const>
 #include <memory>
 #include <string>
 
-#include "klib/config.h"
+#include <parallel_hashmap/phmap.h>
+
+#include "klib/detail/config.h"
 #include "klib/detail/http-inl.h"
 #include "klib/exception.h"
 

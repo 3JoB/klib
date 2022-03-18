@@ -5,12 +5,13 @@
 
 #pragma once
 
-#include <parallel_hashmap/phmap.h>
 #include <cstdint>
 #include <string>
 #include <string_view>
 
-#include "klib/config.h"
+#include <parallel_hashmap/phmap.h>
+
+#include "klib/detail/config.h"
 
 namespace klib {
 

@@ -10,7 +10,7 @@
 #include <string>
 #include <vector>
 
-#include "klib/config.h"
+#include "klib/detail/config.h"
 
 namespace klib {
 
