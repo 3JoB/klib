@@ -57,6 +57,7 @@ target_link_libraries(<your-target> PRIVATE klib::klib)
   - https://github.com/curl/curl/wiki/get-headers-v2
 - HTTP/3
   - https://github.com/curl/curl/wiki/HTTP3
+- Image IO
 
 ---
 
