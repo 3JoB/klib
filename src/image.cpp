@@ -4,17 +4,11 @@
 
 #include "klib/exception.h"
 
-#ifdef KLIB_SANITIZER
-#include <sanitizer/lsan_interface.h>
-#endif
-
 namespace klib {
 
 class Image::ImageImpl {
  public:
   explicit ImageImpl(const std::string &file_name);
-
-  ~ImageImpl();
 
   void to_png(const std::string &out_name, std::int32_t quality,
               std::int32_t compression_level);
@@ -28,21 +22,11 @@ class Image::ImageImpl {
 };
 
 Image::ImageImpl::ImageImpl(const std::string &file_name) {
-#ifdef KLIB_SANITIZER
-  __lsan_disable();
-#endif
-
-  if (VIPS_INIT("")) {
-    throw RuntimeError("vips_init() failed");
+  if (VIPS_INIT("klib")) {
+    throw RuntimeError("VIPS_INIT() failed");
   }
 
   image_ = vips::VImage::new_from_file(file_name.c_str(), nullptr);
-}
-
-Image::ImageImpl::~ImageImpl() {
-#ifdef KLIB_SANITIZER
-  __lsan_enable();
-#endif
 }
 
 void Image::ImageImpl::to_png(const std::string &out_name, std::int32_t quality,

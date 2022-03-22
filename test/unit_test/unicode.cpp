@@ -82,7 +82,7 @@ TEST_CASE("utf32_to_utf8_w", "[unicode]") {
 
 TEST_CASE("is_ascii", "[unicode]") {
   CHECK(klib::is_ascii('A'));
-  CHECK_FALSE(klib::is_ascii(static_cast<char>(190)));
+  CHECK_FALSE(klib::is_ascii(190));
 }
 
 TEST_CASE("is_cjk", "[unicode]") {

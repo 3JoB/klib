@@ -126,10 +126,6 @@ endif()
 include_directories(${gio-2.0_INCLUDE_DIRS})
 include_directories(third_party)
 
-if(KLIB_SANITIZER)
-  add_definitions(-DKLIB_SANITIZER)
-endif()
-
 # ---------------------------------------------------------------------------------------
 # Build static library
 # ---------------------------------------------------------------------------------------
