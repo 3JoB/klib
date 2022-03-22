@@ -48,8 +48,6 @@ file(
   "${KLIB_SOURCE_DIR}/src/*.cpp"
   "${KLIB_SOURCE_DIR}/third_party/fastbase64/*.c"
   "${KLIB_SOURCE_DIR}/third_party/http-parser/*.c"
-  "${KLIB_SOURCE_DIR}/third_party/imageio/*.c"
-  "${KLIB_SOURCE_DIR}/third_party/mozjpeg/*.c"
   "${KLIB_SOURCE_DIR}/third_party/sfntly/*.cc"
   "${KLIB_SOURCE_DIR}/third_party/subtly/*.cc"
   "${KLIB_SOURCE_DIR}/third_party/utf_utils/*.cpp")
@@ -90,9 +88,22 @@ pkg_check_modules(libwoff2common REQUIRED IMPORTED_TARGET libwoff2common)
 pkg_check_modules(libbrotlidec REQUIRED IMPORTED_TARGET libbrotlidec)
 pkg_check_modules(libbrotlienc REQUIRED IMPORTED_TARGET libbrotlienc)
 pkg_check_modules(libbrotlicommon REQUIRED IMPORTED_TARGET libbrotlicommon)
-pkg_check_modules(libpng REQUIRED IMPORTED_TARGET libpng)
+pkg_check_modules(vips REQUIRED IMPORTED_TARGET vips)
+pkg_check_modules(vips-cpp REQUIRED IMPORTED_TARGET vips-cpp)
+pkg_check_modules(gio-2.0 REQUIRED IMPORTED_TARGET gio-2.0)
+pkg_check_modules(gobject-2.0 REQUIRED IMPORTED_TARGET gobject-2.0)
+pkg_check_modules(gmodule-2.0 REQUIRED IMPORTED_TARGET gmodule-2.0)
+pkg_check_modules(gmodule-no-export-2.0 REQUIRED IMPORTED_TARGET
+                  gmodule-no-export-2.0)
+pkg_check_modules(glib-2.0 REQUIRED IMPORTED_TARGET glib-2.0)
+pkg_check_modules(libpcre REQUIRED IMPORTED_TARGET libpcre)
+pkg_check_modules(expat REQUIRED IMPORTED_TARGET expat)
+pkg_check_modules(libffi REQUIRED IMPORTED_TARGET libffi)
+pkg_check_modules(libspng REQUIRED IMPORTED_TARGET libspng)
 pkg_check_modules(libjpeg REQUIRED IMPORTED_TARGET libjpeg)
 pkg_check_modules(libwebp REQUIRED IMPORTED_TARGET libwebp)
+pkg_check_modules(libwebpmux REQUIRED IMPORTED_TARGET libwebpmux)
+pkg_check_modules(libwebpdemux REQUIRED IMPORTED_TARGET libwebpdemux)
 
 find_package(fmt REQUIRED)
 find_package(spdlog REQUIRED)
@@ -112,7 +123,12 @@ if(NOT (${CMAKE_BUILD_TYPE} STREQUAL "Debug"))
   add_definitions(-DDBG_MACRO_DISABLE)
 endif()
 
+include_directories(${gio-2.0_INCLUDE_DIRS})
 include_directories(third_party)
+
+if(KLIB_SANITIZER)
+  add_definitions(-DKLIB_SANITIZER)
+endif()
 
 # ---------------------------------------------------------------------------------------
 # Build static library
@@ -133,14 +149,8 @@ if(KLIB_BUILD_STATIC)
     ${KLIB_LIBRARY} PUBLIC FMT_LOCALE SPDLOG_COMPILED_LIB SPDLOG_FMT_EXTERNAL)
   target_compile_definitions(
     ${KLIB_LIBRARY}
-    PRIVATE HAVE_CONFIG_H
-            SFNTLY_EXPERIMENTAL
-            SFNTLY_NO_EXCEPTION
-            PNG_SUPPORTED
-            LIBARCHIVE_STATIC
-            CURL_STATICLIB
-            CURL_NO_OLDIES
-            SQLITE_HAS_CODEC)
+    PRIVATE SFNTLY_EXPERIMENTAL SFNTLY_NO_EXCEPTION LIBARCHIVE_STATIC
+            CURL_STATICLIB CURL_NO_OLDIES SQLITE_HAS_CODEC)
   target_link_libraries(${KLIB_LIBRARY} INTERFACE ${CMAKE_THREAD_LIBS_INIT})
 
   set_target_properties(
@@ -169,7 +179,12 @@ if(KLIB_BUILD_STATIC)
   file(MAKE_DIRECTORY ${KLIB_BINARY_DIR}/third_party/xxhash)
   file(MAKE_DIRECTORY ${KLIB_BINARY_DIR}/third_party/cmark)
   file(MAKE_DIRECTORY ${KLIB_BINARY_DIR}/third_party/woff2)
-  file(MAKE_DIRECTORY ${KLIB_BINARY_DIR}/third_party/libpng)
+  file(MAKE_DIRECTORY ${KLIB_BINARY_DIR}/third_party/libvips)
+  file(MAKE_DIRECTORY ${KLIB_BINARY_DIR}/third_party/glib)
+  file(MAKE_DIRECTORY ${KLIB_BINARY_DIR}/third_party/libexpat)
+  file(MAKE_DIRECTORY ${KLIB_BINARY_DIR}/third_party/libffi)
+  file(MAKE_DIRECTORY ${KLIB_BINARY_DIR}/third_party/libpcre)
+  file(MAKE_DIRECTORY ${KLIB_BINARY_DIR}/third_party/libspng)
   file(MAKE_DIRECTORY ${KLIB_BINARY_DIR}/third_party/mozjpeg)
   file(MAKE_DIRECTORY ${KLIB_BINARY_DIR}/third_party/libwebp)
   add_custom_command(
@@ -200,9 +215,19 @@ if(KLIB_BUILD_STATIC)
     COMMAND gcc-ar -x --output=woff2 /usr/local/lib/libwoff2common.a
     COMMAND gcc-ar -x --output=woff2 /usr/local/lib/libwoff2dec.a
     COMMAND gcc-ar -x --output=woff2 /usr/local/lib/libwoff2enc.a
-    COMMAND gcc-ar -x --output=libpng /usr/local/lib/libpng.a
+    COMMAND gcc-ar -x --output=libvips /usr/local/lib/libvips.a
+    COMMAND gcc-ar -x --output=libvips /usr/local/lib/libvips-cpp.a
+    COMMAND gcc-ar -x --output=glib /usr/local/lib/libgio-2.0.a
+    COMMAND gcc-ar -x --output=glib /usr/local/lib/libglib-2.0.a
+    COMMAND gcc-ar -x --output=glib /usr/local/lib/libgmodule-2.0.a
+    COMMAND gcc-ar -x --output=glib /usr/local/lib/libgobject-2.0.a
+    COMMAND gcc-ar -x --output=libexpat /usr/local/lib/libexpat.a
+    COMMAND gcc-ar -x --output=libffi /usr/local/lib/libffi.a
+    COMMAND gcc-ar -x --output=libpcre /usr/local/lib/libpcre.a
+    COMMAND gcc-ar -x --output=libspng /usr/local/lib/libspng_static.a
     COMMAND gcc-ar -x --output=mozjpeg /usr/local/lib/libjpeg.a
     COMMAND gcc-ar -x --output=libwebp /usr/local/lib/libwebp.a
+    COMMAND gcc-ar -x --output=libwebp /usr/local/lib/libwebpmux.a
     COMMAND gcc-ar -x --output=libwebp /usr/local/lib/libwebpdemux.a
     COMMAND gcc-ar -x --output=libwebp /usr/local/lib/libwebpdecoder.a
     COMMAND
@@ -210,7 +235,8 @@ if(KLIB_BUILD_STATIC)
       libarchive/*.o tidy-html5/*.o libcurl/*.o brotli/*.o boringssl/*.o
       sqlcipher/*.o argon2/*.o zstd/*.o fmt/*.o spdlog/*.o nghttp2/*.o
       simdutf/*.o libidn2/*.o libpsl/*.o libunistring/*.o xxhash/*.o cmark/*.o
-      woff2/*.o libpng/*.o mozjpeg/*.o libwebp/*.o
+      woff2/*.o libvips/*.o glib/*.o libexpat/*.o libffi/*.o libpcre/*.o
+      libspng/*.o mozjpeg/*.o libwebp/*.o
     COMMAND gcc-ranlib ${KLIB_BINARY_DIR}/lib${KLIB_LIBRARY}.a
     WORKING_DIRECTORY ${KLIB_BINARY_DIR}/third_party
     COMMENT "Combined static library")
@@ -232,9 +258,8 @@ if(KLIB_BUILD_SHARED)
            "$<INSTALL_INTERFACE:${CMAKE_INSTALL_INCLUDEDIR}>")
   target_compile_features(${KLIB_LIBRARY}-shared INTERFACE cxx_std_20)
   target_compile_definitions(
-    ${KLIB_LIBRARY}-shared
-    PRIVATE HAVE_CONFIG_H SFNTLY_EXPERIMENTAL SFNTLY_NO_EXCEPTION PNG_SUPPORTED
-            CURL_NO_OLDIES SQLITE_HAS_CODEC)
+    ${KLIB_LIBRARY}-shared PRIVATE SFNTLY_EXPERIMENTAL SFNTLY_NO_EXCEPTION
+                                   CURL_NO_OLDIES SQLITE_HAS_CODEC)
   target_link_libraries(${KLIB_LIBRARY}-shared PUBLIC fmt::fmt spdlog::spdlog)
   target_link_libraries(
     ${KLIB_LIBRARY}-shared
@@ -252,9 +277,16 @@ if(KLIB_BUILD_SHARED)
             PkgConfig::libbrotlidec
             PkgConfig::libbrotlienc
             PkgConfig::libbrotlicommon
-            PkgConfig::libpng
+            PkgConfig::vips
+            PkgConfig::vips-cpp
+            PkgConfig::gio-2.0
+            PkgConfig::expat
+            PkgConfig::libffi
+            PkgConfig::libspng
             PkgConfig::libjpeg
             PkgConfig::libwebp
+            PkgConfig::libwebpmux
+            PkgConfig::libwebpdemux
             ${Boost_LIBRARIES}
             scope_guard::scope_guard
             simdutf::simdutf
