@@ -58,6 +58,7 @@ target_link_libraries(<your-target> PRIVATE klib::klib)
 - HTTP/3
   - https://github.com/curl/curl/wiki/HTTP3
 - Image IO
+  - https://github.com/randy408/libspng
 
 ---
 
