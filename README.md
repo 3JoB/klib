@@ -44,10 +44,18 @@ A C++ library, which wraps several important C libraries and provides some conve
 
 - [kenv](https://github.com/KaiserLancelot/kenv)
 
-## Usage with CMake
+## Usage
+
+Install dependencies first using [kpkg](https://github.com/KaiserLancelot/kpkg)
+
+```bash
+kpkg install fmt spdlog parallel-hashmap
+```
+
+Then use with CMake
 
 ```cmake
-find_package(klib)
+find_package(klib REQUIRED)
 target_link_libraries(<your-target> PRIVATE klib::klib)
 ```
 
