@@ -4,7 +4,7 @@ include(AddFlag)
 # C/C++ standard
 # ---------------------------------------------------------------------------------------
 # https://cmake.org/cmake/help/latest/prop_tgt/C_STANDARD.html
-set(CMAKE_C_STANDARD 17)
+set(CMAKE_C_STANDARD 11)
 set(CMAKE_C_EXTENSIONS OFF)
 set(CMAKE_C_STANDARD_REQUIRED ON)
 
