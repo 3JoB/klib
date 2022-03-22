@@ -11,7 +11,6 @@ namespace {
 const std::string file_prefix = "book";
 const std::string dir_name = file_prefix;
 const std::string gzip_name = file_prefix + ".tar.gz";
-const std::string rar_name = file_prefix + ".rar";
 
 const std::string std_zip_name = file_prefix + ".std.zip";
 const std::string klib_zip_name = file_prefix + ".klib.zip";
@@ -19,8 +18,6 @@ const std::string klib_zip_aes256_name = file_prefix + ".klib.aes256.zip";
 
 const std::string std_7zip_name = file_prefix + ".std.7z";
 const std::string klib_7zip_name = file_prefix + ".klib.7z";
-
-const std::string std_rar_name = file_prefix + ".std.rar";
 
 const std::string std_gzip_name = file_prefix + ".std.tar.gz";
 const std::string klib_gzip_name = file_prefix + ".klib.tar.gz";
@@ -35,8 +32,6 @@ class TestsFixture {
     REQUIRE(std::filesystem::exists(gzip_name));
     REQUIRE_NOTHROW(klib::exec("tar -zxf " + gzip_name));
     REQUIRE(std::filesystem::exists(dir_name));
-
-    REQUIRE(std::filesystem::exists(rar_name));
   }
 };
 
@@ -136,33 +131,6 @@ TEST_CASE_METHOD(TestsFixture, "7-Zip", "[archive]") {
 
   REQUIRE(std::filesystem::remove(std_7zip_name));
   REQUIRE(std::filesystem::remove(klib_7zip_name));
-}
-
-TEST_CASE_METHOD(TestsFixture, "RAR", "[archive]") {
-  BENCHMARK_ADVANCED("rar compress")
-  (Catch::Benchmark::Chronometer meter) {
-    meter.measure([] {
-      klib::exec("rar a -idq -o+ -mt1 " + std_rar_name + " " + dir_name);
-    });
-
-    REQUIRE(std::filesystem::is_regular_file(std_rar_name));
-  };
-
-  BENCHMARK_ADVANCED("unrar decompress")
-  (Catch::Benchmark::Chronometer meter) {
-    std::filesystem::remove_all(dir_name);
-    meter.measure([] { klib::exec("unrar x -idq -o+ " + rar_name); });
-    REQUIRE(std::filesystem::is_directory(dir_name));
-  };
-
-  BENCHMARK_ADVANCED("klib decompress")
-  (Catch::Benchmark::Chronometer meter) {
-    std::filesystem::remove_all(dir_name);
-    meter.measure([] { klib::decompress(rar_name); });
-    REQUIRE(std::filesystem::is_directory(dir_name));
-  };
-
-  REQUIRE(std::filesystem::remove(std_rar_name));
 }
 
 TEST_CASE_METHOD(TestsFixture, "Gzip", "[archive]") {

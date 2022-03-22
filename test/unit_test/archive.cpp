@@ -17,8 +17,6 @@ class TestsFixture {
     REQUIRE(std::filesystem::exists("zlib-ng-2.0.6.tar.gz"));
     REQUIRE_NOTHROW(klib::exec("tar -zxf zlib-ng-2.0.6.tar.gz"));
     REQUIRE(std::filesystem::exists("zlib-ng-2.0.6"));
-
-    REQUIRE(std::filesystem::exists("zlib-ng-2.0.6.rar"));
   }
 };
 
@@ -118,14 +116,6 @@ TEST_CASE_METHOD(TestsFixture, "tar zstd", "[archive]") {
 
   CHECK(std::filesystem::remove("tar-zstd.tar.zst"));
   CHECK(std::filesystem::remove_all("tar-zstd"));
-}
-
-TEST_CASE_METHOD(TestsFixture, "rar", "[archive]") {
-  dbg(std::filesystem::file_size("zlib-ng-2.0.6.rar"));
-  REQUIRE_NOTHROW(klib::decompress("zlib-ng-2.0.6.rar", "rar"));
-  CHECK_NOTHROW(klib::exec("diff -r zlib-ng-2.0.6 rar/zlib-ng-2.0.6"));
-
-  CHECK(std::filesystem::remove_all("rar"));
 }
 
 TEST_CASE("outermost_folder_name", "[archive]") {

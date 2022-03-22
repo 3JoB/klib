@@ -152,9 +152,6 @@ void init_read_format_filter(archive *archive) {
   rc = archive_read_support_format_gnutar(archive);
   CHECK_LIBARCHIVE(rc, archive);
 
-  rc = archive_read_support_format_rar5(archive);
-  CHECK_LIBARCHIVE(rc, archive);
-
   rc = archive_read_support_filter_none(archive);
   CHECK_LIBARCHIVE(rc, archive);
 
