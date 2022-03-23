@@ -31,7 +31,7 @@
  <tr style="height: 56px;">
   <td id="projectalign" style="padding-left: 0.5em;">
    <div id="projectname">klib
-   &#160;<span id="projectnumber">1.11.0</span>
+   &#160;<span id="projectnumber">1.12.0</span>
    </div>
   </td>
    <td>        <div id="MSearchBox" class="MSearchBoxInactive">
@@ -99,66 +99,46 @@ $(document).ready(function(){initNavTree('image_8h.html',''); initResizable(); }
 </div><!--header-->
 <div class="contents">
 
-<p>Contains WebP conversion module.  
+<p>Contains image conversion module.  
 <a href="#details">More...</a></p>
-<div class="textblock"><code>#include &lt;cstddef&gt;</code><br />
-<code>#include &lt;cstdint&gt;</code><br />
+<div class="textblock"><code>#include &lt;cstdint&gt;</code><br />
 <code>#include &lt;string&gt;</code><br />
-<code>#include &lt;string_view&gt;</code><br />
-<code>#include &quot;klib/config.h&quot;</code><br />
+<code>#include &quot;klib/detail/config.h&quot;</code><br />
 </div>
 <p><a href="image_8h_source.html">Go to the source code of this file.</a></p>
 <table class="memberdecls">
 <tr class="heading"><td colspan="2"><h2 class="groupheader"><a name="func-members"></a>
 Functions</h2></td></tr>
-<tr class="memitem:a40fabf55077b3072c5185a06425c9771"><td class="memItemLeft" align="right" valign="top">std::string KLIB_EXPORT&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="image_8h.html#a40fabf55077b3072c5185a06425c9771">klib::image_to_jpeg</a> (const std::string &amp;image, std::int32_t quality=75, bool max_compress=false)</td></tr>
-<tr class="memdesc:a40fabf55077b3072c5185a06425c9771"><td class="mdescLeft">&#160;</td><td class="mdescRight">Convert PNG/JPEG format to JPEG format.  <a href="image_8h.html#a40fabf55077b3072c5185a06425c9771">More...</a><br /></td></tr>
-<tr class="separator:a40fabf55077b3072c5185a06425c9771"><td class="memSeparator" colspan="2">&#160;</td></tr>
-<tr class="memitem:a2d2ebc77523556fb82c725f582b299b3"><td class="memItemLeft" align="right" valign="top">std::string KLIB_EXPORT&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="image_8h.html#a2d2ebc77523556fb82c725f582b299b3">klib::image_to_jpeg</a> (std::string_view image, std::int32_t quality=75, bool max_compress=false)</td></tr>
-<tr class="memdesc:a2d2ebc77523556fb82c725f582b299b3"><td class="mdescLeft">&#160;</td><td class="mdescRight">Convert PNG/JPEG to format JPEG format.  <a href="image_8h.html#a2d2ebc77523556fb82c725f582b299b3">More...</a><br /></td></tr>
-<tr class="separator:a2d2ebc77523556fb82c725f582b299b3"><td class="memSeparator" colspan="2">&#160;</td></tr>
-<tr class="memitem:a7e1ae58bd892553e534315a11ca6be30"><td class="memItemLeft" align="right" valign="top">std::string KLIB_EXPORT&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="image_8h.html#a7e1ae58bd892553e534315a11ca6be30">klib::image_to_jpeg</a> (const char *image, std::size_t size, std::int32_t quality=75, bool max_compress=false)</td></tr>
-<tr class="memdesc:a7e1ae58bd892553e534315a11ca6be30"><td class="mdescLeft">&#160;</td><td class="mdescRight">Convert PNG/JPEG to format JPEG format.  <a href="image_8h.html#a7e1ae58bd892553e534315a11ca6be30">More...</a><br /></td></tr>
-<tr class="separator:a7e1ae58bd892553e534315a11ca6be30"><td class="memSeparator" colspan="2">&#160;</td></tr>
-<tr class="memitem:a544718f7266a004d0f66ac22685d3306"><td class="memItemLeft" align="right" valign="top">std::string KLIB_EXPORT&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="image_8h.html#a544718f7266a004d0f66ac22685d3306">klib::image_to_webp</a> (const std::string &amp;image, std::int32_t quality=75, std::int32_t method=0, bool lossless=false)</td></tr>
-<tr class="memdesc:a544718f7266a004d0f66ac22685d3306"><td class="mdescLeft">&#160;</td><td class="mdescRight">Convert PNG/JPEG format to WebP format.  <a href="image_8h.html#a544718f7266a004d0f66ac22685d3306">More...</a><br /></td></tr>
-<tr class="separator:a544718f7266a004d0f66ac22685d3306"><td class="memSeparator" colspan="2">&#160;</td></tr>
-<tr class="memitem:a95fcca552d239e2486be6490d6887f66"><td class="memItemLeft" align="right" valign="top">std::string KLIB_EXPORT&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="image_8h.html#a95fcca552d239e2486be6490d6887f66">klib::image_to_webp</a> (std::string_view image, std::int32_t quality=75, std::int32_t method=0, bool lossless=false)</td></tr>
-<tr class="memdesc:a95fcca552d239e2486be6490d6887f66"><td class="mdescLeft">&#160;</td><td class="mdescRight">Convert PNG/JPEG format to WebP format.  <a href="image_8h.html#a95fcca552d239e2486be6490d6887f66">More...</a><br /></td></tr>
-<tr class="separator:a95fcca552d239e2486be6490d6887f66"><td class="memSeparator" colspan="2">&#160;</td></tr>
-<tr class="memitem:acb5953ff1a5a59f935ee9b5e795a101f"><td class="memItemLeft" align="right" valign="top">std::string KLIB_EXPORT&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="image_8h.html#acb5953ff1a5a59f935ee9b5e795a101f">klib::image_to_webp</a> (const char *image, std::size_t size, std::int32_t quality=75, std::int32_t method=0, bool lossless=false)</td></tr>
-<tr class="memdesc:acb5953ff1a5a59f935ee9b5e795a101f"><td class="mdescLeft">&#160;</td><td class="mdescRight">Convert PNG/JPEG format to WebP format.  <a href="image_8h.html#acb5953ff1a5a59f935ee9b5e795a101f">More...</a><br /></td></tr>
-<tr class="separator:acb5953ff1a5a59f935ee9b5e795a101f"><td class="memSeparator" colspan="2">&#160;</td></tr>
-<tr class="memitem:af131d38b67d8fe81f2a91cc43f66660c"><td class="memItemLeft" align="right" valign="top">std::string KLIB_EXPORT&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="image_8h.html#af131d38b67d8fe81f2a91cc43f66660c">klib::webp_to_png</a> (const std::string &amp;image)</td></tr>
-<tr class="memdesc:af131d38b67d8fe81f2a91cc43f66660c"><td class="mdescLeft">&#160;</td><td class="mdescRight">Convert from WebP format to PNG format.  <a href="image_8h.html#af131d38b67d8fe81f2a91cc43f66660c">More...</a><br /></td></tr>
-<tr class="separator:af131d38b67d8fe81f2a91cc43f66660c"><td class="memSeparator" colspan="2">&#160;</td></tr>
-<tr class="memitem:aca05f2d7213eba1f2166c708306bcd71"><td class="memItemLeft" align="right" valign="top">std::string KLIB_EXPORT&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="image_8h.html#aca05f2d7213eba1f2166c708306bcd71">klib::webp_to_png</a> (std::string_view image)</td></tr>
-<tr class="memdesc:aca05f2d7213eba1f2166c708306bcd71"><td class="mdescLeft">&#160;</td><td class="mdescRight">Convert from WebP format to PNG format.  <a href="image_8h.html#aca05f2d7213eba1f2166c708306bcd71">More...</a><br /></td></tr>
-<tr class="separator:aca05f2d7213eba1f2166c708306bcd71"><td class="memSeparator" colspan="2">&#160;</td></tr>
-<tr class="memitem:a78a6321d6607fe88cc99d052574b27f6"><td class="memItemLeft" align="right" valign="top">std::string KLIB_EXPORT&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="image_8h.html#a78a6321d6607fe88cc99d052574b27f6">klib::webp_to_png</a> (const char *image, std::size_t size)</td></tr>
-<tr class="memdesc:a78a6321d6607fe88cc99d052574b27f6"><td class="mdescLeft">&#160;</td><td class="mdescRight">Convert from WebP format to PNG format.  <a href="image_8h.html#a78a6321d6607fe88cc99d052574b27f6">More...</a><br /></td></tr>
-<tr class="separator:a78a6321d6607fe88cc99d052574b27f6"><td class="memSeparator" colspan="2">&#160;</td></tr>
+<tr class="memitem:a4d820a4d0341eaad0392340ed176a5ad"><td class="memItemLeft" align="right" valign="top">void KLIB_EXPORT&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="image_8h.html#a4d820a4d0341eaad0392340ed176a5ad">klib::image_to_png</a> (const std::string &amp;image_path, const std::string &amp;out_path, std::int32_t quality=75, std::int32_t compression_level=6)</td></tr>
+<tr class="memdesc:a4d820a4d0341eaad0392340ed176a5ad"><td class="mdescLeft">&#160;</td><td class="mdescRight">Convert to PNG format.  <a href="image_8h.html#a4d820a4d0341eaad0392340ed176a5ad">More...</a><br /></td></tr>
+<tr class="separator:a4d820a4d0341eaad0392340ed176a5ad"><td class="memSeparator" colspan="2">&#160;</td></tr>
+<tr class="memitem:aa6388acb544474c35205ddc56066a7c0"><td class="memItemLeft" align="right" valign="top">void KLIB_EXPORT&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="image_8h.html#aa6388acb544474c35205ddc56066a7c0">klib::image_to_jpeg</a> (const std::string &amp;image_path, const std::string &amp;out_path, std::int32_t quality=75, bool max_compress=false)</td></tr>
+<tr class="memdesc:aa6388acb544474c35205ddc56066a7c0"><td class="mdescLeft">&#160;</td><td class="mdescRight">Convert to JPEG format.  <a href="image_8h.html#aa6388acb544474c35205ddc56066a7c0">More...</a><br /></td></tr>
+<tr class="separator:aa6388acb544474c35205ddc56066a7c0"><td class="memSeparator" colspan="2">&#160;</td></tr>
+<tr class="memitem:afb937025cba609b21602d37a148f9b80"><td class="memItemLeft" align="right" valign="top">void KLIB_EXPORT&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="image_8h.html#afb937025cba609b21602d37a148f9b80">klib::image_to_webp</a> (const std::string &amp;image_path, const std::string &amp;out_path, std::int32_t quality=75, std::int32_t method=0)</td></tr>
+<tr class="memdesc:afb937025cba609b21602d37a148f9b80"><td class="mdescLeft">&#160;</td><td class="mdescRight">Convert to WebP format.  <a href="image_8h.html#afb937025cba609b21602d37a148f9b80">More...</a><br /></td></tr>
+<tr class="separator:afb937025cba609b21602d37a148f9b80"><td class="memSeparator" colspan="2">&#160;</td></tr>
 </table>
 <a name="details" id="details"></a><h2 class="groupheader">Detailed Description</h2>
-<div class="textblock"><p>Contains WebP conversion module. </p>
+<div class="textblock"><p>Contains image conversion module. </p>
 </div><h2 class="groupheader">Function Documentation</h2>
-<a id="a7e1ae58bd892553e534315a11ca6be30"></a>
-<h2 class="memtitle"><span class="permalink"><a href="#a7e1ae58bd892553e534315a11ca6be30">&#9670;&nbsp;</a></span>image_to_jpeg() <span class="overload">[1/3]</span></h2>
+<a id="aa6388acb544474c35205ddc56066a7c0"></a>
+<h2 class="memtitle"><span class="permalink"><a href="#aa6388acb544474c35205ddc56066a7c0">&#9670;&nbsp;</a></span>image_to_jpeg()</h2>
 
 <div class="memitem">
 <div class="memproto">
       <table class="memname">
         <tr>
-          <td class="memname">std::string KLIB_EXPORT klib::image_to_jpeg </td>
+          <td class="memname">void KLIB_EXPORT klib::image_to_jpeg </td>
           <td>(</td>
-          <td class="paramtype">const char *&#160;</td>
-          <td class="paramname"><em>image</em>, </td>
+          <td class="paramtype">const std::string &amp;&#160;</td>
+          <td class="paramname"><em>image_path</em>, </td>
         </tr>
         <tr>
           <td class="paramkey"></td>
           <td></td>
-          <td class="paramtype">std::size_t&#160;</td>
-          <td class="paramname"><em>size</em>, </td>
+          <td class="paramtype">const std::string &amp;&#160;</td>
+          <td class="paramname"><em>out_path</em>, </td>
         </tr>
         <tr>
           <td class="paramkey"></td>
@@ -180,127 +160,36 @@ Functions</h2></td></tr>
       </table>
 </div><div class="memdoc">
 
-<p>Convert PNG/JPEG to format JPEG format. </p>
+<p>Convert to JPEG format. </p>
 <dl class="params"><dt>Parameters</dt><dd>
   <table class="params">
-    <tr><td class="paramname">image</td><td>Image to be converted </td></tr>
-    <tr><td class="paramname">size</td><td>Image size </td></tr>
+    <tr><td class="paramname">image_path</td><td>The path of the image to be converted </td></tr>
+    <tr><td class="paramname">out_path</td><td>Output filename </td></tr>
     <tr><td class="paramname">quality</td><td>Compression quality </td></tr>
     <tr><td class="paramname">max_compress</td><td>Increase the compression ratio as much as possible, at the expense of increased encoding time </td></tr>
   </table>
   </dd>
 </dl>
-<dl class="section return"><dt>Returns</dt><dd>Image in JPEG format </dd></dl>
 
 </div>
 </div>
-<a id="a40fabf55077b3072c5185a06425c9771"></a>
-<h2 class="memtitle"><span class="permalink"><a href="#a40fabf55077b3072c5185a06425c9771">&#9670;&nbsp;</a></span>image_to_jpeg() <span class="overload">[2/3]</span></h2>
+<a id="a4d820a4d0341eaad0392340ed176a5ad"></a>
+<h2 class="memtitle"><span class="permalink"><a href="#a4d820a4d0341eaad0392340ed176a5ad">&#9670;&nbsp;</a></span>image_to_png()</h2>
 
 <div class="memitem">
 <div class="memproto">
       <table class="memname">
         <tr>
-          <td class="memname">std::string KLIB_EXPORT klib::image_to_jpeg </td>
+          <td class="memname">void KLIB_EXPORT klib::image_to_png </td>
           <td>(</td>
           <td class="paramtype">const std::string &amp;&#160;</td>
-          <td class="paramname"><em>image</em>, </td>
+          <td class="paramname"><em>image_path</em>, </td>
         </tr>
         <tr>
           <td class="paramkey"></td>
           <td></td>
-          <td class="paramtype">std::int32_t&#160;</td>
-          <td class="paramname"><em>quality</em> = <code>75</code>, </td>
-        </tr>
-        <tr>
-          <td class="paramkey"></td>
-          <td></td>
-          <td class="paramtype">bool&#160;</td>
-          <td class="paramname"><em>max_compress</em> = <code>false</code>&#160;</td>
-        </tr>
-        <tr>
-          <td></td>
-          <td>)</td>
-          <td></td><td></td>
-        </tr>
-      </table>
-</div><div class="memdoc">
-
-<p>Convert PNG/JPEG format to JPEG format. </p>
-<dl class="params"><dt>Parameters</dt><dd>
-  <table class="params">
-    <tr><td class="paramname">image</td><td>Image to be converted </td></tr>
-    <tr><td class="paramname">quality</td><td>Compression quality </td></tr>
-    <tr><td class="paramname">max_compress</td><td>Increase the compression ratio as much as possible, at the expense of increased encoding time </td></tr>
-  </table>
-  </dd>
-</dl>
-<dl class="section return"><dt>Returns</dt><dd>Image in JPEG format </dd></dl>
-
-</div>
-</div>
-<a id="a2d2ebc77523556fb82c725f582b299b3"></a>
-<h2 class="memtitle"><span class="permalink"><a href="#a2d2ebc77523556fb82c725f582b299b3">&#9670;&nbsp;</a></span>image_to_jpeg() <span class="overload">[3/3]</span></h2>
-
-<div class="memitem">
-<div class="memproto">
-      <table class="memname">
-        <tr>
-          <td class="memname">std::string KLIB_EXPORT klib::image_to_jpeg </td>
-          <td>(</td>
-          <td class="paramtype">std::string_view&#160;</td>
-          <td class="paramname"><em>image</em>, </td>
-        </tr>
-        <tr>
-          <td class="paramkey"></td>
-          <td></td>
-          <td class="paramtype">std::int32_t&#160;</td>
-          <td class="paramname"><em>quality</em> = <code>75</code>, </td>
-        </tr>
-        <tr>
-          <td class="paramkey"></td>
-          <td></td>
-          <td class="paramtype">bool&#160;</td>
-          <td class="paramname"><em>max_compress</em> = <code>false</code>&#160;</td>
-        </tr>
-        <tr>
-          <td></td>
-          <td>)</td>
-          <td></td><td></td>
-        </tr>
-      </table>
-</div><div class="memdoc">
-
-<p>Convert PNG/JPEG to format JPEG format. </p>
-<dl class="params"><dt>Parameters</dt><dd>
-  <table class="params">
-    <tr><td class="paramname">image</td><td>Image to be converted </td></tr>
-    <tr><td class="paramname">quality</td><td>Compression quality </td></tr>
-    <tr><td class="paramname">max_compress</td><td>Increase the compression ratio as much as possible, at the expense of increased encoding time </td></tr>
-  </table>
-  </dd>
-</dl>
-<dl class="section return"><dt>Returns</dt><dd>Image in JPEG format </dd></dl>
-
-</div>
-</div>
-<a id="acb5953ff1a5a59f935ee9b5e795a101f"></a>
-<h2 class="memtitle"><span class="permalink"><a href="#acb5953ff1a5a59f935ee9b5e795a101f">&#9670;&nbsp;</a></span>image_to_webp() <span class="overload">[1/3]</span></h2>
-
-<div class="memitem">
-<div class="memproto">
-      <table class="memname">
-        <tr>
-          <td class="memname">std::string KLIB_EXPORT klib::image_to_webp </td>
-          <td>(</td>
-          <td class="paramtype">const char *&#160;</td>
-          <td class="paramname"><em>image</em>, </td>
-        </tr>
-        <tr>
-          <td class="paramkey"></td>
-          <td></td>
-          <td class="paramtype">std::size_t&#160;</td>
-          <td class="paramname"><em>size</em>, </td>
+          <td class="paramtype">const std::string &amp;&#160;</td>
+          <td class="paramname"><em>out_path</em>, </td>
         </tr>
         <tr>
           <td class="paramkey"></td>
@@ -312,13 +201,7 @@ Functions</h2></td></tr>
           <td class="paramkey"></td>
           <td></td>
           <td class="paramtype">std::int32_t&#160;</td>
-          <td class="paramname"><em>method</em> = <code>0</code>, </td>
-        </tr>
-        <tr>
-          <td class="paramkey"></td>
-          <td></td>
-          <td class="paramtype">bool&#160;</td>
-          <td class="paramname"><em>lossless</em> = <code>false</code>&#160;</td>
+          <td class="paramname"><em>compression_level</em> = <code>6</code>&#160;</td>
         </tr>
         <tr>
           <td></td>
@@ -328,214 +211,67 @@ Functions</h2></td></tr>
       </table>
 </div><div class="memdoc">
 
-<p>Convert PNG/JPEG format to WebP format. </p>
+<p>Convert to PNG format. </p>
 <dl class="params"><dt>Parameters</dt><dd>
   <table class="params">
-    <tr><td class="paramname">image</td><td>Image to be converted </td></tr>
-    <tr><td class="paramname">size</td><td>Image size </td></tr>
+    <tr><td class="paramname">image_path</td><td>The path of the image to be converted </td></tr>
+    <tr><td class="paramname">out_path</td><td>Output filename </td></tr>
     <tr><td class="paramname">quality</td><td>Compression quality </td></tr>
-    <tr><td class="paramname">method</td><td>Compression method (0=fast, 6=slowest) </td></tr>
-    <tr><td class="paramname">lossless</td><td>Whether to do lossless conversion </td></tr>
+    <tr><td class="paramname">compression_level</td><td>Compression level (0-9) </td></tr>
   </table>
   </dd>
 </dl>
-<dl class="section return"><dt>Returns</dt><dd>Image in WebP format </dd></dl>
 
 </div>
 </div>
-<a id="a544718f7266a004d0f66ac22685d3306"></a>
-<h2 class="memtitle"><span class="permalink"><a href="#a544718f7266a004d0f66ac22685d3306">&#9670;&nbsp;</a></span>image_to_webp() <span class="overload">[2/3]</span></h2>
+<a id="afb937025cba609b21602d37a148f9b80"></a>
+<h2 class="memtitle"><span class="permalink"><a href="#afb937025cba609b21602d37a148f9b80">&#9670;&nbsp;</a></span>image_to_webp()</h2>
 
 <div class="memitem">
 <div class="memproto">
       <table class="memname">
         <tr>
-          <td class="memname">std::string KLIB_EXPORT klib::image_to_webp </td>
+          <td class="memname">void KLIB_EXPORT klib::image_to_webp </td>
           <td>(</td>
           <td class="paramtype">const std::string &amp;&#160;</td>
-          <td class="paramname"><em>image</em>, </td>
+          <td class="paramname"><em>image_path</em>, </td>
         </tr>
         <tr>
           <td class="paramkey"></td>
           <td></td>
-          <td class="paramtype">std::int32_t&#160;</td>
-          <td class="paramname"><em>quality</em> = <code>75</code>, </td>
-        </tr>
-        <tr>
-          <td class="paramkey"></td>
-          <td></td>
-          <td class="paramtype">std::int32_t&#160;</td>
-          <td class="paramname"><em>method</em> = <code>0</code>, </td>
-        </tr>
-        <tr>
-          <td class="paramkey"></td>
-          <td></td>
-          <td class="paramtype">bool&#160;</td>
-          <td class="paramname"><em>lossless</em> = <code>false</code>&#160;</td>
-        </tr>
-        <tr>
-          <td></td>
-          <td>)</td>
-          <td></td><td></td>
-        </tr>
-      </table>
-</div><div class="memdoc">
-
-<p>Convert PNG/JPEG format to WebP format. </p>
-<dl class="params"><dt>Parameters</dt><dd>
-  <table class="params">
-    <tr><td class="paramname">image</td><td>Image to be converted </td></tr>
-    <tr><td class="paramname">quality</td><td>Compression quality </td></tr>
-    <tr><td class="paramname">method</td><td>Compression method (0=fast, 6=slowest) </td></tr>
-    <tr><td class="paramname">lossless</td><td>Whether to do lossless conversion </td></tr>
-  </table>
-  </dd>
-</dl>
-<dl class="section return"><dt>Returns</dt><dd>Image in WebP format </dd></dl>
-
-</div>
-</div>
-<a id="a95fcca552d239e2486be6490d6887f66"></a>
-<h2 class="memtitle"><span class="permalink"><a href="#a95fcca552d239e2486be6490d6887f66">&#9670;&nbsp;</a></span>image_to_webp() <span class="overload">[3/3]</span></h2>
-
-<div class="memitem">
-<div class="memproto">
-      <table class="memname">
-        <tr>
-          <td class="memname">std::string KLIB_EXPORT klib::image_to_webp </td>
-          <td>(</td>
-          <td class="paramtype">std::string_view&#160;</td>
-          <td class="paramname"><em>image</em>, </td>
-        </tr>
-        <tr>
-          <td class="paramkey"></td>
-          <td></td>
-          <td class="paramtype">std::int32_t&#160;</td>
-          <td class="paramname"><em>quality</em> = <code>75</code>, </td>
-        </tr>
-        <tr>
-          <td class="paramkey"></td>
-          <td></td>
-          <td class="paramtype">std::int32_t&#160;</td>
-          <td class="paramname"><em>method</em> = <code>0</code>, </td>
-        </tr>
-        <tr>
-          <td class="paramkey"></td>
-          <td></td>
-          <td class="paramtype">bool&#160;</td>
-          <td class="paramname"><em>lossless</em> = <code>false</code>&#160;</td>
-        </tr>
-        <tr>
-          <td></td>
-          <td>)</td>
-          <td></td><td></td>
-        </tr>
-      </table>
-</div><div class="memdoc">
-
-<p>Convert PNG/JPEG format to WebP format. </p>
-<dl class="params"><dt>Parameters</dt><dd>
-  <table class="params">
-    <tr><td class="paramname">image</td><td>Image to be converted </td></tr>
-    <tr><td class="paramname">quality</td><td>Compression quality </td></tr>
-    <tr><td class="paramname">method</td><td>Compression method (0=fast, 6=slowest) </td></tr>
-    <tr><td class="paramname">lossless</td><td>Whether to do lossless conversion </td></tr>
-  </table>
-  </dd>
-</dl>
-<dl class="section return"><dt>Returns</dt><dd>Image in WebP format </dd></dl>
-
-</div>
-</div>
-<a id="a78a6321d6607fe88cc99d052574b27f6"></a>
-<h2 class="memtitle"><span class="permalink"><a href="#a78a6321d6607fe88cc99d052574b27f6">&#9670;&nbsp;</a></span>webp_to_png() <span class="overload">[1/3]</span></h2>
-
-<div class="memitem">
-<div class="memproto">
-      <table class="memname">
-        <tr>
-          <td class="memname">std::string KLIB_EXPORT klib::webp_to_png </td>
-          <td>(</td>
-          <td class="paramtype">const char *&#160;</td>
-          <td class="paramname"><em>image</em>, </td>
-        </tr>
-        <tr>
-          <td class="paramkey"></td>
-          <td></td>
-          <td class="paramtype">std::size_t&#160;</td>
-          <td class="paramname"><em>size</em>&#160;</td>
-        </tr>
-        <tr>
-          <td></td>
-          <td>)</td>
-          <td></td><td></td>
-        </tr>
-      </table>
-</div><div class="memdoc">
-
-<p>Convert from WebP format to PNG format. </p>
-<dl class="params"><dt>Parameters</dt><dd>
-  <table class="params">
-    <tr><td class="paramname">image</td><td>Image to be converted </td></tr>
-    <tr><td class="paramname">size</td><td>Image size </td></tr>
-  </table>
-  </dd>
-</dl>
-<dl class="section return"><dt>Returns</dt><dd>Image in PNG format </dd></dl>
-
-</div>
-</div>
-<a id="af131d38b67d8fe81f2a91cc43f66660c"></a>
-<h2 class="memtitle"><span class="permalink"><a href="#af131d38b67d8fe81f2a91cc43f66660c">&#9670;&nbsp;</a></span>webp_to_png() <span class="overload">[2/3]</span></h2>
-
-<div class="memitem">
-<div class="memproto">
-      <table class="memname">
-        <tr>
-          <td class="memname">std::string KLIB_EXPORT klib::webp_to_png </td>
-          <td>(</td>
           <td class="paramtype">const std::string &amp;&#160;</td>
-          <td class="paramname"><em>image</em></td><td>)</td>
-          <td></td>
+          <td class="paramname"><em>out_path</em>, </td>
         </tr>
-      </table>
-</div><div class="memdoc">
-
-<p>Convert from WebP format to PNG format. </p>
-<dl class="params"><dt>Parameters</dt><dd>
-  <table class="params">
-    <tr><td class="paramname">image</td><td>Image to be converted </td></tr>
-  </table>
-  </dd>
-</dl>
-<dl class="section return"><dt>Returns</dt><dd>Image in PNG format </dd></dl>
-
-</div>
-</div>
-<a id="aca05f2d7213eba1f2166c708306bcd71"></a>
-<h2 class="memtitle"><span class="permalink"><a href="#aca05f2d7213eba1f2166c708306bcd71">&#9670;&nbsp;</a></span>webp_to_png() <span class="overload">[3/3]</span></h2>
-
-<div class="memitem">
-<div class="memproto">
-      <table class="memname">
         <tr>
-          <td class="memname">std::string KLIB_EXPORT klib::webp_to_png </td>
-          <td>(</td>
-          <td class="paramtype">std::string_view&#160;</td>
-          <td class="paramname"><em>image</em></td><td>)</td>
+          <td class="paramkey"></td>
           <td></td>
+          <td class="paramtype">std::int32_t&#160;</td>
+          <td class="paramname"><em>quality</em> = <code>75</code>, </td>
+        </tr>
+        <tr>
+          <td class="paramkey"></td>
+          <td></td>
+          <td class="paramtype">std::int32_t&#160;</td>
+          <td class="paramname"><em>method</em> = <code>0</code>&#160;</td>
+        </tr>
+        <tr>
+          <td></td>
+          <td>)</td>
+          <td></td><td></td>
         </tr>
       </table>
 </div><div class="memdoc">
 
-<p>Convert from WebP format to PNG format. </p>
+<p>Convert to WebP format. </p>
 <dl class="params"><dt>Parameters</dt><dd>
   <table class="params">
-    <tr><td class="paramname">image</td><td>Image to be converted </td></tr>
+    <tr><td class="paramname">image_path</td><td>The path of the image to be converted </td></tr>
+    <tr><td class="paramname">out_path</td><td>Output filename </td></tr>
+    <tr><td class="paramname">quality</td><td>Compression quality </td></tr>
+    <tr><td class="paramname">method</td><td>Compression method (0=fast, 6=slowest) </td></tr>
   </table>
   </dd>
 </dl>
-<dl class="section return"><dt>Returns</dt><dd>Image in PNG format </dd></dl>
 
 </div>
 </div>
