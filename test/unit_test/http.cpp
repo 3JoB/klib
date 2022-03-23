@@ -172,12 +172,12 @@ TEST_CASE("POST json", "[http]") {
 TEST_CASE("download", "[http]") {
   klib::Request request;
   request.set_browser_user_agent();
-  request.set_doh_url("https://dns.google/dns-query");
 
 #ifndef NDEBUG
   request.verbose(true);
 #endif
 #ifdef KLIB_TEST_USE_PROXY
+  request.set_doh_url("https://dns.google/dns-query");
   request.set_proxy("http://127.0.0.1:1080");
 #endif
 
