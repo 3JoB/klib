@@ -235,7 +235,6 @@ if(KLIB_BUILD_STATIC)
     COMMAND gcc-ar -x --output=libwebp /usr/local/lib/libwebp.a
     COMMAND gcc-ar -x --output=libwebp /usr/local/lib/libwebpmux.a
     COMMAND gcc-ar -x --output=libwebp /usr/local/lib/libwebpdemux.a
-    COMMAND gcc-ar -x --output=libwebp /usr/local/lib/libwebpdecoder.a
     COMMAND
       gcc-ar -qcs ${KLIB_BINARY_DIR}/lib${KLIB_LIBRARY}.a klib/*.o zlib-ng/*.o
       libarchive/*.o tidy-html5/*.o libcurl/*.o brotli/*.o boringssl/*.o
