@@ -93,12 +93,12 @@ pkg_check_modules(vips-cpp REQUIRED IMPORTED_TARGET vips-cpp)
 pkg_check_modules(gio-2.0 REQUIRED IMPORTED_TARGET gio-2.0)
 pkg_check_modules(gobject-2.0 REQUIRED IMPORTED_TARGET gobject-2.0)
 pkg_check_modules(gmodule-2.0 REQUIRED IMPORTED_TARGET gmodule-2.0)
-pkg_check_modules(gmodule-no-export-2.0 REQUIRED IMPORTED_TARGET
-                  gmodule-no-export-2.0)
 pkg_check_modules(glib-2.0 REQUIRED IMPORTED_TARGET glib-2.0)
 pkg_check_modules(libpcre REQUIRED IMPORTED_TARGET libpcre)
 pkg_check_modules(expat REQUIRED IMPORTED_TARGET expat)
 pkg_check_modules(libffi REQUIRED IMPORTED_TARGET libffi)
+pkg_check_modules(mount REQUIRED IMPORTED_TARGET mount)
+pkg_check_modules(blkid REQUIRED IMPORTED_TARGET blkid)
 pkg_check_modules(libspng REQUIRED IMPORTED_TARGET libspng)
 pkg_check_modules(libjpeg REQUIRED IMPORTED_TARGET libjpeg)
 pkg_check_modules(libwebp REQUIRED IMPORTED_TARGET libwebp)
@@ -145,9 +145,15 @@ if(KLIB_BUILD_STATIC)
     ${KLIB_LIBRARY} PUBLIC FMT_LOCALE SPDLOG_COMPILED_LIB SPDLOG_FMT_EXTERNAL)
   target_compile_definitions(
     ${KLIB_LIBRARY}
-    PRIVATE SFNTLY_EXPERIMENTAL SFNTLY_NO_EXCEPTION LIBARCHIVE_STATIC
-            CURL_STATICLIB CURL_NO_OLDIES SQLITE_HAS_CODEC)
-  target_link_libraries(${KLIB_LIBRARY} INTERFACE ${CMAKE_THREAD_LIBS_INIT})
+    PRIVATE SFNTLY_EXPERIMENTAL
+            SFNTLY_NO_EXCEPTION
+            PCRE_STATIC
+            LIBARCHIVE_STATIC
+            CURL_STATICLIB
+            CURL_NO_OLDIES
+            SQLITE_HAS_CODEC)
+  target_link_libraries(${KLIB_LIBRARY} INTERFACE ${CMAKE_THREAD_LIBS_INIT}
+                                                  ${CMAKE_DL_LIBS} resolv)
 
   set_target_properties(
     ${KLIB_LIBRARY} PROPERTIES OUTPUT_NAME ${KLIB_LIBRARY}
@@ -179,6 +185,8 @@ if(KLIB_BUILD_STATIC)
   file(MAKE_DIRECTORY ${KLIB_BINARY_DIR}/third_party/glib)
   file(MAKE_DIRECTORY ${KLIB_BINARY_DIR}/third_party/libexpat)
   file(MAKE_DIRECTORY ${KLIB_BINARY_DIR}/third_party/libffi)
+  file(MAKE_DIRECTORY ${KLIB_BINARY_DIR}/third_party/blkid)
+  file(MAKE_DIRECTORY ${KLIB_BINARY_DIR}/third_party/mount)
   file(MAKE_DIRECTORY ${KLIB_BINARY_DIR}/third_party/libpcre)
   file(MAKE_DIRECTORY ${KLIB_BINARY_DIR}/third_party/libspng)
   file(MAKE_DIRECTORY ${KLIB_BINARY_DIR}/third_party/mozjpeg)
@@ -219,6 +227,8 @@ if(KLIB_BUILD_STATIC)
     COMMAND gcc-ar -x --output=glib /usr/local/lib/libgobject-2.0.a
     COMMAND gcc-ar -x --output=libexpat /usr/local/lib/libexpat.a
     COMMAND gcc-ar -x --output=libffi /usr/local/lib/libffi.a
+    COMMAND gcc-ar -x --output=mount /usr/local/lib/libmount.a
+    COMMAND gcc-ar -x --output=blkid /usr/local/lib/libblkid.a
     COMMAND gcc-ar -x --output=libpcre /usr/local/lib/libpcre.a
     COMMAND gcc-ar -x --output=libspng /usr/local/lib/libspng_static.a
     COMMAND gcc-ar -x --output=mozjpeg /usr/local/lib/libjpeg.a
@@ -231,8 +241,8 @@ if(KLIB_BUILD_STATIC)
       libarchive/*.o tidy-html5/*.o libcurl/*.o brotli/*.o boringssl/*.o
       sqlcipher/*.o argon2/*.o zstd/*.o fmt/*.o spdlog/*.o nghttp2/*.o
       simdutf/*.o libidn2/*.o libpsl/*.o libunistring/*.o xxhash/*.o cmark/*.o
-      woff2/*.o libvips/*.o glib/*.o libexpat/*.o libffi/*.o libpcre/*.o
-      libspng/*.o mozjpeg/*.o libwebp/*.o
+      woff2/*.o libvips/*.o glib/*.o libexpat/*.o libffi/*.o mount/*.o blkid/*.o
+      libpcre/*.o libspng/*.o mozjpeg/*.o libwebp/*.o
     COMMAND gcc-ranlib ${KLIB_BINARY_DIR}/lib${KLIB_LIBRARY}.a
     WORKING_DIRECTORY ${KLIB_BINARY_DIR}/third_party
     COMMENT "Combined static library")
@@ -278,6 +288,8 @@ if(KLIB_BUILD_SHARED)
             PkgConfig::gio-2.0
             PkgConfig::expat
             PkgConfig::libffi
+            PkgConfig::mount
+            PkgConfig::blkid
             PkgConfig::libspng
             PkgConfig::libjpeg
             PkgConfig::libwebp
@@ -290,7 +302,9 @@ if(KLIB_BUILD_SHARED)
             cmark::cmark_static
             utf8cpp
             Microsoft.GSL::GSL
-            ${CMAKE_THREAD_LIBS_INIT})
+            ${CMAKE_THREAD_LIBS_INIT}
+            ${CMAKE_DL_LIBS}
+            resolv)
 
   set_target_properties(
     ${KLIB_LIBRARY}-shared
