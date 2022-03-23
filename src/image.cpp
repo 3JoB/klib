@@ -9,7 +9,7 @@ namespace klib {
 namespace {
 
 vips::VImage get_image(const std::string &image_path) {
-  if (VIPS_INIT("klib")) {
+  if (VIPS_INIT("klib")) [[unlikely]] {
     throw RuntimeError("VIPS_INIT() failed");
   }
 
