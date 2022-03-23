@@ -191,8 +191,6 @@ if(KLIB_BUILD_STATIC)
   file(MAKE_DIRECTORY ${KLIB_BINARY_DIR}/third_party/libspng)
   file(MAKE_DIRECTORY ${KLIB_BINARY_DIR}/third_party/mozjpeg)
   file(MAKE_DIRECTORY ${KLIB_BINARY_DIR}/third_party/libwebp)
-  # FIXME
-  file(MAKE_DIRECTORY ${KLIB_BINARY_DIR}/third_party/glibc)
   add_custom_command(
     TARGET ${KLIB_LIBRARY}
     POST_BUILD
@@ -237,14 +235,13 @@ if(KLIB_BUILD_STATIC)
     COMMAND gcc-ar -x --output=libwebp /usr/local/lib/libwebp.a
     COMMAND gcc-ar -x --output=libwebp /usr/local/lib/libwebpmux.a
     COMMAND gcc-ar -x --output=libwebp /usr/local/lib/libwebpdemux.a
-    COMMAND gcc-ar -x --output=glibc /usr/lib/x86_64-linux-gnu/libresolv.a
     COMMAND
       gcc-ar -qcs ${KLIB_BINARY_DIR}/lib${KLIB_LIBRARY}.a klib/*.o zlib-ng/*.o
       libarchive/*.o tidy-html5/*.o libcurl/*.o brotli/*.o boringssl/*.o
       sqlcipher/*.o argon2/*.o zstd/*.o fmt/*.o spdlog/*.o nghttp2/*.o
       simdutf/*.o libidn2/*.o libpsl/*.o libunistring/*.o xxhash/*.o cmark/*.o
       woff2/*.o libvips/*.o glib/*.o libexpat/*.o libffi/*.o mount/*.o blkid/*.o
-      libpcre/*.o libspng/*.o mozjpeg/*.o libwebp/*.o glibc/*.o
+      libpcre/*.o libspng/*.o mozjpeg/*.o libwebp/*.o
     COMMAND gcc-ranlib ${KLIB_BINARY_DIR}/lib${KLIB_LIBRARY}.a
     WORKING_DIRECTORY ${KLIB_BINARY_DIR}/third_party
     COMMENT "Combined static library")
@@ -305,8 +302,7 @@ if(KLIB_BUILD_SHARED)
             utf8cpp
             Microsoft.GSL::GSL
             ${CMAKE_THREAD_LIBS_INIT}
-            ${CMAKE_DL_LIBS}
-            resolv)
+            ${CMAKE_DL_LIBS})
 
   set_target_properties(
     ${KLIB_LIBRARY}-shared
