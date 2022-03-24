@@ -91,88 +91,6 @@
           "toolchain": "clang"
         }
       }
-    },
-    {
-      "name": "Docker-gcc-debug",
-      "displayName": "Docker GCC Debug",
-      "description": "The compiler is GCC, and the build type is Debug",
-      "generator": "Ninja",
-      "binaryDir": "${sourceDir}/build/${presetName}",
-      "cacheVariables": {
-        "CMAKE_BUILD_TYPE": "Debug",
-        "KLIB_BUILD_TEST": "ON",
-        "KLIB_BUILD_EXTRA_TEST": "ON",
-        "KLIB_BUILD_DOC": "ON",
-        "KLIB_FORMAT": "ON",
-        "KLIB_SANITIZER": "ON",
-        "KLIB_BUILD_COVERAGE": "ON"
-      },
-      "vendor": {
-        "jetbrains.com/clion": {
-          "toolchain": "Docker-gcc"
-        }
-      }
-    },
-    {
-      "name": "Docker-gcc-release",
-      "displayName": "Docker GCC Release",
-      "description": "The compiler is GCC, and the build type is Release",
-      "generator": "Ninja",
-      "binaryDir": "${sourceDir}/build/${presetName}",
-      "cacheVariables": {
-        "CMAKE_BUILD_TYPE": "Release",
-        "KLIB_BUILD_TEST": "ON",
-        "KLIB_BUILD_EXTRA_TEST": "ON",
-        "KLIB_BUILD_BENCH": "ON",
-        "KLIB_BUILD_DOC": "ON",
-        "KLIB_FORMAT": "ON"
-      },
-      "vendor": {
-        "jetbrains.com/clion": {
-          "toolchain": "Docker-gcc"
-        }
-      }
-    },
-    {
-      "name": "Docker-clang-debug",
-      "displayName": "Docker Clang Debug",
-      "description": "The compiler is Clang, and the build type is Debug",
-      "generator": "Ninja",
-      "binaryDir": "${sourceDir}/build/${presetName}",
-      "cacheVariables": {
-        "CMAKE_BUILD_TYPE": "Debug",
-        "KLIB_BUILD_TEST": "ON",
-        "KLIB_BUILD_EXTRA_TEST": "ON",
-        "KLIB_BUILD_DOC": "ON",
-        "KLIB_FORMAT": "ON",
-        "KLIB_SANITIZER": "ON",
-        "KLIB_BUILD_COVERAGE": "ON"
-      },
-      "vendor": {
-        "jetbrains.com/clion": {
-          "toolchain": "Docker-clang"
-        }
-      }
-    },
-    {
-      "name": "Docker-clang-release",
-      "displayName": "Docker Clang Release",
-      "description": "The compiler is clang, and the build type is Release",
-      "generator": "Ninja",
-      "binaryDir": "${sourceDir}/build/${presetName}",
-      "cacheVariables": {
-        "CMAKE_BUILD_TYPE": "Release",
-        "KLIB_BUILD_TEST": "ON",
-        "KLIB_BUILD_EXTRA_TEST": "ON",
-        "KLIB_BUILD_BENCH": "ON",
-        "KLIB_BUILD_DOC": "ON",
-        "KLIB_FORMAT": "ON"
-      },
-      "vendor": {
-        "jetbrains.com/clion": {
-          "toolchain": "Docker-clang"
-        }
-      }
     }
   ],
   "buildPresets": [
@@ -191,22 +109,6 @@
     {
       "name": "Clang Release",
       "configurePreset": "clang-release"
-    },
-    {
-      "name": "Docker GCC Debug",
-      "configurePreset": "Docker-gcc-debug"
-    },
-    {
-      "name": "Docker GCC Release",
-      "configurePreset": "Docker-gcc-release"
-    },
-    {
-      "name": "Docker Clang Debug",
-      "configurePreset": "Docker-clang-debug"
-    },
-    {
-      "name": "Docker Clang Release",
-      "configurePreset": "Docker-clang-release"
     }
   ]
 }
