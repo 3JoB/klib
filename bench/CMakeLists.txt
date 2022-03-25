@@ -26,3 +26,11 @@ target_link_libraries(
           ${Boost_LIBRARIES}
           PkgConfig::icu-i18n
           re2::re2)
+
+add_custom_target(
+  run-bench
+  COMMAND ${KLIB_BENCH_EXECUTABLE} --benchmark-no-analysis --benchmark-samples=3
+          --use-colour=no -o ${KLIB_SOURCE_DIR}/bench/result.md
+  DEPENDS ${KLIB_BENCH_EXECUTABLE}
+  WORKING_DIRECTORY ${CMAKE_CURRENT_BINARY_DIR}
+  COMMENT "Run bench")

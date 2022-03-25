@@ -1,7 +1,6 @@
 #include "klib/util.h"
 
 #include <sys/ioctl.h>
-#include <sys/wait.h>
 #include <unistd.h>
 
 #include <cctype>
@@ -173,16 +172,6 @@ std::string exec_with_output(const char *cmd) {
   }
 
   return result;
-}
-
-void wait_for_child_process() {
-  std::int32_t status = 0;
-
-  while (waitpid(-1, &status, 0) > 0) {
-    if (wait_error(status)) [[unlikely]] {
-      throw RuntimeError("Waitpid error: {}", std::strerror(errno));
-    }
-  }
 }
 
 std::string uuid() {

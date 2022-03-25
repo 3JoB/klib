@@ -131,11 +131,6 @@ std::string KLIB_EXPORT exec_with_output(const std::string &cmd);
 std::string KLIB_EXPORT exec_with_output(const char *cmd);
 
 /**
- * @brief Wait for all child processes to exit
- */
-void KLIB_EXPORT wait_for_child_process();
-
-/**
  * @brief Generate uuid
  */
 std::string KLIB_EXPORT uuid();

@@ -64,14 +64,12 @@ include(Doxygen)
 include(Format)
 include(CompilerOptions)
 
-if(NOT KLIB_SANITIZER)
-  message(STATUS "Use mimalloc")
-  set(MIMALLOC_OBJECT "/usr/local/lib/mimalloc.o")
-endif()
-
 # ---------------------------------------------------------------------------------------
 # Find package
 # ---------------------------------------------------------------------------------------
+set(THREADS_PREFER_PTHREAD_FLAG TRUE)
+find_package(Threads REQUIRED)
+
 find_package(PkgConfig REQUIRED)
 
 pkg_check_modules(zlib REQUIRED IMPORTED_TARGET zlib)
@@ -115,12 +113,14 @@ find_package(cmark REQUIRED)
 find_package(utf8cpp REQUIRED)
 find_package(Microsoft.GSL REQUIRED)
 
-set(THREADS_PREFER_PTHREAD_FLAG TRUE)
-find_package(Threads REQUIRED)
-
 add_definitions(-DDBG_MACRO_NO_WARNING)
 if(NOT (${CMAKE_BUILD_TYPE} STREQUAL "Debug"))
   add_definitions(-DDBG_MACRO_DISABLE)
+endif()
+
+if(NOT KLIB_SANITIZER)
+  message(STATUS "Use mimalloc")
+  set(MIMALLOC_OBJECT "/usr/local/lib/mimalloc.o")
 endif()
 
 include_directories(${gio-2.0_INCLUDE_DIRS})
