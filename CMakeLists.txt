@@ -87,7 +87,6 @@ pkg_check_modules(libbrotlidec REQUIRED IMPORTED_TARGET libbrotlidec)
 pkg_check_modules(libbrotlienc REQUIRED IMPORTED_TARGET libbrotlienc)
 pkg_check_modules(libbrotlicommon REQUIRED IMPORTED_TARGET libbrotlicommon)
 pkg_check_modules(vips REQUIRED IMPORTED_TARGET vips)
-pkg_check_modules(vips-cpp REQUIRED IMPORTED_TARGET vips-cpp)
 pkg_check_modules(gio-2.0 REQUIRED IMPORTED_TARGET gio-2.0)
 pkg_check_modules(gobject-2.0 REQUIRED IMPORTED_TARGET gobject-2.0)
 pkg_check_modules(gmodule-2.0 REQUIRED IMPORTED_TARGET gmodule-2.0)
@@ -220,7 +219,6 @@ if(KLIB_BUILD_STATIC)
     COMMAND gcc-ar -x --output=woff2 /usr/local/lib/libwoff2dec.a
     COMMAND gcc-ar -x --output=woff2 /usr/local/lib/libwoff2enc.a
     COMMAND gcc-ar -x --output=libvips /usr/local/lib/libvips.a
-    COMMAND gcc-ar -x --output=libvips /usr/local/lib/libvips-cpp.a
     COMMAND gcc-ar -x --output=glib /usr/local/lib/libgio-2.0.a
     COMMAND gcc-ar -x --output=glib /usr/local/lib/libglib-2.0.a
     COMMAND gcc-ar -x --output=glib /usr/local/lib/libgmodule-2.0.a
@@ -283,7 +281,6 @@ if(KLIB_BUILD_SHARED)
             PkgConfig::libbrotlienc
             PkgConfig::libbrotlicommon
             PkgConfig::vips
-            PkgConfig::vips-cpp
             PkgConfig::gio-2.0
             PkgConfig::expat
             PkgConfig::libffi

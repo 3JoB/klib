@@ -1,77 +1,71 @@
 #include "klib/image.h"
 
-#include <vips/vips8>
+#include <vips/vips.h>
+#include <scope_guard.hpp>
 
 #include "klib/exception.h"
+
+#define CHECK_LIBVIPS(rc)                      \
+  do {                                         \
+    if (rc != 0) [[unlikely]] {                \
+      throw RuntimeError(vips_error_buffer()); \
+    }                                          \
+  } while (0)
 
 namespace klib {
 
 namespace {
 
-vips::VImage get_image(const std::string &image_path) {
+VipsImage *get_image(const std::string &image_path) {
   if (VIPS_INIT("klib")) [[unlikely]] {
     throw RuntimeError("VIPS_INIT() failed");
   }
 
-  return vips::VImage::new_from_file(image_path.c_str(), nullptr);
+  auto image = vips_image_new_from_file(image_path.c_str(), nullptr);
+  if (!image) {
+    throw RuntimeError(vips_error_buffer());
+  }
+
+  return image;
 }
 
 }  // namespace
 
 void image_to_png(const std::string &image_path, const std::string &out_path,
                   std::int32_t quality, std::int32_t compression_level) {
-  try {
-    auto image = get_image(image_path);
+  auto image = get_image(image_path);
+  SCOPE_EXIT { g_object_unref(image); };
 
-    auto option = new vips::VOption;
-
-    option->set("Q", quality);
-    option->set("compression", compression_level);
-
-    image.pngsave(out_path.c_str(), option);
-  } catch (const vips::VError &err) {
-    throw RuntimeError(err.what());
-  }
+  auto rc = vips_pngsave(image, out_path.c_str(), "Q", quality, "compression",
+                         compression_level, nullptr);
+  CHECK_LIBVIPS(rc);
 }
 
 void image_to_jpeg(const std::string &image_path, const std::string &out_path,
                    std::int32_t quality, bool max_compress) {
-  try {
-    auto image = get_image(image_path);
+  auto image = get_image(image_path);
+  SCOPE_EXIT { g_object_unref(image); };
 
-    auto option = new vips::VOption;
-
-    option->set("Q", quality);
-
-    if (max_compress) {
-      option->set("strip", true);
-      option->set("optimize-coding", true);
-      option->set("interlace", true);
-      option->set("optimize-scans", true);
-      option->set("trellis-quant", true);
-      option->set("quant_table", 3);
-    }
-
-    image.jpegsave(out_path.c_str(), option);
-  } catch (const vips::VError &err) {
-    throw RuntimeError(err.what());
+  if (max_compress) {
+    auto rc = vips_jpegsave(image, out_path.c_str(), "Q", quality, "strip",
+                            true, "optimize-coding", true, "interlace", true,
+                            "optimize-scans", true, "trellis-quant", true,
+                            "quant_table", 3, nullptr);
+    CHECK_LIBVIPS(rc);
+  } else {
+    auto rc = vips_jpegsave(image, out_path.c_str(), "Q", quality, nullptr);
+    CHECK_LIBVIPS(rc);
   }
 }
 
 void image_to_webp(const std::string &image_path, const std::string &out_path,
                    std::int32_t quality, std::int32_t method) {
-  try {
-    auto image = get_image(image_path);
+  auto image = get_image(image_path);
+  SCOPE_EXIT { g_object_unref(image); };
 
-    auto option = new vips::VOption;
-
-    option->set("Q", quality);
-    option->set("effort", method);
-
-    image.webpsave(out_path.c_str(), option);
-  } catch (const vips::VError &err) {
-    throw RuntimeError(err.what());
-  }
+  auto rc = vips_webpsave(image, out_path.c_str(), "Q", quality, "effort",
+                          method, nullptr);
+  CHECK_LIBVIPS(rc);
 }
 
 }  // namespace klib
