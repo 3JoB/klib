@@ -16,7 +16,6 @@ var util_8h =
     [ "split_str", "util_8h.html#af6db632eac5e685edcba2c109fdec449", null ],
     [ "terminal_size", "util_8h.html#ab8d8d04e750bb6af1b894c93104e3730", null ],
     [ "uuid", "util_8h.html#ab1286179ebf206afcd39c5fada01ad28", null ],
-    [ "wait_for_child_process", "util_8h.html#a1b4159dcddf920bf5ee1ec78744e581f", null ],
     [ "write_file", "util_8h.html#acdda733ded7c981be0dc3b4bc56275f6", null ],
     [ "write_file", "util_8h.html#a68427b6368c3a384b94cd5d2cd646e95", null ],
     [ "write_file", "util_8h.html#af5a2b030c406427e718002dfd3f82c65", null ]
