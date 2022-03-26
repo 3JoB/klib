@@ -32,11 +32,13 @@ A C++ library, which wraps several important C libraries and provides some conve
 - fmt ([License](https://github.com/fmtlib/fmt/blob/master/LICENSE.rst))
 - spdlog ([MIT License](https://github.com/gabime/spdlog/blob/v1.x/LICENSE))
 - parallel-hashmap ([Apache License 2.0](https://github.com/greg7mdp/parallel-hashmap/blob/master/LICENSE))
+- Boost ([Boost License](https://www.boost.org/users/license.html))
+- GSL ([MIT License](https://github.com/Microsoft/GSL/blob/master/LICENSE))
+- utfcpp ([Boost Software License 1.0](https://github.com/nemtrif/utfcpp/blob/master/LICENSE))
 - fastbase64 ([License](https://github.com/lemire/fastbase64/blob/master/LICENSE))
 - http-parser ([MIT License](https://github.com/nodejs/http-parser/blob/main/LICENSE-MIT))
 - sfntly ([Apache License 2.0](https://github.com/rillig/sfntly/blob/master/cpp/COPYING.txt))
 - utf_utils ([License](https://github.com/BobSteagall/utf_utils/blob/master/LICENSE.txt))
-- Catch2 ([Boost License](https://github.com/catchorg/Catch2/blob/devel/LICENSE.txt))
 
 ## Build environment
 
