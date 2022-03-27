@@ -132,6 +132,12 @@ if(KLIB_SANITIZER)
     # FIXME
     add_compiler_flag("-fsanitize-recover=implicit-conversion")
   endif()
+
+  if(CMAKE_COMPILER_IS_GNUCXX)
+    add_linker_flag("-static-libasan")
+    add_linker_flag("-static-liblsan")
+    add_linker_flag("-static-libubsan")
+  endif()
 endif()
 
 # ---------------------------------------------------------------------------------------
