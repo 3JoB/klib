@@ -81,8 +81,9 @@ set(CMAKE_POSITION_INDEPENDENT_CODE ON)
 # Link time optimization
 # ---------------------------------------------------------------------------------------
 # https://github.com/ninja-build/ninja/blob/master/CMakeLists.txt
-if((${CMAKE_BUILD_TYPE} STREQUAL "Release") OR (${CMAKE_BUILD_TYPE} STREQUAL
-                                                "MinSizeRel"))
+if(((${CMAKE_BUILD_TYPE} STREQUAL "Release") OR (${CMAKE_BUILD_TYPE} STREQUAL
+                                                 "MinSizeRel"))
+   AND NOT KLIB_SANITIZER)
   include(CheckIPOSupported)
   check_ipo_supported(
     RESULT LTO_SUPPORTED
