@@ -234,7 +234,7 @@ std::pair<std::uint32_t, std::uint32_t> terminal_size() {
   return {win_size.ws_col, win_size.ws_row};
 }
 
-std::string KLIB_EXPORT bytes_to_hex_string(const std::string &bytes) {
+std::string bytes_to_hex_string(const std::string &bytes) {
   std::string str;
   str.reserve(SHA256_DIGEST_LENGTH * 2);
 

@@ -7,15 +7,13 @@
 
 #include <string>
 
-#include "klib/detail/config.h"
-
 namespace klib {
 
 /**
  * @brief Block cipher mode of operation
  * @see https://en.wikipedia.org/wiki/Block_cipher_mode_of_operation
  */
-enum class KLIB_EXPORT AesMode { GCM, CBC };
+enum class AesMode { GCM, CBC };
 
 /**
  * @brief Use AES to encrypt data, key size: 256 bit
@@ -25,10 +23,9 @@ enum class KLIB_EXPORT AesMode { GCM, CBC };
  * @param aad: Additional authenticated data
  * @return Encrypted data
  */
-std::string KLIB_EXPORT aes_256_encrypt(const std::string &data,
-                                        const std::string &key,
-                                        AesMode aes_mode = AesMode::GCM,
-                                        const std::string &aad = "");
+std::string aes_256_encrypt(const std::string &data, const std::string &key,
+                            AesMode aes_mode = AesMode::GCM,
+                            const std::string &aad = "");
 
 /**
  * @brief Use AES to decrypt data, key size: 256 bit
@@ -38,10 +35,9 @@ std::string KLIB_EXPORT aes_256_encrypt(const std::string &data,
  * @param aad: Additional authenticated data
  * @return Decrypted data
  */
-std::string KLIB_EXPORT aes_256_decrypt(const std::string &data,
-                                        const std::string &key,
-                                        AesMode aes_mode = AesMode::GCM,
-                                        const std::string &aad = "");
+std::string aes_256_decrypt(const std::string &data, const std::string &key,
+                            AesMode aes_mode = AesMode::GCM,
+                            const std::string &aad = "");
 
 /**
  * @brief Use AES to decrypt data, key size: 256 bit
@@ -51,7 +47,7 @@ std::string KLIB_EXPORT aes_256_decrypt(const std::string &data,
  * @note It is not safe to not use the initial vector, this function is only
  * used to decrypt the foreign encrypted data
  */
-std::string KLIB_EXPORT aes_256_cbc_decrypt_no_iv(const std::string &data,
-                                                  const std::string &key);
+std::string aes_256_cbc_decrypt_no_iv(const std::string &data,
+                                      const std::string &key);
 
 }  // namespace klib

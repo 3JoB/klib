@@ -171,48 +171,12 @@ std::u32string utf8_to_utf32(const std::string &str) {
   return result;
 }
 
-std::wstring utf8_to_utf32_w(const std::string &str) {
-  static_assert(sizeof(wchar_t) == 4, "wchar_t is not 4 byte");
-
-  auto input_size = std::size(str);
-
-  std::wstring result;
-  result.resize(input_size);
-  auto ptr = reinterpret_cast<const char8_t *>(std::data(str));
-
-  auto length = uu::UtfUtils::SseBigTableConvert(
-      ptr, ptr + input_size, reinterpret_cast<char32_t *>(std::data(result)));
-  if (length == -1) [[unlikely]] {
-    throw RuntimeError("SseBigTableConvert failed");
-  }
-
-  result.resize(length);
-  return result;
-}
-
 std::string utf32_to_utf8(const std::u32string &str) {
   try {
     return utf8::utf32to8(str);
   } catch (const utf8::exception &err) {
     throw klib::RuntimeError(err.what());
   }
-}
-
-std::string utf32_to_utf8_w(const std::wstring &str) {
-  static_assert(sizeof(wchar_t) == 4, "wchar_t is not 4 byte");
-
-  std::string result;
-  result.reserve(std::size(str) * 4);
-
-  const auto ptr = std::data(str);
-
-  try {
-    utf8::utf32to8(ptr, ptr + std::size(str), std::back_inserter(result));
-  } catch (const utf8::exception &err) {
-    throw klib::RuntimeError(err.what());
-  }
-
-  return result;
 }
 
 }  // namespace klib

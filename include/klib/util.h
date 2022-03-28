@@ -11,14 +11,12 @@
 #include <string_view>
 #include <vector>
 
-#include "klib/detail/config.h"
-
 namespace klib {
 
 /**
  * @brief Change working directory
  */
-class KLIB_EXPORT ChangeWorkingDir {
+class ChangeWorkingDir {
  public:
   /**
    * @brief Default constructor
@@ -48,9 +46,9 @@ class KLIB_EXPORT ChangeWorkingDir {
  * @param remove_space: Whether to remove spaces and empty strings
  * @return Result after separation
  */
-std::vector<std::string> KLIB_EXPORT split_str(const std::string &str,
-                                               const std::string &separate,
-                                               bool remove_space = true);
+std::vector<std::string> split_str(const std::string &str,
+                                   const std::string &separate,
+                                   bool remove_space = true);
 
 /**
  * @brief Read a file at a time and store it in a string
@@ -58,7 +56,7 @@ std::vector<std::string> KLIB_EXPORT split_str(const std::string &str,
  * @param binary_mode: Whether to open in binary mode
  * @return A string that holds the contents of the file
  */
-std::string KLIB_EXPORT read_file(const std::string &path, bool binary_mode);
+std::string read_file(const std::string &path, bool binary_mode);
 
 /**
  * @brief Read a file at a time and store it in a string
@@ -66,7 +64,7 @@ std::string KLIB_EXPORT read_file(const std::string &path, bool binary_mode);
  * @param binary_mode: Whether to open in binary mode
  * @return A string that holds the contents of the file
  */
-std::string KLIB_EXPORT read_file(std::string_view path, bool binary_mode);
+std::string read_file(std::string_view path, bool binary_mode);
 
 /**
  * @brief Read a file at a time and store it in a string
@@ -74,7 +72,7 @@ std::string KLIB_EXPORT read_file(std::string_view path, bool binary_mode);
  * @param binary_mode: Whether to open in binary mode
  * @return A string that holds the contents of the file
  */
-std::string KLIB_EXPORT read_file(const char *path, bool binary_mode);
+std::string read_file(const char *path, bool binary_mode);
 
 /**
  * @brief Write string to file
@@ -82,8 +80,8 @@ std::string KLIB_EXPORT read_file(const char *path, bool binary_mode);
  * @param binary_mode: Whether to open in binary mode
  * @param str: String to be written
  */
-void KLIB_EXPORT write_file(const std::string &path, bool binary_mode,
-                            const std::string &str);
+void write_file(const std::string &path, bool binary_mode,
+                const std::string &str);
 
 /**
  * @brief Write string to file
@@ -91,8 +89,7 @@ void KLIB_EXPORT write_file(const std::string &path, bool binary_mode,
  * @param binary_mode: Whether to open in binary mode
  * @param str: String to be written
  */
-void KLIB_EXPORT write_file(std::string_view path, bool binary_mode,
-                            std::string_view str);
+void write_file(std::string_view path, bool binary_mode, std::string_view str);
 
 /**
  * @brief Write string to file
@@ -101,52 +98,52 @@ void KLIB_EXPORT write_file(std::string_view path, bool binary_mode,
  * @param str: String to be written
  * @param size: String size
  */
-void KLIB_EXPORT write_file(const char *path, bool binary_mode, const char *str,
-                            std::size_t size);
+void write_file(const char *path, bool binary_mode, const char *str,
+                std::size_t size);
 
 /**
  * @brief Execute the given line as a shell command
  * @param cmd: Command to be execute
  */
-void KLIB_EXPORT exec(const std::string &cmd);
+void exec(const std::string &cmd);
 
 /**
  * @brief Execute the given line as a shell command
  * @param cmd: Command to be execute
  */
-void KLIB_EXPORT exec(const char *cmd);
+void exec(const char *cmd);
 
 /**
  * @brief Execute the given line as a shell command and return its output
  * @param cmd: Command to be execute
  * @return Command line output
  */
-std::string KLIB_EXPORT exec_with_output(const std::string &cmd);
+std::string exec_with_output(const std::string &cmd);
 
 /**
  * @brief Execute the given line as a shell command and return its output
  * @param cmd: Command to be execute
  * @return Command line output
  */
-std::string KLIB_EXPORT exec_with_output(const char *cmd);
+std::string exec_with_output(const char *cmd);
 
 /**
  * @brief Generate uuid
  */
-std::string KLIB_EXPORT uuid();
+std::string uuid();
 
 /**
  * @brief Clear data
  * @param data: Data to be cleared
  */
-void KLIB_EXPORT cleanse(std::string &data);
+void cleanse(std::string &data);
 
 /**
  * @brief Clear data
  * @param ptr: Point to the data to be cleared
  * @param size: The size of the data to be cleared
  */
-void KLIB_EXPORT cleanse(void *ptr, std::size_t size);
+void cleanse(void *ptr, std::size_t size);
 
 /**
  * @brief According to the given file or directory name, return a legal file or
@@ -156,26 +153,26 @@ void KLIB_EXPORT cleanse(void *ptr, std::size_t size);
  * @see
  * https://docs.microsoft.com/zh-cn/windows/win32/fileio/naming-a-file#file-and-directory-names
  */
-std::string KLIB_EXPORT make_file_name_legal(const std::string &file_name);
+std::string make_file_name_legal(const std::string &file_name);
 
 /**
  * @brief Generate random data of specified bytes
  * @param bytes: The number of bytes to generate
  * @return Random data generated
  */
-std::string KLIB_EXPORT generate_random_bytes(std::size_t bytes);
+std::string generate_random_bytes(std::size_t bytes);
 
 /**
  * @brief Get terminal size
  * @return Terminal length and width
  */
-std::pair<std::uint32_t, std::uint32_t> KLIB_EXPORT terminal_size();
+std::pair<std::uint32_t, std::uint32_t> terminal_size();
 
 /**
  * @brief Convert to 2 hex digits per byte
  * @param bytes: Bytes to convert
  * @return String of hexadecimal digits
  */
-std::string KLIB_EXPORT bytes_to_hex_string(const std::string &bytes);
+std::string bytes_to_hex_string(const std::string &bytes);
 
 }  // namespace klib

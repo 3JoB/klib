@@ -12,7 +12,6 @@
 #include <fmt/core.h>
 #include <fmt/format.h>
 
-#include "klib/detail/config.h"
 #include "klib/detail/fmt_with_loc.h"
 
 namespace klib {
@@ -20,7 +19,7 @@ namespace klib {
 /**
  * @brief Exception class
  */
-class KLIB_EXPORT Exception : public std::exception {
+class Exception : public std::exception {
  public:
   /**
    * @brief Constructor
@@ -43,7 +42,7 @@ class KLIB_EXPORT Exception : public std::exception {
 /**
  * @brief Exception class, which means runtime error
  */
-class KLIB_EXPORT RuntimeError : public Exception {
+class RuntimeError : public Exception {
  public:
   /**
    * @brief Constructor
@@ -60,7 +59,7 @@ class KLIB_EXPORT RuntimeError : public Exception {
 /**
  * @brief Exception class, which means logic error
  */
-class KLIB_EXPORT LogicError : public Exception {
+class LogicError : public Exception {
  public:
   /**
    * @brief Constructor
@@ -77,7 +76,7 @@ class KLIB_EXPORT LogicError : public Exception {
 /**
  * @brief Exception class, which means invalid argument
  */
-class KLIB_EXPORT InvalidArgument : public Exception {
+class InvalidArgument : public Exception {
  public:
   /**
    * @brief Constructor
@@ -94,7 +93,7 @@ class KLIB_EXPORT InvalidArgument : public Exception {
 /**
  * @brief Exception class, which means out of range
  */
-class KLIB_EXPORT OutOfRange : public Exception {
+class OutOfRange : public Exception {
  public:
   /**
    * @brief Constructor

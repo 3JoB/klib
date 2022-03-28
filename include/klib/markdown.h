@@ -7,8 +7,6 @@
 
 #include <string>
 
-#include "klib/detail/config.h"
-
 namespace klib {
 
 /**
@@ -16,6 +14,6 @@ namespace klib {
  * @param markdown: CommonMark Markdown to be converted
  * @return Converted HTML
  */
-std::string KLIB_EXPORT markdown_to_html(const std::string &markdown);
+std::string markdown_to_html(const std::string &markdown);
 
 }  // namespace klib

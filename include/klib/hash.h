@@ -9,8 +9,6 @@
 #include <cstdint>
 #include <string>
 
-#include "klib/detail/config.h"
-
 namespace klib {
 
 /**
@@ -18,14 +16,14 @@ namespace klib {
  * @param data: Data to be hashed
  * @return Hash result
  */
-std::size_t KLIB_EXPORT fast_hash(const std::string &data);
+std::size_t fast_hash(const std::string &data);
 
 /**
  * @brief Calculate the hash
  * @param data: Data to be hashed
  * @return Hash result in hexadecimal representation
  */
-std::string KLIB_EXPORT fast_hash_hex(const std::string &data);
+std::string fast_hash_hex(const std::string &data);
 
 /**
  * @brief Calculate CRC-32
@@ -34,7 +32,7 @@ std::string KLIB_EXPORT fast_hash_hex(const std::string &data);
  * @see
  * https://zh.wikipedia.org/wiki/%E5%BE%AA%E7%92%B0%E5%86%97%E9%A4%98%E6%A0%A1%E9%A9%97
  */
-std::uint32_t KLIB_EXPORT crc32(const std::string &data);
+std::uint32_t crc32(const std::string &data);
 
 /**
  * @brief Calculate CRC-32
@@ -43,7 +41,7 @@ std::uint32_t KLIB_EXPORT crc32(const std::string &data);
  * @see
  * https://zh.wikipedia.org/wiki/%E5%BE%AA%E7%92%B0%E5%86%97%E9%A4%98%E6%A0%A1%E9%A9%97
  */
-std::string KLIB_EXPORT crc32_hex(const std::string &data);
+std::string crc32_hex(const std::string &data);
 
 /**
  * @brief Calculate Adler-32
@@ -51,7 +49,7 @@ std::string KLIB_EXPORT crc32_hex(const std::string &data);
  * @return Hash result
  * @see https://zh.wikipedia.org/wiki/Adler-32
  */
-std::uint32_t KLIB_EXPORT adler32(const std::string &data);
+std::uint32_t adler32(const std::string &data);
 
 /**
  * @brief Calculate Adler-32
@@ -59,7 +57,7 @@ std::uint32_t KLIB_EXPORT adler32(const std::string &data);
  * @return Hash result in hexadecimal representation
  * @see https://zh.wikipedia.org/wiki/Adler-32
  */
-std::string KLIB_EXPORT adler32_hex(const std::string &data);
+std::string adler32_hex(const std::string &data);
 
 /**
  * @brief Calculate MD5
@@ -67,7 +65,7 @@ std::string KLIB_EXPORT adler32_hex(const std::string &data);
  * @return Hash result
  * @see https://zh.wikipedia.org/wiki/MD5
  */
-std::string KLIB_EXPORT md5(const std::string &data);
+std::string md5(const std::string &data);
 
 /**
  * @brief Calculate MD5
@@ -75,7 +73,7 @@ std::string KLIB_EXPORT md5(const std::string &data);
  * @return Hash result in hexadecimal representation
  * @see https://zh.wikipedia.org/wiki/MD5
  */
-std::string KLIB_EXPORT md5_hex(const std::string &data);
+std::string md5_hex(const std::string &data);
 
 /**
  * @brief Calculate SHA-1
@@ -83,7 +81,7 @@ std::string KLIB_EXPORT md5_hex(const std::string &data);
  * @return Hash result
  * @see https://zh.wikipedia.org/wiki/SHA-1
  */
-std::string KLIB_EXPORT sha1(const std::string &data);
+std::string sha1(const std::string &data);
 
 /**
  * @brief Calculate SHA-1
@@ -91,7 +89,7 @@ std::string KLIB_EXPORT sha1(const std::string &data);
  * @return Hash result in hexadecimal representation
  * @see https://zh.wikipedia.org/wiki/SHA-1
  */
-std::string KLIB_EXPORT sha1_hex(const std::string &data);
+std::string sha1_hex(const std::string &data);
 
 /**
  * @brief Calculate SHA-224
@@ -99,7 +97,7 @@ std::string KLIB_EXPORT sha1_hex(const std::string &data);
  * @return Hash result
  * @see https://zh.wikipedia.org/wiki/SHA-2
  */
-std::string KLIB_EXPORT sha224(const std::string &data);
+std::string sha224(const std::string &data);
 
 /**
  * @brief Calculate SHA-224
@@ -107,7 +105,7 @@ std::string KLIB_EXPORT sha224(const std::string &data);
  * @return Hash result in hexadecimal representation
  * @see https://zh.wikipedia.org/wiki/SHA-2
  */
-std::string KLIB_EXPORT sha224_hex(const std::string &data);
+std::string sha224_hex(const std::string &data);
 
 /**
  * @brief Calculate SHA-256
@@ -115,7 +113,7 @@ std::string KLIB_EXPORT sha224_hex(const std::string &data);
  * @return Hash result
  * @see https://zh.wikipedia.org/wiki/SHA-2
  */
-std::string KLIB_EXPORT sha256(const std::string &data);
+std::string sha256(const std::string &data);
 
 /**
  * @brief Calculate SHA-256
@@ -123,7 +121,7 @@ std::string KLIB_EXPORT sha256(const std::string &data);
  * @return Hash result in hexadecimal representation
  * @see https://zh.wikipedia.org/wiki/SHA-2
  */
-std::string KLIB_EXPORT sha256_hex(const std::string &data);
+std::string sha256_hex(const std::string &data);
 
 /**
  * @brief Calculate SHA-384
@@ -131,7 +129,7 @@ std::string KLIB_EXPORT sha256_hex(const std::string &data);
  * @return Hash result
  * @see https://zh.wikipedia.org/wiki/SHA-2
  */
-std::string KLIB_EXPORT sha384(const std::string &data);
+std::string sha384(const std::string &data);
 
 /**
  * @brief Calculate SHA-384
@@ -139,7 +137,7 @@ std::string KLIB_EXPORT sha384(const std::string &data);
  * @return Hash result in hexadecimal representation
  * @see https://zh.wikipedia.org/wiki/SHA-2
  */
-std::string KLIB_EXPORT sha384_hex(const std::string &data);
+std::string sha384_hex(const std::string &data);
 
 /**
  * @brief Calculate SHA-512
@@ -147,7 +145,7 @@ std::string KLIB_EXPORT sha384_hex(const std::string &data);
  * @return Hash result
  * @see https://zh.wikipedia.org/wiki/SHA-2
  */
-std::string KLIB_EXPORT sha512(const std::string &data);
+std::string sha512(const std::string &data);
 
 /**
  * @brief Calculate SHA-512
@@ -155,7 +153,7 @@ std::string KLIB_EXPORT sha512(const std::string &data);
  * @return Hash result in hexadecimal representation
  * @see https://zh.wikipedia.org/wiki/SHA-2
  */
-std::string KLIB_EXPORT sha512_hex(const std::string &data);
+std::string sha512_hex(const std::string &data);
 
 /**
  * @brief Hashes a password
@@ -169,7 +167,7 @@ std::string KLIB_EXPORT sha512_hex(const std::string &data);
  * @see https://github.com/P-H-C/phc-winner-argon2/issues/235
  * @see https://www.tomczhen.com/2016/10/10/hashing-security/
  */
-std::pair<std::string, std::string> KLIB_EXPORT password_hash_raw(
+std::pair<std::string, std::string> password_hash_raw(
     const std::string &password, std::uint32_t time_cost = 1,
     std::uint32_t memory_cost = 4 * 1024 * 1024, std::uint32_t parallelism = 16,
     std::int32_t hash_len = 32, std::int32_t salt_len = 32);
@@ -186,10 +184,12 @@ std::pair<std::string, std::string> KLIB_EXPORT password_hash_raw(
  * @see https://github.com/P-H-C/phc-winner-argon2/issues/235
  * @see https://www.tomczhen.com/2016/10/10/hashing-security/
  */
-std::string KLIB_EXPORT password_hash_raw(
-    const std::string &password, const std::string &salt,
-    std::uint32_t time_cost = 1, std::uint32_t memory_cost = 4 * 1024 * 1024,
-    std::uint32_t parallelism = 16, std::int32_t hash_len = 32);
+std::string password_hash_raw(const std::string &password,
+                              const std::string &salt,
+                              std::uint32_t time_cost = 1,
+                              std::uint32_t memory_cost = 4 * 1024 * 1024,
+                              std::uint32_t parallelism = 16,
+                              std::int32_t hash_len = 32);
 
 /**
  * @brief Hashes a password, producing an encoded hash
@@ -203,10 +203,12 @@ std::string KLIB_EXPORT password_hash_raw(
  * @see https://github.com/P-H-C/phc-winner-argon2/issues/235
  * @see https://www.tomczhen.com/2016/10/10/hashing-security/
  */
-std::string KLIB_EXPORT password_hash_encoded(
-    const std::string &password, std::uint32_t time_cost = 1,
-    std::uint32_t memory_cost = 4 * 1024 * 1024, std::uint32_t parallelism = 16,
-    std::int32_t hash_len = 32, std::int32_t salt_len = 32);
+std::string password_hash_encoded(const std::string &password,
+                                  std::uint32_t time_cost = 1,
+                                  std::uint32_t memory_cost = 4 * 1024 * 1024,
+                                  std::uint32_t parallelism = 16,
+                                  std::int32_t hash_len = 32,
+                                  std::int32_t salt_len = 32);
 
 /**
  * @brief Verifies a password against an encoded string
@@ -214,8 +216,7 @@ std::string KLIB_EXPORT password_hash_encoded(
  * @param encoded: Encoded hash
  * @return Return true if it is verified to be valid
  */
-bool KLIB_EXPORT password_verify(const std::string &password,
-                                 const std::string &encoded);
+bool password_verify(const std::string &password, const std::string &encoded);
 
 /**
  * @brief Verifies a password against raw hash and salt
@@ -227,11 +228,9 @@ bool KLIB_EXPORT password_verify(const std::string &password,
  * @param parallelism: Number of threads and compute lanes
  * @return Return true if it is verified to be valid
  */
-bool KLIB_EXPORT password_verify(const std::string &password,
-                                 const std::string &hash,
-                                 const std::string &salt,
-                                 std::uint32_t time_cost = 1,
-                                 std::uint32_t memory_cost = 4 * 1024 * 1024,
-                                 std::uint32_t parallelism = 16);
+bool password_verify(const std::string &password, const std::string &hash,
+                     const std::string &salt, std::uint32_t time_cost = 1,
+                     std::uint32_t memory_cost = 4 * 1024 * 1024,
+                     std::uint32_t parallelism = 16);
 
 }  // namespace klib

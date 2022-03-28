@@ -11,14 +11,12 @@
 
 #include <parallel_hashmap/phmap.h>
 
-#include "klib/detail/config.h"
-
 namespace klib {
 
 /**
  * @brief Parse URL
  */
-class KLIB_EXPORT URL {
+class URL {
  public:
   URL() = default;
   /**

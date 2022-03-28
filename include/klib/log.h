@@ -12,7 +12,6 @@
 #include <fmt/core.h>
 #include <spdlog/spdlog.h>
 
-#include "klib/detail/config.h"
 #include "klib/detail/fmt_with_loc.h"
 
 namespace klib {
@@ -23,7 +22,7 @@ namespace klib {
  * @param args: Format string parameters
  */
 template <typename... Args>
-void KLIB_EXPORT info(std::string_view fmt, Args &&...args) {
+void info(std::string_view fmt, Args &&...args) {
   spdlog::info(fmt::runtime(fmt), std::forward<Args>(args)...);
 }
 
@@ -33,7 +32,7 @@ void KLIB_EXPORT info(std::string_view fmt, Args &&...args) {
  * @param args: Format string parameters
  */
 template <typename... Args>
-void KLIB_EXPORT warn(std::string_view fmt, Args &&...args) {
+void warn(std::string_view fmt, Args &&...args) {
   spdlog::warn(fmt::runtime(fmt), std::forward<Args>(args)...);
 }
 
@@ -43,8 +42,7 @@ void KLIB_EXPORT warn(std::string_view fmt, Args &&...args) {
  * @param args: Format string parameters
  */
 template <typename... Args>
-[[noreturn]] void KLIB_EXPORT error(detail::FmtWithLoc fmt_with_loc,
-                                    Args &&...args) {
+[[noreturn]] void error(detail::FmtWithLoc fmt_with_loc, Args &&...args) {
   spdlog::default_logger_raw()->log(fmt_with_loc.loc_, spdlog::level::err,
                                     fmt::runtime(fmt_with_loc.fmt_),
                                     std::forward<Args>(args)...);

@@ -26,8 +26,14 @@ TEST_CASE("UTF convert short", "[unicode]") {
       "以当一设看待，此外，漫画最新一话既然都已经发出，说明ZUN并没有试图修改这"
       "个设定问题";
 
-  BENCHMARK("to UTF-16") { return klib::utf8_to_utf16(str); };
-  BENCHMARK("to UTF-32") { return klib::utf8_to_utf32(str); };
+  const auto utf16 = klib::utf8_to_utf16(str);
+  const auto utf32 = klib::utf8_to_utf32(str);
+
+  BENCHMARK("UTF-8 to UTF-16") { return klib::utf8_to_utf16(str); };
+  BENCHMARK("UTF-16 to UTF-8") { return klib::utf16_to_utf8(utf16); };
+
+  BENCHMARK("UTF-8 to UTF-32") { return klib::utf8_to_utf32(str); };
+  BENCHMARK("UTF-32 to UTF-8") { return klib::utf32_to_utf8(utf32); };
 }
 
 TEST_CASE("UTF convert long", "[unicode]") {
@@ -36,8 +42,14 @@ TEST_CASE("UTF convert long", "[unicode]") {
 
   const auto str = klib::read_file(file_name, false);
 
-  BENCHMARK("to UTF-16") { return klib::utf8_to_utf16(str); };
-  BENCHMARK("to UTF-32") { return klib::utf8_to_utf32(str); };
+  const auto utf16 = klib::utf8_to_utf16(str);
+  const auto utf32 = klib::utf8_to_utf32(str);
+
+  BENCHMARK("UTF-8 to UTF-16") { return klib::utf8_to_utf16(str); };
+  BENCHMARK("UTF-16 to UTF-8") { return klib::utf16_to_utf8(utf16); };
+
+  BENCHMARK("UTF-8 to UTF-32") { return klib::utf8_to_utf32(str); };
+  BENCHMARK("UTF-32 to UTF-8") { return klib::utf32_to_utf8(utf32); };
 }
 
 TEST_CASE("trim", "[unicode]") {

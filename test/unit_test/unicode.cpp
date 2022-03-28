@@ -64,20 +64,22 @@ TEST_CASE("utf8_to_utf32", "[unicode]") {
   CHECK(utf32[1] == 0x000000DF);
   CHECK(utf32[2] == 0x00006C34);
   CHECK(utf32[3] == 0x0001F34C);
-
-  CHECK(klib::utf32_to_utf8(utf32) == "zß水🍌");
 }
 
-TEST_CASE("utf32_to_utf8_w", "[unicode]") {
-  auto utf32 = klib::utf8_to_utf32_w("zß水🍌");
+TEST_CASE("utf32_to_utf8", "[unicode]") {
+  auto utf8 = klib::utf32_to_utf8(U"zß水🍌");
 
-  CHECK(std::size(utf32) == 4);
-  CHECK(utf32[0] == 0x0000007A);
-  CHECK(utf32[1] == 0x000000DF);
-  CHECK(utf32[2] == 0x00006C34);
-  CHECK(utf32[3] == 0x0001F34C);
-
-  CHECK(klib::utf32_to_utf8_w(utf32) == "zß水🍌");
+  CHECK(std::size(utf8) == 10);
+  CHECK(static_cast<std::uint8_t>(utf8[0]) == 0x7A);
+  CHECK(static_cast<std::uint8_t>(utf8[1]) == 0xC3);
+  CHECK(static_cast<std::uint8_t>(utf8[2]) == 0x9F);
+  CHECK(static_cast<std::uint8_t>(utf8[3]) == 0xE6);
+  CHECK(static_cast<std::uint8_t>(utf8[4]) == 0xB0);
+  CHECK(static_cast<std::uint8_t>(utf8[5]) == 0xB4);
+  CHECK(static_cast<std::uint8_t>(utf8[6]) == 0xF0);
+  CHECK(static_cast<std::uint8_t>(utf8[7]) == 0x9F);
+  CHECK(static_cast<std::uint8_t>(utf8[8]) == 0x8D);
+  CHECK(static_cast<std::uint8_t>(utf8[9]) == 0x8C);
 }
 
 TEST_CASE("is_ascii", "[unicode]") {
