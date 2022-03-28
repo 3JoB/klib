@@ -74,10 +74,12 @@ target_link_libraries(<your-target> PRIVATE klib::klib)
 
 ## Roadmap
 
-- Use get headers
-  - https://github.com/curl/curl/wiki/get-headers-v2
+- curl_easy_header
+  - https://github.com/curl/curl/pull/8593
 - HTTP/3
-  - https://github.com/curl/curl/wiki/HTTP3
+  - https://github.com/curl/curl/blob/master/docs/HTTP3.md
+- xz
+  - https://tukaani.org/xz/
 
 ---
 
