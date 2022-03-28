@@ -6,6 +6,12 @@ var http_8h =
     [ "XX", "http_8h.html#a001751e2abb71763b08651bec986b6f7", null ],
     [ "XX", "http_8h.html#a001751e2abb71763b08651bec986b6f7", null ],
     [ "XX", "http_8h.html#a001751e2abb71763b08651bec986b6f7", null ],
-    [ "http_method_str", "http_8h.html#a6e3a5315c93768a27f16af56b733a2d1", null ],
-    [ "http_status_str", "http_8h.html#a79fbff285d9332385475847779003a45", null ]
+    [ "HttpMethod", "http_8h.html#a8bdbca8aaac847d46dea12057740e32f", [
+      [ "XX", "http_8h.html#a8bdbca8aaac847d46dea12057740e32fa9087c5728ce6cbce7b91b29946ecea38", null ]
+    ] ],
+    [ "HttpStatus", "http_8h.html#aea29eb2a91d40898afa2d063e7684572", [
+      [ "XX", "http_8h.html#aea29eb2a91d40898afa2d063e7684572a9087c5728ce6cbce7b91b29946ecea38", null ]
+    ] ],
+    [ "http_method_str", "http_8h.html#a91f9b4a4c893a488d22fc239c08d35d1", null ],
+    [ "http_status_str", "http_8h.html#aa99dc5614122dd3993953f4132610125", null ]
 ];

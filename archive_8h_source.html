@@ -31,7 +31,7 @@
  <tr style="height: 56px;">
   <td id="projectalign" style="padding-left: 0.5em;">
    <div id="projectname">klib
-   &#160;<span id="projectnumber">1.12.5</span>
+   &#160;<span id="projectnumber">1.12.6</span>
    </div>
   </td>
    <td>        <div id="MSearchBox" class="MSearchBoxInactive">
@@ -104,50 +104,46 @@ $(document).ready(function(){initNavTree('archive_8h_source.html',''); initResiz
 <div class="line"><a name="l00010"></a><span class="lineno">   10</span>&#160;<span class="preprocessor">#include &lt;string&gt;</span></div>
 <div class="line"><a name="l00011"></a><span class="lineno">   11</span>&#160;<span class="preprocessor">#include &lt;vector&gt;</span></div>
 <div class="line"><a name="l00012"></a><span class="lineno">   12</span>&#160; </div>
-<div class="line"><a name="l00013"></a><span class="lineno">   13</span>&#160;<span class="preprocessor">#include &quot;klib/detail/config.h&quot;</span></div>
+<div class="line"><a name="l00013"></a><span class="lineno">   13</span>&#160;<span class="keyword">namespace </span>klib {</div>
 <div class="line"><a name="l00014"></a><span class="lineno">   14</span>&#160; </div>
-<div class="line"><a name="l00015"></a><span class="lineno">   15</span>&#160;<span class="keyword">namespace </span>klib {</div>
-<div class="line"><a name="l00016"></a><span class="lineno">   16</span>&#160; </div>
-<div class="line"><a name="l00020"></a><span class="lineno">   20</span>&#160;<span class="keyword">enum class</span> KLIB_EXPORT Format { Zip, The7Zip, Tar };</div>
-<div class="line"><a name="l00021"></a><span class="lineno">   21</span>&#160; </div>
-<div class="line"><a name="l00025"></a><span class="lineno">   25</span>&#160;<span class="keyword">enum class</span> KLIB_EXPORT Filter { None, Deflate, Gzip, Zstd };</div>
-<div class="line"><a name="l00026"></a><span class="lineno">   26</span>&#160; </div>
-<div class="line"><a name="l00038"></a><span class="lineno"><a class="line" href="archive_8h.html#a61aa77fc55b57a531e3fe7fc92d81991">   38</a></span>&#160;<span class="keywordtype">void</span> KLIB_EXPORT <a class="code" href="archive_8h.html#a61aa77fc55b57a531e3fe7fc92d81991">compress</a>(<span class="keyword">const</span> std::string &amp;path, Format format = Format::Tar,</div>
-<div class="line"><a name="l00039"></a><span class="lineno">   39</span>&#160;                          Filter filter = Filter::Gzip,</div>
-<div class="line"><a name="l00040"></a><span class="lineno">   40</span>&#160;                          <span class="keyword">const</span> std::string &amp;out_name = <span class="stringliteral">&quot;&quot;</span>, <span class="keywordtype">bool</span> flag = <span class="keyword">true</span>,</div>
-<div class="line"><a name="l00041"></a><span class="lineno">   41</span>&#160;                          std::optional&lt;std::int32_t&gt; level = {},</div>
-<div class="line"><a name="l00042"></a><span class="lineno">   42</span>&#160;                          <span class="keyword">const</span> std::string &amp;password = <span class="stringliteral">&quot;&quot;</span>);</div>
-<div class="line"><a name="l00043"></a><span class="lineno">   43</span>&#160; </div>
-<div class="line"><a name="l00054"></a><span class="lineno"><a class="line" href="archive_8h.html#a602231b204a4154f372ae41662724ab9">   54</a></span>&#160;<span class="keywordtype">void</span> KLIB_EXPORT <a class="code" href="archive_8h.html#a61aa77fc55b57a531e3fe7fc92d81991">compress</a>(<span class="keyword">const</span> std::vector&lt;std::string&gt; &amp;paths,</div>
-<div class="line"><a name="l00055"></a><span class="lineno">   55</span>&#160;                          <span class="keyword">const</span> std::string &amp;out_name,</div>
-<div class="line"><a name="l00056"></a><span class="lineno">   56</span>&#160;                          Format format = Format::Tar,</div>
-<div class="line"><a name="l00057"></a><span class="lineno">   57</span>&#160;                          Filter filter = Filter::Gzip,</div>
-<div class="line"><a name="l00058"></a><span class="lineno">   58</span>&#160;                          std::optional&lt;std::int32_t&gt; level = {},</div>
-<div class="line"><a name="l00059"></a><span class="lineno">   59</span>&#160;                          <span class="keyword">const</span> std::string &amp;password = <span class="stringliteral">&quot;&quot;</span>);</div>
-<div class="line"><a name="l00060"></a><span class="lineno">   60</span>&#160; </div>
-<div class="line"><a name="l00067"></a><span class="lineno"><a class="line" href="archive_8h.html#a855948bbe0bac48fa058d0956a41f21a">   67</a></span>&#160;<span class="keywordtype">void</span> KLIB_EXPORT <a class="code" href="archive_8h.html#a855948bbe0bac48fa058d0956a41f21a">decompress</a>(<span class="keyword">const</span> std::string &amp;file_path,</div>
-<div class="line"><a name="l00068"></a><span class="lineno">   68</span>&#160;                            <span class="keyword">const</span> std::string &amp;out_dir = <span class="stringliteral">&quot;&quot;</span>,</div>
-<div class="line"><a name="l00069"></a><span class="lineno">   69</span>&#160;                            <span class="keyword">const</span> std::string &amp;password = <span class="stringliteral">&quot;&quot;</span>);</div>
-<div class="line"><a name="l00070"></a><span class="lineno">   70</span>&#160; </div>
-<div class="line"><a name="l00076"></a><span class="lineno">   76</span>&#160;std::optional&lt;std::string&gt; KLIB_EXPORT</div>
-<div class="line"><a name="l00077"></a><span class="lineno"><a class="line" href="archive_8h.html#af7e6f72deb03f7d725635e5c799ac43c">   77</a></span>&#160;<a class="code" href="archive_8h.html#af7e6f72deb03f7d725635e5c799ac43c">outermost_folder_name</a>(<span class="keyword">const</span> std::string &amp;file_path);</div>
-<div class="line"><a name="l00078"></a><span class="lineno">   78</span>&#160; </div>
-<div class="line"><a name="l00085"></a><span class="lineno"><a class="line" href="archive_8h.html#af132e1769702ac708cf91e21c8fa3a68">   85</a></span>&#160;std::string KLIB_EXPORT <a class="code" href="archive_8h.html#af132e1769702ac708cf91e21c8fa3a68">compress_data</a>(<span class="keyword">const</span> std::string &amp;data,</div>
-<div class="line"><a name="l00086"></a><span class="lineno">   86</span>&#160;                                      std::optional&lt;std::int32_t&gt; level = {});</div>
-<div class="line"><a name="l00087"></a><span class="lineno">   87</span>&#160; </div>
-<div class="line"><a name="l00095"></a><span class="lineno"><a class="line" href="archive_8h.html#aed618db3d3e969b879b4018e0b661d7a">   95</a></span>&#160;std::string KLIB_EXPORT <a class="code" href="archive_8h.html#af132e1769702ac708cf91e21c8fa3a68">compress_data</a>(<span class="keyword">const</span> <span class="keywordtype">char</span> *data, std::size_t size,</div>
-<div class="line"><a name="l00096"></a><span class="lineno">   96</span>&#160;                                      std::optional&lt;std::int32_t&gt; level = {});</div>
-<div class="line"><a name="l00097"></a><span class="lineno">   97</span>&#160; </div>
-<div class="line"><a name="l00103"></a><span class="lineno"><a class="line" href="archive_8h.html#aa40645c8d14e2e799670a199f860819b">  103</a></span>&#160;std::string KLIB_EXPORT <a class="code" href="archive_8h.html#aa40645c8d14e2e799670a199f860819b">decompress_data</a>(<span class="keyword">const</span> std::string &amp;data);</div>
-<div class="line"><a name="l00104"></a><span class="lineno">  104</span>&#160; </div>
-<div class="line"><a name="l00111"></a><span class="lineno"><a class="line" href="archive_8h.html#a0e38a491d88b35834332e2c9f174a4c2">  111</a></span>&#160;std::string KLIB_EXPORT <a class="code" href="archive_8h.html#aa40645c8d14e2e799670a199f860819b">decompress_data</a>(<span class="keyword">const</span> <span class="keywordtype">char</span> *data, std::size_t size);</div>
-<div class="line"><a name="l00112"></a><span class="lineno">  112</span>&#160; </div>
-<div class="line"><a name="l00113"></a><span class="lineno">  113</span>&#160;}  <span class="comment">// namespace klib</span></div>
-<div class="ttc" id="aarchive_8h_html_a61aa77fc55b57a531e3fe7fc92d81991"><div class="ttname"><a href="archive_8h.html#a61aa77fc55b57a531e3fe7fc92d81991">klib::compress</a></div><div class="ttdeci">void KLIB_EXPORT compress(const std::string &amp;path, Format format=Format::Tar, Filter filter=Filter::Gzip, const std::string &amp;out_name=&quot;&quot;, bool flag=true, std::optional&lt; std::int32_t &gt; level={}, const std::string &amp;password=&quot;&quot;)</div><div class="ttdoc">Compress file or folder.</div></div>
-<div class="ttc" id="aarchive_8h_html_a855948bbe0bac48fa058d0956a41f21a"><div class="ttname"><a href="archive_8h.html#a855948bbe0bac48fa058d0956a41f21a">klib::decompress</a></div><div class="ttdeci">void KLIB_EXPORT decompress(const std::string &amp;file_path, const std::string &amp;out_dir=&quot;&quot;, const std::string &amp;password=&quot;&quot;)</div><div class="ttdoc">Decompress file.</div></div>
-<div class="ttc" id="aarchive_8h_html_aa40645c8d14e2e799670a199f860819b"><div class="ttname"><a href="archive_8h.html#aa40645c8d14e2e799670a199f860819b">klib::decompress_data</a></div><div class="ttdeci">std::string KLIB_EXPORT decompress_data(const std::string &amp;data)</div><div class="ttdoc">Decompress data.</div></div>
-<div class="ttc" id="aarchive_8h_html_af132e1769702ac708cf91e21c8fa3a68"><div class="ttname"><a href="archive_8h.html#af132e1769702ac708cf91e21c8fa3a68">klib::compress_data</a></div><div class="ttdeci">std::string KLIB_EXPORT compress_data(const std::string &amp;data, std::optional&lt; std::int32_t &gt; level={})</div><div class="ttdoc">Compress data.</div></div>
-<div class="ttc" id="aarchive_8h_html_af7e6f72deb03f7d725635e5c799ac43c"><div class="ttname"><a href="archive_8h.html#af7e6f72deb03f7d725635e5c799ac43c">klib::outermost_folder_name</a></div><div class="ttdeci">std::optional&lt; std::string &gt; KLIB_EXPORT outermost_folder_name(const std::string &amp;file_path)</div><div class="ttdoc">Get the outermost folder name.</div></div>
+<div class="line"><a name="l00018"></a><span class="lineno"><a class="line" href="archive_8h.html#a746bca2d6aafe9da24021476bae487e5">   18</a></span>&#160;<span class="keyword">enum class</span> <a class="code" href="archive_8h.html#a746bca2d6aafe9da24021476bae487e5">Format</a> { Zip, The7Zip, Tar };</div>
+<div class="line"><a name="l00019"></a><span class="lineno">   19</span>&#160; </div>
+<div class="line"><a name="l00023"></a><span class="lineno"><a class="line" href="archive_8h.html#aa25a2dd2c496b61e2b93bb7e9ca385ab">   23</a></span>&#160;<span class="keyword">enum class</span> <a class="code" href="archive_8h.html#aa25a2dd2c496b61e2b93bb7e9ca385ab">Filter</a> { None, Deflate, Gzip, Zstd };</div>
+<div class="line"><a name="l00024"></a><span class="lineno">   24</span>&#160; </div>
+<div class="line"><a name="l00036"></a><span class="lineno"><a class="line" href="archive_8h.html#a31c8b98da13a2ba68450b24482956419">   36</a></span>&#160;<span class="keywordtype">void</span> <a class="code" href="archive_8h.html#a31c8b98da13a2ba68450b24482956419">compress</a>(<span class="keyword">const</span> std::string &amp;path, <a class="code" href="archive_8h.html#a746bca2d6aafe9da24021476bae487e5">Format</a> format = Format::Tar,</div>
+<div class="line"><a name="l00037"></a><span class="lineno">   37</span>&#160;              <a class="code" href="archive_8h.html#aa25a2dd2c496b61e2b93bb7e9ca385ab">Filter</a> filter = Filter::Gzip, <span class="keyword">const</span> std::string &amp;out_name = <span class="stringliteral">&quot;&quot;</span>,</div>
+<div class="line"><a name="l00038"></a><span class="lineno">   38</span>&#160;              <span class="keywordtype">bool</span> flag = <span class="keyword">true</span>, std::optional&lt;std::int32_t&gt; level = {},</div>
+<div class="line"><a name="l00039"></a><span class="lineno">   39</span>&#160;              <span class="keyword">const</span> std::string &amp;password = <span class="stringliteral">&quot;&quot;</span>);</div>
+<div class="line"><a name="l00040"></a><span class="lineno">   40</span>&#160; </div>
+<div class="line"><a name="l00051"></a><span class="lineno"><a class="line" href="archive_8h.html#a0c777f5e67b90ab729b47b19d80b36ca">   51</a></span>&#160;<span class="keywordtype">void</span> <a class="code" href="archive_8h.html#a31c8b98da13a2ba68450b24482956419">compress</a>(<span class="keyword">const</span> std::vector&lt;std::string&gt; &amp;paths,</div>
+<div class="line"><a name="l00052"></a><span class="lineno">   52</span>&#160;              <span class="keyword">const</span> std::string &amp;out_name, <a class="code" href="archive_8h.html#a746bca2d6aafe9da24021476bae487e5">Format</a> format = Format::Tar,</div>
+<div class="line"><a name="l00053"></a><span class="lineno">   53</span>&#160;              <a class="code" href="archive_8h.html#aa25a2dd2c496b61e2b93bb7e9ca385ab">Filter</a> filter = Filter::Gzip,</div>
+<div class="line"><a name="l00054"></a><span class="lineno">   54</span>&#160;              std::optional&lt;std::int32_t&gt; level = {},</div>
+<div class="line"><a name="l00055"></a><span class="lineno">   55</span>&#160;              <span class="keyword">const</span> std::string &amp;password = <span class="stringliteral">&quot;&quot;</span>);</div>
+<div class="line"><a name="l00056"></a><span class="lineno">   56</span>&#160; </div>
+<div class="line"><a name="l00063"></a><span class="lineno"><a class="line" href="archive_8h.html#ae501865446ce2bf900e047dac2ff7b15">   63</a></span>&#160;<span class="keywordtype">void</span> <a class="code" href="archive_8h.html#ae501865446ce2bf900e047dac2ff7b15">decompress</a>(<span class="keyword">const</span> std::string &amp;file_path, <span class="keyword">const</span> std::string &amp;out_dir = <span class="stringliteral">&quot;&quot;</span>,</div>
+<div class="line"><a name="l00064"></a><span class="lineno">   64</span>&#160;                <span class="keyword">const</span> std::string &amp;password = <span class="stringliteral">&quot;&quot;</span>);</div>
+<div class="line"><a name="l00065"></a><span class="lineno">   65</span>&#160; </div>
+<div class="line"><a name="l00071"></a><span class="lineno"><a class="line" href="archive_8h.html#a63a8dd405b432393cd8e23c458a2dcee">   71</a></span>&#160;std::optional&lt;std::string&gt; <a class="code" href="archive_8h.html#a63a8dd405b432393cd8e23c458a2dcee">outermost_folder_name</a>(<span class="keyword">const</span> std::string &amp;file_path);</div>
+<div class="line"><a name="l00072"></a><span class="lineno">   72</span>&#160; </div>
+<div class="line"><a name="l00079"></a><span class="lineno"><a class="line" href="archive_8h.html#aa3931b82d4e4fc5a7fcbbabe78a0df28">   79</a></span>&#160;std::string <a class="code" href="archive_8h.html#aa3931b82d4e4fc5a7fcbbabe78a0df28">compress_data</a>(<span class="keyword">const</span> std::string &amp;data,</div>
+<div class="line"><a name="l00080"></a><span class="lineno">   80</span>&#160;                          std::optional&lt;std::int32_t&gt; level = {});</div>
+<div class="line"><a name="l00081"></a><span class="lineno">   81</span>&#160; </div>
+<div class="line"><a name="l00089"></a><span class="lineno"><a class="line" href="archive_8h.html#ae25fca78c9e7f08290433fb7e2ce55c7">   89</a></span>&#160;std::string <a class="code" href="archive_8h.html#aa3931b82d4e4fc5a7fcbbabe78a0df28">compress_data</a>(<span class="keyword">const</span> <span class="keywordtype">char</span> *data, std::size_t size,</div>
+<div class="line"><a name="l00090"></a><span class="lineno">   90</span>&#160;                          std::optional&lt;std::int32_t&gt; level = {});</div>
+<div class="line"><a name="l00091"></a><span class="lineno">   91</span>&#160; </div>
+<div class="line"><a name="l00097"></a><span class="lineno"><a class="line" href="archive_8h.html#a24ceda1bfc50a8ca742e340ad2c60f9d">   97</a></span>&#160;std::string <a class="code" href="archive_8h.html#a24ceda1bfc50a8ca742e340ad2c60f9d">decompress_data</a>(<span class="keyword">const</span> std::string &amp;data);</div>
+<div class="line"><a name="l00098"></a><span class="lineno">   98</span>&#160; </div>
+<div class="line"><a name="l00105"></a><span class="lineno"><a class="line" href="archive_8h.html#a9e4af7ad5ab82c51de143c17ee5da3fb">  105</a></span>&#160;std::string <a class="code" href="archive_8h.html#a24ceda1bfc50a8ca742e340ad2c60f9d">decompress_data</a>(<span class="keyword">const</span> <span class="keywordtype">char</span> *data, std::size_t size);</div>
+<div class="line"><a name="l00106"></a><span class="lineno">  106</span>&#160; </div>
+<div class="line"><a name="l00107"></a><span class="lineno">  107</span>&#160;}  <span class="comment">// namespace klib</span></div>
+<div class="ttc" id="aarchive_8h_html_a24ceda1bfc50a8ca742e340ad2c60f9d"><div class="ttname"><a href="archive_8h.html#a24ceda1bfc50a8ca742e340ad2c60f9d">klib::decompress_data</a></div><div class="ttdeci">std::string decompress_data(const std::string &amp;data)</div><div class="ttdoc">Decompress data.</div></div>
+<div class="ttc" id="aarchive_8h_html_a31c8b98da13a2ba68450b24482956419"><div class="ttname"><a href="archive_8h.html#a31c8b98da13a2ba68450b24482956419">klib::compress</a></div><div class="ttdeci">void compress(const std::string &amp;path, Format format=Format::Tar, Filter filter=Filter::Gzip, const std::string &amp;out_name=&quot;&quot;, bool flag=true, std::optional&lt; std::int32_t &gt; level={}, const std::string &amp;password=&quot;&quot;)</div><div class="ttdoc">Compress file or folder.</div></div>
+<div class="ttc" id="aarchive_8h_html_a63a8dd405b432393cd8e23c458a2dcee"><div class="ttname"><a href="archive_8h.html#a63a8dd405b432393cd8e23c458a2dcee">klib::outermost_folder_name</a></div><div class="ttdeci">std::optional&lt; std::string &gt; outermost_folder_name(const std::string &amp;file_path)</div><div class="ttdoc">Get the outermost folder name.</div></div>
+<div class="ttc" id="aarchive_8h_html_a746bca2d6aafe9da24021476bae487e5"><div class="ttname"><a href="archive_8h.html#a746bca2d6aafe9da24021476bae487e5">klib::Format</a></div><div class="ttdeci">Format</div><div class="ttdoc">Supported Archive Formats.</div><div class="ttdef"><b>Definition:</b> archive.h:18</div></div>
+<div class="ttc" id="aarchive_8h_html_aa25a2dd2c496b61e2b93bb7e9ca385ab"><div class="ttname"><a href="archive_8h.html#aa25a2dd2c496b61e2b93bb7e9ca385ab">klib::Filter</a></div><div class="ttdeci">Filter</div><div class="ttdoc">Supported Compression Algorithms.</div><div class="ttdef"><b>Definition:</b> archive.h:23</div></div>
+<div class="ttc" id="aarchive_8h_html_aa3931b82d4e4fc5a7fcbbabe78a0df28"><div class="ttname"><a href="archive_8h.html#aa3931b82d4e4fc5a7fcbbabe78a0df28">klib::compress_data</a></div><div class="ttdeci">std::string compress_data(const std::string &amp;data, std::optional&lt; std::int32_t &gt; level={})</div><div class="ttdoc">Compress data.</div></div>
+<div class="ttc" id="aarchive_8h_html_ae501865446ce2bf900e047dac2ff7b15"><div class="ttname"><a href="archive_8h.html#ae501865446ce2bf900e047dac2ff7b15">klib::decompress</a></div><div class="ttdeci">void decompress(const std::string &amp;file_path, const std::string &amp;out_dir=&quot;&quot;, const std::string &amp;password=&quot;&quot;)</div><div class="ttdoc">Decompress file.</div></div>
 </div><!-- fragment --></div><!-- contents -->
 </div><!-- doc-content -->
 <!-- start footer part -->

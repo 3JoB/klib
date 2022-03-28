@@ -1,16 +1,16 @@
 var searchData=
 [
-  ['table_5fexists_284',['table_exists',['../classklib_1_1SqlDatabase.html#a05df40e3453e2aa26008fc9021b8d9fa',1,'klib::SqlDatabase']]],
-  ['table_5fline_5fcount_285',['table_line_count',['../classklib_1_1SqlDatabase.html#ac5a1433aa1856a5b0849dfbfa8030f2a',1,'klib::SqlDatabase']]],
-  ['terminal_5fsize_286',['terminal_size',['../util_8h.html#ab8d8d04e750bb6af1b894c93104e3730',1,'klib']]],
-  ['text_287',['text',['../classklib_1_1Response.html#a305b99dcd743ae31007c48c639b99713',1,'klib::Response']]],
-  ['transaction_288',['transaction',['../classklib_1_1SqlDatabase.html#a49841aa41f3015eff7bf521a335fa5f8',1,'klib::SqlDatabase']]],
-  ['trim_289',['trim',['../unicode_8h.html#adca3307351d6e9fcc576d017f0f4e6a1',1,'klib']]],
-  ['trim_5fcopy_290',['trim_copy',['../unicode_8h.html#a3dd060d671307291587cfc6d042240c2',1,'klib']]],
-  ['trim_5fleft_291',['trim_left',['../unicode_8h.html#a46b2be76a2e37cc3ea77d1ce244c6a8d',1,'klib']]],
-  ['trim_5fleft_5fcopy_292',['trim_left_copy',['../unicode_8h.html#aa6874bf25b66094fef4ad0eb162ddffa',1,'klib']]],
-  ['trim_5fright_293',['trim_right',['../unicode_8h.html#a2e4f6caabe4bd1d825048a2aebf43199',1,'klib']]],
-  ['trim_5fright_5fcopy_294',['trim_right_copy',['../unicode_8h.html#a5038c4e9b12be993f718ea4c2cb479c5',1,'klib']]],
-  ['ttf_5fsubset_295',['ttf_subset',['../font_8h.html#a39f8ccc54a4c675e76a4cfd6a59bcb2f',1,'klib::ttf_subset(const std::string &amp;ttf_font, const std::u32string &amp;unicodes)'],['../font_8h.html#a9a5ea853a457e17feb90979c8f5a448b',1,'klib::ttf_subset(std::string_view ttf_font, const std::u32string &amp;unicodes)'],['../font_8h.html#a341c4609b25017f203e4c833974257ba',1,'klib::ttf_subset(const char *ttf_font, std::size_t size, const std::u32string &amp;unicodes)']]],
-  ['ttf_5fto_5fwoff2_296',['ttf_to_woff2',['../font_8h.html#acca157e36d079be4ddcb96c756987ddc',1,'klib']]]
+  ['table_5fexists_287',['table_exists',['../classklib_1_1SqlDatabase.html#a05df40e3453e2aa26008fc9021b8d9fa',1,'klib::SqlDatabase']]],
+  ['table_5fline_5fcount_288',['table_line_count',['../classklib_1_1SqlDatabase.html#ac5a1433aa1856a5b0849dfbfa8030f2a',1,'klib::SqlDatabase']]],
+  ['terminal_5fsize_289',['terminal_size',['../util_8h.html#a325030c1404b23a03b1fd6e1199cb99c',1,'klib']]],
+  ['text_290',['text',['../classklib_1_1Response.html#a305b99dcd743ae31007c48c639b99713',1,'klib::Response']]],
+  ['transaction_291',['transaction',['../classklib_1_1SqlDatabase.html#a49841aa41f3015eff7bf521a335fa5f8',1,'klib::SqlDatabase']]],
+  ['trim_292',['trim',['../unicode_8h.html#a874daae4bec5e1d04083d26278ed44b9',1,'klib']]],
+  ['trim_5fcopy_293',['trim_copy',['../unicode_8h.html#afcd54e1c22b6f0926f83dd63f8ea589b',1,'klib']]],
+  ['trim_5fleft_294',['trim_left',['../unicode_8h.html#a8a693a0287f2c7a12990aada90a4b439',1,'klib']]],
+  ['trim_5fleft_5fcopy_295',['trim_left_copy',['../unicode_8h.html#a08d68ddbecee687722ca07f1ff57945a',1,'klib']]],
+  ['trim_5fright_296',['trim_right',['../unicode_8h.html#a0ce2a2a6674cad9772e4677c7b1d9cfa',1,'klib']]],
+  ['trim_5fright_5fcopy_297',['trim_right_copy',['../unicode_8h.html#a1066517b16d05083bd0aa97bc071396a',1,'klib']]],
+  ['ttf_5fsubset_298',['ttf_subset',['../font_8h.html#aa1fa80e800eeac67cd47f0cbf29c0e69',1,'klib::ttf_subset(const std::string &amp;ttf_font, const std::u32string &amp;unicodes)'],['../font_8h.html#a6386b225baf3040aad8dd6d4e81689e6',1,'klib::ttf_subset(std::string_view ttf_font, const std::u32string &amp;unicodes)'],['../font_8h.html#a181e8df04fa5a6d03e662376d106c99c',1,'klib::ttf_subset(const char *ttf_font, std::size_t size, const std::u32string &amp;unicodes)']]],
+  ['ttf_5fto_5fwoff2_299',['ttf_to_woff2',['../font_8h.html#ad3f3ce5a838b181385bef437ccd78df8',1,'klib']]]
 ];
