@@ -73,9 +73,6 @@ add_compiler_flag("-march=haswell")
 add_linker_flag("-static-libgcc")
 add_linker_flag("-static-libstdc++")
 
-set(CMAKE_C_VISIBILITY_PRESET hidden)
-set(CMAKE_CXX_VISIBILITY_PRESET hidden)
-set(CMAKE_VISIBILITY_INLINES_HIDDEN ON)
 set(CMAKE_POSITION_INDEPENDENT_CODE ON)
 
 # ---------------------------------------------------------------------------------------
