@@ -58,9 +58,8 @@ set(CPACK_PACKAGE_VERSION
     ${PROJECT_VERSION_MAJOR}.${PROJECT_VERSION_MINOR}.${PROJECT_VERSION_PATCH})
 
 # https://cmake.org/cmake/help/latest/cpack_gen/archive.html
-# https://cmake.org/cmake/help/latest/cpack_gen/deb.html
 set(CPACK_GENERATOR "TXZ;DEB")
-
+# https://cmake.org/cmake/help/latest/cpack_gen/deb.html
 set(CPACK_DEBIAN_COMPRESSION_TYPE "xz")
 
 include(CPack)
