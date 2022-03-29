@@ -1,5 +1,8 @@
 var NAVTREEINDEX1 =
 {
+"unicode_8h.html#afcd54e1c22b6f0926f83dd63f8ea589b":[1,0,0,0,12,9],
+"unicode_8h.html#afd9c11f7bcfa0aacc5111a78bfb42bac":[1,0,0,0,12,16],
+"unicode_8h_source.html":[1,0,0,0,12],
 "url-example.html":[2,8],
 "url_8fragment-example.html":[2,9],
 "url_8host-example.html":[2,4],
