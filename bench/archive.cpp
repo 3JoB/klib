@@ -22,6 +22,9 @@ const std::string klib_7zip_name = file_prefix + ".klib.7z";
 const std::string std_gzip_name = file_prefix + ".std.tar.gz";
 const std::string klib_gzip_name = file_prefix + ".klib.tar.gz";
 
+const std::string std_xz_name = file_prefix + ".std.tar.xz";
+const std::string klib_xz_name = file_prefix + ".klib.tar.xz";
+
 const std::string std_zstd_name = file_prefix + ".std.tar.zst";
 const std::string klib_zstd_name = file_prefix + ".klib.tar.zst";
 
@@ -97,8 +100,8 @@ TEST_CASE_METHOD(TestsFixture, "7-Zip", "[archive]") {
   BENCHMARK_ADVANCED("7z compress")
   (Catch::Benchmark::Chronometer meter) {
     meter.measure([] {
-      klib::exec("7z a -mm=Deflate -mx=4 -bso0 -bsp0 -aoa -mmt1 " +
-                 std_7zip_name + " " + dir_name);
+      klib::exec("7z a -bso0 -bsp0 -aoa -mmt1 " + std_7zip_name + " " +
+                 dir_name);
     });
 
     REQUIRE(std::filesystem::is_regular_file(std_7zip_name));
@@ -107,7 +110,7 @@ TEST_CASE_METHOD(TestsFixture, "7-Zip", "[archive]") {
   BENCHMARK_ADVANCED("klib compress")
   (Catch::Benchmark::Chronometer meter) {
     meter.measure([] {
-      klib::compress(dir_name, klib::Format::The7Zip, klib::Filter::Deflate,
+      klib::compress(dir_name, klib::Format::The7Zip, klib::Filter::LZMA,
                      klib_7zip_name);
     });
 
@@ -145,7 +148,7 @@ TEST_CASE_METHOD(TestsFixture, "Gzip", "[archive]") {
   BENCHMARK_ADVANCED("klib compress")
   (Catch::Benchmark::Chronometer meter) {
     meter.measure([] {
-      klib::compress(dir_name, klib::Format::Tar, klib::Filter::Gzip,
+      klib::compress(dir_name, klib::Format::GNUTar, klib::Filter::Gzip,
                      klib_gzip_name);
     });
 
@@ -170,6 +173,43 @@ TEST_CASE_METHOD(TestsFixture, "Gzip", "[archive]") {
   REQUIRE(std::filesystem::remove(klib_gzip_name));
 }
 
+TEST_CASE_METHOD(TestsFixture, "xz", "[archive]") {
+  BENCHMARK_ADVANCED("tar compress")
+  (Catch::Benchmark::Chronometer meter) {
+    meter.measure(
+        [] { klib::exec("tar --xz -cf " + std_xz_name + " " + dir_name); });
+
+    REQUIRE(std::filesystem::is_regular_file(std_xz_name));
+  };
+
+  BENCHMARK_ADVANCED("klib compress")
+  (Catch::Benchmark::Chronometer meter) {
+    meter.measure([] {
+      klib::compress(dir_name, klib::Format::GNUTar, klib::Filter::LZMA,
+                     klib_xz_name);
+    });
+
+    REQUIRE(std::filesystem::is_regular_file(klib_xz_name));
+  };
+
+  BENCHMARK_ADVANCED("tar decompress")
+  (Catch::Benchmark::Chronometer meter) {
+    std::filesystem::remove_all(dir_name);
+    meter.measure([] { klib::exec("tar --xz -xf " + std_xz_name); });
+    REQUIRE(std::filesystem::is_directory(dir_name));
+  };
+
+  BENCHMARK_ADVANCED("klib decompress")
+  (Catch::Benchmark::Chronometer meter) {
+    std::filesystem::remove_all(dir_name);
+    meter.measure([] { klib::decompress(klib_xz_name); });
+    REQUIRE(std::filesystem::is_directory(dir_name));
+  };
+
+  REQUIRE(std::filesystem::remove(std_xz_name));
+  REQUIRE(std::filesystem::remove(klib_xz_name));
+}
+
 TEST_CASE_METHOD(TestsFixture, "Zstandard", "[archive]") {
   BENCHMARK_ADVANCED("tar compress")
   (Catch::Benchmark::Chronometer meter) {
@@ -182,7 +222,7 @@ TEST_CASE_METHOD(TestsFixture, "Zstandard", "[archive]") {
   BENCHMARK_ADVANCED("klib compress")
   (Catch::Benchmark::Chronometer meter) {
     meter.measure([] {
-      klib::compress(dir_name, klib::Format::Tar, klib::Filter::Zstd,
+      klib::compress(dir_name, klib::Format::GNUTar, klib::Filter::Zstd,
                      klib_zstd_name);
     });
 

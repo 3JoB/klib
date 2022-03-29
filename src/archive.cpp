@@ -52,11 +52,13 @@ std::string compressed_file_name(const std::string &path, Format format,
     return name + ".zip";
   } else if (format == Format::The7Zip) {
     return name + ".7z";
-  } else if (format == Format::Tar) {
+  } else if (format == Format::GNUTar) {
     if (filter == Filter::None) {
       return name + ".tar";
-    } else if (filter == Filter::Deflate || filter == Filter::Gzip) {
+    } else if (filter == Filter::Gzip) {
       return name + ".tar.gz";
+    } else if (filter == Filter::LZMA) {
+      return name + ".tar.xz";
     } else if (filter == Filter::Zstd) {
       return name + ".tar.zst";
     }
@@ -105,9 +107,9 @@ void init_write_format_filter(archive *archive, Format format, Filter filter,
       rc = archive_write_set_format_option(archive, "7zip", "compression",
                                            "store");
       CHECK_LIBARCHIVE(rc, archive);
-    } else if (filter == Filter::Deflate) {
+    } else if (filter == Filter::LZMA) {
       rc = archive_write_set_format_option(archive, "7zip", "compression",
-                                           "deflate");
+                                           "LZMA2");
       CHECK_LIBARCHIVE(rc, archive);
       set_format_compression_level(archive, level ? *level : 6);
     } else [[unlikely]] {
@@ -115,26 +117,34 @@ void init_write_format_filter(archive *archive, Format format, Filter filter,
           "Filter other than Deflate should not be used in the 7-Zip archive "
           "format");
     }
-  } else if (format == Format::Tar) {
+  } else if (format == Format::GNUTar) {
     rc = archive_write_set_format_gnutar(archive);
     CHECK_LIBARCHIVE(rc, archive);
+
+    auto hardware_thread = std::to_string(std::thread::hardware_concurrency());
+    dbg(hardware_thread);
 
     if (filter == Filter::None) {
       rc = archive_write_add_filter_none(archive);
       CHECK_LIBARCHIVE(rc, archive);
-    } else if (filter == Filter::Deflate || filter == Filter::Gzip) {
+    } else if (filter == Filter::Gzip) {
       rc = archive_write_add_filter_gzip(archive);
       CHECK_LIBARCHIVE(rc, archive);
       set_filter_compression_level(archive, level ? *level : 6);
+    } else if (filter == Filter::LZMA) {
+      rc = archive_write_add_filter_xz(archive);
+      CHECK_LIBARCHIVE(rc, archive);
+      set_filter_compression_level(archive, level ? *level : 6);
+
+      rc = archive_write_set_filter_option(archive, "xz", "threads",
+                                           hardware_thread.c_str());
+      CHECK_LIBARCHIVE(rc, archive);
     } else if (filter == Filter::Zstd) {
       rc = archive_write_add_filter_zstd(archive);
       CHECK_LIBARCHIVE(rc, archive);
       set_filter_compression_level(archive,
                                    level ? *level : ZSTD_defaultCLevel());
 
-      auto hardware_thread =
-          std::to_string(std::thread::hardware_concurrency());
-      dbg(hardware_thread);
       rc = archive_write_set_filter_option(archive, "zstd", "threads",
                                            hardware_thread.c_str());
       CHECK_LIBARCHIVE(rc, archive);
@@ -156,6 +166,9 @@ void init_read_format_filter(archive *archive) {
   CHECK_LIBARCHIVE(rc, archive);
 
   rc = archive_read_support_filter_gzip(archive);
+  CHECK_LIBARCHIVE(rc, archive);
+
+  rc = archive_read_support_filter_xz(archive);
   CHECK_LIBARCHIVE(rc, archive);
 
   rc = archive_read_support_filter_zstd(archive);
@@ -279,6 +292,16 @@ void compress(const std::vector<std::string> &paths,
       }
     }
   }
+}
+
+void compress_zip(const std::string &path, const std::string &out_name,
+                  bool flag) {
+  compress(path, Format::Zip, Filter::Deflate, out_name, flag);
+}
+
+void compress_tar_gz(const std::string &path, const std::string &out_name,
+                     bool flag) {
+  compress(path, Format::GNUTar, Filter::Gzip, out_name, flag);
 }
 
 void decompress(const std::string &file_name, const std::string &out_dir,

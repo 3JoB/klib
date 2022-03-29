@@ -15,12 +15,12 @@ namespace klib {
 /**
  * @brief Supported Archive Formats
  */
-enum class Format { Zip, The7Zip, Tar };
+enum class Format { Zip, The7Zip, GNUTar };
 
 /**
  * @brief Supported Compression Algorithms
  */
-enum class Filter { None, Deflate, Gzip, Zstd };
+enum class Filter { None, Deflate, Gzip, LZMA, Zstd };
 
 /**
  * @brief Compress file or folder
@@ -33,7 +33,7 @@ enum class Filter { None, Deflate, Gzip, Zstd };
  * @param password: Set password for compressed file(Can only be set for ZIP
  * format)
  */
-void compress(const std::string &path, Format format = Format::Tar,
+void compress(const std::string &path, Format format = Format::GNUTar,
               Filter filter = Filter::Gzip, const std::string &out_name = "",
               bool flag = true, std::optional<std::int32_t> level = {},
               const std::string &password = "");
@@ -49,10 +49,30 @@ void compress(const std::string &path, Format format = Format::Tar,
  * format)
  */
 void compress(const std::vector<std::string> &paths,
-              const std::string &out_name, Format format = Format::Tar,
+              const std::string &out_name, Format format = Format::GNUTar,
               Filter filter = Filter::Gzip,
               std::optional<std::int32_t> level = {},
               const std::string &password = "");
+
+/**
+ * @brief Compress file or folder. The archive format is ZIP, and the
+ * compression algorithm is Deflate
+ * @param path: File or folder path
+ * @param out_name: Compressed file name
+ * @param flag: Whether to include the outermost folder
+ */
+void compress_zip(const std::string &path, const std::string &out_name = "",
+                  bool flag = true);
+
+/**
+ * @brief Compress file or folder. The archive format is GNU tar, and the
+ * compression algorithm is Gzip
+ * @param path: File or folder path
+ * @param out_name: Compressed file name
+ * @param flag: Whether to include the outermost folder
+ */
+void compress_tar_gz(const std::string &path, const std::string &out_name = "",
+                     bool flag = true);
 
 /**
  * @brief Decompress file

@@ -80,12 +80,19 @@ pkg_check_modules(openssl REQUIRED IMPORTED_TARGET openssl)
 pkg_check_modules(sqlcipher REQUIRED IMPORTED_TARGET sqlcipher)
 pkg_check_modules(libargon2 REQUIRED IMPORTED_TARGET libargon2)
 pkg_check_modules(libzstd REQUIRED IMPORTED_TARGET libzstd)
+pkg_check_modules(libbrotlidec REQUIRED IMPORTED_TARGET libbrotlidec)
+pkg_check_modules(libbrotlienc REQUIRED IMPORTED_TARGET libbrotlienc)
+pkg_check_modules(libbrotlicommon REQUIRED IMPORTED_TARGET libbrotlicommon)
 pkg_check_modules(libwoff2dec REQUIRED IMPORTED_TARGET libwoff2dec)
 pkg_check_modules(libwoff2enc REQUIRED IMPORTED_TARGET libwoff2enc)
 pkg_check_modules(libwoff2common REQUIRED IMPORTED_TARGET libwoff2common)
 pkg_check_modules(libbrotlidec REQUIRED IMPORTED_TARGET libbrotlidec)
 pkg_check_modules(libbrotlienc REQUIRED IMPORTED_TARGET libbrotlienc)
 pkg_check_modules(libbrotlicommon REQUIRED IMPORTED_TARGET libbrotlicommon)
+pkg_check_modules(libnghttp2 REQUIRED IMPORTED_TARGET libnghttp2)
+pkg_check_modules(libidn2 REQUIRED IMPORTED_TARGET libidn2)
+pkg_check_modules(libpsl REQUIRED IMPORTED_TARGET libpsl)
+pkg_check_modules(libunistring REQUIRED IMPORTED_TARGET libunistring)
 pkg_check_modules(vips REQUIRED IMPORTED_TARGET vips)
 pkg_check_modules(gio-2.0 REQUIRED IMPORTED_TARGET gio-2.0)
 pkg_check_modules(gobject-2.0 REQUIRED IMPORTED_TARGET gobject-2.0)
@@ -101,6 +108,7 @@ pkg_check_modules(libjpeg REQUIRED IMPORTED_TARGET libjpeg)
 pkg_check_modules(libwebp REQUIRED IMPORTED_TARGET libwebp)
 pkg_check_modules(libwebpmux REQUIRED IMPORTED_TARGET libwebpmux)
 pkg_check_modules(libwebpdemux REQUIRED IMPORTED_TARGET libwebpdemux)
+pkg_check_modules(liblzma REQUIRED IMPORTED_TARGET liblzma)
 
 find_package(fmt REQUIRED)
 find_package(spdlog REQUIRED)
@@ -187,6 +195,8 @@ file(MAKE_DIRECTORY ${KLIB_BINARY_DIR}/third_party/libpcre)
 file(MAKE_DIRECTORY ${KLIB_BINARY_DIR}/third_party/libspng)
 file(MAKE_DIRECTORY ${KLIB_BINARY_DIR}/third_party/mozjpeg)
 file(MAKE_DIRECTORY ${KLIB_BINARY_DIR}/third_party/libwebp)
+file(MAKE_DIRECTORY ${KLIB_BINARY_DIR}/third_party/liblzma)
+
 add_custom_command(
   TARGET ${KLIB_LIBRARY}
   POST_BUILD
@@ -230,13 +240,14 @@ add_custom_command(
   COMMAND gcc-ar -x --output=libwebp /usr/local/lib/libwebp.a
   COMMAND gcc-ar -x --output=libwebp /usr/local/lib/libwebpmux.a
   COMMAND gcc-ar -x --output=libwebp /usr/local/lib/libwebpdemux.a
+  COMMAND gcc-ar -x --output=liblzma /usr/local/lib/liblzma.a
   COMMAND
     gcc-ar -qcs ${KLIB_BINARY_DIR}/lib${KLIB_LIBRARY}.a klib/*.o zlib-ng/*.o
     libarchive/*.o tidy-html5/*.o libcurl/*.o brotli/*.o boringssl/*.o
     sqlcipher/*.o argon2/*.o zstd/*.o fmt/*.o spdlog/*.o nghttp2/*.o simdutf/*.o
     libidn2/*.o libpsl/*.o libunistring/*.o xxhash/*.o cmark/*.o woff2/*.o
     libvips/*.o glib/*.o libexpat/*.o libffi/*.o mount/*.o blkid/*.o libpcre/*.o
-    libspng/*.o mozjpeg/*.o libwebp/*.o
+    libspng/*.o mozjpeg/*.o libwebp/*.o liblzma/*.o
   COMMAND gcc-ranlib ${KLIB_BINARY_DIR}/lib${KLIB_LIBRARY}.a
   WORKING_DIRECTORY ${KLIB_BINARY_DIR}/third_party
   COMMENT "Combined static library")
