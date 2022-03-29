@@ -50,7 +50,7 @@ set(CPACK_INCLUDE_TOPLEVEL_DIRECTORY OFF)
 set(CPACK_INSTALL_CMAKE_PROJECTS ${KLIB_BINARY_DIR} ${PROJECT_NAME} ALL .)
 
 # https://cmake.org/cmake/help/latest/cpack_gen/deb.html
-set(CPACK_PACKAGE_CONTACT "Kaiser <KaiserLancelot123@gmail.com>")
+set(CPACK_PACKAGE_CONTACT "Kaiser <kaiserlancelot123@gmail.com>")
 set(CPACK_PACKAGE_DESCRIPTION_SUMMARY
     "A C++ library, which wraps several important C libraries and provides some convenient functions"
 )
@@ -59,8 +59,8 @@ set(CPACK_PACKAGE_VERSION
 
 # https://cmake.org/cmake/help/latest/cpack_gen/archive.html
 # https://cmake.org/cmake/help/latest/cpack_gen/deb.html
-set(CPACK_GENERATOR "TGZ;DEB")
+set(CPACK_GENERATOR "TXZ;DEB")
 
-set(CPACK_DEBIAN_PACKAGE_SHLIBDEPS ON)
+set(CPACK_DEBIAN_COMPRESSION_TYPE "xz")
 
 include(CPack)

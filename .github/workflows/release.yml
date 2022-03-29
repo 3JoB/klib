@@ -51,5 +51,5 @@ jobs:
         if: ${{ matrix.compiler.cxx == 'g++' && matrix.build_type == 'Release'}}
         with:
           files: |
-            build/klib*.tar.gz
+            build/klib*.tar.xz
             build/klib*.deb
