@@ -12,6 +12,7 @@ var hierarchy =
     ] ],
     [ "klib::Request", "classklib_1_1Request.html", null ],
     [ "klib::Response", "classklib_1_1Response.html", null ],
+    [ "klib::RGB", "classklib_1_1RGB.html", null ],
     [ "klib::SqlDatabase", "classklib_1_1SqlDatabase.html", null ],
     [ "klib::SqlQuery", "classklib_1_1SqlQuery.html", null ],
     [ "klib::URL", "classklib_1_1URL.html", null ]

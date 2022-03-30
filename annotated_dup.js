@@ -8,6 +8,7 @@ var annotated_dup =
       [ "OutOfRange", "classklib_1_1OutOfRange.html", "classklib_1_1OutOfRange" ],
       [ "Request", "classklib_1_1Request.html", "classklib_1_1Request" ],
       [ "Response", "classklib_1_1Response.html", "classklib_1_1Response" ],
+      [ "RGB", "classklib_1_1RGB.html", "classklib_1_1RGB" ],
       [ "Column", "classklib_1_1Column.html", "classklib_1_1Column" ],
       [ "SqlQuery", "classklib_1_1SqlQuery.html", "classklib_1_1SqlQuery" ],
       [ "SqlDatabase", "classklib_1_1SqlDatabase.html", "classklib_1_1SqlDatabase" ],
