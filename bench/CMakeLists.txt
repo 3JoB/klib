@@ -29,7 +29,7 @@ target_link_libraries(
 
 add_custom_target(
   run-bench
-  COMMAND ${KLIB_BENCH_EXECUTABLE} --benchmark-no-analysis --benchmark-samples=3
+  COMMAND ${KLIB_BENCH_EXECUTABLE} --benchmark-no-analysis --benchmark-samples=1
           --use-colour=no -o ${KLIB_SOURCE_DIR}/bench/result.md
   DEPENDS ${KLIB_BENCH_EXECUTABLE}
   WORKING_DIRECTORY ${CMAKE_CURRENT_BINARY_DIR}
