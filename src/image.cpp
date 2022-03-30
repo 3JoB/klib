@@ -29,43 +29,107 @@ VipsImage *get_image(const std::string &image_path) {
   return image;
 }
 
-}  // namespace
+VipsImage *get_image(const RGB &rgb) {
+  if (VIPS_INIT("klib")) [[unlikely]] {
+    throw RuntimeError("VIPS_INIT() failed");
+  }
 
-void image_to_png(const std::string &image_path, const std::string &out_path,
-                  std::int32_t quality, std::int32_t compression_level) {
-  auto image = get_image(image_path);
-  SCOPE_EXIT { g_object_unref(image); };
+  const auto width = rgb.width();
+  const auto height = rgb.height();
+  auto image = vips_image_new_from_memory(rgb.rgb(), width * height * 3, width,
+                                          height, 3, VIPS_FORMAT_UCHAR);
+  if (!image) {
+    throw RuntimeError(vips_error_buffer());
+  }
 
-  auto rc = vips_pngsave(image, out_path.c_str(), "Q", quality, "compression",
-                         compression_level, nullptr);
+  return image;
+}
+
+void do_to_png(VipsImage *vips_image, const std::string &out_path,
+               std::int32_t quality, std::int32_t compression_level) {
+  auto rc = vips_pngsave(vips_image, out_path.c_str(), "Q", quality,
+                         "compression", compression_level, nullptr);
   CHECK_LIBVIPS(rc);
 }
 
-void image_to_jpeg(const std::string &image_path, const std::string &out_path,
-                   std::int32_t quality, bool max_compress) {
-  auto image = get_image(image_path);
-  SCOPE_EXIT { g_object_unref(image); };
-
+void do_to_jpeg(VipsImage *vips_image, const std::string &out_path,
+                std::int32_t quality, bool max_compress) {
   if (max_compress) {
-    auto rc = vips_jpegsave(image, out_path.c_str(), "Q", quality, "strip",
+    auto rc = vips_jpegsave(vips_image, out_path.c_str(), "Q", quality, "strip",
                             true, "optimize-coding", true, "interlace", true,
                             "optimize-scans", true, "trellis-quant", true,
                             "quant_table", 3, nullptr);
     CHECK_LIBVIPS(rc);
   } else {
-    auto rc = vips_jpegsave(image, out_path.c_str(), "Q", quality, nullptr);
+    auto rc =
+        vips_jpegsave(vips_image, out_path.c_str(), "Q", quality, nullptr);
     CHECK_LIBVIPS(rc);
   }
 }
 
-void image_to_webp(const std::string &image_path, const std::string &out_path,
-                   std::int32_t quality, std::int32_t method) {
-  auto image = get_image(image_path);
-  SCOPE_EXIT { g_object_unref(image); };
-
-  auto rc = vips_webpsave(image, out_path.c_str(), "Q", quality, "effort",
+void do_to_webp(VipsImage *vips_image, const std::string &out_path,
+                std::int32_t quality, std::int32_t method) {
+  auto rc = vips_webpsave(vips_image, out_path.c_str(), "Q", quality, "effort",
                           method, nullptr);
   CHECK_LIBVIPS(rc);
+}
+
+}  // namespace
+
+RGB::RGB(std::int32_t width, std::int32_t height)
+    : width_(width), height_(height) {
+  rgb_ = new std::uint8_t[height_ * width_ * 3];
+}
+
+RGB::RGB(std::uint8_t *rgb, std::int32_t width, std::int32_t height, bool free)
+    : rgb_(rgb), width_(width), height_(height), free_(free) {}
+
+RGB::~RGB() {
+  if (free_) {
+    delete[] rgb_;
+  }
+}
+
+void image_to_png(const std::string &image_path, const std::string &out_path,
+                  std::int32_t quality, std::int32_t compression_level) {
+  auto vips_image = get_image(image_path);
+  SCOPE_EXIT { g_object_unref(vips_image); };
+  return do_to_png(vips_image, out_path, quality, compression_level);
+}
+
+void rgb_to_png(const RGB &rgb, const std::string &out_path,
+                std::int32_t quality, std::int32_t compression_level) {
+  auto vips_image = get_image(rgb);
+  SCOPE_EXIT { g_object_unref(vips_image); };
+  return do_to_png(vips_image, out_path, quality, compression_level);
+}
+
+void image_to_jpeg(const std::string &image_path, const std::string &out_path,
+                   std::int32_t quality, bool max_compress) {
+  auto vips_image = get_image(image_path);
+  SCOPE_EXIT { g_object_unref(vips_image); };
+  return do_to_jpeg(vips_image, out_path, quality, max_compress);
+}
+
+void rgb_to_jpeg(const RGB &rgb, const std::string &out_path,
+                 std::int32_t quality, bool max_compress) {
+  auto vips_image = get_image(rgb);
+  SCOPE_EXIT { g_object_unref(vips_image); };
+  return do_to_jpeg(vips_image, out_path, quality, max_compress);
+}
+
+void image_to_webp(const std::string &image_path, const std::string &out_path,
+                   std::int32_t quality, std::int32_t method) {
+  auto vips_image = get_image(image_path);
+  SCOPE_EXIT { g_object_unref(vips_image); };
+  return do_to_webp(vips_image, out_path, quality, method);
+}
+
+void rgb_to_webp(const RGB &rgb, const std::string &out_path,
+                 std::int32_t quality, std::int32_t method) {
+  auto vips_image = get_image(rgb);
+  SCOPE_EXIT { g_object_unref(vips_image); };
+  return do_to_webp(vips_image, out_path, quality, method);
 }
 
 }  // namespace klib

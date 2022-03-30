@@ -46,11 +46,9 @@ file(
   KLIB_LIBRARY_SRC
   CONFIGURE_DEPENDS
   "${KLIB_SOURCE_DIR}/src/*.cpp"
-  "${KLIB_SOURCE_DIR}/third_party/fastbase64/*.c"
-  "${KLIB_SOURCE_DIR}/third_party/http-parser/*.c"
-  "${KLIB_SOURCE_DIR}/third_party/sfntly/*.cc"
-  "${KLIB_SOURCE_DIR}/third_party/subtly/*.cc"
-  "${KLIB_SOURCE_DIR}/third_party/utf_utils/*.cpp")
+  "${KLIB_SOURCE_DIR}/third_party/*.c"
+  "${KLIB_SOURCE_DIR}/third_party/*.cc"
+  "${KLIB_SOURCE_DIR}/third_party/*.cpp")
 
 # ---------------------------------------------------------------------------------------
 # Include CMake module

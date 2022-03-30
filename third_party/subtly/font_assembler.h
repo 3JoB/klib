@@ -51,7 +51,6 @@ class FontAssembler : public sfntly::RefCounted<FontAssembler> {
   virtual bool AssembleCMapTable();
   virtual bool AssembleGlyphAndLocaTables();
   virtual bool AssembleHorizontalMetricsTable();
-  virtual bool AssemblePostScriptTabble();
 
   virtual void Initialize();
 
@@ -71,11 +70,6 @@ class FontAssembler : public sfntly::RefCounted<FontAssembler> {
     constexpr static int32_t numberOfGlyphs = 32;
     constexpr static int32_t glyphNameIndex = 34;
   };
-
-  static const std::unordered_map<std::string, int32_t>* invertNameMap();
-
-  inline static const std::unordered_map<std::string, int32_t>*
-      INVERTED_STANDARD_NAMES = invertNameMap();
 };
 }  // namespace subtly
 

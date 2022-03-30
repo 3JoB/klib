@@ -21,14 +21,12 @@
 
 #include "sfntly/font.h"
 #include "sfntly/font_factory.h"
-#include "sfntly/port/memory_output_stream.h"
 #include "sfntly/port/refcount.h"
 #include "sfntly/port/type.h"
 #include "sfntly/table/core/cmap_table.h"
 #include "sfntly/table/core/horizontal_header_table.h"
 #include "sfntly/table/core/horizontal_metrics_table.h"
 #include "sfntly/table/core/maximum_profile_table.h"
-#include "sfntly/table/core/post_script_table.h"
 #include "sfntly/table/truetype/glyph_table.h"
 #include "sfntly/table/truetype/loca_table.h"
 #include "sfntly/tag.h"
@@ -36,14 +34,6 @@
 
 namespace subtly {
 using namespace sfntly;
-
-const std::unordered_map<std::string, int32_t>* FontAssembler::invertNameMap() {
-  static std::unordered_map<std::string, int32_t> nameMap;
-  for (int32_t i = 0; i < PostScriptTable::NUM_STANDARD_NAMES; ++i) {
-    nameMap[PostScriptTable::STANDARD_NAMES[i]] = i;
-  }
-  return &nameMap;
-}
 
 FontAssembler::FontAssembler(FontInfo* font_info, IntegerSet* table_blacklist)
     : table_blacklist_(table_blacklist) {
@@ -64,7 +54,7 @@ void FontAssembler::Initialize() {
 CALLER_ATTACH Font* FontAssembler::Assemble() {
   // Assemble tables we can subset.
   if (!AssembleGlyphAndLocaTables() || !AssembleCMapTable() ||
-      !AssembleHorizontalMetricsTable() || !AssemblePostScriptTabble()) {
+      !AssembleHorizontalMetricsTable()) {
     return NULL;
   }
   // For all other tables, either include them unmodified or don't at all.
@@ -277,68 +267,4 @@ bool FontAssembler::AssembleHorizontalMetricsTable() {
   return true;
 }
 
-bool FontAssembler::AssemblePostScriptTabble() {
-  if (new_to_old_glyphid_.empty()) {
-    return false;
-  }
-  Ptr<PostScriptTable> post =
-      down_cast<PostScriptTable*>(font_info_->GetTable(0, Tag::post));
-  WritableFontDataPtr v1Data;
-  v1Data.Attach(WritableFontData::CreateWritableFontData(V1_TABLE_SIZE));
-  ReadableFontDataPtr tmp = post->ReadFontData();
-  FontDataPtr fontDataPtr;
-  fontDataPtr.Attach(tmp->Slice(0, V1_TABLE_SIZE));
-  ReadableFontDataPtr srcData = down_cast<ReadableFontData*>(fontDataPtr.p_);
-  srcData->CopyTo(v1Data);
-
-  int32_t post_version = post->ReadFontData()->ReadFixed(Offset::version);
-  std::vector<std::string> names;
-  if (post_version == 0x10000 || post_version == 0x20000) {
-    for (size_t i = 0; i < new_to_old_glyphid_.size(); ++i) {
-      names.push_back(post->GlyphName(new_to_old_glyphid_[i]));
-    }
-  }
-
-  if (names.empty()) {
-    font_builder_->NewTableBuilder(Tag::post, v1Data);
-    return true;
-  }
-
-  std::vector<int32_t> glyphNameIndices;
-  MemoryOutputStream nameBos;
-  size_t nGlyphs = names.size();
-  int32_t tableIndex = NUM_STANDARD_NAMES;
-  for (const auto& name : names) {
-    int32_t glyphNameIndex;
-    if (INVERTED_STANDARD_NAMES->find(name) != INVERTED_STANDARD_NAMES->end()) {
-      glyphNameIndex = INVERTED_STANDARD_NAMES->at(name);
-    } else {
-      glyphNameIndex = tableIndex++;
-      auto len = (int32_t)name.size();
-      auto* lenptr = (uint8_t*)&len;
-      nameBos.Write(lenptr, 0, sizeof(int32_t));
-      nameBos.Write((uint8_t*)name.c_str(), 0, (int32_t)name.size());
-    }
-    glyphNameIndices.push_back(glyphNameIndex);
-  }
-  std::vector<uint8_t> nameBytes(nameBos.Size());
-  for (size_t j = 0; j < nameBos.Size(); ++j) {
-    nameBytes.push_back(nameBos.Get()[j]);
-  }
-  int32_t newLength = 34 + 2 * (int32_t)nGlyphs + (int32_t)nameBytes.size();
-  WritableFontDataPtr data;
-  data.Attach(WritableFontData::CreateWritableFontData(newLength));
-  v1Data->CopyTo(data);
-  data->WriteFixed(Offset::numberOfGlyphs, (int32_t)nGlyphs);
-  int32_t index = Offset::glyphNameIndex;
-  for (const auto& glyphNameIndex : glyphNameIndices) {
-    index += data->WriteUShort(index, glyphNameIndex);
-  }
-  if (!nameBytes.empty()) {
-    data->WriteBytes(index, &nameBytes);
-  }
-
-  font_builder_->NewTableBuilder(Tag::post, data);
-  return true;
-}
 }  // namespace subtly
