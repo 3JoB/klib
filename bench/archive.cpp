@@ -300,10 +300,8 @@ TEST_CASE("Compress data", "[archive]") {
 
   const auto data = klib::read_file(file_name, true);
 
-  const auto compressed_data_zstd = klib::compress_data(data);
+  const auto compressed = klib::compress_data(data);
 
   BENCHMARK("zstd compress") { return klib::compress_data(data); };
-  BENCHMARK("zstd decompress") {
-    return klib::decompress_data(compressed_data_zstd);
-  };
+  BENCHMARK("zstd decompress") { return klib::decompress_data(compressed); };
 }

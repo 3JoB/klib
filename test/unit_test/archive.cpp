@@ -147,14 +147,18 @@ TEST_CASE("outermost_folder_name", "[archive]") {
 }
 
 TEST_CASE("compress data", "[archive]") {
-  std::string data =
-      "Hello World!! 11111111133333333333333333333333333333333333333333333";
-  std::string compressed, decompressed;
+  const std::string file_name = "book.tar";
+  REQUIRE(std::filesystem::exists(file_name));
 
+  const auto data = klib::read_file(file_name, true);
   dbg(std::size(data));
+
+  std::string compressed;
   REQUIRE_NOTHROW(compressed = klib::compress_data(data));
   dbg(std::size(compressed));
-  dbg(compressed);
+
+  std::string decompressed;
   REQUIRE_NOTHROW(decompressed = klib::decompress_data(compressed));
+
   CHECK(data == decompressed);
 }

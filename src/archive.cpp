@@ -415,7 +415,7 @@ std::string compress_data(const char *data, std::size_t size,
   result.resize(max_size);
 
   auto length = ZSTD_compress(std::data(result), max_size, data, size,
-                              level ? *level : ZSTD_defaultCLevel());
+                              level ? *level : -4);
   CHECK_ZSTD(length);
   result.resize(length);
 
