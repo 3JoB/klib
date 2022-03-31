@@ -10,7 +10,6 @@
 #include "klib/archive.h"
 
 #include <cerrno>
-#include <cstdint>
 #include <filesystem>
 #include <memory>
 #include <thread>
@@ -52,7 +51,7 @@ std::string compressed_file_name(const std::string &path, Format format,
     return name + ".zip";
   } else if (format == Format::The7Zip) {
     return name + ".7z";
-  } else if (format == Format::GNUTar) {
+  } else if (format == Format::USTar) {
     if (filter == Filter::None) {
       return name + ".tar";
     } else if (filter == Filter::Gzip) {
@@ -107,6 +106,11 @@ void init_write_format_filter(archive *archive, Format format, Filter filter,
       rc = archive_write_set_format_option(archive, "7zip", "compression",
                                            "store");
       CHECK_LIBARCHIVE(rc, archive);
+    } else if (filter == Filter::Deflate) {
+      rc = archive_write_set_format_option(archive, "7zip", "compression",
+                                           "deflate");
+      CHECK_LIBARCHIVE(rc, archive);
+      set_format_compression_level(archive, level ? *level : 6);
     } else if (filter == Filter::LZMA) {
       rc = archive_write_set_format_option(archive, "7zip", "compression",
                                            "LZMA2");
@@ -117,8 +121,8 @@ void init_write_format_filter(archive *archive, Format format, Filter filter,
           "Filter other than Deflate should not be used in the 7-Zip archive "
           "format");
     }
-  } else if (format == Format::GNUTar) {
-    rc = archive_write_set_format_gnutar(archive);
+  } else if (format == Format::USTar) {
+    rc = archive_write_set_format_ustar(archive);
     CHECK_LIBARCHIVE(rc, archive);
 
     auto hardware_thread = std::to_string(std::thread::hardware_concurrency());
@@ -157,6 +161,9 @@ void init_read_format_filter(archive *archive) {
   CHECK_LIBARCHIVE(rc, archive);
 
   rc = archive_read_support_format_7zip(archive);
+  CHECK_LIBARCHIVE(rc, archive);
+
+  rc = archive_read_support_format_tar(archive);
   CHECK_LIBARCHIVE(rc, archive);
 
   rc = archive_read_support_format_gnutar(archive);
@@ -299,9 +306,14 @@ void compress_zip(const std::string &path, const std::string &out_name,
   compress(path, Format::Zip, Filter::Deflate, out_name, flag);
 }
 
+void compress_7zip(const std::string &path, const std::string &out_name,
+                   bool flag) {
+  compress(path, Format::The7Zip, Filter::Deflate, out_name, flag);
+}
+
 void compress_tar_gz(const std::string &path, const std::string &out_name,
                      bool flag) {
-  compress(path, Format::GNUTar, Filter::Gzip, out_name, flag);
+  compress(path, Format::USTar, Filter::Gzip, out_name, flag);
 }
 
 void decompress(const std::string &file_name, const std::string &out_dir,

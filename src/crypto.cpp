@@ -104,7 +104,7 @@ std::pair<std::string, std::string> aes_256_crypt(
   std::size_t total = 0;
   std::int32_t length;
   while (!data.empty()) {
-    std::int32_t todo = std::min(data.size(), 16384UL);
+    auto todo = std::min(data.size(), 16384UL);
 
     rc = EVP_CipherUpdate(
         ctx, reinterpret_cast<unsigned char *>(std::data(result)) + total,

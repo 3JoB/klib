@@ -6,6 +6,7 @@
 #pragma once
 
 #include <cstddef>
+#include <cstdint>
 #include <optional>
 #include <string>
 #include <vector>
@@ -15,7 +16,7 @@ namespace klib {
 /**
  * @brief Supported Archive Formats
  */
-enum class Format { Zip, The7Zip, GNUTar };
+enum class Format { Zip, The7Zip, USTar };
 
 /**
  * @brief Supported Compression Algorithms
@@ -33,7 +34,7 @@ enum class Filter { None, Deflate, Gzip, LZMA, Zstd };
  * @param password: Set password for compressed file(Can only be set for ZIP
  * format)
  */
-void compress(const std::string &path, Format format = Format::GNUTar,
+void compress(const std::string &path, Format format = Format::USTar,
               Filter filter = Filter::Gzip, const std::string &out_name = "",
               bool flag = true, std::optional<std::int32_t> level = {},
               const std::string &password = "");
@@ -49,7 +50,7 @@ void compress(const std::string &path, Format format = Format::GNUTar,
  * format)
  */
 void compress(const std::vector<std::string> &paths,
-              const std::string &out_name, Format format = Format::GNUTar,
+              const std::string &out_name, Format format = Format::USTar,
               Filter filter = Filter::Gzip,
               std::optional<std::int32_t> level = {},
               const std::string &password = "");
@@ -65,8 +66,18 @@ void compress_zip(const std::string &path, const std::string &out_name = "",
                   bool flag = true);
 
 /**
- * @brief Compress file or folder. The archive format is GNU tar, and the
- * compression algorithm is Gzip
+ * @brief Compress file or folder. The archive format is 7-Zip, and the
+ * compression algorithm is Deflate
+ * @param path: File or folder path
+ * @param out_name: Compressed file name
+ * @param flag: Whether to include the outermost folder
+ */
+void compress_7zip(const std::string &path, const std::string &out_name = "",
+                   bool flag = true);
+
+/**
+ * @brief Compress file or folder. The archive format is Unix Standard TAR, and
+ * the compression algorithm is Gzip
  * @param path: File or folder path
  * @param out_name: Compressed file name
  * @param flag: Whether to include the outermost folder
