@@ -76,6 +76,8 @@ target_link_libraries(<your-target> PRIVATE klib::klib)
 
 ## Roadmap
 
+- Rewrite the HTTP module
+  - https://github.com/libcpr/cpr
 - curl_easy_header
   - https://github.com/curl/curl/pull/8593
 - HTTP/3
