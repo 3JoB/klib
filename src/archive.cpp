@@ -51,7 +51,7 @@ std::string compressed_file_name(const std::string &path, Format format,
     return name + ".zip";
   } else if (format == Format::The7Zip) {
     return name + ".7z";
-  } else if (format == Format::USTar) {
+  } else if (format == Format::Tar) {
     if (filter == Filter::None) {
       return name + ".tar";
     } else if (filter == Filter::Gzip) {
@@ -121,8 +121,8 @@ void init_write_format_filter(archive *archive, Format format, Filter filter,
           "Filter other than Deflate should not be used in the 7-Zip archive "
           "format");
     }
-  } else if (format == Format::USTar) {
-    rc = archive_write_set_format_ustar(archive);
+  } else if (format == Format::Tar) {
+    rc = archive_write_set_format_pax_restricted(archive);
     CHECK_LIBARCHIVE(rc, archive);
 
     auto hardware_thread = std::to_string(std::thread::hardware_concurrency());
@@ -313,7 +313,7 @@ void compress_7zip(const std::string &path, const std::string &out_name,
 
 void compress_tar_gz(const std::string &path, const std::string &out_name,
                      bool flag) {
-  compress(path, Format::USTar, Filter::Gzip, out_name, flag);
+  compress(path, Format::Tar, Filter::Gzip, out_name, flag);
 }
 
 void decompress(const std::string &file_name, const std::string &out_dir,

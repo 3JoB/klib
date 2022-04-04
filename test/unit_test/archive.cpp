@@ -97,7 +97,7 @@ TEST_CASE_METHOD(TestsFixture, "7-zip LZMA2", "[archive]") {
 }
 
 TEST_CASE_METHOD(TestsFixture, "tar none", "[archive]") {
-  REQUIRE_NOTHROW(klib::compress("zlib-ng-2.0.6", klib::Format::USTar,
+  REQUIRE_NOTHROW(klib::compress("zlib-ng-2.0.6", klib::Format::Tar,
                                  klib::Filter::None, "tar-none.tar"));
   dbg(std::filesystem::file_size("tar-none.tar"));
   REQUIRE_NOTHROW(klib::decompress("tar-none.tar", "tar-none"));
@@ -108,7 +108,7 @@ TEST_CASE_METHOD(TestsFixture, "tar none", "[archive]") {
 }
 
 TEST_CASE_METHOD(TestsFixture, "tar gzip", "[archive]") {
-  REQUIRE_NOTHROW(klib::compress("zlib-ng-2.0.6", klib::Format::USTar,
+  REQUIRE_NOTHROW(klib::compress("zlib-ng-2.0.6", klib::Format::Tar,
                                  klib::Filter::Gzip, "tar-gzip.tar.gz"));
   dbg(std::filesystem::file_size("tar-gzip.tar.gz"));
   REQUIRE_NOTHROW(klib::decompress("tar-gzip.tar.gz", "tar-gzip"));
@@ -119,7 +119,7 @@ TEST_CASE_METHOD(TestsFixture, "tar gzip", "[archive]") {
 }
 
 TEST_CASE_METHOD(TestsFixture, "tar xz", "[archive]") {
-  REQUIRE_NOTHROW(klib::compress("zlib-ng-2.0.6", klib::Format::USTar,
+  REQUIRE_NOTHROW(klib::compress("zlib-ng-2.0.6", klib::Format::Tar,
                                  klib::Filter::LZMA, "tar-xz.tar.xz"));
   dbg(std::filesystem::file_size("tar-xz.tar.xz"));
   REQUIRE_NOTHROW(klib::decompress("tar-xz.tar.xz", "tar-xz"));
@@ -130,7 +130,7 @@ TEST_CASE_METHOD(TestsFixture, "tar xz", "[archive]") {
 }
 
 TEST_CASE_METHOD(TestsFixture, "tar zstd", "[archive]") {
-  REQUIRE_NOTHROW(klib::compress("zlib-ng-2.0.6", klib::Format::USTar,
+  REQUIRE_NOTHROW(klib::compress("zlib-ng-2.0.6", klib::Format::Tar,
                                  klib::Filter::Zstd, "tar-zstd.tar.zst"));
   dbg(std::filesystem::file_size("tar-zstd.tar.zst"));
   REQUIRE_NOTHROW(klib::decompress("tar-zstd.tar.zst", "tar-zstd"));

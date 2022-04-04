@@ -16,7 +16,7 @@ namespace klib {
 /**
  * @brief Supported Archive Formats
  */
-enum class Format { Zip, The7Zip, USTar };
+enum class Format { Zip, The7Zip, Tar };
 
 /**
  * @brief Supported Compression Algorithms
@@ -34,7 +34,7 @@ enum class Filter { None, Deflate, Gzip, LZMA, Zstd };
  * @param password: Set password for compressed file(Can only be set for ZIP
  * format)
  */
-void compress(const std::string &path, Format format = Format::USTar,
+void compress(const std::string &path, Format format = Format::Tar,
               Filter filter = Filter::Gzip, const std::string &out_name = "",
               bool flag = true, std::optional<std::int32_t> level = {},
               const std::string &password = "");
@@ -50,7 +50,7 @@ void compress(const std::string &path, Format format = Format::USTar,
  * format)
  */
 void compress(const std::vector<std::string> &paths,
-              const std::string &out_name, Format format = Format::USTar,
+              const std::string &out_name, Format format = Format::Tar,
               Filter filter = Filter::Gzip,
               std::optional<std::int32_t> level = {},
               const std::string &password = "");

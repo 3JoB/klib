@@ -158,7 +158,7 @@ TEST_CASE_METHOD(TestsFixture, "Tar", "[archive]") {
     std::filesystem::remove(klib_tar_name);
 
     meter.measure([] {
-      klib::compress(dir_name, klib::Format::USTar, klib::Filter::None,
+      klib::compress(dir_name, klib::Format::Tar, klib::Filter::None,
                      klib_tar_name);
     });
 
@@ -196,7 +196,7 @@ TEST_CASE_METHOD(TestsFixture, "Gzip", "[archive]") {
     std::filesystem::remove(klib_gzip_name);
 
     meter.measure([] {
-      klib::compress(dir_name, klib::Format::USTar, klib::Filter::Gzip,
+      klib::compress(dir_name, klib::Format::Tar, klib::Filter::Gzip,
                      klib_gzip_name);
     });
 
@@ -234,7 +234,7 @@ TEST_CASE_METHOD(TestsFixture, "xz", "[archive]") {
     std::filesystem::remove(klib_xz_name);
 
     meter.measure([] {
-      klib::compress(dir_name, klib::Format::USTar, klib::Filter::LZMA,
+      klib::compress(dir_name, klib::Format::Tar, klib::Filter::LZMA,
                      klib_xz_name);
     });
 
@@ -272,7 +272,7 @@ TEST_CASE_METHOD(TestsFixture, "Zstandard", "[archive]") {
     std::filesystem::remove(klib_zstd_name);
 
     meter.measure([] {
-      klib::compress(dir_name, klib::Format::USTar, klib::Filter::Zstd,
+      klib::compress(dir_name, klib::Format::Tar, klib::Filter::Zstd,
                      klib_zstd_name);
     });
 
