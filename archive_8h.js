@@ -10,10 +10,11 @@ var archive_8h =
     [ "Format", "archive_8h.html#a746bca2d6aafe9da24021476bae487e5", [
       [ "Zip", "archive_8h.html#a746bca2d6aafe9da24021476bae487e5a963ab0bbea32f1f9d19afb00d08be14d", null ],
       [ "The7Zip", "archive_8h.html#a746bca2d6aafe9da24021476bae487e5a313080699dd27a769c224921d1b2d5ca", null ],
-      [ "GNUTar", "archive_8h.html#a746bca2d6aafe9da24021476bae487e5a867eceb66141e7806193b5f9de319bb7", null ]
+      [ "Tar", "archive_8h.html#a746bca2d6aafe9da24021476bae487e5ad9056ecb9178b326e670a8a13cdcfe60", null ]
     ] ],
-    [ "compress", "archive_8h.html#a7775401347134a4077cd0d3adcab6535", null ],
-    [ "compress", "archive_8h.html#a038611488b897b7fbee7f9ebb451554e", null ],
+    [ "compress", "archive_8h.html#a31c8b98da13a2ba68450b24482956419", null ],
+    [ "compress", "archive_8h.html#a0c777f5e67b90ab729b47b19d80b36ca", null ],
+    [ "compress_7zip", "archive_8h.html#a6260603b867ea8d56d7a45a6a18f5fca", null ],
     [ "compress_data", "archive_8h.html#ae25fca78c9e7f08290433fb7e2ce55c7", null ],
     [ "compress_data", "archive_8h.html#aa3931b82d4e4fc5a7fcbbabe78a0df28", null ],
     [ "compress_tar_gz", "archive_8h.html#ab85002a5574dc126394c97eb96a4dba7", null ],
