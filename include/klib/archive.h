@@ -76,8 +76,8 @@ void compress_7zip(const std::string &path, const std::string &out_name = "",
                    bool flag = true);
 
 /**
- * @brief Compress file or folder. The archive format is Unix Standard TAR, and
- * the compression algorithm is Gzip
+ * @brief Compress file or folder. The archive format is TAR, and the
+ * compression algorithm is Gzip
  * @param path: File or folder path
  * @param out_name: Compressed file name
  * @param flag: Whether to include the outermost folder
