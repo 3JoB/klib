@@ -17,7 +17,7 @@ var dir_c4deac73006ad3d1787e421f2d774b3c =
     [ "image.h", "image_8h.html", "image_8h" ],
     [ "log.h", "log_8h.html", "log_8h" ],
     [ "markdown.h", "markdown_8h.html", "markdown_8h" ],
-    [ "qr_code.h", "qr__code_8h_source.html", null ],
+    [ "qr_code.h", "qr__code_8h.html", "qr__code_8h" ],
     [ "sql.h", "sql_8h.html", [
       [ "Column", "classklib_1_1Column.html", "classklib_1_1Column" ],
       [ "SqlQuery", "classklib_1_1SqlQuery.html", "classklib_1_1SqlQuery" ],
