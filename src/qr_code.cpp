@@ -1,11 +1,14 @@
 #include "klib/qr_code.h"
 
+#include <cerrno>
 #include <cstring>
 #include <string_view>
 
 #include <fmt/core.h>
 #include <qrencode.h>
 #include <scope_guard.hpp>
+
+#include "klib/exception.h"
 
 namespace klib {
 
@@ -27,6 +30,9 @@ RGB qr_code(const std::string &text, std::int32_t margin, std::int32_t zoom) {
   const auto qr = QRcode_encodeString(text.c_str(), 0, QRecLevel::QR_ECLEVEL_H,
                                       QRencodeMode::QR_MODE_8, true);
   SCOPE_EXIT { QRcode_free(qr); };
+  if (!qr) {
+    throw RuntimeError(std::strerror(errno));
+  }
 
   margin *= zoom;
   const auto qr_size = qr->width;
@@ -66,35 +72,38 @@ RGB qr_code(const std::string &text, std::int32_t margin, std::int32_t zoom) {
 }
 
 void print_qr_code(const std::string &text, std::int32_t margin) {
-  const auto qr_code = QRcode_encodeString(
-      text.c_str(), 0, QRecLevel::QR_ECLEVEL_H, QRencodeMode::QR_MODE_8, true);
-  SCOPE_EXIT { QRcode_free(qr_code); };
+  const auto qr = QRcode_encodeString(text.c_str(), 0, QRecLevel::QR_ECLEVEL_H,
+                                      QRencodeMode::QR_MODE_8, true);
+  SCOPE_EXIT { QRcode_free(qr); };
+  if (!qr) {
+    throw RuntimeError(std::strerror(errno));
+  }
 
   constexpr std::string_view empty = " ";
   constexpr std::string_view low_half = "\342\226\204";
   constexpr std::string_view up_half = "\342\226\200";
   constexpr std::string_view full = "\342\226\210";
 
-  const auto real_width = (qr_code->width + margin * 2);
+  const auto real_width = (qr->width + margin * 2);
 
   print_margin(real_width, margin, full);
 
-  for (std::int32_t y = 0; y < qr_code->width; y += 2) {
-    const auto row1 = qr_code->data + y * qr_code->width;
-    const auto row2 = row1 + qr_code->width;
+  for (std::int32_t y = 0; y < qr->width; y += 2) {
+    const auto row1 = qr->data + y * qr->width;
+    const auto row2 = row1 + qr->width;
 
     for (std::int32_t x = 0; x < margin; x++) {
       fmt::print("{}", full);
     }
 
-    for (std::int32_t x = 0; x < qr_code->width; ++x) {
+    for (std::int32_t x = 0; x < qr->width; ++x) {
       if (row1[x] & 1) {
-        if (y < qr_code->width - 1 && row2[x] & 1) {
+        if (y < qr->width - 1 && row2[x] & 1) {
           fmt::print("{}", empty);
         } else {
           fmt::print("{}", low_half);
         }
-      } else if (y < qr_code->width - 1 && row2[x] & 1) {
+      } else if (y < qr->width - 1 && row2[x] & 1) {
         fmt::print("{}", up_half);
       } else {
         fmt::print("{}", full);
