@@ -70,18 +70,18 @@ void print_qr_code(const std::string &text, std::int32_t margin) {
       text.c_str(), 0, QRecLevel::QR_ECLEVEL_H, QRencodeMode::QR_MODE_8, true);
   SCOPE_EXIT { QRcode_free(qr_code); };
 
-  std::string_view empty = " ";
-  std::string_view low_half = "\342\226\204";
-  std::string_view up_half = "\342\226\200";
-  std::string_view full = "\342\226\210";
+  constexpr std::string_view empty = " ";
+  constexpr std::string_view low_half = "\342\226\204";
+  constexpr std::string_view up_half = "\342\226\200";
+  constexpr std::string_view full = "\342\226\210";
 
-  auto real_width = (qr_code->width + margin * 2);
+  const auto real_width = (qr_code->width + margin * 2);
 
   print_margin(real_width, margin, full);
 
   for (std::int32_t y = 0; y < qr_code->width; y += 2) {
-    auto row1 = qr_code->data + y * qr_code->width;
-    auto row2 = row1 + qr_code->width;
+    const auto row1 = qr_code->data + y * qr_code->width;
+    const auto row2 = row1 + qr_code->width;
 
     for (std::int32_t x = 0; x < margin; x++) {
       fmt::print("{}", full);
