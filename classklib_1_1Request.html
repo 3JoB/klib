@@ -31,7 +31,7 @@
  <tr style="height: 56px;">
   <td id="projectalign" style="padding-left: 0.5em;">
    <div id="projectname">klib
-   &#160;<span id="projectnumber">1.14.2</span>
+   &#160;<span id="projectnumber">1.15.0</span>
    </div>
   </td>
    <td>        <div id="MSearchBox" class="MSearchBoxInactive">
@@ -167,6 +167,9 @@ void&#160;</td><td class="memItemRight" valign="bottom"><b>set_accept_encoding</
 <tr class="memitem:a4f3204f81963445ce7dfb0d71cf53e81"><td class="memItemLeft" align="right" valign="top">void&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="classklib_1_1Request.html#a4f3204f81963445ce7dfb0d71cf53e81">set_cookie</a> (const phmap::flat_hash_map&lt; std::string, std::string &gt; &amp;cookies)</td></tr>
 <tr class="memdesc:a4f3204f81963445ce7dfb0d71cf53e81"><td class="mdescLeft">&#160;</td><td class="mdescRight">Set cookie.  <a href="classklib_1_1Request.html#a4f3204f81963445ce7dfb0d71cf53e81">More...</a><br /></td></tr>
 <tr class="separator:a4f3204f81963445ce7dfb0d71cf53e81"><td class="memSeparator" colspan="2">&#160;</td></tr>
+<tr class="memitem:acc644be23ad9701272c028757ad64ec2"><td class="memItemLeft" align="right" valign="top">void&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="classklib_1_1Request.html#acc644be23ad9701272c028757ad64ec2">basic_auth</a> (const std::string &amp;user_name, const std::string &amp;password)</td></tr>
+<tr class="memdesc:acc644be23ad9701272c028757ad64ec2"><td class="mdescLeft">&#160;</td><td class="mdescRight">Enable HTTP basic authentication.  <a href="classklib_1_1Request.html#acc644be23ad9701272c028757ad64ec2">More...</a><br /></td></tr>
+<tr class="separator:acc644be23ad9701272c028757ad64ec2"><td class="memSeparator" colspan="2">&#160;</td></tr>
 <tr class="memitem:a821a5ecba97e28f1bb8029e2aa11673a"><td class="memItemLeft" align="right" valign="top">std::string&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="classklib_1_1Request.html#a821a5ecba97e28f1bb8029e2aa11673a">url_encode</a> (const std::string &amp;str)</td></tr>
 <tr class="memdesc:a821a5ecba97e28f1bb8029e2aa11673a"><td class="mdescLeft">&#160;</td><td class="mdescRight">Encoding <a class="el" href="classklib_1_1URL.html" title="Parse URL.">URL</a> string.  <a href="classklib_1_1Request.html#a821a5ecba97e28f1bb8029e2aa11673a">More...</a><br /></td></tr>
 <tr class="separator:a821a5ecba97e28f1bb8029e2aa11673a"><td class="memSeparator" colspan="2">&#160;</td></tr>
@@ -195,6 +198,43 @@ class&#160;</td><td class="memItemRight" valign="bottom"><b>Response</b></td></t
 <a name="details" id="details"></a><h2 class="groupheader">Detailed Description</h2>
 <div class="textblock"><p>Constructs and sends a <a class="el" href="classklib_1_1Request.html" title="Constructs and sends a Request.">Request</a>. </p>
 </div><h2 class="groupheader">Member Function Documentation</h2>
+<a id="acc644be23ad9701272c028757ad64ec2"></a>
+<h2 class="memtitle"><span class="permalink"><a href="#acc644be23ad9701272c028757ad64ec2">&#9670;&nbsp;</a></span>basic_auth()</h2>
+
+<div class="memitem">
+<div class="memproto">
+      <table class="memname">
+        <tr>
+          <td class="memname">void klib::Request::basic_auth </td>
+          <td>(</td>
+          <td class="paramtype">const std::string &amp;&#160;</td>
+          <td class="paramname"><em>user_name</em>, </td>
+        </tr>
+        <tr>
+          <td class="paramkey"></td>
+          <td></td>
+          <td class="paramtype">const std::string &amp;&#160;</td>
+          <td class="paramname"><em>password</em>&#160;</td>
+        </tr>
+        <tr>
+          <td></td>
+          <td>)</td>
+          <td></td><td></td>
+        </tr>
+      </table>
+</div><div class="memdoc">
+
+<p>Enable HTTP basic authentication. </p>
+<dl class="params"><dt>Parameters</dt><dd>
+  <table class="params">
+    <tr><td class="paramname">user_name</td><td>User name </td></tr>
+    <tr><td class="paramname">password</td><td>Password </td></tr>
+  </table>
+  </dd>
+</dl>
+
+</div>
+</div>
 <a id="a5942edc73192ce0c8235182dc55b8f18"></a>
 <h2 class="memtitle"><span class="permalink"><a href="#a5942edc73192ce0c8235182dc55b8f18">&#9670;&nbsp;</a></span>get()</h2>
 

@@ -1,4 +1,4 @@
 var searchData=
 [
-  ['logicerror_175',['LogicError',['../classklib_1_1LogicError.html',1,'klib']]]
+  ['logicerror_177',['LogicError',['../classklib_1_1LogicError.html',1,'klib']]]
 ];

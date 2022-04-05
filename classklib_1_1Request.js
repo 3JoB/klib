@@ -4,6 +4,7 @@ var classklib_1_1Request =
     [ "Request", "classklib_1_1Request.html#a51f8b4f45626ccbe10a4e65d693f4996", null ],
     [ "Request", "classklib_1_1Request.html#aca2ecf7b7e7fb29eb71148ab97c82e55", null ],
     [ "~Request", "classklib_1_1Request.html#abf010562c66bb66def366522fb40b982", null ],
+    [ "basic_auth", "classklib_1_1Request.html#acc644be23ad9701272c028757ad64ec2", null ],
     [ "get", "classklib_1_1Request.html#a5942edc73192ce0c8235182dc55b8f18", null ],
     [ "operator=", "classklib_1_1Request.html#a1bdd9d722384dfe377bc3a902f9ce4ab", null ],
     [ "operator=", "classklib_1_1Request.html#acd404419be226f1a1f63d6cf0562c065", null ],
