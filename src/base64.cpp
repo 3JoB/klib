@@ -25,7 +25,7 @@ std::string fast_base64_encode(const std::string &data) {
   auto length =
       fast_avx2_base64_encode(std::data(result), std::data(data), input_size);
   if (length == MODP_B64_ERROR) [[unlikely]] {
-    throw RuntimeError("fast_avx2_base64_encode failed");
+    throw RuntimeError("fast_avx2_base64_encode() failed");
   }
 
   result.resize(length);
@@ -41,7 +41,7 @@ std::string fast_base64_decode(const std::string &data) {
   auto length =
       fast_avx2_base64_decode(std::data(result), std::data(data), input_size);
   if (length == MODP_B64_ERROR) [[unlikely]] {
-    throw RuntimeError("fast_avx2_base64_decode failed");
+    throw RuntimeError("fast_avx2_base64_decode() failed");
   }
 
   result.resize(length);

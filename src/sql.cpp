@@ -189,7 +189,7 @@ SqlQuery::SqlQueryImpl::~SqlQueryImpl() {
   try {
     finalize();
   } catch (...) {
-    error("~SqlQueryImpl failed");
+    error("~SqlQueryImpl() failed");
   }
 }
 

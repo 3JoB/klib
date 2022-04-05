@@ -132,7 +132,7 @@ std::u16string utf8_to_utf16(const std::string &str) {
   auto check =
       simdutf::convert_utf8_to_utf16(source, source_size, std::data(result));
   if (check == 0) [[unlikely]] {
-    throw RuntimeError("convert_utf8_to_utf16 failed");
+    throw RuntimeError("convert_utf8_to_utf16() failed");
   }
 
   return result;
@@ -148,7 +148,7 @@ std::string utf16_to_utf8(const std::u16string &str) {
   auto check =
       simdutf::convert_utf16_to_utf8(source, source_size, std::data(result));
   if (check == 0) [[unlikely]] {
-    throw RuntimeError("convert_utf16_to_utf8 failed");
+    throw RuntimeError("convert_utf16_to_utf8() failed");
   }
 
   return result;
@@ -164,7 +164,7 @@ std::u32string utf8_to_utf32(const std::string &str) {
   auto length = uu::UtfUtils::SseBigTableConvert(ptr, ptr + input_size,
                                                  std::data(result));
   if (length == -1) [[unlikely]] {
-    throw RuntimeError("SseBigTableConvert failed");
+    throw RuntimeError("SseBigTableConvert() failed");
   }
 
   result.resize(length);

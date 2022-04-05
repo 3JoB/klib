@@ -37,12 +37,12 @@ std::size_t fast_hash(const std::string &data) {
   auto status = status1.get();
 
   if (XXH3_64bits_reset(status) == XXH_ERROR) [[unlikely]] {
-    throw RuntimeError("XXH3_64bits_reset failed");
+    throw RuntimeError("XXH3_64bits_reset() failed");
   }
 
   if (XXH3_64bits_update(status, std::data(data), std::size(data)) == XXH_ERROR)
       [[unlikely]] {
-    throw RuntimeError("XXH3_64bits_update failed");
+    throw RuntimeError("XXH3_64bits_update() failed");
   }
 
   return XXH3_64bits_digest(status);

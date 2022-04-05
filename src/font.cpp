@@ -74,7 +74,7 @@ std::string ttf_to_woff2(const std::string &ttf_font) {
       data_ptr, data_size, reinterpret_cast<uint8_t *>(std::data(result)),
       &max_size, params);
   if (!rc) {
-    throw RuntimeError("ConvertTTFToWOFF failed");
+    throw RuntimeError("ConvertTTFToWOFF() failed");
   }
   result.resize(max_size);
 
@@ -88,14 +88,14 @@ std::string woff2_to_ttf(const std::string &woff2_font) {
   std::string result;
   auto size = woff2::ComputeWOFF2FinalSize(data_ptr, data_size);
   if (size == 0) {
-    throw RuntimeError("ComputeWOFF2FinalSize failed");
+    throw RuntimeError("ComputeWOFF2FinalSize() failed");
   }
   result.resize(size);
 
   woff2::WOFF2StringOut buff(&result);
   auto rc = woff2::ConvertWOFF2ToTTF(data_ptr, data_size, &buff);
   if (!rc) {
-    throw RuntimeError("ConvertWOFF2ToTTF failed");
+    throw RuntimeError("ConvertWOFF2ToTTF() failed");
   }
 
   return result;

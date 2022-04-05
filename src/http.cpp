@@ -8,6 +8,7 @@
 #include <cstddef>
 #include <cstdio>
 #include <filesystem>
+#include <mutex>
 #include <string_view>
 
 #include <curl/curl.h>
@@ -187,22 +188,24 @@ class Request::RequestImpl {
 
   constexpr static std::string_view cookies_path = "/tmp/cookies.txt";
   constexpr static std::string_view altsvc_path = "/tmp/altsvc.txt";
+
+  inline static std::mutex curl_easy_init_mutex;
 };
 
 Request::RequestImpl::RequestImpl() {
-  auto rc = curl_global_init(CURL_GLOBAL_DEFAULT);
-  CHECK_CURL(rc);
-
+  curl_easy_init_mutex.lock();
   curl_ = curl_easy_init();
+  curl_easy_init_mutex.unlock();
+
   SCOPE_FAIL {
     curl_easy_cleanup(curl_);
     curl_global_cleanup();
   };
   if (!curl_) [[unlikely]] {
-    throw RuntimeError("curl_easy_init failed");
+    throw RuntimeError("curl_easy_init() failed");
   }
 
-  rc = curl_easy_setopt(curl_, CURLOPT_BUFFERSIZE, 102400);
+  auto rc = curl_easy_setopt(curl_, CURLOPT_BUFFERSIZE, 102400);
   CHECK_CURL(rc);
 
   rc = curl_easy_setopt(curl_, CURLOPT_FOLLOWLOCATION, 1);
@@ -311,7 +314,7 @@ std::string Request::RequestImpl::url_encode(const std::string &str) {
   auto ptr = curl_easy_escape(curl_, str.c_str(), std::size(str));
   SCOPE_EXIT { curl_free(ptr); };
   if (!ptr) [[unlikely]] {
-    throw RuntimeError("curl_easy_escape failed");
+    throw RuntimeError("curl_easy_escape() failed");
   }
 
   return ptr;
@@ -322,7 +325,7 @@ std::string Request::RequestImpl::url_decode(const std::string &str) {
   auto ptr = curl_easy_unescape(curl_, str.c_str(), std::size(str), &length);
   SCOPE_EXIT { curl_free(ptr); };
   if (!ptr) [[unlikely]] {
-    throw RuntimeError("curl_easy_unescape failed");
+    throw RuntimeError("curl_easy_unescape() failed");
   }
 
   return std::string(ptr, length);
