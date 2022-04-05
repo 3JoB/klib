@@ -161,6 +161,7 @@ class Request::RequestImpl {
   void set_accept_encoding(const std::string &accept_encoding);
   void set_cookie(
       const phmap::flat_hash_map<std::string, std::string> &cookies);
+  void basic_auth(const std::string &user_name, const std::string &password);
   std::string url_encode(const std::string &str);
   std::string url_decode(const std::string &str);
 
@@ -307,6 +308,17 @@ void Request::RequestImpl::set_cookie(
   }
 
   auto rc = curl_easy_setopt(curl_, CURLOPT_COOKIE, cookies_str.c_str());
+  CHECK_CURL(rc);
+}
+
+void Request::RequestImpl::basic_auth(const std::string &user_name,
+                                      const std::string &password) {
+  auto rc = curl_easy_setopt(curl_, CURLOPT_HTTPAUTH, CURLAUTH_BASIC);
+  CHECK_CURL(rc);
+
+  rc = curl_easy_setopt(curl_, CURLOPT_USERNAME, user_name.c_str());
+  CHECK_CURL(rc);
+  rc = curl_easy_setopt(curl_, CURLOPT_PASSWORD, password.c_str());
   CHECK_CURL(rc);
 }
 
@@ -538,6 +550,11 @@ void Request::set_accept_encoding(const std::string &accept_encoding) {
 void Request::set_cookie(
     const phmap::flat_hash_map<std::string, std::string> &cookies) {
   impl_->set_cookie(cookies);
+}
+
+void Request::basic_auth(const std::string &user_name,
+                         const std::string &password) {
+  impl_->basic_auth(user_name, password);
 }
 
 std::string Request::url_encode(const std::string &str) {

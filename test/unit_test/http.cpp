@@ -69,6 +69,8 @@ TEST_CASE("GET", "[http]") {
   request.set_browser_user_agent();
   request.set_accept_encoding("gzip, deflate, br");
 
+  request.basic_auth("Kaiser", "123456");
+
 #ifndef NDEBUG
   request.verbose(true);
 #endif

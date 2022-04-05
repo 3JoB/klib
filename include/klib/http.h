@@ -174,6 +174,13 @@ class Request {
       const phmap::flat_hash_map<std::string, std::string> &cookies);
 
   /**
+   * @brief Enable HTTP basic authentication
+   * @param user_name: User name
+   * @param password: Password
+   */
+  void basic_auth(const std::string &user_name, const std::string &password);
+
+  /**
    * @brief Encoding URL string
    * @param str: String to be encoded
    * @return Encoded string
