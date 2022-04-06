@@ -209,12 +209,15 @@ Request::RequestImpl::RequestImpl() {
     throw RuntimeError("curl_easy_init() failed");
   }
 
-  curl_blob blob;
-  blob.data = cacert;
-  blob.len = cacert_size;
-  blob.flags = CURL_BLOB_NOCOPY;
+  auto rc = curl_easy_setopt(curl_, CURLOPT_CAINFO, nullptr);
+  CHECK_CURL(rc);
 
-  auto rc = curl_easy_setopt(curl_, CURLOPT_CAINFO_BLOB, &blob);
+  rc = curl_easy_setopt(curl_, CURLOPT_CAPATH, nullptr);
+  CHECK_CURL(rc);
+
+  curl_blob blob = {cacert, static_cast<std::size_t>(cacert_size),
+                    CURL_BLOB_NOCOPY};
+  rc = curl_easy_setopt(curl_, CURLOPT_CAINFO_BLOB, &blob);
   CHECK_CURL(rc);
 
   rc = curl_easy_setopt(curl_, CURLOPT_BUFFERSIZE, 102400);
