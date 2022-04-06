@@ -80,9 +80,9 @@ void print_qr_code(const std::string &text, std::int32_t margin) {
   }
 
   constexpr std::string_view empty = " ";
-  constexpr std::string_view low_half = "\342\226\204";
-  constexpr std::string_view up_half = "\342\226\200";
-  constexpr std::string_view full = "\342\226\210";
+  constexpr std::string_view low_half = "▄";
+  constexpr std::string_view up_half = "▀";
+  constexpr std::string_view full = "█";
 
   const auto real_width = (qr->width + margin * 2);
 
