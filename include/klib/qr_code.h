@@ -19,13 +19,14 @@ namespace klib {
  * @param zoom: Zoom level
  * @return RBG data with QR code
  */
-RGB qr_code(const std::string &text, std::int32_t margin, std::int32_t zoom);
+RGB qr_code_to_rbg(const std::string &text, std::int32_t margin,
+                   std::int32_t zoom);
 
 /**
- * @brief Generate QR code containing 'text' and print to standard output
+ * @brief Generate QR code containing 'text'
  * @param text: Data in QR code
  * @param margin: Margin size (pixels)
  */
-void print_qr_code(const std::string &text, std::int32_t margin);
+std::string qr_code_to_utf8(const std::string &text, std::int32_t margin);
 
 }  // namespace klib

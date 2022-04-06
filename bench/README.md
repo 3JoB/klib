@@ -320,4 +320,3 @@ zstd decompress                                100             1    7.29204 ms
 
 ===============================================================================
 All tests passed (5028 assertions in 24 test cases)
-

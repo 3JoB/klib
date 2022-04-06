@@ -4,7 +4,6 @@
 #include <cstring>
 #include <string_view>
 
-#include <fmt/core.h>
 #include <qrencode.h>
 #include <scope_guard.hpp>
 
@@ -14,19 +13,20 @@ namespace klib {
 
 namespace {
 
-void print_margin(std::int32_t real_width, std::int32_t margin,
-                  std::string_view full) {
+void print_margin(std::string &result, std::int32_t real_width,
+                  std::int32_t margin, std::string_view full) {
   for (std::int32_t y = 0; y < margin / 2; ++y) {
     for (std::int32_t x = 0; x < real_width; ++x) {
-      fmt::print("{}", full);
+      result.append(full);
     }
-    fmt::print("\n");
+    result.append("\n");
   }
 }
 
 }  // namespace
 
-RGB qr_code(const std::string &text, std::int32_t margin, std::int32_t zoom) {
+RGB qr_code_to_rbg(const std::string &text, std::int32_t margin,
+                   std::int32_t zoom) {
   const auto qr = QRcode_encodeString(text.c_str(), 0, QRecLevel::QR_ECLEVEL_H,
                                       QRencodeMode::QR_MODE_8, true);
   SCOPE_EXIT { QRcode_free(qr); };
@@ -71,7 +71,10 @@ RGB qr_code(const std::string &text, std::int32_t margin, std::int32_t zoom) {
   return {rgb, width, height};
 }
 
-void print_qr_code(const std::string &text, std::int32_t margin) {
+std::string qr_code_to_utf8(const std::string &text, std::int32_t margin) {
+  std::string result;
+  result.reserve(2048);
+
   const auto qr = QRcode_encodeString(text.c_str(), 0, QRecLevel::QR_ECLEVEL_H,
                                       QRencodeMode::QR_MODE_8, true);
   SCOPE_EXIT { QRcode_free(qr); };
@@ -86,38 +89,40 @@ void print_qr_code(const std::string &text, std::int32_t margin) {
 
   const auto real_width = (qr->width + margin * 2);
 
-  print_margin(real_width, margin, full);
+  print_margin(result, real_width, margin, full);
 
   for (std::int32_t y = 0; y < qr->width; y += 2) {
     const auto row1 = qr->data + y * qr->width;
     const auto row2 = row1 + qr->width;
 
     for (std::int32_t x = 0; x < margin; x++) {
-      fmt::print("{}", full);
+      result.append(full);
     }
 
     for (std::int32_t x = 0; x < qr->width; ++x) {
       if (row1[x] & 1) {
         if (y < qr->width - 1 && row2[x] & 1) {
-          fmt::print("{}", empty);
+          result.append(empty);
         } else {
-          fmt::print("{}", low_half);
+          result.append(low_half);
         }
       } else if (y < qr->width - 1 && row2[x] & 1) {
-        fmt::print("{}", up_half);
+        result.append(up_half);
       } else {
-        fmt::print("{}", full);
+        result.append(full);
       }
     }
 
     for (std::int32_t x = 0; x < margin; ++x) {
-      fmt::print("{}", full);
+      result.append(full);
     }
 
-    fmt::print("\n");
+    result.append("\n");
   }
 
-  print_margin(real_width, margin, full);
+  print_margin(result, real_width, margin, full);
+
+  return result;
 }
 
 }  // namespace klib
