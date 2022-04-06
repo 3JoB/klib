@@ -14,7 +14,7 @@ klib_extract_version()
 
 project(
   klib
-  LANGUAGES C CXX
+  LANGUAGES ASM C CXX
   VERSION ${KLIB_VERSION}
   HOMEPAGE_URL https://github.com/KaiserLancelot/klib)
 
@@ -133,6 +133,14 @@ include_directories(${gio-2.0_INCLUDE_DIRS})
 include_directories(third_party)
 
 # ---------------------------------------------------------------------------------------
+# Build cacert file
+# ---------------------------------------------------------------------------------------
+file(COPY "${KLIB_SOURCE_DIR}/cacert/cacert.pem" DESTINATION ${KLIB_BINARY_DIR})
+
+add_library(cacert STATIC "${KLIB_SOURCE_DIR}/src/cacert.s")
+target_compile_options(cacert PRIVATE "-Wno-unused-command-line-argument")
+
+# ---------------------------------------------------------------------------------------
 # Build static library
 # ---------------------------------------------------------------------------------------
 add_library(${KLIB_LIBRARY} STATIC ${KLIB_LIBRARY_SRC})
@@ -201,6 +209,7 @@ add_custom_command(
   TARGET ${KLIB_LIBRARY}
   POST_BUILD
   COMMAND gcc-ar -x --output=klib $<TARGET_FILE:${KLIB_LIBRARY}>
+  COMMAND gcc-ar -x --output=klib $<TARGET_FILE:cacert>
   COMMAND gcc-ar -x --output=zlib-ng /usr/local/lib/libz.a
   COMMAND gcc-ar -x --output=libarchive /usr/local/lib/libarchive.a
   COMMAND gcc-ar -x --output=tidy-html5 /usr/local/lib/libtidy.a

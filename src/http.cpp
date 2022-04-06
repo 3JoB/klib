@@ -17,6 +17,9 @@
 #include "klib/exception.h"
 #include "klib/util.h"
 
+extern char cacert[];
+extern int cacert_size;
+
 #define CHECK_CURL(rc)                            \
   do {                                            \
     if (rc != CURLcode::CURLE_OK) [[unlikely]] {  \
@@ -206,7 +209,15 @@ Request::RequestImpl::RequestImpl() {
     throw RuntimeError("curl_easy_init() failed");
   }
 
-  auto rc = curl_easy_setopt(curl_, CURLOPT_BUFFERSIZE, 102400);
+  curl_blob blob;
+  blob.data = cacert;
+  blob.len = cacert_size;
+  blob.flags = CURL_BLOB_NOCOPY;
+
+  auto rc = curl_easy_setopt(curl_, CURLOPT_CAINFO_BLOB, &blob);
+  CHECK_CURL(rc);
+
+  rc = curl_easy_setopt(curl_, CURLOPT_BUFFERSIZE, 102400);
   CHECK_CURL(rc);
 
   rc = curl_easy_setopt(curl_, CURLOPT_FOLLOWLOCATION, 1);
