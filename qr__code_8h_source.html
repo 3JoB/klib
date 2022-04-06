@@ -31,7 +31,7 @@
  <tr style="height: 56px;">
   <td id="projectalign" style="padding-left: 0.5em;">
    <div id="projectname">klib
-   &#160;<span id="projectnumber">1.16.2</span>
+   &#160;<span id="projectnumber">1.17.0</span>
    </div>
   </td>
    <td>        <div id="MSearchBox" class="MSearchBoxInactive">
@@ -106,15 +106,16 @@ $(document).ready(function(){initNavTree('qr__code_8h_source.html',''); initResi
 <div class="line"><a name="l00012"></a><span class="lineno">   12</span>&#160; </div>
 <div class="line"><a name="l00013"></a><span class="lineno">   13</span>&#160;<span class="keyword">namespace </span>klib {</div>
 <div class="line"><a name="l00014"></a><span class="lineno">   14</span>&#160; </div>
-<div class="line"><a name="l00022"></a><span class="lineno"><a class="line" href="qr__code_8h.html#ade71afc6e839363818c7b64f4624c150">   22</a></span>&#160;<a class="code" href="classklib_1_1RGB.html">RGB</a> <a class="code" href="qr__code_8h.html#ade71afc6e839363818c7b64f4624c150">qr_code</a>(<span class="keyword">const</span> std::string &amp;text, std::int32_t margin, std::int32_t zoom);</div>
-<div class="line"><a name="l00023"></a><span class="lineno">   23</span>&#160; </div>
-<div class="line"><a name="l00029"></a><span class="lineno"><a class="line" href="qr__code_8h.html#a1337d5fd014aba2bad5fbb908ac296e8">   29</a></span>&#160;<span class="keywordtype">void</span> <a class="code" href="qr__code_8h.html#a1337d5fd014aba2bad5fbb908ac296e8">print_qr_code</a>(<span class="keyword">const</span> std::string &amp;text, std::int32_t margin);</div>
-<div class="line"><a name="l00030"></a><span class="lineno">   30</span>&#160; </div>
-<div class="line"><a name="l00031"></a><span class="lineno">   31</span>&#160;}  <span class="comment">// namespace klib</span></div>
+<div class="line"><a name="l00022"></a><span class="lineno"><a class="line" href="qr__code_8h.html#a165d425cb96f3afab54c20ee67a08f26">   22</a></span>&#160;<a class="code" href="classklib_1_1RGB.html">RGB</a> <a class="code" href="qr__code_8h.html#a165d425cb96f3afab54c20ee67a08f26">qr_code_to_rbg</a>(<span class="keyword">const</span> std::string &amp;text, std::int32_t margin,</div>
+<div class="line"><a name="l00023"></a><span class="lineno">   23</span>&#160;                   std::int32_t zoom);</div>
+<div class="line"><a name="l00024"></a><span class="lineno">   24</span>&#160; </div>
+<div class="line"><a name="l00030"></a><span class="lineno"><a class="line" href="qr__code_8h.html#a7d6c9a23db74fe85198f83a9be0a5eaf">   30</a></span>&#160;std::string <a class="code" href="qr__code_8h.html#a7d6c9a23db74fe85198f83a9be0a5eaf">qr_code_to_utf8</a>(<span class="keyword">const</span> std::string &amp;text, std::int32_t margin);</div>
+<div class="line"><a name="l00031"></a><span class="lineno">   31</span>&#160; </div>
+<div class="line"><a name="l00032"></a><span class="lineno">   32</span>&#160;}  <span class="comment">// namespace klib</span></div>
 <div class="ttc" id="aclassklib_1_1RGB_html"><div class="ttname"><a href="classklib_1_1RGB.html">klib::RGB</a></div><div class="ttdef"><b>Definition:</b> image.h:16</div></div>
 <div class="ttc" id="aimage_8h_html"><div class="ttname"><a href="image_8h.html">image.h</a></div><div class="ttdoc">Contains image conversion module.</div></div>
-<div class="ttc" id="aqr__code_8h_html_a1337d5fd014aba2bad5fbb908ac296e8"><div class="ttname"><a href="qr__code_8h.html#a1337d5fd014aba2bad5fbb908ac296e8">klib::print_qr_code</a></div><div class="ttdeci">void print_qr_code(const std::string &amp;text, std::int32_t margin)</div><div class="ttdoc">Generate QR code containing 'text' and print to standard output.</div></div>
-<div class="ttc" id="aqr__code_8h_html_ade71afc6e839363818c7b64f4624c150"><div class="ttname"><a href="qr__code_8h.html#ade71afc6e839363818c7b64f4624c150">klib::qr_code</a></div><div class="ttdeci">RGB qr_code(const std::string &amp;text, std::int32_t margin, std::int32_t zoom)</div><div class="ttdoc">Generate QR code containing 'text'.</div></div>
+<div class="ttc" id="aqr__code_8h_html_a165d425cb96f3afab54c20ee67a08f26"><div class="ttname"><a href="qr__code_8h.html#a165d425cb96f3afab54c20ee67a08f26">klib::qr_code_to_rbg</a></div><div class="ttdeci">RGB qr_code_to_rbg(const std::string &amp;text, std::int32_t margin, std::int32_t zoom)</div><div class="ttdoc">Generate QR code containing 'text'.</div></div>
+<div class="ttc" id="aqr__code_8h_html_a7d6c9a23db74fe85198f83a9be0a5eaf"><div class="ttname"><a href="qr__code_8h.html#a7d6c9a23db74fe85198f83a9be0a5eaf">klib::qr_code_to_utf8</a></div><div class="ttdeci">std::string qr_code_to_utf8(const std::string &amp;text, std::int32_t margin)</div><div class="ttdoc">Generate QR code containing 'text'.</div></div>
 </div><!-- fragment --></div><!-- contents -->
 </div><!-- doc-content -->
 <!-- start footer part -->

@@ -31,7 +31,7 @@
  <tr style="height: 56px;">
   <td id="projectalign" style="padding-left: 0.5em;">
    <div id="projectname">klib
-   &#160;<span id="projectnumber">1.16.2</span>
+   &#160;<span id="projectnumber">1.17.0</span>
    </div>
   </td>
    <td>        <div id="MSearchBox" class="MSearchBoxInactive">
@@ -109,61 +109,24 @@ $(document).ready(function(){initNavTree('qr__code_8h.html',''); initResizable()
 <table class="memberdecls">
 <tr class="heading"><td colspan="2"><h2 class="groupheader"><a name="func-members"></a>
 Functions</h2></td></tr>
-<tr class="memitem:ade71afc6e839363818c7b64f4624c150"><td class="memItemLeft" align="right" valign="top">RGB&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="qr__code_8h.html#ade71afc6e839363818c7b64f4624c150">klib::qr_code</a> (const std::string &amp;text, std::int32_t margin, std::int32_t zoom)</td></tr>
-<tr class="memdesc:ade71afc6e839363818c7b64f4624c150"><td class="mdescLeft">&#160;</td><td class="mdescRight">Generate QR code containing 'text'.  <a href="qr__code_8h.html#ade71afc6e839363818c7b64f4624c150">More...</a><br /></td></tr>
-<tr class="separator:ade71afc6e839363818c7b64f4624c150"><td class="memSeparator" colspan="2">&#160;</td></tr>
-<tr class="memitem:a1337d5fd014aba2bad5fbb908ac296e8"><td class="memItemLeft" align="right" valign="top">void&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="qr__code_8h.html#a1337d5fd014aba2bad5fbb908ac296e8">klib::print_qr_code</a> (const std::string &amp;text, std::int32_t margin)</td></tr>
-<tr class="memdesc:a1337d5fd014aba2bad5fbb908ac296e8"><td class="mdescLeft">&#160;</td><td class="mdescRight">Generate QR code containing 'text' and print to standard output.  <a href="qr__code_8h.html#a1337d5fd014aba2bad5fbb908ac296e8">More...</a><br /></td></tr>
-<tr class="separator:a1337d5fd014aba2bad5fbb908ac296e8"><td class="memSeparator" colspan="2">&#160;</td></tr>
+<tr class="memitem:a165d425cb96f3afab54c20ee67a08f26"><td class="memItemLeft" align="right" valign="top">RGB&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="qr__code_8h.html#a165d425cb96f3afab54c20ee67a08f26">klib::qr_code_to_rbg</a> (const std::string &amp;text, std::int32_t margin, std::int32_t zoom)</td></tr>
+<tr class="memdesc:a165d425cb96f3afab54c20ee67a08f26"><td class="mdescLeft">&#160;</td><td class="mdescRight">Generate QR code containing 'text'.  <a href="qr__code_8h.html#a165d425cb96f3afab54c20ee67a08f26">More...</a><br /></td></tr>
+<tr class="separator:a165d425cb96f3afab54c20ee67a08f26"><td class="memSeparator" colspan="2">&#160;</td></tr>
+<tr class="memitem:a7d6c9a23db74fe85198f83a9be0a5eaf"><td class="memItemLeft" align="right" valign="top">std::string&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="qr__code_8h.html#a7d6c9a23db74fe85198f83a9be0a5eaf">klib::qr_code_to_utf8</a> (const std::string &amp;text, std::int32_t margin)</td></tr>
+<tr class="memdesc:a7d6c9a23db74fe85198f83a9be0a5eaf"><td class="mdescLeft">&#160;</td><td class="mdescRight">Generate QR code containing 'text'.  <a href="qr__code_8h.html#a7d6c9a23db74fe85198f83a9be0a5eaf">More...</a><br /></td></tr>
+<tr class="separator:a7d6c9a23db74fe85198f83a9be0a5eaf"><td class="memSeparator" colspan="2">&#160;</td></tr>
 </table>
 <a name="details" id="details"></a><h2 class="groupheader">Detailed Description</h2>
 <div class="textblock"><p>Contains generating and outputting QR code module. </p>
 </div><h2 class="groupheader">Function Documentation</h2>
-<a id="a1337d5fd014aba2bad5fbb908ac296e8"></a>
-<h2 class="memtitle"><span class="permalink"><a href="#a1337d5fd014aba2bad5fbb908ac296e8">&#9670;&nbsp;</a></span>print_qr_code()</h2>
+<a id="a165d425cb96f3afab54c20ee67a08f26"></a>
+<h2 class="memtitle"><span class="permalink"><a href="#a165d425cb96f3afab54c20ee67a08f26">&#9670;&nbsp;</a></span>qr_code_to_rbg()</h2>
 
 <div class="memitem">
 <div class="memproto">
       <table class="memname">
         <tr>
-          <td class="memname">void klib::print_qr_code </td>
-          <td>(</td>
-          <td class="paramtype">const std::string &amp;&#160;</td>
-          <td class="paramname"><em>text</em>, </td>
-        </tr>
-        <tr>
-          <td class="paramkey"></td>
-          <td></td>
-          <td class="paramtype">std::int32_t&#160;</td>
-          <td class="paramname"><em>margin</em>&#160;</td>
-        </tr>
-        <tr>
-          <td></td>
-          <td>)</td>
-          <td></td><td></td>
-        </tr>
-      </table>
-</div><div class="memdoc">
-
-<p>Generate QR code containing 'text' and print to standard output. </p>
-<dl class="params"><dt>Parameters</dt><dd>
-  <table class="params">
-    <tr><td class="paramname">text</td><td>Data in QR code </td></tr>
-    <tr><td class="paramname">margin</td><td>Margin size (pixels) </td></tr>
-  </table>
-  </dd>
-</dl>
-
-</div>
-</div>
-<a id="ade71afc6e839363818c7b64f4624c150"></a>
-<h2 class="memtitle"><span class="permalink"><a href="#ade71afc6e839363818c7b64f4624c150">&#9670;&nbsp;</a></span>qr_code()</h2>
-
-<div class="memitem">
-<div class="memproto">
-      <table class="memname">
-        <tr>
-          <td class="memname">RGB klib::qr_code </td>
+          <td class="memname">RGB klib::qr_code_to_rbg </td>
           <td>(</td>
           <td class="paramtype">const std::string &amp;&#160;</td>
           <td class="paramname"><em>text</em>, </td>
@@ -198,6 +161,43 @@ Functions</h2></td></tr>
   </dd>
 </dl>
 <dl class="section return"><dt>Returns</dt><dd>RBG data with QR code </dd></dl>
+
+</div>
+</div>
+<a id="a7d6c9a23db74fe85198f83a9be0a5eaf"></a>
+<h2 class="memtitle"><span class="permalink"><a href="#a7d6c9a23db74fe85198f83a9be0a5eaf">&#9670;&nbsp;</a></span>qr_code_to_utf8()</h2>
+
+<div class="memitem">
+<div class="memproto">
+      <table class="memname">
+        <tr>
+          <td class="memname">std::string klib::qr_code_to_utf8 </td>
+          <td>(</td>
+          <td class="paramtype">const std::string &amp;&#160;</td>
+          <td class="paramname"><em>text</em>, </td>
+        </tr>
+        <tr>
+          <td class="paramkey"></td>
+          <td></td>
+          <td class="paramtype">std::int32_t&#160;</td>
+          <td class="paramname"><em>margin</em>&#160;</td>
+        </tr>
+        <tr>
+          <td></td>
+          <td>)</td>
+          <td></td><td></td>
+        </tr>
+      </table>
+</div><div class="memdoc">
+
+<p>Generate QR code containing 'text'. </p>
+<dl class="params"><dt>Parameters</dt><dd>
+  <table class="params">
+    <tr><td class="paramname">text</td><td>Data in QR code </td></tr>
+    <tr><td class="paramname">margin</td><td>Margin size (pixels) </td></tr>
+  </table>
+  </dd>
+</dl>
 
 </div>
 </div>
