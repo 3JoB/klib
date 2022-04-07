@@ -24,6 +24,7 @@ var classklib_1_1Request =
     [ "set_user_agent", "classklib_1_1Request.html#abc72456d5b46d7081dbea3980fefc68b", null ],
     [ "url_decode", "classklib_1_1Request.html#a0dcd41db916b56c1bb834d1ba836c8e5", null ],
     [ "url_encode", "classklib_1_1Request.html#a821a5ecba97e28f1bb8029e2aa11673a", null ],
+    [ "use_http3", "classklib_1_1Request.html#a48ffa6c77fbc8148bd9e8b8527e13d71", null ],
     [ "verbose", "classklib_1_1Request.html#a049dedc37a3f347c03784b1147455546", null ],
     [ "Response", "classklib_1_1Request.html#a0bb0e5a2fcd99881ef189293e209db7f", null ]
 ];
