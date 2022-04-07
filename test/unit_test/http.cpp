@@ -193,3 +193,16 @@ TEST_CASE("download", "[http]") {
           "0d9ade222c64e912d6957b11c923e214e2e010a18f39bec102f572e693ba2867");
   std::filesystem::remove("zstd-1.5.0.tar.gz");
 }
+
+TEST_CASE("HTTP/3", "[http]") {
+  klib::Request request;
+  request.use_http3();
+  request.set_browser_user_agent();
+
+#ifndef NDEBUG
+  request.verbose(true);
+#endif
+
+  auto response = request.get("https://cloudflare-quic.com/");
+  REQUIRE(response.ok());
+}
