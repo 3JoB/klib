@@ -338,6 +338,7 @@ void Request::RequestImpl::basic_auth(const std::string &user_name,
 }
 
 void Request::RequestImpl::use_http3() {
+  // TODO Make HTTP/3 default
   auto rc = curl_easy_setopt(curl_, CURLOPT_ALTSVC_CTRL,
                              CURLALTSVC_H1 | CURLALTSVC_H2 | CURLALTSVC_H3);
   CHECK_CURL(rc);
