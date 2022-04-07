@@ -17,13 +17,13 @@ TEST_CASE("QR Code", "[qr_code]") {
   const std::string max_jpeg_out_name = "qr-code.max.jpeg";
   const std::string webp_out_name = "qr-code.webp";
 
-  BENCHMARK("QR Code") { return klib::qr_code(text, margin, zoom); };
+  BENCHMARK("QR Code") { return klib::qr_code_to_rbg(text, margin, zoom); };
 
   BENCHMARK_ADVANCED("QR Code to PNG")
   (Catch::Benchmark::Chronometer meter) {
     std::filesystem::remove(png_out_name);
     meter.measure([&] {
-      auto rgb = klib::qr_code(text, margin, zoom);
+      auto rgb = klib::qr_code_to_rbg(text, margin, zoom);
       klib::rgb_to_png(rgb, png_out_name);
     });
   };
@@ -32,7 +32,7 @@ TEST_CASE("QR Code", "[qr_code]") {
   (Catch::Benchmark::Chronometer meter) {
     std::filesystem::remove(jpeg_out_name);
     meter.measure([&] {
-      auto rgb = klib::qr_code(text, margin, zoom);
+      auto rgb = klib::qr_code_to_rbg(text, margin, zoom);
       klib::rgb_to_jpeg(rgb, jpeg_out_name);
     });
   };
@@ -41,7 +41,7 @@ TEST_CASE("QR Code", "[qr_code]") {
   (Catch::Benchmark::Chronometer meter) {
     std::filesystem::remove(max_jpeg_out_name);
     meter.measure([&] {
-      auto rgb = klib::qr_code(text, margin, zoom);
+      auto rgb = klib::qr_code_to_rbg(text, margin, zoom);
       klib::rgb_to_jpeg(rgb, max_jpeg_out_name, 75, true);
     });
   };
@@ -50,7 +50,7 @@ TEST_CASE("QR Code", "[qr_code]") {
   (Catch::Benchmark::Chronometer meter) {
     std::filesystem::remove(webp_out_name);
     meter.measure([&] {
-      auto rgb = klib::qr_code(text, margin, zoom);
+      auto rgb = klib::qr_code_to_rbg(text, margin, zoom);
       klib::rgb_to_webp(rgb, webp_out_name);
     });
   };

@@ -165,7 +165,6 @@ class Request::RequestImpl {
   void set_cookie(
       const phmap::flat_hash_map<std::string, std::string> &cookies);
   void basic_auth(const std::string &user_name, const std::string &password);
-  void use_http2();
   void use_http3();
   std::string url_encode(const std::string &str);
   std::string url_decode(const std::string &str);
@@ -338,14 +337,9 @@ void Request::RequestImpl::basic_auth(const std::string &user_name,
   CHECK_CURL(rc);
 }
 
-void Request::RequestImpl::use_http2() {
-  auto rc =
-      curl_easy_setopt(curl_, CURLOPT_HTTP_VERSION, CURL_HTTP_VERSION_2TLS);
-  CHECK_CURL(rc);
-}
-
 void Request::RequestImpl::use_http3() {
-  auto rc = curl_easy_setopt(curl_, CURLOPT_HTTP_VERSION, CURL_HTTP_VERSION_3);
+  auto rc = curl_easy_setopt(curl_, CURLOPT_ALTSVC_CTRL,
+                             CURLALTSVC_H1 | CURLALTSVC_H2 | CURLALTSVC_H3);
   CHECK_CURL(rc);
 }
 
@@ -583,8 +577,6 @@ void Request::basic_auth(const std::string &user_name,
                          const std::string &password) {
   impl_->basic_auth(user_name, password);
 }
-
-void Request::use_http2() { impl_->use_http2(); }
 
 void Request::use_http3() { impl_->use_http3(); }
 

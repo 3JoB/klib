@@ -181,11 +181,6 @@ class Request {
   void basic_auth(const std::string &user_name, const std::string &password);
 
   /**
-   * @brief Use HTTP/2
-   */
-  void use_http2();
-
-  /**
    * @brief Use HTTP/3
    */
   void use_http3();
