@@ -165,7 +165,8 @@ class Request::RequestImpl {
   void set_cookie(
       const phmap::flat_hash_map<std::string, std::string> &cookies);
   void basic_auth(const std::string &user_name, const std::string &password);
-  void use_http3();
+  void http_version(HTTPVersion http_version);
+  void accept_http3_altsvc();
   std::string url_encode(const std::string &str);
   std::string url_decode(const std::string &str);
 
@@ -291,7 +292,7 @@ void Request::RequestImpl::set_browser_user_agent() {
   // navigator.userAgent
   set_user_agent(
       "Mozilla/5.0 (X11; Linux x86_64) AppleWebKit/537.36 (KHTML, like Gecko) "
-      "Chrome/100.0.4896.60 Safari/537.36 Edg/100.0.1185.29");
+      "Chrome/100.0.4896.75 Safari/537.36 Edg/100.0.1185.36");
 }
 
 void Request::RequestImpl::set_curl_user_agent() {
@@ -337,8 +338,20 @@ void Request::RequestImpl::basic_auth(const std::string &user_name,
   CHECK_CURL(rc);
 }
 
-void Request::RequestImpl::use_http3() {
-  // TODO Make HTTP/3 default
+void Request::RequestImpl::http_version(Request::HTTPVersion http_version) {
+  if (http_version == HTTPVersion::HTTP2) {
+    auto rc =
+        curl_easy_setopt(curl_, CURLOPT_HTTP_VERSION, CURL_HTTP_VERSION_2TLS);
+    CHECK_CURL(rc);
+  } else if (http_version == HTTPVersion::HTTP3) {
+    auto rc =
+        curl_easy_setopt(curl_, CURLOPT_HTTP_VERSION, CURL_HTTP_VERSION_3);
+    CHECK_CURL(rc);
+  }
+}
+
+void Request::RequestImpl::accept_http3_altsvc() {
+  // TODO Make it default
   auto rc = curl_easy_setopt(curl_, CURLOPT_ALTSVC_CTRL,
                              CURLALTSVC_H1 | CURLALTSVC_H2 | CURLALTSVC_H3);
   CHECK_CURL(rc);
@@ -579,7 +592,11 @@ void Request::basic_auth(const std::string &user_name,
   impl_->basic_auth(user_name, password);
 }
 
-void Request::use_http3() { impl_->use_http3(); }
+void Request::http_version(Request::HTTPVersion http_version) {
+  impl_->http_version(http_version);
+}
+
+void Request::accept_http3_altsvc() { impl_->accept_http3_altsvc(); }
 
 std::string Request::url_encode(const std::string &str) {
   return impl_->url_encode(str);

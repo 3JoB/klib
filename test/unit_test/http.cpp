@@ -194,15 +194,28 @@ TEST_CASE("download", "[http]") {
   std::filesystem::remove("zstd-1.5.0.tar.gz");
 }
 
-TEST_CASE("HTTP/3", "[http]") {
+TEST_CASE("HTTP/2", "[http]") {
   klib::Request request;
-  request.use_http3();
+  request.http_version(klib::Request::HTTP2);
   request.set_browser_user_agent();
 
 #ifndef NDEBUG
   request.verbose(true);
 #endif
 
-  auto response = request.get("https://cloudflare-quic.com/");
+  auto response = request.get("https://www.litespeedtech.com/");
+  REQUIRE(response.ok());
+}
+
+TEST_CASE("HTTP/3", "[http]") {
+  klib::Request request;
+  request.http_version(klib::Request::HTTP3);
+  request.set_browser_user_agent();
+
+#ifndef NDEBUG
+  request.verbose(true);
+#endif
+
+  auto response = request.get("https://www.litespeedtech.com/");
   REQUIRE(response.ok());
 }
