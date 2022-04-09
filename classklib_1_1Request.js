@@ -1,11 +1,17 @@
 var classklib_1_1Request =
 [
+    [ "HTTPVersion", "classklib_1_1Request.html#a5fa625ef3219d4765b2bf27a92bcc35b", [
+      [ "HTTP2", "classklib_1_1Request.html#a5fa625ef3219d4765b2bf27a92bcc35bab0a82d880dc38cf6277a4f29a540096e", null ],
+      [ "HTTP3", "classklib_1_1Request.html#a5fa625ef3219d4765b2bf27a92bcc35bab77eedf5aadec92cd76c58d29de163e9", null ]
+    ] ],
     [ "Request", "classklib_1_1Request.html#a0fe5c62e7c2d1adcb68f56fc644a7c61", null ],
     [ "Request", "classklib_1_1Request.html#a51f8b4f45626ccbe10a4e65d693f4996", null ],
     [ "Request", "classklib_1_1Request.html#aca2ecf7b7e7fb29eb71148ab97c82e55", null ],
     [ "~Request", "classklib_1_1Request.html#abf010562c66bb66def366522fb40b982", null ],
+    [ "accept_http3_altsvc", "classklib_1_1Request.html#affece0c024a84a1b7bd5ba1e227520b7", null ],
     [ "basic_auth", "classklib_1_1Request.html#acc644be23ad9701272c028757ad64ec2", null ],
     [ "get", "classklib_1_1Request.html#a5942edc73192ce0c8235182dc55b8f18", null ],
+    [ "http_version", "classklib_1_1Request.html#a699bdc026769e5cca838ca5bca791099", null ],
     [ "operator=", "classklib_1_1Request.html#a1bdd9d722384dfe377bc3a902f9ce4ab", null ],
     [ "operator=", "classklib_1_1Request.html#acd404419be226f1a1f63d6cf0562c065", null ],
     [ "post", "classklib_1_1Request.html#adb71f6422cdc28e37866b6f306d1a95c", null ],
@@ -24,7 +30,6 @@ var classklib_1_1Request =
     [ "set_user_agent", "classklib_1_1Request.html#abc72456d5b46d7081dbea3980fefc68b", null ],
     [ "url_decode", "classklib_1_1Request.html#a0dcd41db916b56c1bb834d1ba836c8e5", null ],
     [ "url_encode", "classklib_1_1Request.html#a821a5ecba97e28f1bb8029e2aa11673a", null ],
-    [ "use_http3", "classklib_1_1Request.html#a48ffa6c77fbc8148bd9e8b8527e13d71", null ],
     [ "verbose", "classklib_1_1Request.html#a049dedc37a3f347c03784b1147455546", null ],
     [ "Response", "classklib_1_1Request.html#a0bb0e5a2fcd99881ef189293e209db7f", null ]
 ];

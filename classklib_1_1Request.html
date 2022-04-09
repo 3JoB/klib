@@ -31,7 +31,7 @@
  <tr style="height: 56px;">
   <td id="projectalign" style="padding-left: 0.5em;">
    <div id="projectname">klib
-   &#160;<span id="projectnumber">1.18.0</span>
+   &#160;<span id="projectnumber">1.18.1</span>
    </div>
   </td>
    <td>        <div id="MSearchBox" class="MSearchBoxInactive">
@@ -93,6 +93,7 @@ $(document).ready(function(){initNavTree('classklib_1_1Request.html',''); initRe
 
 <div class="header">
   <div class="summary">
+<a href="#pub-types">Public Types</a> &#124;
 <a href="#pub-methods">Public Member Functions</a> &#124;
 <a href="#friends">Friends</a> &#124;
 <a href="classklib_1_1Request-members.html">List of all members</a>  </div>
@@ -106,6 +107,14 @@ $(document).ready(function(){initNavTree('classklib_1_1Request.html',''); initRe
 
 <p><code>#include &lt;<a class="el" href="http_8h_source.html">http.h</a>&gt;</code></p>
 <table class="memberdecls">
+<tr class="heading"><td colspan="2"><h2 class="groupheader"><a name="pub-types"></a>
+Public Types</h2></td></tr>
+<tr class="memitem:a5fa625ef3219d4765b2bf27a92bcc35b"><td class="memItemLeft" align="right" valign="top"><a id="a5fa625ef3219d4765b2bf27a92bcc35b"></a>enum &#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="classklib_1_1Request.html#a5fa625ef3219d4765b2bf27a92bcc35b">HTTPVersion</a> { <b>HTTP2</b>
+, <b>HTTP3</b>
+ }</td></tr>
+<tr class="memdesc:a5fa625ef3219d4765b2bf27a92bcc35b"><td class="mdescLeft">&#160;</td><td class="mdescRight">HTTP version. <br /></td></tr>
+<tr class="separator:a5fa625ef3219d4765b2bf27a92bcc35b"><td class="memSeparator" colspan="2">&#160;</td></tr>
+</table><table class="memberdecls">
 <tr class="heading"><td colspan="2"><h2 class="groupheader"><a name="pub-methods"></a>
 Public Member Functions</h2></td></tr>
 <tr class="memitem:a0fe5c62e7c2d1adcb68f56fc644a7c61"><td class="memItemLeft" align="right" valign="top"><a id="a0fe5c62e7c2d1adcb68f56fc644a7c61"></a>
@@ -170,10 +179,14 @@ void&#160;</td><td class="memItemRight" valign="bottom"><b>set_accept_encoding</
 <tr class="memitem:acc644be23ad9701272c028757ad64ec2"><td class="memItemLeft" align="right" valign="top">void&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="classklib_1_1Request.html#acc644be23ad9701272c028757ad64ec2">basic_auth</a> (const std::string &amp;user_name, const std::string &amp;password)</td></tr>
 <tr class="memdesc:acc644be23ad9701272c028757ad64ec2"><td class="mdescLeft">&#160;</td><td class="mdescRight">Enable HTTP basic authentication.  <a href="classklib_1_1Request.html#acc644be23ad9701272c028757ad64ec2">More...</a><br /></td></tr>
 <tr class="separator:acc644be23ad9701272c028757ad64ec2"><td class="memSeparator" colspan="2">&#160;</td></tr>
-<tr class="memitem:a48ffa6c77fbc8148bd9e8b8527e13d71"><td class="memItemLeft" align="right" valign="top"><a id="a48ffa6c77fbc8148bd9e8b8527e13d71"></a>
-void&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="classklib_1_1Request.html#a48ffa6c77fbc8148bd9e8b8527e13d71">use_http3</a> ()</td></tr>
-<tr class="memdesc:a48ffa6c77fbc8148bd9e8b8527e13d71"><td class="mdescLeft">&#160;</td><td class="mdescRight">Use HTTP/3. <br /></td></tr>
-<tr class="separator:a48ffa6c77fbc8148bd9e8b8527e13d71"><td class="memSeparator" colspan="2">&#160;</td></tr>
+<tr class="memitem:a699bdc026769e5cca838ca5bca791099"><td class="memItemLeft" align="right" valign="top"><a id="a699bdc026769e5cca838ca5bca791099"></a>
+void&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="classklib_1_1Request.html#a699bdc026769e5cca838ca5bca791099">http_version</a> (<a class="el" href="classklib_1_1Request.html#a5fa625ef3219d4765b2bf27a92bcc35b">HTTPVersion</a> http_version)</td></tr>
+<tr class="memdesc:a699bdc026769e5cca838ca5bca791099"><td class="mdescLeft">&#160;</td><td class="mdescRight">Specify HTTP version. <br /></td></tr>
+<tr class="separator:a699bdc026769e5cca838ca5bca791099"><td class="memSeparator" colspan="2">&#160;</td></tr>
+<tr class="memitem:affece0c024a84a1b7bd5ba1e227520b7"><td class="memItemLeft" align="right" valign="top"><a id="affece0c024a84a1b7bd5ba1e227520b7"></a>
+void&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="classklib_1_1Request.html#affece0c024a84a1b7bd5ba1e227520b7">accept_http3_altsvc</a> ()</td></tr>
+<tr class="memdesc:affece0c024a84a1b7bd5ba1e227520b7"><td class="mdescLeft">&#160;</td><td class="mdescRight">Accept alternative services offered over HTTP/3. <br /></td></tr>
+<tr class="separator:affece0c024a84a1b7bd5ba1e227520b7"><td class="memSeparator" colspan="2">&#160;</td></tr>
 <tr class="memitem:a821a5ecba97e28f1bb8029e2aa11673a"><td class="memItemLeft" align="right" valign="top">std::string&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="classklib_1_1Request.html#a821a5ecba97e28f1bb8029e2aa11673a">url_encode</a> (const std::string &amp;str)</td></tr>
 <tr class="memdesc:a821a5ecba97e28f1bb8029e2aa11673a"><td class="mdescLeft">&#160;</td><td class="mdescRight">Encoding <a class="el" href="classklib_1_1URL.html" title="Parse URL.">URL</a> string.  <a href="classklib_1_1Request.html#a821a5ecba97e28f1bb8029e2aa11673a">More...</a><br /></td></tr>
 <tr class="separator:a821a5ecba97e28f1bb8029e2aa11673a"><td class="memSeparator" colspan="2">&#160;</td></tr>
