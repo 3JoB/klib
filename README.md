@@ -2,7 +2,7 @@
 
 [![Build](https://github.com/KaiserLancelot/klib/actions/workflows/build.yml/badge.svg)](https://github.com/KaiserLancelot/klib/actions/workflows/build.yml)
 [![Platform](https://img.shields.io/badge/Platform-Debian%2011-brightgreen)](https://www.debian.org/)
-[![Coverage Status](https://coveralls.io/repos/github/KaiserLancelot/klib/badge.svg?branch=main)](https://coveralls.io/github/KaiserLancelot/klib?branch=main)
+[![Coverage Status](https://codecov.io/gh/KaiserLancelot/klib/branch/main/graph/badge.svg?token=Adu3iF5b6t)](https://codecov.io/gh/KaiserLancelot/klib)
 [![GitHub Releases](https://img.shields.io/github/release/KaiserLancelot/klib)](https://github.com/KaiserLancelot/klib/releases/latest)
 [![Documentation](https://img.shields.io/badge/docs-doxygen-blue)](https://kaiserlancelot.github.io/klib)
 [![GitHub Downloads](https://img.shields.io/github/downloads/KaiserLancelot/klib/total)](https://github.com/KaiserLancelot/klib/releases)
