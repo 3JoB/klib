@@ -203,7 +203,7 @@ TEST_CASE("HTTP/2", "[http]") {
   request.verbose(true);
 #endif
 
-  auto response = request.get("https://www.litespeedtech.com/");
+  auto response = request.get("https://cloudflare-quic.com/");
   REQUIRE(response.ok());
 }
 
@@ -216,6 +216,6 @@ TEST_CASE("HTTP/3", "[http]") {
   request.verbose(true);
 #endif
 
-  auto response = request.get("https://www.litespeedtech.com/");
+  auto response = request.get("https://cloudflare-quic.com/");
   REQUIRE(response.ok());
 }
