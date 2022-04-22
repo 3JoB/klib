@@ -292,7 +292,7 @@ void Request::RequestImpl::set_browser_user_agent() {
   // navigator.userAgent
   set_user_agent(
       "Mozilla/5.0 (X11; Linux x86_64) AppleWebKit/537.36 (KHTML, like Gecko) "
-      "Chrome/100.0.4896.127 Safari/537.36 Edg/100.0.1185.44");
+      "Chrome/100.0.4896.127 Safari/537.36 Edg/100.0.1185.50");
 }
 
 void Request::RequestImpl::set_curl_user_agent() {
