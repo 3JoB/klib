@@ -69,6 +69,27 @@ class RGB {
 };
 
 /**
+ * @brief Check if the image is in PNG format
+ * @param image: Image to be detected
+ * @return Return true if it is in PNG format
+ */
+bool is_png(const std::string &image);
+
+/**
+ * @brief Check if the image is in JPEG format
+ * @param image: Image to be detected
+ * @return Return true if it is in JPEG format
+ */
+bool is_jpeg(const std::string &image);
+
+/**
+ * @brief Check if the image is in WebP format
+ * @param image: Image to be detected
+ * @return Return true if it is in WebP format
+ */
+bool is_webp(const std::string &image);
+
+/**
  * @brief Convert to PNG format
  * @param image_path: The path of the image to be converted
  * @param out_path: Output filename
