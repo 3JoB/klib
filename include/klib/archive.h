@@ -21,7 +21,7 @@ enum class Format { Zip, The7Zip, Tar };
 /**
  * @brief Supported Compression Algorithms
  */
-enum class Filter { None, Deflate, Gzip, LZMA, Zstd };
+enum class Filter { None, Deflate, Gzip, LZMA };
 
 /**
  * @brief Compress file or folder

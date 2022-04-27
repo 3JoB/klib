@@ -108,10 +108,6 @@ pkg_check_modules(libwebpmux REQUIRED IMPORTED_TARGET libwebpmux)
 pkg_check_modules(libwebpdemux REQUIRED IMPORTED_TARGET libwebpdemux)
 pkg_check_modules(liblzma REQUIRED IMPORTED_TARGET liblzma)
 pkg_check_modules(libqrencode REQUIRED IMPORTED_TARGET libqrencode)
-pkg_check_modules(libngtcp2 REQUIRED IMPORTED_TARGET libngtcp2)
-pkg_check_modules(libngtcp2_crypto_boringssl REQUIRED IMPORTED_TARGET
-                  libngtcp2_crypto_boringssl)
-pkg_check_modules(libnghttp3 REQUIRED IMPORTED_TARGET libnghttp3)
 
 find_package(fmt REQUIRED)
 find_package(spdlog REQUIRED)
@@ -208,8 +204,6 @@ file(MAKE_DIRECTORY ${KLIB_BINARY_DIR}/third_party/mozjpeg)
 file(MAKE_DIRECTORY ${KLIB_BINARY_DIR}/third_party/libwebp)
 file(MAKE_DIRECTORY ${KLIB_BINARY_DIR}/third_party/liblzma)
 file(MAKE_DIRECTORY ${KLIB_BINARY_DIR}/third_party/libqrencode)
-file(MAKE_DIRECTORY ${KLIB_BINARY_DIR}/third_party/libngtcp2)
-file(MAKE_DIRECTORY ${KLIB_BINARY_DIR}/third_party/libnghttp3)
 
 add_custom_command(
   TARGET ${KLIB_LIBRARY}
@@ -257,10 +251,6 @@ add_custom_command(
   COMMAND gcc-ar -x --output=libwebp /usr/local/lib/libwebpdemux.a
   COMMAND gcc-ar -x --output=liblzma /usr/local/lib/liblzma.a
   COMMAND gcc-ar -x --output=libqrencode /usr/local/lib/libqrencode.a
-  COMMAND gcc-ar -x --output=libngtcp2 /usr/local/lib/libngtcp2.a
-  COMMAND gcc-ar -x --output=libngtcp2
-          /usr/local/lib/libngtcp2_crypto_boringssl.a
-  COMMAND gcc-ar -x --output=libnghttp3 /usr/local/lib/libnghttp3.a
   COMMAND
     gcc-ar -qcs ${KLIB_BINARY_DIR}/lib${KLIB_LIBRARY}.a klib/*.o zlib-ng/*.o
     libarchive/*.o tidy-html5/*.o libcurl/*.o brotli/*.o boringssl/*.o
@@ -268,7 +258,6 @@ add_custom_command(
     libidn2/*.o libpsl/*.o libunistring/*.o xxhash/*.o cmark/*.o woff2/*.o
     libvips/*.o glib/*.o libexpat/*.o libffi/*.o mount/*.o blkid/*.o libpcre/*.o
     libspng/*.o mozjpeg/*.o libwebp/*.o liblzma/*.o libqrencode/*.o
-    libngtcp2/*.o libnghttp3/*.o
   COMMAND gcc-ranlib ${KLIB_BINARY_DIR}/lib${KLIB_LIBRARY}.a
   WORKING_DIRECTORY ${KLIB_BINARY_DIR}/third_party
   COMMENT "Combined static library")

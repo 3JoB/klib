@@ -22,11 +22,6 @@ class TestsFixture {
 
 }  // namespace
 
-TEST_CASE("libarchive version", "[archive]") {
-  CHECK(archive_zlib_version() == std::string("1.2.11.zlib-ng"));
-  CHECK(archive_libzstd_version() == std::string("1.5.2"));
-}
-
 TEST_CASE_METHOD(TestsFixture, "zip none", "[archive]") {
   REQUIRE_NOTHROW(klib::compress("zlib-ng-2.0.6", klib::Format::Zip,
                                  klib::Filter::None, "zip-none.zip"));
@@ -127,17 +122,6 @@ TEST_CASE_METHOD(TestsFixture, "tar xz", "[archive]") {
 
   CHECK(std::filesystem::remove("tar-xz.tar.xz"));
   CHECK(std::filesystem::remove_all("tar-xz"));
-}
-
-TEST_CASE_METHOD(TestsFixture, "tar zstd", "[archive]") {
-  REQUIRE_NOTHROW(klib::compress("zlib-ng-2.0.6", klib::Format::Tar,
-                                 klib::Filter::Zstd, "tar-zstd.tar.zst"));
-  dbg(std::filesystem::file_size("tar-zstd.tar.zst"));
-  REQUIRE_NOTHROW(klib::decompress("tar-zstd.tar.zst", "tar-zstd"));
-  CHECK_NOTHROW(klib::exec("diff -r zlib-ng-2.0.6 tar-zstd/zlib-ng-2.0.6"));
-
-  CHECK(std::filesystem::remove("tar-zstd.tar.zst"));
-  CHECK(std::filesystem::remove_all("tar-zstd"));
 }
 
 TEST_CASE("outermost_folder_name", "[archive]") {

@@ -25,8 +25,6 @@ A C++ library, which wraps several important C libraries and provides some conve
 - Argon2 ([License](https://github.com/P-H-C/phc-winner-argon2/blob/master/LICENSE))
 - zstd ([BSD License](https://github.com/facebook/zstd/blob/dev/LICENSE))
 - nghttp2 ([MIT License](https://github.com/nghttp2/nghttp2/blob/master/COPYING))
-- ngtcp2 ([MIT License](https://github.com/ngtcp2/ngtcp2/blob/main/COPYING))
-- nghttp3 ([MIT License](https://github.com/ngtcp2/nghttp3/blob/main/COPYING))
 - simdutf ([MIT License](https://github.com/simdutf/simdutf/blob/master/LICENSE-MIT))
 - libidn2 ([MIT](https://gitlab.com/libidn/libidn2/-/blob/master/COPYING))
 - libpsl ([MIT License](https://github.com/rockdaboot/libpsl/blob/master/LICENSE))
@@ -78,8 +76,6 @@ target_link_libraries(<your-target> PRIVATE klib::klib)
 
 ## Roadmap
 
-- Rewrite the HTTP module
-  - https://github.com/libcpr/cpr
 - curl_easy_header
   - https://github.com/curl/curl/pull/8593
 

@@ -11,15 +11,6 @@
 
 const std::string httpbin_url = "https://httpbin.org";
 
-TEST_CASE("curl version", "[http]") {
-  auto version_info = curl_version_info(CURLVERSION_NOW);
-
-  CHECK(version_info->libz_version == std::string("1.2.11.zlib-ng"));
-  CHECK(version_info->zstd_version == std::string("1.5.2"));
-  CHECK(version_info->brotli_version == std::string("1.0.9"));
-  CHECK(version_info->ssl_version == std::string("BoringSSL"));
-}
-
 TEST_CASE("request headers", "[http]") {
   klib::Request request;
   request.set_curl_user_agent();
@@ -192,30 +183,4 @@ TEST_CASE("download", "[http]") {
   REQUIRE(klib::sha256_hex(klib::read_file("zstd-1.5.0.tar.gz", true)) ==
           "0d9ade222c64e912d6957b11c923e214e2e010a18f39bec102f572e693ba2867");
   std::filesystem::remove("zstd-1.5.0.tar.gz");
-}
-
-TEST_CASE("HTTP/2", "[http]") {
-  klib::Request request;
-  request.http_version(klib::Request::HTTP2);
-  request.set_browser_user_agent();
-
-#ifndef NDEBUG
-  request.verbose(true);
-#endif
-
-  auto response = request.get("https://cloudflare-quic.com/");
-  REQUIRE(response.ok());
-}
-
-TEST_CASE("HTTP/3", "[http]") {
-  klib::Request request;
-  request.http_version(klib::Request::HTTP3);
-  request.set_browser_user_agent();
-
-#ifndef NDEBUG
-  request.verbose(true);
-#endif
-
-  auto response = request.get("https://cloudflare-quic.com/");
-  REQUIRE(response.ok());
 }

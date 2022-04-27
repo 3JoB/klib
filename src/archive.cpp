@@ -58,8 +58,6 @@ std::string compressed_file_name(const std::string &path, Format format,
       return name + ".tar.gz";
     } else if (filter == Filter::LZMA) {
       return name + ".tar.xz";
-    } else if (filter == Filter::Zstd) {
-      return name + ".tar.zst";
     }
   }
 
@@ -125,9 +123,6 @@ void init_write_format_filter(archive *archive, Format format, Filter filter,
     rc = archive_write_set_format_pax_restricted(archive);
     CHECK_LIBARCHIVE(rc, archive);
 
-    auto hardware_thread = std::to_string(std::thread::hardware_concurrency());
-    dbg(hardware_thread);
-
     if (filter == Filter::None) {
       rc = archive_write_add_filter_none(archive);
       CHECK_LIBARCHIVE(rc, archive);
@@ -140,16 +135,10 @@ void init_write_format_filter(archive *archive, Format format, Filter filter,
       CHECK_LIBARCHIVE(rc, archive);
       set_filter_compression_level(archive, level ? *level : 6);
 
+      auto hardware_thread =
+          std::to_string(std::thread::hardware_concurrency());
+      dbg(hardware_thread);
       rc = archive_write_set_filter_option(archive, "xz", "threads",
-                                           hardware_thread.c_str());
-      CHECK_LIBARCHIVE(rc, archive);
-    } else if (filter == Filter::Zstd) {
-      rc = archive_write_add_filter_zstd(archive);
-      CHECK_LIBARCHIVE(rc, archive);
-      set_filter_compression_level(archive,
-                                   level ? *level : ZSTD_defaultCLevel());
-
-      rc = archive_write_set_filter_option(archive, "zstd", "threads",
                                            hardware_thread.c_str());
       CHECK_LIBARCHIVE(rc, archive);
     }
@@ -176,9 +165,6 @@ void init_read_format_filter(archive *archive) {
   CHECK_LIBARCHIVE(rc, archive);
 
   rc = archive_read_support_filter_xz(archive);
-  CHECK_LIBARCHIVE(rc, archive);
-
-  rc = archive_read_support_filter_zstd(archive);
   CHECK_LIBARCHIVE(rc, archive);
 }
 

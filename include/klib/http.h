@@ -181,24 +181,6 @@ class Request {
   void basic_auth(const std::string &user_name, const std::string &password);
 
   /**
-   * @brief HTTP version
-   */
-  enum HTTPVersion {
-    HTTP2,
-    HTTP3,
-  };
-
-  /**
-   * @brief Specify HTTP version
-   */
-  void http_version(HTTPVersion http_version);
-
-  /**
-   * @brief Accept alternative services offered over HTTP/3
-   */
-  void accept_http3_altsvc();
-
-  /**
    * @brief Encoding URL string
    * @param str: String to be encoded
    * @return Encoded string

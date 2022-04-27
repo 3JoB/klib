@@ -165,8 +165,6 @@ class Request::RequestImpl {
   void set_cookie(
       const phmap::flat_hash_map<std::string, std::string> &cookies);
   void basic_auth(const std::string &user_name, const std::string &password);
-  void http_version(HTTPVersion http_version);
-  void accept_http3_altsvc();
   std::string url_encode(const std::string &str);
   std::string url_decode(const std::string &str);
 
@@ -296,7 +294,7 @@ void Request::RequestImpl::set_browser_user_agent() {
 }
 
 void Request::RequestImpl::set_curl_user_agent() {
-  set_user_agent("curl/7.82.0");
+  set_user_agent("curl/7.83.0");
 }
 
 void Request::RequestImpl::set_timeout(std::int64_t seconds) {
@@ -335,25 +333,6 @@ void Request::RequestImpl::basic_auth(const std::string &user_name,
   rc = curl_easy_setopt(curl_, CURLOPT_USERNAME, user_name.c_str());
   CHECK_CURL(rc);
   rc = curl_easy_setopt(curl_, CURLOPT_PASSWORD, password.c_str());
-  CHECK_CURL(rc);
-}
-
-void Request::RequestImpl::http_version(Request::HTTPVersion http_version) {
-  if (http_version == HTTPVersion::HTTP2) {
-    auto rc =
-        curl_easy_setopt(curl_, CURLOPT_HTTP_VERSION, CURL_HTTP_VERSION_2TLS);
-    CHECK_CURL(rc);
-  } else if (http_version == HTTPVersion::HTTP3) {
-    auto rc =
-        curl_easy_setopt(curl_, CURLOPT_HTTP_VERSION, CURL_HTTP_VERSION_3);
-    CHECK_CURL(rc);
-  }
-}
-
-void Request::RequestImpl::accept_http3_altsvc() {
-  // TODO Make it default
-  auto rc = curl_easy_setopt(curl_, CURLOPT_ALTSVC_CTRL,
-                             CURLALTSVC_H1 | CURLALTSVC_H2 | CURLALTSVC_H3);
   CHECK_CURL(rc);
 }
 
@@ -591,12 +570,6 @@ void Request::basic_auth(const std::string &user_name,
                          const std::string &password) {
   impl_->basic_auth(user_name, password);
 }
-
-void Request::http_version(Request::HTTPVersion http_version) {
-  impl_->http_version(http_version);
-}
-
-void Request::accept_http3_altsvc() { impl_->accept_http3_altsvc(); }
 
 std::string Request::url_encode(const std::string &str) {
   return impl_->url_encode(str);
