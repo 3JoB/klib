@@ -1,8 +1,5 @@
 var NAVTREEINDEX1 =
 {
-"qr__code_8h_source.html":[1,0,0,0,11],
-"request_8set_accept_encoding-example.html":[2,2],
-"request_8set_doh_url-example.html":[2,1],
 "request_8set_proxy-example.html":[2,0],
 "sql_8h.html":[1,0,0,0,12],
 "sql_8h_source.html":[1,0,0,0,12],

@@ -4,8 +4,7 @@ var archive_8h =
       [ "None", "archive_8h.html#aa25a2dd2c496b61e2b93bb7e9ca385aba6adf97f83acf6453d4a6a4b1070f3754", null ],
       [ "Deflate", "archive_8h.html#aa25a2dd2c496b61e2b93bb7e9ca385abae2430ff724c45c3d68893fb1a3584426", null ],
       [ "Gzip", "archive_8h.html#aa25a2dd2c496b61e2b93bb7e9ca385aba2548e50da66f41afea53de1cbbf3b30c", null ],
-      [ "LZMA", "archive_8h.html#aa25a2dd2c496b61e2b93bb7e9ca385abaf42190e84ceca474c5c77e4ddad30fb1", null ],
-      [ "Zstd", "archive_8h.html#aa25a2dd2c496b61e2b93bb7e9ca385aba0c8468c9ff2f38e853335e1e40ade4c3", null ]
+      [ "LZMA", "archive_8h.html#aa25a2dd2c496b61e2b93bb7e9ca385abaf42190e84ceca474c5c77e4ddad30fb1", null ]
     ] ],
     [ "Format", "archive_8h.html#a746bca2d6aafe9da24021476bae487e5", [
       [ "Zip", "archive_8h.html#a746bca2d6aafe9da24021476bae487e5a963ab0bbea32f1f9d19afb00d08be14d", null ],

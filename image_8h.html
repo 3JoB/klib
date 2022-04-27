@@ -31,7 +31,7 @@
  <tr style="height: 56px;">
   <td id="projectalign" style="padding-left: 0.5em;">
    <div id="projectname">klib
-   &#160;<span id="projectnumber">1.18.2</span>
+   &#160;<span id="projectnumber">1.19.0</span>
    </div>
   </td>
    <td>        <div id="MSearchBox" class="MSearchBoxInactive">
@@ -114,6 +114,15 @@ Classes</h2></td></tr>
 </table><table class="memberdecls">
 <tr class="heading"><td colspan="2"><h2 class="groupheader"><a name="func-members"></a>
 Functions</h2></td></tr>
+<tr class="memitem:a678ee9ab1a96ef67c9467d827ef3ec5e"><td class="memItemLeft" align="right" valign="top">bool&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="image_8h.html#a678ee9ab1a96ef67c9467d827ef3ec5e">klib::is_png</a> (const std::string &amp;image)</td></tr>
+<tr class="memdesc:a678ee9ab1a96ef67c9467d827ef3ec5e"><td class="mdescLeft">&#160;</td><td class="mdescRight">Check if the image is in PNG format.  <a href="image_8h.html#a678ee9ab1a96ef67c9467d827ef3ec5e">More...</a><br /></td></tr>
+<tr class="separator:a678ee9ab1a96ef67c9467d827ef3ec5e"><td class="memSeparator" colspan="2">&#160;</td></tr>
+<tr class="memitem:afe4111e33ac5fe7fe9b4123d95e071fb"><td class="memItemLeft" align="right" valign="top">bool&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="image_8h.html#afe4111e33ac5fe7fe9b4123d95e071fb">klib::is_jpeg</a> (const std::string &amp;image)</td></tr>
+<tr class="memdesc:afe4111e33ac5fe7fe9b4123d95e071fb"><td class="mdescLeft">&#160;</td><td class="mdescRight">Check if the image is in JPEG format.  <a href="image_8h.html#afe4111e33ac5fe7fe9b4123d95e071fb">More...</a><br /></td></tr>
+<tr class="separator:afe4111e33ac5fe7fe9b4123d95e071fb"><td class="memSeparator" colspan="2">&#160;</td></tr>
+<tr class="memitem:abf4ab37cd8e18d8b25d60378c572e31b"><td class="memItemLeft" align="right" valign="top">bool&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="image_8h.html#abf4ab37cd8e18d8b25d60378c572e31b">klib::is_webp</a> (const std::string &amp;image)</td></tr>
+<tr class="memdesc:abf4ab37cd8e18d8b25d60378c572e31b"><td class="mdescLeft">&#160;</td><td class="mdescRight">Check if the image is in WebP format.  <a href="image_8h.html#abf4ab37cd8e18d8b25d60378c572e31b">More...</a><br /></td></tr>
+<tr class="separator:abf4ab37cd8e18d8b25d60378c572e31b"><td class="memSeparator" colspan="2">&#160;</td></tr>
 <tr class="memitem:a6470a66019bf33b81ddacf058c777309"><td class="memItemLeft" align="right" valign="top">void&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="image_8h.html#a6470a66019bf33b81ddacf058c777309">klib::image_to_png</a> (const std::string &amp;image_path, const std::string &amp;out_path, std::int32_t quality=75, std::int32_t compression_level=6)</td></tr>
 <tr class="memdesc:a6470a66019bf33b81ddacf058c777309"><td class="mdescLeft">&#160;</td><td class="mdescRight">Convert to PNG format.  <a href="image_8h.html#a6470a66019bf33b81ddacf058c777309">More...</a><br /></td></tr>
 <tr class="separator:a6470a66019bf33b81ddacf058c777309"><td class="memSeparator" colspan="2">&#160;</td></tr>
@@ -286,6 +295,87 @@ Functions</h2></td></tr>
   </table>
   </dd>
 </dl>
+
+</div>
+</div>
+<a id="afe4111e33ac5fe7fe9b4123d95e071fb"></a>
+<h2 class="memtitle"><span class="permalink"><a href="#afe4111e33ac5fe7fe9b4123d95e071fb">&#9670;&nbsp;</a></span>is_jpeg()</h2>
+
+<div class="memitem">
+<div class="memproto">
+      <table class="memname">
+        <tr>
+          <td class="memname">bool klib::is_jpeg </td>
+          <td>(</td>
+          <td class="paramtype">const std::string &amp;&#160;</td>
+          <td class="paramname"><em>image</em></td><td>)</td>
+          <td></td>
+        </tr>
+      </table>
+</div><div class="memdoc">
+
+<p>Check if the image is in JPEG format. </p>
+<dl class="params"><dt>Parameters</dt><dd>
+  <table class="params">
+    <tr><td class="paramname">image</td><td>Image to be detected </td></tr>
+  </table>
+  </dd>
+</dl>
+<dl class="section return"><dt>Returns</dt><dd>Return true if it is in JPEG format </dd></dl>
+
+</div>
+</div>
+<a id="a678ee9ab1a96ef67c9467d827ef3ec5e"></a>
+<h2 class="memtitle"><span class="permalink"><a href="#a678ee9ab1a96ef67c9467d827ef3ec5e">&#9670;&nbsp;</a></span>is_png()</h2>
+
+<div class="memitem">
+<div class="memproto">
+      <table class="memname">
+        <tr>
+          <td class="memname">bool klib::is_png </td>
+          <td>(</td>
+          <td class="paramtype">const std::string &amp;&#160;</td>
+          <td class="paramname"><em>image</em></td><td>)</td>
+          <td></td>
+        </tr>
+      </table>
+</div><div class="memdoc">
+
+<p>Check if the image is in PNG format. </p>
+<dl class="params"><dt>Parameters</dt><dd>
+  <table class="params">
+    <tr><td class="paramname">image</td><td>Image to be detected </td></tr>
+  </table>
+  </dd>
+</dl>
+<dl class="section return"><dt>Returns</dt><dd>Return true if it is in PNG format </dd></dl>
+
+</div>
+</div>
+<a id="abf4ab37cd8e18d8b25d60378c572e31b"></a>
+<h2 class="memtitle"><span class="permalink"><a href="#abf4ab37cd8e18d8b25d60378c572e31b">&#9670;&nbsp;</a></span>is_webp()</h2>
+
+<div class="memitem">
+<div class="memproto">
+      <table class="memname">
+        <tr>
+          <td class="memname">bool klib::is_webp </td>
+          <td>(</td>
+          <td class="paramtype">const std::string &amp;&#160;</td>
+          <td class="paramname"><em>image</em></td><td>)</td>
+          <td></td>
+        </tr>
+      </table>
+</div><div class="memdoc">
+
+<p>Check if the image is in WebP format. </p>
+<dl class="params"><dt>Parameters</dt><dd>
+  <table class="params">
+    <tr><td class="paramname">image</td><td>Image to be detected </td></tr>
+  </table>
+  </dd>
+</dl>
+<dl class="section return"><dt>Returns</dt><dd>Return true if it is in WebP format </dd></dl>
 
 </div>
 </div>
