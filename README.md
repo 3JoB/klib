@@ -74,11 +74,6 @@ find_package(klib REQUIRED)
 target_link_libraries(<your-target> PRIVATE klib::klib)
 ```
 
-## Roadmap
-
-- curl_easy_header
-  - https://github.com/curl/curl/pull/8593
-
 ---
 
 Thanks to [JetBrains](https://www.jetbrains.com/) for donating product licenses to help develop this project <a href="https://www.jetbrains.com/"><img src="logo/jetbrains.svg" width="94" align="center" /></a>
