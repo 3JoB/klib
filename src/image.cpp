@@ -96,7 +96,14 @@ bool is_png(const std::string &image) {
 }
 
 bool is_jpeg(const std::string &image) {
-  return image.starts_with("\xFF\xD8\xFF\xE0");
+  return image.starts_with("\xFF\xD8\xFF\xDB") ||
+         image.starts_with(
+             "\xFF\xD8\xFF\xE0\x00\x10\x4A\x46\x49\x46\x00\x01") ||
+         image.starts_with("\xFF\xD8\xFF\xEE") ||
+         (image.starts_with("\xFF\xD8\xFF\xE1") &&
+          image.substr(6, 4) == "Exif" && image[10] == '\0' &&
+          image[11] == '\0') ||
+         image.starts_with("\xFF\xD8\xFF\xE0");
 }
 
 bool is_webp(const std::string &image) {

@@ -122,9 +122,15 @@ TEST_CASE("is_png", "[image]") {
 }
 
 TEST_CASE("is_jpeg", "[image]") {
-  const std::string file_name = "avatar.jpg";
+  std::string file_name = "avatar.jpg";
   REQUIRE(std::filesystem::exists(file_name));
-  const auto image = klib::read_file(file_name, true);
+  auto image = klib::read_file(file_name, true);
+
+  CHECK(klib::is_jpeg(image));
+
+  file_name = "test.jpg";
+  REQUIRE(std::filesystem::exists(file_name));
+  image = klib::read_file(file_name, true);
 
   CHECK(klib::is_jpeg(image));
 }
