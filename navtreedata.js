@@ -49,7 +49,7 @@ var NAVTREE =
 var NAVTREEINDEX =
 [
 "annotated.html",
-"request_8set_proxy-example.html"
+"qr__code_8h_source.html"
 ];
 
 var SYNCONMSG = 'click to disable panel synchronisation';
