@@ -90,26 +90,6 @@ RGB::~RGB() {
   }
 }
 
-// https://en.wikipedia.org/wiki/List_of_file_signatures
-bool is_png(const std::string &image) {
-  return image.starts_with("\x89\x50\x4E\x47\x0D\x0A\x1A\x0A");
-}
-
-bool is_jpeg(const std::string &image) {
-  return image.starts_with("\xFF\xD8\xFF\xDB") ||
-         image.starts_with(
-             "\xFF\xD8\xFF\xE0\x00\x10\x4A\x46\x49\x46\x00\x01") ||
-         image.starts_with("\xFF\xD8\xFF\xEE") ||
-         (image.starts_with("\xFF\xD8\xFF\xE1") &&
-          image.substr(6, 4) == "Exif" && image[10] == '\0' &&
-          image[11] == '\0') ||
-         image.starts_with("\xFF\xD8\xFF\xE0");
-}
-
-bool is_webp(const std::string &image) {
-  return image.starts_with("RIFF") && image.substr(8, 4) == "WEBP";
-}
-
 void image_to_png(const std::string &image_path, const std::string &out_path,
                   std::int32_t quality, std::int32_t compression_level) {
   auto vips_image = get_image(image_path);

@@ -108,6 +108,7 @@ pkg_check_modules(libwebpmux REQUIRED IMPORTED_TARGET libwebpmux)
 pkg_check_modules(libwebpdemux REQUIRED IMPORTED_TARGET libwebpdemux)
 pkg_check_modules(liblzma REQUIRED IMPORTED_TARGET liblzma)
 pkg_check_modules(libqrencode REQUIRED IMPORTED_TARGET libqrencode)
+pkg_check_modules(libmagic REQUIRED IMPORTED_TARGET libmagic)
 
 find_package(fmt REQUIRED)
 find_package(spdlog REQUIRED)
@@ -204,6 +205,7 @@ file(MAKE_DIRECTORY ${KLIB_BINARY_DIR}/third_party/mozjpeg)
 file(MAKE_DIRECTORY ${KLIB_BINARY_DIR}/third_party/libwebp)
 file(MAKE_DIRECTORY ${KLIB_BINARY_DIR}/third_party/liblzma)
 file(MAKE_DIRECTORY ${KLIB_BINARY_DIR}/third_party/libqrencode)
+file(MAKE_DIRECTORY ${KLIB_BINARY_DIR}/third_party/libmagic)
 
 add_custom_command(
   TARGET ${KLIB_LIBRARY}
@@ -251,13 +253,14 @@ add_custom_command(
   COMMAND gcc-ar -x --output=libwebp /usr/local/lib/libwebpdemux.a
   COMMAND gcc-ar -x --output=liblzma /usr/local/lib/liblzma.a
   COMMAND gcc-ar -x --output=libqrencode /usr/local/lib/libqrencode.a
+  COMMAND gcc-ar -x --output=libmagic /usr/local/lib/libmagic.a
   COMMAND
     gcc-ar -qcs ${KLIB_BINARY_DIR}/lib${KLIB_LIBRARY}.a klib/*.o zlib-ng/*.o
     libarchive/*.o tidy-html5/*.o libcurl/*.o brotli/*.o boringssl/*.o
     sqlcipher/*.o argon2/*.o zstd/*.o fmt/*.o spdlog/*.o nghttp2/*.o simdutf/*.o
     libidn2/*.o libpsl/*.o libunistring/*.o xxhash/*.o cmark/*.o woff2/*.o
     libvips/*.o glib/*.o libexpat/*.o libffi/*.o mount/*.o blkid/*.o libpcre/*.o
-    libspng/*.o mozjpeg/*.o libwebp/*.o liblzma/*.o libqrencode/*.o
+    libspng/*.o mozjpeg/*.o libwebp/*.o liblzma/*.o libqrencode/*.o libmagic/*.o
   COMMAND gcc-ranlib ${KLIB_BINARY_DIR}/lib${KLIB_LIBRARY}.a
   WORKING_DIRECTORY ${KLIB_BINARY_DIR}/third_party
   COMMENT "Combined static library")
