@@ -43,6 +43,7 @@ A C++ library, which wraps several important C libraries and provides some conve
 - libwebp ([License](https://chromium.googlesource.com/webm/libwebp/+/refs/heads/main/COPYING))
 - XZ Utils ([License](https://git.tukaani.org/?p=xz.git;a=blob;f=COPYING;h=20e60d5b2427334e1fec6701e7c5ad0da0bc8a5d;hb=HEAD))
 - libqrencode ([GNU Lesser General Public License v2.1](https://github.com/fukuchi/libqrencode/blob/master/COPYING))
+- file ([License](https://github.com/file/file/blob/master/COPYING))
 - Scope Guard ([MIT License](https://github.com/Neargye/scope_guard/blob/master/LICENSE))
 - fmt ([License](https://github.com/fmtlib/fmt/blob/master/LICENSE.rst))
 - spdlog ([MIT License](https://github.com/gabime/spdlog/blob/v1.x/LICENSE))
