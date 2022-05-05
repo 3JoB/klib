@@ -18,14 +18,14 @@ std::string mime(const std::string &file) {
   auto cookie = magic_open(MAGIC_MIME_TYPE);
   SCOPE_EXIT { magic_close(cookie); };
   if (!cookie) [[unlikely]] {
-    throw RuntimeError("Unable to initialize cookie library: {}",
+    throw RuntimeError("Unable to initialize magic library: {}",
                        std::strerror(errno));
   }
 
   void *bufs[1] = {magic};
   std::size_t sizes[1] = {static_cast<std::size_t>(magic_size)};
   if (magic_load_buffers(cookie, bufs, sizes, 1) != 0) [[unlikely]] {
-    throw RuntimeError("Cannot load cookie database: {}", magic_error(cookie));
+    throw RuntimeError("Cannot load magic database: {}", magic_error(cookie));
   }
 
   auto str = magic_buffer(cookie, std::data(file), std::size(file));
