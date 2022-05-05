@@ -134,12 +134,12 @@ include_directories(${gio-2.0_INCLUDE_DIRS})
 include_directories(third_party)
 
 # ---------------------------------------------------------------------------------------
-# Build cacert file
+# Build blob file
 # ---------------------------------------------------------------------------------------
 file(COPY "${KLIB_SOURCE_DIR}/cacert/cacert.pem" DESTINATION ${KLIB_BINARY_DIR})
 
-add_library(cacert STATIC "${KLIB_SOURCE_DIR}/src/cacert.s")
-target_compile_options(cacert PRIVATE "-Wno-unused-command-line-argument")
+add_library(blob STATIC "${KLIB_SOURCE_DIR}/src/blob.s")
+target_compile_options(blob PRIVATE "-Wno-unused-command-line-argument")
 
 # ---------------------------------------------------------------------------------------
 # Build static library
@@ -211,7 +211,7 @@ add_custom_command(
   TARGET ${KLIB_LIBRARY}
   POST_BUILD
   COMMAND gcc-ar -x --output=klib $<TARGET_FILE:${KLIB_LIBRARY}>
-  COMMAND gcc-ar -x --output=klib $<TARGET_FILE:cacert>
+  COMMAND gcc-ar -x --output=klib $<TARGET_FILE:blob>
   COMMAND gcc-ar -x --output=zlib-ng /usr/local/lib/libz.a
   COMMAND gcc-ar -x --output=libarchive /usr/local/lib/libarchive.a
   COMMAND gcc-ar -x --output=tidy-html5 /usr/local/lib/libtidy.a
