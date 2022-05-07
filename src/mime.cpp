@@ -14,6 +14,8 @@ extern int magic_size;
 
 namespace klib {
 
+namespace {
+
 std::string mime(const std::string &file) {
   auto cookie = magic_open(MAGIC_MIME_TYPE);
   SCOPE_EXIT { magic_close(cookie); };
@@ -35,6 +37,8 @@ std::string mime(const std::string &file) {
 
   return str;
 }
+
+}  // namespace
 
 bool is_png(const std::string &image) { return mime(image) == "image/png"; }
 

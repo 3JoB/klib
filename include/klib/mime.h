@@ -10,13 +10,6 @@
 namespace klib {
 
 /**
- * @brief Return MIME type based on file content
- * @param file: File content to be detected
- * @return Return the MIME type
- */
-std::string mime(const std::string &data);
-
-/**
  * @brief Check if the image is in PNG format
  * @param image: Image to be detected
  * @return Return true if it is in PNG format
