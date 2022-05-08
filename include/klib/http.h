@@ -13,7 +13,6 @@
 #include <parallel_hashmap/phmap.h>
 
 #include "klib/detail/http-inl.h"
-#include "klib/exception.h"
 
 namespace klib {
 
@@ -40,7 +39,7 @@ inline std::string http_status_str(HttpStatus http_status) {
     KLIB_HTTP_STATUS_MAP(XX)
 #undef XX
     default:
-      throw InvalidArgument("Unknown HTTP status");
+      return "Unknown HTTP status";
   }
 }
 
@@ -69,7 +68,7 @@ inline std::string http_method_str(HttpMethod http_method) {
     KLIB_HTTP_METHOD_MAP(XX)
 #undef XX
     default:
-      throw InvalidArgument("Unknown Http method");
+      return "Unknown Http method";
   }
 }
 
