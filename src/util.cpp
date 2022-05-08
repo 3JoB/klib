@@ -230,7 +230,11 @@ std::string generate_random_bytes(std::size_t bytes) {
 // https://stackoverflow.com/questions/1022957/getting-terminal-width-in-c
 std::pair<std::uint32_t, std::uint32_t> terminal_size() {
   winsize win_size;
-  ioctl(STDOUT_FILENO, TIOCGWINSZ, &win_size);
+  auto rc = ioctl(STDOUT_FILENO, TIOCGWINSZ, &win_size);
+  if (rc != 0) [[unlikely]] {
+    return {100, 25};
+  }
+
   return {win_size.ws_col, win_size.ws_row};
 }
 
