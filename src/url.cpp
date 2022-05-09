@@ -1,6 +1,7 @@
 #include "klib/url.h"
 
 #include <charconv>
+#include <vector>
 
 #include <curl/urlapi.h>
 #include <boost/algorithm/string.hpp>
