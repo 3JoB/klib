@@ -40,3 +40,15 @@ TEST_CASE("URL2", "[url]") {
   CHECK(url.build() ==
         "https://masiro.me/images/encode/other-220322144937-1J7I.jpg");
 }
+
+TEST_CASE("URL3", "[url]") {
+  klib::URL url;
+
+  url.set_host("www.example.com");
+  url.set_path("/引き割り.html");
+  url.set_query({{"a", "1"}, {"b", "你"}});
+
+  CHECK(url.build() ==
+        "https://www.example.com/"
+        "%e5%bc%95%e3%81%8d%e5%89%b2%e3%82%8a.html?b=%e4%bd%a0&a=1");
+}

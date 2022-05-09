@@ -14,6 +14,7 @@ namespace klib {
 
 /**
  * @brief Parse and build URL
+ * @see https://en.wikipedia.org/wiki/URL
  */
 class URL {
  public:
@@ -37,7 +38,6 @@ class URL {
    * @brief Get URL schema
    * @return URL schema
    * @example url.schema() == "https"
-   * @see https://en.wikipedia.org/wiki/URL
    */
   [[nodiscard]] const std::string &schema() const { return schema_; }
 
@@ -51,7 +51,6 @@ class URL {
    * @brief Get URL host
    * @return URL host
    * @example url.host() == "www.example.com"
-   * @see https://en.wikipedia.org/wiki/URL
    */
   [[nodiscard]] const std::string &host() const { return host_; }
 
@@ -65,7 +64,6 @@ class URL {
    * @brief Get URL port
    * @return URL port
    * @example url.port() == 443
-   * @see https://en.wikipedia.org/wiki/URL
    */
   [[nodiscard]] std::int32_t port() const { return port_; }
 
@@ -79,7 +77,6 @@ class URL {
    * @brief Get URL path
    * @return URL path
    * @example url.path() == "/path/to/index.html"
-   * @see https://en.wikipedia.org/wiki/URL
    */
   [[nodiscard]] const std::string &path() const { return path_; }
 
@@ -92,8 +89,6 @@ class URL {
   /**
    * @brief Get URL query
    * @return URL query
-   * @example url.query() == "key1=value1&key2=value2"
-   * @see https://en.wikipedia.org/wiki/URL
    */
   [[nodiscard]] const phmap::flat_hash_map<std::string, std::string> &query()
       const {
@@ -113,7 +108,6 @@ class URL {
    * @return URL fragment
    * @example url = "https://www.example.com/index.html#Somewhere"
    * @example url.fragment() == "Somewhere"
-   * @see https://en.wikipedia.org/wiki/URL
    */
   [[nodiscard]] const std::string &fragment() const { return fragment_; }
 
@@ -128,7 +122,6 @@ class URL {
    * @return URL user
    * @example url = "https://user:password@example.com"
    * @example url.user() == "user"
-   * @see https://en.wikipedia.org/wiki/URL
    */
   [[nodiscard]] const std::string &user() const { return user_; }
 
@@ -143,7 +136,6 @@ class URL {
    * @return URL password
    * @example url = "https://user:password@example.com"
    * @example url.password() == "password"
-   * @see https://en.wikipedia.org/wiki/URL
    */
   [[nodiscard]] const std::string &password() const { return password_; }
 
@@ -154,7 +146,7 @@ class URL {
   void set_password(const std::string &password) { password_ = password; }
 
  private:
-  std::string schema_;
+  std::string schema_ = "https";
   std::string host_;
   std::int32_t port_ = 0;
   std::string path_;

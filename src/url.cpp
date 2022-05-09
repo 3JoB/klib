@@ -60,7 +60,7 @@ URL::URL(const std::string& url) {
   {
     char* str;
     SCOPE_EXIT { curl_free(str); };
-    rc = curl_url_get(c_url, CURLUPART_PATH, &str, 0);
+    rc = curl_url_get(c_url, CURLUPART_PATH, &str, CURLU_URLDECODE);
     CHECK_CURL_URL(rc);
     path_ = str;
   }
@@ -138,7 +138,8 @@ std::string URL::build() const {
   }
 
   if (!std::empty(path_)) {
-    auto rc = curl_url_set(c_url, CURLUPART_PATH, path_.c_str(), 0);
+    auto rc =
+        curl_url_set(c_url, CURLUPART_PATH, path_.c_str(), CURLU_URLENCODE);
     CHECK_CURL_URL(rc);
   }
 
