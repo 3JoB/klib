@@ -31,7 +31,7 @@
  <tr style="height: 56px;">
   <td id="projectalign" style="padding-left: 0.5em;">
    <div id="projectname">klib
-   &#160;<span id="projectnumber">1.20.1</span>
+   &#160;<span id="projectnumber">1.21.0</span>
    </div>
   </td>
    <td>        <div id="MSearchBox" class="MSearchBoxInactive">
@@ -100,46 +100,78 @@ $(document).ready(function(){initNavTree('classklib_1_1URL.html',''); initResiza
 </div><!--header-->
 <div class="contents">
 
-<p>Parse <a class="el" href="classklib_1_1URL.html" title="Parse URL.">URL</a>.  
+<p>Parse and build <a class="el" href="classklib_1_1URL.html" title="Parse and build URL.">URL</a>.  
  <a href="classklib_1_1URL.html#details">More...</a></p>
 
-<p><code>#include &lt;<a class="el" href="url__parse_8h_source.html">url_parse.h</a>&gt;</code></p>
+<p><code>#include &lt;<a class="el" href="url_8h_source.html">url.h</a>&gt;</code></p>
 <table class="memberdecls">
 <tr class="heading"><td colspan="2"><h2 class="groupheader"><a name="pub-methods"></a>
 Public Member Functions</h2></td></tr>
-<tr class="memitem:a9ba546ee9cc96d95ec097383dbfdea45"><td class="memItemLeft" align="right" valign="top">&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="classklib_1_1URL.html#a9ba546ee9cc96d95ec097383dbfdea45">URL</a> (std::string url)</td></tr>
-<tr class="memdesc:a9ba546ee9cc96d95ec097383dbfdea45"><td class="mdescLeft">&#160;</td><td class="mdescRight">Constructor.  <a href="classklib_1_1URL.html#a9ba546ee9cc96d95ec097383dbfdea45">More...</a><br /></td></tr>
-<tr class="separator:a9ba546ee9cc96d95ec097383dbfdea45"><td class="memSeparator" colspan="2">&#160;</td></tr>
-<tr class="memitem:a76559355f45f73d69b5dd05a3a9823d9"><td class="memItemLeft" align="right" valign="top"><a id="a76559355f45f73d69b5dd05a3a9823d9"></a>
-std::string_view&#160;</td><td class="memItemRight" valign="bottom"><b>schema</b> () const noexcept</td></tr>
-<tr class="separator:a76559355f45f73d69b5dd05a3a9823d9"><td class="memSeparator" colspan="2">&#160;</td></tr>
-<tr class="memitem:ad4497c15f17b284387bacfae18448b78"><td class="memItemLeft" align="right" valign="top"><a id="ad4497c15f17b284387bacfae18448b78"></a>
-std::string_view&#160;</td><td class="memItemRight" valign="bottom"><b>host</b> () const noexcept</td></tr>
-<tr class="separator:ad4497c15f17b284387bacfae18448b78"><td class="memSeparator" colspan="2">&#160;</td></tr>
-<tr class="memitem:aa0a55bd650f7fe9a11eb9447e48d272a"><td class="memItemLeft" align="right" valign="top"><a id="aa0a55bd650f7fe9a11eb9447e48d272a"></a>
-std::int32_t&#160;</td><td class="memItemRight" valign="bottom"><b>port</b> () const noexcept</td></tr>
-<tr class="separator:aa0a55bd650f7fe9a11eb9447e48d272a"><td class="memSeparator" colspan="2">&#160;</td></tr>
-<tr class="memitem:a951d49987df06612b8afc256ce662430"><td class="memItemLeft" align="right" valign="top"><a id="a951d49987df06612b8afc256ce662430"></a>
-std::string_view&#160;</td><td class="memItemRight" valign="bottom"><b>path</b> () const noexcept</td></tr>
-<tr class="separator:a951d49987df06612b8afc256ce662430"><td class="memSeparator" colspan="2">&#160;</td></tr>
-<tr class="memitem:a93b8331c553361914e2c9bef47e211c1"><td class="memItemLeft" align="right" valign="top"><a id="a93b8331c553361914e2c9bef47e211c1"></a>
-std::string_view&#160;</td><td class="memItemRight" valign="bottom"><b>query</b> () const noexcept</td></tr>
-<tr class="separator:a93b8331c553361914e2c9bef47e211c1"><td class="memSeparator" colspan="2">&#160;</td></tr>
-<tr class="memitem:aba50dddd3c3797d560d5336195256ab6"><td class="memItemLeft" align="right" valign="top"><a id="aba50dddd3c3797d560d5336195256ab6"></a>
-std::string_view&#160;</td><td class="memItemRight" valign="bottom"><b>fragment</b> () const noexcept</td></tr>
-<tr class="separator:aba50dddd3c3797d560d5336195256ab6"><td class="memSeparator" colspan="2">&#160;</td></tr>
-<tr class="memitem:ab549a95f7c12ed49ed6447a497a27753"><td class="memItemLeft" align="right" valign="top"><a id="ab549a95f7c12ed49ed6447a497a27753"></a>
-std::string_view&#160;</td><td class="memItemRight" valign="bottom"><b>user_info</b> () const noexcept</td></tr>
-<tr class="separator:ab549a95f7c12ed49ed6447a497a27753"><td class="memSeparator" colspan="2">&#160;</td></tr>
-<tr class="memitem:aaf6fb56091f5125b19054de60cc756f9"><td class="memItemLeft" align="right" valign="top">phmap::flat_hash_map&lt; std::string, std::string &gt;&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="classklib_1_1URL.html#aaf6fb56091f5125b19054de60cc756f9">query_map</a> () const</td></tr>
-<tr class="memdesc:aaf6fb56091f5125b19054de60cc756f9"><td class="mdescLeft">&#160;</td><td class="mdescRight">Parse query parameters.  <a href="classklib_1_1URL.html#aaf6fb56091f5125b19054de60cc756f9">More...</a><br /></td></tr>
-<tr class="separator:aaf6fb56091f5125b19054de60cc756f9"><td class="memSeparator" colspan="2">&#160;</td></tr>
+<tr class="memitem:a7c3ad9c9d0fa68f27b692e5474f57927"><td class="memItemLeft" align="right" valign="top"><a id="a7c3ad9c9d0fa68f27b692e5474f57927"></a>
+&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="classklib_1_1URL.html#a7c3ad9c9d0fa68f27b692e5474f57927">URL</a> ()=default</td></tr>
+<tr class="memdesc:a7c3ad9c9d0fa68f27b692e5474f57927"><td class="mdescLeft">&#160;</td><td class="mdescRight">Default constructor. <br /></td></tr>
+<tr class="separator:a7c3ad9c9d0fa68f27b692e5474f57927"><td class="memSeparator" colspan="2">&#160;</td></tr>
+<tr class="memitem:ab380b3c535b362d46693603e923bcf78"><td class="memItemLeft" align="right" valign="top">&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="classklib_1_1URL.html#ab380b3c535b362d46693603e923bcf78">URL</a> (const std::string &amp;url)</td></tr>
+<tr class="memdesc:ab380b3c535b362d46693603e923bcf78"><td class="mdescLeft">&#160;</td><td class="mdescRight">Constructor.  <a href="classklib_1_1URL.html#ab380b3c535b362d46693603e923bcf78">More...</a><br /></td></tr>
+<tr class="separator:ab380b3c535b362d46693603e923bcf78"><td class="memSeparator" colspan="2">&#160;</td></tr>
+<tr class="memitem:a02fa6ed756dd737e1d99be9ea7b71adb"><td class="memItemLeft" align="right" valign="top">std::string&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="classklib_1_1URL.html#a02fa6ed756dd737e1d99be9ea7b71adb">build</a> () const</td></tr>
+<tr class="memdesc:a02fa6ed756dd737e1d99be9ea7b71adb"><td class="mdescLeft">&#160;</td><td class="mdescRight">Build <a class="el" href="classklib_1_1URL.html" title="Parse and build URL.">URL</a>.  <a href="classklib_1_1URL.html#a02fa6ed756dd737e1d99be9ea7b71adb">More...</a><br /></td></tr>
+<tr class="separator:a02fa6ed756dd737e1d99be9ea7b71adb"><td class="memSeparator" colspan="2">&#160;</td></tr>
+<tr class="memitem:ac156d1868d9be8409cf34e080fefede7"><td class="memItemLeft" align="right" valign="top"><a id="ac156d1868d9be8409cf34e080fefede7"></a>
+const std::string &amp;&#160;</td><td class="memItemRight" valign="bottom"><b>schema</b> () const</td></tr>
+<tr class="separator:ac156d1868d9be8409cf34e080fefede7"><td class="memSeparator" colspan="2">&#160;</td></tr>
+<tr class="memitem:a64cc3c70623482e4ac6466e0b93c7507"><td class="memItemLeft" align="right" valign="top">void&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="classklib_1_1URL.html#a64cc3c70623482e4ac6466e0b93c7507">set_schema</a> (const std::string &amp;schema)</td></tr>
+<tr class="memdesc:a64cc3c70623482e4ac6466e0b93c7507"><td class="mdescLeft">&#160;</td><td class="mdescRight">Set <a class="el" href="classklib_1_1URL.html" title="Parse and build URL.">URL</a> schema.  <a href="classklib_1_1URL.html#a64cc3c70623482e4ac6466e0b93c7507">More...</a><br /></td></tr>
+<tr class="separator:a64cc3c70623482e4ac6466e0b93c7507"><td class="memSeparator" colspan="2">&#160;</td></tr>
+<tr class="memitem:a057c2facae08f289a77d0b89d0d8cbe1"><td class="memItemLeft" align="right" valign="top"><a id="a057c2facae08f289a77d0b89d0d8cbe1"></a>
+const std::string &amp;&#160;</td><td class="memItemRight" valign="bottom"><b>host</b> () const</td></tr>
+<tr class="separator:a057c2facae08f289a77d0b89d0d8cbe1"><td class="memSeparator" colspan="2">&#160;</td></tr>
+<tr class="memitem:ab27bbe0635220df332795aded4b731ec"><td class="memItemLeft" align="right" valign="top">void&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="classklib_1_1URL.html#ab27bbe0635220df332795aded4b731ec">set_host</a> (const std::string &amp;host)</td></tr>
+<tr class="memdesc:ab27bbe0635220df332795aded4b731ec"><td class="mdescLeft">&#160;</td><td class="mdescRight">Set <a class="el" href="classklib_1_1URL.html" title="Parse and build URL.">URL</a> host.  <a href="classklib_1_1URL.html#ab27bbe0635220df332795aded4b731ec">More...</a><br /></td></tr>
+<tr class="separator:ab27bbe0635220df332795aded4b731ec"><td class="memSeparator" colspan="2">&#160;</td></tr>
+<tr class="memitem:a205e24e1883f85ec43472a0c3b8baaed"><td class="memItemLeft" align="right" valign="top"><a id="a205e24e1883f85ec43472a0c3b8baaed"></a>
+std::int32_t&#160;</td><td class="memItemRight" valign="bottom"><b>port</b> () const</td></tr>
+<tr class="separator:a205e24e1883f85ec43472a0c3b8baaed"><td class="memSeparator" colspan="2">&#160;</td></tr>
+<tr class="memitem:af3509f57a8bda90b0d819aa67324bba1"><td class="memItemLeft" align="right" valign="top">void&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="classklib_1_1URL.html#af3509f57a8bda90b0d819aa67324bba1">set_port</a> (std::int32_t port)</td></tr>
+<tr class="memdesc:af3509f57a8bda90b0d819aa67324bba1"><td class="mdescLeft">&#160;</td><td class="mdescRight">Set <a class="el" href="classklib_1_1URL.html" title="Parse and build URL.">URL</a> port.  <a href="classklib_1_1URL.html#af3509f57a8bda90b0d819aa67324bba1">More...</a><br /></td></tr>
+<tr class="separator:af3509f57a8bda90b0d819aa67324bba1"><td class="memSeparator" colspan="2">&#160;</td></tr>
+<tr class="memitem:a5b5a17f79f7ab4b808b93c0498e59088"><td class="memItemLeft" align="right" valign="top"><a id="a5b5a17f79f7ab4b808b93c0498e59088"></a>
+const std::string &amp;&#160;</td><td class="memItemRight" valign="bottom"><b>path</b> () const</td></tr>
+<tr class="separator:a5b5a17f79f7ab4b808b93c0498e59088"><td class="memSeparator" colspan="2">&#160;</td></tr>
+<tr class="memitem:a70fdff0ebf823d3d5d6b12df966acf97"><td class="memItemLeft" align="right" valign="top">void&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="classklib_1_1URL.html#a70fdff0ebf823d3d5d6b12df966acf97">set_path</a> (const std::string &amp;path)</td></tr>
+<tr class="memdesc:a70fdff0ebf823d3d5d6b12df966acf97"><td class="mdescLeft">&#160;</td><td class="mdescRight">Set <a class="el" href="classklib_1_1URL.html" title="Parse and build URL.">URL</a> path.  <a href="classklib_1_1URL.html#a70fdff0ebf823d3d5d6b12df966acf97">More...</a><br /></td></tr>
+<tr class="separator:a70fdff0ebf823d3d5d6b12df966acf97"><td class="memSeparator" colspan="2">&#160;</td></tr>
+<tr class="memitem:a5b3434c08c190fcd008595f54fe11874"><td class="memItemLeft" align="right" valign="top">const phmap::flat_hash_map&lt; std::string, std::string &gt; &amp;&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="classklib_1_1URL.html#a5b3434c08c190fcd008595f54fe11874">query</a> () const</td></tr>
+<tr class="memdesc:a5b3434c08c190fcd008595f54fe11874"><td class="mdescLeft">&#160;</td><td class="mdescRight">Get <a class="el" href="classklib_1_1URL.html" title="Parse and build URL.">URL</a> query.  <a href="classklib_1_1URL.html#a5b3434c08c190fcd008595f54fe11874">More...</a><br /></td></tr>
+<tr class="separator:a5b3434c08c190fcd008595f54fe11874"><td class="memSeparator" colspan="2">&#160;</td></tr>
+<tr class="memitem:ad3b8b3cd745a5f0344a7567250db8898"><td class="memItemLeft" align="right" valign="top">void&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="classklib_1_1URL.html#ad3b8b3cd745a5f0344a7567250db8898">set_query</a> (const phmap::flat_hash_map&lt; std::string, std::string &gt; &amp;<a class="el" href="classklib_1_1URL.html#a5b3434c08c190fcd008595f54fe11874">query</a>)</td></tr>
+<tr class="memdesc:ad3b8b3cd745a5f0344a7567250db8898"><td class="mdescLeft">&#160;</td><td class="mdescRight">Set <a class="el" href="classklib_1_1URL.html" title="Parse and build URL.">URL</a> query.  <a href="classklib_1_1URL.html#ad3b8b3cd745a5f0344a7567250db8898">More...</a><br /></td></tr>
+<tr class="separator:ad3b8b3cd745a5f0344a7567250db8898"><td class="memSeparator" colspan="2">&#160;</td></tr>
+<tr class="memitem:a6c2c95b986b2e4c6d7383e5e99fea5fb"><td class="memItemLeft" align="right" valign="top"><a id="a6c2c95b986b2e4c6d7383e5e99fea5fb"></a>
+const std::string &amp;&#160;</td><td class="memItemRight" valign="bottom"><b>fragment</b> () const</td></tr>
+<tr class="separator:a6c2c95b986b2e4c6d7383e5e99fea5fb"><td class="memSeparator" colspan="2">&#160;</td></tr>
+<tr class="memitem:a4c5bb0286c6cb63912c2cb443cf22b91"><td class="memItemLeft" align="right" valign="top">void&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="classklib_1_1URL.html#a4c5bb0286c6cb63912c2cb443cf22b91">set_fragment</a> (const std::string &amp;fragment)</td></tr>
+<tr class="memdesc:a4c5bb0286c6cb63912c2cb443cf22b91"><td class="mdescLeft">&#160;</td><td class="mdescRight">Set <a class="el" href="classklib_1_1URL.html" title="Parse and build URL.">URL</a> fragment.  <a href="classklib_1_1URL.html#a4c5bb0286c6cb63912c2cb443cf22b91">More...</a><br /></td></tr>
+<tr class="separator:a4c5bb0286c6cb63912c2cb443cf22b91"><td class="memSeparator" colspan="2">&#160;</td></tr>
+<tr class="memitem:a32b097494b6b518a7ddeca0c6bd18475"><td class="memItemLeft" align="right" valign="top"><a id="a32b097494b6b518a7ddeca0c6bd18475"></a>
+const std::string &amp;&#160;</td><td class="memItemRight" valign="bottom"><b>user</b> () const</td></tr>
+<tr class="separator:a32b097494b6b518a7ddeca0c6bd18475"><td class="memSeparator" colspan="2">&#160;</td></tr>
+<tr class="memitem:a37872b88a5fbfb4348e980dee8b5b7eb"><td class="memItemLeft" align="right" valign="top">void&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="classklib_1_1URL.html#a37872b88a5fbfb4348e980dee8b5b7eb">set_user</a> (const std::string &amp;user)</td></tr>
+<tr class="memdesc:a37872b88a5fbfb4348e980dee8b5b7eb"><td class="mdescLeft">&#160;</td><td class="mdescRight">Set <a class="el" href="classklib_1_1URL.html" title="Parse and build URL.">URL</a> user.  <a href="classklib_1_1URL.html#a37872b88a5fbfb4348e980dee8b5b7eb">More...</a><br /></td></tr>
+<tr class="separator:a37872b88a5fbfb4348e980dee8b5b7eb"><td class="memSeparator" colspan="2">&#160;</td></tr>
+<tr class="memitem:ae678909dbf255efa42741ee8d95637bf"><td class="memItemLeft" align="right" valign="top"><a id="ae678909dbf255efa42741ee8d95637bf"></a>
+const std::string &amp;&#160;</td><td class="memItemRight" valign="bottom"><b>password</b> () const</td></tr>
+<tr class="separator:ae678909dbf255efa42741ee8d95637bf"><td class="memSeparator" colspan="2">&#160;</td></tr>
+<tr class="memitem:a85b6e51cc528f5135c930bbe682b7de8"><td class="memItemLeft" align="right" valign="top">void&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="classklib_1_1URL.html#a85b6e51cc528f5135c930bbe682b7de8">set_password</a> (const std::string &amp;password)</td></tr>
+<tr class="memdesc:a85b6e51cc528f5135c930bbe682b7de8"><td class="mdescLeft">&#160;</td><td class="mdescRight">Set <a class="el" href="classklib_1_1URL.html" title="Parse and build URL.">URL</a> password.  <a href="classklib_1_1URL.html#a85b6e51cc528f5135c930bbe682b7de8">More...</a><br /></td></tr>
+<tr class="separator:a85b6e51cc528f5135c930bbe682b7de8"><td class="memSeparator" colspan="2">&#160;</td></tr>
 </table>
 <a name="details" id="details"></a><h2 class="groupheader">Detailed Description</h2>
-<div class="textblock"><p>Parse <a class="el" href="classklib_1_1URL.html" title="Parse URL.">URL</a>. </p>
+<div class="textblock"><p>Parse and build <a class="el" href="classklib_1_1URL.html" title="Parse and build URL.">URL</a>. </p>
+<dl class="section see"><dt>See also</dt><dd><a href="https://en.wikipedia.org/wiki/URL">https://en.wikipedia.org/wiki/URL</a> </dd></dl>
 </div><h2 class="groupheader">Constructor &amp; Destructor Documentation</h2>
-<a id="a9ba546ee9cc96d95ec097383dbfdea45"></a>
-<h2 class="memtitle"><span class="permalink"><a href="#a9ba546ee9cc96d95ec097383dbfdea45">&#9670;&nbsp;</a></span>URL()</h2>
+<a id="ab380b3c535b362d46693603e923bcf78"></a>
+<h2 class="memtitle"><span class="permalink"><a href="#ab380b3c535b362d46693603e923bcf78">&#9670;&nbsp;</a></span>URL()</h2>
 
 <div class="memitem">
 <div class="memproto">
@@ -150,7 +182,7 @@ std::string_view&#160;</td><td class="memItemRight" valign="bottom"><b>user_info
         <tr>
           <td class="memname">klib::URL::URL </td>
           <td>(</td>
-          <td class="paramtype">std::string&#160;</td>
+          <td class="paramtype">const std::string &amp;&#160;</td>
           <td class="paramname"><em>url</em></td><td>)</td>
           <td></td>
         </tr>
@@ -165,7 +197,7 @@ std::string_view&#160;</td><td class="memItemRight" valign="bottom"><b>user_info
 <p>Constructor. </p>
 <dl class="params"><dt>Parameters</dt><dd>
   <table class="params">
-    <tr><td class="paramname">url</td><td><a class="el" href="classklib_1_1URL.html" title="Parse URL.">URL</a> to be parsed </td></tr>
+    <tr><td class="paramname">url</td><td><a class="el" href="classklib_1_1URL.html" title="Parse and build URL.">URL</a> to be parsed </td></tr>
   </table>
   </dd>
 </dl>
@@ -173,14 +205,14 @@ std::string_view&#160;</td><td class="memItemRight" valign="bottom"><b>user_info
 </div>
 </div>
 <h2 class="groupheader">Member Function Documentation</h2>
-<a id="aaf6fb56091f5125b19054de60cc756f9"></a>
-<h2 class="memtitle"><span class="permalink"><a href="#aaf6fb56091f5125b19054de60cc756f9">&#9670;&nbsp;</a></span>query_map()</h2>
+<a id="a02fa6ed756dd737e1d99be9ea7b71adb"></a>
+<h2 class="memtitle"><span class="permalink"><a href="#a02fa6ed756dd737e1d99be9ea7b71adb">&#9670;&nbsp;</a></span>build()</h2>
 
 <div class="memitem">
 <div class="memproto">
       <table class="memname">
         <tr>
-          <td class="memname">phmap::flat_hash_map&lt;std::string, std::string&gt; klib::URL::query_map </td>
+          <td class="memname">std::string klib::URL::build </td>
           <td>(</td>
           <td class="paramname"></td><td>)</td>
           <td> const</td>
@@ -188,13 +220,313 @@ std::string_view&#160;</td><td class="memItemRight" valign="bottom"><b>user_info
       </table>
 </div><div class="memdoc">
 
-<p>Parse query parameters. </p>
-<dl class="section return"><dt>Returns</dt><dd>Query key-value pairs </dd></dl>
+<p>Build <a class="el" href="classklib_1_1URL.html" title="Parse and build URL.">URL</a>. </p>
+<dl class="section return"><dt>Returns</dt><dd>The <a class="el" href="classklib_1_1URL.html" title="Parse and build URL.">URL</a> </dd></dl>
+
+</div>
+</div>
+<a id="a5b3434c08c190fcd008595f54fe11874"></a>
+<h2 class="memtitle"><span class="permalink"><a href="#a5b3434c08c190fcd008595f54fe11874">&#9670;&nbsp;</a></span>query()</h2>
+
+<div class="memitem">
+<div class="memproto">
+<table class="mlabels">
+  <tr>
+  <td class="mlabels-left">
+      <table class="memname">
+        <tr>
+          <td class="memname">const phmap::flat_hash_map&lt;std::string, std::string&gt;&amp; klib::URL::query </td>
+          <td>(</td>
+          <td class="paramname"></td><td>)</td>
+          <td> const</td>
+        </tr>
+      </table>
+  </td>
+  <td class="mlabels-right">
+<span class="mlabels"><span class="mlabel">inline</span></span>  </td>
+  </tr>
+</table>
+</div><div class="memdoc">
+
+<p>Get <a class="el" href="classklib_1_1URL.html" title="Parse and build URL.">URL</a> query. </p>
+<dl class="section return"><dt>Returns</dt><dd><a class="el" href="classklib_1_1URL.html" title="Parse and build URL.">URL</a> query </dd></dl>
+
+</div>
+</div>
+<a id="a4c5bb0286c6cb63912c2cb443cf22b91"></a>
+<h2 class="memtitle"><span class="permalink"><a href="#a4c5bb0286c6cb63912c2cb443cf22b91">&#9670;&nbsp;</a></span>set_fragment()</h2>
+
+<div class="memitem">
+<div class="memproto">
+<table class="mlabels">
+  <tr>
+  <td class="mlabels-left">
+      <table class="memname">
+        <tr>
+          <td class="memname">void klib::URL::set_fragment </td>
+          <td>(</td>
+          <td class="paramtype">const std::string &amp;&#160;</td>
+          <td class="paramname"><em>fragment</em></td><td>)</td>
+          <td></td>
+        </tr>
+      </table>
+  </td>
+  <td class="mlabels-right">
+<span class="mlabels"><span class="mlabel">inline</span></span>  </td>
+  </tr>
+</table>
+</div><div class="memdoc">
+
+<p>Set <a class="el" href="classklib_1_1URL.html" title="Parse and build URL.">URL</a> fragment. </p>
+<dl class="params"><dt>Parameters</dt><dd>
+  <table class="params">
+    <tr><td class="paramname">fragment</td><td><a class="el" href="classklib_1_1URL.html" title="Parse and build URL.">URL</a> fragment </td></tr>
+  </table>
+  </dd>
+</dl>
+
+</div>
+</div>
+<a id="ab27bbe0635220df332795aded4b731ec"></a>
+<h2 class="memtitle"><span class="permalink"><a href="#ab27bbe0635220df332795aded4b731ec">&#9670;&nbsp;</a></span>set_host()</h2>
+
+<div class="memitem">
+<div class="memproto">
+<table class="mlabels">
+  <tr>
+  <td class="mlabels-left">
+      <table class="memname">
+        <tr>
+          <td class="memname">void klib::URL::set_host </td>
+          <td>(</td>
+          <td class="paramtype">const std::string &amp;&#160;</td>
+          <td class="paramname"><em>host</em></td><td>)</td>
+          <td></td>
+        </tr>
+      </table>
+  </td>
+  <td class="mlabels-right">
+<span class="mlabels"><span class="mlabel">inline</span></span>  </td>
+  </tr>
+</table>
+</div><div class="memdoc">
+
+<p>Set <a class="el" href="classklib_1_1URL.html" title="Parse and build URL.">URL</a> host. </p>
+<dl class="params"><dt>Parameters</dt><dd>
+  <table class="params">
+    <tr><td class="paramname">host</td><td><a class="el" href="classklib_1_1URL.html" title="Parse and build URL.">URL</a> host </td></tr>
+  </table>
+  </dd>
+</dl>
+
+</div>
+</div>
+<a id="a85b6e51cc528f5135c930bbe682b7de8"></a>
+<h2 class="memtitle"><span class="permalink"><a href="#a85b6e51cc528f5135c930bbe682b7de8">&#9670;&nbsp;</a></span>set_password()</h2>
+
+<div class="memitem">
+<div class="memproto">
+<table class="mlabels">
+  <tr>
+  <td class="mlabels-left">
+      <table class="memname">
+        <tr>
+          <td class="memname">void klib::URL::set_password </td>
+          <td>(</td>
+          <td class="paramtype">const std::string &amp;&#160;</td>
+          <td class="paramname"><em>password</em></td><td>)</td>
+          <td></td>
+        </tr>
+      </table>
+  </td>
+  <td class="mlabels-right">
+<span class="mlabels"><span class="mlabel">inline</span></span>  </td>
+  </tr>
+</table>
+</div><div class="memdoc">
+
+<p>Set <a class="el" href="classklib_1_1URL.html" title="Parse and build URL.">URL</a> password. </p>
+<dl class="params"><dt>Parameters</dt><dd>
+  <table class="params">
+    <tr><td class="paramname">user_info</td><td><a class="el" href="classklib_1_1URL.html" title="Parse and build URL.">URL</a> password </td></tr>
+  </table>
+  </dd>
+</dl>
+
+</div>
+</div>
+<a id="a70fdff0ebf823d3d5d6b12df966acf97"></a>
+<h2 class="memtitle"><span class="permalink"><a href="#a70fdff0ebf823d3d5d6b12df966acf97">&#9670;&nbsp;</a></span>set_path()</h2>
+
+<div class="memitem">
+<div class="memproto">
+<table class="mlabels">
+  <tr>
+  <td class="mlabels-left">
+      <table class="memname">
+        <tr>
+          <td class="memname">void klib::URL::set_path </td>
+          <td>(</td>
+          <td class="paramtype">const std::string &amp;&#160;</td>
+          <td class="paramname"><em>path</em></td><td>)</td>
+          <td></td>
+        </tr>
+      </table>
+  </td>
+  <td class="mlabels-right">
+<span class="mlabels"><span class="mlabel">inline</span></span>  </td>
+  </tr>
+</table>
+</div><div class="memdoc">
+
+<p>Set <a class="el" href="classklib_1_1URL.html" title="Parse and build URL.">URL</a> path. </p>
+<dl class="params"><dt>Parameters</dt><dd>
+  <table class="params">
+    <tr><td class="paramname">path</td><td><a class="el" href="classklib_1_1URL.html" title="Parse and build URL.">URL</a> path </td></tr>
+  </table>
+  </dd>
+</dl>
+
+</div>
+</div>
+<a id="af3509f57a8bda90b0d819aa67324bba1"></a>
+<h2 class="memtitle"><span class="permalink"><a href="#af3509f57a8bda90b0d819aa67324bba1">&#9670;&nbsp;</a></span>set_port()</h2>
+
+<div class="memitem">
+<div class="memproto">
+<table class="mlabels">
+  <tr>
+  <td class="mlabels-left">
+      <table class="memname">
+        <tr>
+          <td class="memname">void klib::URL::set_port </td>
+          <td>(</td>
+          <td class="paramtype">std::int32_t&#160;</td>
+          <td class="paramname"><em>port</em></td><td>)</td>
+          <td></td>
+        </tr>
+      </table>
+  </td>
+  <td class="mlabels-right">
+<span class="mlabels"><span class="mlabel">inline</span></span>  </td>
+  </tr>
+</table>
+</div><div class="memdoc">
+
+<p>Set <a class="el" href="classklib_1_1URL.html" title="Parse and build URL.">URL</a> port. </p>
+<dl class="params"><dt>Parameters</dt><dd>
+  <table class="params">
+    <tr><td class="paramname">port</td><td><a class="el" href="classklib_1_1URL.html" title="Parse and build URL.">URL</a> port </td></tr>
+  </table>
+  </dd>
+</dl>
+
+</div>
+</div>
+<a id="ad3b8b3cd745a5f0344a7567250db8898"></a>
+<h2 class="memtitle"><span class="permalink"><a href="#ad3b8b3cd745a5f0344a7567250db8898">&#9670;&nbsp;</a></span>set_query()</h2>
+
+<div class="memitem">
+<div class="memproto">
+<table class="mlabels">
+  <tr>
+  <td class="mlabels-left">
+      <table class="memname">
+        <tr>
+          <td class="memname">void klib::URL::set_query </td>
+          <td>(</td>
+          <td class="paramtype">const phmap::flat_hash_map&lt; std::string, std::string &gt; &amp;&#160;</td>
+          <td class="paramname"><em>query</em></td><td>)</td>
+          <td></td>
+        </tr>
+      </table>
+  </td>
+  <td class="mlabels-right">
+<span class="mlabels"><span class="mlabel">inline</span></span>  </td>
+  </tr>
+</table>
+</div><div class="memdoc">
+
+<p>Set <a class="el" href="classklib_1_1URL.html" title="Parse and build URL.">URL</a> query. </p>
+<dl class="params"><dt>Parameters</dt><dd>
+  <table class="params">
+    <tr><td class="paramname">query</td><td><a class="el" href="classklib_1_1URL.html" title="Parse and build URL.">URL</a> query </td></tr>
+  </table>
+  </dd>
+</dl>
+
+</div>
+</div>
+<a id="a64cc3c70623482e4ac6466e0b93c7507"></a>
+<h2 class="memtitle"><span class="permalink"><a href="#a64cc3c70623482e4ac6466e0b93c7507">&#9670;&nbsp;</a></span>set_schema()</h2>
+
+<div class="memitem">
+<div class="memproto">
+<table class="mlabels">
+  <tr>
+  <td class="mlabels-left">
+      <table class="memname">
+        <tr>
+          <td class="memname">void klib::URL::set_schema </td>
+          <td>(</td>
+          <td class="paramtype">const std::string &amp;&#160;</td>
+          <td class="paramname"><em>schema</em></td><td>)</td>
+          <td></td>
+        </tr>
+      </table>
+  </td>
+  <td class="mlabels-right">
+<span class="mlabels"><span class="mlabel">inline</span></span>  </td>
+  </tr>
+</table>
+</div><div class="memdoc">
+
+<p>Set <a class="el" href="classklib_1_1URL.html" title="Parse and build URL.">URL</a> schema. </p>
+<dl class="params"><dt>Parameters</dt><dd>
+  <table class="params">
+    <tr><td class="paramname">schema</td><td><a class="el" href="classklib_1_1URL.html" title="Parse and build URL.">URL</a> schema </td></tr>
+  </table>
+  </dd>
+</dl>
+
+</div>
+</div>
+<a id="a37872b88a5fbfb4348e980dee8b5b7eb"></a>
+<h2 class="memtitle"><span class="permalink"><a href="#a37872b88a5fbfb4348e980dee8b5b7eb">&#9670;&nbsp;</a></span>set_user()</h2>
+
+<div class="memitem">
+<div class="memproto">
+<table class="mlabels">
+  <tr>
+  <td class="mlabels-left">
+      <table class="memname">
+        <tr>
+          <td class="memname">void klib::URL::set_user </td>
+          <td>(</td>
+          <td class="paramtype">const std::string &amp;&#160;</td>
+          <td class="paramname"><em>user</em></td><td>)</td>
+          <td></td>
+        </tr>
+      </table>
+  </td>
+  <td class="mlabels-right">
+<span class="mlabels"><span class="mlabel">inline</span></span>  </td>
+  </tr>
+</table>
+</div><div class="memdoc">
+
+<p>Set <a class="el" href="classklib_1_1URL.html" title="Parse and build URL.">URL</a> user. </p>
+<dl class="params"><dt>Parameters</dt><dd>
+  <table class="params">
+    <tr><td class="paramname">user_info</td><td><a class="el" href="classklib_1_1URL.html" title="Parse and build URL.">URL</a> user </td></tr>
+  </table>
+  </dd>
+</dl>
 
 </div>
 </div>
 <hr/>The documentation for this class was generated from the following file:<ul>
-<li>/__w/klib/klib/include/klib/<a class="el" href="url__parse_8h_source.html">url_parse.h</a></li>
+<li>/__w/klib/klib/include/klib/<a class="el" href="url_8h_source.html">url.h</a></li>
 </ul>
 </div><!-- contents -->
 </div><!-- doc-content -->

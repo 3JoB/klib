@@ -31,7 +31,7 @@
  <tr style="height: 56px;">
   <td id="projectalign" style="padding-left: 0.5em;">
    <div id="projectname">klib
-   &#160;<span id="projectnumber">1.20.1</span>
+   &#160;<span id="projectnumber">1.21.0</span>
    </div>
   </td>
    <td>        <div id="MSearchBox" class="MSearchBoxInactive">
@@ -171,10 +171,10 @@ void&#160;</td><td class="memItemRight" valign="bottom"><b>set_accept_encoding</
 <tr class="memdesc:acc644be23ad9701272c028757ad64ec2"><td class="mdescLeft">&#160;</td><td class="mdescRight">Enable HTTP basic authentication.  <a href="classklib_1_1Request.html#acc644be23ad9701272c028757ad64ec2">More...</a><br /></td></tr>
 <tr class="separator:acc644be23ad9701272c028757ad64ec2"><td class="memSeparator" colspan="2">&#160;</td></tr>
 <tr class="memitem:a821a5ecba97e28f1bb8029e2aa11673a"><td class="memItemLeft" align="right" valign="top">std::string&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="classklib_1_1Request.html#a821a5ecba97e28f1bb8029e2aa11673a">url_encode</a> (const std::string &amp;str)</td></tr>
-<tr class="memdesc:a821a5ecba97e28f1bb8029e2aa11673a"><td class="mdescLeft">&#160;</td><td class="mdescRight">Encoding <a class="el" href="classklib_1_1URL.html" title="Parse URL.">URL</a> string.  <a href="classklib_1_1Request.html#a821a5ecba97e28f1bb8029e2aa11673a">More...</a><br /></td></tr>
+<tr class="memdesc:a821a5ecba97e28f1bb8029e2aa11673a"><td class="mdescLeft">&#160;</td><td class="mdescRight">Encoding <a class="el" href="classklib_1_1URL.html" title="Parse and build URL.">URL</a> string.  <a href="classklib_1_1Request.html#a821a5ecba97e28f1bb8029e2aa11673a">More...</a><br /></td></tr>
 <tr class="separator:a821a5ecba97e28f1bb8029e2aa11673a"><td class="memSeparator" colspan="2">&#160;</td></tr>
 <tr class="memitem:a0dcd41db916b56c1bb834d1ba836c8e5"><td class="memItemLeft" align="right" valign="top">std::string&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="classklib_1_1Request.html#a0dcd41db916b56c1bb834d1ba836c8e5">url_decode</a> (const std::string &amp;str)</td></tr>
-<tr class="memdesc:a0dcd41db916b56c1bb834d1ba836c8e5"><td class="mdescLeft">&#160;</td><td class="mdescRight">Decoding <a class="el" href="classklib_1_1URL.html" title="Parse URL.">URL</a> string.  <a href="classklib_1_1Request.html#a0dcd41db916b56c1bb834d1ba836c8e5">More...</a><br /></td></tr>
+<tr class="memdesc:a0dcd41db916b56c1bb834d1ba836c8e5"><td class="mdescLeft">&#160;</td><td class="mdescRight">Decoding <a class="el" href="classklib_1_1URL.html" title="Parse and build URL.">URL</a> string.  <a href="classklib_1_1Request.html#a0dcd41db916b56c1bb834d1ba836c8e5">More...</a><br /></td></tr>
 <tr class="separator:a0dcd41db916b56c1bb834d1ba836c8e5"><td class="memSeparator" colspan="2">&#160;</td></tr>
 <tr class="memitem:a5942edc73192ce0c8235182dc55b8f18"><td class="memItemLeft" align="right" valign="top"><a class="el" href="classklib_1_1Response.html">Response</a>&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="classklib_1_1Request.html#a5942edc73192ce0c8235182dc55b8f18">get</a> (const std::string &amp;url, const phmap::flat_hash_map&lt; std::string, std::string &gt; &amp;params={}, const phmap::flat_hash_map&lt; std::string, std::string &gt; &amp;headers={})</td></tr>
 <tr class="memdesc:a5942edc73192ce0c8235182dc55b8f18"><td class="mdescLeft">&#160;</td><td class="mdescRight">Sends a GET request.  <a href="classklib_1_1Request.html#a5942edc73192ce0c8235182dc55b8f18">More...</a><br /></td></tr>
@@ -271,7 +271,7 @@ class&#160;</td><td class="memItemRight" valign="bottom"><b>Response</b></td></t
 <dl class="params"><dt>Parameters</dt><dd>
   <table class="params">
     <tr><td class="paramname">url</td><td>Requested url </td></tr>
-    <tr><td class="paramname">params</td><td><a class="el" href="classklib_1_1URL.html" title="Parse URL.">URL</a> parameters </td></tr>
+    <tr><td class="paramname">params</td><td><a class="el" href="classklib_1_1URL.html" title="Parse and build URL.">URL</a> parameters </td></tr>
     <tr><td class="paramname">headers</td><td>HTTP headers </td></tr>
   </table>
   </dd>
@@ -568,7 +568,7 @@ class&#160;</td><td class="memItemRight" valign="bottom"><b>Response</b></td></t
       </table>
 </div><div class="memdoc">
 
-<p>Decoding <a class="el" href="classklib_1_1URL.html" title="Parse URL.">URL</a> string. </p>
+<p>Decoding <a class="el" href="classklib_1_1URL.html" title="Parse and build URL.">URL</a> string. </p>
 <dl class="params"><dt>Parameters</dt><dd>
   <table class="params">
     <tr><td class="paramname">str</td><td>String to be decoded </td></tr>
@@ -595,7 +595,7 @@ class&#160;</td><td class="memItemRight" valign="bottom"><b>Response</b></td></t
       </table>
 </div><div class="memdoc">
 
-<p>Encoding <a class="el" href="classklib_1_1URL.html" title="Parse URL.">URL</a> string. </p>
+<p>Encoding <a class="el" href="classklib_1_1URL.html" title="Parse and build URL.">URL</a> string. </p>
 <dl class="params"><dt>Parameters</dt><dd>
   <table class="params">
     <tr><td class="paramname">str</td><td>String to be encoded </td></tr>

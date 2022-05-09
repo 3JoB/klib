@@ -7,8 +7,8 @@ var examples =
     [ "url.host", "url_8host-example.html", null ],
     [ "url.port", "url_8port-example.html", null ],
     [ "url.path", "url_8path-example.html", null ],
-    [ "url.query", "url_8query-example.html", null ],
     [ "url", "url-example.html", null ],
     [ "url.fragment", "url_8fragment-example.html", null ],
-    [ "url.user_info", "url_8user_info-example.html", null ]
+    [ "url.user", "url_8user-example.html", null ],
+    [ "url.password", "url_8password-example.html", null ]
 ];

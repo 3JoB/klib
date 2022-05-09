@@ -25,7 +25,7 @@ var dir_c4deac73006ad3d1787e421f2d774b3c =
       [ "SqlDatabase", "classklib_1_1SqlDatabase.html", "classklib_1_1SqlDatabase" ]
     ] ],
     [ "unicode.h", "unicode_8h.html", "unicode_8h" ],
-    [ "url_parse.h", "url__parse_8h.html", [
+    [ "url.h", "url_8h.html", [
       [ "URL", "classklib_1_1URL.html", "classklib_1_1URL" ]
     ] ],
     [ "util.h", "util_8h.html", "util_8h" ],
