@@ -82,6 +82,16 @@ TEST_CASE("utf32_to_utf8", "[unicode]") {
   CHECK(static_cast<std::uint8_t>(utf8[9]) == 0x8C);
 }
 
+TEST_CASE("utf32_to_utf8 2", "[unicode]") {
+  auto utf8 = klib::utf32_to_utf8(U"🍌");
+
+  CHECK(std::size(utf8) == 4);
+  CHECK(static_cast<std::uint8_t>(utf8[0]) == 0xF0);
+  CHECK(static_cast<std::uint8_t>(utf8[1]) == 0x9F);
+  CHECK(static_cast<std::uint8_t>(utf8[2]) == 0x8D);
+  CHECK(static_cast<std::uint8_t>(utf8[3]) == 0x8C);
+}
+
 TEST_CASE("is_ascii", "[unicode]") {
   CHECK(klib::is_ascii('A'));
   CHECK_FALSE(klib::is_ascii(190));

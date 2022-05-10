@@ -179,4 +179,14 @@ std::string utf32_to_utf8(const std::u32string &str) {
   }
 }
 
+std::string utf32_to_utf8(char32_t code_point) {
+  std::string result;
+  try {
+    utf8::append(code_point, result);
+    return result;
+  } catch (const utf8::exception &err) {
+    throw klib::RuntimeError(err.what());
+  }
+}
+
 }  // namespace klib

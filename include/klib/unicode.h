@@ -108,6 +108,13 @@ std::u32string utf8_to_utf32(const std::string &str);
 std::string utf32_to_utf8(const std::u32string &str);
 
 /**
+ * @brief Convert code point to UTF-8 encoded string
+ * @param code_point: Code point
+ * @return The converted UTF-8 encoded string
+ */
+std::string utf32_to_utf8(char32_t code_point);
+
+/**
  * @brief Determine whether it is an ASCII character
  * @param code_point: Code point
  * @return If it is an ASCII character, return true, otherwise return false
