@@ -31,7 +31,7 @@
  <tr style="height: 56px;">
   <td id="projectalign" style="padding-left: 0.5em;">
    <div id="projectname">klib
-   &#160;<span id="projectnumber">1.21.0</span>
+   &#160;<span id="projectnumber">1.22.0</span>
    </div>
   </td>
    <td>        <div id="MSearchBox" class="MSearchBoxInactive">
@@ -93,7 +93,8 @@ $(document).ready(function(){initNavTree('url_8h.html',''); initResizable(); });
 
 <div class="header">
   <div class="summary">
-<a href="#nested-classes">Classes</a>  </div>
+<a href="#nested-classes">Classes</a> &#124;
+<a href="#func-members">Functions</a>  </div>
   <div class="headertitle">
 <div class="title">url.h File Reference</div>  </div>
 </div><!--header-->
@@ -112,10 +113,74 @@ Classes</h2></td></tr>
 <tr class="memitem:"><td class="memItemLeft" align="right" valign="top">class &#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="classklib_1_1URL.html">klib::URL</a></td></tr>
 <tr class="memdesc:"><td class="mdescLeft">&#160;</td><td class="mdescRight">Parse and build <a class="el" href="classklib_1_1URL.html" title="Parse and build URL.">URL</a>.  <a href="classklib_1_1URL.html#details">More...</a><br /></td></tr>
 <tr class="separator:"><td class="memSeparator" colspan="2">&#160;</td></tr>
+</table><table class="memberdecls">
+<tr class="heading"><td colspan="2"><h2 class="groupheader"><a name="func-members"></a>
+Functions</h2></td></tr>
+<tr class="memitem:ab61d7a500844479f08056b4d2f480ffe"><td class="memItemLeft" align="right" valign="top">std::string&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="url_8h.html#ab61d7a500844479f08056b4d2f480ffe">klib::url_encode</a> (const std::string &amp;str)</td></tr>
+<tr class="memdesc:ab61d7a500844479f08056b4d2f480ffe"><td class="mdescLeft">&#160;</td><td class="mdescRight">Encoding <a class="el" href="classklib_1_1URL.html" title="Parse and build URL.">URL</a> string.  <a href="url_8h.html#ab61d7a500844479f08056b4d2f480ffe">More...</a><br /></td></tr>
+<tr class="separator:ab61d7a500844479f08056b4d2f480ffe"><td class="memSeparator" colspan="2">&#160;</td></tr>
+<tr class="memitem:abcf715bf078ce03cdf7b76ef2a57f95c"><td class="memItemLeft" align="right" valign="top">std::string&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="url_8h.html#abcf715bf078ce03cdf7b76ef2a57f95c">klib::url_decode</a> (const std::string &amp;str)</td></tr>
+<tr class="memdesc:abcf715bf078ce03cdf7b76ef2a57f95c"><td class="mdescLeft">&#160;</td><td class="mdescRight">Decoding <a class="el" href="classklib_1_1URL.html" title="Parse and build URL.">URL</a> string.  <a href="url_8h.html#abcf715bf078ce03cdf7b76ef2a57f95c">More...</a><br /></td></tr>
+<tr class="separator:abcf715bf078ce03cdf7b76ef2a57f95c"><td class="memSeparator" colspan="2">&#160;</td></tr>
 </table>
 <a name="details" id="details"></a><h2 class="groupheader">Detailed Description</h2>
 <div class="textblock"><p>Contains URL module. </p>
-</div></div><!-- contents -->
+</div><h2 class="groupheader">Function Documentation</h2>
+<a id="abcf715bf078ce03cdf7b76ef2a57f95c"></a>
+<h2 class="memtitle"><span class="permalink"><a href="#abcf715bf078ce03cdf7b76ef2a57f95c">&#9670;&nbsp;</a></span>url_decode()</h2>
+
+<div class="memitem">
+<div class="memproto">
+      <table class="memname">
+        <tr>
+          <td class="memname">std::string klib::url_decode </td>
+          <td>(</td>
+          <td class="paramtype">const std::string &amp;&#160;</td>
+          <td class="paramname"><em>str</em></td><td>)</td>
+          <td></td>
+        </tr>
+      </table>
+</div><div class="memdoc">
+
+<p>Decoding URL string. </p>
+<dl class="params"><dt>Parameters</dt><dd>
+  <table class="params">
+    <tr><td class="paramname">str</td><td>String to be decoded </td></tr>
+  </table>
+  </dd>
+</dl>
+<dl class="section return"><dt>Returns</dt><dd>Decoded string </dd></dl>
+
+</div>
+</div>
+<a id="ab61d7a500844479f08056b4d2f480ffe"></a>
+<h2 class="memtitle"><span class="permalink"><a href="#ab61d7a500844479f08056b4d2f480ffe">&#9670;&nbsp;</a></span>url_encode()</h2>
+
+<div class="memitem">
+<div class="memproto">
+      <table class="memname">
+        <tr>
+          <td class="memname">std::string klib::url_encode </td>
+          <td>(</td>
+          <td class="paramtype">const std::string &amp;&#160;</td>
+          <td class="paramname"><em>str</em></td><td>)</td>
+          <td></td>
+        </tr>
+      </table>
+</div><div class="memdoc">
+
+<p>Encoding URL string. </p>
+<dl class="params"><dt>Parameters</dt><dd>
+  <table class="params">
+    <tr><td class="paramname">str</td><td>String to be encoded </td></tr>
+  </table>
+  </dd>
+</dl>
+<dl class="section return"><dt>Returns</dt><dd>Encoded string </dd></dl>
+
+</div>
+</div>
+</div><!-- contents -->
 </div><!-- doc-content -->
 <!-- start footer part -->
 <div id="nav-path" class="navpath"><!-- id is needed for treeview function! -->

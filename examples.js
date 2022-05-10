@@ -2,7 +2,6 @@ var examples =
 [
     [ "request.set_proxy", "request_8set_proxy-example.html", null ],
     [ "request.set_doh_url", "request_8set_doh_url-example.html", null ],
-    [ "request.set_accept_encoding", "request_8set_accept_encoding-example.html", null ],
     [ "url.schema", "url_8schema-example.html", null ],
     [ "url.host", "url_8host-example.html", null ],
     [ "url.port", "url_8port-example.html", null ],

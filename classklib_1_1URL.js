@@ -2,7 +2,6 @@ var classklib_1_1URL =
 [
     [ "URL", "classklib_1_1URL.html#a7c3ad9c9d0fa68f27b692e5474f57927", null ],
     [ "URL", "classklib_1_1URL.html#ab380b3c535b362d46693603e923bcf78", null ],
-    [ "build", "classklib_1_1URL.html#a02fa6ed756dd737e1d99be9ea7b71adb", null ],
     [ "fragment", "classklib_1_1URL.html#a6c2c95b986b2e4c6d7383e5e99fea5fb", null ],
     [ "host", "classklib_1_1URL.html#a057c2facae08f289a77d0b89d0d8cbe1", null ],
     [ "password", "classklib_1_1URL.html#ae678909dbf255efa42741ee8d95637bf", null ],
@@ -18,5 +17,6 @@ var classklib_1_1URL =
     [ "set_query", "classklib_1_1URL.html#ad3b8b3cd745a5f0344a7567250db8898", null ],
     [ "set_schema", "classklib_1_1URL.html#a64cc3c70623482e4ac6466e0b93c7507", null ],
     [ "set_user", "classklib_1_1URL.html#a37872b88a5fbfb4348e980dee8b5b7eb", null ],
+    [ "to_string", "classklib_1_1URL.html#a7b33bb035848b66df8e865ad8e17749e", null ],
     [ "user", "classklib_1_1URL.html#a32b097494b6b518a7ddeca0c6bd18475", null ]
 ];

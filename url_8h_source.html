@@ -31,7 +31,7 @@
  <tr style="height: 56px;">
   <td id="projectalign" style="padding-left: 0.5em;">
    <div id="projectname">klib
-   &#160;<span id="projectnumber">1.21.0</span>
+   &#160;<span id="projectnumber">1.22.0</span>
    </div>
   </td>
    <td>        <div id="MSearchBox" class="MSearchBoxInactive">
@@ -106,75 +106,81 @@ $(document).ready(function(){initNavTree('url_8h_source.html',''); initResizable
 <div class="line"><a name="l00012"></a><span class="lineno">   12</span>&#160; </div>
 <div class="line"><a name="l00013"></a><span class="lineno">   13</span>&#160;<span class="keyword">namespace </span>klib {</div>
 <div class="line"><a name="l00014"></a><span class="lineno">   14</span>&#160; </div>
-<div class="line"><a name="l00019"></a><span class="lineno"><a class="line" href="classklib_1_1URL.html">   19</a></span>&#160;<span class="keyword">class </span><a class="code" href="classklib_1_1URL.html">URL</a> {</div>
-<div class="line"><a name="l00020"></a><span class="lineno">   20</span>&#160; <span class="keyword">public</span>:</div>
-<div class="line"><a name="l00024"></a><span class="lineno"><a class="line" href="classklib_1_1URL.html#a7c3ad9c9d0fa68f27b692e5474f57927">   24</a></span>&#160;  <a class="code" href="classklib_1_1URL.html#a7c3ad9c9d0fa68f27b692e5474f57927">URL</a>() = <span class="keywordflow">default</span>;</div>
-<div class="line"><a name="l00029"></a><span class="lineno"><a class="line" href="classklib_1_1URL.html#ab380b3c535b362d46693603e923bcf78">   29</a></span>&#160;  <span class="keyword">explicit</span> <a class="code" href="classklib_1_1URL.html#ab380b3c535b362d46693603e923bcf78">URL</a>(<span class="keyword">const</span> std::string &amp;url);</div>
-<div class="line"><a name="l00030"></a><span class="lineno">   30</span>&#160; </div>
-<div class="line"><a name="l00035"></a><span class="lineno"><a class="line" href="classklib_1_1URL.html#a02fa6ed756dd737e1d99be9ea7b71adb">   35</a></span>&#160;  [[nodiscard]] std::string <a class="code" href="classklib_1_1URL.html#a02fa6ed756dd737e1d99be9ea7b71adb">build</a>() <span class="keyword">const</span>;</div>
-<div class="line"><a name="l00036"></a><span class="lineno">   36</span>&#160; </div>
-<div class="line"><a name="l00042"></a><span class="lineno">   42</span>&#160;  [[nodiscard]] <span class="keyword">const</span> std::string &amp;schema()<span class="keyword"> const </span>{ <span class="keywordflow">return</span> schema_; }</div>
-<div class="line"><a name="l00043"></a><span class="lineno">   43</span>&#160; </div>
-<div class="line"><a name="l00048"></a><span class="lineno"><a class="line" href="classklib_1_1URL.html#a64cc3c70623482e4ac6466e0b93c7507">   48</a></span>&#160;  <span class="keywordtype">void</span> <a class="code" href="classklib_1_1URL.html#a64cc3c70623482e4ac6466e0b93c7507">set_schema</a>(<span class="keyword">const</span> std::string &amp;schema) { schema_ = schema; }</div>
-<div class="line"><a name="l00049"></a><span class="lineno">   49</span>&#160; </div>
-<div class="line"><a name="l00055"></a><span class="lineno">   55</span>&#160;  [[nodiscard]] <span class="keyword">const</span> std::string &amp;host()<span class="keyword"> const </span>{ <span class="keywordflow">return</span> host_; }</div>
-<div class="line"><a name="l00056"></a><span class="lineno">   56</span>&#160; </div>
-<div class="line"><a name="l00061"></a><span class="lineno"><a class="line" href="classklib_1_1URL.html#ab27bbe0635220df332795aded4b731ec">   61</a></span>&#160;  <span class="keywordtype">void</span> <a class="code" href="classklib_1_1URL.html#ab27bbe0635220df332795aded4b731ec">set_host</a>(<span class="keyword">const</span> std::string &amp;host) { host_ = host; }</div>
-<div class="line"><a name="l00062"></a><span class="lineno">   62</span>&#160; </div>
-<div class="line"><a name="l00068"></a><span class="lineno">   68</span>&#160;  [[nodiscard]] std::int32_t port()<span class="keyword"> const </span>{ <span class="keywordflow">return</span> port_; }</div>
-<div class="line"><a name="l00069"></a><span class="lineno">   69</span>&#160; </div>
-<div class="line"><a name="l00074"></a><span class="lineno"><a class="line" href="classklib_1_1URL.html#af3509f57a8bda90b0d819aa67324bba1">   74</a></span>&#160;  <span class="keywordtype">void</span> <a class="code" href="classklib_1_1URL.html#af3509f57a8bda90b0d819aa67324bba1">set_port</a>(std::int32_t port) { port_ = port; }</div>
-<div class="line"><a name="l00075"></a><span class="lineno">   75</span>&#160; </div>
-<div class="line"><a name="l00081"></a><span class="lineno">   81</span>&#160;  [[nodiscard]] <span class="keyword">const</span> std::string &amp;path()<span class="keyword"> const </span>{ <span class="keywordflow">return</span> path_; }</div>
-<div class="line"><a name="l00082"></a><span class="lineno">   82</span>&#160; </div>
-<div class="line"><a name="l00087"></a><span class="lineno"><a class="line" href="classklib_1_1URL.html#a70fdff0ebf823d3d5d6b12df966acf97">   87</a></span>&#160;  <span class="keywordtype">void</span> <a class="code" href="classklib_1_1URL.html#a70fdff0ebf823d3d5d6b12df966acf97">set_path</a>(<span class="keyword">const</span> std::string &amp;path) { path_ = path; }</div>
-<div class="line"><a name="l00088"></a><span class="lineno">   88</span>&#160; </div>
-<div class="line"><a name="l00093"></a><span class="lineno"><a class="line" href="classklib_1_1URL.html#a5b3434c08c190fcd008595f54fe11874">   93</a></span>&#160;  [[nodiscard]] <span class="keyword">const</span> phmap::flat_hash_map&lt;std::string, std::string&gt; &amp;<a class="code" href="classklib_1_1URL.html#a5b3434c08c190fcd008595f54fe11874">query</a>()<span class="keyword"></span></div>
-<div class="line"><a name="l00094"></a><span class="lineno">   94</span>&#160;<span class="keyword">      const </span>{</div>
-<div class="line"><a name="l00095"></a><span class="lineno">   95</span>&#160;    <span class="keywordflow">return</span> query_;</div>
-<div class="line"><a name="l00096"></a><span class="lineno">   96</span>&#160;  }</div>
-<div class="line"><a name="l00097"></a><span class="lineno">   97</span>&#160; </div>
-<div class="line"><a name="l00102"></a><span class="lineno"><a class="line" href="classklib_1_1URL.html#ad3b8b3cd745a5f0344a7567250db8898">  102</a></span>&#160;  <span class="keywordtype">void</span> <a class="code" href="classklib_1_1URL.html#ad3b8b3cd745a5f0344a7567250db8898">set_query</a>(<span class="keyword">const</span> phmap::flat_hash_map&lt;std::string, std::string&gt; &amp;<a class="code" href="classklib_1_1URL.html#a5b3434c08c190fcd008595f54fe11874">query</a>) {</div>
-<div class="line"><a name="l00103"></a><span class="lineno">  103</span>&#160;    query_ = <a class="code" href="classklib_1_1URL.html#a5b3434c08c190fcd008595f54fe11874">query</a>;</div>
-<div class="line"><a name="l00104"></a><span class="lineno">  104</span>&#160;  }</div>
-<div class="line"><a name="l00105"></a><span class="lineno">  105</span>&#160; </div>
-<div class="line"><a name="l00112"></a><span class="lineno">  112</span>&#160;  [[nodiscard]] <span class="keyword">const</span> std::string &amp;fragment()<span class="keyword"> const </span>{ <span class="keywordflow">return</span> fragment_; }</div>
-<div class="line"><a name="l00113"></a><span class="lineno">  113</span>&#160; </div>
-<div class="line"><a name="l00118"></a><span class="lineno"><a class="line" href="classklib_1_1URL.html#a4c5bb0286c6cb63912c2cb443cf22b91">  118</a></span>&#160;  <span class="keywordtype">void</span> <a class="code" href="classklib_1_1URL.html#a4c5bb0286c6cb63912c2cb443cf22b91">set_fragment</a>(<span class="keyword">const</span> std::string &amp;fragment) { fragment_ = fragment; }</div>
+<div class="line"><a name="l00020"></a><span class="lineno"><a class="line" href="url_8h.html#ab61d7a500844479f08056b4d2f480ffe">   20</a></span>&#160;std::string <a class="code" href="url_8h.html#ab61d7a500844479f08056b4d2f480ffe">url_encode</a>(<span class="keyword">const</span> std::string &amp;str);</div>
+<div class="line"><a name="l00021"></a><span class="lineno">   21</span>&#160; </div>
+<div class="line"><a name="l00027"></a><span class="lineno"><a class="line" href="url_8h.html#abcf715bf078ce03cdf7b76ef2a57f95c">   27</a></span>&#160;std::string <a class="code" href="url_8h.html#abcf715bf078ce03cdf7b76ef2a57f95c">url_decode</a>(<span class="keyword">const</span> std::string &amp;str);</div>
+<div class="line"><a name="l00028"></a><span class="lineno">   28</span>&#160; </div>
+<div class="line"><a name="l00033"></a><span class="lineno"><a class="line" href="classklib_1_1URL.html">   33</a></span>&#160;<span class="keyword">class </span><a class="code" href="classklib_1_1URL.html">URL</a> {</div>
+<div class="line"><a name="l00034"></a><span class="lineno">   34</span>&#160; <span class="keyword">public</span>:</div>
+<div class="line"><a name="l00038"></a><span class="lineno"><a class="line" href="classklib_1_1URL.html#a7c3ad9c9d0fa68f27b692e5474f57927">   38</a></span>&#160;  <a class="code" href="classklib_1_1URL.html#a7c3ad9c9d0fa68f27b692e5474f57927">URL</a>() = <span class="keywordflow">default</span>;</div>
+<div class="line"><a name="l00043"></a><span class="lineno"><a class="line" href="classklib_1_1URL.html#ab380b3c535b362d46693603e923bcf78">   43</a></span>&#160;  <span class="keyword">explicit</span> <a class="code" href="classklib_1_1URL.html#ab380b3c535b362d46693603e923bcf78">URL</a>(<span class="keyword">const</span> std::string &amp;url);</div>
+<div class="line"><a name="l00044"></a><span class="lineno">   44</span>&#160; </div>
+<div class="line"><a name="l00049"></a><span class="lineno"><a class="line" href="classklib_1_1URL.html#a7b33bb035848b66df8e865ad8e17749e">   49</a></span>&#160;  [[nodiscard]] std::string <a class="code" href="classklib_1_1URL.html#a7b33bb035848b66df8e865ad8e17749e">to_string</a>() <span class="keyword">const</span>;</div>
+<div class="line"><a name="l00050"></a><span class="lineno">   50</span>&#160; </div>
+<div class="line"><a name="l00056"></a><span class="lineno">   56</span>&#160;  [[nodiscard]] <span class="keyword">const</span> std::string &amp;schema()<span class="keyword"> const </span>{ <span class="keywordflow">return</span> schema_; }</div>
+<div class="line"><a name="l00057"></a><span class="lineno">   57</span>&#160; </div>
+<div class="line"><a name="l00062"></a><span class="lineno"><a class="line" href="classklib_1_1URL.html#a64cc3c70623482e4ac6466e0b93c7507">   62</a></span>&#160;  <span class="keywordtype">void</span> <a class="code" href="classklib_1_1URL.html#a64cc3c70623482e4ac6466e0b93c7507">set_schema</a>(<span class="keyword">const</span> std::string &amp;schema) { schema_ = schema; }</div>
+<div class="line"><a name="l00063"></a><span class="lineno">   63</span>&#160; </div>
+<div class="line"><a name="l00069"></a><span class="lineno">   69</span>&#160;  [[nodiscard]] <span class="keyword">const</span> std::string &amp;host()<span class="keyword"> const </span>{ <span class="keywordflow">return</span> host_; }</div>
+<div class="line"><a name="l00070"></a><span class="lineno">   70</span>&#160; </div>
+<div class="line"><a name="l00075"></a><span class="lineno"><a class="line" href="classklib_1_1URL.html#ab27bbe0635220df332795aded4b731ec">   75</a></span>&#160;  <span class="keywordtype">void</span> <a class="code" href="classklib_1_1URL.html#ab27bbe0635220df332795aded4b731ec">set_host</a>(<span class="keyword">const</span> std::string &amp;host) { host_ = host; }</div>
+<div class="line"><a name="l00076"></a><span class="lineno">   76</span>&#160; </div>
+<div class="line"><a name="l00082"></a><span class="lineno">   82</span>&#160;  [[nodiscard]] std::int32_t port()<span class="keyword"> const </span>{ <span class="keywordflow">return</span> port_; }</div>
+<div class="line"><a name="l00083"></a><span class="lineno">   83</span>&#160; </div>
+<div class="line"><a name="l00088"></a><span class="lineno"><a class="line" href="classklib_1_1URL.html#af3509f57a8bda90b0d819aa67324bba1">   88</a></span>&#160;  <span class="keywordtype">void</span> <a class="code" href="classklib_1_1URL.html#af3509f57a8bda90b0d819aa67324bba1">set_port</a>(std::int32_t port) { port_ = port; }</div>
+<div class="line"><a name="l00089"></a><span class="lineno">   89</span>&#160; </div>
+<div class="line"><a name="l00095"></a><span class="lineno">   95</span>&#160;  [[nodiscard]] <span class="keyword">const</span> std::string &amp;path()<span class="keyword"> const </span>{ <span class="keywordflow">return</span> path_; }</div>
+<div class="line"><a name="l00096"></a><span class="lineno">   96</span>&#160; </div>
+<div class="line"><a name="l00101"></a><span class="lineno"><a class="line" href="classklib_1_1URL.html#a70fdff0ebf823d3d5d6b12df966acf97">  101</a></span>&#160;  <span class="keywordtype">void</span> <a class="code" href="classklib_1_1URL.html#a70fdff0ebf823d3d5d6b12df966acf97">set_path</a>(<span class="keyword">const</span> std::string &amp;path) { path_ = path; }</div>
+<div class="line"><a name="l00102"></a><span class="lineno">  102</span>&#160; </div>
+<div class="line"><a name="l00107"></a><span class="lineno"><a class="line" href="classklib_1_1URL.html#a5b3434c08c190fcd008595f54fe11874">  107</a></span>&#160;  [[nodiscard]] <span class="keyword">const</span> phmap::flat_hash_map&lt;std::string, std::string&gt; &amp;<a class="code" href="classklib_1_1URL.html#a5b3434c08c190fcd008595f54fe11874">query</a>()<span class="keyword"></span></div>
+<div class="line"><a name="l00108"></a><span class="lineno">  108</span>&#160;<span class="keyword">      const </span>{</div>
+<div class="line"><a name="l00109"></a><span class="lineno">  109</span>&#160;    <span class="keywordflow">return</span> query_;</div>
+<div class="line"><a name="l00110"></a><span class="lineno">  110</span>&#160;  }</div>
+<div class="line"><a name="l00111"></a><span class="lineno">  111</span>&#160; </div>
+<div class="line"><a name="l00116"></a><span class="lineno"><a class="line" href="classklib_1_1URL.html#ad3b8b3cd745a5f0344a7567250db8898">  116</a></span>&#160;  <span class="keywordtype">void</span> <a class="code" href="classklib_1_1URL.html#ad3b8b3cd745a5f0344a7567250db8898">set_query</a>(<span class="keyword">const</span> phmap::flat_hash_map&lt;std::string, std::string&gt; &amp;<a class="code" href="classklib_1_1URL.html#a5b3434c08c190fcd008595f54fe11874">query</a>) {</div>
+<div class="line"><a name="l00117"></a><span class="lineno">  117</span>&#160;    query_ = <a class="code" href="classklib_1_1URL.html#a5b3434c08c190fcd008595f54fe11874">query</a>;</div>
+<div class="line"><a name="l00118"></a><span class="lineno">  118</span>&#160;  }</div>
 <div class="line"><a name="l00119"></a><span class="lineno">  119</span>&#160; </div>
-<div class="line"><a name="l00126"></a><span class="lineno">  126</span>&#160;  [[nodiscard]] <span class="keyword">const</span> std::string &amp;user()<span class="keyword"> const </span>{ <span class="keywordflow">return</span> user_; }</div>
+<div class="line"><a name="l00126"></a><span class="lineno">  126</span>&#160;  [[nodiscard]] <span class="keyword">const</span> std::string &amp;fragment()<span class="keyword"> const </span>{ <span class="keywordflow">return</span> fragment_; }</div>
 <div class="line"><a name="l00127"></a><span class="lineno">  127</span>&#160; </div>
-<div class="line"><a name="l00132"></a><span class="lineno"><a class="line" href="classklib_1_1URL.html#a37872b88a5fbfb4348e980dee8b5b7eb">  132</a></span>&#160;  <span class="keywordtype">void</span> <a class="code" href="classklib_1_1URL.html#a37872b88a5fbfb4348e980dee8b5b7eb">set_user</a>(<span class="keyword">const</span> std::string &amp;user) { user_ = user; }</div>
+<div class="line"><a name="l00132"></a><span class="lineno"><a class="line" href="classklib_1_1URL.html#a4c5bb0286c6cb63912c2cb443cf22b91">  132</a></span>&#160;  <span class="keywordtype">void</span> <a class="code" href="classklib_1_1URL.html#a4c5bb0286c6cb63912c2cb443cf22b91">set_fragment</a>(<span class="keyword">const</span> std::string &amp;fragment) { fragment_ = fragment; }</div>
 <div class="line"><a name="l00133"></a><span class="lineno">  133</span>&#160; </div>
-<div class="line"><a name="l00140"></a><span class="lineno">  140</span>&#160;  [[nodiscard]] <span class="keyword">const</span> std::string &amp;password()<span class="keyword"> const </span>{ <span class="keywordflow">return</span> password_; }</div>
+<div class="line"><a name="l00140"></a><span class="lineno">  140</span>&#160;  [[nodiscard]] <span class="keyword">const</span> std::string &amp;user()<span class="keyword"> const </span>{ <span class="keywordflow">return</span> user_; }</div>
 <div class="line"><a name="l00141"></a><span class="lineno">  141</span>&#160; </div>
-<div class="line"><a name="l00146"></a><span class="lineno"><a class="line" href="classklib_1_1URL.html#a85b6e51cc528f5135c930bbe682b7de8">  146</a></span>&#160;  <span class="keywordtype">void</span> <a class="code" href="classklib_1_1URL.html#a85b6e51cc528f5135c930bbe682b7de8">set_password</a>(<span class="keyword">const</span> std::string &amp;password) { password_ = password; }</div>
+<div class="line"><a name="l00146"></a><span class="lineno"><a class="line" href="classklib_1_1URL.html#a37872b88a5fbfb4348e980dee8b5b7eb">  146</a></span>&#160;  <span class="keywordtype">void</span> <a class="code" href="classklib_1_1URL.html#a37872b88a5fbfb4348e980dee8b5b7eb">set_user</a>(<span class="keyword">const</span> std::string &amp;user) { user_ = user; }</div>
 <div class="line"><a name="l00147"></a><span class="lineno">  147</span>&#160; </div>
-<div class="line"><a name="l00148"></a><span class="lineno">  148</span>&#160; <span class="keyword">private</span>:</div>
-<div class="line"><a name="l00149"></a><span class="lineno">  149</span>&#160;  std::string schema_ = <span class="stringliteral">&quot;https&quot;</span>;</div>
-<div class="line"><a name="l00150"></a><span class="lineno">  150</span>&#160;  std::string host_;</div>
-<div class="line"><a name="l00151"></a><span class="lineno">  151</span>&#160;  std::int32_t port_ = 0;</div>
-<div class="line"><a name="l00152"></a><span class="lineno">  152</span>&#160;  std::string path_;</div>
-<div class="line"><a name="l00153"></a><span class="lineno">  153</span>&#160;  phmap::flat_hash_map&lt;std::string, std::string&gt; query_;</div>
-<div class="line"><a name="l00154"></a><span class="lineno">  154</span>&#160;  std::string fragment_;</div>
-<div class="line"><a name="l00155"></a><span class="lineno">  155</span>&#160;  std::string user_;</div>
-<div class="line"><a name="l00156"></a><span class="lineno">  156</span>&#160;  std::string password_;</div>
-<div class="line"><a name="l00157"></a><span class="lineno">  157</span>&#160;};</div>
-<div class="line"><a name="l00158"></a><span class="lineno">  158</span>&#160; </div>
-<div class="line"><a name="l00159"></a><span class="lineno">  159</span>&#160;}  <span class="comment">// namespace klib</span></div>
-<div class="ttc" id="aclassklib_1_1URL_html"><div class="ttname"><a href="classklib_1_1URL.html">klib::URL</a></div><div class="ttdoc">Parse and build URL.</div><div class="ttdef"><b>Definition:</b> url.h:19</div></div>
-<div class="ttc" id="aclassklib_1_1URL_html_a02fa6ed756dd737e1d99be9ea7b71adb"><div class="ttname"><a href="classklib_1_1URL.html#a02fa6ed756dd737e1d99be9ea7b71adb">klib::URL::build</a></div><div class="ttdeci">std::string build() const</div><div class="ttdoc">Build URL.</div></div>
-<div class="ttc" id="aclassklib_1_1URL_html_a37872b88a5fbfb4348e980dee8b5b7eb"><div class="ttname"><a href="classklib_1_1URL.html#a37872b88a5fbfb4348e980dee8b5b7eb">klib::URL::set_user</a></div><div class="ttdeci">void set_user(const std::string &amp;user)</div><div class="ttdoc">Set URL user.</div><div class="ttdef"><b>Definition:</b> url.h:132</div></div>
-<div class="ttc" id="aclassklib_1_1URL_html_a4c5bb0286c6cb63912c2cb443cf22b91"><div class="ttname"><a href="classklib_1_1URL.html#a4c5bb0286c6cb63912c2cb443cf22b91">klib::URL::set_fragment</a></div><div class="ttdeci">void set_fragment(const std::string &amp;fragment)</div><div class="ttdoc">Set URL fragment.</div><div class="ttdef"><b>Definition:</b> url.h:118</div></div>
-<div class="ttc" id="aclassklib_1_1URL_html_a5b3434c08c190fcd008595f54fe11874"><div class="ttname"><a href="classklib_1_1URL.html#a5b3434c08c190fcd008595f54fe11874">klib::URL::query</a></div><div class="ttdeci">const phmap::flat_hash_map&lt; std::string, std::string &gt; &amp; query() const</div><div class="ttdoc">Get URL query.</div><div class="ttdef"><b>Definition:</b> url.h:93</div></div>
-<div class="ttc" id="aclassklib_1_1URL_html_a64cc3c70623482e4ac6466e0b93c7507"><div class="ttname"><a href="classklib_1_1URL.html#a64cc3c70623482e4ac6466e0b93c7507">klib::URL::set_schema</a></div><div class="ttdeci">void set_schema(const std::string &amp;schema)</div><div class="ttdoc">Set URL schema.</div><div class="ttdef"><b>Definition:</b> url.h:48</div></div>
-<div class="ttc" id="aclassklib_1_1URL_html_a70fdff0ebf823d3d5d6b12df966acf97"><div class="ttname"><a href="classklib_1_1URL.html#a70fdff0ebf823d3d5d6b12df966acf97">klib::URL::set_path</a></div><div class="ttdeci">void set_path(const std::string &amp;path)</div><div class="ttdoc">Set URL path.</div><div class="ttdef"><b>Definition:</b> url.h:87</div></div>
+<div class="line"><a name="l00154"></a><span class="lineno">  154</span>&#160;  [[nodiscard]] <span class="keyword">const</span> std::string &amp;password()<span class="keyword"> const </span>{ <span class="keywordflow">return</span> password_; }</div>
+<div class="line"><a name="l00155"></a><span class="lineno">  155</span>&#160; </div>
+<div class="line"><a name="l00160"></a><span class="lineno"><a class="line" href="classklib_1_1URL.html#a85b6e51cc528f5135c930bbe682b7de8">  160</a></span>&#160;  <span class="keywordtype">void</span> <a class="code" href="classklib_1_1URL.html#a85b6e51cc528f5135c930bbe682b7de8">set_password</a>(<span class="keyword">const</span> std::string &amp;password) { password_ = password; }</div>
+<div class="line"><a name="l00161"></a><span class="lineno">  161</span>&#160; </div>
+<div class="line"><a name="l00162"></a><span class="lineno">  162</span>&#160; <span class="keyword">private</span>:</div>
+<div class="line"><a name="l00163"></a><span class="lineno">  163</span>&#160;  std::string schema_ = <span class="stringliteral">&quot;https&quot;</span>;</div>
+<div class="line"><a name="l00164"></a><span class="lineno">  164</span>&#160;  std::string host_;</div>
+<div class="line"><a name="l00165"></a><span class="lineno">  165</span>&#160;  std::int32_t port_ = 0;</div>
+<div class="line"><a name="l00166"></a><span class="lineno">  166</span>&#160;  std::string path_;</div>
+<div class="line"><a name="l00167"></a><span class="lineno">  167</span>&#160;  phmap::flat_hash_map&lt;std::string, std::string&gt; query_;</div>
+<div class="line"><a name="l00168"></a><span class="lineno">  168</span>&#160;  std::string fragment_;</div>
+<div class="line"><a name="l00169"></a><span class="lineno">  169</span>&#160;  std::string user_;</div>
+<div class="line"><a name="l00170"></a><span class="lineno">  170</span>&#160;  std::string password_;</div>
+<div class="line"><a name="l00171"></a><span class="lineno">  171</span>&#160;};</div>
+<div class="line"><a name="l00172"></a><span class="lineno">  172</span>&#160; </div>
+<div class="line"><a name="l00173"></a><span class="lineno">  173</span>&#160;}  <span class="comment">// namespace klib</span></div>
+<div class="ttc" id="aclassklib_1_1URL_html"><div class="ttname"><a href="classklib_1_1URL.html">klib::URL</a></div><div class="ttdoc">Parse and build URL.</div><div class="ttdef"><b>Definition:</b> url.h:33</div></div>
+<div class="ttc" id="aclassklib_1_1URL_html_a37872b88a5fbfb4348e980dee8b5b7eb"><div class="ttname"><a href="classklib_1_1URL.html#a37872b88a5fbfb4348e980dee8b5b7eb">klib::URL::set_user</a></div><div class="ttdeci">void set_user(const std::string &amp;user)</div><div class="ttdoc">Set URL user.</div><div class="ttdef"><b>Definition:</b> url.h:146</div></div>
+<div class="ttc" id="aclassklib_1_1URL_html_a4c5bb0286c6cb63912c2cb443cf22b91"><div class="ttname"><a href="classklib_1_1URL.html#a4c5bb0286c6cb63912c2cb443cf22b91">klib::URL::set_fragment</a></div><div class="ttdeci">void set_fragment(const std::string &amp;fragment)</div><div class="ttdoc">Set URL fragment.</div><div class="ttdef"><b>Definition:</b> url.h:132</div></div>
+<div class="ttc" id="aclassklib_1_1URL_html_a5b3434c08c190fcd008595f54fe11874"><div class="ttname"><a href="classklib_1_1URL.html#a5b3434c08c190fcd008595f54fe11874">klib::URL::query</a></div><div class="ttdeci">const phmap::flat_hash_map&lt; std::string, std::string &gt; &amp; query() const</div><div class="ttdoc">Get URL query.</div><div class="ttdef"><b>Definition:</b> url.h:107</div></div>
+<div class="ttc" id="aclassklib_1_1URL_html_a64cc3c70623482e4ac6466e0b93c7507"><div class="ttname"><a href="classklib_1_1URL.html#a64cc3c70623482e4ac6466e0b93c7507">klib::URL::set_schema</a></div><div class="ttdeci">void set_schema(const std::string &amp;schema)</div><div class="ttdoc">Set URL schema.</div><div class="ttdef"><b>Definition:</b> url.h:62</div></div>
+<div class="ttc" id="aclassklib_1_1URL_html_a70fdff0ebf823d3d5d6b12df966acf97"><div class="ttname"><a href="classklib_1_1URL.html#a70fdff0ebf823d3d5d6b12df966acf97">klib::URL::set_path</a></div><div class="ttdeci">void set_path(const std::string &amp;path)</div><div class="ttdoc">Set URL path.</div><div class="ttdef"><b>Definition:</b> url.h:101</div></div>
+<div class="ttc" id="aclassklib_1_1URL_html_a7b33bb035848b66df8e865ad8e17749e"><div class="ttname"><a href="classklib_1_1URL.html#a7b33bb035848b66df8e865ad8e17749e">klib::URL::to_string</a></div><div class="ttdeci">std::string to_string() const</div><div class="ttdoc">Get URL string.</div></div>
 <div class="ttc" id="aclassklib_1_1URL_html_a7c3ad9c9d0fa68f27b692e5474f57927"><div class="ttname"><a href="classklib_1_1URL.html#a7c3ad9c9d0fa68f27b692e5474f57927">klib::URL::URL</a></div><div class="ttdeci">URL()=default</div><div class="ttdoc">Default constructor.</div></div>
-<div class="ttc" id="aclassklib_1_1URL_html_a85b6e51cc528f5135c930bbe682b7de8"><div class="ttname"><a href="classklib_1_1URL.html#a85b6e51cc528f5135c930bbe682b7de8">klib::URL::set_password</a></div><div class="ttdeci">void set_password(const std::string &amp;password)</div><div class="ttdoc">Set URL password.</div><div class="ttdef"><b>Definition:</b> url.h:146</div></div>
-<div class="ttc" id="aclassklib_1_1URL_html_ab27bbe0635220df332795aded4b731ec"><div class="ttname"><a href="classklib_1_1URL.html#ab27bbe0635220df332795aded4b731ec">klib::URL::set_host</a></div><div class="ttdeci">void set_host(const std::string &amp;host)</div><div class="ttdoc">Set URL host.</div><div class="ttdef"><b>Definition:</b> url.h:61</div></div>
+<div class="ttc" id="aclassklib_1_1URL_html_a85b6e51cc528f5135c930bbe682b7de8"><div class="ttname"><a href="classklib_1_1URL.html#a85b6e51cc528f5135c930bbe682b7de8">klib::URL::set_password</a></div><div class="ttdeci">void set_password(const std::string &amp;password)</div><div class="ttdoc">Set URL password.</div><div class="ttdef"><b>Definition:</b> url.h:160</div></div>
+<div class="ttc" id="aclassklib_1_1URL_html_ab27bbe0635220df332795aded4b731ec"><div class="ttname"><a href="classklib_1_1URL.html#ab27bbe0635220df332795aded4b731ec">klib::URL::set_host</a></div><div class="ttdeci">void set_host(const std::string &amp;host)</div><div class="ttdoc">Set URL host.</div><div class="ttdef"><b>Definition:</b> url.h:75</div></div>
 <div class="ttc" id="aclassklib_1_1URL_html_ab380b3c535b362d46693603e923bcf78"><div class="ttname"><a href="classklib_1_1URL.html#ab380b3c535b362d46693603e923bcf78">klib::URL::URL</a></div><div class="ttdeci">URL(const std::string &amp;url)</div><div class="ttdoc">Constructor.</div></div>
-<div class="ttc" id="aclassklib_1_1URL_html_ad3b8b3cd745a5f0344a7567250db8898"><div class="ttname"><a href="classklib_1_1URL.html#ad3b8b3cd745a5f0344a7567250db8898">klib::URL::set_query</a></div><div class="ttdeci">void set_query(const phmap::flat_hash_map&lt; std::string, std::string &gt; &amp;query)</div><div class="ttdoc">Set URL query.</div><div class="ttdef"><b>Definition:</b> url.h:102</div></div>
-<div class="ttc" id="aclassklib_1_1URL_html_af3509f57a8bda90b0d819aa67324bba1"><div class="ttname"><a href="classklib_1_1URL.html#af3509f57a8bda90b0d819aa67324bba1">klib::URL::set_port</a></div><div class="ttdeci">void set_port(std::int32_t port)</div><div class="ttdoc">Set URL port.</div><div class="ttdef"><b>Definition:</b> url.h:74</div></div>
+<div class="ttc" id="aclassklib_1_1URL_html_ad3b8b3cd745a5f0344a7567250db8898"><div class="ttname"><a href="classklib_1_1URL.html#ad3b8b3cd745a5f0344a7567250db8898">klib::URL::set_query</a></div><div class="ttdeci">void set_query(const phmap::flat_hash_map&lt; std::string, std::string &gt; &amp;query)</div><div class="ttdoc">Set URL query.</div><div class="ttdef"><b>Definition:</b> url.h:116</div></div>
+<div class="ttc" id="aclassklib_1_1URL_html_af3509f57a8bda90b0d819aa67324bba1"><div class="ttname"><a href="classklib_1_1URL.html#af3509f57a8bda90b0d819aa67324bba1">klib::URL::set_port</a></div><div class="ttdeci">void set_port(std::int32_t port)</div><div class="ttdoc">Set URL port.</div><div class="ttdef"><b>Definition:</b> url.h:88</div></div>
+<div class="ttc" id="aurl_8h_html_ab61d7a500844479f08056b4d2f480ffe"><div class="ttname"><a href="url_8h.html#ab61d7a500844479f08056b4d2f480ffe">klib::url_encode</a></div><div class="ttdeci">std::string url_encode(const std::string &amp;str)</div><div class="ttdoc">Encoding URL string.</div></div>
+<div class="ttc" id="aurl_8h_html_abcf715bf078ce03cdf7b76ef2a57f95c"><div class="ttname"><a href="url_8h.html#abcf715bf078ce03cdf7b76ef2a57f95c">klib::url_decode</a></div><div class="ttdeci">std::string url_decode(const std::string &amp;str)</div><div class="ttdoc">Decoding URL string.</div></div>
 </div><!-- fragment --></div><!-- contents -->
 </div><!-- doc-content -->
 <!-- start footer part -->

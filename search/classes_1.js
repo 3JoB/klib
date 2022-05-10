@@ -1,4 +1,4 @@
 var searchData=
 [
-  ['exception_191',['Exception',['../classklib_1_1Exception.html',1,'klib']]]
+  ['exception_190',['Exception',['../classklib_1_1Exception.html',1,'klib']]]
 ];
