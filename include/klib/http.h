@@ -142,11 +142,6 @@ class Request {
   void set_browser_user_agent();
 
   /**
-   * @brief Set up curl user agent
-   */
-  void set_curl_user_agent();
-
-  /**
    * @brief Set up timeout
    * @param seconds: Time in seconds
    */

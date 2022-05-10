@@ -129,7 +129,6 @@ class Request::RequestImpl {
   void set_doh_url(const std::string &url);
   void set_user_agent(const std::string &user_agent);
   void set_browser_user_agent();
-  void set_curl_user_agent();
   void set_timeout(std::int64_t seconds);
   void set_connect_timeout(std::int64_t seconds);
   void set_cookie(
@@ -261,10 +260,6 @@ void Request::RequestImpl::set_browser_user_agent() {
   set_user_agent(
       "Mozilla/5.0 (X11; Linux x86_64) AppleWebKit/537.36 (KHTML, like Gecko) "
       "Chrome/101.0.4951.54 Safari/537.36 Edg/101.0.1210.39");
-}
-
-void Request::RequestImpl::set_curl_user_agent() {
-  set_user_agent("curl/7.83.0");
 }
 
 void Request::RequestImpl::set_timeout(std::int64_t seconds) {
@@ -485,8 +480,6 @@ void Request::set_user_agent(const std::string &user_agent) {
 }
 
 void Request::set_browser_user_agent() { impl_->set_browser_user_agent(); }
-
-void Request::set_curl_user_agent() { impl_->set_curl_user_agent(); }
 
 void Request::set_timeout(std::int64_t seconds) { impl_->set_timeout(seconds); }
 
