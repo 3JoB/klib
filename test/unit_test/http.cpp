@@ -14,7 +14,6 @@ const std::string httpbin_url = "https://httpbin.org";
 
 TEST_CASE("request headers", "[http]") {
   klib::Request request;
-  request.set_curl_user_agent();
 
 #ifndef NDEBUG
   request.verbose(true);
@@ -38,7 +37,6 @@ TEST_CASE("request headers", "[http]") {
 
 TEST_CASE("response headers", "[http]") {
   klib::Request request;
-  request.set_curl_user_agent();
 
 #ifndef NDEBUG
   request.verbose(true);
