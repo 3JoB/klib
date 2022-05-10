@@ -15,6 +15,7 @@
 #include <scope_guard.hpp>
 
 #include "klib/exception.h"
+#include "klib/url.h"
 #include "klib/util.h"
 
 extern char cacert[];
@@ -25,13 +26,6 @@ extern int cacert_size;
     if (rc != CURLcode::CURLE_OK) [[unlikely]] {  \
       throw RuntimeError(curl_easy_strerror(rc)); \
     }                                             \
-  } while (0)
-
-#define CHECK_CURL_URL(rc)                         \
-  do {                                             \
-    if (rc != CURLUcode::CURLUE_OK) [[unlikely]] { \
-      throw RuntimeError(curl_url_strerror(rc));   \
-    }                                              \
   } while (0)
 
 namespace klib {
@@ -51,29 +45,6 @@ HttpStatus get_status(CURL *curl) {
   CHECK_CURL(rc);
 
   return static_cast<HttpStatus>(status_code);
-}
-
-CURLU *add_url(
-    CURL *curl, const std::string &url,
-    const phmap::flat_hash_map<std::string, std::string> &params = {}) {
-  auto c_url = curl_url();
-
-  auto rc = curl_url_set(c_url, CURLUPART_URL, url.c_str(), 0);
-  CHECK_CURL_URL(rc);
-
-  for (const auto &[key, value] : params) {
-    std::string query;
-    query.append(key).append("=").append(value);
-
-    rc = curl_url_set(c_url, CURLUPART_QUERY, query.c_str(),
-                      CURLU_APPENDQUERY | CURLU_URLENCODE);
-    CHECK_CURL_URL(rc);
-  }
-
-  auto rc2 = curl_easy_setopt(curl, CURLOPT_CURLU, c_url);
-  CHECK_CURL(rc2);
-
-  return c_url;
 }
 
 curl_slist *add_header(
@@ -161,15 +132,11 @@ class Request::RequestImpl {
   void set_curl_user_agent();
   void set_timeout(std::int64_t seconds);
   void set_connect_timeout(std::int64_t seconds);
-  void set_accept_encoding(const std::string &accept_encoding);
   void set_cookie(
       const phmap::flat_hash_map<std::string, std::string> &cookies);
   void basic_auth(const std::string &user_name, const std::string &password);
-  std::string url_encode(const std::string &str);
-  std::string url_decode(const std::string &str);
 
   Response get(const std::string &url,
-               const phmap::flat_hash_map<std::string, std::string> &params,
                const phmap::flat_hash_map<std::string, std::string> &headers);
   Response post(const std::string &url,
                 const phmap::flat_hash_map<std::string, std::string> &data,
@@ -247,6 +214,9 @@ Request::RequestImpl::RequestImpl() {
                         CURLALTSVC_H1 | CURLALTSVC_H2);
   CHECK_CURL(rc);
 
+  rc = curl_easy_setopt(curl_, CURLOPT_ACCEPT_ENCODING, "gzip, deflate, br");
+  CHECK_CURL(rc);
+
   rc = curl_easy_setopt(curl_, CURLOPT_WRITEFUNCTION, callback_func_std_string);
   CHECK_CURL(rc);
 }
@@ -307,13 +277,6 @@ void Request::RequestImpl::set_connect_timeout(std::int64_t seconds) {
   CHECK_CURL(rc);
 }
 
-void Request::RequestImpl::set_accept_encoding(
-    const std::string &accept_encoding) {
-  auto rc =
-      curl_easy_setopt(curl_, CURLOPT_ACCEPT_ENCODING, accept_encoding.c_str());
-  CHECK_CURL(rc);
-}
-
 void Request::RequestImpl::set_cookie(
     const phmap::flat_hash_map<std::string, std::string> &cookies) {
   std::string cookies_str;
@@ -336,38 +299,15 @@ void Request::RequestImpl::basic_auth(const std::string &user_name,
   CHECK_CURL(rc);
 }
 
-std::string Request::RequestImpl::url_encode(const std::string &str) {
-  auto ptr = curl_easy_escape(curl_, str.c_str(), std::size(str));
-  SCOPE_EXIT { curl_free(ptr); };
-  if (!ptr) [[unlikely]] {
-    throw RuntimeError("curl_easy_escape() failed");
-  }
-
-  return ptr;
-}
-
-std::string Request::RequestImpl::url_decode(const std::string &str) {
-  std::int32_t length;
-  auto ptr = curl_easy_unescape(curl_, str.c_str(), std::size(str), &length);
-  SCOPE_EXIT { curl_free(ptr); };
-  if (!ptr) [[unlikely]] {
-    throw RuntimeError("curl_easy_unescape() failed");
-  }
-
-  return std::string(ptr, length);
-}
-
 Response Request::RequestImpl::get(
     const std::string &url,
-    const phmap::flat_hash_map<std::string, std::string> &params,
     const phmap::flat_hash_map<std::string, std::string> &headers) {
   auto rc = curl_easy_setopt(curl_, CURLOPT_HTTPGET, 1);
   CHECK_CURL(rc);
 
-  auto c_url = add_url(curl_, url, params);
+  rc = curl_easy_setopt(curl_, CURLOPT_URL, url.c_str());
   SCOPE_EXIT {
-    curl_url_cleanup(c_url);
-    rc = curl_easy_setopt(curl_, CURLOPT_CURLU, nullptr);
+    rc = curl_easy_setopt(curl_, CURLOPT_URL, nullptr);
     CHECK_CURL(rc);
   };
 
@@ -403,10 +343,9 @@ Response Request::RequestImpl::post(
     CHECK_CURL(rc);
   };
 
-  auto c_url = add_url(curl_, url);
+  rc = curl_easy_setopt(curl_, CURLOPT_URL, url.c_str());
   SCOPE_EXIT {
-    curl_url_cleanup(c_url);
-    rc = curl_easy_setopt(curl_, CURLOPT_CURLU, nullptr);
+    rc = curl_easy_setopt(curl_, CURLOPT_URL, nullptr);
     CHECK_CURL(rc);
   };
 
@@ -440,10 +379,9 @@ Response Request::RequestImpl::post(
     CHECK_CURL(rc);
   };
 
-  auto c_url = add_url(curl_, url);
+  rc = curl_easy_setopt(curl_, CURLOPT_URL, url.c_str());
   SCOPE_EXIT {
-    curl_url_cleanup(c_url);
-    rc = curl_easy_setopt(curl_, CURLOPT_CURLU, nullptr);
+    rc = curl_easy_setopt(curl_, CURLOPT_URL, nullptr);
     CHECK_CURL(rc);
   };
 
@@ -467,10 +405,9 @@ Response Request::RequestImpl::post_mime(
   auto rc = curl_easy_setopt(curl_, CURLOPT_HTTPPOST, 1);
   CHECK_CURL(rc);
 
-  auto c_url = add_url(curl_, url);
+  rc = curl_easy_setopt(curl_, CURLOPT_URL, url.c_str());
   SCOPE_EXIT {
-    curl_url_cleanup(c_url);
-    rc = curl_easy_setopt(curl_, CURLOPT_CURLU, nullptr);
+    rc = curl_easy_setopt(curl_, CURLOPT_URL, nullptr);
     CHECK_CURL(rc);
   };
 
@@ -557,10 +494,6 @@ void Request::set_connect_timeout(std::int64_t seconds) {
   impl_->set_connect_timeout(seconds);
 }
 
-void Request::set_accept_encoding(const std::string &accept_encoding) {
-  impl_->set_accept_encoding(accept_encoding);
-}
-
 void Request::set_cookie(
     const phmap::flat_hash_map<std::string, std::string> &cookies) {
   impl_->set_cookie(cookies);
@@ -571,19 +504,10 @@ void Request::basic_auth(const std::string &user_name,
   impl_->basic_auth(user_name, password);
 }
 
-std::string Request::url_encode(const std::string &str) {
-  return impl_->url_encode(str);
-}
-
-std::string Request::url_decode(const std::string &str) {
-  return impl_->url_decode(str);
-}
-
 Response Request::get(
     const std::string &url,
-    const phmap::flat_hash_map<std::string, std::string> &params,
     const phmap::flat_hash_map<std::string, std::string> &header) {
-  return impl_->get(url, params, header);
+  return impl_->get(url, header);
 }
 
 Response Request::post(

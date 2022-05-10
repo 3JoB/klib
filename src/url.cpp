@@ -3,7 +3,7 @@
 #include <charconv>
 #include <vector>
 
-#include <curl/urlapi.h>
+#include <curl/curl.h>
 #include <boost/algorithm/string.hpp>
 #include <scope_guard.hpp>
 
@@ -17,6 +17,27 @@
   } while (0)
 
 namespace klib {
+
+std::string url_encode(const std::string& str) {
+  auto ptr = curl_easy_escape(nullptr, str.c_str(), 0);
+  SCOPE_EXIT { curl_free(ptr); };
+  if (!ptr) [[unlikely]] {
+    throw RuntimeError("curl_easy_escape() failed");
+  }
+
+  return ptr;
+}
+
+std::string url_decode(const std::string& str) {
+  std::int32_t length;
+  auto ptr = curl_easy_unescape(nullptr, str.c_str(), 0, &length);
+  SCOPE_EXIT { curl_free(ptr); };
+  if (!ptr) [[unlikely]] {
+    throw RuntimeError("curl_easy_unescape() failed");
+  }
+
+  return std::string(ptr, length);
+}
 
 URL::URL(const std::string& url) {
   auto c_url = curl_url();
@@ -115,7 +136,7 @@ URL::URL(const std::string& url) {
   }
 }
 
-std::string URL::build() const {
+std::string URL::to_string() const {
   auto c_url = curl_url();
   SCOPE_EXIT { curl_url_cleanup(c_url); };
   if (!c_url) {

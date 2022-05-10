@@ -55,28 +55,28 @@ TEST_CASE("Set", "[set]") {
   }
 
   BENCHMARK("std::set find") {
-    bool flag;
+    bool flag = false;
     for (auto key : keys) {
       flag = std_set.contains(key);
     }
     return flag;
   };
   BENCHMARK("phmap::btree_set find") {
-    bool flag;
+    bool flag = false;
     for (auto key : keys) {
       flag = ph_set.contains(key);
     }
     return flag;
   };
   BENCHMARK("std::unordered_set find") {
-    bool flag;
+    bool flag = false;
     for (auto key : keys) {
       flag = std_hashset.contains(key);
     }
     return flag;
   };
   BENCHMARK("phmap::flat_hash_set find") {
-    bool flag;
+    bool flag = false;
     for (auto key : keys) {
       flag = ph_hashset.contains(key);
     }

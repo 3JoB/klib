@@ -13,6 +13,20 @@
 namespace klib {
 
 /**
+ * @brief Encoding URL string
+ * @param str: String to be encoded
+ * @return Encoded string
+ */
+std::string url_encode(const std::string &str);
+
+/**
+ * @brief Decoding URL string
+ * @param str: String to be decoded
+ * @return Decoded string
+ */
+std::string url_decode(const std::string &str);
+
+/**
  * @brief Parse and build URL
  * @see https://en.wikipedia.org/wiki/URL
  */
@@ -29,10 +43,10 @@ class URL {
   explicit URL(const std::string &url);
 
   /**
-   * @brief Build URL
-   * @return The URL
+   * @brief Get URL string
+   * @return URL string
    */
-  [[nodiscard]] std::string build() const;
+  [[nodiscard]] std::string to_string() const;
 
   /**
    * @brief Get URL schema

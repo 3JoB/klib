@@ -40,10 +40,19 @@ std::string mime(const std::string &file) {
 
 }  // namespace
 
-bool is_png(const std::string &image) { return mime(image) == "image/png"; }
+bool is_png(const std::string &image) {
+  const static std::string png_mime = "image/png";
+  return mime(image) == png_mime;
+}
 
-bool is_jpeg(const std::string &image) { return mime(image) == "image/jpeg"; }
+bool is_jpeg(const std::string &image) {
+  const static std::string jpeg_mime = "image/jpeg";
+  return mime(image) == jpeg_mime;
+}
 
-bool is_webp(const std::string &image) { return mime(image) == "image/webp"; }
+bool is_webp(const std::string &image) {
+  const static std::string webp_mime = "image/webp";
+  return mime(image) == webp_mime;
+}
 
 }  // namespace klib

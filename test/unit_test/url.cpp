@@ -24,7 +24,7 @@ TEST_CASE("URL", "[url]") {
   CHECK(url.user() == "user");
   CHECK(url.password() == "password");
 
-  CHECK(url.build() == url_str);
+  CHECK(url.to_string() == url_str);
 }
 
 TEST_CASE("URL2", "[url]") {
@@ -37,7 +37,7 @@ TEST_CASE("URL2", "[url]") {
   query.erase("quality");
   url.set_query(query);
 
-  CHECK(url.build() ==
+  CHECK(url.to_string() ==
         "https://masiro.me/images/encode/other-220322144937-1J7I.jpg");
 }
 
@@ -48,7 +48,7 @@ TEST_CASE("URL3", "[url]") {
   url.set_path("/引き割り.html");
   url.set_query({{"a", "1"}, {"b", "你"}});
 
-  CHECK(url.build() ==
+  CHECK(url.to_string() ==
         "https://www.example.com/"
         "%e5%bc%95%e3%81%8d%e5%89%b2%e3%82%8a.html?b=%e4%bd%a0&a=1");
 }

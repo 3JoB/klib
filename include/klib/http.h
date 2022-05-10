@@ -159,13 +159,6 @@ class Request {
   void set_connect_timeout(std::int64_t seconds);
 
   /**
-   * @brief Set Accept-Encoding
-   * @param accept_encoding: Accept-Encoding
-   * @example request.set_accept_encoding("gzip, deflate, br");
-   */
-  void set_accept_encoding(const std::string &accept_encoding);
-
-  /**
    * @brief Set cookie
    * @param cookies: Cookies
    */
@@ -180,29 +173,13 @@ class Request {
   void basic_auth(const std::string &user_name, const std::string &password);
 
   /**
-   * @brief Encoding URL string
-   * @param str: String to be encoded
-   * @return Encoded string
-   */
-  std::string url_encode(const std::string &str);
-
-  /**
-   * @brief Decoding URL string
-   * @param str: String to be decoded
-   * @return Decoded string
-   */
-  std::string url_decode(const std::string &str);
-
-  /**
    * @brief Sends a GET request
    * @param url: Requested url
-   * @param params: URL parameters
    * @param headers: HTTP headers
    * @return Response content
    */
   Response get(
       const std::string &url,
-      const phmap::flat_hash_map<std::string, std::string> &params = {},
       const phmap::flat_hash_map<std::string, std::string> &headers = {});
 
   /**

@@ -7,6 +7,7 @@
 
 #include "klib/hash.h"
 #include "klib/http.h"
+#include "klib/url.h"
 #include "klib/util.h"
 
 const std::string httpbin_url = "https://httpbin.org";
@@ -22,11 +23,11 @@ TEST_CASE("request headers", "[http]") {
   const std::string header_key = "Authorization";
   const std::string header_value = "你好123456";
 
-  auto response = request.get(httpbin_url + "/headers", {},
-                              {{header_key, request.url_encode(header_value)}});
+  auto response = request.get(httpbin_url + "/headers",
+                              {{header_key, klib::url_encode(header_value)}});
   REQUIRE(response.ok());
   auto headers = boost::json::parse(response.text()).at("headers");
-  REQUIRE(request.url_decode(headers.at(header_key).as_string().c_str()) ==
+  REQUIRE(klib::url_decode(headers.at(header_key).as_string().c_str()) ==
           header_value);
 
   response = request.get(httpbin_url + "/headers");
@@ -58,7 +59,6 @@ TEST_CASE("response headers", "[http]") {
 TEST_CASE("GET", "[http]") {
   klib::Request request;
   request.set_browser_user_agent();
-  request.set_accept_encoding("gzip, deflate, br");
 
   request.basic_auth("Kaiser", "123456");
 
@@ -70,8 +70,11 @@ TEST_CASE("GET", "[http]") {
   const std::string key2 = "b";
   const std::string value2 = "你好世界";
 
-  auto response =
-      request.get(httpbin_url + "/get", {{key1, value1}, {key2, value2}});
+  klib::URL url(httpbin_url);
+  url.set_path("/get");
+  url.set_query({{key1, value1}, {key2, value2}});
+
+  auto response = request.get(url.to_string());
   REQUIRE(response.ok());
 
   auto args = boost::json::parse(response.text()).at("args");

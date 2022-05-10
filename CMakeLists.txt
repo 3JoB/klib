@@ -88,9 +88,6 @@ pkg_check_modules(libbrotlidec REQUIRED IMPORTED_TARGET libbrotlidec)
 pkg_check_modules(libbrotlienc REQUIRED IMPORTED_TARGET libbrotlienc)
 pkg_check_modules(libbrotlicommon REQUIRED IMPORTED_TARGET libbrotlicommon)
 pkg_check_modules(libnghttp2 REQUIRED IMPORTED_TARGET libnghttp2)
-pkg_check_modules(libidn2 REQUIRED IMPORTED_TARGET libidn2)
-pkg_check_modules(libpsl REQUIRED IMPORTED_TARGET libpsl)
-pkg_check_modules(libunistring REQUIRED IMPORTED_TARGET libunistring)
 pkg_check_modules(vips REQUIRED IMPORTED_TARGET vips)
 pkg_check_modules(gio-2.0 REQUIRED IMPORTED_TARGET gio-2.0)
 pkg_check_modules(gobject-2.0 REQUIRED IMPORTED_TARGET gobject-2.0)
@@ -187,9 +184,6 @@ file(MAKE_DIRECTORY ${KLIB_BINARY_DIR}/third_party/fmt)
 file(MAKE_DIRECTORY ${KLIB_BINARY_DIR}/third_party/spdlog)
 file(MAKE_DIRECTORY ${KLIB_BINARY_DIR}/third_party/nghttp2)
 file(MAKE_DIRECTORY ${KLIB_BINARY_DIR}/third_party/simdutf)
-file(MAKE_DIRECTORY ${KLIB_BINARY_DIR}/third_party/libidn2)
-file(MAKE_DIRECTORY ${KLIB_BINARY_DIR}/third_party/libpsl)
-file(MAKE_DIRECTORY ${KLIB_BINARY_DIR}/third_party/libunistring)
 file(MAKE_DIRECTORY ${KLIB_BINARY_DIR}/third_party/xxhash)
 file(MAKE_DIRECTORY ${KLIB_BINARY_DIR}/third_party/cmark)
 file(MAKE_DIRECTORY ${KLIB_BINARY_DIR}/third_party/woff2)
@@ -228,9 +222,6 @@ add_custom_command(
   COMMAND gcc-ar -x --output=spdlog /usr/local/lib/libspdlog.a
   COMMAND gcc-ar -x --output=nghttp2 /usr/local/lib/libnghttp2.a
   COMMAND gcc-ar -x --output=simdutf /usr/local/lib/libsimdutf.a
-  COMMAND gcc-ar -x --output=libidn2 /usr/local/lib/libidn2.a
-  COMMAND gcc-ar -x --output=libpsl /usr/local/lib/libpsl.a
-  COMMAND gcc-ar -x --output=libunistring /usr/local/lib/libunistring.a
   COMMAND gcc-ar -x --output=xxhash /usr/local/lib/libxxhash.a
   COMMAND gcc-ar -x --output=cmark /usr/local/lib/libcmark.a
   COMMAND gcc-ar -x --output=woff2 /usr/local/lib/libwoff2common.a
@@ -258,9 +249,9 @@ add_custom_command(
     gcc-ar -qcs ${KLIB_BINARY_DIR}/lib${KLIB_LIBRARY}.a klib/*.o zlib-ng/*.o
     libarchive/*.o tidy-html5/*.o libcurl/*.o brotli/*.o boringssl/*.o
     sqlcipher/*.o argon2/*.o zstd/*.o fmt/*.o spdlog/*.o nghttp2/*.o simdutf/*.o
-    libidn2/*.o libpsl/*.o libunistring/*.o xxhash/*.o cmark/*.o woff2/*.o
-    libvips/*.o glib/*.o libexpat/*.o libffi/*.o mount/*.o blkid/*.o libpcre/*.o
-    libspng/*.o mozjpeg/*.o libwebp/*.o liblzma/*.o libqrencode/*.o libmagic/*.o
+    xxhash/*.o cmark/*.o woff2/*.o libvips/*.o glib/*.o libexpat/*.o libffi/*.o
+    mount/*.o blkid/*.o libpcre/*.o libspng/*.o mozjpeg/*.o libwebp/*.o
+    liblzma/*.o libqrencode/*.o libmagic/*.o
   COMMAND gcc-ranlib ${KLIB_BINARY_DIR}/lib${KLIB_LIBRARY}.a
   WORKING_DIRECTORY ${KLIB_BINARY_DIR}/third_party
   COMMENT "Combined static library")
