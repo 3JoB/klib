@@ -5,10 +5,6 @@ file(GLOB_RECURSE KLIB_BENCH_SRC CONFIGURE_DEPENDS
      "${CMAKE_CURRENT_SOURCE_DIR}/*.cpp")
 
 find_package(Catch2 REQUIRED)
-find_package(re2 REQUIRED)
-find_package(TBB REQUIRED)
-find_package(simdjson REQUIRED)
-find_package(Boost REQUIRED COMPONENTS json CONFIG)
 add_definitions(-DCATCH_CONFIG_ENABLE_BENCHMARKING)
 
 find_package(PkgConfig REQUIRED)
@@ -18,11 +14,5 @@ add_definitions(-DU_HIDE_INTERNAL_API -DU_HIDE_DRAFT_API -DU_HIDE_OBSOLETE_API
 
 add_executable(${KLIB_BENCH_EXECUTABLE} ${MIMALLOC_OBJECT} ${KLIB_BENCH_SRC})
 target_link_libraries(
-  ${KLIB_BENCH_EXECUTABLE}
-  PRIVATE ${KLIB_LIBRARY}
-          Catch2::Catch2WithMain
-          TBB::tbb
-          simdjson::simdjson
-          ${Boost_LIBRARIES}
-          PkgConfig::icu-i18n
-          re2::re2)
+  ${KLIB_BENCH_EXECUTABLE} PRIVATE ${KLIB_LIBRARY} Catch2::Catch2WithMain
+                                   PkgConfig::icu-i18n)
