@@ -31,7 +31,7 @@
  <tr style="height: 56px;">
   <td id="projectalign" style="padding-left: 0.5em;">
    <div id="projectname">klib
-   &#160;<span id="projectnumber">1.22.1</span>
+   &#160;<span id="projectnumber">1.22.2</span>
    </div>
   </td>
    <td>        <div id="MSearchBox" class="MSearchBoxInactive">
@@ -151,6 +151,9 @@ Functions</h2></td></tr>
 <tr class="memitem:a137702622c0905e43278959649acb981"><td class="memItemLeft" align="right" valign="top">std::string&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="unicode_8h.html#a137702622c0905e43278959649acb981">klib::utf32_to_utf8</a> (const std::u32string &amp;str)</td></tr>
 <tr class="memdesc:a137702622c0905e43278959649acb981"><td class="mdescLeft">&#160;</td><td class="mdescRight">Convert UTF-32 encoded string to UTF-8 encoded string.  <a href="unicode_8h.html#a137702622c0905e43278959649acb981">More...</a><br /></td></tr>
 <tr class="separator:a137702622c0905e43278959649acb981"><td class="memSeparator" colspan="2">&#160;</td></tr>
+<tr class="memitem:a57d6a4073409b7d50a080db2919b7ac6"><td class="memItemLeft" align="right" valign="top">std::string&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="unicode_8h.html#a57d6a4073409b7d50a080db2919b7ac6">klib::utf32_to_utf8</a> (char32_t code_point)</td></tr>
+<tr class="memdesc:a57d6a4073409b7d50a080db2919b7ac6"><td class="mdescLeft">&#160;</td><td class="mdescRight">Convert code point to UTF-8 encoded string.  <a href="unicode_8h.html#a57d6a4073409b7d50a080db2919b7ac6">More...</a><br /></td></tr>
+<tr class="separator:a57d6a4073409b7d50a080db2919b7ac6"><td class="memSeparator" colspan="2">&#160;</td></tr>
 <tr class="memitem:a3bd7c76e3014966f4ddf5d997cba3d45"><td class="memItemLeft" align="right" valign="top">constexpr bool&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="unicode_8h.html#a3bd7c76e3014966f4ddf5d997cba3d45">klib::is_ascii</a> (char32_t code_point) noexcept</td></tr>
 <tr class="memdesc:a3bd7c76e3014966f4ddf5d997cba3d45"><td class="mdescLeft">&#160;</td><td class="mdescRight">Determine whether it is an ASCII character.  <a href="unicode_8h.html#a3bd7c76e3014966f4ddf5d997cba3d45">More...</a><br /></td></tr>
 <tr class="separator:a3bd7c76e3014966f4ddf5d997cba3d45"><td class="memSeparator" colspan="2">&#160;</td></tr>
@@ -628,8 +631,35 @@ Functions</h2></td></tr>
 
 </div>
 </div>
+<a id="a57d6a4073409b7d50a080db2919b7ac6"></a>
+<h2 class="memtitle"><span class="permalink"><a href="#a57d6a4073409b7d50a080db2919b7ac6">&#9670;&nbsp;</a></span>utf32_to_utf8() <span class="overload">[1/2]</span></h2>
+
+<div class="memitem">
+<div class="memproto">
+      <table class="memname">
+        <tr>
+          <td class="memname">std::string klib::utf32_to_utf8 </td>
+          <td>(</td>
+          <td class="paramtype">char32_t&#160;</td>
+          <td class="paramname"><em>code_point</em></td><td>)</td>
+          <td></td>
+        </tr>
+      </table>
+</div><div class="memdoc">
+
+<p>Convert code point to UTF-8 encoded string. </p>
+<dl class="params"><dt>Parameters</dt><dd>
+  <table class="params">
+    <tr><td class="paramname">code_point</td><td>Code point </td></tr>
+  </table>
+  </dd>
+</dl>
+<dl class="section return"><dt>Returns</dt><dd>The converted UTF-8 encoded string </dd></dl>
+
+</div>
+</div>
 <a id="a137702622c0905e43278959649acb981"></a>
-<h2 class="memtitle"><span class="permalink"><a href="#a137702622c0905e43278959649acb981">&#9670;&nbsp;</a></span>utf32_to_utf8()</h2>
+<h2 class="memtitle"><span class="permalink"><a href="#a137702622c0905e43278959649acb981">&#9670;&nbsp;</a></span>utf32_to_utf8() <span class="overload">[2/2]</span></h2>
 
 <div class="memitem">
 <div class="memproto">

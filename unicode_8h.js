@@ -15,6 +15,7 @@ var unicode_8h =
     [ "trim_right", "unicode_8h.html#a0ce2a2a6674cad9772e4677c7b1d9cfa", null ],
     [ "trim_right_copy", "unicode_8h.html#a1066517b16d05083bd0aa97bc071396a", null ],
     [ "utf16_to_utf8", "unicode_8h.html#a307c51d968ca389408db8534cf8d3ace", null ],
+    [ "utf32_to_utf8", "unicode_8h.html#a57d6a4073409b7d50a080db2919b7ac6", null ],
     [ "utf32_to_utf8", "unicode_8h.html#a137702622c0905e43278959649acb981", null ],
     [ "utf8_to_utf16", "unicode_8h.html#afd9c11f7bcfa0aacc5111a78bfb42bac", null ],
     [ "utf8_to_utf32", "unicode_8h.html#a618c7297574b1f62db6b5e8b19186f3b", null ],
