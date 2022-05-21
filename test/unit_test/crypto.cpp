@@ -2,7 +2,7 @@
 
 #include <dbg.h>
 #include <boost/core/ignore_unused.hpp>
-#include <catch2/catch.hpp>
+#include <catch2/catch_test_macros.hpp>
 
 #include "klib/base64.h"
 #include "klib/crypto.h"

@@ -1,7 +1,8 @@
 #include <filesystem>
 #include <string>
 
-#include <catch2/catch.hpp>
+#include <catch2/benchmark/catch_benchmark.hpp>
+#include <catch2/catch_test_macros.hpp>
 
 #include "klib/hash.h"
 #include "klib/util.h"

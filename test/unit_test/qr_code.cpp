@@ -4,7 +4,7 @@
 
 #include <dbg.h>
 #include <fmt/core.h>
-#include <catch2/catch.hpp>
+#include <catch2/catch_test_macros.hpp>
 
 #include "klib/hash.h"
 #include "klib/image.h"

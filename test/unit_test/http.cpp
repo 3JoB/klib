@@ -3,7 +3,7 @@
 
 #include <curl/curl.h>
 #include <boost/json.hpp>
-#include <catch2/catch.hpp>
+#include <catch2/catch_test_macros.hpp>
 
 #include "klib/hash.h"
 #include "klib/http.h"
