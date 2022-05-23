@@ -9,6 +9,8 @@
 
 #include "klib/archive.h"
 
+#include <sys/stat.h>
+
 #include <cerrno>
 #include <filesystem>
 #include <memory>
@@ -378,7 +380,9 @@ std::optional<std::string> outermost_folder_name(const std::string &file_name) {
     }
     CHECK_LIBARCHIVE(rc, archive);
 
-    dirs.insert(get_top_level_dir(archive_entry_pathname(entry)));
+    if (S_ISDIR(archive_entry_filetype(entry))) {
+      dirs.insert(get_top_level_dir(archive_entry_pathname(entry)));
+    }
   }
 
   if (std::size(dirs) == 1) {

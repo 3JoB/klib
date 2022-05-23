@@ -128,6 +128,9 @@ TEST_CASE("outermost_folder_name", "[archive]") {
   REQUIRE(std::filesystem::exists("zlib-ng-2.0.6.tar.gz"));
   CHECK(*klib::outermost_folder_name("zlib-ng-2.0.6.tar.gz") ==
         "zlib-ng-2.0.6");
+
+  REQUIRE(std::filesystem::exists("ninja-linux.zip"));
+  CHECK(!klib::outermost_folder_name("ninja-linux.zip"));
 }
 
 TEST_CASE("compress data", "[archive]") {
