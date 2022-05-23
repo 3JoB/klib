@@ -167,6 +167,11 @@ target_link_libraries(${KLIB_LIBRARY} INTERFACE ${CMAKE_THREAD_LIBS_INIT}
 set_target_properties(
   ${KLIB_LIBRARY} PROPERTIES OUTPUT_NAME ${KLIB_LIBRARY}
                              INTERPROCEDURAL_OPTIMIZATION FALSE)
+if(((${CMAKE_BUILD_TYPE} STREQUAL "Release") OR (${CMAKE_BUILD_TYPE} STREQUAL
+                                                 "MinSizeRel"))
+   AND NOT KLIB_SANITIZER)
+  target_compile_options(${KLIB_LIBRARY} PRIVATE "-fno-lto")
+endif()
 
 # https://stackoverflow.com/questions/37924383/combining-several-static-libraries-into-one-using-cmake
 file(MAKE_DIRECTORY ${KLIB_BINARY_DIR}/third_party)
