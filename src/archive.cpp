@@ -371,7 +371,8 @@ std::optional<std::string> outermost_folder_name(const std::string &file_name) {
   auto rc = archive_read_open_filename(archive, file_name.c_str(), 10240);
   CHECK_LIBARCHIVE(rc, archive);
 
-  phmap::flat_hash_set<std::string> dirs;
+  // path/is_dir
+  phmap::flat_hash_map<std::string, bool> map;
   while (true) {
     archive_entry *entry;
     rc = archive_read_next_header(archive, &entry);
@@ -380,13 +381,15 @@ std::optional<std::string> outermost_folder_name(const std::string &file_name) {
     }
     CHECK_LIBARCHIVE(rc, archive);
 
-    if (S_ISDIR(archive_entry_filetype(entry))) {
-      dirs.insert(get_top_level_dir(archive_entry_pathname(entry)));
-    }
+    const auto path = archive_entry_pathname(entry);
+    const auto top_level_dir = get_top_level_dir(path);
+    map.emplace(top_level_dir, path != top_level_dir
+                                   ? true
+                                   : S_ISDIR(archive_entry_filetype(entry)));
   }
 
-  if (std::size(dirs) == 1) {
-    return *dirs.begin();
+  if (std::size(map) == 1 && map.begin()->second) {
+    return map.begin()->first;
   }
 
   return {};

@@ -130,7 +130,11 @@ TEST_CASE("outermost_folder_name", "[archive]") {
         "zlib-ng-2.0.6");
 
   REQUIRE(std::filesystem::exists("ninja-linux.zip"));
-  CHECK(!klib::outermost_folder_name("ninja-linux.zip"));
+  CHECK_FALSE(klib::outermost_folder_name("ninja-linux.zip"));
+
+  REQUIRE(std::filesystem::exists("pugixml-1.12.1.tar.gz"));
+  CHECK(*klib::outermost_folder_name("pugixml-1.12.1.tar.gz") ==
+        "pugixml-1.12");
 }
 
 TEST_CASE("compress data", "[archive]") {
