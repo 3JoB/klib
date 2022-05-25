@@ -5,7 +5,6 @@ file(GLOB_RECURSE KLIB_BENCH_SRC CONFIGURE_DEPENDS
      "${CMAKE_CURRENT_SOURCE_DIR}/*.cpp")
 
 find_package(Catch2 REQUIRED)
-add_definitions(-DCATCH_CONFIG_ENABLE_BENCHMARKING)
 
 find_package(PkgConfig REQUIRED)
 pkg_check_modules(icu-i18n REQUIRED IMPORTED_TARGET icu-i18n)
