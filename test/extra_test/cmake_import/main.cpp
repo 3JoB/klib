@@ -1,16 +1,20 @@
+#include <cassert>
 #include <iostream>
 
-#include <klib/hash.h>
+#include <klib/exception.h>
 #include <klib/http.h>
-#include <klib/util.h>
+#include <klib/log.h>
 
-int main() {
+int main() try {
   klib::Request request;
-  request.verbose(true);
+  request.set_no_proxy();
 
-  auto response =
-      request.get("https://github.com/fmtlib/fmt/archive/refs/tags/8.0.1.zip");
-  response.save_to_file("8.0.1.zip");
+  auto response = request.get("https://www.baidu.com");
+  assert(response.ok());
 
-  std::cout << klib::sha256_hex(klib::read_file("8.0.1.zip", true)) << '\n';
+  std::cout << response.text() << '\n';
+
+  throw klib::RuntimeError("error");
+} catch (const klib::RuntimeError &err) {
+  klib::warn(err.what());
 }
