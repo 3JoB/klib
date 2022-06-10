@@ -2,11 +2,13 @@
 
 #include <sys/ioctl.h>
 #include <unistd.h>
+#include <wait.h>
 
 #include <cctype>
 #include <cerrno>
 #include <cstdio>
 #include <cstdlib>
+#include <cstring>
 #include <filesystem>
 #include <fstream>
 
@@ -145,12 +147,10 @@ void exec(const char *cmd) {
   }
 }
 
-std::string exec_with_output(const std::string &cmd) {
-  return exec_with_output(cmd.c_str());
-}
+std::string pipe(const std::string &cmd) { return pipe(cmd.c_str()); }
 
 // https://stackoverflow.com/questions/478898/how-do-i-execute-a-command-and-get-the-output-of-the-command-within-c-using-po?rq=1
-std::string exec_with_output(const char *cmd) {
+std::string pipe(const char *cmd) {
   auto pipe = popen(cmd, "r");
   if (!pipe) [[unlikely]] {
     throw RuntimeError("popen() failed");
@@ -172,6 +172,25 @@ std::string exec_with_output(const char *cmd) {
   }
 
   return result;
+}
+
+void wait_for_child_process() {
+  std::int32_t status = 0;
+
+  while (waitpid(-1, &status, 0) > 0) {
+    if (wait_error(status)) {
+      throw RuntimeError("waitpid() failed: {}", std::strerror(errno));
+    }
+  }
+}
+
+std::optional<std::string> get_env(const std::string &name) {
+  return get_env(name.c_str());
+}
+
+std::optional<std::string> get_env(const char *name) {
+  auto value = std::getenv(name);
+  return value == nullptr ? std::optional<std::string>{} : value;
 }
 
 std::string uuid() {

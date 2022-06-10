@@ -6,11 +6,8 @@
 #include "klib/http.h"
 
 #include <cstddef>
-#include <cstdio>
-#include <cstdlib>
 #include <filesystem>
 #include <mutex>
-#include <string_view>
 
 #include <curl/curl.h>
 #include <scope_guard.hpp>
@@ -158,9 +155,9 @@ class Request::RequestImpl {
   CURL *curl_;
 
   const inline static std::string cookies_path =
-      std::getenv("HOME") + std::string("/.cookies.txt");
+      get_env("HOME").value_or("/tmp") + "/.cookies.txt";
   const inline static std::string altsvc_path =
-      std::getenv("HOME") + std::string("/.altsvc.txt");
+      get_env("HOME").value_or("/tmp") + "/.altsvc.txt";
 
   inline static std::mutex curl_easy_init_mutex;
 };
@@ -234,17 +231,19 @@ void Request::RequestImpl::verbose(bool flag) {
 }
 
 void Request::RequestImpl::set_proxy(const std::string &proxy) {
-  auto rc = curl_easy_setopt(curl_, CURLOPT_PROXY, proxy.c_str());
+  auto rc = curl_easy_setopt(curl_, CURLOPT_PROXY,
+                             std::empty(proxy) ? nullptr : proxy.c_str());
   CHECK_CURL(rc);
 }
 
 void Request::RequestImpl::set_proxy_from_env() {
-  set_proxy(std::getenv("HTTP_PROXY"));
-  set_no_proxy(std::getenv("NO_PROXY"));
+  set_proxy(get_env("HTTP_PROXY").value_or(""));
+  set_no_proxy(get_env("NO_PROXY").value_or(""));
 }
 
 void Request::RequestImpl::set_no_proxy(const std::string &no_proxy) {
-  auto rc = curl_easy_setopt(curl_, CURLOPT_NOPROXY, no_proxy.c_str());
+  auto rc = curl_easy_setopt(curl_, CURLOPT_NOPROXY,
+                             std::empty(no_proxy) ? nullptr : no_proxy.c_str());
   CHECK_CURL(rc);
 }
 

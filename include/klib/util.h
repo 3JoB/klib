@@ -7,6 +7,7 @@
 
 #include <cstddef>
 #include <cstdint>
+#include <optional>
 #include <string>
 #include <string_view>
 #include <vector>
@@ -118,14 +119,33 @@ void exec(const char *cmd);
  * @param cmd: Command to be execute
  * @return Command line output
  */
-std::string exec_with_output(const std::string &cmd);
+std::string pipe(const std::string &cmd);
 
 /**
  * @brief Execute the given line as a shell command and return its output
  * @param cmd: Command to be execute
  * @return Command line output
  */
-std::string exec_with_output(const char *cmd);
+std::string pipe(const char *cmd);
+
+/**
+ * @brief Get environment variables
+ * @param name: Name of the environment variable
+ * @return Value of environment variable
+ */
+std::optional<std::string> get_env(const std::string &name);
+
+/**
+ * @brief Get environment variables
+ * @param name: Name of the environment variable
+ * @return Value of environment variable
+ */
+std::optional<std::string> get_env(const char *name);
+
+/**
+ * @brief Wait for all child processes to exit
+ */
+void wait_for_child_process();
 
 /**
  * @brief Generate uuid

@@ -71,3 +71,11 @@ TEST_CASE("terminal_size", "[util]") {
   auto size = klib::terminal_size();
   dbg(size);
 }
+
+TEST_CASE("get_env", "[util]") {
+  auto value = klib::get_env("HOME");
+  dbg(value);
+
+  value = klib::get_env("HOME2");
+  dbg(value);
+}
