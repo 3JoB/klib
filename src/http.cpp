@@ -7,6 +7,7 @@
 
 #include <cstddef>
 #include <cstdio>
+#include <cstdlib>
 #include <filesystem>
 #include <mutex>
 #include <string_view>
@@ -156,8 +157,10 @@ class Request::RequestImpl {
 
   CURL *curl_;
 
-  constexpr static std::string_view cookies_path = "/tmp/cookies.txt";
-  constexpr static std::string_view altsvc_path = "/tmp/altsvc.txt";
+  const inline static std::string cookies_path =
+      std::getenv("HOME") + std::string("/.cookies.txt");
+  const inline static std::string altsvc_path =
+      std::getenv("HOME") + std::string("/.altsvc.txt");
 
   inline static std::mutex curl_easy_init_mutex;
 };
@@ -259,7 +262,7 @@ void Request::RequestImpl::set_browser_user_agent() {
   // navigator.userAgent
   set_user_agent(
       "Mozilla/5.0 (X11; Linux x86_64) AppleWebKit/537.36 (KHTML, like Gecko) "
-      "Chrome/102.0.5005.63 Safari/537.36 Edg/102.0.1245.30");
+      "Chrome/102.0.5005.63 Safari/537.36 Edg/102.0.1245.39");
 }
 
 void Request::RequestImpl::set_timeout(std::int64_t seconds) {
