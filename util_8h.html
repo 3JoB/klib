@@ -31,7 +31,7 @@
  <tr style="height: 56px;">
   <td id="projectalign" style="padding-left: 0.5em;">
    <div id="projectname">klib
-   &#160;<span id="projectnumber">1.23.0</span>
+   &#160;<span id="projectnumber">1.24.0</span>
    </div>
   </td>
    <td>        <div id="MSearchBox" class="MSearchBoxInactive">
@@ -104,6 +104,7 @@ $(document).ready(function(){initNavTree('util_8h.html',''); initResizable(); })
 <a href="#details">More...</a></p>
 <div class="textblock"><code>#include &lt;cstddef&gt;</code><br />
 <code>#include &lt;cstdint&gt;</code><br />
+<code>#include &lt;optional&gt;</code><br />
 <code>#include &lt;string&gt;</code><br />
 <code>#include &lt;string_view&gt;</code><br />
 <code>#include &lt;vector&gt;</code><br />
@@ -145,12 +146,22 @@ Functions</h2></td></tr>
 <tr class="memitem:a1e1698d0a500a8d343d9fee0ac35c331"><td class="memItemLeft" align="right" valign="top">void&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="util_8h.html#a1e1698d0a500a8d343d9fee0ac35c331">klib::exec</a> (const char *cmd)</td></tr>
 <tr class="memdesc:a1e1698d0a500a8d343d9fee0ac35c331"><td class="mdescLeft">&#160;</td><td class="mdescRight">Execute the given line as a shell command.  <a href="util_8h.html#a1e1698d0a500a8d343d9fee0ac35c331">More...</a><br /></td></tr>
 <tr class="separator:a1e1698d0a500a8d343d9fee0ac35c331"><td class="memSeparator" colspan="2">&#160;</td></tr>
-<tr class="memitem:a4e77f7c0321a0ebd9343a7abe22402ac"><td class="memItemLeft" align="right" valign="top">std::string&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="util_8h.html#a4e77f7c0321a0ebd9343a7abe22402ac">klib::exec_with_output</a> (const std::string &amp;cmd)</td></tr>
-<tr class="memdesc:a4e77f7c0321a0ebd9343a7abe22402ac"><td class="mdescLeft">&#160;</td><td class="mdescRight">Execute the given line as a shell command and return its output.  <a href="util_8h.html#a4e77f7c0321a0ebd9343a7abe22402ac">More...</a><br /></td></tr>
-<tr class="separator:a4e77f7c0321a0ebd9343a7abe22402ac"><td class="memSeparator" colspan="2">&#160;</td></tr>
-<tr class="memitem:a01e50e0fc8c242ccdf7bdd10ae55f8e3"><td class="memItemLeft" align="right" valign="top">std::string&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="util_8h.html#a01e50e0fc8c242ccdf7bdd10ae55f8e3">klib::exec_with_output</a> (const char *cmd)</td></tr>
-<tr class="memdesc:a01e50e0fc8c242ccdf7bdd10ae55f8e3"><td class="mdescLeft">&#160;</td><td class="mdescRight">Execute the given line as a shell command and return its output.  <a href="util_8h.html#a01e50e0fc8c242ccdf7bdd10ae55f8e3">More...</a><br /></td></tr>
-<tr class="separator:a01e50e0fc8c242ccdf7bdd10ae55f8e3"><td class="memSeparator" colspan="2">&#160;</td></tr>
+<tr class="memitem:ad5761948ecd92227de1070e0f3f7da00"><td class="memItemLeft" align="right" valign="top">std::string&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="util_8h.html#ad5761948ecd92227de1070e0f3f7da00">klib::pipe</a> (const std::string &amp;cmd)</td></tr>
+<tr class="memdesc:ad5761948ecd92227de1070e0f3f7da00"><td class="mdescLeft">&#160;</td><td class="mdescRight">Execute the given line as a shell command and return its output.  <a href="util_8h.html#ad5761948ecd92227de1070e0f3f7da00">More...</a><br /></td></tr>
+<tr class="separator:ad5761948ecd92227de1070e0f3f7da00"><td class="memSeparator" colspan="2">&#160;</td></tr>
+<tr class="memitem:a980d907f1e371b1e19ccdc8a7ffcae11"><td class="memItemLeft" align="right" valign="top">std::string&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="util_8h.html#a980d907f1e371b1e19ccdc8a7ffcae11">klib::pipe</a> (const char *cmd)</td></tr>
+<tr class="memdesc:a980d907f1e371b1e19ccdc8a7ffcae11"><td class="mdescLeft">&#160;</td><td class="mdescRight">Execute the given line as a shell command and return its output.  <a href="util_8h.html#a980d907f1e371b1e19ccdc8a7ffcae11">More...</a><br /></td></tr>
+<tr class="separator:a980d907f1e371b1e19ccdc8a7ffcae11"><td class="memSeparator" colspan="2">&#160;</td></tr>
+<tr class="memitem:aedc1341dbc85e73b0d285ab72f5be78f"><td class="memItemLeft" align="right" valign="top">std::optional&lt; std::string &gt;&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="util_8h.html#aedc1341dbc85e73b0d285ab72f5be78f">klib::get_env</a> (const std::string &amp;name)</td></tr>
+<tr class="memdesc:aedc1341dbc85e73b0d285ab72f5be78f"><td class="mdescLeft">&#160;</td><td class="mdescRight">Get environment variables.  <a href="util_8h.html#aedc1341dbc85e73b0d285ab72f5be78f">More...</a><br /></td></tr>
+<tr class="separator:aedc1341dbc85e73b0d285ab72f5be78f"><td class="memSeparator" colspan="2">&#160;</td></tr>
+<tr class="memitem:a85778a077c038b049f64e72af0dc2a61"><td class="memItemLeft" align="right" valign="top">std::optional&lt; std::string &gt;&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="util_8h.html#a85778a077c038b049f64e72af0dc2a61">klib::get_env</a> (const char *name)</td></tr>
+<tr class="memdesc:a85778a077c038b049f64e72af0dc2a61"><td class="mdescLeft">&#160;</td><td class="mdescRight">Get environment variables.  <a href="util_8h.html#a85778a077c038b049f64e72af0dc2a61">More...</a><br /></td></tr>
+<tr class="separator:a85778a077c038b049f64e72af0dc2a61"><td class="memSeparator" colspan="2">&#160;</td></tr>
+<tr class="memitem:a068f640d8df09ff35caf8822a9c1e0ac"><td class="memItemLeft" align="right" valign="top"><a id="a068f640d8df09ff35caf8822a9c1e0ac"></a>
+void&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="util_8h.html#a068f640d8df09ff35caf8822a9c1e0ac">klib::wait_for_child_process</a> ()</td></tr>
+<tr class="memdesc:a068f640d8df09ff35caf8822a9c1e0ac"><td class="mdescLeft">&#160;</td><td class="mdescRight">Wait for all child processes to exit. <br /></td></tr>
+<tr class="separator:a068f640d8df09ff35caf8822a9c1e0ac"><td class="memSeparator" colspan="2">&#160;</td></tr>
 <tr class="memitem:a04c05579273b722fad57a8362193d573"><td class="memItemLeft" align="right" valign="top"><a id="a04c05579273b722fad57a8362193d573"></a>
 std::string&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="util_8h.html#a04c05579273b722fad57a8362193d573">klib::uuid</a> ()</td></tr>
 <tr class="memdesc:a04c05579273b722fad57a8362193d573"><td class="mdescLeft">&#160;</td><td class="mdescRight">Generate uuid. <br /></td></tr>
@@ -319,60 +330,6 @@ std::string&#160;</td><td class="memItemRight" valign="bottom"><a class="el" hre
 
 </div>
 </div>
-<a id="a01e50e0fc8c242ccdf7bdd10ae55f8e3"></a>
-<h2 class="memtitle"><span class="permalink"><a href="#a01e50e0fc8c242ccdf7bdd10ae55f8e3">&#9670;&nbsp;</a></span>exec_with_output() <span class="overload">[1/2]</span></h2>
-
-<div class="memitem">
-<div class="memproto">
-      <table class="memname">
-        <tr>
-          <td class="memname">std::string klib::exec_with_output </td>
-          <td>(</td>
-          <td class="paramtype">const char *&#160;</td>
-          <td class="paramname"><em>cmd</em></td><td>)</td>
-          <td></td>
-        </tr>
-      </table>
-</div><div class="memdoc">
-
-<p>Execute the given line as a shell command and return its output. </p>
-<dl class="params"><dt>Parameters</dt><dd>
-  <table class="params">
-    <tr><td class="paramname">cmd</td><td>Command to be execute </td></tr>
-  </table>
-  </dd>
-</dl>
-<dl class="section return"><dt>Returns</dt><dd>Command line output </dd></dl>
-
-</div>
-</div>
-<a id="a4e77f7c0321a0ebd9343a7abe22402ac"></a>
-<h2 class="memtitle"><span class="permalink"><a href="#a4e77f7c0321a0ebd9343a7abe22402ac">&#9670;&nbsp;</a></span>exec_with_output() <span class="overload">[2/2]</span></h2>
-
-<div class="memitem">
-<div class="memproto">
-      <table class="memname">
-        <tr>
-          <td class="memname">std::string klib::exec_with_output </td>
-          <td>(</td>
-          <td class="paramtype">const std::string &amp;&#160;</td>
-          <td class="paramname"><em>cmd</em></td><td>)</td>
-          <td></td>
-        </tr>
-      </table>
-</div><div class="memdoc">
-
-<p>Execute the given line as a shell command and return its output. </p>
-<dl class="params"><dt>Parameters</dt><dd>
-  <table class="params">
-    <tr><td class="paramname">cmd</td><td>Command to be execute </td></tr>
-  </table>
-  </dd>
-</dl>
-<dl class="section return"><dt>Returns</dt><dd>Command line output </dd></dl>
-
-</div>
-</div>
 <a id="a734f4c9c1ea977f1f74ac6f4b6ef817b"></a>
 <h2 class="memtitle"><span class="permalink"><a href="#a734f4c9c1ea977f1f74ac6f4b6ef817b">&#9670;&nbsp;</a></span>generate_random_bytes()</h2>
 
@@ -397,6 +354,60 @@ std::string&#160;</td><td class="memItemRight" valign="bottom"><a class="el" hre
   </dd>
 </dl>
 <dl class="section return"><dt>Returns</dt><dd>Random data generated </dd></dl>
+
+</div>
+</div>
+<a id="a85778a077c038b049f64e72af0dc2a61"></a>
+<h2 class="memtitle"><span class="permalink"><a href="#a85778a077c038b049f64e72af0dc2a61">&#9670;&nbsp;</a></span>get_env() <span class="overload">[1/2]</span></h2>
+
+<div class="memitem">
+<div class="memproto">
+      <table class="memname">
+        <tr>
+          <td class="memname">std::optional&lt;std::string&gt; klib::get_env </td>
+          <td>(</td>
+          <td class="paramtype">const char *&#160;</td>
+          <td class="paramname"><em>name</em></td><td>)</td>
+          <td></td>
+        </tr>
+      </table>
+</div><div class="memdoc">
+
+<p>Get environment variables. </p>
+<dl class="params"><dt>Parameters</dt><dd>
+  <table class="params">
+    <tr><td class="paramname">name</td><td>Name of the environment variable </td></tr>
+  </table>
+  </dd>
+</dl>
+<dl class="section return"><dt>Returns</dt><dd>Value of environment variable </dd></dl>
+
+</div>
+</div>
+<a id="aedc1341dbc85e73b0d285ab72f5be78f"></a>
+<h2 class="memtitle"><span class="permalink"><a href="#aedc1341dbc85e73b0d285ab72f5be78f">&#9670;&nbsp;</a></span>get_env() <span class="overload">[2/2]</span></h2>
+
+<div class="memitem">
+<div class="memproto">
+      <table class="memname">
+        <tr>
+          <td class="memname">std::optional&lt;std::string&gt; klib::get_env </td>
+          <td>(</td>
+          <td class="paramtype">const std::string &amp;&#160;</td>
+          <td class="paramname"><em>name</em></td><td>)</td>
+          <td></td>
+        </tr>
+      </table>
+</div><div class="memdoc">
+
+<p>Get environment variables. </p>
+<dl class="params"><dt>Parameters</dt><dd>
+  <table class="params">
+    <tr><td class="paramname">name</td><td>Name of the environment variable </td></tr>
+  </table>
+  </dd>
+</dl>
+<dl class="section return"><dt>Returns</dt><dd>Value of environment variable </dd></dl>
 
 </div>
 </div>
@@ -425,6 +436,60 @@ std::string&#160;</td><td class="memItemRight" valign="bottom"><a class="el" hre
 </dl>
 <dl class="section return"><dt>Returns</dt><dd>Legal file or directory name </dd></dl>
 <dl class="section see"><dt>See also</dt><dd><a href="https://docs.microsoft.com/zh-cn/windows/win32/fileio/naming-a-file#file-and-directory-names">https://docs.microsoft.com/zh-cn/windows/win32/fileio/naming-a-file#file-and-directory-names</a> </dd></dl>
+
+</div>
+</div>
+<a id="a980d907f1e371b1e19ccdc8a7ffcae11"></a>
+<h2 class="memtitle"><span class="permalink"><a href="#a980d907f1e371b1e19ccdc8a7ffcae11">&#9670;&nbsp;</a></span>pipe() <span class="overload">[1/2]</span></h2>
+
+<div class="memitem">
+<div class="memproto">
+      <table class="memname">
+        <tr>
+          <td class="memname">std::string klib::pipe </td>
+          <td>(</td>
+          <td class="paramtype">const char *&#160;</td>
+          <td class="paramname"><em>cmd</em></td><td>)</td>
+          <td></td>
+        </tr>
+      </table>
+</div><div class="memdoc">
+
+<p>Execute the given line as a shell command and return its output. </p>
+<dl class="params"><dt>Parameters</dt><dd>
+  <table class="params">
+    <tr><td class="paramname">cmd</td><td>Command to be execute </td></tr>
+  </table>
+  </dd>
+</dl>
+<dl class="section return"><dt>Returns</dt><dd>Command line output </dd></dl>
+
+</div>
+</div>
+<a id="ad5761948ecd92227de1070e0f3f7da00"></a>
+<h2 class="memtitle"><span class="permalink"><a href="#ad5761948ecd92227de1070e0f3f7da00">&#9670;&nbsp;</a></span>pipe() <span class="overload">[2/2]</span></h2>
+
+<div class="memitem">
+<div class="memproto">
+      <table class="memname">
+        <tr>
+          <td class="memname">std::string klib::pipe </td>
+          <td>(</td>
+          <td class="paramtype">const std::string &amp;&#160;</td>
+          <td class="paramname"><em>cmd</em></td><td>)</td>
+          <td></td>
+        </tr>
+      </table>
+</div><div class="memdoc">
+
+<p>Execute the given line as a shell command and return its output. </p>
+<dl class="params"><dt>Parameters</dt><dd>
+  <table class="params">
+    <tr><td class="paramname">cmd</td><td>Command to be execute </td></tr>
+  </table>
+  </dd>
+</dl>
+<dl class="section return"><dt>Returns</dt><dd>Command line output </dd></dl>
 
 </div>
 </div>
