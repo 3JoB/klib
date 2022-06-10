@@ -49,7 +49,7 @@ TEST_CASE("execute_command", "[util]") {
   CHECK_NOTHROW(klib::exec("gcc -v"));
   CHECK_NOTHROW(klib::exec(""));
 
-  CHECK_NOTHROW(klib::exec_with_output("clang -v"));
+  CHECK_NOTHROW(klib::pipe("clang -v"));
 }
 
 TEST_CASE("cleanse", "[util]") {
