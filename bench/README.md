@@ -1,4 +1,4 @@
-Randomness seeded to: 459880353
+Randomness seeded to: 575526278
 
 ~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
 kbench is a Catch2 v3.0.1 host application.
@@ -12,10 +12,10 @@ UTF convert short
 
 benchmark name                            samples    iterations          mean
 -------------------------------------------------------------------------------
-UTF-8 to UTF-16                                100            92    181.756 ns 
-UTF-16 to UTF-8                                100           135    124.054 ns 
-UTF-8 to UTF-32                                100            47    353.681 ns 
-UTF-32 to UTF-8                                100            30    568.703 ns 
+UTF-8 to UTF-16                                100           107    159.193 ns 
+UTF-16 to UTF-8                                100            97    174.576 ns 
+UTF-8 to UTF-32                                100           104    162.592 ns 
+UTF-32 to UTF-8                                100           116    146.289 ns 
 
 -------------------------------------------------------------------------------
 UTF convert long
@@ -25,10 +25,10 @@ UTF convert long
 
 benchmark name                            samples    iterations          mean
 -------------------------------------------------------------------------------
-UTF-8 to UTF-16                                100             1    5.16846 ms 
-UTF-16 to UTF-8                                100             1    2.66895 ms 
-UTF-8 to UTF-32                                100             1    26.4596 ms 
-UTF-32 to UTF-8                                100             1     19.769 ms 
+UTF-8 to UTF-16                                100             1    4.67343 ms 
+UTF-16 to UTF-8                                100             1    2.84941 ms 
+UTF-8 to UTF-32                                100             1    4.79487 ms 
+UTF-32 to UTF-8                                100             1    3.85927 ms 
 
 -------------------------------------------------------------------------------
 trim
@@ -38,8 +38,8 @@ trim
 
 benchmark name                            samples    iterations          mean
 -------------------------------------------------------------------------------
-klib trim                                      100           210    79.2259 ns 
-ICU trim                                       100            23    725.354 ns 
+klib trim                                      100           287    59.0723 ns 
+ICU trim                                       100            25    674.567 ns 
 
 -------------------------------------------------------------------------------
 Image
@@ -49,12 +49,12 @@ Image
 
 benchmark name                            samples    iterations          mean
 -------------------------------------------------------------------------------
-PNG to JPEG                                    100             1    152.237 ms 
-PNG to JPEG max compress                       100             1     924.84 ms 
-PNG to WebP                                    100             1    272.178 ms 
-JPEG to JPEG                                   100             1    110.178 ms 
-JPEG to JPEG max compress                      100             1    678.432 ms 
-JPEG to WebP                                   100             1    190.044 ms 
+PNG to JPEG                                    100             1    153.211 ms 
+PNG to JPEG max compress                       100             1    933.729 ms 
+PNG to WebP                                    100             1    273.479 ms 
+JPEG to JPEG                                   100             1    114.281 ms 
+JPEG to JPEG max compress                      100             1    683.776 ms 
+JPEG to WebP                                   100             1    191.535 ms 
 
 -------------------------------------------------------------------------------
 Hash
@@ -64,12 +64,12 @@ Hash
 
 benchmark name                            samples    iterations          mean
 -------------------------------------------------------------------------------
-klib fast hash                                 100             1    182.684 us 
-klib adler32                                   100             1    196.539 us 
-klib crc32                                     100             1    3.18584 ms 
-klib md5                                       100             1    5.56125 ms 
-klib sha1                                      100             1      3.922 ms 
-klib sha256                                    100             1    9.76571 ms 
+klib fast hash                                 100             1    184.883 us 
+klib adler32                                   100             1    208.168 us 
+klib crc32                                     100             1    3.19399 ms 
+klib md5                                       100             1    5.57082 ms 
+klib sha1                                      100             1    3.92318 ms 
+klib sha256                                    100             1    9.76257 ms 
 
 -------------------------------------------------------------------------------
 Font
@@ -79,10 +79,10 @@ Font
 
 benchmark name                            samples    iterations          mean
 -------------------------------------------------------------------------------
-pyftsubset ttf                                 100             1     505.16 ms 
-pyftsubset woff2                               100             1    583.644 ms 
-klib ttf                                       100             1    10.2337 ms 
-klib woff2                                     100             1    10.9518 ms 
+pyftsubset ttf                                 100             1    519.363 ms 
+pyftsubset woff2                               100             1    603.841 ms 
+klib ttf                                       100             1    11.5243 ms 
+klib woff2                                     100             1    12.2031 ms 
 
 -------------------------------------------------------------------------------
 AES-256-GCM
@@ -92,8 +92,8 @@ AES-256-GCM
 
 benchmark name                            samples    iterations          mean
 -------------------------------------------------------------------------------
-klib encrypt                                   100             1    2.03582 ms 
-klib decrypt                                   100             1    1.56903 ms 
+klib encrypt                                   100             1    2.10886 ms 
+klib decrypt                                   100             1    1.58472 ms 
 
 -------------------------------------------------------------------------------
 AES-256-CBC
@@ -103,8 +103,8 @@ AES-256-CBC
 
 benchmark name                            samples    iterations          mean
 -------------------------------------------------------------------------------
-klib encrypt                                   100             1    5.11502 ms 
-klib decrypt                                   100             1    1.55671 ms 
+klib encrypt                                   100             1    5.19208 ms 
+klib decrypt                                   100             1    1.57423 ms 
 
 -------------------------------------------------------------------------------
 Base64
@@ -114,89 +114,76 @@ Base64
 
 benchmark name                            samples    iterations          mean
 -------------------------------------------------------------------------------
-klib secure encoded                            100             1    22.5399 ms 
-klib fast encoded                              100             1    685.512 us 
-klib secure decoded                            100             1    28.2581 ms 
-klib fast decoded                              100             1    667.488 us 
+klib secure encoded                            100             1    22.4224 ms 
+klib fast encoded                              100             1    725.742 us 
+klib secure decoded                            100             1    27.4522 ms 
+klib fast decoded                              100             1     683.91 us 
 
 -------------------------------------------------------------------------------
 ZIP
 -------------------------------------------------------------------------------
-/home/kaiser/CLionProjects/klib/bench/archive.cpp:44
+/home/kaiser/CLionProjects/klib/bench/archive.cpp:41
 ...............................................................................
 
 benchmark name                            samples    iterations          mean
 -------------------------------------------------------------------------------
-zip compress                                   100             1    331.106 ms 
-klib compress                                  100             1    192.672 ms 
-unzip decompress                               100             1    107.365 ms 
-klib decompress                                100             1    61.2435 ms 
-klib compress aes256                           100             1    789.208 ms 
-klib decompress aes256                         100             1    654.445 ms 
+zip compress                                   100             1    332.638 ms 
+klib compress                                  100             1    195.467 ms 
+unzip decompress                               100             1     106.95 ms 
+klib decompress                                100             1    61.3462 ms 
+klib compress aes256                           100             1    789.783 ms 
+klib decompress aes256                         100             1    657.036 ms 
 
 -------------------------------------------------------------------------------
 7-Zip
 -------------------------------------------------------------------------------
-/home/kaiser/CLionProjects/klib/bench/archive.cpp:102
+/home/kaiser/CLionProjects/klib/bench/archive.cpp:99
 ...............................................................................
 
 benchmark name                            samples    iterations          mean
 -------------------------------------------------------------------------------
-7z compress                                    100             1     325.69 ms 
-klib compress                                  100             1    223.215 ms 
-7z decompress                                  100             1     166.98 ms 
-klib decompress                                100             1    55.1349 ms 
+7z compress                                    100             1    328.085 ms 
+klib compress                                  100             1    229.283 ms 
+7z decompress                                  100             1    166.599 ms 
+klib decompress                                100             1     54.977 ms 
 
 -------------------------------------------------------------------------------
 Tar
 -------------------------------------------------------------------------------
-/home/kaiser/CLionProjects/klib/bench/archive.cpp:143
+/home/kaiser/CLionProjects/klib/bench/archive.cpp:140
 ...............................................................................
 
 benchmark name                            samples    iterations          mean
 -------------------------------------------------------------------------------
-tar compress                                   100             1    18.1845 ms 
-klib compress                                  100             1    19.9356 ms 
-tar decompress                                 100             1    23.3278 ms 
-klib decompress                                100             1    18.2072 ms 
+tar compress                                   100             1     18.178 ms 
+klib compress                                  100             1      20.69 ms 
+tar decompress                                 100             1    24.6304 ms 
+klib decompress                                100             1     18.796 ms 
 
 -------------------------------------------------------------------------------
 Gzip
 -------------------------------------------------------------------------------
-/home/kaiser/CLionProjects/klib/bench/archive.cpp:181
+/home/kaiser/CLionProjects/klib/bench/archive.cpp:178
 ...............................................................................
 
 benchmark name                            samples    iterations          mean
 -------------------------------------------------------------------------------
-tar compress                                   100             1    485.573 ms 
-klib compress                                  100             1    211.021 ms 
-tar decompress                                 100             1    72.4978 ms 
-klib decompress                                100             1    46.2194 ms 
-
--------------------------------------------------------------------------------
-xz
--------------------------------------------------------------------------------
-/home/kaiser/CLionProjects/klib/bench/archive.cpp:219
-...............................................................................
-
-benchmark name                            samples    iterations          mean
--------------------------------------------------------------------------------
-tar compress                                   100             1     5.09121 s 
-klib compress                                  100             1     5.09469 s 
-tar decompress                                 100             1    137.563 ms 
-klib decompress                                100             1    141.824 ms 
+tar compress                                   100             1    486.132 ms 
+klib compress                                  100             1    211.907 ms 
+tar decompress                                 100             1    72.6701 ms 
+klib decompress                                100             1    46.1449 ms 
 
 -------------------------------------------------------------------------------
 Compress data
 -------------------------------------------------------------------------------
-/home/kaiser/CLionProjects/klib/bench/archive.cpp:257
+/home/kaiser/CLionProjects/klib/bench/archive.cpp:216
 ...............................................................................
 
 benchmark name                            samples    iterations          mean
 -------------------------------------------------------------------------------
-zstd compress                                  100             1    24.0706 ms 
-zstd decompress                                100             1    6.74293 ms 
+zstd compress                                  100             1    24.1373 ms 
+zstd decompress                                100             1    6.75843 ms 
 
 ===============================================================================
-All tests passed (2675 assertions in 15 test cases)
+All tests passed (2267 assertions in 14 test cases)
 
