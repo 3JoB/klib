@@ -20,5 +20,6 @@ var unicode_8h =
     [ "utf8_to_utf16", "unicode_8h.html#afd9c11f7bcfa0aacc5111a78bfb42bac", null ],
     [ "utf8_to_utf32", "unicode_8h.html#a618c7297574b1f62db6b5e8b19186f3b", null ],
     [ "validate_utf16", "unicode_8h.html#a59ccca7bab3669628c5ac6e6abb82a94", null ],
+    [ "validate_utf32", "unicode_8h.html#a19bae17dcc26bcf3996705f178336143", null ],
     [ "validate_utf8", "unicode_8h.html#a4f15235a6d7bf62418abcd3dbf7c22f4", null ]
 ];
