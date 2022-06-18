@@ -29,6 +29,11 @@ TEST_CASE("validate_utf16", "[unicode]") {
   CHECK(klib::validate_utf16(str));
 }
 
+TEST_CASE("validate_utf32", "[unicode]") {
+  std::u32string str = U"你好世界";
+  CHECK(klib::validate_utf32(str));
+}
+
 TEST_CASE("utf8_to_utf16", "[unicode]") {
   auto utf16 = klib::utf8_to_utf16("zß水🍌");
 

@@ -6,7 +6,6 @@
 #include <gsl/assert>
 
 #include "klib/exception.h"
-#include "utf_utils/utf_utils.h"
 
 namespace klib {
 
@@ -121,6 +120,10 @@ bool validate_utf16(const std::u16string &str) {
   return simdutf::validate_utf16(str.c_str(), std::size(str));
 }
 
+bool validate_utf32(const std::u32string &str) {
+  return simdutf::validate_utf32(str.c_str(), std::size(str));
+}
+
 // https://github.com/simdutf/simdutf#example
 std::u16string utf8_to_utf16(const std::string &str) {
   auto source = std::data(str);
@@ -129,8 +132,8 @@ std::u16string utf8_to_utf16(const std::string &str) {
   std::u16string result;
   result.resize(simdutf::utf16_length_from_utf8(source, source_size));
 
-  auto check =
-      simdutf::convert_utf8_to_utf16(source, source_size, std::data(result));
+  auto check = simdutf::convert_valid_utf8_to_utf16(source, source_size,
+                                                    std::data(result));
   if (check == 0) [[unlikely]] {
     throw RuntimeError("convert_utf8_to_utf16() failed");
   }
@@ -145,8 +148,8 @@ std::string utf16_to_utf8(const std::u16string &str) {
   std::string result;
   result.resize(simdutf::utf8_length_from_utf16(source, source_size));
 
-  auto check =
-      simdutf::convert_utf16_to_utf8(source, source_size, std::data(result));
+  auto check = simdutf::convert_valid_utf16_to_utf8(source, source_size,
+                                                    std::data(result));
   if (check == 0) [[unlikely]] {
     throw RuntimeError("convert_utf16_to_utf8() failed");
   }
@@ -155,38 +158,41 @@ std::string utf16_to_utf8(const std::u16string &str) {
 }
 
 std::u32string utf8_to_utf32(const std::string &str) {
-  auto input_size = std::size(str);
+  auto source = std::data(str);
+  auto source_size = std::size(str);
 
   std::u32string result;
-  result.resize(input_size);
-  auto ptr = reinterpret_cast<const char8_t *>(std::data(str));
+  result.resize(simdutf::utf32_length_from_utf8(source, source_size));
 
-  auto length = uu::UtfUtils::SseBigTableConvert(ptr, ptr + input_size,
-                                                 std::data(result));
-  if (length == -1) [[unlikely]] {
-    throw RuntimeError("SseBigTableConvert() failed");
+  auto check = simdutf::convert_valid_utf8_to_utf32(source, source_size,
+                                                    std::data(result));
+  if (check == 0) [[unlikely]] {
+    throw RuntimeError("convert_utf8_to_utf32() failed");
   }
 
-  result.resize(length);
   return result;
 }
 
 std::string utf32_to_utf8(const std::u32string &str) {
-  try {
-    return utf8::utf32to8(str);
-  } catch (const utf8::exception &err) {
-    throw klib::RuntimeError(err.what());
+  auto source = std::data(str);
+  auto source_size = std::size(str);
+
+  std::string result;
+  result.resize(simdutf::utf8_length_from_utf32(source, source_size));
+
+  auto check = simdutf::convert_valid_utf32_to_utf8(source, source_size,
+                                                    std::data(result));
+  if (check == 0) [[unlikely]] {
+    throw RuntimeError("convert_utf32_to_utf8() failed");
   }
+
+  return result;
 }
 
 std::string utf32_to_utf8(char32_t code_point) {
-  std::string result;
-  try {
-    utf8::append(code_point, result);
-    return result;
-  } catch (const utf8::exception &err) {
-    throw klib::RuntimeError(err.what());
-  }
+  std::u32string str;
+  str.push_back(code_point);
+  return utf32_to_utf8(str);
 }
 
 }  // namespace klib

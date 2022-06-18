@@ -23,7 +23,6 @@ if(KLIB_FORMAT)
     "${CMAKE_CURRENT_SOURCE_DIR}/third_party/*.h"
     "${CMAKE_CURRENT_SOURCE_DIR}/third_party/*.c"
     "${CMAKE_CURRENT_SOURCE_DIR}/third_party/*.cc"
-    "${CMAKE_CURRENT_SOURCE_DIR}/third_party/*.cpp"
     "${CMAKE_CURRENT_SOURCE_DIR}/tool/*.cpp")
 
   file(

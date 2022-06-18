@@ -80,6 +80,13 @@ bool validate_utf8(const std::string &str);
 bool validate_utf16(const std::u16string &str);
 
 /**
+ * @brief Validate the UTF-32 string
+ * @param str: The UTF-32 string to validate
+ * @return True if and only if the string is valid UTF-32
+ */
+bool validate_utf32(const std::u32string &str);
+
+/**
  * @brief Convert UTF-8 encoded string to UTF-16 encoded string
  * @param str: UTF-8 encoded string
  * @return The converted UTF-16 encoded string

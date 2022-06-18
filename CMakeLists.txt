@@ -41,14 +41,9 @@ set(KLIB_SOURCE_DIR ${CMAKE_CURRENT_SOURCE_DIR})
 set(KLIB_BINARY_DIR ${CMAKE_CURRENT_BINARY_DIR})
 
 # https://cmake.org/cmake/help/latest/command/file.html#glob-recurse
-file(
-  GLOB_RECURSE
-  KLIB_LIBRARY_SRC
-  CONFIGURE_DEPENDS
-  "${KLIB_SOURCE_DIR}/src/*.cpp"
-  "${KLIB_SOURCE_DIR}/third_party/*.c"
-  "${KLIB_SOURCE_DIR}/third_party/*.cc"
-  "${KLIB_SOURCE_DIR}/third_party/*.cpp")
+file(GLOB_RECURSE KLIB_LIBRARY_SRC CONFIGURE_DEPENDS
+     "${KLIB_SOURCE_DIR}/src/*.cpp" "${KLIB_SOURCE_DIR}/third_party/*.c"
+     "${KLIB_SOURCE_DIR}/third_party/*.cc")
 
 # ---------------------------------------------------------------------------------------
 # Include CMake module
