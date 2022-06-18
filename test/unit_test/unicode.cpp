@@ -1,8 +1,10 @@
+#include <filesystem>
 #include <string>
 
 #include <catch2/catch_test_macros.hpp>
 
 #include "klib/unicode.h"
+#include "klib/util.h"
 
 TEST_CASE("trim", "[unicode]") {
   std::string str = " 你好世界 ";
@@ -45,6 +47,21 @@ TEST_CASE("utf8_to_utf16", "[unicode]") {
   CHECK(utf16[4] == 0xDF4C);
 }
 
+TEST_CASE("utf8_to_utf16 2", "[unicode]") {
+  const std::string file_name = "100012892.txt";
+  REQUIRE(std::filesystem::exists(file_name));
+  const auto str = klib::read_file(file_name, false);
+  REQUIRE(klib::validate_utf8(str));
+
+  std::u16string utf16;
+  CHECK_NOTHROW(utf16 = klib::utf8_to_utf16(str));
+  CHECK(klib::validate_utf16(utf16));
+
+  std::string utf8;
+  CHECK_NOTHROW(utf8 = klib::utf16_to_utf8(utf16));
+  CHECK(utf8 == str);
+}
+
 TEST_CASE("utf16_to_utf8", "[unicode]") {
   auto utf8 = klib::utf16_to_utf8(u"zß水🍌");
 
@@ -69,6 +86,21 @@ TEST_CASE("utf8_to_utf32", "[unicode]") {
   CHECK(utf32[1] == 0x000000DF);
   CHECK(utf32[2] == 0x00006C34);
   CHECK(utf32[3] == 0x0001F34C);
+}
+
+TEST_CASE("utf8_to_utf32 2", "[unicode]") {
+  const std::string file_name = "100012892.txt";
+  REQUIRE(std::filesystem::exists(file_name));
+  const auto str = klib::read_file(file_name, false);
+  REQUIRE(klib::validate_utf8(str));
+
+  std::u32string utf32;
+  CHECK_NOTHROW(utf32 = klib::utf8_to_utf32(str));
+  CHECK(klib::validate_utf32(utf32));
+
+  std::string utf8;
+  CHECK_NOTHROW(utf8 = klib::utf32_to_utf8(utf32));
+  CHECK(utf8 == str);
 }
 
 TEST_CASE("utf32_to_utf8", "[unicode]") {
