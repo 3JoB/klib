@@ -126,15 +126,16 @@ bool validate_utf32(const std::u32string &str) {
 
 // https://github.com/simdutf/simdutf#example
 std::u16string utf8_to_utf16(const std::string &str) {
-  auto source = std::data(str);
-  auto source_size = std::size(str);
+  const auto source = std::data(str);
+  const auto source_size = std::size(str);
+  const auto result_size = simdutf::utf16_length_from_utf8(source, source_size);
 
   std::u16string result;
-  result.resize(simdutf::utf16_length_from_utf8(source, source_size));
+  result.resize(result_size);
 
-  auto check = simdutf::convert_valid_utf8_to_utf16(source, source_size,
-                                                    std::data(result));
-  if (check == 0) [[unlikely]] {
+  const auto check = simdutf::convert_valid_utf8_to_utf16(source, source_size,
+                                                          std::data(result));
+  if (check != result_size) [[unlikely]] {
     throw RuntimeError("convert_utf8_to_utf16() failed");
   }
 
@@ -142,15 +143,16 @@ std::u16string utf8_to_utf16(const std::string &str) {
 }
 
 std::string utf16_to_utf8(const std::u16string &str) {
-  auto source = std::data(str);
-  auto source_size = std::size(str);
+  const auto source = std::data(str);
+  const auto source_size = std::size(str);
+  const auto result_size = simdutf::utf8_length_from_utf16(source, source_size);
 
   std::string result;
-  result.resize(simdutf::utf8_length_from_utf16(source, source_size));
+  result.resize(result_size);
 
-  auto check = simdutf::convert_valid_utf16_to_utf8(source, source_size,
-                                                    std::data(result));
-  if (check == 0) [[unlikely]] {
+  const auto check = simdutf::convert_valid_utf16_to_utf8(source, source_size,
+                                                          std::data(result));
+  if (check != result_size) [[unlikely]] {
     throw RuntimeError("convert_utf16_to_utf8() failed");
   }
 
@@ -158,15 +160,16 @@ std::string utf16_to_utf8(const std::u16string &str) {
 }
 
 std::u32string utf8_to_utf32(const std::string &str) {
-  auto source = std::data(str);
-  auto source_size = std::size(str);
+  const auto source = std::data(str);
+  const auto source_size = std::size(str);
+  const auto result_size = simdutf::utf32_length_from_utf8(source, source_size);
 
   std::u32string result;
-  result.resize(simdutf::utf32_length_from_utf8(source, source_size));
+  result.resize(result_size);
 
-  auto check = simdutf::convert_valid_utf8_to_utf32(source, source_size,
-                                                    std::data(result));
-  if (check == 0) [[unlikely]] {
+  const auto check = simdutf::convert_valid_utf8_to_utf32(source, source_size,
+                                                          std::data(result));
+  if (check != result_size) [[unlikely]] {
     throw RuntimeError("convert_utf8_to_utf32() failed");
   }
 
@@ -174,15 +177,16 @@ std::u32string utf8_to_utf32(const std::string &str) {
 }
 
 std::string utf32_to_utf8(const std::u32string &str) {
-  auto source = std::data(str);
-  auto source_size = std::size(str);
+  const auto source = std::data(str);
+  const auto source_size = std::size(str);
+  const auto result_size = simdutf::utf8_length_from_utf32(source, source_size);
 
   std::string result;
-  result.resize(simdutf::utf8_length_from_utf32(source, source_size));
+  result.resize(result_size);
 
-  auto check = simdutf::convert_valid_utf32_to_utf8(source, source_size,
-                                                    std::data(result));
-  if (check == 0) [[unlikely]] {
+  const auto check = simdutf::convert_valid_utf32_to_utf8(source, source_size,
+                                                          std::data(result));
+  if (check != result_size) [[unlikely]] {
     throw RuntimeError("convert_utf32_to_utf8() failed");
   }
 
