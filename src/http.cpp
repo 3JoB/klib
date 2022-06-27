@@ -7,7 +7,6 @@
 
 #include <cstddef>
 #include <filesystem>
-#include <mutex>
 
 #include <curl/curl.h>
 #include <scope_guard.hpp>
@@ -133,14 +132,17 @@ class Request::RequestImpl {
       const phmap::flat_hash_map<std::string, std::string> &cookies);
   void basic_auth(const std::string &user_name, const std::string &password);
 
-  Response get(const std::string &url,
-               const phmap::flat_hash_map<std::string, std::string> &headers);
-  Response post(const std::string &url,
-                const phmap::flat_hash_map<std::string, std::string> &data,
-                const phmap::flat_hash_map<std::string, std::string> &headers);
-  Response post(const std::string &url, const std::string &json,
-                const phmap::flat_hash_map<std::string, std::string> &headers);
-  Response post_mime(
+  [[nodiscard]] Response get(
+      const std::string &url,
+      const phmap::flat_hash_map<std::string, std::string> &headers);
+  [[nodiscard]] Response post(
+      const std::string &url,
+      const phmap::flat_hash_map<std::string, std::string> &data,
+      const phmap::flat_hash_map<std::string, std::string> &headers);
+  [[nodiscard]] Response post(
+      const std::string &url, const std::string &json,
+      const phmap::flat_hash_map<std::string, std::string> &headers);
+  [[nodiscard]] Response post_mime(
       const std::string &url,
       const phmap::flat_hash_map<std::string, std::string> &data,
       const phmap::flat_hash_map<std::string, std::string> &file,
@@ -158,14 +160,10 @@ class Request::RequestImpl {
       get_env("HOME").value_or("/tmp") + "/.cookies.txt";
   const inline static std::string altsvc_path =
       get_env("HOME").value_or("/tmp") + "/.altsvc.txt";
-
-  inline static std::mutex curl_easy_init_mutex;
 };
 
 Request::RequestImpl::RequestImpl() {
-  curl_easy_init_mutex.lock();
   curl_ = curl_easy_init();
-  curl_easy_init_mutex.unlock();
 
   SCOPE_FAIL {
     curl_easy_cleanup(curl_);
@@ -261,7 +259,7 @@ void Request::RequestImpl::set_browser_user_agent() {
   // navigator.userAgent
   set_user_agent(
       "Mozilla/5.0 (X11; Linux x86_64) AppleWebKit/537.36 (KHTML, like Gecko) "
-      "Chrome/102.0.5005.124 Safari/537.36 Edg/102.0.1245.44");
+      "Chrome/103.0.5060.53 Safari/537.36 Edg/103.0.1264.37");
 }
 
 void Request::RequestImpl::set_timeout(std::int64_t seconds) {
