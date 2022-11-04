@@ -183,6 +183,12 @@ Request::RequestImpl::RequestImpl() {
                     CURL_BLOB_NOCOPY};
   rc = curl_easy_setopt(curl_, CURLOPT_CAINFO_BLOB, &blob);
   CHECK_CURL(rc);
+    
+  rc = curl_easy_setopt(curl_,CURLOPT_SSL_VERIFYHOST, 0);
+  CHECK_CURL(rc);
+  
+  rc = curl_easy_setopt(curl_, CURLOPT_SSL_VERIFYPEER, 0);
+  CHECK_CURL(rc);
 
   rc = curl_easy_setopt(curl_, CURLOPT_BUFFERSIZE, 102400);
   CHECK_CURL(rc);
