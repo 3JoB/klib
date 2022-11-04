@@ -44,12 +44,12 @@ jobs:
         env:
           CC: ${{ matrix.compiler.cc }}
           CXX: ${{ matrix.compiler.cxx }}
-
+      
       # https://github.com/softprops/action-gh-release
       - name: Release
-        uses: softprops/action-gh-release@v1
-        if: ${{ matrix.compiler.cxx == 'g++' && matrix.build_type == 'Release'}}
+        uses: actions/upload-artifact@v3
         with:
-          files: |
-            build/klib*.tar.xz
-            build/klib*.deb
+          name: release-dist
+          path: |
+              build/klib*.tar.xz
+              build/klib*.deb
