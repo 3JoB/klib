@@ -1,6 +1,12 @@
 name: Release
 
 on:
+  push:
+    branches: [ "main" ]
+    tags:
+        - vf*
+  pull_request:
+    branches: [ "main" ]
   release:
     # https://stackoverflow.com/questions/59319281/github-action-different-between-release-created-and-published
     types: [published]
@@ -9,13 +15,6 @@ jobs:
   build:
     runs-on: ubuntu-latest
     container: kaiserlancelot/kenv:latest
-    strategy:
-      matrix:
-        # https://cmake.org/cmake/help/latest/variable/CMAKE_BUILD_TYPE.html
-        build_type: ["Release"]
-        compiler:
-          - { cc: "gcc", cxx: "g++" }
-          - { cc: "clang", cxx: "clang++" }
 
     steps:
       # https://github.com/actions/checkout
@@ -35,15 +34,6 @@ jobs:
       - name: Install
         run: sudo dpkg -i klib*.deb
         working-directory: build
-
-      - name: Build example
-        run: |
-          cmake -S . -B build -DCMAKE_BUILD_TYPE=${{ matrix.build_type }}
-          cmake --build build --config ${{ matrix.build_type }} -j"$(nproc)"
-        working-directory: example
-        env:
-          CC: ${{ matrix.compiler.cc }}
-          CXX: ${{ matrix.compiler.cxx }}
       
       # https://github.com/softprops/action-gh-release
       - name: Release
